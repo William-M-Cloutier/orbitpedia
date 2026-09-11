@@ -329,28 +329,34 @@ function focusMeshScale(body: Body): number {
 }
 
 /**
- * Viewport height fill fraction for the focused visual sphere.
- * Pluto gold standard ≈25–30% with margins; 0.25 keeps edges clear.
+ * Target on-screen diameter as a fraction of min(Explore viewport w, h).
+ * Pluto gold standard ≈25–30%; prior sin/height framing read ~10% on screen,
+ * so FOCUS_FILL is raised (0.42) with tan + min(w,h) so framed bodies land
+ * in that band for sun / planets / dwarf planets / asteroids.
  */
-const FOCUS_FILL = 0.25;
+const FOCUS_FILL = 0.42;
 
 /**
  * FOV-based focus distance for ALL bodies (sun + planets + asteroids).
- * Same rule: visual sphere fills ~FOCUS_FILL of Explore viewport height.
- *   distance = visualRadius / sin(fovY_rad / 2) / fill
- * Replaces aAu-based / hardcoded sun distances.
+ * On-screen diameter ≈ fill * min(viewport width, height):
+ *   d = r / (fill * tan(fovY/2) * min(1, aspect))
+ * Replaces sin-based height-only framing that undershot William's Pluto ref.
  */
 function focusFrameDistance(
   body: Body,
   fovYDeg: number,
+  aspect: number = 1,
   fill: number = FOCUS_FILL,
 ): number {
   const r = visualRadius(body) * focusMeshScale(body);
   const halfRad = ((fovYDeg * Math.PI) / 180) / 2;
-  const sinHalf = Math.sin(halfRad);
-  if (!(sinHalf > 1e-6) || !(fill > 1e-6)) return 12;
+  const tanHalf = Math.tan(halfRad);
+  if (!(tanHalf > 1e-6) || !(fill > 1e-6)) return 12;
+  // PerspectiveCamera fov is vertical; limiting half-extent for min(w,h).
+  const a = Number.isFinite(aspect) && aspect > 1e-6 ? aspect : 1;
+  const halfMin = a >= 1 ? tanHalf : tanHalf * a;
   // Floor keeps dolly above OrbitControls minDistance / near plane comfort.
-  return Math.max(0.45, r / sinHalf / fill);
+  return Math.max(0.45, r / (fill * halfMin));
 }
 
 /**
@@ -428,7 +434,11 @@ function FollowCamera() {
     const pos = bodyWorldPosition(b, days, getBaryOffset());
     const fovY =
       camera instanceof THREE.PerspectiveCamera ? camera.fov : 45;
-    const dist = focusFrameDistance(b, fovY);
+    const aspect =
+      camera instanceof THREE.PerspectiveCamera && camera.aspect > 1e-6
+        ? camera.aspect
+        : 1;
+    const dist = focusFrameDistance(b, fovY, aspect);
     target.current.set(pos[0], pos[1], pos[2]);
     desired.current.copy(target.current);
     // Pleasant elevation/azimuth at EXACT framing distance (fill is distance).
