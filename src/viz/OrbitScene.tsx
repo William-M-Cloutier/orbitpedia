@@ -741,12 +741,21 @@ function FollowCamera() {
 
 /**
  * WASD fly while the Explore canvas is focused (click into the WebGL view).
+ * W/S forward/back, A/D strafe, Space up, Control down, Shift speed boost.
  * Moves relative to camera facing; skips when focus is an input/UI control.
  * Idle: pan camera + OrbitControls target together. Follow: move camera only
  * so the ride-along offset changes without fighting the body target.
  */
 function WasdFly() {
-  const keys = useRef({ w: false, a: false, s: false, d: false });
+  const keys = useRef({
+    w: false,
+    a: false,
+    s: false,
+    d: false,
+    space: false,
+    ctrl: false,
+    shift: false,
+  });
   /** True after pointerdown on the WebGL canvas until pointerdown outside it. */
   const canvasArmed = useRef(false);
   const { getFollowing } = useSimApi();
@@ -756,6 +765,7 @@ function WasdFly() {
   const invalidate = useThree((s) => s.invalidate);
   const forward = useRef(new THREE.Vector3());
   const right = useRef(new THREE.Vector3());
+  const up = useRef(new THREE.Vector3());
   const move = useRef(new THREE.Vector3());
 
   useEffect(() => {
@@ -773,7 +783,15 @@ function WasdFly() {
     };
 
     const clearKeys = () => {
-      keys.current = { w: false, a: false, s: false, d: false };
+      keys.current = {
+        w: false,
+        a: false,
+        s: false,
+        d: false,
+        space: false,
+        ctrl: false,
+        shift: false,
+      };
     };
 
     const onCanvasPointerDown = () => {
@@ -791,9 +809,29 @@ function WasdFly() {
         return;
       }
       const k = e.key.toLowerCase();
+      let handled = false;
       if (k === "w" || k === "a" || k === "s" || k === "d") {
-        if (keys.current[k]) return;
-        keys.current[k] = true;
+        if (!keys.current[k]) {
+          keys.current[k] = true;
+          handled = true;
+        }
+      } else if (e.code === "Space" || k === " ") {
+        if (!keys.current.space) {
+          keys.current.space = true;
+          handled = true;
+        }
+      } else if (k === "control") {
+        if (!keys.current.ctrl) {
+          keys.current.ctrl = true;
+          handled = true;
+        }
+      } else if (k === "shift") {
+        if (!keys.current.shift) {
+          keys.current.shift = true;
+          handled = true;
+        }
+      }
+      if (handled) {
         e.preventDefault();
         invalidate();
       }
@@ -802,6 +840,12 @@ function WasdFly() {
       const k = e.key.toLowerCase();
       if (k === "w" || k === "a" || k === "s" || k === "d") {
         keys.current[k] = false;
+      } else if (e.code === "Space" || k === " ") {
+        keys.current.space = false;
+      } else if (k === "control") {
+        keys.current.ctrl = false;
+      } else if (k === "shift") {
+        keys.current.shift = false;
       }
     };
 
@@ -825,8 +869,8 @@ function WasdFly() {
 
   useFrame((_, delta) => {
     if (typeof document !== "undefined" && document.hidden) return;
-    const { w, a, s, d } = keys.current;
-    if (!(w || a || s || d) || !canvasArmed.current) return;
+    const { w, a, s, d, space, ctrl, shift } = keys.current;
+    if (!(w || a || s || d || space || ctrl) || !canvasArmed.current) return;
 
     camera.getWorldDirection(forward.current);
     if (forward.current.lengthSq() < 1e-12) return;
@@ -837,12 +881,15 @@ function WasdFly() {
     } else {
       right.current.normalize();
     }
+    up.current.copy(camera.up).normalize();
 
     move.current.set(0, 0, 0);
     if (w) move.current.add(forward.current);
     if (s) move.current.sub(forward.current);
     if (d) move.current.add(right.current);
     if (a) move.current.sub(right.current);
+    if (space) move.current.add(up.current);
+    if (ctrl) move.current.sub(up.current);
     if (move.current.lengthSq() < 1e-12) return;
     move.current.normalize();
 
@@ -851,6 +898,7 @@ function WasdFly() {
       const dist = camera.position.distanceTo(controls.target);
       speed = Math.max(0.35, Math.min(14, dist * 0.9));
     }
+    if (shift) speed *= 2.75;
     move.current.multiplyScalar(speed * Math.min(delta, 0.1));
 
     camera.position.add(move.current);
