@@ -1,0 +1,52 @@
+{
+  "id": "kepler-11-g",
+  "name": "Kepler-11 g",
+  "kind": "planet",
+  "systemId": "kepler-11",
+  "facts": {
+    "radiusMeanKm": 21215.43,
+    "discoveryNotes": "Outermost known; mass upper bound only (not used)",
+    "discoveryDate": "2011-02-02"
+  },
+  "color": "#7D6B91",
+  "meta": {
+    "source": "NASA Exoplanet Archive / Lissauer et al. 2011–2013; orbit.frame=heliocentric relative to host Kepler-11 (not Solar-System barycenter). omDeg=0 and maDeg=0 assumed (absolute node/mean anomaly not fixed in composite).",
+    "sources": [
+      {
+        "name": "NASA Exoplanet Archive — Kepler-11 overview",
+        "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-11",
+        "fields": [
+          "facts.radiusMeanKm",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.periodD"
+        ]
+      },
+      {
+        "name": "NASA Exoplanet Archive",
+        "url": "https://exoplanetarchive.ipac.caltech.edu/",
+        "fields": [
+          "facts.radiusMeanKm",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.periodD"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-11T18:59:48.654Z",
+    "confidence": "assumed",
+    "unitsVersion": 1
+  },
+  "orbit": {
+    "frame": "heliocentric",
+    "aAu": 0.466,
+    "e": 0.013,
+    "iDeg": 89.87,
+    "omDeg": 0,
+    "wDeg": 0,
+    "maDeg": 0,
+    "periodD": 118.3807
+  }
+}

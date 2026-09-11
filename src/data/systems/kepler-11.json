@@ -1,0 +1,49 @@
+{
+  "id": "kepler-11",
+  "name": "Kepler-11",
+  "home": false,
+  "memberIds": [
+    "kepler-11",
+    "kepler-11-b",
+    "kepler-11-c",
+    "kepler-11-d",
+    "kepler-11-e",
+    "kepler-11-f",
+    "kepler-11-g"
+  ],
+  "blurb": "A Sun-like star with six tightly packed, low-density transiting planets — one of the first systems found with six planets all crossing the star’s disk.",
+  "highlights": [
+    "Six confirmed planets (b–g), all larger than Earth",
+    "Entire known system fits well inside Mercury’s orbital distance from the Sun",
+    "Remarkably flat, coplanar layout (transit inclinations ~89.5–90°)"
+  ],
+  "planetCount": 6,
+  "distanceLy": 2108,
+  "hostSpectralType": "G",
+  "compactnessNote": "All six planets orbit closer than Mercury does to the Sun — a packed, nearly coplanar system (archive inclinations are edge-on; Explore shows face-on).",
+  "meta": {
+    "confidence": "known",
+    "fetchedAt": "2026-09-11T18:59:48.654Z",
+    "sources": [
+      {
+        "name": "NASA Exoplanet Archive — Kepler-11 overview",
+        "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-11",
+        "fields": [
+          "blurb",
+          "highlights",
+          "planetCount",
+          "distanceLy",
+          "hostSpectralType",
+          "compactnessNote"
+        ]
+      },
+      {
+        "name": "NASA Exoplanet Archive",
+        "url": "https://exoplanetarchive.ipac.caltech.edu/",
+        "fields": [
+          "distanceLy"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "id": "kepler-11-d",
+  "name": "Kepler-11 d",
+  "kind": "planet",
+  "systemId": "kepler-11",
+  "facts": {
+    "massKg": 4.855236000000001e+25,
+    "radiusMeanKm": 19877.52,
+    "discoveryNotes": "Middle pack; low density",
+    "discoveryDate": "2011-02-02"
+  },
+  "color": "#6CA0DC",
+  "meta": {
+    "source": "NASA Exoplanet Archive / Lissauer et al. 2011–2013; orbit.frame=heliocentric relative to host Kepler-11 (not Solar-System barycenter). omDeg=0 and maDeg=0 assumed (absolute node/mean anomaly not fixed in composite).",
+    "sources": [
+      {
+        "name": "NASA Exoplanet Archive — Kepler-11 overview",
+        "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-11",
+        "fields": [
+          "facts.massKg",
+          "facts.radiusMeanKm",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.periodD"
+        ]
+      },
+      {
+        "name": "NASA Exoplanet Archive",
+        "url": "https://exoplanetarchive.ipac.caltech.edu/",
+        "fields": [
+          "facts.massKg",
+          "facts.radiusMeanKm",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.periodD"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-11T18:59:48.654Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  },
+  "orbit": {
+    "frame": "heliocentric",
+    "aAu": 0.155,
+    "e": 0.004,
+    "iDeg": 89.67,
+    "omDeg": 0,
+    "wDeg": 0,
+    "maDeg": 0,
+    "periodD": 22.6845
+  }
+}

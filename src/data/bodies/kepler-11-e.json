@@ -1,0 +1,55 @@
+{
+  "id": "kepler-11-e",
+  "name": "Kepler-11 e",
+  "kind": "planet",
+  "systemId": "kepler-11",
+  "facts": {
+    "massKg": 5.661456e+25,
+    "radiusMeanKm": 26694.49,
+    "discoveryNotes": "Largest radius in the system",
+    "discoveryDate": "2011-02-02"
+  },
+  "color": "#5B8CDE",
+  "meta": {
+    "source": "NASA Exoplanet Archive / Lissauer et al. 2011–2013; orbit.frame=heliocentric relative to host Kepler-11 (not Solar-System barycenter). omDeg=0 and maDeg=0 assumed (absolute node/mean anomaly not fixed in composite).",
+    "sources": [
+      {
+        "name": "NASA Exoplanet Archive — Kepler-11 overview",
+        "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-11",
+        "fields": [
+          "facts.massKg",
+          "facts.radiusMeanKm",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.periodD"
+        ]
+      },
+      {
+        "name": "NASA Exoplanet Archive",
+        "url": "https://exoplanetarchive.ipac.caltech.edu/",
+        "fields": [
+          "facts.massKg",
+          "facts.radiusMeanKm",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.periodD"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-11T18:59:48.654Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  },
+  "orbit": {
+    "frame": "heliocentric",
+    "aAu": 0.195,
+    "e": 0.012,
+    "iDeg": 89.89,
+    "omDeg": 0,
+    "wDeg": 0,
+    "maDeg": 0,
+    "periodD": 31.9996
+  }
+}

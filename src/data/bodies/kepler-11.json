@@ -1,0 +1,41 @@
+{
+  "id": "kepler-11",
+  "name": "Kepler-11",
+  "kind": "star",
+  "systemId": "kepler-11",
+  "aliases": [
+    "KOI-157",
+    "KIC 6541920"
+  ],
+  "facts": {
+    "massKg": 1.91091967e+30,
+    "radiusMeanKm": 740920.5,
+    "discoveryNotes": "Sun-like host of six tightly packed transiting planets — the whole known system fits well inside Mercury’s orbit; open from the Systems map to explore the flat, compact layout."
+  },
+  "color": "#F5D76E",
+  "meta": {
+    "source": "NASA Exoplanet Archive overview / Lissauer et al.; central star (no heliocentric orbit). Stellar mass≈0.961 M☉, radius≈1.065 R☉.",
+    "sources": [
+      {
+        "name": "NASA Exoplanet Archive — Kepler-11 overview",
+        "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-11",
+        "fields": [
+          "facts.massKg",
+          "facts.radiusMeanKm",
+          "facts.discoveryNotes"
+        ]
+      },
+      {
+        "name": "NASA Exoplanet Archive",
+        "url": "https://exoplanetarchive.ipac.caltech.edu/",
+        "fields": [
+          "facts.massKg",
+          "facts.radiusMeanKm"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-11T18:59:48.654Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  }
+}
