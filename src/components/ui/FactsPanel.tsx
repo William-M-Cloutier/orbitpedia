@@ -54,6 +54,42 @@ function discoveryDisplay(body: Body): string {
   return "Known since antiquity";
 }
 
+function SourcesList({ body }: { body: Body }) {
+  const sources = body.meta.sources;
+  if (!sources?.length) return null;
+  const fetched = body.meta.fetchedAt;
+  return (
+    <section>
+      <h3 className="mb-2 text-xs font-medium uppercase tracking-wider text-zinc-500">
+        Sources
+      </h3>
+      <ul className="space-y-2">
+        {sources.map((s) => (
+          <li key={s.url} className="text-sm">
+            <a
+              href={s.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sky-300/90 hover:text-sky-200 hover:underline"
+            >
+              {s.name}
+            </a>
+            {s.fields && s.fields.length > 0 && (
+              <p className="mt-0.5 text-[11px] text-zinc-600">
+                Fields: {s.fields.join(", ")}
+              </p>
+            )}
+          </li>
+        ))}
+      </ul>
+      {fetched && (
+        <p className="mt-2 text-[11px] text-zinc-600">Fetched {fetched}</p>
+      )}
+    </section>
+  );
+}
+
+
 export function FactsPanel({ body, onClear }: Props) {
   const [expanded, setExpanded] = useState(false);
 
@@ -130,6 +166,13 @@ export function FactsPanel({ body, onClear }: Props) {
             </dl>
             {note && (
               <p className="text-sm leading-relaxed text-zinc-400">{note}</p>
+            )}
+            {body.meta.sources && body.meta.sources.length > 0 && (
+              <p className="text-[11px] text-zinc-500">
+                {body.meta.sources.length} source
+                {body.meta.sources.length === 1 ? "" : "s"} — expand Full to open
+                links
+              </p>
             )}
             <button
               type="button"
@@ -227,6 +270,8 @@ export function FactsPanel({ body, onClear }: Props) {
                 </dl>
               </section>
             )}
+
+            <SourcesList body={body} />
           </div>
         )}
       </div>
