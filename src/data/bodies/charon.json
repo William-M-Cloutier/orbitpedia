@@ -1,0 +1,61 @@
+{
+  "id": "charon",
+  "name": "Charon",
+  "kind": "moon",
+  "systemId": "solar",
+  "parentId": "pluto",
+  "facts": {
+    "radiusMeanKm": 606.0,
+    "massKg": 1.5896798166099815e+21,
+    "densityGcm3": 1.853,
+    "discoveryNotes": "Discovered by James Christy (1978)"
+  },
+  "orbit": {
+    "frame": "parent",
+    "epochJd": 2451545.0,
+    "aAu": 0.0001309895785919306,
+    "e": 0.0001610672790944719,
+    "iDeg": 112.8908097641467,
+    "omDeg": 227.3916867008565,
+    "wDeg": 172.5855027165132,
+    "maDeg": 148.6651344828103,
+    "periodD": 6.387220612548998,
+    "qAu": 0.0001309684804569171
+  },
+  "color": "#908888",
+  "horizonId": "901",
+  "meta": {
+    "source": "JPL Horizons Charon vs Pluto (ELEMENTS + OBJ_DATA)",
+    "sources": [
+      {
+        "name": "JPL Horizons API (Charon 901 ELEMENTS, CENTER=pluto 999)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='901'&EPHEM_TYPE=ELEMENTS&CENTER='500@999'&START_TIME='JD2451545.0'",
+        "fields": [
+          "orbit.epochJd",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "orbit.qAu",
+          "orbit.frame",
+          "horizonId"
+        ]
+      },
+      {
+        "name": "JPL Horizons API (Charon OBJ_DATA physical)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='901'&OBJ_DATA=YES&MAKE_EPHEM=NO",
+        "fields": [
+          "facts.massKg",
+          "facts.radiusMeanKm",
+          "facts.densityGcm3"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-11T17:19:56.708Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  }
+}

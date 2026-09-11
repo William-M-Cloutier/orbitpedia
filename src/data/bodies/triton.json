@@ -1,0 +1,65 @@
+{
+  "id": "triton",
+  "name": "Triton",
+  "kind": "moon",
+  "systemId": "solar",
+  "parentId": "neptune",
+  "facts": {
+    "radiusMeanKm": 1352.6,
+    "massKg": 2.1402918658136433e+22,
+    "densityGcm3": 2.065,
+    "albedo": 0.7,
+    "rotationPeriodD": 5.877077441614112,
+    "discoveryNotes": "Discovered by William Lassell (1846)"
+  },
+  "orbit": {
+    "frame": "parent",
+    "epochJd": 2451545.0,
+    "aAu": 0.002371464648964025,
+    "e": 0.0001461079095879048,
+    "iDeg": 130.2614060073336,
+    "omDeg": 215.8591103702256,
+    "wDeg": 91.17138119399802,
+    "maDeg": 343.4606712122722,
+    "periodD": 5.877077441614112,
+    "qAu": 0.002371118159221503
+  },
+  "color": "#A0B0B8",
+  "horizonId": "801",
+  "meta": {
+    "source": "JPL Horizons Triton vs Neptune (ELEMENTS + OBJ_DATA)",
+    "sources": [
+      {
+        "name": "JPL Horizons API (Triton 801 ELEMENTS, CENTER=neptune 899)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='801'&EPHEM_TYPE=ELEMENTS&CENTER='500@899'&START_TIME='JD2451545.0'",
+        "fields": [
+          "orbit.epochJd",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "orbit.qAu",
+          "orbit.frame",
+          "horizonId"
+        ]
+      },
+      {
+        "name": "JPL Horizons API (Triton OBJ_DATA physical)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='801'&OBJ_DATA=YES&MAKE_EPHEM=NO",
+        "fields": [
+          "facts.massKg",
+          "facts.radiusMeanKm",
+          "facts.densityGcm3",
+          "facts.albedo",
+          "facts.rotationPeriodD"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-11T17:19:56.708Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  }
+}

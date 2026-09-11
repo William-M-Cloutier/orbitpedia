@@ -1,0 +1,68 @@
+{
+  "id": "ganymede",
+  "name": "Ganymede",
+  "kind": "moon",
+  "systemId": "solar",
+  "parentId": "jupiter",
+  "aliases": [
+    "III"
+  ],
+  "facts": {
+    "radiusMeanKm": 2631.2,
+    "massKg": 1.481478626972117e+23,
+    "densityGcm3": 1.942,
+    "albedo": 0.43,
+    "rotationPeriodD": 7.155869785747252,
+    "discoveryNotes": "Discovered by Galileo Galilei (1610)"
+  },
+  "orbit": {
+    "frame": "parent",
+    "epochJd": 2451545.0,
+    "aAu": 0.007155833676042577,
+    "e": 0.001457215292672099,
+    "iDeg": 2.214148041848081,
+    "omDeg": 343.1728455275238,
+    "wDeg": 319.8078127226449,
+    "maDeg": 277.0487684461206,
+    "periodD": 7.155869785747252,
+    "qAu": 0.00714540608577803
+  },
+  "color": "#B0A090",
+  "horizonId": "503",
+  "meta": {
+    "source": "JPL Horizons Ganymede vs Jupiter (ELEMENTS + OBJ_DATA)",
+    "sources": [
+      {
+        "name": "JPL Horizons API (Ganymede 503 ELEMENTS, CENTER=jupiter 599)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='503'&EPHEM_TYPE=ELEMENTS&CENTER='500@599'&START_TIME='JD2451545.0'",
+        "fields": [
+          "orbit.epochJd",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "orbit.qAu",
+          "orbit.frame",
+          "horizonId"
+        ]
+      },
+      {
+        "name": "JPL Horizons API (Ganymede OBJ_DATA physical)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='503'&OBJ_DATA=YES&MAKE_EPHEM=NO",
+        "fields": [
+          "facts.massKg",
+          "facts.radiusMeanKm",
+          "facts.densityGcm3",
+          "facts.albedo",
+          "facts.rotationPeriodD"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-11T17:19:56.708Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  }
+}

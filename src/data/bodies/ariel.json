@@ -1,0 +1,68 @@
+{
+  "id": "ariel",
+  "name": "Ariel",
+  "kind": "moon",
+  "systemId": "solar",
+  "parentId": "uranus",
+  "aliases": [
+    "I"
+  ],
+  "facts": {
+    "radiusMeanKm": 581.1,
+    "massKg": 1.2500187285558038e+21,
+    "densityGcm3": 1.54,
+    "albedo": 0.34,
+    "rotationPeriodD": 2.520725632150754,
+    "discoveryNotes": "Discovered by William Lassell (1851)"
+  },
+  "orbit": {
+    "frame": "parent",
+    "epochJd": 2451545.0,
+    "aAu": 0.001276364069125674,
+    "e": 0.001520812328868678,
+    "iDeg": 97.719319228073,
+    "omDeg": 167.6455486422633,
+    "wDeg": 45.35674156751863,
+    "maDeg": 152.7943682479845,
+    "periodD": 2.520725632150754,
+    "qAu": 0.001274422958913223
+  },
+  "color": "#C0C8D0",
+  "horizonId": "701",
+  "meta": {
+    "source": "JPL Horizons Ariel vs Uranus (ELEMENTS + OBJ_DATA)",
+    "sources": [
+      {
+        "name": "JPL Horizons API (Ariel 701 ELEMENTS, CENTER=uranus 799)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='701'&EPHEM_TYPE=ELEMENTS&CENTER='500@799'&START_TIME='JD2451545.0'",
+        "fields": [
+          "orbit.epochJd",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "orbit.qAu",
+          "orbit.frame",
+          "horizonId"
+        ]
+      },
+      {
+        "name": "JPL Horizons API (Ariel OBJ_DATA physical)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='701'&OBJ_DATA=YES&MAKE_EPHEM=NO",
+        "fields": [
+          "facts.massKg",
+          "facts.radiusMeanKm",
+          "facts.densityGcm3",
+          "facts.albedo",
+          "facts.rotationPeriodD"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-11T17:19:56.708Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  }
+}

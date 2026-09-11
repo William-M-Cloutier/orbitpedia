@@ -1,0 +1,68 @@
+{
+  "id": "rhea",
+  "name": "Rhea",
+  "kind": "moon",
+  "systemId": "solar",
+  "parentId": "saturn",
+  "aliases": [
+    "V"
+  ],
+  "facts": {
+    "radiusMeanKm": 764.5,
+    "massKg": 2.309e+21,
+    "densityGcm3": 1.233,
+    "albedo": 0.6,
+    "rotationPeriodD": 4.520237180979472,
+    "discoveryNotes": "Discovered by Giovanni Cassini (1672)"
+  },
+  "orbit": {
+    "frame": "parent",
+    "epochJd": 2451545.0,
+    "aAu": 0.003524283134944075,
+    "e": 0.0008002149724314739,
+    "iDeg": 28.24141737577452,
+    "omDeg": 168.9842022220848,
+    "wDeg": 165.7818213737295,
+    "maDeg": 206.9021112955066,
+    "periodD": 4.520237180979472,
+    "qAu": 0.003521462950812404
+  },
+  "color": "#B8B0A8",
+  "horizonId": "605",
+  "meta": {
+    "source": "JPL Horizons Rhea vs Saturn (ELEMENTS + OBJ_DATA)",
+    "sources": [
+      {
+        "name": "JPL Horizons API (Rhea 605 ELEMENTS, CENTER=saturn 699)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='605'&EPHEM_TYPE=ELEMENTS&CENTER='500@699'&START_TIME='JD2451545.0'",
+        "fields": [
+          "orbit.epochJd",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "orbit.qAu",
+          "orbit.frame",
+          "horizonId"
+        ]
+      },
+      {
+        "name": "JPL Horizons API (Rhea OBJ_DATA physical)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='605'&OBJ_DATA=YES&MAKE_EPHEM=NO",
+        "fields": [
+          "facts.massKg",
+          "facts.radiusMeanKm",
+          "facts.densityGcm3",
+          "facts.albedo",
+          "facts.rotationPeriodD"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-11T17:19:56.708Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "id": "titan",
+  "name": "Titan",
+  "kind": "moon",
+  "systemId": "solar",
+  "parentId": "saturn",
+  "aliases": [
+    "VI"
+  ],
+  "facts": {
+    "radiusMeanKm": 2575.5,
+    "massKg": 1.3455299999999999e+23,
+    "densityGcm3": 1.88,
+    "albedo": 0.2,
+    "discoveryNotes": "Discovered by Christiaan Huygens (1655)"
+  },
+  "orbit": {
+    "frame": "parent",
+    "epochJd": 2451545.0,
+    "aAu": 0.00816812963443584,
+    "e": 0.02860066256432539,
+    "iDeg": 27.71833887311165,
+    "omDeg": 169.2391602866279,
+    "wDeg": 164.4091285733822,
+    "maDeg": 163.4361974944248,
+    "periodD": 15.94734750754382,
+    "qAu": 0.007934515714979674
+  },
+  "color": "#C89040",
+  "horizonId": "606",
+  "meta": {
+    "source": "JPL Horizons Titan vs Saturn (ELEMENTS + OBJ_DATA)",
+    "sources": [
+      {
+        "name": "JPL Horizons API (Titan 606 ELEMENTS, CENTER=saturn 699)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='606'&EPHEM_TYPE=ELEMENTS&CENTER='500@699'&START_TIME='JD2451545.0'",
+        "fields": [
+          "orbit.epochJd",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "orbit.qAu",
+          "orbit.frame",
+          "horizonId"
+        ]
+      },
+      {
+        "name": "JPL Horizons API (Titan OBJ_DATA physical)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='606'&OBJ_DATA=YES&MAKE_EPHEM=NO",
+        "fields": [
+          "facts.massKg",
+          "facts.radiusMeanKm",
+          "facts.densityGcm3",
+          "facts.albedo"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-11T17:19:56.708Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  }
+}

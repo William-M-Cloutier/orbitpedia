@@ -1,0 +1,68 @@
+{
+  "id": "io",
+  "name": "Io",
+  "kind": "moon",
+  "systemId": "solar",
+  "parentId": "jupiter",
+  "aliases": [
+    "I"
+  ],
+  "facts": {
+    "radiusMeanKm": 1821.49,
+    "massKg": 8.92964880212157e+22,
+    "densityGcm3": 3.528,
+    "albedo": 0.63,
+    "rotationPeriodD": 1.771395757437516,
+    "discoveryNotes": "Discovered by Galileo Galilei (1610)"
+  },
+  "orbit": {
+    "frame": "parent",
+    "epochJd": 2451545.0,
+    "aAu": 0.002821139295029148,
+    "e": 0.004715688921345897,
+    "iDeg": 2.212617763556377,
+    "omDeg": 336.8524452085695,
+    "wDeg": 66.16488500283468,
+    "maDeg": 335.153206478952,
+    "periodD": 1.771395757437516,
+    "qAu": 0.002807835679710006
+  },
+  "color": "#E8C060",
+  "horizonId": "501",
+  "meta": {
+    "source": "JPL Horizons Io vs Jupiter (ELEMENTS + OBJ_DATA)",
+    "sources": [
+      {
+        "name": "JPL Horizons API (Io 501 ELEMENTS, CENTER=jupiter 599)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='501'&EPHEM_TYPE=ELEMENTS&CENTER='500@599'&START_TIME='JD2451545.0'",
+        "fields": [
+          "orbit.epochJd",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "orbit.qAu",
+          "orbit.frame",
+          "horizonId"
+        ]
+      },
+      {
+        "name": "JPL Horizons API (Io OBJ_DATA physical)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='501'&OBJ_DATA=YES&MAKE_EPHEM=NO",
+        "fields": [
+          "facts.massKg",
+          "facts.radiusMeanKm",
+          "facts.densityGcm3",
+          "facts.albedo",
+          "facts.rotationPeriodD"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-11T17:19:56.708Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  }
+}

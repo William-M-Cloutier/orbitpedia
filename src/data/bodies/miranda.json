@@ -1,0 +1,68 @@
+{
+  "id": "miranda",
+  "name": "Miranda",
+  "kind": "moon",
+  "systemId": "solar",
+  "parentId": "uranus",
+  "aliases": [
+    "V"
+  ],
+  "facts": {
+    "radiusMeanKm": 240.0,
+    "massKg": 6.4426231964400755e+19,
+    "densityGcm3": 1.18,
+    "albedo": 0.27,
+    "rotationPeriodD": 1.414004013381316,
+    "discoveryNotes": "Discovered by Gerard Kuiper (1948)"
+  },
+  "orbit": {
+    "frame": "parent",
+    "epochJd": 2451545.0,
+    "aAu": 0.0008681390616993154,
+    "e": 0.001509798566639019,
+    "iDeg": 97.25415391960598,
+    "omDeg": 172.0875833032825,
+    "wDeg": 261.0221270814858,
+    "maDeg": 62.06189119864032,
+    "periodD": 1.414004013381316,
+    "qAu": 0.0008668283465883185
+  },
+  "color": "#B0B8C0",
+  "horizonId": "705",
+  "meta": {
+    "source": "JPL Horizons Miranda vs Uranus (ELEMENTS + OBJ_DATA)",
+    "sources": [
+      {
+        "name": "JPL Horizons API (Miranda 705 ELEMENTS, CENTER=uranus 799)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='705'&EPHEM_TYPE=ELEMENTS&CENTER='500@799'&START_TIME='JD2451545.0'",
+        "fields": [
+          "orbit.epochJd",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "orbit.qAu",
+          "orbit.frame",
+          "horizonId"
+        ]
+      },
+      {
+        "name": "JPL Horizons API (Miranda OBJ_DATA physical)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='705'&OBJ_DATA=YES&MAKE_EPHEM=NO",
+        "fields": [
+          "facts.massKg",
+          "facts.radiusMeanKm",
+          "facts.densityGcm3",
+          "facts.albedo",
+          "facts.rotationPeriodD"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-11T17:19:56.708Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  }
+}

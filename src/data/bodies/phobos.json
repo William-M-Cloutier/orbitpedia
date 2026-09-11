@@ -1,0 +1,68 @@
+{
+  "id": "phobos",
+  "name": "Phobos",
+  "kind": "moon",
+  "systemId": "solar",
+  "parentId": "mars",
+  "aliases": [
+    "I"
+  ],
+  "facts": {
+    "radiusMeanKm": 11.0584,
+    "massKg": 1.08e+16,
+    "densityGcm3": 1.9,
+    "albedo": 0.06,
+    "rotationPeriodD": 0.3191597103826502,
+    "discoveryNotes": "Discovered by Asaph Hall (1877)"
+  },
+  "orbit": {
+    "frame": "parent",
+    "epochJd": 2451545.0,
+    "aAu": 6.269213782629399e-05,
+    "e": 0.01469841851969655,
+    "iDeg": 26.05670195883539,
+    "omDeg": 84.81514244056581,
+    "wDeg": 342.7848642391356,
+    "maDeg": 189.8224342278868,
+    "periodD": 0.3191597103826502,
+    "qAu": 6.177066254662862e-05
+  },
+  "color": "#A09080",
+  "horizonId": "401",
+  "meta": {
+    "source": "JPL Horizons Phobos vs Mars (ELEMENTS + OBJ_DATA)",
+    "sources": [
+      {
+        "name": "JPL Horizons API (Phobos 401 ELEMENTS, CENTER=mars 499)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='401'&EPHEM_TYPE=ELEMENTS&CENTER='500@499'&START_TIME='JD2451545.0'",
+        "fields": [
+          "orbit.epochJd",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "orbit.qAu",
+          "orbit.frame",
+          "horizonId"
+        ]
+      },
+      {
+        "name": "JPL Horizons API (Phobos OBJ_DATA physical)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='401'&OBJ_DATA=YES&MAKE_EPHEM=NO",
+        "fields": [
+          "facts.massKg",
+          "facts.radiusMeanKm",
+          "facts.densityGcm3",
+          "facts.albedo",
+          "facts.rotationPeriodD"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-11T17:19:56.708Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  }
+}

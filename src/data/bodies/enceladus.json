@@ -1,0 +1,68 @@
+{
+  "id": "enceladus",
+  "name": "Enceladus",
+  "kind": "moon",
+  "systemId": "solar",
+  "parentId": "saturn",
+  "aliases": [
+    "II"
+  ],
+  "facts": {
+    "radiusMeanKm": 252.3,
+    "massKg": 1.0805e+20,
+    "densityGcm3": 1.606,
+    "albedo": 1.04,
+    "rotationPeriodD": 1.374616095618862,
+    "discoveryNotes": "Discovered by William Herschel (1789)"
+  },
+  "orbit": {
+    "frame": "parent",
+    "epochJd": 2451545.0,
+    "aAu": 0.00159373838496841,
+    "e": 0.006351597350212341,
+    "iDeg": 28.05202310549093,
+    "omDeg": 169.5065956328603,
+    "wDeg": 135.4830251984964,
+    "maDeg": 6.953398474767734,
+    "periodD": 1.374616095618862,
+    "qAu": 0.001583615600465512
+  },
+  "color": "#E8F0F0",
+  "horizonId": "602",
+  "meta": {
+    "source": "JPL Horizons Enceladus vs Saturn (ELEMENTS + OBJ_DATA)",
+    "sources": [
+      {
+        "name": "JPL Horizons API (Enceladus 602 ELEMENTS, CENTER=saturn 699)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='602'&EPHEM_TYPE=ELEMENTS&CENTER='500@699'&START_TIME='JD2451545.0'",
+        "fields": [
+          "orbit.epochJd",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "orbit.qAu",
+          "orbit.frame",
+          "horizonId"
+        ]
+      },
+      {
+        "name": "JPL Horizons API (Enceladus OBJ_DATA physical)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='602'&OBJ_DATA=YES&MAKE_EPHEM=NO",
+        "fields": [
+          "facts.massKg",
+          "facts.radiusMeanKm",
+          "facts.densityGcm3",
+          "facts.albedo",
+          "facts.rotationPeriodD"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-11T17:19:56.708Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  }
+}

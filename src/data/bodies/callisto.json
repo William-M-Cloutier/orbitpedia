@@ -1,0 +1,68 @@
+{
+  "id": "callisto",
+  "name": "Callisto",
+  "kind": "moon",
+  "systemId": "solar",
+  "parentId": "jupiter",
+  "aliases": [
+    "IV"
+  ],
+  "facts": {
+    "radiusMeanKm": 2410.3,
+    "massKg": 1.075660878294353e+23,
+    "densityGcm3": 1.834,
+    "albedo": 0.17,
+    "rotationPeriodD": 16.69112168919004,
+    "discoveryNotes": "Discovered by Galileo Galilei (1610)"
+  },
+  "orbit": {
+    "frame": "parent",
+    "epochJd": 2451545.0,
+    "aAu": 0.01258555984162885,
+    "e": 0.007439434600948234,
+    "iDeg": 2.016916220859312,
+    "omDeg": 337.9426103461244,
+    "wDeg": 16.12689497888475,
+    "maDeg": 85.11888858079212,
+    "periodD": 16.69112168919004,
+    "qAu": 0.01249193039227073
+  },
+  "color": "#6A6058",
+  "horizonId": "504",
+  "meta": {
+    "source": "JPL Horizons Callisto vs Jupiter (ELEMENTS + OBJ_DATA)",
+    "sources": [
+      {
+        "name": "JPL Horizons API (Callisto 504 ELEMENTS, CENTER=jupiter 599)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='504'&EPHEM_TYPE=ELEMENTS&CENTER='500@599'&START_TIME='JD2451545.0'",
+        "fields": [
+          "orbit.epochJd",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "orbit.qAu",
+          "orbit.frame",
+          "horizonId"
+        ]
+      },
+      {
+        "name": "JPL Horizons API (Callisto OBJ_DATA physical)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='504'&OBJ_DATA=YES&MAKE_EPHEM=NO",
+        "fields": [
+          "facts.massKg",
+          "facts.radiusMeanKm",
+          "facts.densityGcm3",
+          "facts.albedo",
+          "facts.rotationPeriodD"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-11T17:19:56.708Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  }
+}

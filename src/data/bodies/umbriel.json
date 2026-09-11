@@ -1,0 +1,68 @@
+{
+  "id": "umbriel",
+  "name": "Umbriel",
+  "kind": "moon",
+  "systemId": "solar",
+  "parentId": "uranus",
+  "aliases": [
+    "II"
+  ],
+  "facts": {
+    "radiusMeanKm": 584.7,
+    "massKg": 1.2795349325022849e+21,
+    "densityGcm3": 1.52,
+    "albedo": 0.18,
+    "rotationPeriodD": 4.145031502892753,
+    "discoveryNotes": "Discovered by William Lassell (1851)"
+  },
+  "orbit": {
+    "frame": "parent",
+    "epochJd": 2451545.0,
+    "aAu": 0.001778181651275977,
+    "e": 0.004170165145635332,
+    "iDeg": 97.66606723745439,
+    "omDeg": 167.6381821495947,
+    "wDeg": 334.9516684490692,
+    "maDeg": 271.2233789529364,
+    "periodD": 4.145031502892753,
+    "qAu": 0.001770766340131217
+  },
+  "color": "#585860",
+  "horizonId": "702",
+  "meta": {
+    "source": "JPL Horizons Umbriel vs Uranus (ELEMENTS + OBJ_DATA)",
+    "sources": [
+      {
+        "name": "JPL Horizons API (Umbriel 702 ELEMENTS, CENTER=uranus 799)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='702'&EPHEM_TYPE=ELEMENTS&CENTER='500@799'&START_TIME='JD2451545.0'",
+        "fields": [
+          "orbit.epochJd",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "orbit.qAu",
+          "orbit.frame",
+          "horizonId"
+        ]
+      },
+      {
+        "name": "JPL Horizons API (Umbriel OBJ_DATA physical)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='702'&OBJ_DATA=YES&MAKE_EPHEM=NO",
+        "fields": [
+          "facts.massKg",
+          "facts.radiusMeanKm",
+          "facts.densityGcm3",
+          "facts.albedo",
+          "facts.rotationPeriodD"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-11T17:19:56.708Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  }
+}

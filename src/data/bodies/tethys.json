@@ -1,0 +1,68 @@
+{
+  "id": "tethys",
+  "name": "Tethys",
+  "kind": "moon",
+  "systemId": "solar",
+  "parentId": "saturn",
+  "aliases": [
+    "III"
+  ],
+  "facts": {
+    "radiusMeanKm": 536.3,
+    "massKg": 6.176e+20,
+    "densityGcm3": 0.956,
+    "albedo": 0.8,
+    "rotationPeriodD": 1.89172053804673,
+    "discoveryNotes": "Discovered by Giovanni Cassini (1684)"
+  },
+  "orbit": {
+    "frame": "parent",
+    "epochJd": 2451545.0,
+    "aAu": 0.001971821201097222,
+    "e": 0.0009698778768676897,
+    "iDeg": 27.22072909012297,
+    "omDeg": 167.9977256763769,
+    "wDeg": 158.0570744864902,
+    "maDeg": 350.3828192477454,
+    "periodD": 1.89172053804673,
+    "qAu": 0.001969908775337138
+  },
+  "color": "#D8D8D0",
+  "horizonId": "603",
+  "meta": {
+    "source": "JPL Horizons Tethys vs Saturn (ELEMENTS + OBJ_DATA)",
+    "sources": [
+      {
+        "name": "JPL Horizons API (Tethys 603 ELEMENTS, CENTER=saturn 699)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='603'&EPHEM_TYPE=ELEMENTS&CENTER='500@699'&START_TIME='JD2451545.0'",
+        "fields": [
+          "orbit.epochJd",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "orbit.qAu",
+          "orbit.frame",
+          "horizonId"
+        ]
+      },
+      {
+        "name": "JPL Horizons API (Tethys OBJ_DATA physical)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='603'&OBJ_DATA=YES&MAKE_EPHEM=NO",
+        "fields": [
+          "facts.massKg",
+          "facts.radiusMeanKm",
+          "facts.densityGcm3",
+          "facts.albedo",
+          "facts.rotationPeriodD"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-11T17:19:56.708Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  }
+}

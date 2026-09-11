@@ -1,0 +1,68 @@
+{
+  "id": "europa",
+  "name": "Europa",
+  "kind": "moon",
+  "systemId": "solar",
+  "parentId": "jupiter",
+  "aliases": [
+    "II"
+  ],
+  "facts": {
+    "radiusMeanKm": 1560.8,
+    "massKg": 4.7985737830184444e+22,
+    "densityGcm3": 3.013,
+    "albedo": 0.67,
+    "rotationPeriodD": 3.553206130669637,
+    "discoveryNotes": "Discovered by Galileo Galilei (1610)"
+  },
+  "orbit": {
+    "frame": "parent",
+    "epochJd": 2451545.0,
+    "aAu": 0.004487019063502094,
+    "e": 0.009812823575576082,
+    "iDeg": 1.790971209716447,
+    "omDeg": 332.6287323572119,
+    "wDeg": 254.6471423731226,
+    "maDeg": 345.411036769848,
+    "periodD": 3.553206130669637,
+    "qAu": 0.004442988737051702
+  },
+  "color": "#D0C8A8",
+  "horizonId": "502",
+  "meta": {
+    "source": "JPL Horizons Europa vs Jupiter (ELEMENTS + OBJ_DATA)",
+    "sources": [
+      {
+        "name": "JPL Horizons API (Europa 502 ELEMENTS, CENTER=jupiter 599)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='502'&EPHEM_TYPE=ELEMENTS&CENTER='500@599'&START_TIME='JD2451545.0'",
+        "fields": [
+          "orbit.epochJd",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "orbit.qAu",
+          "orbit.frame",
+          "horizonId"
+        ]
+      },
+      {
+        "name": "JPL Horizons API (Europa OBJ_DATA physical)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='502'&OBJ_DATA=YES&MAKE_EPHEM=NO",
+        "fields": [
+          "facts.massKg",
+          "facts.radiusMeanKm",
+          "facts.densityGcm3",
+          "facts.albedo",
+          "facts.rotationPeriodD"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-11T17:19:56.708Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  }
+}

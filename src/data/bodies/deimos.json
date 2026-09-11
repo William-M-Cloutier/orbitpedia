@@ -1,0 +1,68 @@
+{
+  "id": "deimos",
+  "name": "Deimos",
+  "kind": "moon",
+  "systemId": "solar",
+  "parentId": "mars",
+  "aliases": [
+    "II"
+  ],
+  "facts": {
+    "radiusMeanKm": 6.2031,
+    "massKg": 1800000000000000.0,
+    "densityGcm3": 1.76,
+    "albedo": 0.06,
+    "rotationPeriodD": 1.262530472708875,
+    "discoveryNotes": "Discovered by Asaph Hall (1877)"
+  },
+  "orbit": {
+    "frame": "parent",
+    "epochJd": 2451545.0,
+    "aAu": 0.0001568082647289548,
+    "e": 0.0003299624878237082,
+    "iDeg": 27.56936980386812,
+    "omDeg": 83.66926662588133,
+    "wDeg": 211.8947925261645,
+    "maDeg": 5.093950813525924,
+    "periodD": 1.262530472708875,
+    "qAu": 0.0001567565238838135
+  },
+  "color": "#908878",
+  "horizonId": "402",
+  "meta": {
+    "source": "JPL Horizons Deimos vs Mars (ELEMENTS + OBJ_DATA)",
+    "sources": [
+      {
+        "name": "JPL Horizons API (Deimos 402 ELEMENTS, CENTER=mars 499)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='402'&EPHEM_TYPE=ELEMENTS&CENTER='500@499'&START_TIME='JD2451545.0'",
+        "fields": [
+          "orbit.epochJd",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "orbit.qAu",
+          "orbit.frame",
+          "horizonId"
+        ]
+      },
+      {
+        "name": "JPL Horizons API (Deimos OBJ_DATA physical)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='402'&OBJ_DATA=YES&MAKE_EPHEM=NO",
+        "fields": [
+          "facts.massKg",
+          "facts.radiusMeanKm",
+          "facts.densityGcm3",
+          "facts.albedo",
+          "facts.rotationPeriodD"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-11T17:19:56.708Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  }
+}

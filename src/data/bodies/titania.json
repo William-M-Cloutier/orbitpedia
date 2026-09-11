@@ -1,0 +1,68 @@
+{
+  "id": "titania",
+  "name": "Titania",
+  "kind": "moon",
+  "systemId": "solar",
+  "parentId": "uranus",
+  "aliases": [
+    "III"
+  ],
+  "facts": {
+    "radiusMeanKm": 788.9,
+    "massKg": 3.3381777864345324e+21,
+    "densityGcm3": 1.65,
+    "albedo": 0.27,
+    "rotationPeriodD": 8.706372907685905,
+    "discoveryNotes": "Discovered by William Herschel (1787)"
+  },
+  "orbit": {
+    "frame": "parent",
+    "epochJd": 2451545.0,
+    "aAu": 0.002916436400823477,
+    "e": 0.002479000317146799,
+    "iDeg": 97.818368383812,
+    "omDeg": 167.6178145945835,
+    "wDeg": 202.1167721066045,
+    "maDeg": 74.41677554285916,
+    "periodD": 8.706372907685905,
+    "qAu": 0.002909206554060897
+  },
+  "color": "#A8B0B8",
+  "horizonId": "703",
+  "meta": {
+    "source": "JPL Horizons Titania vs Uranus (ELEMENTS + OBJ_DATA)",
+    "sources": [
+      {
+        "name": "JPL Horizons API (Titania 703 ELEMENTS, CENTER=uranus 799)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='703'&EPHEM_TYPE=ELEMENTS&CENTER='500@799'&START_TIME='JD2451545.0'",
+        "fields": [
+          "orbit.epochJd",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "orbit.qAu",
+          "orbit.frame",
+          "horizonId"
+        ]
+      },
+      {
+        "name": "JPL Horizons API (Titania OBJ_DATA physical)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='703'&OBJ_DATA=YES&MAKE_EPHEM=NO",
+        "fields": [
+          "facts.massKg",
+          "facts.radiusMeanKm",
+          "facts.densityGcm3",
+          "facts.albedo",
+          "facts.rotationPeriodD"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-11T17:19:56.708Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  }
+}

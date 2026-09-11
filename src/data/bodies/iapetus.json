@@ -1,0 +1,68 @@
+{
+  "id": "iapetus",
+  "name": "Iapetus",
+  "kind": "moon",
+  "systemId": "solar",
+  "parentId": "saturn",
+  "aliases": [
+    "VIII"
+  ],
+  "facts": {
+    "radiusMeanKm": 734.5,
+    "massKg": 1.8059e+21,
+    "densityGcm3": 1.088,
+    "albedo": 0.6,
+    "rotationPeriodD": 79.39837044190301,
+    "discoveryNotes": "Discovered by Giovanni Cassini (1671)"
+  },
+  "orbit": {
+    "frame": "parent",
+    "epochJd": 2451545.0,
+    "aAu": 0.02381428652788714,
+    "e": 0.02786249162022612,
+    "iDeg": 17.23820439459392,
+    "omDeg": 139.6917551276544,
+    "wDeg": 229.658395405145,
+    "maDeg": 208.0175928163262,
+    "periodD": 79.39837044190301,
+    "qAu": 0.02315076116906222
+  },
+  "color": "#706858",
+  "horizonId": "608",
+  "meta": {
+    "source": "JPL Horizons Iapetus vs Saturn (ELEMENTS + OBJ_DATA)",
+    "sources": [
+      {
+        "name": "JPL Horizons API (Iapetus 608 ELEMENTS, CENTER=saturn 699)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='608'&EPHEM_TYPE=ELEMENTS&CENTER='500@699'&START_TIME='JD2451545.0'",
+        "fields": [
+          "orbit.epochJd",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "orbit.qAu",
+          "orbit.frame",
+          "horizonId"
+        ]
+      },
+      {
+        "name": "JPL Horizons API (Iapetus OBJ_DATA physical)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='608'&OBJ_DATA=YES&MAKE_EPHEM=NO",
+        "fields": [
+          "facts.massKg",
+          "facts.radiusMeanKm",
+          "facts.densityGcm3",
+          "facts.albedo",
+          "facts.rotationPeriodD"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-11T17:19:56.708Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  }
+}

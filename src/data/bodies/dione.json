@@ -1,0 +1,68 @@
+{
+  "id": "dione",
+  "name": "Dione",
+  "kind": "moon",
+  "systemId": "solar",
+  "parentId": "saturn",
+  "aliases": [
+    "IV"
+  ],
+  "facts": {
+    "radiusMeanKm": 562.5,
+    "massKg": 1.09572e+21,
+    "densityGcm3": 1.469,
+    "albedo": 0.6,
+    "rotationPeriodD": 2.740345816432255,
+    "discoveryNotes": "Discovered by Giovanni Cassini (1684)"
+  },
+  "orbit": {
+    "frame": "parent",
+    "epochJd": 2451545.0,
+    "aAu": 0.002524448888976435,
+    "e": 0.002928360145096942,
+    "iDeg": 28.04139510566285,
+    "omDeg": 169.470196786071,
+    "wDeg": 164.9353995421455,
+    "maDeg": 332.0565629313631,
+    "periodD": 2.740345816432255,
+    "qAu": 0.002517056393461623
+  },
+  "color": "#C8C8C0",
+  "horizonId": "604",
+  "meta": {
+    "source": "JPL Horizons Dione vs Saturn (ELEMENTS + OBJ_DATA)",
+    "sources": [
+      {
+        "name": "JPL Horizons API (Dione 604 ELEMENTS, CENTER=saturn 699)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='604'&EPHEM_TYPE=ELEMENTS&CENTER='500@699'&START_TIME='JD2451545.0'",
+        "fields": [
+          "orbit.epochJd",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "orbit.qAu",
+          "orbit.frame",
+          "horizonId"
+        ]
+      },
+      {
+        "name": "JPL Horizons API (Dione OBJ_DATA physical)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='604'&OBJ_DATA=YES&MAKE_EPHEM=NO",
+        "fields": [
+          "facts.massKg",
+          "facts.radiusMeanKm",
+          "facts.densityGcm3",
+          "facts.albedo",
+          "facts.rotationPeriodD"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-11T17:19:56.708Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  }
+}
