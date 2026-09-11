@@ -2,13 +2,17 @@ import type { Body, BodyKind } from "@/data/schema";
 import { bodies } from "@/data/catalog";
 
 /**
- * Visual mesh radii + orbit distance scale (render layer).
+ * Visual mesh radii (render layer). Orbit paths stay in real AU so the
+ * current Explore zoom bounds (min~0.5, max~80) remain the working box.
  *
- * - schematic: readable size tiers; orbits stay real AU (default)
- * - proportional / true: one linear scale for meshes AND orbits
- *   (sunMesh / sunPhysical). Planets are never swallowed by the sun.
- *   Proportional: sun largest, capped to clear Mercury on that scale.
- *   True: larger readable sun; same uniform scale for paths.
+ * - schematic: readable size tiers (default)
+ * - proportional: true radius ratios; sun largest, capped so Mercury clears
+ *   on real-AU orbits
+ * - true: real radius ratios to the sun; sun sized to Mercury clearance on
+ *   real-AU orbits (planets stay tiny vs sun — honest, still fits zoom)
+ *
+ * Never explode orbit distances to match a magnified sun — that shrinks the
+ * whole system under the same camera. Clearance = cap the sun, keep AU paths.
  *
  * Adding a planet later = catalog facts only; this module maps radius → mesh.
  */
@@ -30,7 +34,7 @@ export const PLANET_VISUAL_RADIUS_SMALL = 0.1;
 export const PLANET_VISUAL_RADIUS_LARGE = 0.18;
 
 /**
- * Extra perihelion gap (AU) between schematic sun surface and body surface.
+ * Extra perihelion gap (AU) between sun surface and body surface.
  */
 export const PERIHELION_CLEARANCE_MARGIN_AU = 0.04;
 
@@ -42,7 +46,7 @@ export const STAR_VISUAL_RADIUS = 0.12;
 
 const AU_KM = 149_597_870.7;
 
-/** Mercury perihelion (AU) — used for proportional sun clearance. */
+/** Mercury perihelion (AU) — used for proportional/true sun clearance. */
 const MERCURY_Q_AU = 0.307;
 
 export function minClearanceAu(
@@ -78,16 +82,22 @@ function mercuryRadiusKm(): number {
   return m?.facts.radiusMeanKm ?? 2_439.7;
 }
 
+function sunRadiusKm(): number {
+  const sun =
+    bodies.find((b) => b.kind === "star") ??
+    bodies.find((b) => b.id === "sun");
+  return sun?.facts.radiusMeanKm ?? 695_700;
+}
+
 /**
  * Proportional: sun is the biggest mesh; other bodies keep true radius ratios
- * and are scaled so the sun still clears Mercury's perihelion.
+ * and are scaled so the sun still clears Mercury's perihelion on real AU.
  */
 function proportionalRadius(body: Body): number {
   const mercKm = mercuryRadiusKm();
   const maxKm = maxNonStarRadiusKm();
   // Solve: sun = S, maxPlanet = 0.92*S, mercMesh = maxPlanet * (mercKm/maxKm)
   // S + mercMesh + margin <= Mercury q
-  // S * (1 + 0.92 * mercKm/maxKm) <= q - margin
   const ratioMercToMax = mercKm / maxKm;
   const denom = 1 + 0.92 * ratioMercToMax;
   const sunMesh = (MERCURY_Q_AU - PERIHELION_CLEARANCE_MARGIN_AU) / denom;
@@ -100,15 +110,15 @@ function proportionalRadius(body: Body): number {
 }
 
 /**
- * True ratios: readable sun mesh; every body scales by radiusMeanKm / R_sun.
- * orbitDistanceScale expands paths by the same factor so Mercury stays outside.
+ * True ratios on real-AU orbits: sunMesh * (1 + R_merc/R_sun) + margin <= q.
+ * Planets stay tiny vs the sun (honest) and the system fits the zoom box.
  */
-const TRUE_SUN_MESH_AU = 0.85;
-
 function trueRadius(body: Body): number {
-  const sun = bodies.find((b) => b.kind === "star") ?? bodies.find((b) => b.id === "sun");
-  const sunKm = sun?.facts.radiusMeanKm ?? 695_700;
-  const scale = TRUE_SUN_MESH_AU / sunKm; // km → scene AU
+  const sunKm = sunRadiusKm();
+  const mercKm = mercuryRadiusKm();
+  const denom = 1 + mercKm / sunKm;
+  const sunMesh = (MERCURY_Q_AU - PERIHELION_CLEARANCE_MARGIN_AU) / denom;
+  const scale = sunMesh / sunKm; // km → scene AU
   return Math.max(1e-6, body.facts.radiusMeanKm * scale);
 }
 
@@ -128,17 +138,9 @@ export function physicalRadiusAu(body: Body): number {
 }
 
 /**
- * Scale factor for orbit distances (and bary wobble) so mesh sizes and paths
- * share one linear scale. Schematic keeps real AU (1). Proportional/True use
- * sunMesh / sunPhysical so planets are not swallowed by a magnified sun.
+ * Orbit distance scale. Always 1: Explore zoom is the bounding box.
+ * Clearance comes from capping sun meshes, not from exploding AU paths.
  */
-export function orbitDistanceScale(mode: SizeMode = DEFAULT_SIZE_MODE): number {
-  if (mode === "schematic") return 1;
-  const sun =
-    bodies.find((b) => b.kind === "star") ??
-    bodies.find((b) => b.id === "sun");
-  if (!sun) return 1;
-  const physical = physicalRadiusAu(sun);
-  if (!(physical > 0)) return 1;
-  return visualRadius(sun, mode) / physical;
+export function orbitDistanceScale(_mode: SizeMode = DEFAULT_SIZE_MODE): number {
+  return 1;
 }
