@@ -4,9 +4,7 @@ import {
   Suspense,
   useCallback,
   useEffect,
-  useLayoutEffect,
   useMemo,
-  useRef,
   useState,
 } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -28,9 +26,6 @@ function ExploreHome() {
 
   const [focusId, setFocusId] = useState<string | null>(null);
   const [speedMultiple, setSpeedMultiple] = useState(DEFAULT_SPEED_PRESET.multiple);
-  /** Right overlay width (Facts); left rail is outside the canvas → inset 0. */
-  const [viewInsetRight, setViewInsetRight] = useState(0);
-  const factsOverlayRef = useRef<HTMLDivElement>(null);
   const focus = focusId ? getBody(focusId) : undefined;
   const simDaysPerSec = useMemo(
     () => multipleToDaysPerSec(speedMultiple),
@@ -77,29 +72,6 @@ function ExploreHome() {
     return () => window.removeEventListener("keydown", onKey);
   }, [setFocus]);
 
-  // Facts overlays the canvas on md+ (w-72/w-80). Measure for setViewOffset so
-  // focus centers in the visible gap. BodyRail is a flex sibling — left inset 0.
-  // When Facts is hidden, clear the right inset (no selection).
-  useLayoutEffect(() => {
-    const el = factsOverlayRef.current;
-    const measure = () => {
-      if (!focusId || !el) {
-        setViewInsetRight(0);
-        return;
-      }
-      const md = window.matchMedia("(min-width: 768px)").matches;
-      setViewInsetRight(md ? el.offsetWidth : 0);
-    };
-    measure();
-    if (!el || !focusId) return;
-    const ro = new ResizeObserver(measure);
-    ro.observe(el);
-    window.addEventListener("resize", measure);
-    return () => {
-      ro.disconnect();
-      window.removeEventListener("resize", measure);
-    };
-  }, [focusId]);
 
   return (
     <AppShell rail={<BodyRail activeId={focusId ?? undefined} onFocus={onRailFocus} />}>
@@ -114,31 +86,29 @@ function ExploreHome() {
               </p>
             </div>
           </div>
-          <div className="relative min-h-0 flex-1">
-            <OrbitCanvas
-              focusId={focusId}
-              onSelect={onSelect}
-              highlightColor={focus?.color}
-              simDaysPerSec={simDaysPerSec}
-              viewInsetLeft={0}
-              viewInsetRight={viewInsetRight}
-            />
-            <div className="pointer-events-none absolute bottom-3 left-3 right-3 z-10 flex justify-start md:right-auto">
-              <SpeedControl
-                multiple={speedMultiple}
-                onMultipleChange={setSpeedMultiple}
+          <div className="relative flex min-h-0 flex-1 flex-row">
+            <div className="relative min-h-0 min-w-0 flex-1">
+              <OrbitCanvas
+                focusId={focusId}
+                onSelect={onSelect}
+                highlightColor={focus?.color}
+                simDaysPerSec={simDaysPerSec}
               />
+              <div className="pointer-events-none absolute bottom-3 left-3 z-10 flex justify-start">
+                <SpeedControl
+                  multiple={speedMultiple}
+                  onMultipleChange={setSpeedMultiple}
+                />
+              </div>
             </div>
             {/*
-              Overlay Facts on the canvas — do NOT flex-shrink the WebGL viewport
-              when focus clears. Unmounting a side column resized the canvas and
-              looked like a left camera pan even when pose was bit-stable.
+              Always reserve the Facts column on md+ so the WebGL canvas width
+              (and optical center) stay stable whether or not a body is selected.
             */}
-            <div
-              ref={factsOverlayRef}
-              className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex justify-end md:inset-y-0 md:left-auto md:right-0 md:w-72 lg:w-80"
-            >
-              <FactsPanel body={focus} onClear={onClear} />
+            <div className="pointer-events-none hidden w-72 shrink-0 border-l border-white/10 md:block lg:w-80">
+              <div className="pointer-events-auto h-full">
+                <FactsPanel body={focus} onClear={onClear} />
+              </div>
             </div>
           </div>
         </div>
