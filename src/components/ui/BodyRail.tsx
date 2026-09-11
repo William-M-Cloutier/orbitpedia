@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { bodies, KIND_LABEL } from "@/data/catalog";
+import { getBodiesForSystem, getHomeSystem, KIND_LABEL } from "@/data/catalog";
 import type { BodyKind } from "@/data/schema";
 
 const FILTERS: Array<BodyKind | "all"> = [
@@ -20,6 +20,8 @@ type Props = {
   selectMode?: boolean;
   /** When set, row click focuses instead of navigating to detail. */
   onFocus?: (id: string) => void;
+  /** Limit rail to one system graph (default: home). */
+  systemId?: string;
 };
 
 export function BodyRail({
@@ -28,13 +30,19 @@ export function BodyRail({
   onToggleSelect,
   selectMode = false,
   onFocus,
+  systemId,
 }: Props) {
   const [filter, setFilter] = useState<(typeof FILTERS)[number]>("all");
   const [open, setOpen] = useState(true);
 
+  const bodies = useMemo(() => {
+    const id = systemId ?? getHomeSystem().id;
+    return getBodiesForSystem(id);
+  }, [systemId]);
+
   const list = useMemo(
     () => (filter === "all" ? bodies : bodies.filter((b) => b.kind === filter)),
-    [filter],
+    [filter, bodies],
   );
 
   if (!open) {

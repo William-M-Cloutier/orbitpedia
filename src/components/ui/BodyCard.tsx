@@ -44,16 +44,20 @@ export function BodyCard({ body, selected, onSelect }: Props) {
         )}
       </div>
       <dl className="space-y-1 text-sm text-zinc-400">
-        <div className="flex justify-between gap-2">
-          <dt>Mass</dt>
-          <dd className="text-zinc-200">{formatMass(body.facts.massKg)}</dd>
-        </div>
-        <div className="flex justify-between gap-2">
-          <dt>Radius</dt>
-          <dd className="text-zinc-200 text-right">
-            {formatRadius(body.facts.radiusMeanKm)}
-          </dd>
-        </div>
+        {body.facts.massKg != null && (
+          <div className="flex justify-between gap-2">
+            <dt>Mass</dt>
+            <dd className="text-zinc-200">{formatMass(body.facts.massKg)}</dd>
+          </div>
+        )}
+        {body.facts.radiusMeanKm != null && (
+          <div className="flex justify-between gap-2">
+            <dt>Radius</dt>
+            <dd className="text-zinc-200 text-right">
+              {formatRadius(body.facts.radiusMeanKm)}
+            </dd>
+          </div>
+        )}
         {body.orbit && (
           <div className="flex justify-between gap-2">
             <dt>a</dt>

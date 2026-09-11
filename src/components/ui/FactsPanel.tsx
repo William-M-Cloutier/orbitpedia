@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { KIND_LABEL } from "@/data/catalog";
-import type { Body } from "@/data/schema";
+import { bodyProvenance, type Body } from "@/data/schema";
 import { periodFromA } from "@/lib/kepler";
 import {
   formatAu,
@@ -112,11 +112,15 @@ export function FactsPanel({ body, onClear }: Props) {
           <div className="space-y-3">
             <dl className="grid gap-2">
               <Stat label="Discovered" value={discovered} />
-              <Stat label="Mass" value={formatMass(body.facts.massKg)} />
-              <Stat
-                label="Mean radius"
-                value={formatRadius(body.facts.radiusMeanKm)}
-              />
+              {body.facts.massKg != null && (
+                <Stat label="Mass" value={formatMass(body.facts.massKg)} />
+              )}
+              {body.facts.radiusMeanKm != null && (
+                <Stat
+                  label="Mean radius"
+                  value={formatRadius(body.facts.radiusMeanKm)}
+                />
+              )}
               {period != null && (
                 <Stat label="Orbital period" value={formatPeriodDays(period)} />
               )}
@@ -146,7 +150,7 @@ export function FactsPanel({ body, onClear }: Props) {
                   `${body.name} is a ${KIND_LABEL[body.kind].toLowerCase()} in the Orbitpedia Phase 1 catalog.`}
               </p>
               <p className="mt-2 text-[11px] text-zinc-600">
-                Source: {body.meta.source}
+                Source: {bodyProvenance(body)}
               </p>
             </section>
 
@@ -156,11 +160,15 @@ export function FactsPanel({ body, onClear }: Props) {
               </h3>
               <dl className="grid gap-2">
                 <Stat label="Discovered" value={discovered} />
-                <Stat label="Mass" value={formatMass(body.facts.massKg)} />
-                <Stat
-                  label="Mean radius"
-                  value={formatRadius(body.facts.radiusMeanKm)}
-                />
+                {body.facts.massKg != null && (
+                  <Stat label="Mass" value={formatMass(body.facts.massKg)} />
+                )}
+                {body.facts.radiusMeanKm != null && (
+                  <Stat
+                    label="Mean radius"
+                    value={formatRadius(body.facts.radiusMeanKm)}
+                  />
+                )}
                 {body.facts.densityGcm3 != null && (
                   <Stat
                     label="Density"
@@ -212,7 +220,10 @@ export function FactsPanel({ body, onClear }: Props) {
                   {period != null && (
                     <Stat label="Period" value={formatPeriodDays(period)} />
                   )}
-                  <Stat label="Epoch (JD)" value={String(body.orbit.epochJd)} />
+                  {body.orbit.epochJd != null && (
+                    <Stat label="Epoch (JD)" value={String(body.orbit.epochJd)} />
+                  )}
+                  <Stat label="Frame" value={body.orbit.frame} />
                 </dl>
               </section>
             )}

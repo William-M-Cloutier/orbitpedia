@@ -2,7 +2,7 @@
 
 Search, discover, and explore Solar System bodies — facts, orbits, and graphs.
 
-**Phase 1** covers the Sun, eight planets, Pluto (dwarf planet), and asteroids Ceres, Vesta, Pallas, and Hygiea. Data is a versioned in-repo JSON catalog (Zod-validated); no database and no accounts.
+**Phase 1** covers the Sun, eight planets, Pluto (dwarf planet), and asteroids Ceres, Vesta, Pallas, and Hygiea. Data is a versioned Store B catalog — system docs + per-body cards (Zod-validated v2); no database and no accounts.
 
 ## Modes
 
@@ -16,7 +16,7 @@ Search, discover, and explore Solar System bodies — facts, orbits, and graphs.
 - Next.js App Router + TypeScript + Tailwind
 - React Three Fiber + drei + three.js (client-only canvas, `frameloop="demand"`)
 - Recharts (lazy / off cold Explore path)
-- Zod + versioned JSON seed (`src/data/catalog/`)
+- Zod + Store B seeds (`src/data/systems/` + `src/data/bodies/`, catalog v2)
 
 SI units internally; display adapters in `src/lib/units.ts`. Orbital math in `src/lib/kepler.ts`.
 

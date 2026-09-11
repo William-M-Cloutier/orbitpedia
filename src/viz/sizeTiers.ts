@@ -1,5 +1,5 @@
 import type { Body, BodyKind } from "@/data/schema";
-import { bodies } from "@/data/catalog";
+import { getBody, getHomeSystemGraph } from "@/data/catalog";
 
 /**
  * Visual mesh radii (render layer). Orbit paths stay in real AU so the
@@ -14,7 +14,8 @@ import { bodies } from "@/data/catalog";
  * Never explode orbit distances to match a magnified sun — that shrinks the
  * whole system under the same camera. Clearance = cap the sun, keep AU paths.
  *
- * Adding a planet later = catalog facts only; this module maps radius → mesh.
+ * Adding a planet later = body-card facts only; this module maps radius → mesh.
+ * Scoped to the home system graph for now (additive systems later).
  */
 
 export type SizeMode = "schematic" | "proportional" | "true";
@@ -58,34 +59,36 @@ export function minClearanceAu(
 function schematicRadius(body: Body): number {
   const tiers: Record<BodyKind, number> = {
     star: STAR_VISUAL_RADIUS,
-    planet: body.facts.radiusMeanKm > 20000
+    planet: (body.facts.radiusMeanKm ?? 0) > 20000
       ? PLANET_VISUAL_RADIUS_LARGE
       : PLANET_VISUAL_RADIUS_SMALL,
     dwarf_planet: 0.07,
     asteroid: 0.05,
+    moon: 0.04,
   };
   return tiers[body.kind];
 }
 
-/** Max non-star catalog radius (km) — for proportional fit. */
+/** Max non-star radius (km) in the home system — for proportional fit. */
 function maxNonStarRadiusKm(): number {
   let max = 0;
-  for (const b of bodies) {
+  for (const b of getHomeSystemGraph().bodies) {
     if (b.kind === "star") continue;
-    if (b.facts.radiusMeanKm > max) max = b.facts.radiusMeanKm;
+    const r = b.facts.radiusMeanKm;
+    if (r != null && r > max) max = r;
   }
   return max > 0 ? max : 69_911; // Jupiter fallback
 }
 
 function mercuryRadiusKm(): number {
-  const m = bodies.find((b) => b.id === "mercury");
+  const m = getBody("mercury");
   return m?.facts.radiusMeanKm ?? 2_439.7;
 }
 
 function sunRadiusKm(): number {
   const sun =
-    bodies.find((b) => b.kind === "star") ??
-    bodies.find((b) => b.id === "sun");
+    getBody("sun") ??
+    getHomeSystemGraph().bodies.find((b) => b.kind === "star");
   return sun?.facts.radiusMeanKm ?? 695_700;
 }
 
@@ -106,7 +109,8 @@ function proportionalRadius(body: Body): number {
   if (body.kind === "star") {
     return sunMesh; // largest by construction
   }
-  return Math.max(0.008, body.facts.radiusMeanKm * scale);
+  const km = body.facts.radiusMeanKm ?? 1;
+  return Math.max(0.008, km * scale);
 }
 
 /**
@@ -119,7 +123,8 @@ function trueRadius(body: Body): number {
   const denom = 1 + mercKm / sunKm;
   const sunMesh = (MERCURY_Q_AU - PERIHELION_CLEARANCE_MARGIN_AU) / denom;
   const scale = sunMesh / sunKm; // km → scene AU
-  return Math.max(1e-6, body.facts.radiusMeanKm * scale);
+  const km = body.facts.radiusMeanKm ?? 1;
+  return Math.max(1e-6, km * scale);
 }
 
 /** Visual mesh radius in scene units (≈ AU for orbit layout). */
@@ -134,7 +139,7 @@ export function visualRadius(
 
 /** True radius in AU (catalog), for tools/tests — not mesh size. */
 export function physicalRadiusAu(body: Body): number {
-  return body.facts.radiusMeanKm / AU_KM;
+  return (body.facts.radiusMeanKm ?? 0) / AU_KM;
 }
 
 /**

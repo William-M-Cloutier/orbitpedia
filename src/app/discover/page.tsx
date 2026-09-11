@@ -83,8 +83,8 @@ export default function DiscoverPage() {
                   {(
                     [
                       ["Kind", (b) => KIND_LABEL[b.kind]],
-                      ["Mass", (b) => formatMass(b.facts.massKg)],
-                      ["Radius", (b) => formatRadius(b.facts.radiusMeanKm)],
+                      ["Mass", (b) => (b.facts.massKg != null ? formatMass(b.facts.massKg) : "—")],
+                      ["Radius", (b) => (b.facts.radiusMeanKm != null ? formatRadius(b.facts.radiusMeanKm) : "—")],
                       [
                         "Density",
                         (b) =>

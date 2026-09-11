@@ -1,24 +1,15 @@
 #!/usr/bin/env node
 /**
- * Orbitpedia viz / Kepler sanity (NOT catalog physical clearance).
+ * Orbitpedia viz / Kepler sanity for the loaded home system graph (Store B).
  *
  * Catalog-side physical clearance lives in validate-catalog.mjs:
  *   q = orbit.qAu ?? aAu*(1-e)  MUST  q > centralRadiusAu (real km→AU).
  *
- * This script owns schematic + Kepler checks:
+ * This script owns schematic + Kepler checks on getHomeSystem members:
  *   1) For every orbiter: q > visualRadius(sun) + visualRadius(body) + margin
- *      (scene units ≈ AU; visual tiers are NOT true scale — see sizeTiers.ts)
  *   2) Sampled ellipse |r| stays outside REAL sun radius (au)
  *   3) periodD ≈ GAUSS_YEAR_D * aAu^1.5 within relative tolerance
- *   4) Central star (sun) has no heliocentric orbit / no OrbitLine required
- *
- * Units (multi-system reuse):
- *   - Length: AU (astronomical unit); physical radii stored as km in facts
- *   - Angles: degrees in catalog fields (*Deg): iDeg, omDeg, wDeg, maDeg
- *   - Time: Julian Day epochJd; periods in days (periodD, rotationPeriodD)
- *   - Field names: aAu, e, iDeg, omDeg, wDeg, maDeg, periodD, epochJd, optional qAu
- *
- * Float compares use EPS_AU = 1e-9 au unless noted.
+ *   4) Central star has no heliocentric orbit / no OrbitLine required
  *
  * Usage: node scripts/orbit-sanity.mjs
  *        npm test
@@ -29,16 +20,14 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
+const DATA = path.join(ROOT, "src/data");
 
 /** Sidereal year (days) for heliocentric Kepler-3 mean period. */
 const GAUSS_YEAR_D = 365.256363;
 const AU_KM = 1.495_978_707e8;
-/** Absolute distance epsilon (au) for float compares — tell Ephemeris. */
 const EPS_AU = 1e-9;
-/** Relative tolerance: osculating periodD vs mean a^1.5 law. */
 const PERIOD_REL_TOL = 0.02;
 const SAMPLE_N = 96;
-
 const DEG = Math.PI / 180;
 
 function fail(msg) {
@@ -71,7 +60,6 @@ function trueAnomaly(E, e) {
   return Math.atan2(Math.sqrt(1 - e * e) * Math.sin(E), Math.cos(E) - e);
 }
 
-/** Heliocentric ecliptic XYZ (AU) — mirrors src/lib/kepler.ts positionAtMa. */
 function positionAtMa(el, maDeg) {
   const M = (maDeg ?? el.maDeg) * DEG;
   const E = solveKepler(M, el.e);
@@ -102,7 +90,29 @@ function hypot3(x, y, z) {
   return Math.hypot(x, y, z);
 }
 
-/** Pull exported numeric consts from sizeTiers.ts (single source of truth). */
+function loadJsonDir(dir) {
+  return fs
+    .readdirSync(dir)
+    .filter((f) => f.endsWith(".json"))
+    .sort()
+    .map((f) => JSON.parse(fs.readFileSync(path.join(dir, f), "utf8")));
+}
+
+function hasUsableOrbit(body) {
+  const o = body.orbit;
+  if (!o || body.kind === "star") return false;
+  return (
+    Number.isFinite(o.aAu) &&
+    o.aAu > 0 &&
+    Number.isFinite(o.e) &&
+    Number.isFinite(o.iDeg) &&
+    Number.isFinite(o.omDeg) &&
+    Number.isFinite(o.wDeg) &&
+    Number.isFinite(o.maDeg) &&
+    o.frame != null
+  );
+}
+
 function loadVisualTiers() {
   const src = fs.readFileSync(path.join(ROOT, "src/viz/sizeTiers.ts"), "utf8");
   const num = (name) => {
@@ -117,6 +127,7 @@ function loadVisualTiers() {
     PERIHELION_CLEARANCE_MARGIN_AU: num("PERIHELION_CLEARANCE_MARGIN_AU"),
     dwarf: 0.07,
     asteroid: 0.05,
+    moon: 0.04,
   };
 }
 
@@ -125,13 +136,15 @@ function visualRadius(body, tiers) {
     case "star":
       return tiers.STAR_VISUAL_RADIUS;
     case "planet":
-      return body.facts.radiusMeanKm > 20000
+      return (body.facts?.radiusMeanKm ?? 0) > 20000
         ? tiers.PLANET_VISUAL_RADIUS_LARGE
         : tiers.PLANET_VISUAL_RADIUS_SMALL;
     case "dwarf_planet":
       return tiers.dwarf;
     case "asteroid":
       return tiers.asteroid;
+    case "moon":
+      return tiers.moon;
     default:
       throw new Error(`unknown kind ${body.kind}`);
   }
@@ -141,29 +154,57 @@ function meanPeriodDays(aAu) {
   return GAUSS_YEAR_D * Math.pow(aAu, 1.5);
 }
 
-const catalogPath = path.join(ROOT, "src/data/catalog/bodies.json");
-const catalog = JSON.parse(fs.readFileSync(catalogPath, "utf8"));
-const bodies = catalog.bodies;
-const tiers = loadVisualTiers();
-
-const central = bodies.find((b) => b.kind === "star") ?? bodies.find((b) => b.id === "sun");
-if (!central) {
-  fail("no central star/sun in catalog");
+const systems = loadJsonDir(path.join(DATA, "systems"));
+const allBodies = loadJsonDir(path.join(DATA, "bodies"));
+const bodyById = new Map(allBodies.map((b) => [b.id, b]));
+const home = systems.find((s) => s.home === true);
+if (!home) {
+  fail("no home system (home: true) under src/data/systems/");
   process.exit(1);
 }
 
-const realSunRadiusAu = central.facts.radiusMeanKm / AU_KM;
+const bodies = home.memberIds.map((id) => {
+  const b = bodyById.get(id);
+  if (!b) {
+    fail(`home system member missing body card: ${id}`);
+  }
+  return b;
+}).filter(Boolean);
+
+for (const b of bodies) {
+  if (!b.systemId) {
+    fail(`${b.id}: missing systemId (v2 loud fail)`);
+  } else if (b.systemId !== home.id) {
+    fail(`${b.id}: systemId ${b.systemId} ≠ home ${home.id}`);
+  }
+}
+
+const tiers = loadVisualTiers();
+const central =
+  bodies.find((b) => b.kind === "star" && !b.parentId) ??
+  bodies.find((b) => b.kind === "star") ??
+  bodies.find((b) => b.id === "sun");
+if (!central) {
+  fail("no central star/sun in home system graph");
+  process.exit(1);
+}
+
+const realSunRadiusAu = (central.facts?.radiusMeanKm ?? 0) / AU_KM;
+if (!(realSunRadiusAu > 0)) {
+  fail(`${central.id}: facts.radiusMeanKm required for sanity`);
+  process.exit(1);
+}
 const sunVisual = visualRadius(central, tiers);
 
 console.log("orbit-sanity");
-console.log(`  catalog ${catalogPath}`);
+console.log(`  data ${DATA}`);
+console.log(`  homeSystem ${home.id} members ${bodies.length}`);
 console.log(`  central ${central.id} realRadiusAu=${realSunRadiusAu} visualRadius=${sunVisual}`);
 console.log(`  EPS_AU=${EPS_AU} PERIOD_REL_TOL=${PERIOD_REL_TOL} GAUSS_YEAR_D=${GAUSS_YEAR_D}`);
 console.log(
   `  visual clearance: q > sunVisual(${sunVisual}) + bodyVisual + margin(${tiers.PERIHELION_CLEARANCE_MARGIN_AU})`,
 );
 
-// --- sun / central: no heliocentric orbit required ---
 if (central.orbit) {
   fail(`${central.id}: central star must not carry a heliocentric orbit`);
 } else {
@@ -173,8 +214,8 @@ if (central.orbit) {
 const orbiters = bodies.filter((b) => b.id !== central.id);
 
 for (const b of orbiters) {
-  if (!b.orbit) {
-    fail(`${b.id}: non-central body missing orbit`);
+  if (!hasUsableOrbit(b)) {
+    fail(`${b.id}: non-central body missing usable orbit (elements + frame)`);
     continue;
   }
   const o = b.orbit;
@@ -182,7 +223,6 @@ for (const b of orbiters) {
   const bodyVis = visualRadius(b, tiers);
   const need = sunVisual + bodyVis + tiers.PERIHELION_CLEARANCE_MARGIN_AU;
 
-  // Schematic viz clearance (separate from catalog real-radius check).
   if (!(q > need + EPS_AU)) {
     fail(
       `${b.id}: schematic clearance q=${q} ≯ sunVis(${sunVisual})+bodyVis(${bodyVis})+margin(${tiers.PERIHELION_CLEARANCE_MARGIN_AU})=${need}`,
@@ -191,7 +231,6 @@ for (const b of orbiters) {
     ok(`${b.id}: viz clearance q=${q.toPrecision(6)} > ${need.toPrecision(6)}`);
   }
 
-  // Sampled ellipse stays outside REAL sun radius.
   let minR = Infinity;
   for (let i = 0; i <= SAMPLE_N; i++) {
     const ma = (360 * i) / SAMPLE_N;
@@ -207,15 +246,10 @@ for (const b of orbiters) {
     ok(`${b.id}: sampled min|r|=${minR.toPrecision(6)} > realSun ${realSunRadiusAu.toPrecision(6)}`);
   }
 
-  // Sanity: sampled min should be near q (within e-driven geometry; allow 1e-6 au).
-  if (Math.abs(minR - q) > 1e-4) {
-    // Inclined orbits: periapsis distance is still ~q; allow slightly larger slack.
-    if (Math.abs(minR - q) > 1e-3) {
-      fail(`${b.id}: sampled min|r|=${minR} far from q=${q}`);
-    }
+  if (Math.abs(minR - q) > 1e-3) {
+    fail(`${b.id}: sampled min|r|=${minR} far from q=${q}`);
   }
 
-  // Kepler-3 mean period vs catalog periodD.
   if (o.periodD != null && Number.isFinite(o.periodD)) {
     const pred = meanPeriodDays(o.aAu);
     const rel = Math.abs(o.periodD - pred) / pred;
@@ -231,7 +265,6 @@ for (const b of orbiters) {
   }
 }
 
-// Mirror kepler.ts GAUSS_YEAR_D / periodFromA for drift detection.
 const keplerSrc = fs.readFileSync(path.join(ROOT, "src/lib/kepler.ts"), "utf8");
 const named = keplerSrc.match(/export const GAUSS_YEAR_D = ([0-9.]+)/);
 const inline = keplerSrc.match(/Math\.pow\(aAu,\s*1\.5\)\s*\*\s*([0-9.]+)/);

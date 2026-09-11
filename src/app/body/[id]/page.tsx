@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { AppShell } from "@/components/ui/AppShell";
 import { BodyRail } from "@/components/ui/BodyRail";
 import { bodies, getBody, KIND_LABEL } from "@/data/catalog";
+import { bodyProvenance } from "@/data/schema";
 import { periodFromA } from "@/lib/kepler";
 import {
   formatAu,
@@ -74,7 +75,7 @@ export default async function BodyPage({ params }: Props) {
               `${body.name} is a ${KIND_LABEL[body.kind].toLowerCase()} in the Orbitpedia Phase 1 catalog.`}
           </p>
           <p className="mt-2 text-xs text-zinc-600">
-            Source: {body.meta.source}
+            Source: {bodyProvenance(body)}
           </p>
         </section>
 
@@ -83,8 +84,18 @@ export default async function BodyPage({ params }: Props) {
           <dl className="grid gap-3 sm:grid-cols-2">
             {(
               [
-                ["Mass", formatMass(body.facts.massKg)],
-                ["Mean radius", formatRadius(body.facts.radiusMeanKm)],
+                [
+                  "Mass",
+                  body.facts.massKg != null
+                    ? formatMass(body.facts.massKg)
+                    : null,
+                ],
+                [
+                  "Mean radius",
+                  body.facts.radiusMeanKm != null
+                    ? formatRadius(body.facts.radiusMeanKm)
+                    : null,
+                ],
                 [
                   "Density",
                   body.facts.densityGcm3 != null
@@ -135,7 +146,13 @@ export default async function BodyPage({ params }: Props) {
                     "Period",
                     period != null ? formatPeriodDays(period) : null,
                   ],
-                  ["Epoch (JD)", String(body.orbit.epochJd)],
+                  [
+                    "Epoch (JD)",
+                    body.orbit.epochJd != null
+                      ? String(body.orbit.epochJd)
+                      : null,
+                  ],
+                  ["Frame", body.orbit.frame],
                 ] as Array<[string, string | null]>
               )
                 .filter(([, v]) => v != null)

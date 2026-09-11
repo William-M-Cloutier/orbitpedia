@@ -14,8 +14,11 @@ import {
 } from "react";
 import * as THREE from "three";
 import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
-import { bodies } from "@/data/catalog";
+import { getBody, getHomeSystemGraph, hasUsableOrbit } from "@/data/catalog";
 import type { Body } from "@/data/schema";
+
+/** Explore default: one system graph (home = solar). Additive systems plug in later. */
+const { bodies: systemBodies } = getHomeSystemGraph();
 import { periodFromA, positionAtMa, sampleOrbit } from "@/lib/kepler";
 import {
   DEFAULT_SIZE_MODE,
@@ -73,11 +76,11 @@ function useSimApi(): SimApi {
   return api;
 }
 
-/** True only when focus refers to a body that has an orbit (not sun / not star). */
+/** True only when focus refers to a body with a usable orbit (not sun / not star). */
 function focusIsOrbiter(focusId?: string | null): boolean {
   if (!focusId) return false;
-  const b = bodies.find((x) => x.id === focusId);
-  return Boolean(b?.orbit && b.kind !== "star");
+  const b = getBody(focusId);
+  return Boolean(b && hasUsableOrbit(b));
 }
 
 function eclipticToScene(x: number, y: number, z: number): [number, number, number] {
@@ -224,7 +227,7 @@ const OrbitLine = memo(function OrbitLine({
   const sizeMode = useSizeMode();
   const distScale = orbitDistanceScale(sizeMode);
   const points = useMemo(() => {
-    if (!body.orbit) return null;
+    if (!hasUsableOrbit(body)) return null;
     return sampleOrbit(body.orbit, 96).map(([x, y, z]) => {
       const [sx, sy, sz] = eclipticToScene(x * distScale, y * distScale, z * distScale);
       return new THREE.Vector3(sx, sy, sz);
@@ -506,7 +509,7 @@ function FollowCamera() {
       freezePoseRefs();
       return;
     }
-    const b = bodies.find((x) => x.id === focusId);
+    const b = getBody(focusId ?? "");
     if (!b) {
       wasFollowing.current = false;
       freezePoseRefs();
@@ -553,7 +556,7 @@ function FollowCamera() {
       return;
     }
 
-    const b = bodies.find((x) => x.id === focusNow);
+    const b = getBody(focusNow ?? "");
     if (!b?.orbit) {
       if (wasFollowing.current) {
         wasFollowing.current = false;
@@ -775,10 +778,10 @@ function SceneContent({
   viewInsetLeft = 0,
   viewInsetRight = 0,
 }: Props) {
-  // Orbit ellipses only for catalog heliocentric orbits — never the sun
-  // (sun wobble is BarycentricRoot viz-only; no catalog OrbitLine).
+  // Orbit ellipses from system graph elements — skip if no usable orbit.
+  // Sun wobble is BarycentricRoot viz-only; no catalog OrbitLine.
   const orbiters = useMemo(
-    () => bodies.filter((b) => b.orbit && b.kind !== "star"),
+    () => systemBodies.filter((b) => hasUsableOrbit(b)),
     [],
   );
   // Idle system view: no camera autoRotate (user orbits manually).
@@ -802,7 +805,7 @@ function SceneContent({
             highlightColor={highlightColor}
           />
         ))}
-        {bodies.map((b) => (
+        {systemBodies.map((b) => (
           <BodyMesh
             key={`${b.id}-${sizeMode}`}
             body={b}

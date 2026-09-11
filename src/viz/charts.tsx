@@ -13,19 +13,24 @@ import {
   Bar,
   Cell,
 } from "recharts";
-import { bodies } from "@/data/catalog";
+import { bodies, hasUsableOrbit } from "@/data/catalog";
 import { periodFromA } from "@/lib/kepler";
 import { EARTH_MASS_KG, EARTH_RADIUS_KM } from "@/lib/units";
 
-const orbiters = bodies.filter((b) => b.orbit && b.kind !== "star");
+const orbiters = bodies.filter((b) => hasUsableOrbit(b));
 
 const massRadiusData = bodies
-  .filter((b) => b.kind !== "star")
+  .filter(
+    (b) =>
+      b.kind !== "star" &&
+      b.facts.massKg != null &&
+      b.facts.radiusMeanKm != null,
+  )
   .map((b) => ({
     id: b.id,
     name: b.name,
-    massMe: b.facts.massKg / EARTH_MASS_KG,
-    radiusRe: b.facts.radiusMeanKm / EARTH_RADIUS_KM,
+    massMe: (b.facts.massKg as number) / EARTH_MASS_KG,
+    radiusRe: (b.facts.radiusMeanKm as number) / EARTH_RADIUS_KM,
     fill: b.color ?? "#888",
   }));
 
