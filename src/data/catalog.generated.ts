@@ -2,6 +2,7 @@
 /* eslint-disable */
 
 import system_solar from "./systems/solar.json";
+import system_trappist_1 from "./systems/trappist-1.json";
 
 import body_ariel from "./bodies/ariel.json";
 import body_callisto from "./bodies/callisto.json";
@@ -32,11 +33,19 @@ import body_sun from "./bodies/sun.json";
 import body_tethys from "./bodies/tethys.json";
 import body_titan from "./bodies/titan.json";
 import body_titania from "./bodies/titania.json";
+import body_trappist_1_b from "./bodies/trappist-1-b.json";
+import body_trappist_1_c from "./bodies/trappist-1-c.json";
+import body_trappist_1_d from "./bodies/trappist-1-d.json";
+import body_trappist_1_e from "./bodies/trappist-1-e.json";
+import body_trappist_1_f from "./bodies/trappist-1-f.json";
+import body_trappist_1_g from "./bodies/trappist-1-g.json";
+import body_trappist_1_h from "./bodies/trappist-1-h.json";
+import body_trappist_1 from "./bodies/trappist-1.json";
 import body_triton from "./bodies/triton.json";
 import body_umbriel from "./bodies/umbriel.json";
 import body_uranus from "./bodies/uranus.json";
 import body_venus from "./bodies/venus.json";
 import body_vesta from "./bodies/vesta.json";
 
-export const loadedSystems = [system_solar];
-export const loadedBodies = [body_ariel, body_callisto, body_ceres, body_charon, body_deimos, body_dione, body_earth, body_enceladus, body_europa, body_ganymede, body_hygiea, body_iapetus, body_io, body_jupiter, body_mars, body_mercury, body_miranda, body_moon, body_neptune, body_oberon, body_pallas, body_phobos, body_pluto, body_rhea, body_saturn, body_sun, body_tethys, body_titan, body_titania, body_triton, body_umbriel, body_uranus, body_venus, body_vesta];
+export const loadedSystems = [system_solar, system_trappist_1];
+export const loadedBodies = [body_ariel, body_callisto, body_ceres, body_charon, body_deimos, body_dione, body_earth, body_enceladus, body_europa, body_ganymede, body_hygiea, body_iapetus, body_io, body_jupiter, body_mars, body_mercury, body_miranda, body_moon, body_neptune, body_oberon, body_pallas, body_phobos, body_pluto, body_rhea, body_saturn, body_sun, body_tethys, body_titan, body_titania, body_trappist_1_b, body_trappist_1_c, body_trappist_1_d, body_trappist_1_e, body_trappist_1_f, body_trappist_1_g, body_trappist_1_h, body_trappist_1, body_triton, body_umbriel, body_uranus, body_venus, body_vesta];

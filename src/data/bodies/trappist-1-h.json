@@ -1,0 +1,60 @@
+{
+  "id": "trappist-1-h",
+  "name": "TRAPPIST-1 h",
+  "kind": "planet",
+  "systemId": "trappist-1",
+  "facts": {
+    "massKg": 1.94692742e+24,
+    "radiusMeanKm": 4810.111342,
+    "discoveryNotes": "Outermost; coldest confirmed planet",
+    "discoveryDate": "2017"
+  },
+  "color": "#7A8B9A",
+  "meta": {
+    "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host TRAPPIST-1 (not Solar-System barycenter). omDeg=0 and maDeg=0 assumed (absolute node/mean anomaly not published in composite; epochJd=transit mid-time). wDeg from pl_orblper.",
+    "sources": [
+      {
+        "name": "NASA Exoplanet Archive \u2014 TRAPPIST-1 overview",
+        "url": "https://exoplanetarchive.ipac.caltech.edu/overview/TRAPPIST-1",
+        "fields": [
+          "facts.massKg",
+          "facts.radiusMeanKm",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.periodD",
+          "orbit.epochJd",
+          "orbit.wDeg"
+        ]
+      },
+      {
+        "name": "NASA Exoplanet Archive",
+        "url": "https://exoplanetarchive.ipac.caltech.edu/",
+        "fields": [
+          "facts.massKg",
+          "facts.radiusMeanKm",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.periodD",
+          "orbit.epochJd",
+          "orbit.wDeg"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-11T17:51:20.163Z",
+    "confidence": "assumed",
+    "unitsVersion": 1
+  },
+  "orbit": {
+    "frame": "heliocentric",
+    "epochJd": 2457662.5741486,
+    "aAu": 0.06189,
+    "e": 0.00567,
+    "iDeg": 89.805,
+    "omDeg": 0.0,
+    "wDeg": 338.92,
+    "maDeg": 0.0,
+    "periodD": 18.772866
+  }
+}

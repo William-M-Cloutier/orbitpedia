@@ -1,0 +1,15 @@
+{
+  "id": "trappist-1",
+  "name": "TRAPPIST-1",
+  "home": false,
+  "memberIds": [
+    "trappist-1",
+    "trappist-1-b",
+    "trappist-1-c",
+    "trappist-1-d",
+    "trappist-1-e",
+    "trappist-1-f",
+    "trappist-1-g",
+    "trappist-1-h"
+  ]
+}
