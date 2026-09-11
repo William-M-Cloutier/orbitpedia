@@ -46,6 +46,25 @@ import {
 /** Must match <Canvas camera.near> — focus floors stay outside the near plane. */
 const CAMERA_NEAR = 0.01;
 
+/**
+ * Legacy Sol idle camera offset (Canvas default). Direction is reused for every
+ * system; distance comes from {@link idleCameraDistance}.
+ */
+const IDLE_CAMERA_OFFSET = [0, 8, 14] as const;
+const IDLE_CAMERA_DIST_LEGACY = Math.hypot(
+  IDLE_CAMERA_OFFSET[0],
+  IDLE_CAMERA_OFFSET[1],
+  IDLE_CAMERA_OFFSET[2],
+);
+
+/**
+ * Compact-system idle pad: sceneExtent × pad → camera distance.
+ * ~1.17 ≈ 10% closer than the prior shared legacy camera for mid-size systems
+ * (e.g. Kepler-11 extent ≈12.4 → ~14.5 vs legacy ≈16.1). Large systems whose
+ * extent × pad exceeds legacy (Sol) keep {@link IDLE_CAMERA_DIST_LEGACY}.
+ */
+const IDLE_EXTENT_PAD = 1.17;
+
 type Props = {
   focusId?: string | null;
   onSelect?: (id: string | null) => void;
@@ -110,6 +129,44 @@ function heliocentricDisplayScale(bodies: Body[], sizeMode: SizeMode): number {
       };
     }),
   );
+}
+
+
+/**
+ * Primary-frame scene extent (display au): max apoapsis × helioScale.
+ * Prefer planet/dwarf (same set that defines the face-on plane); fall back to
+ * all primary-frame orbiters so asteroid-only graphs still frame.
+ */
+function systemSceneExtent(
+  bodies: readonly Body[],
+  helioScale: number,
+): number {
+  const hs = helioScale > 0 && Number.isFinite(helioScale) ? helioScale : 1;
+  const primary = bodies.filter(
+    (b) => hasUsableOrbit(b) && b.orbit?.frame !== "parent",
+  );
+  const preferred = primary.filter(
+    (b) => b.kind === "planet" || b.kind === "dwarf_planet",
+  );
+  const pool = preferred.length > 0 ? preferred : primary;
+  let maxApo = 0;
+  for (const b of pool) {
+    const o = b.orbit!;
+    const apo = o.aAu * (1 + o.e);
+    if (Number.isFinite(apo) && apo > maxApo) maxApo = apo;
+  }
+  return maxApo * hs;
+}
+
+/**
+ * Idle Explore camera distance from system scene extent (formula only).
+ * Compact hosts pull in; Sol-scale extents stay on the legacy framing.
+ */
+function idleCameraDistance(extent: number): number {
+  if (!(extent > 1e-6) || !Number.isFinite(extent)) {
+    return IDLE_CAMERA_DIST_LEGACY;
+  }
+  return Math.min(IDLE_CAMERA_DIST_LEGACY, extent * IDLE_EXTENT_PAD);
 }
 
 /**
@@ -776,6 +833,40 @@ function ViewOffsetController({
       camera.updateProjectionMatrix();
     };
   }, [camera, size.width, size.height, insetLeft, insetRight, invalidate]);
+
+  return null;
+}
+
+
+/**
+ * One-shot idle pose from system extent. Runs before FollowCamera layout so a
+ * null-focus freeze snapshots the extent-framed distance (not the Canvas
+ * legacy fallback). Deep-link focus leaves pose to FollowCamera.
+ */
+function IdleCameraBootstrap({ focusId }: { focusId?: string | null }) {
+  const { bodies: systemBodies, helioScale } = useSystemViz();
+  const camera = useThree((s) => s.camera);
+  const controls = useThree((s) => s.controls) as OrbitControlsImpl | null;
+  const invalidate = useThree((s) => s.invalidate);
+  const applied = useRef(false);
+
+  useLayoutEffect(() => {
+    if (applied.current) return;
+    applied.current = true;
+    if (focusId) return; // FollowCamera focus snap owns pose
+
+    const extent = systemSceneExtent(systemBodies, helioScale);
+    const dist = idleCameraDistance(extent);
+    const [ox, oy, oz] = IDLE_CAMERA_OFFSET;
+    const len = Math.hypot(ox, oy, oz) || 1;
+    camera.position.set((ox / len) * dist, (oy / len) * dist, (oz / len) * dist);
+    camera.lookAt(0, 0, 0);
+    if (controls?.target) {
+      controls.target.set(0, 0, 0);
+      controls.update();
+    }
+    invalidate();
+  }, [camera, controls, invalidate, focusId, systemBodies, helioScale]);
 
   return null;
 }
@@ -1562,6 +1653,7 @@ function SceneContent({
         maxDistance={80}
         onChange={() => invalidate()}
       />
+      <IdleCameraBootstrap focusId={focusId} />
       <FollowCamera />
       <WasdFly />
     </SimProvider>
@@ -1591,7 +1683,12 @@ export function OrbitScene({
     >
       <Canvas
         frameloop="demand"
-        camera={{ position: [0, 8, 14], fov: 45, near: CAMERA_NEAR, far: 5000 }}
+        camera={{
+          position: [...IDLE_CAMERA_OFFSET],
+          fov: 45,
+          near: CAMERA_NEAR,
+          far: 5000,
+        }}
         dpr={[1, 1.5]}
         gl={{ antialias: true, powerPreference: "high-performance" }}
         onPointerMissed={() => {

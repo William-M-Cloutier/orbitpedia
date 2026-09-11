@@ -623,6 +623,17 @@ if (!Number.isFinite(c)) {
   } else {
     ok("FollowCamera scales camera by size-mode framing ratio (no full reset)");
   }
+  // Idle camera: extent × pad for compact systems; legacy cap preserves Sol.
+  if (
+    !/systemSceneExtent/.test(sceneSrc) ||
+    !/idleCameraDistance/.test(sceneSrc) ||
+    !/IDLE_EXTENT_PAD/.test(sceneSrc) ||
+    !/IdleCameraBootstrap/.test(sceneSrc)
+  ) {
+    fail("OrbitScene missing extent-based idle camera framing");
+  } else {
+    ok("OrbitScene idle camera uses system extent (legacy cap for Sol-scale)");
+  }
 }
 
 if (process.exitCode) {

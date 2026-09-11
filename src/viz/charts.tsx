@@ -20,6 +20,7 @@ import {
   getSystem,
   hasUsableOrbit,
 } from "@/data/catalog";
+import type { Body, BodyKind } from "@/data/schema";
 import { periodFromA } from "@/lib/kepler";
 import { EARTH_MASS_KG, EARTH_RADIUS_KM } from "@/lib/units";
 
@@ -50,6 +51,34 @@ type ChartsProps = {
   systemId?: string;
 };
 
+/** Kind groups for separate charts — never mix moon AU with planet AU. */
+const KIND_GROUPS: {
+  key: string;
+  title: string;
+  kinds: readonly BodyKind[];
+  /** Distance-bar subject: host star vs parent body. */
+  distanceSubject: "host" | "parent";
+}[] = [
+  {
+    key: "planets",
+    title: "Planets",
+    kinds: ["planet", "dwarf_planet"],
+    distanceSubject: "host",
+  },
+  {
+    key: "moons",
+    title: "Moons",
+    kinds: ["moon"],
+    distanceSubject: "parent",
+  },
+  {
+    key: "asteroids",
+    title: "Asteroids",
+    kinds: ["asteroid"],
+    distanceSubject: "host",
+  },
+];
+
 function useSystemBodies(systemId?: string) {
   return useMemo(() => {
     const id = systemId ?? getHomeSystem().id;
@@ -61,14 +90,25 @@ function hostLabel(systemId?: string): string {
   const id = systemId ?? getHomeSystem().id;
   const sys = getSystem(id);
   const members = getBodiesForSystem(id);
-  const star = members.find((b) => b.kind === "star" && !b.parentId)
-    ?? members.find((b) => b.kind === "star");
+  const star =
+    members.find((b) => b.kind === "star" && !b.parentId) ??
+    members.find((b) => b.kind === "star");
   if (star) return star.name;
   return sys?.name ?? "host";
 }
 
-export function MassRadiusChart({ systemId }: ChartsProps) {
-  const bodies = useSystemBodies(systemId);
+function filterKinds(bodies: Body[], kinds: readonly BodyKind[]): Body[] {
+  const set = new Set<BodyKind>(kinds);
+  return bodies.filter((b) => set.has(b.kind));
+}
+
+function MassRadiusChart({
+  bodies,
+  title,
+}: {
+  bodies: Body[];
+  title: string;
+}) {
   const massRadiusData = useMemo(
     () =>
       bodies
@@ -90,16 +130,16 @@ export function MassRadiusChart({ systemId }: ChartsProps) {
 
   if (massRadiusData.length === 0) {
     return (
-      <ChartCard title="Mass vs radius (Earth units)">
+      <ChartCard title={title}>
         <p className="flex h-full items-center justify-center text-sm text-zinc-500">
-          No mass+radius pairs in this system
+          No mass+radius pairs in this group
         </p>
       </ChartCard>
     );
   }
 
   return (
-    <ChartCard title="Mass vs radius (Earth units)">
+    <ChartCard title={title}>
       <ResponsiveContainer>
         <ScatterChart margin={{ top: 8, right: 12, bottom: 20, left: 8 }}>
           <CartesianGrid stroke="rgba(255,255,255,0.06)" />
@@ -162,8 +202,13 @@ export function MassRadiusChart({ systemId }: ChartsProps) {
   );
 }
 
-export function APeriodChart({ systemId }: ChartsProps) {
-  const bodies = useSystemBodies(systemId);
+function APeriodChart({
+  bodies,
+  title,
+}: {
+  bodies: Body[];
+  title: string;
+}) {
   const aPeriodData = useMemo(() => {
     const orbiters = bodies.filter((b) => hasUsableOrbit(b));
     return orbiters.map((b) => {
@@ -181,16 +226,16 @@ export function APeriodChart({ systemId }: ChartsProps) {
 
   if (aPeriodData.length === 0) {
     return (
-      <ChartCard title="Semi-major axis vs orbital period">
+      <ChartCard title={title}>
         <p className="flex h-full items-center justify-center text-sm text-zinc-500">
-          No orbits in this system
+          No orbits in this group
         </p>
       </ChartCard>
     );
   }
 
   return (
-    <ChartCard title="Semi-major axis vs orbital period">
+    <ChartCard title={title}>
       <ResponsiveContainer>
         <ScatterChart margin={{ top: 8, right: 12, bottom: 20, left: 8 }}>
           <CartesianGrid stroke="rgba(255,255,255,0.06)" />
@@ -252,15 +297,18 @@ export function APeriodChart({ systemId }: ChartsProps) {
   );
 }
 
-export function DistanceBarChart({ systemId }: ChartsProps) {
-  const bodies = useSystemBodies(systemId);
-  const host = hostLabel(systemId);
+function DistanceBarChart({
+  bodies,
+  title,
+}: {
+  bodies: Body[];
+  title: string;
+}) {
   const distanceData = useMemo(() => {
     const orbiters = bodies.filter((b) => hasUsableOrbit(b));
     return orbiters
       .map((b) => ({
         id: b.id,
-        // Short tick label: last segment of id or truncated name
         label:
           b.name.length > 14
             ? b.id.includes("-")
@@ -276,9 +324,9 @@ export function DistanceBarChart({ systemId }: ChartsProps) {
 
   if (distanceData.length === 0) {
     return (
-      <ChartCard title={`Distance from ${host} (semi-major axis)`}>
+      <ChartCard title={title}>
         <p className="flex h-full items-center justify-center text-sm text-zinc-500">
-          No orbits in this system
+          No orbits in this group
         </p>
       </ChartCard>
     );
@@ -289,7 +337,7 @@ export function DistanceBarChart({ systemId }: ChartsProps) {
   const bottom = angle === 0 ? 8 : 36;
 
   return (
-    <ChartCard title={`Distance from ${host} (semi-major axis)`}>
+    <ChartCard title={title}>
       <ResponsiveContainer>
         <BarChart
           data={distanceData}
@@ -332,12 +380,76 @@ export function DistanceBarChart({ systemId }: ChartsProps) {
   );
 }
 
+function groupHasChartData(bodies: Body[]): boolean {
+  const hasMassRadius = bodies.some(
+    (b) =>
+      b.kind !== "star" &&
+      b.facts.massKg != null &&
+      b.facts.radiusMeanKm != null,
+  );
+  const hasOrbit = bodies.some((b) => hasUsableOrbit(b));
+  return hasMassRadius || hasOrbit;
+}
+
 export function CatalogCharts({ systemId }: ChartsProps) {
+  const bodies = useSystemBodies(systemId);
+  const host = hostLabel(systemId);
+
+  const sections = useMemo(() => {
+    return KIND_GROUPS.map((g) => {
+      const subset = filterKinds(bodies, g.kinds);
+      return { ...g, subset };
+    }).filter((g) => groupHasChartData(g.subset));
+  }, [bodies]);
+
+  if (sections.length === 0) {
+    return (
+      <div className="rounded-xl border border-white/10 bg-white/[0.03] p-6 text-sm text-zinc-500">
+        No chartable bodies in this system
+      </div>
+    );
+  }
+
   return (
-    <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
-      <MassRadiusChart systemId={systemId} />
-      <APeriodChart systemId={systemId} />
-      <DistanceBarChart systemId={systemId} />
+    <div className="space-y-8">
+      {sections.map((section) => {
+        const distTitle =
+          section.distanceSubject === "parent"
+            ? `${section.title}: distance from parent (semi-major axis)`
+            : `${section.title}: distance from ${host} (semi-major axis)`;
+        return (
+          <section key={section.key} className="space-y-3">
+            <h3 className="text-base font-semibold text-zinc-200">
+              {section.title}
+            </h3>
+            <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
+              {section.subset.some(
+                (b) =>
+                  b.kind !== "star" &&
+                  b.facts.massKg != null &&
+                  b.facts.radiusMeanKm != null,
+              ) ? (
+                <MassRadiusChart
+                  bodies={section.subset}
+                  title={`${section.title}: mass vs radius (Earth units)`}
+                />
+              ) : null}
+              {section.subset.some((b) => hasUsableOrbit(b)) ? (
+                <>
+                  <APeriodChart
+                    bodies={section.subset}
+                    title={`${section.title}: semi-major axis vs orbital period`}
+                  />
+                  <DistanceBarChart
+                    bodies={section.subset}
+                    title={distTitle}
+                  />
+                </>
+              ) : null}
+            </div>
+          </section>
+        );
+      })}
     </div>
   );
 }
