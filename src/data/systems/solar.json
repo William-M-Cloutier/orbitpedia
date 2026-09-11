@@ -37,5 +37,37 @@
     "vesta",
     "pallas",
     "hygiea"
-  ]
+  ],
+  "blurb": "Our home planetary system — a G-type star with eight planets, major moons, and a main-belt asteroid population.",
+  "highlights": [
+    "Eight planets from Mercury to Neptune (plus dwarf planet Pluto in the catalog)",
+    "Earth–Moon and other major moons use parent-frame orbits",
+    "Distances span ~0.4–30+ au for the planets"
+  ],
+  "planetCount": 8,
+  "hostSpectralType": "G2V",
+  "compactnessNote": "Planet orbits span from inside Mercury's path out past Neptune — vastly larger than TRAPPIST-1's packed system.",
+  "meta": {
+    "confidence": "known",
+    "fetchedAt": "2026-09-11T18:38:13.479Z",
+    "sources": [
+      {
+        "name": "NASA Solar System Exploration",
+        "url": "https://science.nasa.gov/solar-system/",
+        "fields": [
+          "blurb",
+          "highlights",
+          "planetCount",
+          "hostSpectralType"
+        ]
+      },
+      {
+        "name": "JPL Horizons web app",
+        "url": "https://ssd.jpl.nasa.gov/horizons/app.html",
+        "fields": [
+          "compactnessNote"
+        ]
+      }
+    ]
+  }
 }

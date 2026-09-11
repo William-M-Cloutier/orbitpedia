@@ -11,5 +11,40 @@
     "trappist-1-f",
     "trappist-1-g",
     "trappist-1-h"
-  ]
+  ],
+  "blurb": "An ultra-cool dwarf star with seven Earth-size planets — one of the most compact known planetary systems.",
+  "highlights": [
+    "All seven planets orbit closer than Mercury does to the Sun",
+    "Several planets sit in or near the star's habitable zone",
+    "Host is a small, cool M-dwarf (TRAPPIST-1)"
+  ],
+  "planetCount": 7,
+  "distanceLy": 40.5,
+  "hostSpectralType": "M8V",
+  "compactnessNote": "All seven planets lie well inside Mercury's orbital distance from the Sun — a packed, short-period system.",
+  "meta": {
+    "confidence": "known",
+    "fetchedAt": "2026-09-11T18:38:13.479Z",
+    "sources": [
+      {
+        "name": "NASA Exoplanet Archive — TRAPPIST-1 overview",
+        "url": "https://exoplanetarchive.ipac.caltech.edu/overview/TRAPPIST-1",
+        "fields": [
+          "blurb",
+          "highlights",
+          "planetCount",
+          "distanceLy",
+          "hostSpectralType",
+          "compactnessNote"
+        ]
+      },
+      {
+        "name": "NASA Exoplanet Archive",
+        "url": "https://exoplanetarchive.ipac.caltech.edu/",
+        "fields": [
+          "distanceLy"
+        ]
+      }
+    ]
+  }
 }

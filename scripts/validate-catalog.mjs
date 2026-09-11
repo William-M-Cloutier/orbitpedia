@@ -95,11 +95,32 @@ const BodySchema = z.object({
   sbdbDes: z.string().optional(),
   meta: BodyMetaSchema,
 });
+const SystemMetaSchema = z.object({
+  sources: z
+    .array(
+      z.object({
+        name: z.string(),
+        url: z.string().url(),
+        fields: z.array(z.string()).optional(),
+      }),
+    )
+    .optional(),
+  fetchedAt: z.string().optional(),
+  confidence: ConfidenceSchema.optional(),
+});
 const SystemSchema = z.object({
   id: z.string().min(1),
   name: z.string().min(1),
   home: z.boolean().optional(),
   memberIds: z.array(z.string().min(1)).min(1),
+  placeholderPrimaryId: z.string().min(1).optional(),
+  blurb: z.string().min(1).optional(),
+  highlights: z.array(z.string().min(1)).optional(),
+  planetCount: z.number().int().nonnegative().optional(),
+  distanceLy: z.number().nonnegative().optional(),
+  hostSpectralType: z.string().min(1).optional(),
+  compactnessNote: z.string().min(1).optional(),
+  meta: SystemMetaSchema.optional(),
 });
 const CatalogSchema = z
   .object({

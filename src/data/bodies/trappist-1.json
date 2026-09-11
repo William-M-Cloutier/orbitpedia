@@ -10,14 +10,14 @@
   "facts": {
     "massKg": 1.78559218e+29,
     "radiusMeanKm": 82927.44,
-    "discoveryNotes": "Ultra-cool M8V red dwarf hosting seven Earth-sized planets; Teff\u22482566 K (NASA Exoplanet Archive pscomppars)"
+    "discoveryNotes": "Ultra-cool M-dwarf host of seven Earth-size planets — all orbit closer than Mercury does to the Sun; open this system from the Systems map to explore the packed layout."
   },
   "color": "#E84A3C",
   "meta": {
-    "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) \u2014 stellar mass/radius; orbit frame N/A (central star)",
+    "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
     "sources": [
       {
-        "name": "NASA Exoplanet Archive \u2014 TRAPPIST-1 overview",
+        "name": "NASA Exoplanet Archive — TRAPPIST-1 overview",
         "url": "https://exoplanetarchive.ipac.caltech.edu/overview/TRAPPIST-1",
         "fields": [
           "facts.massKg",

@@ -107,12 +107,39 @@ export const BodySchema = z
     }
   });
 
+/** Sparse system-level facts for Systems / Explore chrome (not body Facts). */
+export const SystemMetaSchema = z.object({
+  sources: z
+    .array(
+      z.object({
+        name: z.string(),
+        url: z.string().url(),
+        fields: z.array(z.string()).optional(),
+      }),
+    )
+    .optional(),
+  fetchedAt: z.string().optional(),
+  confidence: ConfidenceSchema.optional(),
+});
+
 export const SystemSchema = z.object({
   id: z.string().min(1),
   name: z.string().min(1),
   /** Exactly one system in a loaded catalog should be home. */
   home: z.boolean().optional(),
   memberIds: z.array(z.string().min(1)).min(1),
+  /** Optional primary when graph is sparse / placeholder. */
+  placeholderPrimaryId: z.string().min(1).optional(),
+  /** Short system blurb for System cards. */
+  blurb: z.string().min(1).optional(),
+  /** Bullet highlights (keep short). */
+  highlights: z.array(z.string().min(1)).optional(),
+  planetCount: z.number().int().nonnegative().optional(),
+  /** Distance from Sol in light-years (omit for home). */
+  distanceLy: z.number().nonnegative().optional(),
+  hostSpectralType: z.string().min(1).optional(),
+  compactnessNote: z.string().min(1).optional(),
+  meta: SystemMetaSchema.optional(),
 });
 
 export const CatalogSchema = z
@@ -182,6 +209,7 @@ export type Orbit = z.infer<typeof OrbitSchema>;
 export type Facts = z.infer<typeof FactsSchema>;
 export type BodyMeta = z.infer<typeof BodyMetaSchema>;
 export type Body = z.infer<typeof BodySchema>;
+export type SystemMeta = z.infer<typeof SystemMetaSchema>;
 export type System = z.infer<typeof SystemSchema>;
 export type Catalog = z.infer<typeof CatalogSchema>;
 
