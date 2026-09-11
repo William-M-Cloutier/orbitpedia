@@ -7,8 +7,8 @@ import { bodies } from "@/data/catalog";
  * - schematic: readable size tiers (default)
  * - proportional: true radius ratios; sun is largest mesh and still clears
  *   Mercury's orbit (planets scaled to fit under that sun)
- * - true: physical radii in AU (uncapped sun). Orbits stay correct so meshes
- *   do not intersect paths; bodies are tiny in the system view.
+ * - true: real radius ratios with uncapped sun (readable). Sun sphere is larger
+ *   than Mercury's orbit — honest true scale; planets stay tiny vs the sun.
  *
  * Adding a planet later = catalog facts only; this module maps radius → mesh.
  */
@@ -99,9 +99,18 @@ function proportionalRadius(body: Body): number {
   return Math.max(0.008, body.facts.radiusMeanKm * scale);
 }
 
-/** True physical radius in scene AU (uncapped). */
+/**
+ * True ratios, sun uncapped: pick a readable sun mesh, scale every body by
+ * radiusMeanKm / R_sun. Inner orbits will lie inside the sun sphere — that is
+ * real scale (sun ≫ Mercury distance). Focus framing still works on tiny planets.
+ */
+const TRUE_SUN_MESH_AU = 0.85;
+
 function trueRadius(body: Body): number {
-  return body.facts.radiusMeanKm / AU_KM;
+  const sun = bodies.find((b) => b.kind === "star") ?? bodies.find((b) => b.id === "sun");
+  const sunKm = sun?.facts.radiusMeanKm ?? 695_700;
+  const scale = TRUE_SUN_MESH_AU / sunKm; // km → scene AU
+  return Math.max(1e-6, body.facts.radiusMeanKm * scale);
 }
 
 /** Visual mesh radius in scene units (≈ AU for orbit layout). */
