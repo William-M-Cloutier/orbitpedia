@@ -1486,7 +1486,7 @@ function BodyDials({
   if (usable.length === 0) return null;
 
   return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3">
+    <div className="col-span-full w-full rounded-xl border border-white/10 bg-white/[0.03] p-3">
       <h3 className="mb-2 text-sm font-medium text-zinc-300">
         Body dials · vs {vs.name}
       </h3>
