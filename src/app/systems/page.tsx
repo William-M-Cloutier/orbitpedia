@@ -1,6 +1,13 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type PointerEvent as ReactPointerEvent,
+  type WheelEvent as ReactWheelEvent,
+} from "react";
 import { useRouter } from "next/navigation";
 import { AppShell } from "@/components/ui/AppShell";
 import {
@@ -20,13 +27,19 @@ const SPACING_MODES: { id: MapSpacing; label: string }[] = [
   { id: "proportional", label: "Proportional" },
 ];
 
+const WORLD_W = 960;
+const WORLD_H = 420;
+const ZOOM_MIN = 0.45;
+const ZOOM_MAX = 4;
+const PAN_SPEED = 380; // world units / sec at zoom 1
+const PAN_SHIFT = 2.6;
+
 type SystemNode = {
   id: string;
   name: string;
   home: boolean;
   memberCount: number;
   planetCount: number;
-  /** Outermost primary-frame semi-major axis (au); used for proportional spacing. */
   outerAAu: number;
   starColor: string;
 };
@@ -52,10 +65,6 @@ function buildNodes(): SystemNode[] {
   });
 }
 
-/**
- * Place systems on a horizontal layout.
- * Schematic: equal gaps. Proportional: gaps grow with outerAAu (not ly / True).
- */
 function layoutNodes(
   nodes: SystemNode[],
   spacing: MapSpacing,
@@ -77,27 +86,53 @@ function layoutNodes(
     }));
   }
 
-  // Proportional: cumulative outer-a spans (schematic floor so tiny systems stay clickable).
   const weights = nodes.map((n) => Math.max(0.15, Math.sqrt(n.outerAAu)));
   const sum = weights.reduce((a, b) => a + b, 0);
   let acc = 0;
   return nodes.map((n, i) => {
     const w = weights[i]!;
-    // Place at center of each weight segment.
     const x = padX + ((acc + w / 2) / sum) * usable;
     acc += w;
-    return { ...n, x, y, r: n.home ? 28 : 20 + Math.min(10, Math.sqrt(n.outerAAu) * 2) };
+    return {
+      ...n,
+      x,
+      y,
+      r: n.home ? 28 : 20 + Math.min(10, Math.sqrt(n.outerAAu) * 2),
+    };
   });
+}
+
+type Cam = { x: number; y: number; zoom: number };
+
+function viewBoxFor(cam: Cam): string {
+  const w = WORLD_W / cam.zoom;
+  const h = WORLD_H / cam.zoom;
+  return `${cam.x - w / 2} ${cam.y - h / 2} ${w} ${h}`;
 }
 
 function SystemMapView() {
   const router = useRouter();
   const homeId = getHomeSystem().id;
   const [spacing, setSpacing] = useState<MapSpacing>("schematic");
-  /** Facts overlay only when a node is selected — no always-on card grid. */
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [cam, setCam] = useState<Cam>({
+    x: WORLD_W / 2,
+    y: WORLD_H / 2,
+    zoom: 1,
+  });
   const nodes = useMemo(() => buildNodes(), []);
   const selectedSystem = selectedId ? getSystem(selectedId) : null;
+  const laid = useMemo(
+    () => layoutNodes(nodes, spacing, WORLD_W, WORLD_H),
+    [nodes, spacing],
+  );
+
+  const mapRef = useRef<HTMLDivElement>(null);
+  const keysRef = useRef<Set<string>>(new Set());
+  const draggingRef = useRef(false);
+  const lastPtrRef = useRef<{ x: number; y: number } | null>(null);
+  const camRef = useRef(cam);
+  camRef.current = cam;
 
   function openExplore(systemId: string) {
     router.push(
@@ -107,13 +142,157 @@ function SystemMapView() {
     );
   }
 
-  // Fixed design size; SVG scales via viewBox.
-  const W = 960;
-  const H = 420;
-  const laid = useMemo(
-    () => layoutNodes(nodes, spacing, W, H),
-    [nodes, spacing],
-  );
+  // When selection changes, center that system in the open map (bias left of facts panel).
+  useEffect(() => {
+    if (!selectedId) return;
+    const n = laid.find((x) => x.id === selectedId);
+    if (!n) return;
+    setCam((prev) => {
+      const w = WORLD_W / prev.zoom;
+      // Facts panel sits on the right — put node in the remaining visual center.
+      const biasX = w * 0.14;
+      return { ...prev, x: n.x + biasX, y: n.y };
+    });
+  }, [selectedId, laid]);
+
+  // WASD pan (Shift boost). Skip when typing in inputs.
+  useEffect(() => {
+    const isEditable = (t: EventTarget | null) => {
+      if (!(t instanceof HTMLElement)) return false;
+      const tag = t.tagName;
+      return (
+        tag === "INPUT" ||
+        tag === "TEXTAREA" ||
+        tag === "SELECT" ||
+        t.isContentEditable
+      );
+    };
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (isEditable(e.target)) return;
+      const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+      if (
+        k === "w" ||
+        k === "a" ||
+        k === "s" ||
+        k === "d" ||
+        k === "Shift"
+      ) {
+        keysRef.current.add(k === "Shift" ? "shift" : k);
+        // Prevent page scroll on keys when map is the intent
+        if (k === "w" || k === "a" || k === "s" || k === "d") e.preventDefault();
+      }
+    };
+    const onKeyUp = (e: KeyboardEvent) => {
+      const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+      if (k === "Shift") keysRef.current.delete("shift");
+      else keysRef.current.delete(k);
+    };
+    const onBlur = () => keysRef.current.clear();
+
+    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("keyup", onKeyUp);
+    window.addEventListener("blur", onBlur);
+
+    let raf = 0;
+    let last = performance.now();
+    const tick = (now: number) => {
+      raf = requestAnimationFrame(tick);
+      const dt = Math.min(0.05, (now - last) / 1000);
+      last = now;
+      const keys = keysRef.current;
+      if (keys.size === 0) return;
+      let dx = 0;
+      let dy = 0;
+      if (keys.has("a")) dx -= 1;
+      if (keys.has("d")) dx += 1;
+      if (keys.has("w")) dy -= 1;
+      if (keys.has("s")) dy += 1;
+      if (dx === 0 && dy === 0) return;
+      const len = Math.hypot(dx, dy) || 1;
+      dx /= len;
+      dy /= len;
+      const c = camRef.current;
+      const speed =
+        (PAN_SPEED / c.zoom) * (keys.has("shift") ? PAN_SHIFT : 1);
+      setCam((prev) => ({
+        ...prev,
+        x: prev.x + dx * speed * dt,
+        y: prev.y + dy * speed * dt,
+      }));
+    };
+    raf = requestAnimationFrame(tick);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("keyup", onKeyUp);
+      window.removeEventListener("blur", onBlur);
+    };
+  }, []);
+
+  // Wheel zoom toward cursor
+  const onWheelFixed = (e: ReactWheelEvent) => {
+    e.preventDefault();
+    const factor = e.deltaY > 0 ? 0.9 : 1.1;
+    const el = mapRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const nx = (e.clientX - rect.left) / Math.max(rect.width, 1);
+    const ny = (e.clientY - rect.top) / Math.max(rect.height, 1);
+    setCam((prev) => {
+      const nextZoom = Math.min(
+        ZOOM_MAX,
+        Math.max(ZOOM_MIN, prev.zoom * factor),
+      );
+      if (nextZoom === prev.zoom) return prev;
+      const w0 = WORLD_W / prev.zoom;
+      const h0 = WORLD_H / prev.zoom;
+      const pivotX = prev.x - w0 / 2 + nx * w0;
+      const pivotY = prev.y - h0 / 2 + ny * h0;
+      const w1 = WORLD_W / nextZoom;
+      const h1 = WORLD_H / nextZoom;
+      return {
+        zoom: nextZoom,
+        x: pivotX - nx * w1 + w1 / 2,
+        y: pivotY - ny * h1 + h1 / 2,
+      };
+    });
+  };
+
+  const onPointerDown = (e: ReactPointerEvent) => {
+    if (e.button !== 0) return;
+    // Only drag from empty map / background — nodes stopPropagation
+    draggingRef.current = true;
+    lastPtrRef.current = { x: e.clientX, y: e.clientY };
+    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+  };
+
+  const onPointerMove = (e: ReactPointerEvent) => {
+    if (!draggingRef.current || !lastPtrRef.current) return;
+    const el = mapRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const dxPx = e.clientX - lastPtrRef.current.x;
+    const dyPx = e.clientY - lastPtrRef.current.y;
+    lastPtrRef.current = { x: e.clientX, y: e.clientY };
+    const c = camRef.current;
+    const w = WORLD_W / c.zoom;
+    const h = WORLD_H / c.zoom;
+    const dx = (-dxPx / Math.max(rect.width, 1)) * w;
+    const dy = (-dyPx / Math.max(rect.height, 1)) * h;
+    setCam((prev) => ({ ...prev, x: prev.x + dx, y: prev.y + dy }));
+  };
+
+  const onPointerUp = (e: ReactPointerEvent) => {
+    draggingRef.current = false;
+    lastPtrRef.current = null;
+    try {
+      (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
+    } catch {
+      /* ignore */
+    }
+  };
 
   return (
     <AppShell>
@@ -122,9 +301,9 @@ function SystemMapView() {
           <div>
             <h1 className="text-lg font-medium text-zinc-100">System map</h1>
             <p className="mt-0.5 max-w-2xl text-sm text-zinc-500">
-              Systems as nodes — spacing is Schematic or Proportional only (not
-              true inter-system distances). Click a system for facts; double-click
-              or Open Explore to enter it.
+              Click a system for facts (centers view). Drag or WASD to pan,
+              Shift faster, scroll to zoom. Double-click or Open Explore to
+              enter.
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -151,6 +330,16 @@ function SystemMapView() {
             </div>
             <button
               type="button"
+              onClick={() => {
+                setCam({ x: WORLD_W / 2, y: WORLD_H / 2, zoom: 1 });
+                setSelectedId(null);
+              }}
+              className="rounded-md border border-white/10 bg-white/5 px-3 py-2 text-xs text-zinc-300 hover:bg-white/10"
+            >
+              Reset view
+            </button>
+            <button
+              type="button"
               onClick={() => router.push("/")}
               className="rounded-md border border-sky-500/30 bg-sky-500/15 px-3 py-2 text-xs text-sky-200 hover:bg-sky-500/25"
             >
@@ -159,10 +348,18 @@ function SystemMapView() {
           </div>
         </div>
 
-        <div className="relative min-h-0 flex-1 overflow-hidden rounded-xl border border-white/10 bg-[#060a14]">
+        <div
+          ref={mapRef}
+          className="relative min-h-0 flex-1 touch-none overflow-hidden rounded-xl border border-white/10 bg-[#060a14]"
+          onWheel={onWheelFixed}
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={onPointerUp}
+          onPointerCancel={onPointerUp}
+        >
           <svg
-            viewBox={`0 0 ${W} ${H}`}
-            className="h-full w-full"
+            viewBox={viewBoxFor(cam)}
+            className="h-full w-full cursor-grab active:cursor-grabbing"
             role="img"
             aria-label="System map"
             onClick={() => setSelectedId(null)}
@@ -173,27 +370,31 @@ function SystemMapView() {
                 <stop offset="100%" stopColor="#060a14" stopOpacity="0" />
               </radialGradient>
             </defs>
-            <rect width={W} height={H} fill="#060a14" />
+            <rect
+              x={-WORLD_W}
+              y={-WORLD_H}
+              width={WORLD_W * 3}
+              height={WORLD_H * 3}
+              fill="#060a14"
+            />
             <ellipse
-              cx={W / 2}
-              cy={H / 2}
-              rx={W * 0.42}
-              ry={H * 0.38}
+              cx={WORLD_W / 2}
+              cy={WORLD_H / 2}
+              rx={WORLD_W * 0.42}
+              ry={WORLD_H * 0.38}
               fill="url(#mapGlow)"
             />
 
-            {/* Baseline */}
             <line
               x1={60}
-              y1={H * 0.48}
-              x2={W - 60}
-              y2={H * 0.48}
+              y1={WORLD_H * 0.48}
+              x2={WORLD_W - 60}
+              y2={WORLD_H * 0.48}
               stroke="rgba(255,255,255,0.08)"
               strokeWidth={1}
               strokeDasharray="4 6"
             />
 
-            {/* Connectors */}
             {laid.slice(0, -1).map((a, i) => {
               const b = laid[i + 1]!;
               return (
@@ -222,6 +423,7 @@ function SystemMapView() {
                   e.preventDefault();
                   openExplore(n.id);
                 }}
+                onPointerDown={(e) => e.stopPropagation()}
                 role="button"
                 tabIndex={0}
                 onKeyDown={(e) => {
@@ -289,6 +491,7 @@ function SystemMapView() {
               className="pointer-events-auto absolute bottom-3 right-3 top-3 z-10 flex w-[min(100%-1.5rem,20rem)] flex-col overflow-hidden rounded-lg border border-sky-500/25 bg-[#080d18]/95 p-3 shadow-xl backdrop-blur"
               aria-label={`${selectedSystem.name} system facts`}
               onClick={(e) => e.stopPropagation()}
+              onPointerDown={(e) => e.stopPropagation()}
             >
               <div className="mb-2 flex items-center justify-between gap-2">
                 <p className="text-[11px] font-medium uppercase tracking-wider text-zinc-500">
@@ -318,9 +521,8 @@ function SystemMapView() {
         </div>
 
         <p className="mt-2 text-xs text-zinc-600">
-          Proportional spacing uses each system&apos;s outermost catalog
-          semi-major axis as a weight — educational layout only, not light-year
-          realism. Click empty map to dismiss facts.
+          Drag or WASD to pan · Shift faster · scroll wheel zoom · Reset view
+          restores the full map. Click empty space to dismiss facts.
         </p>
       </div>
     </AppShell>
