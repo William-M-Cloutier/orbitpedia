@@ -151,10 +151,14 @@ export function orbitDistanceScale(_mode: SizeMode = DEFAULT_SIZE_MODE): number 
 }
 
 /**
- * Viz-only multiplier for parent-frame relative orbits (e.g. Moon).
- * Catalog a/e stay real; schematic/oversized parent meshes otherwise swallow
+ * Viz-only multiplier for one parent-frame child orbit (e.g. Moon).
+ * Catalog a/e/i stay real; schematic/oversized parent meshes otherwise swallow
  * the child path. Scales relative Kepler XYZ so periapsis clears
  * parentVis + childVis + a small margin (never written back to Store B).
+ *
+ * When a parent has multiple moons, prefer {@link parentFrameSharedDisplayScale}
+ * so siblings share one inflate factor (per-child scales can stack everyone on
+ * the same display periapsis and intersect).
  */
 export function parentFrameDisplayScale(
   childOrbitQAu: number,
@@ -165,4 +169,51 @@ export function parentFrameDisplayScale(
   const need = Math.max(parentVis + childVis + margin, parentVis * 1.85 + childVis);
   if (!(childOrbitQAu > 0) || !Number.isFinite(childOrbitQAu)) return 1;
   return childOrbitQAu >= need ? 1 : need / childOrbitQAu;
+}
+
+/** Viz-only input row for {@link parentFrameSharedDisplayScale}. */
+export type ParentFrameChildOrbit = {
+  qAu: number;
+  aAu: number;
+  e: number;
+  vis: number;
+};
+
+/**
+ * Per-parent shared viz-only display scale for all parent-frame children.
+ * Starts from max({@link parentFrameDisplayScale}) among children (parent
+ * clearance), then bumps so consecutive catalog-a siblings keep enough radial
+ * gap between inner apoapsis and outer periapsis for both meshes + margin.
+ * Catalog elements unchanged — display spacing only.
+ */
+export function parentFrameSharedDisplayScale(
+  parentVis: number,
+  children: ParentFrameChildOrbit[],
+): number {
+  if (!children.length) return 1;
+  let s = 1;
+  for (const c of children) {
+    s = Math.max(s, parentFrameDisplayScale(c.qAu, parentVis, c.vis));
+  }
+  const sorted = [...children].sort((a, b) => a.aAu - b.aAu);
+  for (let i = 0; i < sorted.length - 1; i++) {
+    const inner = sorted[i]!;
+    const outer = sorted[i + 1]!;
+    const innerApo = inner.aAu * (1 + inner.e);
+    const outerPeri = outer.aAu * (1 - outer.e);
+    const gap = outerPeri - innerApo;
+    const sepMargin = Math.min(
+      PERIHELION_CLEARANCE_MARGIN_AU,
+      Math.max(inner.vis, outer.vis),
+    );
+    const need = inner.vis + outer.vis + sepMargin;
+    if (gap > 1e-12) {
+      s = Math.max(s, need / gap);
+    } else {
+      // Crossing / nested-poor catalog pair: fall back to semi-major separation.
+      const da = outer.aAu - inner.aAu;
+      if (da > 1e-12) s = Math.max(s, need / da);
+    }
+  }
+  return s;
 }

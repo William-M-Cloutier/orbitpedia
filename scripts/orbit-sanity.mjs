@@ -10,8 +10,9 @@
  *   2) Sampled ellipse |r| stays outside REAL sun radius (au) [heliocentric]
  *   3) periodD ≈ GAUSS_YEAR_D * aAu^1.5 within relative tolerance [heliocentric]
  *   4) Central star has no heliocentric orbit / no OrbitLine required
- *   5) Parent-frame: q clears parent real radius; viz scale clears parent mesh;
- *      skip sun Kepler-3; require periodD > 0
+ *   5) Parent-frame: q clears parent real radius; shared viz scale clears parent
+ *      mesh + keeps sibling display orbits from intersecting; skip sun Kepler-3;
+ *      require periodD > 0
  *   6) Epoch MA pose lies on true-anomaly OrbitLine polyline (body-on-line)
  *
  * Usage: node scripts/orbit-sanity.mjs
@@ -161,6 +162,30 @@ function parentFrameDisplayScale(childOrbitQAu, parentVis, childVis, marginCap) 
   const need = Math.max(parentVis + childVis + margin, parentVis * 1.85 + childVis);
   if (!(childOrbitQAu > 0) || !Number.isFinite(childOrbitQAu)) return 1;
   return childOrbitQAu >= need ? 1 : need / childOrbitQAu;
+}
+
+/** Match src/viz/sizeTiers.ts parentFrameSharedDisplayScale (viz-only). */
+function parentFrameSharedDisplayScale(parentVis, children, marginCap) {
+  if (!children.length) return 1;
+  let s = 1;
+  for (const c of children) {
+    s = Math.max(s, parentFrameDisplayScale(c.qAu, parentVis, c.vis, marginCap));
+  }
+  const sorted = [...children].sort((a, b) => a.aAu - b.aAu);
+  for (let i = 0; i < sorted.length - 1; i++) {
+    const inner = sorted[i];
+    const outer = sorted[i + 1];
+    const gap = outer.aAu * (1 - outer.e) - inner.aAu * (1 + inner.e);
+    const sepMargin = Math.min(marginCap, Math.max(inner.vis, outer.vis));
+    const need = inner.vis + outer.vis + sepMargin;
+    if (gap > 1e-12) {
+      s = Math.max(s, need / gap);
+    } else {
+      const da = outer.aAu - inner.aAu;
+      if (da > 1e-12) s = Math.max(s, need / da);
+    }
+  }
+  return s;
 }
 
 function loadJsonDir(dir) {
@@ -324,27 +349,7 @@ for (const b of orbiters) {
       );
     }
 
-    const parentVis = visualRadius(parent, tiers);
-    const scale = parentFrameDisplayScale(
-      q,
-      parentVis,
-      bodyVis,
-      tiers.PERIHELION_CLEARANCE_MARGIN_AU,
-    );
-    const qVis = q * scale;
-    const need = parentVis + bodyVis + Math.min(
-      tiers.PERIHELION_CLEARANCE_MARGIN_AU,
-      Math.max(parentVis * 0.35, bodyVis),
-    );
-    if (!(qVis > need - 1e-9)) {
-      fail(
-        `${b.id}: parent-frame viz q*scale=${qVis} ≯ parentVis+childVis+margin=${need} (scale=${scale})`,
-      );
-    } else {
-      ok(
-        `${b.id}: parent-frame viz q*scale=${qVis.toPrecision(6)} > ${need.toPrecision(6)} (scale=${scale.toPrecision(4)})`,
-      );
-    }
+    // Shared per-parent viz scale checked after the orbiter loop (sibling-aware).
 
     // Relative ellipse samples clear origin (parent) by q — true-anomaly sweep.
     let minR = Infinity;
@@ -416,6 +421,74 @@ for (const b of orbiters) {
     );
   } else {
     ok(`${b.id}: body-on-line dist=${off.toExponential(2)} au`);
+  }
+}
+
+// Per-parent shared viz display scale: parent clearance + sibling separation.
+const parentFrameKids = new Map();
+for (const b of orbiters) {
+  if (!hasUsableOrbit(b) || b.orbit?.frame !== "parent" || !b.parentId) continue;
+  if (!parentFrameKids.has(b.parentId)) parentFrameKids.set(b.parentId, []);
+  parentFrameKids.get(b.parentId).push(b);
+}
+for (const [parentId, kids] of parentFrameKids) {
+  const parent = bodyById.get(parentId);
+  if (!parent) {
+    fail(`parent-frame group: missing parent ${parentId}`);
+    continue;
+  }
+  const parentVis = visualRadius(parent, tiers);
+  const rows = kids.map((c) => ({
+    id: c.id,
+    qAu: periapsisAu(c.orbit),
+    aAu: c.orbit.aAu,
+    e: c.orbit.e,
+    vis: visualRadius(c, tiers),
+  }));
+  const scale = parentFrameSharedDisplayScale(
+    parentVis,
+    rows,
+    tiers.PERIHELION_CLEARANCE_MARGIN_AU,
+  );
+  for (const r of rows) {
+    const qVis = r.qAu * scale;
+    const need =
+      parentVis +
+      r.vis +
+      Math.min(
+        tiers.PERIHELION_CLEARANCE_MARGIN_AU,
+        Math.max(parentVis * 0.35, r.vis),
+      );
+    if (!(qVis > need - 1e-9)) {
+      fail(
+        `${r.id}: shared viz q*scale=${qVis} ≯ parentVis+childVis+margin=${need} (scale=${scale})`,
+      );
+    } else {
+      ok(
+        `${r.id}: shared viz q*scale=${qVis.toPrecision(6)} > ${need.toPrecision(6)} (scale=${scale.toPrecision(4)})`,
+      );
+    }
+  }
+  const sorted = [...rows].sort((a, b) => a.aAu - b.aAu);
+  for (let i = 0; i < sorted.length - 1; i++) {
+    const inner = sorted[i];
+    const outer = sorted[i + 1];
+    const innerApo = inner.aAu * (1 + inner.e) * scale;
+    const outerPeri = outer.aAu * (1 - outer.e) * scale;
+    const gap = outerPeri - innerApo;
+    const need = inner.vis + outer.vis;
+    if (!(gap >= need - 1e-9)) {
+      fail(
+        `${parentId} siblings ${inner.id}/${outer.id}: display gap ${gap} < mesh sum ${need} (scale=${scale})`,
+      );
+    } else {
+      ok(
+        `${parentId} siblings ${inner.id}/${outer.id}: display gap ${gap.toPrecision(4)} ≥ ${need.toPrecision(4)}`,
+      );
+    }
+  }
+  if (sorted.length === 1) {
+    ok(`${parentId}: single parent-frame child (shared scale=${scale.toPrecision(4)})`);
   }
 }
 

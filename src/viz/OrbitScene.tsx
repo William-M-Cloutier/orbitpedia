@@ -14,7 +14,13 @@ import {
 } from "react";
 import * as THREE from "three";
 import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
-import { getBody, getHomeSystemGraph, getParent, hasUsableOrbit } from "@/data/catalog";
+import {
+  getBody,
+  getHomeSystemGraph,
+  getParent,
+  hasUsableOrbit,
+  listChildren,
+} from "@/data/catalog";
 import type { Body } from "@/data/schema";
 
 /** Explore default: one system graph (home = solar). Additive systems plug in later. */
@@ -23,10 +29,13 @@ import { periodFromA, positionAtMa, sampleOrbit } from "@/lib/kepler";
 import {
   DEFAULT_SIZE_MODE,
   orbitDistanceScale,
-  parentFrameDisplayScale,
+  parentFrameSharedDisplayScale,
   visualRadius,
   type SizeMode,
 } from "./sizeTiers";
+
+/** Must match <Canvas camera.near> — focus floors stay outside the near plane. */
+const CAMERA_NEAR = 0.01;
 
 type Props = {
   focusId?: string | null;
@@ -119,6 +128,33 @@ function orbitQAu(orbit: NonNullable<Body["orbit"]>): number {
 }
 
 /**
+ * Viz-only parent-frame orbit inflate. Shared per parent so Galileans / etc.
+ * keep relative spacing instead of each child independently mapping to the
+ * same display periapsis (catalog a/e/i unchanged).
+ */
+function parentDisplayScale(body: Body, sizeMode: SizeMode): number {
+  if (body.orbit?.frame !== "parent" || !body.parentId) return 1;
+  const parent = getParent(body.id) ?? getBody(body.parentId);
+  if (!parent) return 1;
+  const kids = listChildren(parent.id).filter(
+    (c) => c.orbit?.frame === "parent" && hasUsableOrbit(c),
+  );
+  if (kids.length === 0) return 1;
+  return parentFrameSharedDisplayScale(
+    visualRadius(parent, sizeMode),
+    kids.map((c) => {
+      const o = c.orbit!;
+      return {
+        qAu: orbitQAu(o),
+        aAu: o.aAu,
+        e: o.e,
+        vis: visualRadius(c, sizeMode),
+      };
+    }),
+  );
+}
+
+/**
  * Scene-local Kepler position for one body's own elements (no parent offset).
  * `relScale` folds orbitDistanceScale and optional parent-frame display scale.
  */
@@ -156,11 +192,7 @@ function bodyPosition(
     const parent = getParent(body.id) ?? getBody(body.parentId);
     if (parent) {
       const parentPos = bodyPosition(parent, simDays, distScale, sizeMode, seen);
-      const ps = parentFrameDisplayScale(
-        orbitQAu(body.orbit),
-        visualRadius(parent, sizeMode),
-        visualRadius(body, sizeMode),
-      );
+      const ps = parentDisplayScale(body, sizeMode);
       const local = localOrbitPosition(body, simDays, s * ps);
       return [
         parentPos[0] + local[0],
@@ -289,14 +321,7 @@ const OrbitLine = memo(function OrbitLine({
   const relScale = useMemo(() => {
     if (!hasUsableOrbit(body)) return distScale;
     if (!parent) return distScale;
-    return (
-      distScale *
-      parentFrameDisplayScale(
-        orbitQAu(body.orbit),
-        visualRadius(parent, sizeMode),
-        visualRadius(body, sizeMode),
-      )
-    );
+    return distScale * parentDisplayScale(body, sizeMode);
   }, [body, parent, distScale, sizeMode]);
 
   const points = useMemo(() => {
@@ -470,28 +495,33 @@ const FOCUS_FILL = 0.48;
 
 /**
  * OrbitControls dolly floor. Idle keeps Explore True floor (~0.23 from
- * closer-True UX). While a body is focused/followed, drop to ~2.2× its focused
- * mesh radius so tiny True-scale planets (and Moon) stay inspectable.
+ * closer-True UX). While focused, allow tighter than idle for tiny True-scale
+ * bodies, but never below ~2.2× focused mesh radius or inside the near plane
+ * (Math.min(idle, tight) previously let large True-sun dolly inside the mesh).
  */
 function orbitMinDistance(
   sizeMode: SizeMode,
   focusBody?: Body | null,
+  cameraNear: number = CAMERA_NEAR,
 ): number {
   const idle = sizeMode === "true" ? 0.23 : 0.4;
   if (!focusBody) return idle;
   const r = visualRadius(focusBody, sizeMode) * focusMeshScale(focusBody);
-  const tight = Math.max(0.004, r * 2.2);
-  return Math.min(idle, tight);
+  const near = cameraNear > 0 ? cameraNear : CAMERA_NEAR;
+  return Math.max(r * 2.2, near + r, 0.004);
 }
 
 /** Auto-frame floor — tracks orbitMinDistance so focus snap can use the dolly. */
 function focusDistanceFloor(
   sizeMode: SizeMode,
   focusBody?: Body | null,
+  cameraNear: number = CAMERA_NEAR,
 ): number {
   if (focusBody) {
     const r = visualRadius(focusBody, sizeMode) * focusMeshScale(focusBody);
-    return Math.max(0.0035, r * 2.0);
+    const near = cameraNear > 0 ? cameraNear : CAMERA_NEAR;
+    // Strictly outside the focused mesh (+ margin) and in front of near plane.
+    return Math.max(r * 2.5, near + r, 0.0035);
   }
   return sizeMode === "true" ? 0.2 : 0.36;
 }
@@ -501,6 +531,8 @@ function focusDistanceFloor(
  * On-screen diameter ≈ fill * min(viewport width, height):
  *   d = r / (fill * tan(fovY/2) * min(1, aspect))
  * Replaces sin-based height-only framing that undershot William's Pluto ref.
+ * Always enforces dist >= focused mesh radius × 2.5 and near+r so True/Prop
+ * focus never ends inside the sphere (tiny meshes used to frame below near).
  */
 function focusFrameDistance(
   body: Body,
@@ -508,16 +540,19 @@ function focusFrameDistance(
   aspect: number = 1,
   fill: number = FOCUS_FILL,
   sizeMode: SizeMode = DEFAULT_SIZE_MODE,
+  cameraNear: number = CAMERA_NEAR,
 ): number {
   const r = visualRadius(body, sizeMode) * focusMeshScale(body);
   const halfRad = ((fovYDeg * Math.PI) / 180) / 2;
   const tanHalf = Math.tan(halfRad);
   if (!(tanHalf > 1e-6) || !(fill > 1e-6)) return 12;
-  // PerspectiveCamera fov is vertical; limiting half-extent for min(w,h).
+  // PerspectiveCamera fov is vertical; half-extent for min(w,h). Prefer the
+  // smaller of vertical/horizontal so a skewed visibleAspect (viewOffset /
+  // portrait) cannot enlarge halfMin and pull the camera inside the mesh.
   const a = Number.isFinite(aspect) && aspect > 1e-6 ? aspect : 1;
-  const halfMin = a >= 1 ? tanHalf : tanHalf * a;
-  // Floor keeps dolly above OrbitControls minDistance / near plane comfort.
-  return Math.max(focusDistanceFloor(sizeMode, body), r / (fill * halfMin));
+  const halfMin = Math.min(tanHalf, tanHalf * a);
+  const framed = r / (fill * halfMin);
+  return Math.max(focusDistanceFloor(sizeMode, body, cameraNear), framed);
 }
 
 /** Aspect of the *visible* sub-rect when setViewOffset is active. */
@@ -651,7 +686,16 @@ function FollowCamera() {
       camera instanceof THREE.PerspectiveCamera
         ? visibleAspect(camera)
         : 1;
-    const dist = focusFrameDistance(b, fovY, aspect, FOCUS_FILL, sizeMode);
+    const near =
+      camera instanceof THREE.PerspectiveCamera ? camera.near : CAMERA_NEAR;
+    const dist = focusFrameDistance(
+      b,
+      fovY,
+      aspect,
+      FOCUS_FILL,
+      sizeMode,
+      near,
+    );
     target.current.set(pos[0], pos[1], pos[2]);
     desired.current.copy(target.current);
     // Pleasant elevation/azimuth at EXACT framing distance (fill is distance).
@@ -1104,8 +1148,11 @@ function SceneContent({
   // Idle system view: no camera autoRotate (user orbits manually).
   // Follow mode still ride-alongs when a planet is selected.
   const invalidate = useThree((s) => s.invalidate);
+  const camera = useThree((s) => s.camera);
   const focusBody = focusId ? getBody(focusId) : null;
-  const minDistance = orbitMinDistance(sizeMode, focusBody);
+  const cameraNear =
+    camera instanceof THREE.PerspectiveCamera ? camera.near : CAMERA_NEAR;
+  const minDistance = orbitMinDistance(sizeMode, focusBody, cameraNear);
 
   return (
     <SizeModeContext.Provider value={sizeMode}>
@@ -1176,7 +1223,7 @@ export function OrbitScene({
     >
       <Canvas
         frameloop="demand"
-        camera={{ position: [0, 8, 14], fov: 45, near: 0.01, far: 250 }}
+        camera={{ position: [0, 8, 14], fov: 45, near: CAMERA_NEAR, far: 250 }}
         dpr={[1, 1.5]}
         gl={{ antialias: true, powerPreference: "high-performance" }}
         onPointerMissed={() => {
