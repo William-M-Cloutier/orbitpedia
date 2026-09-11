@@ -8,6 +8,7 @@
  * Cache/temp under /tmp (not committed).
  */
 import { writeFileSync, readFileSync, existsSync, mkdirSync } from "node:fs";
+import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
@@ -578,6 +579,15 @@ async function main() {
     OMITTED_OUT,
     JSON.stringify({ fetchedAt: FETCHED_AT, omitted: notesOmitted }, null, 2) + "\n",
   );
+  const gen = spawnSync(
+    process.execPath,
+    [join(__dirname, "generate-catalog-index.mjs")],
+    { stdio: "inherit" },
+  );
+  if (gen.status !== 0) {
+    throw new Error("generate-catalog-index.mjs failed");
+  }
+
   console.log(`Wrote ${bodies.length} body cards under ${BODIES_DIR}`);
   console.log(`Wrote ${join(SYSTEMS_DIR, SYSTEM_ID + ".json")}`);
   console.log(`Omitted log: ${OMITTED_OUT}`);

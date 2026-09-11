@@ -6,87 +6,18 @@ import {
   type Catalog,
   type System,
 } from "./schema";
-
-import solarSystem from "./systems/solar.json";
-
-import sun from "./bodies/sun.json";
-import mercury from "./bodies/mercury.json";
-import venus from "./bodies/venus.json";
-import earth from "./bodies/earth.json";
-import moon from "./bodies/moon.json";
-import mars from "./bodies/mars.json";
-import phobos from "./bodies/phobos.json";
-import deimos from "./bodies/deimos.json";
-import jupiter from "./bodies/jupiter.json";
-import io from "./bodies/io.json";
-import europa from "./bodies/europa.json";
-import ganymede from "./bodies/ganymede.json";
-import callisto from "./bodies/callisto.json";
-import saturn from "./bodies/saturn.json";
-import enceladus from "./bodies/enceladus.json";
-import tethys from "./bodies/tethys.json";
-import dione from "./bodies/dione.json";
-import rhea from "./bodies/rhea.json";
-import titan from "./bodies/titan.json";
-import iapetus from "./bodies/iapetus.json";
-import uranus from "./bodies/uranus.json";
-import ariel from "./bodies/ariel.json";
-import umbriel from "./bodies/umbriel.json";
-import titania from "./bodies/titania.json";
-import oberon from "./bodies/oberon.json";
-import miranda from "./bodies/miranda.json";
-import neptune from "./bodies/neptune.json";
-import triton from "./bodies/triton.json";
-import pluto from "./bodies/pluto.json";
-import charon from "./bodies/charon.json";
-import ceres from "./bodies/ceres.json";
-import vesta from "./bodies/vesta.json";
-import pallas from "./bodies/pallas.json";
-import hygiea from "./bodies/hygiea.json";
+import { loadedBodies, loadedSystems } from "./catalog.generated";
 
 /**
- * Assembled Store B catalog (v2). Explore loads one system graph via
- * getHomeSystemGraph() — never assume a flat forever-all-bodies list.
+ * Assembled Store B catalog (v2). Body/system JSON is auto-registered via
+ * scripts/generate-catalog-index.mjs (run after ingest / new cards).
+ * Explore loads one system graph via getHomeSystemGraph() — never assume a
+ * flat forever-all-bodies list.
  */
 const raw = {
   version: 2 as const,
-  systems: [solarSystem],
-  bodies: [
-    sun,
-    mercury,
-    venus,
-    earth,
-    moon,
-    mars,
-    phobos,
-    deimos,
-    jupiter,
-    io,
-    europa,
-    ganymede,
-    callisto,
-    saturn,
-    enceladus,
-    tethys,
-    dione,
-    rhea,
-    titan,
-    iapetus,
-    uranus,
-    ariel,
-    umbriel,
-    titania,
-    oberon,
-    miranda,
-    neptune,
-    triton,
-    pluto,
-    charon,
-    ceres,
-    vesta,
-    pallas,
-    hygiea,
-  ],
+  systems: loadedSystems,
+  bodies: loadedBodies,
 };
 
 export const catalog: Catalog = CatalogSchema.parse(raw);
