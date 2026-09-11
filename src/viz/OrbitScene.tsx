@@ -316,6 +316,20 @@ function wrapDeltaAngle(d: number): number {
 }
 
 /**
+ * Canned focus distance on acquire.
+ * Orbiters: neighborhood scale from a (unchanged).
+ * Star / central (no orbit): frame from visualRadius — readable sun + a slice
+ * of inner system. Never the old hardcoded 12 (speck-at-overview).
+ */
+function focusFrameDistance(body: Body): number {
+  const r = visualRadius(body);
+  if (body.kind === "star" || !body.orbit) {
+    return Math.max(3.5, r * 24);
+  }
+  return Math.max(1.2, body.orbit.aAu * 0.55 + 1.5);
+}
+
+/**
  * FollowCamera: slides look-at with the body, rides along by yawing the
  * camera offset with orbital bearing change, and never overwrites distance —
  * user OrbitControls dolly/orbit/pan still win on offset length/direction.
@@ -330,25 +344,40 @@ function FollowCamera() {
   const desired = useRef(new THREE.Vector3(0, 0, 0));
   const offset = useRef(new THREE.Vector3());
   const lastBearing = useRef<number | null>(null);
+  /** Edge-detect follow→idle so we hard-freeze pose and kill residual motion. */
+  const wasFollowing = useRef(false);
+
+  /** Snapshot live camera + controls into follow refs without moving either. */
+  const freezePoseRefs = () => {
+    lastBearing.current = null;
+    if (controls?.target) {
+      target.current.copy(controls.target);
+      desired.current.copy(controls.target);
+      offset.current.copy(camera.position).sub(controls.target);
+    } else {
+      desired.current.copy(target.current);
+      offset.current.copy(camera.position).sub(target.current);
+    }
+  };
 
   // Snap / re-frame only when acquiring a focus. Clearing focus must leave
-  // camera position + OrbitControls target/zoom as-is (stop Follow tracking only).
-  useEffect(() => {
+  // camera position + OrbitControls target/zoom exactly as last follow frame.
+  useLayoutEffect(() => {
     if (!focusId) {
-      lastBearing.current = null;
+      wasFollowing.current = false;
+      freezePoseRefs();
       return;
     }
     const b = bodies.find((x) => x.id === focusId);
     if (!b) {
-      lastBearing.current = null;
+      wasFollowing.current = false;
+      freezePoseRefs();
       return;
     }
     const days = getSimDays();
     const helio = bodyPosition(b, days);
     const pos = bodyWorldPosition(b, days);
-    const dist = b.orbit
-      ? Math.max(1.2, b.orbit.aAu * 0.55 + 1.5)
-      : 12;
+    const dist = focusFrameDistance(b);
     target.current.set(pos[0], pos[1], pos[2]);
     desired.current.copy(target.current);
     camera.position.set(
@@ -365,16 +394,33 @@ function FollowCamera() {
     lastBearing.current = focusIsOrbiter(focusId)
       ? Math.atan2(helio[0], helio[2])
       : null;
+    wasFollowing.current = focusIsOrbiter(focusId);
     invalidate();
   }, [focusId, camera, controls, invalidate]); // eslint-disable-line react-hooks/exhaustive-deps -- snap on focus acquire only
 
   useFrame((_, delta) => {
     const followingNow = getFollowing();
     const focusNow = getFocusId();
-    if (!followingNow || !focusNow) return;
+
+    if (!followingNow || !focusNow) {
+      // Stop follow: freeze camera + OrbitControls target; no lerp / bearing / retarget.
+      if (wasFollowing.current) {
+        wasFollowing.current = false;
+        freezePoseRefs();
+      }
+      return;
+    }
 
     const b = bodies.find((x) => x.id === focusNow);
-    if (!b?.orbit) return;
+    if (!b?.orbit) {
+      if (wasFollowing.current) {
+        wasFollowing.current = false;
+        freezePoseRefs();
+      }
+      return;
+    }
+
+    wasFollowing.current = true;
 
     const days = getSimDays();
     const helio = bodyPosition(b, days);
@@ -568,6 +614,7 @@ function SceneContent({ focusId, onSelect, highlightColor, simDaysPerSec }: Prop
         enableZoom
         enableRotate
         autoRotate={false}
+        enableDamping={false}
         minDistance={0.5}
         maxDistance={80}
         onChange={() => invalidate()}
