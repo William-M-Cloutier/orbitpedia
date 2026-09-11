@@ -22,10 +22,12 @@ type Props = {
   focusId?: string | null;
   onSelect?: (id: string | null) => void;
   highlightColor?: string;
+  /** Simulated days advanced per real second while following. */
+  simDaysPerSec?: number;
 };
 
-/** Wall-clock days advanced per real second while following (paused when hidden). */
-const SIM_DAYS_PER_SEC = 6;
+/** Fallback when UI omits speed (matches former hard-coded follow rate). */
+const DEFAULT_SIM_DAYS_PER_SEC = 6;
 
 type SimApi = {
   /** Simulated days since follow started (or resumed). */
@@ -403,14 +405,18 @@ function DemandInvalidator({ active }: { active: boolean }) {
 
 function SimProvider({
   focusId,
+  simDaysPerSec = DEFAULT_SIM_DAYS_PER_SEC,
   children,
 }: {
   focusId?: string | null;
+  simDaysPerSec?: number;
   children: React.ReactNode;
 }) {
   const following = focusIsOrbiter(focusId);
   const simDaysRef = useRef(0);
   const lastWallRef = useRef<number | null>(null);
+  const rateRef = useRef(simDaysPerSec);
+  rateRef.current = simDaysPerSec;
 
   useEffect(() => {
     // Reset clock when selection changes so new body starts from epoch + 0
@@ -429,7 +435,7 @@ function SimProvider({
         lastWallRef.current = null;
       } else if (lastWallRef.current != null) {
         const dt = (now - lastWallRef.current) / 1000;
-        simDaysRef.current += dt * SIM_DAYS_PER_SEC;
+        simDaysRef.current += dt * rateRef.current;
       }
       lastWallRef.current = typeof document !== "undefined" && document.hidden
         ? null
@@ -460,7 +466,7 @@ function SimProvider({
   return <SimContext.Provider value={api}>{children}</SimContext.Provider>;
 }
 
-function SceneContent({ focusId, onSelect, highlightColor }: Props) {
+function SceneContent({ focusId, onSelect, highlightColor, simDaysPerSec }: Props) {
   const orbiters = useMemo(
     () => bodies.filter((b) => b.orbit && b.kind !== "star"),
     [],
@@ -472,7 +478,7 @@ function SceneContent({ focusId, onSelect, highlightColor }: Props) {
   const invalidate = useThree((s) => s.invalidate);
 
   return (
-    <SimProvider focusId={focusId}>
+    <SimProvider focusId={focusId} simDaysPerSec={simDaysPerSec}>
       <color attach="background" args={["#02040a"]} />
       <Starfield />
       <SoftHaze />
@@ -512,7 +518,7 @@ function SceneContent({ focusId, onSelect, highlightColor }: Props) {
   );
 }
 
-export function OrbitScene({ focusId, onSelect, highlightColor }: Props) {
+export function OrbitScene({ focusId, onSelect, highlightColor, simDaysPerSec }: Props) {
   return (
     <div
       className="h-full w-full"
@@ -534,6 +540,7 @@ export function OrbitScene({ focusId, onSelect, highlightColor }: Props) {
           focusId={focusId}
           onSelect={onSelect}
           highlightColor={highlightColor}
+          simDaysPerSec={simDaysPerSec}
         />
       </Canvas>
     </div>

@@ -1,10 +1,15 @@
 "use client";
 
-import { Suspense, useCallback, useEffect, useState } from "react";
+import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { AppShell } from "@/components/ui/AppShell";
 import { BodyRail } from "@/components/ui/BodyRail";
 import { FactsPanel } from "@/components/ui/FactsPanel";
+import {
+  DEFAULT_SPEED_PRESET,
+  SpeedControl,
+  multipleToDaysPerSec,
+} from "@/components/ui/SpeedControl";
 import { OrbitCanvas } from "@/viz/OrbitCanvas";
 import { getBody } from "@/data/catalog";
 
@@ -14,7 +19,12 @@ function ExploreHome() {
   const focusParam = searchParams.get("focus");
 
   const [focusId, setFocusId] = useState<string | null>(null);
+  const [speedMultiple, setSpeedMultiple] = useState(DEFAULT_SPEED_PRESET.multiple);
   const focus = focusId ? getBody(focusId) : undefined;
+  const simDaysPerSec = useMemo(
+    () => multipleToDaysPerSec(speedMultiple),
+    [speedMultiple],
+  );
 
   // Hydrate (and re-hydrate) from ?focus=
   useEffect(() => {
@@ -59,7 +69,7 @@ function ExploreHome() {
   return (
     <AppShell rail={<BodyRail activeId={focusId ?? undefined} onFocus={onRailFocus} />}>
       <div className="relative flex h-[calc(100vh-3.5rem)] flex-col md:flex-row">
-        <div className="flex min-h-0 min-w-0 flex-1 flex-col">
+        <div className="relative flex min-h-0 min-w-0 flex-1 flex-col">
           <div className="flex items-center justify-between gap-3 border-b border-white/10 px-4 py-2">
             <div>
               <h1 className="text-sm font-medium text-zinc-200">Explore</h1>
@@ -69,8 +79,19 @@ function ExploreHome() {
               </p>
             </div>
           </div>
-          <div className="min-h-0 flex-1">
-            <OrbitCanvas focusId={focusId} onSelect={onSelect} />
+          <div className="relative min-h-0 flex-1">
+            <OrbitCanvas
+              focusId={focusId}
+              onSelect={onSelect}
+              highlightColor={focus?.color}
+              simDaysPerSec={simDaysPerSec}
+            />
+            <div className="pointer-events-none absolute bottom-3 left-3 right-3 z-10 flex justify-start md:right-auto">
+              <SpeedControl
+                multiple={speedMultiple}
+                onMultipleChange={setSpeedMultiple}
+              />
+            </div>
           </div>
         </div>
         <FactsPanel body={focus} onClear={onClear} />

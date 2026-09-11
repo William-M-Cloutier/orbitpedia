@@ -19,6 +19,8 @@ type Props = {
   focusId?: string | null;
   onSelect?: (id: string | null) => void;
   highlightColor?: string;
+  /** Simulated days advanced per real second while following. */
+  simDaysPerSec?: number;
 };
 
 export function OrbitCanvas(props: Props) {
