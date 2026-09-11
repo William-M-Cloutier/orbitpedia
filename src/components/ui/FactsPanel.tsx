@@ -29,6 +29,28 @@ function Stat({ label, value }: { label: string; value: string }) {
   );
 }
 
+
+function formatDiscoveryDate(raw: string): string {
+  // Prefer readable calendar date; fall back to the raw catalog string.
+  const iso = /^(\d{4})-(\d{2})-(\d{2})$/.exec(raw);
+  if (iso) {
+    const d = new Date(Date.UTC(Number(iso[1]), Number(iso[2]) - 1, Number(iso[3])));
+    return d.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      timeZone: "UTC",
+    });
+  }
+  return raw;
+}
+
+function discoveryDisplay(body: Body): string {
+  if (body.facts.discoveryDate) return formatDiscoveryDate(body.facts.discoveryDate);
+  if (body.kind === "star" || body.id === "sun") return "N/A";
+  return "Known since antiquity";
+}
+
 export function FactsPanel({ body, onClear }: Props) {
   const [expanded, setExpanded] = useState(false);
 
@@ -56,7 +78,7 @@ export function FactsPanel({ body, onClear }: Props) {
     body.orbit?.periodD ??
     (body.orbit ? periodFromA(body.orbit.aAu) : undefined);
   const note = body.facts.discoveryNotes;
-  const discovered = body.facts.discoveryDate;
+  const discovered = discoveryDisplay(body);
 
   return (
     <aside className="pointer-events-auto flex max-h-[45vh] w-full flex-col overflow-hidden border-t border-white/10 bg-[#080d18]/95 backdrop-blur md:max-h-none md:h-full md:w-72 md:shrink-0 md:border-l md:border-t-0 lg:w-80">
@@ -104,9 +126,7 @@ export function FactsPanel({ body, onClear }: Props) {
                 label="Mean radius"
                 value={formatRadius(body.facts.radiusMeanKm)}
               />
-              {discovered && (
-                <Stat label="Discovered" value={discovered} />
-              )}
+              <Stat label="Discovered" value={discovered} />
               {period != null && (
                 <Stat label="Orbital period" value={formatPeriodDays(period)} />
               )}
@@ -150,9 +170,7 @@ export function FactsPanel({ body, onClear }: Props) {
                   label="Mean radius"
                   value={formatRadius(body.facts.radiusMeanKm)}
                 />
-                {discovered && (
-                  <Stat label="Discovered" value={discovered} />
-                )}
+                <Stat label="Discovered" value={discovered} />
                 {body.facts.densityGcm3 != null && (
                   <Stat
                     label="Density"
