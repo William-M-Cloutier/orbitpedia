@@ -20,8 +20,8 @@
     "source": "JPL Horizons + SSD phys_par",
     "sources": [
       {
-        "name": "JPL Horizons API (ELEMENTS @ J2000)",
-        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='399'&EPHEM_TYPE=ELEMENTS&CENTER='500@10'&START_TIME='JD2451545.0'",
+        "name": "JPL Horizons web app",
+        "url": "https://ssd.jpl.nasa.gov/horizons/app.html",
         "fields": [
           "orbit.epochJd",
           "orbit.aAu",

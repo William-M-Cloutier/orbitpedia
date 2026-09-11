@@ -21,6 +21,10 @@ const OMITTED_OUT = join("/tmp", "orbitpedia-ingest-omitted.json");
 const SYSTEM_ID = "solar";
 
 const HORIZONS = "https://ssd.jpl.nasa.gov/api/horizons.api";
+/** Human-readable pages only in meta.sources (never raw API query URLs). */
+const HORIZONS_APP = "https://ssd.jpl.nasa.gov/horizons/app.html";
+const SATS_PHYS_PAR_URL = "https://ssd.jpl.nasa.gov/sats/phys_par.html";
+const SBDB_LOOKUP = "https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/";
 const SBDB = "https://ssd-api.jpl.nasa.gov/sbdb.api";
 const PHYS_PAR_URL = "https://ssd.jpl.nasa.gov/planets/phys_par.html";
 const G_SI = 6.6743e-11; // CODATA 2018
@@ -318,7 +322,7 @@ function asteroidFromSbdb(meta, data) {
   const sources = [
     {
       name: "JPL SBDB API",
-      url: `${SBDB}?des=${meta.sbdbDes}&phys-par=true&full-prec=true`,
+      url: `${SBDB_LOOKUP}${encodeURIComponent(meta.sbdbDes)}`,
       fields: [
         "orbit.aAu",
         "orbit.e",
@@ -391,8 +395,8 @@ async function main() {
       source: "JPL Horizons Sun physical properties (IAU2015 radius)",
       sources: [
         {
-          name: "JPL Horizons API (Sun OBJ_DATA)",
-          url: `${HORIZONS}?format=json&COMMAND=10&OBJ_DATA=YES&MAKE_EPHEM=NO`,
+          name: "JPL Horizons web app",
+          url: HORIZONS_APP,
           fields: [
             "facts.massKg",
             "facts.radiusMeanKm",
@@ -440,8 +444,8 @@ async function main() {
         source: "JPL Horizons + SSD phys_par",
         sources: [
           {
-            name: "JPL Horizons API (ELEMENTS @ J2000)",
-            url: `${HORIZONS}?format=json&COMMAND='${p.horizonId}'&EPHEM_TYPE=ELEMENTS&CENTER='500@10'&START_TIME='JD2451545.0'`,
+            name: "JPL Horizons web app",
+            url: HORIZONS_APP,
             fields: [
               "orbit.epochJd",
               "orbit.aAu",
@@ -501,8 +505,8 @@ async function main() {
           source: "JPL Horizons Moon vs Earth (ELEMENTS + OBJ_DATA)",
           sources: [
             {
-              name: "JPL Horizons API (Moon 301 ELEMENTS, CENTER=Earth 399)",
-              url: `${HORIZONS}?format=json&COMMAND='301'&EPHEM_TYPE=ELEMENTS&CENTER='500@399'`,
+              name: "JPL Horizons web app",
+              url: HORIZONS_APP,
               fields: [
                 "orbit.epochJd",
                 "orbit.aAu",
@@ -517,8 +521,8 @@ async function main() {
               ],
             },
             {
-              name: "JPL Horizons / IAU Moon physical parameters",
-              url: `${HORIZONS}?format=json&COMMAND='301'&OBJ_DATA=YES&MAKE_EPHEM=NO`,
+              name: "JPL SSD satellite physical parameters",
+              url: SATS_PHYS_PAR_URL,
               fields: [
                 "facts.massKg",
                 "facts.radiusMeanKm",

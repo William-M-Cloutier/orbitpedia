@@ -235,6 +235,12 @@ function findCentralBody(bodies, idHint) {
 function collectWeakFieldFlags(body, centralId) {
   const flags = [];
   if (!body.meta.sources?.length) flags.push("meta.sources missing");
+  for (const s of body.meta.sources ?? []) {
+    const u = String(s.url ?? "");
+    if (/horizons\.api/i.test(u) || /format=json/i.test(u) || /\/api\//i.test(u)) {
+      flags.push(`meta.sources must be human page, not API: ${u.slice(0, 96)}`);
+    }
+  }
   if (!body.meta.fetchedAt) flags.push("meta.fetchedAt missing");
   if (!body.meta.provenance && !body.meta.source) {
     flags.push("meta.provenance|source missing");

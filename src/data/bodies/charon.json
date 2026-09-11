@@ -28,8 +28,8 @@
     "source": "JPL Horizons Charon vs Pluto (ELEMENTS + OBJ_DATA)",
     "sources": [
       {
-        "name": "JPL Horizons API (Charon 901 ELEMENTS, CENTER=pluto 999)",
-        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='901'&EPHEM_TYPE=ELEMENTS&CENTER='500@999'&START_TIME='JD2451545.0'",
+        "name": "JPL Horizons web app",
+        "url": "https://ssd.jpl.nasa.gov/horizons/app.html",
         "fields": [
           "orbit.epochJd",
           "orbit.aAu",
@@ -45,8 +45,8 @@
         ]
       },
       {
-        "name": "JPL Horizons API (Charon OBJ_DATA physical)",
-        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='901'&OBJ_DATA=YES&MAKE_EPHEM=NO",
+        "name": "JPL SSD satellite physical parameters",
+        "url": "https://ssd.jpl.nasa.gov/sats/phys_par.html",
         "fields": [
           "facts.massKg",
           "facts.radiusMeanKm",

@@ -19,8 +19,8 @@
     "source": "JPL Horizons Sun physical properties (IAU2015 radius)",
     "sources": [
       {
-        "name": "JPL Horizons API (Sun OBJ_DATA)",
-        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=10&OBJ_DATA=YES&MAKE_EPHEM=NO",
+        "name": "JPL SSD planetary physical parameters",
+        "url": "https://ssd.jpl.nasa.gov/planets/phys_par.html",
         "fields": [
           "facts.massKg",
           "facts.radiusMeanKm",

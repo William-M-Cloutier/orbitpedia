@@ -33,8 +33,8 @@
     "source": "JPL Horizons Europa vs Jupiter (ELEMENTS + OBJ_DATA)",
     "sources": [
       {
-        "name": "JPL Horizons API (Europa 502 ELEMENTS, CENTER=jupiter 599)",
-        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='502'&EPHEM_TYPE=ELEMENTS&CENTER='500@599'&START_TIME='JD2451545.0'",
+        "name": "JPL Horizons web app",
+        "url": "https://ssd.jpl.nasa.gov/horizons/app.html",
         "fields": [
           "orbit.epochJd",
           "orbit.aAu",
@@ -50,8 +50,8 @@
         ]
       },
       {
-        "name": "JPL Horizons API (Europa OBJ_DATA physical)",
-        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='502'&OBJ_DATA=YES&MAKE_EPHEM=NO",
+        "name": "JPL SSD satellite physical parameters",
+        "url": "https://ssd.jpl.nasa.gov/sats/phys_par.html",
         "fields": [
           "facts.massKg",
           "facts.radiusMeanKm",
