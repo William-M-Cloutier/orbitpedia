@@ -12,8 +12,8 @@ const CatalogChartsDynamic = dynamic(
   },
 );
 
-type Props = { systemId?: string };
+type Props = { systemId?: string; focusId?: string };
 
-export function CatalogChartsLazy({ systemId }: Props) {
-  return <CatalogChartsDynamic systemId={systemId} />;
+export function CatalogChartsLazy({ systemId, focusId }: Props) {
+  return <CatalogChartsDynamic systemId={systemId} focusId={focusId} />;
 }

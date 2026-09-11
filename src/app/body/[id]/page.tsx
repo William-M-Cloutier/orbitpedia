@@ -178,7 +178,7 @@ export default async function BodyPage({ params }: Props) {
           <h2 className="mb-4 text-lg font-medium text-zinc-200">
             Catalog graphs
           </h2>
-          <CatalogChartsLazy systemId={body.systemId} />
+          <CatalogChartsLazy systemId={body.systemId} focusId={body.id} />
         </section>
       </div>
     </AppShell>
