@@ -26,8 +26,8 @@ type Props = {
   simDaysPerSec?: number;
 };
 
-/** Fallback when UI omits speed (matches former hard-coded follow rate). */
-const DEFAULT_SIM_DAYS_PER_SEC = 6;
+/** Fallback when UI omits speed — matches Explore Default preset (0.5 d/s). */
+const DEFAULT_SIM_DAYS_PER_SEC = 0.5;
 
 type SimApi = {
   /** Simulated days since follow started (or resumed). */
