@@ -268,6 +268,20 @@ const BodyMesh = memo(function BodyMesh({
   );
 });
 
+const Y_AXIS = new THREE.Vector3(0, 1, 0);
+
+/** Normalize angle delta into (-π, π]. */
+function wrapDeltaAngle(d: number): number {
+  if (d > Math.PI) return d - Math.PI * 2;
+  if (d <= -Math.PI) return d + Math.PI * 2;
+  return d;
+}
+
+/**
+ * FollowCamera: slides look-at with the body, rides along by yawing the
+ * camera offset with orbital bearing change, and never overwrites distance —
+ * user OrbitControls dolly/orbit/pan still win on offset length/direction.
+ */
 function FollowCamera() {
   const { getSimDays, following, focusId } = useContext(SimContext);
   const camera = useThree((s) => s.camera);
@@ -276,6 +290,7 @@ function FollowCamera() {
   const target = useRef(new THREE.Vector3(0, 0, 0));
   const desired = useRef(new THREE.Vector3(0, 0, 0));
   const offset = useRef(new THREE.Vector3());
+  const lastBearing = useRef<number | null>(null);
 
   // Snap / re-frame when focus changes (canned offset only on focus change).
   useEffect(() => {
@@ -301,6 +316,9 @@ function FollowCamera() {
       controls.update();
     }
     offset.current.copy(camera.position).sub(target.current);
+    lastBearing.current = focusIsOrbiter(focusId)
+      ? Math.atan2(pos[0], pos[2])
+      : null;
     invalidate();
   }, [focusId, camera, controls, invalidate]); // eslint-disable-line react-hooks/exhaustive-deps -- snap on focus change only
 
@@ -313,12 +331,26 @@ function FollowCamera() {
     const pos = bodyPosition(b, getSimDays());
     desired.current.set(pos[0], pos[1], pos[2]);
 
-    // Preserve user's relative camera offset; only slide the look-at target.
+    // Sync offset from what OrbitControls did (dolly / orbit / pan) relative
+    // to the previous target — preserves user zoom distance.
     if (controls?.target) {
       offset.current.copy(camera.position).sub(controls.target);
     } else {
       offset.current.copy(camera.position).sub(target.current);
     }
+
+    // Ride-along: yaw horizontal offset by change in body's orbital bearing.
+    const bearing = Math.atan2(pos[0], pos[2]);
+    if (lastBearing.current != null) {
+      const dYaw = wrapDeltaAngle(bearing - lastBearing.current);
+      if (dYaw !== 0) {
+        const len = offset.current.length();
+        offset.current.applyAxisAngle(Y_AXIS, dYaw);
+        // Keep length stable through rotation (user zoom owns length).
+        if (len > 1e-6) offset.current.setLength(len);
+      }
+    }
+    lastBearing.current = bearing;
 
     const lerp = 1 - Math.exp(-4 * delta);
     target.current.lerp(desired.current, lerp);
@@ -326,6 +358,8 @@ function FollowCamera() {
     camera.position.copy(target.current).add(offset.current);
     if (controls?.target) {
       controls.target.copy(target.current);
+      // update() re-reads camera→spherical so the next user gesture
+      // continues from the ride-along pose without a jump.
       controls.update();
     } else {
       camera.lookAt(target.current);
@@ -335,19 +369,35 @@ function FollowCamera() {
   return null;
 }
 
-/** Keeps demand frameloop animating only while following. */
-function FollowInvalidator({ following }: { following: boolean }) {
+/**
+ * Demand frameloop: keep invalidating while following OR idle-ambient.
+ * Pause while the tab is hidden; OrbitControls onChange still invalidates
+ * during active user interaction.
+ */
+function DemandInvalidator({ active }: { active: boolean }) {
   const invalidate = useThree((s) => s.invalidate);
   useEffect(() => {
-    if (!following) return;
+    if (!active) return;
     let id = 0;
+    let alive = true;
     const loop = () => {
-      invalidate();
+      if (!alive) return;
+      if (typeof document === "undefined" || !document.hidden) {
+        invalidate();
+      }
       id = requestAnimationFrame(loop);
     };
     id = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(id);
-  }, [following, invalidate]);
+    const onVis = () => {
+      if (!document.hidden) invalidate();
+    };
+    document.addEventListener("visibilitychange", onVis);
+    return () => {
+      alive = false;
+      cancelAnimationFrame(id);
+      document.removeEventListener("visibilitychange", onVis);
+    };
+  }, [active, invalidate]);
   return null;
 }
 
@@ -416,6 +466,9 @@ function SceneContent({ focusId, onSelect, highlightColor }: Props) {
     [],
   );
   const following = focusIsOrbiter(focusId);
+  // Idle system view: gentle camera yaw via OrbitControls autoRotate.
+  // (Cheaper than a root-group spin; no residual transform on follow handoff.)
+  const idleAmbient = !focusId;
   const invalidate = useThree((s) => s.invalidate);
 
   return (
@@ -445,26 +498,36 @@ function SceneContent({ focusId, onSelect, highlightColor }: Props) {
       <OrbitControls
         makeDefault
         enablePan
+        enableZoom
+        enableRotate
+        autoRotate={idleAmbient}
+        autoRotateSpeed={0.35}
         minDistance={0.5}
         maxDistance={80}
         onChange={() => invalidate()}
       />
       <FollowCamera />
-      <FollowInvalidator following={following} />
+      <DemandInvalidator active={following || idleAmbient} />
     </SimProvider>
   );
 }
 
 export function OrbitScene({ focusId, onSelect, highlightColor }: Props) {
   return (
-    <div className="h-full w-full">
+    <div
+      className="h-full w-full"
+      onContextMenu={(e) => {
+        e.preventDefault();
+        onSelect?.(null);
+      }}
+    >
       <Canvas
         frameloop="demand"
         camera={{ position: [0, 8, 14], fov: 45, near: 0.01, far: 250 }}
         dpr={[1, 1.5]}
         gl={{ antialias: true, powerPreference: "high-performance" }}
         onPointerMissed={() => {
-          /* keep selection; Esc clears at page level */
+          /* keep selection on empty left-click; Esc / right-click / toggle clear */
         }}
       >
         <SceneContent
