@@ -93,13 +93,20 @@ export function BodyRail({
   const [open, setOpen] = useState(true);
   /** Parent ids whose children are folded in the All-tab tree (list only). */
   const [collapsed, setCollapsed] = useState<Set<string>>(() => new Set());
-  /** All-tab only: when false, moon rows are omitted from the list (Explore unchanged). */
-  const [showMoonsInAll, setShowMoonsInAll] = useState(true);
 
   const bodies = useMemo(() => {
     const id = systemId ?? getHomeSystem().id;
     return getBodiesForSystem(id);
   }, [systemId]);
+
+  const parentIdsWithChildren = useMemo(() => {
+    const { children } = buildChildrenMap(bodies);
+    return [...children.keys()];
+  }, [bodies]);
+
+  const allMoonsCollapsed =
+    parentIdsWithChildren.length > 0 &&
+    parentIdsWithChildren.every((id) => collapsed.has(id));
 
   const rows = useMemo(() => {
     const filtered =
@@ -108,11 +115,20 @@ export function BodyRail({
     if (filter !== "all") {
       return filtered.map((body) => ({ body, depth: 0, childCount: 0 }));
     }
-    const treeBodies = showMoonsInAll
-      ? bodies
-      : bodies.filter((b) => b.kind !== "moon");
-    return buildRailTree(treeBodies, collapsed);
-  }, [bodies, filter, collapsed, showMoonsInAll]);
+    return buildRailTree(bodies, collapsed);
+  }, [bodies, filter, collapsed]);
+
+  const toggleAllMoonsInList = useCallback(() => {
+    setCollapsed((prev) => {
+      if (
+        parentIdsWithChildren.length > 0 &&
+        parentIdsWithChildren.every((id) => prev.has(id))
+      ) {
+        return new Set(); // expand all
+      }
+      return new Set(parentIdsWithChildren); // collapse all
+    });
+  }, [parentIdsWithChildren]);
 
   const toggleCollapsed = useCallback((id: string) => {
     setCollapsed((prev) => {
@@ -182,23 +198,23 @@ export function BodyRail({
             </button>
           ))}
         </div>
-        {filter === "all" ? (
+        {filter === "all" && parentIdsWithChildren.length > 0 ? (
           <button
             type="button"
-            onClick={() => setShowMoonsInAll((v) => !v)}
+            onClick={toggleAllMoonsInList}
             className={`mt-2 w-full rounded px-2 py-1 text-[11px] ${
-              showMoonsInAll
-                ? "bg-white/5 text-zinc-400 hover:text-zinc-200"
-                : "bg-sky-500/15 text-sky-200"
+              allMoonsCollapsed
+                ? "bg-sky-500/15 text-sky-200"
+                : "bg-white/5 text-zinc-400 hover:text-zinc-200"
             }`}
-            aria-pressed={!showMoonsInAll}
+            aria-pressed={allMoonsCollapsed}
             title={
-              showMoonsInAll
-                ? "Hide moons from this list only"
-                : "Show moons in this list"
+              allMoonsCollapsed
+                ? "Expand all moon lists"
+                : "Collapse all moon lists"
             }
           >
-            {showMoonsInAll ? "Hide moons in list" : "Show moons in list"}
+            {allMoonsCollapsed ? "Show moons in list" : "Hide moons in list"}
           </button>
         ) : null}
       </div>
@@ -244,15 +260,19 @@ export function BodyRail({
               >
                 {isCollapsed ? ">" : "<"}
               </button>
-            ) : (
-              <span className="inline-flex w-4 shrink-0 justify-center text-[10px] text-zinc-600" aria-hidden>
-                {depth > 0 ? "└" : ""}
-              </span>
-            );
+            ) : null;
 
-          // Twisty is a sibling of the row control — never nest <button> in <button>.
+          // Twisty sits to the RIGHT of the planet row — never nest <button> in <button>.
           const label = (
             <>
+              {depth > 0 ? (
+                <span
+                  className="shrink-0 text-[10px] text-zinc-600"
+                  aria-hidden
+                >
+                  └
+                </span>
+              ) : null}
               {swatch}
               <span className="truncate">{b.name}</span>
             </>
@@ -287,7 +307,6 @@ export function BodyRail({
             >
               {selectMode && onToggleSelect ? (
                 <>
-                  {twisty}
                   <button
                     type="button"
                     onClick={() => onToggleSelect(b.id)}
@@ -299,10 +318,10 @@ export function BodyRail({
                   >
                     {label}
                   </button>
+                  {twisty}
                 </>
               ) : onFocus ? (
                 <>
-                  {twisty}
                   <button
                     type="button"
                     onClick={() => onFocus(b.id)}
@@ -310,14 +329,15 @@ export function BodyRail({
                   >
                     {label}
                   </button>
+                  {twisty}
                   {hideBtn}
                 </>
               ) : (
                 <>
-                  {twisty}
                   <Link href={`/body/${b.id}`} className={rowClass}>
                     {label}
                   </Link>
+                  {twisty}
                 </>
               )}
             </li>
