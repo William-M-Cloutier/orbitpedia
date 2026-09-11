@@ -85,6 +85,18 @@ export const BodyMetaSchema = z
     }
   });
 
+
+export const AppearanceSchema = z
+  .object({
+    /** Registry key for a future texture pack — never a URL, path, or bytes. */
+    textureId: z
+      .string()
+      .min(1)
+      .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "textureId must be a kebab-case registry key")
+      .optional(),
+  })
+  .strict();
+
 export const BodySchema = z
   .object({
     id: z.string().min(1),
@@ -100,6 +112,8 @@ export const BodySchema = z
     color: z.string().optional(),
     horizonId: z.string().optional(),
     sbdbDes: z.string().optional(),
+    /** Optional render hint — textureId is a registry key only (no URLs/bytes). */
+    appearance: AppearanceSchema.optional(),
     meta: BodyMetaSchema,
   })
   .superRefine((body, ctx) => {
@@ -212,6 +226,7 @@ export type OrbitFrame = z.infer<typeof OrbitFrameSchema>;
 export type Confidence = z.infer<typeof ConfidenceSchema>;
 export type Orbit = z.infer<typeof OrbitSchema>;
 export type Facts = z.infer<typeof FactsSchema>;
+export type Appearance = z.infer<typeof AppearanceSchema>;
 export type BodyMeta = z.infer<typeof BodyMetaSchema>;
 export type Body = z.infer<typeof BodySchema>;
 export type SystemMeta = z.infer<typeof SystemMetaSchema>;

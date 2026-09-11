@@ -82,6 +82,15 @@ const BodyMetaSchema = z
       });
     }
   });
+const AppearanceSchema = z
+  .object({
+    textureId: z
+      .string()
+      .min(1)
+      .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "textureId must be a kebab-case registry key")
+      .optional(),
+  })
+  .strict();
 const BodySchema = z.object({
   id: z.string().min(1),
   name: z.string().min(1),
@@ -94,6 +103,7 @@ const BodySchema = z.object({
   color: z.string().optional(),
   horizonId: z.string().optional(),
   sbdbDes: z.string().optional(),
+  appearance: AppearanceSchema.optional(),
   meta: BodyMetaSchema,
 });
 const SystemMetaSchema = z.object({
