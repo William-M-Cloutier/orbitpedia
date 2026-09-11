@@ -139,14 +139,14 @@ function parseHorizonsElements(resultText) {
   };
 }
 
-async function fetchHorizonsElements(horizonId) {
+async function fetchHorizonsElements(horizonId, center = "500@10") {
   const params = new URLSearchParams({
     format: "json",
     COMMAND: `'${horizonId}'`,
     OBJ_DATA: "NO",
     MAKE_EPHEM: "YES",
     EPHEM_TYPE: "ELEMENTS",
-    CENTER: "'500@10'",
+    CENTER: `'${center}'`,
     START_TIME: "'JD2451545.0'",
     STOP_TIME: "'JD2451546.0'",
     STEP_SIZE: "'1d'",
@@ -472,6 +472,67 @@ async function main() {
       },
     };
     bodies.push(body);
+
+    if (p.id === "earth") {
+      console.log("Fetching Moon orbit (Horizons 301 vs Earth)…");
+      const moonOrbit = await fetchHorizonsElements("301", "500@399");
+      await sleep(250);
+      const moonFacts = {
+        massKg: 7.349e22,
+        radiusMeanKm: 1737.53,
+        densityGcm3: 3.3437,
+        rotationPeriodD: 27.321661,
+        albedo: 0.12,
+        discoveryNotes: "Known since antiquity",
+      };
+      bodies.push({
+        id: "moon",
+        name: "Moon",
+        kind: "moon",
+        systemId: SYSTEM_ID,
+        parentId: "earth",
+        aliases: ["Luna"],
+        facts: moonFacts,
+        orbit: { ...moonOrbit, frame: "parent" },
+        color: "#C8C8C8",
+        horizonId: "301",
+        meta: {
+          source: "JPL Horizons Moon vs Earth (ELEMENTS + OBJ_DATA)",
+          sources: [
+            {
+              name: "JPL Horizons API (Moon 301 ELEMENTS, CENTER=Earth 399)",
+              url: `${HORIZONS}?format=json&COMMAND='301'&EPHEM_TYPE=ELEMENTS&CENTER='500@399'`,
+              fields: [
+                "orbit.epochJd",
+                "orbit.aAu",
+                "orbit.e",
+                "orbit.iDeg",
+                "orbit.omDeg",
+                "orbit.wDeg",
+                "orbit.maDeg",
+                "orbit.periodD",
+                "orbit.frame",
+                "horizonId",
+              ],
+            },
+            {
+              name: "JPL Horizons / IAU Moon physical parameters",
+              url: `${HORIZONS}?format=json&COMMAND='301'&OBJ_DATA=YES&MAKE_EPHEM=NO`,
+              fields: [
+                "facts.massKg",
+                "facts.radiusMeanKm",
+                "facts.densityGcm3",
+                "facts.albedo",
+                "facts.rotationPeriodD",
+              ],
+            },
+          ],
+          fetchedAt: FETCHED_AT,
+          confidence: "known",
+          unitsVersion: 1,
+        },
+      });
+    }
   }
 
   // Asteroids
