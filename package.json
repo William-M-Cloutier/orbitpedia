@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "validate:catalog": "node scripts/validate-catalog.mjs"
+    "validate:catalog": "node scripts/validate-catalog.mjs",
+    "test": "node scripts/orbit-sanity.mjs",
+    "orbit-sanity": "node scripts/orbit-sanity.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.8",

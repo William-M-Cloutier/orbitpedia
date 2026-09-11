@@ -33,9 +33,12 @@ export function radiusFromAnomaly(a: number, e: number, nu: number): number {
   return (a * (1 - e * e)) / (1 + e * Math.cos(nu));
 }
 
+/** Sidereal / Gaussian year (days) for heliocentric Kepler-3 mean period. */
+export const GAUSS_YEAR_D = 365.256363;
+
 /** Period (days) from semi-major axis (AU) via Kepler's 3rd law (Sun-centered). */
 export function periodFromA(aAu: number): number {
-  return Math.pow(aAu, 1.5) * 365.25;
+  return Math.pow(aAu, 1.5) * GAUSS_YEAR_D;
 }
 
 export type OrbitalElements = {

@@ -93,3 +93,16 @@ Options:
 - `--strict-warnings` — fail on missing weak fields (density, albedo, provenance, ids)
 
 Hard-fail rule: every non-central body with an orbit must have periapsis `qAu` or `aAu*(1-e)` **greater than** the central body's physical radius (au). This catches sun-intersecting (or star-intersecting) elements. Schematic viz radii are out of scope — pass a larger `--central-radius-au` only when intentionally testing clearance against a display scale.
+
+## Viz / Kepler orbit-sanity (schematic vs physical)
+
+Physical catalog clearance: `npm run validate:catalog` — `q > centralRadiusAu` (real km→AU).
+
+Schematic mesh clearance + Kepler sampling: `npm test` (`scripts/orbit-sanity.mjs`):
+
+- `q > visualRadius(sun) + visualRadius(body) + margin` (scene AU; sizeTiers — NOT true scale)
+- sampled ellipse `|r|` outside **real** sun radius (au)
+- `periodD ≈ 365.256363 * aAu^1.5` within 2% relative
+- central star: no heliocentric orbit
+- float epsilon: **1e-9 au**
+- units: AU, degrees (`*Deg`), Julian Day (`epochJd`); fields `aAu,e,iDeg,omDeg,wDeg,maDeg,periodD,epochJd[,qAu]`
