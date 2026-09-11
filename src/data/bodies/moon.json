@@ -1,0 +1,68 @@
+{
+  "id": "moon",
+  "name": "Moon",
+  "kind": "moon",
+  "systemId": "solar",
+  "parentId": "earth",
+  "aliases": [
+    "Luna"
+  ],
+  "facts": {
+    "massKg": 7.349e+22,
+    "radiusMeanKm": 1737.53,
+    "densityGcm3": 3.3437,
+    "rotationPeriodD": 27.321661,
+    "albedo": 0.12,
+    "discoveryNotes": "Known since antiquity"
+  },
+  "orbit": {
+    "frame": "parent",
+    "epochJd": 2451544.5,
+    "aAu": 0.002548289534928953,
+    "e": 0.06476694128611285,
+    "iDeg": 5.240010829674768,
+    "omDeg": 123.9837028145578,
+    "wDeg": 308.1359034620368,
+    "maDeg": 140.7402571142365,
+    "periodD": 26.94659463562457,
+    "qAu": 0.002383244616240193
+  },
+  "color": "#C8C8C8",
+  "horizonId": "301",
+  "meta": {
+    "source": "JPL Horizons Moon vs Earth (ELEMENTS + OBJ_DATA)",
+    "sources": [
+      {
+        "name": "JPL Horizons API (Moon 301 ELEMENTS, CENTER=Earth 399)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='301'&EPHEM_TYPE=ELEMENTS&CENTER='500@399'&START_TIME='2000-01-01'",
+        "fields": [
+          "orbit.epochJd",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "orbit.qAu",
+          "orbit.frame",
+          "horizonId"
+        ]
+      },
+      {
+        "name": "JPL Horizons API (Moon OBJ_DATA physical)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='301'&OBJ_DATA=YES&MAKE_EPHEM=NO",
+        "fields": [
+          "facts.massKg",
+          "facts.radiusMeanKm",
+          "facts.densityGcm3",
+          "facts.albedo",
+          "facts.rotationPeriodD"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-11T16:48:53.176Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  }
+}
