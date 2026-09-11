@@ -327,22 +327,33 @@ function runSystemSanity(system) {
 
   const orbiters = bodies.filter((b) => b.id !== central.id);
 
-  // Shared heliocentric display scale (compact exoplanet systems).
+  // Heliocentric display scale: star clearance only (not sibling planet gaps —
+  // shared sibling inflate ruined Schematic solar ~35×).
   const helioKids = orbiters.filter(
     (b) => hasUsableOrbit(b) && b.orbit?.frame !== "parent",
   );
-  const helioScale = parentFrameSharedDisplayScale(
-    sunVisual,
-    helioKids.map((c) => ({
-      qAu: periapsisAu(c.orbit),
-      aAu: c.orbit.aAu,
-      e: c.orbit.e,
-      vis: visualRadius(c, tiers),
-    })),
-    tiers.PERIHELION_CLEARANCE_MARGIN_AU,
-  );
+  let helioScale = 1;
+  for (const c of helioKids) {
+    helioScale = Math.max(
+      helioScale,
+      parentFrameDisplayScale(
+        periapsisAu(c.orbit),
+        sunVisual,
+        visualRadius(c, tiers),
+        tiers.PERIHELION_CLEARANCE_MARGIN_AU,
+      ),
+    );
+  }
   if (helioKids.length) {
     ok(`${system.id}: heliocentric display scale=${helioScale.toPrecision(4)}`);
+    if (system.id === "solar" || system.id === "sol" || system.id === "solar-system") {
+      // Star clearance alone is ~1.05; sibling-gap blow-up was ~35.
+      if (helioScale > 2) {
+        fail(`${system.id}: schematic heliocentric scale ${helioScale} must stay near 1 (no sibling-gap blow-up)`);
+      } else {
+        ok(`${system.id}: heliocentric scale near 1 (no sibling-gap blow-up)`);
+      }
+    }
   }
 
   for (const b of orbiters) {

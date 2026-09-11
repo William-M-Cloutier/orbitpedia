@@ -27,6 +27,7 @@ import { periodFromA, positionAtMa, sampleOrbit } from "@/lib/kepler";
 import {
   DEFAULT_SIZE_MODE,
   orbitDistanceScale,
+  parentFrameDisplayScale,
   parentFrameSharedDisplayScale,
   visualRadius,
   type SizeMode,
@@ -70,7 +71,14 @@ function useSystemViz(): SystemVizApi {
   return api;
 }
 
-/** Shared heliocentric display scale so schematic star meshes clear compact orbits. */
+/**
+ * Heliocentric display scale: star↔planet periapsis clearance only.
+ * Do NOT use parentFrameSharedDisplayScale here — its sibling mesh-gap loop
+ * blew Schematic solar ~35× (Sun speck; Pluto past starfield). Moons keep
+ * shared sibling clearance via parentDisplayScale (parent-frame only).
+ * Compact systems (e.g. TRAPPIST-1) still inflate so schematic star mesh
+ * does not swallow inner orbits.
+ */
 function heliocentricDisplayScale(bodies: Body[], sizeMode: SizeMode): number {
   const star =
     bodies.find((b) => b.kind === "star" && !b.parentId) ??
@@ -80,18 +88,15 @@ function heliocentricDisplayScale(bodies: Body[], sizeMode: SizeMode): number {
     (b) => hasUsableOrbit(b) && b.orbit?.frame !== "parent",
   );
   if (kids.length === 0) return 1;
-  return parentFrameSharedDisplayScale(
-    visualRadius(star, sizeMode, bodies),
-    kids.map((c) => {
-      const o = c.orbit!;
-      return {
-        qAu: orbitQAu(o),
-        aAu: o.aAu,
-        e: o.e,
-        vis: visualRadius(c, sizeMode, bodies),
-      };
-    }),
-  );
+  const starVis = visualRadius(star, sizeMode, bodies);
+  let s = 1;
+  for (const c of kids) {
+    s = Math.max(
+      s,
+      parentFrameDisplayScale(orbitQAu(c.orbit!), starVis, visualRadius(c, sizeMode, bodies)),
+    );
+  }
+  return s;
 }
 
 /** Fallback when UI omits speed — matches Explore Default preset (0.2 d/s = 1 day / 5s). */
@@ -294,7 +299,7 @@ function Starfield({ count = 3200 }: { count?: number }) {
     const col = new Float32Array(count * 3);
     const tmp = new THREE.Color();
     for (let i = 0; i < count; i++) {
-      const r = 55 + Math.random() * 90;
+      const r = 80 + Math.random() * 320;
       const u = Math.random();
       const v = Math.random();
       const theta = 2 * Math.PI * u;
@@ -353,7 +358,7 @@ function Starfield({ count = 3200 }: { count?: number }) {
 function SoftHaze() {
   return (
     <mesh>
-      <sphereGeometry args={[28, 24, 16]} />
+      <sphereGeometry args={[120, 24, 16]} />
       <meshBasicMaterial
         color="#1a2a4a"
         transparent
