@@ -56,17 +56,45 @@ export function minClearanceAu(
   return STAR_VISUAL_RADIUS + bodyRadius + PERIHELION_CLEARANCE_MARGIN_AU;
 }
 
-function schematicRadius(body: Body): number {
-  const tiers: Record<BodyKind, number> = {
+/** Cap moon mesh as a fraction of its parent schematic mesh (readability). */
+const SCHEMATIC_MOON_MAX_OF_PARENT = 0.45;
+const SCHEMATIC_MOON_MIN = 0.012;
+
+function schematicRadiusNonMoon(body: Body): number {
+  const tiers: Record<Exclude<BodyKind, "moon">, number> = {
     star: STAR_VISUAL_RADIUS,
     planet: (body.facts.radiusMeanKm ?? 0) > 20000
       ? PLANET_VISUAL_RADIUS_LARGE
       : PLANET_VISUAL_RADIUS_SMALL,
     dwarf_planet: 0.07,
     asteroid: 0.05,
-    moon: 0.04,
   };
-  return tiers[body.kind];
+  return tiers[body.kind as Exclude<BodyKind, "moon">] ?? 0.05;
+}
+
+/**
+ * Schematic moons use the same rule everywhere: parentMesh * (R_moon/R_parent),
+ * clamped for readability. Flat moon tier made Charon ~57% of Pluto while
+ * tiny moons looked fine under gas giants — inconsistent scale.
+ */
+function schematicRadius(body: Body): number {
+  if (body.kind === "moon") {
+    const parent = body.parentId ? getBody(body.parentId) : undefined;
+    if (parent && parent.kind !== "moon") {
+      const parentVis = schematicRadiusNonMoon(parent);
+      const pKm = parent.facts.radiusMeanKm ?? 0;
+      const cKm = body.facts.radiusMeanKm ?? 0;
+      if (pKm > 0 && cKm > 0) {
+        const ratio = cKm / pKm;
+        return Math.min(
+          parentVis * SCHEMATIC_MOON_MAX_OF_PARENT,
+          Math.max(SCHEMATIC_MOON_MIN, parentVis * ratio),
+        );
+      }
+    }
+    return SCHEMATIC_MOON_MIN;
+  }
+  return schematicRadiusNonMoon(body);
 }
 
 /** Max non-star radius (km) in the home system — for proportional fit. */
