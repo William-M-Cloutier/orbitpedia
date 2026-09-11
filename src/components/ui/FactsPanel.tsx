@@ -56,6 +56,7 @@ export function FactsPanel({ body, onClear }: Props) {
     body.orbit?.periodD ??
     (body.orbit ? periodFromA(body.orbit.aAu) : undefined);
   const note = body.facts.discoveryNotes;
+  const discovered = body.facts.discoveryDate;
 
   return (
     <aside className="pointer-events-auto flex max-h-[45vh] w-full flex-col overflow-hidden border-t border-white/10 bg-[#080d18]/95 backdrop-blur md:max-h-none md:h-full md:w-72 md:shrink-0 md:border-l md:border-t-0 lg:w-80">
@@ -103,6 +104,9 @@ export function FactsPanel({ body, onClear }: Props) {
                 label="Mean radius"
                 value={formatRadius(body.facts.radiusMeanKm)}
               />
+              {discovered && (
+                <Stat label="Discovered" value={discovered} />
+              )}
               {period != null && (
                 <Stat label="Orbital period" value={formatPeriodDays(period)} />
               )}
@@ -146,6 +150,9 @@ export function FactsPanel({ body, onClear }: Props) {
                   label="Mean radius"
                   value={formatRadius(body.facts.radiusMeanKm)}
                 />
+                {discovered && (
+                  <Stat label="Discovered" value={discovered} />
+                )}
                 {body.facts.densityGcm3 != null && (
                   <Stat
                     label="Density"

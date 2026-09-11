@@ -427,7 +427,8 @@
               "orbit.wDeg",
               "orbit.maDeg",
               "orbit.periodD",
-              "horizonId"
+              "horizonId",
+              "facts.discoveryDate"
             ]
           },
           {
@@ -438,7 +439,8 @@
               "facts.radiusMeanKm",
               "facts.densityGcm3",
               "facts.rotationPeriodD",
-              "facts.albedo"
+              "facts.albedo",
+              "facts.discoveryDate"
             ]
           },
           {
@@ -493,7 +495,8 @@
               "orbit.wDeg",
               "orbit.maDeg",
               "orbit.periodD",
-              "horizonId"
+              "horizonId",
+              "facts.discoveryDate"
             ]
           },
           {
@@ -504,7 +507,8 @@
               "facts.radiusMeanKm",
               "facts.densityGcm3",
               "facts.rotationPeriodD",
-              "facts.albedo"
+              "facts.albedo",
+              "facts.discoveryDate"
             ]
           },
           {
@@ -559,7 +563,8 @@
               "orbit.wDeg",
               "orbit.maDeg",
               "orbit.periodD",
-              "horizonId"
+              "horizonId",
+              "facts.discoveryDate"
             ]
           },
           {
@@ -570,7 +575,8 @@
               "facts.radiusMeanKm",
               "facts.densityGcm3",
               "facts.rotationPeriodD",
-              "facts.albedo"
+              "facts.albedo",
+              "facts.discoveryDate"
             ]
           },
           {
@@ -633,7 +639,8 @@
               "facts.densityGcm3",
               "facts.albedo",
               "facts.rotationPeriodD",
-              "sbdbDes"
+              "sbdbDes",
+              "facts.discoveryDate"
             ]
           },
           {
@@ -696,7 +703,8 @@
               "facts.densityGcm3",
               "facts.albedo",
               "facts.rotationPeriodD",
-              "sbdbDes"
+              "sbdbDes",
+              "facts.discoveryDate"
             ]
           },
           {
@@ -759,7 +767,8 @@
               "facts.densityGcm3",
               "facts.albedo",
               "facts.rotationPeriodD",
-              "sbdbDes"
+              "sbdbDes",
+              "facts.discoveryDate"
             ]
           },
           {
@@ -820,7 +829,8 @@
               "facts.massKg",
               "facts.albedo",
               "facts.rotationPeriodD",
-              "sbdbDes"
+              "sbdbDes",
+              "facts.discoveryDate"
             ]
           },
           {

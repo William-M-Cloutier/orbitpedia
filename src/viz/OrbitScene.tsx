@@ -26,8 +26,8 @@ type Props = {
   simDaysPerSec?: number;
 };
 
-/** Fallback when UI omits speed — matches Explore Default preset (0.5 d/s). */
-const DEFAULT_SIM_DAYS_PER_SEC = 0.5;
+/** Fallback when UI omits speed — matches Explore Default preset (0.2 d/s = 1 day / 5s). */
+const DEFAULT_SIM_DAYS_PER_SEC = 0.2;
 
 /**
  * Idle OrbitControls autoRotate at default speed.

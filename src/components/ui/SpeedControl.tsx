@@ -21,7 +21,7 @@ export type SpeedPreset = {
 export const SPEED_PRESETS: SpeedPreset[] = [
   { id: "realism", label: "Realism", multiple: 1 },
   { id: "slow", label: "Slow", multiple: 1_440 }, // ~1 day / min
-  { id: "default", label: "Default", multiple: 43_200 }, // 0.5 day / s
+  { id: "default", label: "Default", multiple: 17_280 }, // 0.2 day / s = 1 day / 5s
   { id: "fast", label: "Fast", multiple: 518_400 }, // 6 day / s (former)
   { id: "warp", label: "Warp", multiple: 2_592_000 }, // 30 day / s
 ];
@@ -48,7 +48,11 @@ function formatSpeed(daysPerSec: number): string {
   }
   if (daysPerSec < 1) {
     const secPerDay = 1 / daysPerSec;
-    return `1 day / ${secPerDay < 90 ? `${Math.round(secPerDay)}s` : `${(secPerDay / 60).toPrecision(2)}m`}`;
+    if (secPerDay < 90) {
+      const s = Math.round(secPerDay);
+      return `1 day / ${s}s`;
+    }
+    return `1 day / ${(secPerDay / 60).toPrecision(2)}m`;
   }
   if (daysPerSec < 10) return `${daysPerSec.toPrecision(2)} d/s`;
   return `${Math.round(daysPerSec)} d/s`;
