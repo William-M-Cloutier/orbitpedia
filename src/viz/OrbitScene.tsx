@@ -16,15 +16,13 @@ import * as THREE from "three";
 import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 import {
   getBody,
-  getHomeSystemGraph,
+  getHomeSystem,
   getParent,
+  getSystemGraph,
   hasUsableOrbit,
   listChildren,
 } from "@/data/catalog";
 import type { Body } from "@/data/schema";
-
-/** Explore default: one system graph (home = solar). Additive systems plug in later. */
-const { bodies: systemBodies } = getHomeSystemGraph();
 import { periodFromA, positionAtMa, sampleOrbit } from "@/lib/kepler";
 import {
   DEFAULT_SIZE_MODE,
@@ -47,6 +45,8 @@ type Props = {
   sizeMode?: SizeMode;
   /** Session-only ids with mesh + orbit line suppressed (Explore hide). */
   hiddenIds?: ReadonlySet<string>;
+  /** Active system graph (default: home). Remount OrbitCanvas on change. */
+  systemId?: string;
   /**
    * Canvas-space insets (px) covered by Explore overlays. BodyRail is a flex
    * sibling (outside the canvas) so left is usually 0; Facts overlays the
@@ -55,6 +55,44 @@ type Props = {
   viewInsetLeft?: number;
   viewInsetRight?: number;
 };
+
+type SystemVizApi = {
+  bodies: Body[];
+  /** Shared primary-frame orbit display inflate (compact exoplanet systems). */
+  helioScale: number;
+};
+
+const SystemVizContext = createContext<SystemVizApi | null>(null);
+
+function useSystemViz(): SystemVizApi {
+  const api = useContext(SystemVizContext);
+  if (!api) throw new Error("useSystemViz must be used inside SystemVizContext");
+  return api;
+}
+
+/** Shared heliocentric display scale so schematic star meshes clear compact orbits. */
+function heliocentricDisplayScale(bodies: Body[], sizeMode: SizeMode): number {
+  const star =
+    bodies.find((b) => b.kind === "star" && !b.parentId) ??
+    bodies.find((b) => b.kind === "star");
+  if (!star) return 1;
+  const kids = bodies.filter(
+    (b) => hasUsableOrbit(b) && b.orbit?.frame !== "parent",
+  );
+  if (kids.length === 0) return 1;
+  return parentFrameSharedDisplayScale(
+    visualRadius(star, sizeMode),
+    kids.map((c) => {
+      const o = c.orbit!;
+      return {
+        qAu: orbitQAu(o),
+        aAu: o.aAu,
+        e: o.e,
+        vis: visualRadius(c, sizeMode),
+      };
+    }),
+  );
+}
 
 /** Fallback when UI omits speed — matches Explore Default preset (0.2 d/s = 1 day / 5s). */
 const DEFAULT_SIM_DAYS_PER_SEC = 0.2;
@@ -181,6 +219,7 @@ function bodyPosition(
   simDays: number,
   distScale: number = 1,
   sizeMode: SizeMode = DEFAULT_SIZE_MODE,
+  helioScale: number = 1,
   seen: Set<string> = new Set(),
 ): [number, number, number] {
   if (body.kind === "star" || !body.orbit) return [0, 0, 0];
@@ -188,10 +227,18 @@ function bodyPosition(
   seen.add(body.id);
 
   const s = distScale > 0 ? distScale : 1;
+  const hs = helioScale > 0 ? helioScale : 1;
   if (body.orbit.frame === "parent" && body.parentId) {
     const parent = getParent(body.id) ?? getBody(body.parentId);
     if (parent) {
-      const parentPos = bodyPosition(parent, simDays, distScale, sizeMode, seen);
+      const parentPos = bodyPosition(
+        parent,
+        simDays,
+        distScale,
+        sizeMode,
+        helioScale,
+        seen,
+      );
       const ps = parentDisplayScale(body, sizeMode);
       const local = localOrbitPosition(body, simDays, s * ps);
       return [
@@ -201,7 +248,7 @@ function bodyPosition(
       ];
     }
   }
-  return localOrbitPosition(body, simDays, s);
+  return localOrbitPosition(body, simDays, s * hs);
 }
 
 /** World-space position including the applied barycentric translation. */
@@ -211,8 +258,9 @@ function bodyWorldPosition(
   bary: readonly [number, number, number],
   distScale: number = 1,
   sizeMode: SizeMode = DEFAULT_SIZE_MODE,
+  helioScale: number = 1,
 ): [number, number, number] {
-  const [x, y, z] = bodyPosition(body, simDays, distScale, sizeMode);
+  const [x, y, z] = bodyPosition(body, simDays, distScale, sizeMode, helioScale);
   return [x + bary[0], y + bary[1], z + bary[2]];
 }
 
@@ -313,6 +361,7 @@ const OrbitLine = memo(function OrbitLine({
   const group = useRef<THREE.Group>(null);
   const sizeMode = useSizeMode();
   const distScale = orbitDistanceScale(sizeMode);
+  const { helioScale } = useSystemViz();
   const { getSimDays } = useSimApi();
   const parent =
     body.orbit?.frame === "parent" && body.parentId
@@ -320,9 +369,9 @@ const OrbitLine = memo(function OrbitLine({
       : undefined;
   const relScale = useMemo(() => {
     if (!hasUsableOrbit(body)) return distScale;
-    if (!parent) return distScale;
-    return distScale * parentDisplayScale(body, sizeMode);
-  }, [body, parent, distScale, sizeMode]);
+    if (parent) return distScale * parentDisplayScale(body, sizeMode);
+    return distScale * helioScale;
+  }, [body, parent, distScale, sizeMode, helioScale]);
 
   const points = useMemo(() => {
     if (!hasUsableOrbit(body)) return null;
@@ -335,14 +384,14 @@ const OrbitLine = memo(function OrbitLine({
 
   const syncParent = (days: number) => {
     if (!parent || !group.current) return;
-    const [x, y, z] = bodyPosition(parent, days, distScale, sizeMode);
+    const [x, y, z] = bodyPosition(parent, days, distScale, sizeMode, helioScale);
     group.current.position.set(x, y, z);
   };
 
   useLayoutEffect(() => {
     syncParent(getSimDays());
     // eslint-disable-next-line react-hooks/exhaustive-deps -- parent pose sync
-  }, [parent, distScale, sizeMode]);
+  }, [parent, distScale, sizeMode, helioScale]);
 
   useFrame(() => {
     syncParent(getSimDays());
@@ -384,6 +433,7 @@ const BodyMesh = memo(function BodyMesh({
 }) {
   const group = useRef<THREE.Group>(null);
   const { getSimDays } = useSimApi();
+  const { helioScale } = useSystemViz();
   const sizeMode = useSizeMode();
   const distScale = orbitDistanceScale(sizeMode);
   const r = visualRadius(body, sizeMode);
@@ -412,7 +462,7 @@ const BodyMesh = memo(function BodyMesh({
 
   const applyPose = (days: number) => {
     if (!group.current) return;
-    const [x, y, z] = bodyPosition(body, days, distScale, sizeMode);
+    const [x, y, z] = bodyPosition(body, days, distScale, sizeMode, helioScale);
     group.current.position.set(x, y, z);
     const period = body.facts.rotationPeriodD;
     if (spinMesh.current && period != null && period !== 0) {
@@ -432,18 +482,25 @@ const BodyMesh = memo(function BodyMesh({
   });
 
   if (body.kind === "star") {
+    const starMat =
+      body.color && body.color.toLowerCase() !== "#fdb813"
+        ? undefined
+        : sharedSunMat;
     return (
       <group ref={group} name={body.id}>
         {/* Viz-only barycentric wobble drives this group via useFrame; no OrbitLine. */}
-        <pointLight intensity={2.2} distance={80} />
+        <pointLight intensity={2.2} distance={80} color={body.color ?? "#FDB813"} />
         <mesh
           ref={spinMesh}
           onClick={handleClick}
           onContextMenu={handleContextMenu}
-          material={sharedSunMat}
+          material={starMat}
           scale={focused ? 1.2 : 1}
         >
           <sphereGeometry args={[r, 32, 32]} />
+          {starMat ? null : (
+            <meshBasicMaterial color={body.color ?? "#FDB813"} />
+          )}
         </mesh>
       </group>
     );
@@ -628,6 +685,7 @@ function ViewOffsetController({
 function FollowCamera() {
   const sizeMode = useSizeMode();
   const distScale = orbitDistanceScale(sizeMode);
+  const { helioScale } = useSystemViz();
   const { getSimDays, getFollowing, getFocusId, getBaryOffset } = useSimApi();
   const focusId = getFocusId();
   const camera = useThree((s) => s.camera);
@@ -678,8 +736,8 @@ function FollowCamera() {
     }
     poseFrozen.current = false;
     const days = getSimDays();
-    const helio = bodyPosition(b, days, distScale, sizeMode);
-    const pos = bodyWorldPosition(b, days, getBaryOffset(), distScale, sizeMode);
+    const helio = bodyPosition(b, days, distScale, sizeMode, helioScale);
+    const pos = bodyWorldPosition(b, days, getBaryOffset(), distScale, sizeMode, helioScale);
     const fovY =
       camera instanceof THREE.PerspectiveCamera ? camera.fov : 45;
     const aspect =
@@ -739,8 +797,8 @@ function FollowCamera() {
     poseFrozen.current = false;
 
     const days = getSimDays();
-    const helio = bodyPosition(b, days, distScale, sizeMode);
-    const pos = bodyWorldPosition(b, days, getBaryOffset(), distScale, sizeMode);
+    const helio = bodyPosition(b, days, distScale, sizeMode, helioScale);
+    const pos = bodyWorldPosition(b, days, getBaryOffset(), distScale, sizeMode, helioScale);
     desired.current.set(pos[0], pos[1], pos[2]);
 
     // Sync offset from what OrbitControls did (dolly / orbit / pan) relative
@@ -1046,7 +1104,7 @@ function BarycentricRoot({
   };
 
   // Runs before FollowCamera's layout snap (declared earlier in the tree) so
-  // bodyWorldPosition(getBaryOffset()) matches the group translation.
+  // bodyWorldPosition(getBaryOffset(), helioScale) matches the group translation.
   useLayoutEffect(() => {
     if (getFollowing()) {
       applyOffset(sunBarycentricOffset(getSimDays(), distScale));
@@ -1122,14 +1180,29 @@ function SceneContent({
   simDaysPerSec,
   sizeMode = DEFAULT_SIZE_MODE,
   hiddenIds,
+  systemId,
   viewInsetLeft = 0,
   viewInsetRight = 0,
 }: Props) {
+  const resolvedSystemId = systemId ?? getHomeSystem().id;
+  const systemBodies = useMemo(
+    () => getSystemGraph(resolvedSystemId).bodies,
+    [resolvedSystemId],
+  );
+  const helioScale = useMemo(
+    () => heliocentricDisplayScale(systemBodies, sizeMode),
+    [systemBodies, sizeMode],
+  );
+  const systemViz = useMemo(
+    () => ({ bodies: systemBodies, helioScale }),
+    [systemBodies, helioScale],
+  );
+
   // Orbit ellipses from system graph elements — skip if no usable orbit.
   // Sun wobble is BarycentricRoot viz-only; no catalog OrbitLine.
   const orbiters = useMemo(
     () => systemBodies.filter((b) => hasUsableOrbit(b)),
-    [],
+    [systemBodies],
   );
   const visibleOrbiters = useMemo(
     () =>
@@ -1143,7 +1216,7 @@ function SceneContent({
       hiddenIds && hiddenIds.size > 0
         ? systemBodies.filter((b) => !hiddenIds.has(b.id))
         : systemBodies,
-    [hiddenIds],
+    [systemBodies, hiddenIds],
   );
   // Idle system view: no camera autoRotate (user orbits manually).
   // Follow mode still ride-alongs when a planet is selected.
@@ -1155,6 +1228,7 @@ function SceneContent({
   const minDistance = orbitMinDistance(sizeMode, focusBody, cameraNear);
 
   return (
+    <SystemVizContext.Provider value={systemViz}>
     <SizeModeContext.Provider value={sizeMode}>
     <SimProvider focusId={focusId} simDaysPerSec={simDaysPerSec}>
       <color attach="background" args={["#02040a"]} />
@@ -1200,6 +1274,7 @@ function SceneContent({
       <WasdFly />
     </SimProvider>
     </SizeModeContext.Provider>
+    </SystemVizContext.Provider>
   );
 }
 
@@ -1210,6 +1285,7 @@ export function OrbitScene({
   simDaysPerSec,
   sizeMode = DEFAULT_SIZE_MODE,
   hiddenIds,
+  systemId,
   viewInsetLeft = 0,
   viewInsetRight = 0,
 }: Props) {
@@ -1237,6 +1313,7 @@ export function OrbitScene({
           simDaysPerSec={simDaysPerSec}
           sizeMode={sizeMode}
           hiddenIds={hiddenIds}
+          systemId={systemId}
           viewInsetLeft={viewInsetLeft}
           viewInsetRight={viewInsetRight}
         />

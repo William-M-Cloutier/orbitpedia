@@ -25,6 +25,8 @@ type Props = {
   sizeMode?: SizeMode;
   /** Session-only ids with mesh + orbit line suppressed (Explore hide). */
   hiddenIds?: ReadonlySet<string>;
+  /** Active system graph — remount parent with key={systemId} to unload RAF/meshes. */
+  systemId?: string;
   /** Canvas-space overlay insets for setViewOffset (see OrbitScene). */
   viewInsetLeft?: number;
   viewInsetRight?: number;

@@ -3,10 +3,11 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
-import { searchBodies } from "@/data/catalog";
+import { getHomeSystem, searchBodies } from "@/data/catalog";
 
 const MODES = [
   { href: "/", label: "Explore" },
+  { href: "/systems", label: "Systems" },
   { href: "/discover", label: "Discover" },
   { href: "/search", label: "Search" },
 ] as const;
@@ -16,6 +17,7 @@ export function TopBar() {
   const router = useRouter();
   const [q, setQ] = useState("");
   const [open, setOpen] = useState(false);
+  const homeId = getHomeSystem().id;
 
   const hits = useMemo(() => (q.trim() ? searchBodies(q).slice(0, 8) : []), [q]);
 
@@ -72,12 +74,19 @@ export function TopBar() {
                     onClick={() => {
                       setQ("");
                       setOpen(false);
-                      // Phase 1: focus in Explore; full page via FactsPanel secondary link
-                      router.push(`/?focus=${encodeURIComponent(b.id)}`);
+                      const params = new URLSearchParams();
+                      if (b.systemId !== homeId) {
+                        params.set("system", b.systemId);
+                      }
+                      params.set("focus", b.id);
+                      router.push(`/?${params.toString()}`);
                     }}
                   >
                     <span className="text-zinc-100">{b.name}</span>
-                    <span className="text-xs text-zinc-500">{b.kind}</span>
+                    <span className="text-xs text-zinc-500">
+                      {b.kind}
+                      {b.systemId !== homeId ? ` · ${b.systemId}` : ""}
+                    </span>
                   </button>
                 </li>
               ))}

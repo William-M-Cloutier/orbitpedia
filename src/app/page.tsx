@@ -7,6 +7,7 @@ import {
   useMemo,
   useState,
 } from "react";
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { AppShell } from "@/components/ui/AppShell";
 import { BodyRail } from "@/components/ui/BodyRail";
@@ -17,7 +18,12 @@ import {
   multipleToDaysPerSec,
 } from "@/components/ui/SpeedControl";
 import { OrbitCanvas } from "@/viz/OrbitCanvas";
-import { getBody } from "@/data/catalog";
+import {
+  getBody,
+  getHomeSystem,
+  getSystem,
+  getSystemGraph,
+} from "@/data/catalog";
 import {
   SizeModeControl,
   DEFAULT_SIZE_MODE,
@@ -28,11 +34,24 @@ function ExploreHome() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const focusParam = searchParams.get("focus");
+  const systemParam = searchParams.get("system");
+
+  const homeId = getHomeSystem().id;
+  const systemId = useMemo(() => {
+    if (systemParam && getSystem(systemParam)) return systemParam;
+    return homeId;
+  }, [systemParam, homeId]);
+
+  const system = useMemo(() => getSystemGraph(systemId).system, [systemId]);
+  const memberIds = useMemo(
+    () => new Set(getSystemGraph(systemId).bodies.map((b) => b.id)),
+    [systemId],
+  );
 
   const [focusId, setFocusId] = useState<string | null>(null);
   const [speedMultiple, setSpeedMultiple] = useState(DEFAULT_SPEED_PRESET.multiple);
   const [sizeMode, setSizeMode] = useState<SizeMode>(DEFAULT_SIZE_MODE);
-  /** Session-only — never written to catalog JSON. */
+  /** Session-only — never written to catalog JSON. Cleared on system switch. */
   const [hiddenIds, setHiddenIds] = useState<Set<string>>(() => new Set());
   const focus = focusId ? getBody(focusId) : undefined;
   const simDaysPerSec = useMemo(
@@ -40,26 +59,52 @@ function ExploreHome() {
     [speedMultiple],
   );
 
-  // Hydrate (and re-hydrate) from ?focus=
+  const isHome = systemId === homeId;
+
+  // Drop session hide set when leaving a system (no leftover filters).
   useEffect(() => {
-    if (focusParam) {
-      setFocusId(getBody(focusParam) ? focusParam : null);
+    setHiddenIds(new Set());
+  }, [systemId]);
+
+  // Hydrate (and re-hydrate) from ?system=&focus=
+  useEffect(() => {
+    if (focusParam && memberIds.has(focusParam) && getBody(focusParam)) {
+      setFocusId(focusParam);
       return;
     }
     setFocusId(null);
-  }, [focusParam]);
+  }, [focusParam, memberIds]);
+
+  const pushExplore = useCallback(
+    (nextSystemId: string, nextFocus: string | null) => {
+      const params = new URLSearchParams();
+      if (nextSystemId !== homeId) {
+        params.set("system", nextSystemId);
+      }
+      if (nextFocus && getBody(nextFocus)) {
+        params.set("focus", nextFocus);
+      }
+      const qs = params.toString();
+      router.replace(qs ? `/?${qs}` : "/", { scroll: false });
+    },
+    [router, homeId],
+  );
 
   const setFocus = useCallback(
     (id: string | null) => {
-      setFocusId(id);
-      if (id && getBody(id)) {
-        router.replace(`/?focus=${encodeURIComponent(id)}`, { scroll: false });
-      } else {
-        router.replace("/", { scroll: false });
-      }
+      const next =
+        id && memberIds.has(id) && getBody(id) ? id : null;
+      setFocusId(next);
+      pushExplore(systemId, next);
     },
-    [router],
+    [memberIds, pushExplore, systemId],
   );
+
+  const goHome = useCallback(() => {
+    setFocusId(null);
+    setHiddenIds(new Set());
+    router.replace("/", { scroll: false });
+  }, [router]);
 
   // Viz (and UI) may clear via onSelect(null) — drops ?focus= and empties FactsPanel.
   const onSelect = useCallback(
@@ -94,11 +139,11 @@ function ExploreHome() {
     return () => window.removeEventListener("keydown", onKey);
   }, [setFocus]);
 
-
   return (
     <AppShell
       rail={
         <BodyRail
+          systemId={systemId}
           activeId={focusId ?? undefined}
           onFocus={onRailFocus}
           hiddenIds={hiddenIds}
@@ -110,16 +155,42 @@ function ExploreHome() {
         <div className="relative flex min-h-0 min-w-0 flex-1 flex-col">
           <div className="flex items-center justify-between gap-3 border-b border-white/10 px-4 py-2">
             <div>
-              <h1 className="text-sm font-medium text-zinc-200">Explore</h1>
+              <h1 className="text-sm font-medium text-zinc-200">
+                Explore
+                <span className="ml-2 font-normal text-zinc-500">
+                  · {system.name}
+                </span>
+              </h1>
               <p className="text-xs text-zinc-500">
                 Click to follow; click again or right-click to clear; Esc also
                 clears.
               </p>
             </div>
+            <div className="flex shrink-0 items-center gap-2">
+              <Link
+                href="/systems"
+                className="rounded-md border border-white/10 bg-white/5 px-2.5 py-1 text-xs text-zinc-300 hover:bg-white/10 hover:text-zinc-100"
+              >
+                Systems
+              </Link>
+              {!isHome ? (
+                <button
+                  type="button"
+                  onClick={goHome}
+                  className="rounded-md border border-sky-500/30 bg-sky-500/15 px-2.5 py-1 text-xs text-sky-200 hover:bg-sky-500/25"
+                  title="Return to Solar System"
+                >
+                  Home
+                </button>
+              ) : null}
+            </div>
           </div>
           <div className="relative flex min-h-0 flex-1 flex-row">
             <div className="relative min-h-0 min-w-0 flex-1">
+              {/* key remounts Canvas — unload RAF / meshes on system switch */}
               <OrbitCanvas
+                key={systemId}
+                systemId={systemId}
                 focusId={focusId}
                 onSelect={onSelect}
                 highlightColor={focus?.color}

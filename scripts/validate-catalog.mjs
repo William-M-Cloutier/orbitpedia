@@ -309,102 +309,114 @@ if (!parsed.success) {
 
 const catalog = parsed.data;
 const home = catalog.systems.find((s) => s.home === true);
-const systemId = args.system ?? home?.id;
-if (!systemId) {
+if (!home && !args.system) {
   console.error("VALIDATION FAIL: no home system and no --system");
   process.exit(1);
 }
-const system = catalog.systems.find((s) => s.id === systemId);
-if (!system) {
-  console.error(`VALIDATION FAIL: system not found: ${systemId}`);
-  process.exit(1);
-}
-
-const graphBodies = system.memberIds
-  .map((id) => catalog.bodies.find((b) => b.id === id))
-  .filter(Boolean);
-
-const central = findCentralBody(graphBodies, args.centralBody);
-if (!central) {
-  console.error("VALIDATION FAIL: no central body (star) found; pass --central-body");
-  process.exit(1);
-}
-
-const centralRadiusKm = central.facts.radiusMeanKm;
-if (centralRadiusKm == null && !(args.centralRadiusAu > 0)) {
-  console.error("VALIDATION FAIL: central body missing facts.radiusMeanKm");
-  process.exit(1);
-}
-
-const centralRadiusAu =
-  args.centralRadiusAu != null && Number.isFinite(args.centralRadiusAu)
-    ? args.centralRadiusAu
-    : centralRadiusKm / AU_KM;
-
-if (!(centralRadiusAu > 0)) {
-  console.error("VALIDATION FAIL: central body radius must be positive");
-  process.exit(1);
-}
-
-const hardErrors = [];
-const warnings = [];
 
 const bodyById = new Map(catalog.bodies.map((b) => [b.id, b]));
+const systemsToCheck = args.system
+  ? catalog.systems.filter((s) => s.id === args.system)
+  : catalog.systems;
 
-for (const b of graphBodies) {
-  if (b.systemId !== system.id) {
-    hardErrors.push(`${b.id}: systemId ${b.systemId} ≠ system ${system.id}`);
-  }
-  if (b.id === central.id) continue;
-  if (!b.orbit) {
-    hardErrors.push(`${b.id}: missing orbit while not central body`);
-    continue;
-  }
-  const q = periapsisAu(b.orbit);
-  if (b.orbit.frame === "parent") {
-    if (!b.parentId) {
-      hardErrors.push(`${b.id}: orbit.frame=parent requires parentId`);
-    } else {
-      const parent = bodyById.get(b.parentId);
-      if (!parent) {
-        hardErrors.push(`${b.id}: parentId ${b.parentId} not in catalog`);
-      } else {
-        const parentRkm = parent.facts?.radiusMeanKm;
-        if (parentRkm == null || !(parentRkm > 0)) {
-          hardErrors.push(
-            `${b.id}: parent ${parent.id} missing facts.radiusMeanKm for parent-frame clearance`,
-          );
-        } else {
-          const parentR = parentRkm / AU_KM;
-          if (!(q > parentR + EPS_AU)) {
-            hardErrors.push(
-              `${b.id}: parent-frame periapsis q=${q.toPrecision(8)} au does not clear parent '${parent.id}' radius ${parentR.toPrecision(8)} au`,
-            );
-          }
-        }
-      }
-    }
-  } else if (!(q > centralRadiusAu + EPS_AU)) {
-    hardErrors.push(
-      `${b.id}: periapsis q=${q.toPrecision(8)} au does not clear central '${central.id}' radius ${centralRadiusAu.toPrecision(8)} au (intersects or subsurface)`,
-    );
-  }
-  for (const f of collectWeakFieldFlags(b, central.id)) {
-    warnings.push(`${b.id}: ${f}`);
-  }
-}
-for (const f of collectWeakFieldFlags(central, central.id)) {
-  warnings.push(`${central.id}: ${f}`);
+if (args.system && systemsToCheck.length === 0) {
+  console.error(`VALIDATION FAIL: system not found: ${args.system}`);
+  process.exit(1);
 }
 
 console.log("dataDir", dataDir);
 console.log("version", catalog.version);
 console.log("systems", catalog.systems.length);
 console.log("bodies", catalog.bodies.length);
-console.log("graph", system.id, "members", graphBodies.length, "home", system.home === true);
-console.log(
-  `central ${central.id} radiusMeanKm=${central.facts.radiusMeanKm} radiusAu=${centralRadiusAu}`,
-);
+
+const hardErrors = [];
+const warnings = [];
+
+for (const system of systemsToCheck) {
+  const graphBodies = system.memberIds
+    .map((id) => bodyById.get(id))
+    .filter(Boolean);
+
+  const central = findCentralBody(graphBodies, args.centralBody);
+  if (!central) {
+    hardErrors.push(`${system.id}: no central body (star) found; pass --central-body`);
+    continue;
+  }
+
+  const centralRadiusKm = central.facts.radiusMeanKm;
+  if (centralRadiusKm == null && !(args.centralRadiusAu > 0)) {
+    hardErrors.push(`${system.id}: central body missing facts.radiusMeanKm`);
+    continue;
+  }
+
+  const centralRadiusAu =
+    args.centralRadiusAu != null && Number.isFinite(args.centralRadiusAu)
+      ? args.centralRadiusAu
+      : centralRadiusKm / AU_KM;
+
+  if (!(centralRadiusAu > 0)) {
+    hardErrors.push(`${system.id}: central body radius must be positive`);
+    continue;
+  }
+
+  console.log(
+    "graph",
+    system.id,
+    "members",
+    graphBodies.length,
+    "home",
+    system.home === true,
+  );
+  console.log(
+    `  central ${central.id} radiusMeanKm=${central.facts.radiusMeanKm} radiusAu=${centralRadiusAu}`,
+  );
+
+  for (const b of graphBodies) {
+    if (b.systemId !== system.id) {
+      hardErrors.push(`${b.id}: systemId ${b.systemId} ≠ system ${system.id}`);
+    }
+    if (b.id === central.id) continue;
+    if (!b.orbit) {
+      hardErrors.push(`${b.id}: missing orbit while not central body`);
+      continue;
+    }
+    const q = periapsisAu(b.orbit);
+    if (b.orbit.frame === "parent") {
+      if (!b.parentId) {
+        hardErrors.push(`${b.id}: orbit.frame=parent requires parentId`);
+      } else {
+        const parent = bodyById.get(b.parentId);
+        if (!parent) {
+          hardErrors.push(`${b.id}: parentId ${b.parentId} not in catalog`);
+        } else {
+          const parentRkm = parent.facts?.radiusMeanKm;
+          if (parentRkm == null || !(parentRkm > 0)) {
+            hardErrors.push(
+              `${b.id}: parent ${parent.id} missing facts.radiusMeanKm for parent-frame clearance`,
+            );
+          } else {
+            const parentR = parentRkm / AU_KM;
+            if (!(q > parentR + EPS_AU)) {
+              hardErrors.push(
+                `${b.id}: parent-frame periapsis q=${q.toPrecision(8)} au does not clear parent '${parent.id}' radius ${parentR.toPrecision(8)} au`,
+              );
+            }
+          }
+        }
+      }
+    } else if (!(q > centralRadiusAu + EPS_AU)) {
+      hardErrors.push(
+        `${b.id}: periapsis q=${q.toPrecision(8)} au does not clear central '${central.id}' radius ${centralRadiusAu.toPrecision(8)} au (intersects or subsurface)`,
+      );
+    }
+    for (const f of collectWeakFieldFlags(b, central.id)) {
+      warnings.push(`${b.id}: ${f}`);
+    }
+  }
+  for (const f of collectWeakFieldFlags(central, central.id)) {
+    warnings.push(`${central.id}: ${f}`);
+  }
+}
 
 if (hardErrors.length) {
   console.error("VALIDATION FAIL (orbit clearance / graph)");
@@ -429,5 +441,5 @@ if (warnings.length) {
 
 console.log("VALIDATION PASS");
 console.log(
-  "orbit_clearance_ok true (all orbiters qAu|a*(1-e) > central radius)",
+  "orbit_clearance_ok true (all systems: orbiters qAu|a*(1-e) > central radius)",
 );

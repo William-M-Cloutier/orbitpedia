@@ -1,18 +1,18 @@
 #!/usr/bin/env node
 /**
- * Orbitpedia viz / Kepler sanity for the loaded home system graph (Store B).
+ * Orbitpedia viz / Kepler sanity for every Store B system graph.
  *
  * Catalog-side physical clearance lives in validate-catalog.mjs:
  *   q = orbit.qAu ?? aAu*(1-e)  MUST  q > centralRadiusAu (real km→AU).
  *
- * This script owns schematic + Kepler checks on getHomeSystem members:
- *   1) Heliocentric orbiters: q > visualRadius(sun) + visualRadius(body) + margin
- *   2) Sampled ellipse |r| stays outside REAL sun radius (au) [heliocentric]
- *   3) periodD ≈ GAUSS_YEAR_D * aAu^1.5 within relative tolerance [heliocentric]
+ * Per system:
+ *   1) Heliocentric orbiters: display-scaled q clears starVis + bodyVis + margin
+ *      (shared helio display scale — same formula as parent-frame moons)
+ *   2) Sampled ellipse |r| stays outside REAL central radius (au) [heliocentric]
+ *   3) Solar-mass systems: periodD ≈ GAUSS_YEAR_D * aAu^1.5 within tol
+ *      Other hosts: periodD ≈ GAUSS_YEAR_D * aAu^1.5 / sqrt(M/Msun) (skip if mass unknown)
  *   4) Central star has no heliocentric orbit / no OrbitLine required
- *   5) Parent-frame: q clears parent real radius; shared viz scale clears parent
- *      mesh + keeps sibling display orbits from intersecting; skip sun Kepler-3;
- *      require periodD > 0
+ *   5) Parent-frame: q clears parent real radius; shared viz scale; skip sun Kepler-3
  *   6) Epoch MA pose lies on true-anomaly OrbitLine polyline (body-on-line)
  *
  * Usage: node scripts/orbit-sanity.mjs
@@ -261,59 +261,91 @@ if (!home) {
   process.exit(1);
 }
 
-const bodies = home.memberIds.map((id) => {
-  const b = bodyById.get(id);
-  if (!b) {
-    fail(`home system member missing body card: ${id}`);
-  }
-  return b;
-}).filter(Boolean);
-
-for (const b of bodies) {
-  if (!b.systemId) {
-    fail(`${b.id}: missing systemId (v2 loud fail)`);
-  } else if (b.systemId !== home.id) {
-    fail(`${b.id}: systemId ${b.systemId} ≠ home ${home.id}`);
-  }
-}
-
+const M_SUN_KG = 1.98841e30;
 const tiers = loadVisualTiers();
-const central =
-  bodies.find((b) => b.kind === "star" && !b.parentId) ??
-  bodies.find((b) => b.kind === "star") ??
-  bodies.find((b) => b.id === "sun");
-if (!central) {
-  fail("no central star/sun in home system graph");
-  process.exit(1);
-}
-
-const realSunRadiusAu = (central.facts?.radiusMeanKm ?? 0) / AU_KM;
-if (!(realSunRadiusAu > 0)) {
-  fail(`${central.id}: facts.radiusMeanKm required for sanity`);
-  process.exit(1);
-}
-const sunVisual = visualRadius(central, tiers);
 
 console.log("orbit-sanity");
 console.log(`  data ${DATA}`);
-console.log(`  homeSystem ${home.id} members ${bodies.length}`);
-console.log(`  central ${central.id} realRadiusAu=${realSunRadiusAu} visualRadius=${sunVisual}`);
+console.log(`  systems ${systems.length} (home=${home.id})`);
 console.log(`  EPS_AU=${EPS_AU} PERIOD_REL_TOL=${PERIOD_REL_TOL} GAUSS_YEAR_D=${GAUSS_YEAR_D}`);
-console.log(
-  `  visual clearance: q > sunVisual(${sunVisual}) + bodyVisual + margin(${tiers.PERIHELION_CLEARANCE_MARGIN_AU})`,
-);
 
-if (central.orbit) {
-  fail(`${central.id}: central star must not carry a heliocentric orbit`);
-} else {
-  ok(`${central.id}: no heliocentric orbit (no OrbitLine)`);
-}
-
-const orbiters = bodies.filter((b) => b.id !== central.id);
 /** Max allowed distance from epoch MA pose to OrbitLine polyline (au). */
 const BODY_ON_LINE_TOL_AU = 0.02;
 
-for (const b of orbiters) {
+function meanPeriodDaysForStar(aAu, starMassKg) {
+  if (!(starMassKg > 0) || !Number.isFinite(starMassKg)) {
+    return meanPeriodDays(aAu);
+  }
+  const mSun = starMassKg / M_SUN_KG;
+  return meanPeriodDays(aAu) / Math.sqrt(mSun);
+}
+
+function runSystemSanity(system) {
+  const bodies = system.memberIds.map((id) => {
+    const b = bodyById.get(id);
+    if (!b) {
+      fail(`system ${system.id} member missing body card: ${id}`);
+    }
+    return b;
+  }).filter(Boolean);
+
+  for (const b of bodies) {
+    if (!b.systemId) {
+      fail(`${b.id}: missing systemId (v2 loud fail)`);
+    } else if (b.systemId !== system.id) {
+      fail(`${b.id}: systemId ${b.systemId} ≠ system ${system.id}`);
+    }
+  }
+
+  const central =
+    bodies.find((b) => b.kind === "star" && !b.parentId) ??
+    bodies.find((b) => b.kind === "star") ??
+    bodies.find((b) => b.id === "sun");
+  if (!central) {
+    fail(`no central star in system ${system.id}`);
+    return;
+  }
+
+  const realSunRadiusAu = (central.facts?.radiusMeanKm ?? 0) / AU_KM;
+  if (!(realSunRadiusAu > 0)) {
+    fail(`${central.id}: facts.radiusMeanKm required for sanity`);
+    return;
+  }
+  const sunVisual = visualRadius(central, tiers);
+  const starMassKg = central.facts?.massKg;
+  const mSun = starMassKg > 0 ? starMassKg / M_SUN_KG : NaN;
+  const solarKepler = Number.isFinite(mSun) && Math.abs(mSun - 1) < 0.05;
+
+  console.log(`\n=== system ${system.id} members ${bodies.length}${system.home ? " (home)" : ""} ===`);
+  console.log(`  central ${central.id} realRadiusAu=${realSunRadiusAu} visualRadius=${sunVisual} M/Msun=${Number.isFinite(mSun) ? mSun.toPrecision(4) : "?"}`);
+
+  if (central.orbit) {
+    fail(`${central.id}: central star must not carry a heliocentric orbit`);
+  } else {
+    ok(`${central.id}: no heliocentric orbit (no OrbitLine)`);
+  }
+
+  const orbiters = bodies.filter((b) => b.id !== central.id);
+
+  // Shared heliocentric display scale (compact exoplanet systems).
+  const helioKids = orbiters.filter(
+    (b) => hasUsableOrbit(b) && b.orbit?.frame !== "parent",
+  );
+  const helioScale = parentFrameSharedDisplayScale(
+    sunVisual,
+    helioKids.map((c) => ({
+      qAu: periapsisAu(c.orbit),
+      aAu: c.orbit.aAu,
+      e: c.orbit.e,
+      vis: visualRadius(c, tiers),
+    })),
+    tiers.PERIHELION_CLEARANCE_MARGIN_AU,
+  );
+  if (helioKids.length) {
+    ok(`${system.id}: heliocentric display scale=${helioScale.toPrecision(4)}`);
+  }
+
+  for (const b of orbiters) {
   if (!hasUsableOrbit(b)) {
     fail(`${b.id}: non-central body missing usable orbit (elements + frame)`);
     continue;
@@ -371,13 +403,14 @@ for (const b of orbiters) {
     }
   } else {
     const need = sunVisual + bodyVis + tiers.PERIHELION_CLEARANCE_MARGIN_AU;
+    const qVis = q * helioScale;
 
-    if (!(q > need + EPS_AU)) {
+    if (!(qVis > need + EPS_AU)) {
       fail(
-        `${b.id}: schematic clearance q=${q} ≯ sunVis(${sunVisual})+bodyVis(${bodyVis})+margin(${tiers.PERIHELION_CLEARANCE_MARGIN_AU})=${need}`,
+        `${b.id}: schematic clearance q*scale=${qVis} ≯ sunVis(${sunVisual})+bodyVis(${bodyVis})+margin=${need} (scale=${helioScale})`,
       );
     } else {
-      ok(`${b.id}: viz clearance q=${q.toPrecision(6)} > ${need.toPrecision(6)}`);
+      ok(`${b.id}: viz clearance q*scale=${qVis.toPrecision(6)} > ${need.toPrecision(6)}`);
     }
 
     let minR = Infinity;
@@ -399,14 +432,21 @@ for (const b of orbiters) {
     }
 
     if (o.periodD != null && Number.isFinite(o.periodD)) {
-      const pred = meanPeriodDays(o.aAu);
-      const rel = Math.abs(o.periodD - pred) / pred;
-      if (rel > PERIOD_REL_TOL) {
-        fail(
-          `${b.id}: periodD=${o.periodD} vs ${GAUSS_YEAR_D}*a^1.5=${pred} rel=${rel} > ${PERIOD_REL_TOL}`,
-        );
+      if (!(starMassKg > 0)) {
+        ok(`${b.id}: periodD=${o.periodD} (skip Kepler-3; central mass unknown)`);
       } else {
-        ok(`${b.id}: periodD vs Kepler-3 rel=${rel.toExponential(2)}`);
+        const pred = meanPeriodDaysForStar(o.aAu, starMassKg);
+        const rel = Math.abs(o.periodD - pred) / pred;
+        const label = solarKepler
+          ? `${GAUSS_YEAR_D}*a^1.5`
+          : `${GAUSS_YEAR_D}*a^1.5/sqrt(M)`;
+        if (rel > PERIOD_REL_TOL) {
+          fail(
+            `${b.id}: periodD=${o.periodD} vs ${label}=${pred} rel=${rel} > ${PERIOD_REL_TOL}`,
+          );
+        } else {
+          ok(`${b.id}: periodD vs Kepler-3 (${label}) rel=${rel.toExponential(2)}`);
+        }
       }
     } else {
       fail(`${b.id}: periodD missing`);
@@ -424,72 +464,77 @@ for (const b of orbiters) {
   }
 }
 
-// Per-parent shared viz display scale: parent clearance + sibling separation.
-const parentFrameKids = new Map();
-for (const b of orbiters) {
-  if (!hasUsableOrbit(b) || b.orbit?.frame !== "parent" || !b.parentId) continue;
-  if (!parentFrameKids.has(b.parentId)) parentFrameKids.set(b.parentId, []);
-  parentFrameKids.get(b.parentId).push(b);
-}
-for (const [parentId, kids] of parentFrameKids) {
-  const parent = bodyById.get(parentId);
-  if (!parent) {
-    fail(`parent-frame group: missing parent ${parentId}`);
-    continue;
+  // Per-parent shared viz display scale: parent clearance + sibling separation.
+  const parentFrameKids = new Map();
+  for (const b of orbiters) {
+    if (!hasUsableOrbit(b) || b.orbit?.frame !== "parent" || !b.parentId) continue;
+    if (!parentFrameKids.has(b.parentId)) parentFrameKids.set(b.parentId, []);
+    parentFrameKids.get(b.parentId).push(b);
   }
-  const parentVis = visualRadius(parent, tiers);
-  const rows = kids.map((c) => ({
-    id: c.id,
-    qAu: periapsisAu(c.orbit),
-    aAu: c.orbit.aAu,
-    e: c.orbit.e,
-    vis: visualRadius(c, tiers),
-  }));
-  const scale = parentFrameSharedDisplayScale(
-    parentVis,
-    rows,
-    tiers.PERIHELION_CLEARANCE_MARGIN_AU,
-  );
-  for (const r of rows) {
-    const qVis = r.qAu * scale;
-    const need =
-      parentVis +
-      r.vis +
-      Math.min(
-        tiers.PERIHELION_CLEARANCE_MARGIN_AU,
-        Math.max(parentVis * 0.35, r.vis),
-      );
-    if (!(qVis > need - 1e-9)) {
-      fail(
-        `${r.id}: shared viz q*scale=${qVis} ≯ parentVis+childVis+margin=${need} (scale=${scale})`,
-      );
-    } else {
-      ok(
-        `${r.id}: shared viz q*scale=${qVis.toPrecision(6)} > ${need.toPrecision(6)} (scale=${scale.toPrecision(4)})`,
-      );
+  for (const [parentId, kids] of parentFrameKids) {
+    const parent = bodyById.get(parentId);
+    if (!parent) {
+      fail(`parent-frame group: missing parent ${parentId}`);
+      continue;
+    }
+    const parentVis = visualRadius(parent, tiers);
+    const rows = kids.map((c) => ({
+      id: c.id,
+      qAu: periapsisAu(c.orbit),
+      aAu: c.orbit.aAu,
+      e: c.orbit.e,
+      vis: visualRadius(c, tiers),
+    }));
+    const scale = parentFrameSharedDisplayScale(
+      parentVis,
+      rows,
+      tiers.PERIHELION_CLEARANCE_MARGIN_AU,
+    );
+    for (const r of rows) {
+      const qVis = r.qAu * scale;
+      const need =
+        parentVis +
+        r.vis +
+        Math.min(
+          tiers.PERIHELION_CLEARANCE_MARGIN_AU,
+          Math.max(parentVis * 0.35, r.vis),
+        );
+      if (!(qVis > need - 1e-9)) {
+        fail(
+          `${r.id}: shared viz q*scale=${qVis} ≯ parentVis+childVis+margin=${need} (scale=${scale})`,
+        );
+      } else {
+        ok(
+          `${r.id}: shared viz q*scale=${qVis.toPrecision(6)} > ${need.toPrecision(6)} (scale=${scale.toPrecision(4)})`,
+        );
+      }
+    }
+    const sorted = [...rows].sort((a, b) => a.aAu - b.aAu);
+    for (let i = 0; i < sorted.length - 1; i++) {
+      const inner = sorted[i];
+      const outer = sorted[i + 1];
+      const innerApo = inner.aAu * (1 + inner.e) * scale;
+      const outerPeri = outer.aAu * (1 - outer.e) * scale;
+      const gap = outerPeri - innerApo;
+      const need = inner.vis + outer.vis;
+      if (!(gap >= need - 1e-9)) {
+        fail(
+          `${parentId} siblings ${inner.id}/${outer.id}: display gap ${gap} < mesh sum ${need} (scale=${scale})`,
+        );
+      } else {
+        ok(
+          `${parentId} siblings ${inner.id}/${outer.id}: display gap ${gap.toPrecision(4)} ≥ ${need.toPrecision(4)}`,
+        );
+      }
+    }
+    if (sorted.length === 1) {
+      ok(`${parentId}: single parent-frame child (shared scale=${scale.toPrecision(4)})`);
     }
   }
-  const sorted = [...rows].sort((a, b) => a.aAu - b.aAu);
-  for (let i = 0; i < sorted.length - 1; i++) {
-    const inner = sorted[i];
-    const outer = sorted[i + 1];
-    const innerApo = inner.aAu * (1 + inner.e) * scale;
-    const outerPeri = outer.aAu * (1 - outer.e) * scale;
-    const gap = outerPeri - innerApo;
-    const need = inner.vis + outer.vis;
-    if (!(gap >= need - 1e-9)) {
-      fail(
-        `${parentId} siblings ${inner.id}/${outer.id}: display gap ${gap} < mesh sum ${need} (scale=${scale})`,
-      );
-    } else {
-      ok(
-        `${parentId} siblings ${inner.id}/${outer.id}: display gap ${gap.toPrecision(4)} ≥ ${need.toPrecision(4)}`,
-      );
-    }
-  }
-  if (sorted.length === 1) {
-    ok(`${parentId}: single parent-frame child (shared scale=${scale.toPrecision(4)})`);
-  }
+} // end runSystemSanity
+
+for (const system of systems) {
+  runSystemSanity(system);
 }
 
 const keplerSrc = fs.readFileSync(path.join(ROOT, "src/lib/kepler.ts"), "utf8");
