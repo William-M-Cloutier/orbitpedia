@@ -36,6 +36,11 @@ type SimApi = {
   /** True when focus is an orbiter (ride-along follow). */
   getFollowing: () => boolean;
   getFocusId: () => string | null | undefined;
+  /**
+   * Barycentric translation currently applied to BarycentricRoot.
+   * Frozen while not following an orbiter (see freeze contract).
+   */
+  getBaryOffset: () => readonly [number, number, number];
 };
 
 const SimContext = createContext<SimApi | null>(null);
@@ -87,14 +92,14 @@ function bodyPosition(
   return eclipticToScene(x, y, z);
 }
 
-/** World-space position including viz-only barycentric sun wobble. */
+/** World-space position including the applied barycentric translation. */
 function bodyWorldPosition(
   body: Body,
   simDays: number,
+  bary: readonly [number, number, number],
 ): [number, number, number] {
-  const [bx, by, bz] = sunBarycentricOffset(simDays);
   const [x, y, z] = bodyPosition(body, simDays);
-  return [x + bx, y + by, z + bz];
+  return [x + bary[0], y + bary[1], z + bary[2]];
 }
 
 const sharedSunMat = new THREE.MeshBasicMaterial({ color: "#FDB813" });
@@ -317,14 +322,15 @@ function wrapDeltaAngle(d: number): number {
 
 /**
  * Canned focus distance on acquire.
- * Orbiters: neighborhood scale from a (unchanged).
- * Star / central (no orbit): frame from visualRadius — readable sun + a slice
- * of inner system. Never the old hardcoded 12 (speck-at-overview).
+ * Orbiters: neighborhood scale from a (unchanged — William likes planet framing).
+ * Star / central (no orbit): close readable sun — visualRadius×8–12 so the
+ * schematic disc fills a similar portion of view as a focused planet, NOT a
+ * 3.5 AU overview floor (that still felt far). Mid of band: ×10.
  */
 function focusFrameDistance(body: Body): number {
   const r = visualRadius(body);
   if (body.kind === "star" || !body.orbit) {
-    return Math.max(3.5, r * 24);
+    return r * 10;
   }
   return Math.max(1.2, body.orbit.aAu * 0.55 + 1.5);
 }
@@ -333,9 +339,20 @@ function focusFrameDistance(body: Body): number {
  * FollowCamera: slides look-at with the body, rides along by yawing the
  * camera offset with orbital bearing change, and never overwrites distance —
  * user OrbitControls dolly/orbit/pan still win on offset length/direction.
+ *
+ * Freeze contract (unfocus): after clearing focus, with no user input,
+ * camera.position and controls.target stay bit-identical (≤1e-6) for 2+s.
+ * Paths that must not move the pose on clear:
+ * - no follow lerp / bearing yaw / target retarget / damping
+ * - OrbitControls enableDamping=false, autoRotate=false
+ * - BarycentricRoot freezes its translation while not following an orbiter
+ *   (idle / sun focus) so the world does not slide under a world-fixed
+ *   camera (apparent pan on clear)
+ * - Starfield yaw is local to the points mesh only (does not move camera)
+ * Idle OrbitControls still work — we do not overwrite pose every frame.
  */
 function FollowCamera() {
-  const { getSimDays, getFollowing, getFocusId } = useSimApi();
+  const { getSimDays, getFollowing, getFocusId, getBaryOffset } = useSimApi();
   const focusId = getFocusId();
   const camera = useThree((s) => s.camera);
   const controls = useThree((s) => s.controls) as OrbitControlsImpl | null;
@@ -376,7 +393,7 @@ function FollowCamera() {
     }
     const days = getSimDays();
     const helio = bodyPosition(b, days);
-    const pos = bodyWorldPosition(b, days);
+    const pos = bodyWorldPosition(b, days, getBaryOffset());
     const dist = focusFrameDistance(b);
     target.current.set(pos[0], pos[1], pos[2]);
     desired.current.copy(target.current);
@@ -424,7 +441,7 @@ function FollowCamera() {
 
     const days = getSimDays();
     const helio = bodyPosition(b, days);
-    const pos = bodyWorldPosition(b, days);
+    const pos = bodyWorldPosition(b, days, getBaryOffset());
     desired.current.set(pos[0], pos[1], pos[2]);
 
     // Sync offset from what OrbitControls did (dolly / orbit / pan) relative
@@ -525,15 +542,53 @@ function SimDriver({
  * Translates the whole heliocentric system by the viz-only sun wobble so
  * orbit ellipses stay glued to bodies and the sun describes a small circle
  * about the scene origin (barycenter). Not a catalog orbit — no OrbitLine.
+ *
+ * Freeze contract: while not following an orbiter (idle or sun/star focus),
+ * hold the last applied offset. Live wobble under a world-fixed camera looks
+ * like a pan on unfocus; freezing the root keeps camera.position /
+ * controls.target bit-stable without rewriting the pose every idle frame
+ * (so manual OrbitControls still work).
  */
-function BarycentricRoot({ children }: { children: React.ReactNode }) {
+function BarycentricRoot({
+  children,
+  focusId,
+}: {
+  children: React.ReactNode;
+  focusId?: string | null;
+}) {
   const group = useRef<THREE.Group>(null);
-  const { getSimDays } = useSimApi();
+  const { getSimDays, getFollowing, getBaryOffset } = useSimApi();
+
+  const applyOffset = (next: readonly [number, number, number]) => {
+    const cur = getBaryOffset() as [number, number, number];
+    cur[0] = next[0];
+    cur[1] = next[1];
+    cur[2] = next[2];
+    if (group.current) group.current.position.set(next[0], next[1], next[2]);
+  };
+
+  // Runs before FollowCamera's layout snap (declared earlier in the tree) so
+  // bodyWorldPosition(getBaryOffset()) matches the group translation.
+  useLayoutEffect(() => {
+    if (getFollowing()) {
+      applyOffset(sunBarycentricOffset(getSimDays()));
+    } else if (group.current) {
+      const [x, y, z] = getBaryOffset();
+      group.current.position.set(x, y, z);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- sync on focus edge only
+  }, [focusId]);
+
   useFrame(() => {
     if (!group.current) return;
-    const [x, y, z] = sunBarycentricOffset(getSimDays());
-    group.current.position.set(x, y, z);
+    if (!getFollowing()) {
+      const [x, y, z] = getBaryOffset();
+      group.current.position.set(x, y, z);
+      return;
+    }
+    applyOffset(sunBarycentricOffset(getSimDays()));
   });
+
   return <group ref={group}>{children}</group>;
 }
 
@@ -549,6 +604,8 @@ function SimProvider({
   const simDaysRef = useRef(0);
   const rateRef = useRef(simDaysPerSec);
   rateRef.current = simDaysPerSec;
+  /** Applied barycentric translation; mutated in place by BarycentricRoot. */
+  const baryOffsetRef = useRef<[number, number, number]>([0, 0, 0]);
 
   const followingRef = useRef(focusIsOrbiter(focusId));
   followingRef.current = focusIsOrbiter(focusId);
@@ -560,6 +617,7 @@ function SimProvider({
     getSimDays: () => simDaysRef.current,
     getFollowing: () => followingRef.current,
     getFocusId: () => focusIdRef.current,
+    getBaryOffset: () => baryOffsetRef.current,
   }).current;
 
   return (
@@ -588,7 +646,7 @@ function SceneContent({ focusId, onSelect, highlightColor, simDaysPerSec }: Prop
       <Starfield />
       <SoftHaze />
       <ambientLight intensity={0.32} />
-      <BarycentricRoot>
+      <BarycentricRoot focusId={focusId}>
         {/* pointLight lives on the sun BodyMesh so it follows barycentric wobble */}
         {orbiters.map((b) => (
           <OrbitLine
