@@ -25,11 +25,13 @@ function Stat({
   value,
   unknown,
   reason,
+  approximate,
 }: {
   label: string;
   value: string;
   unknown?: boolean;
   reason?: string;
+  approximate?: boolean;
 }) {
   return (
     <div className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
@@ -42,6 +44,7 @@ function Stat({
             ? "mt-0.5 text-sm text-zinc-500"
             : "mt-0.5 text-sm text-zinc-100"
         }
+        title={approximate ? "Approximate" : undefined}
       >
         {value}
         {unknown && reason ? (
@@ -65,6 +68,7 @@ function FactStats({ rows }: { rows: FactRow[] }) {
             value={r.value}
             unknown={r.unknown}
             reason={r.reason}
+            approximate={r.approximate}
           />
         ) : null,
       )}

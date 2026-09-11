@@ -92,6 +92,7 @@ export default async function BodyPage({ params }: Props) {
                       ? "mt-0.5 text-zinc-500"
                       : "mt-0.5 text-zinc-100"
                   }
+                  title={row.approximate ? "Approximate" : undefined}
                 >
                   {row.value}
                   {row.unknown && row.reason ? (

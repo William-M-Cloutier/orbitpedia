@@ -32,6 +32,8 @@ export type FactRow = {
   unknown?: boolean;
   /** Optional short reason (e.g. upper bound only) under Unknown. */
   reason?: string;
+  /** True when value is marked approximate (~). */
+  approximate?: boolean;
 };
 
 function isApproximate(body: Body, field: FactKey): boolean {
@@ -44,19 +46,16 @@ function withApprox(text: string, approx: boolean): string {
   return text.startsWith("~") ? text : `~${text}`;
 }
 
-/** Short reason for Unknown — only when card already explains the gap. */
+/**
+ * Short reason under Unknown — only when there is a specific story.
+ * Omit generic restatements of unknown (no "not in catalog" / "unavailable").
+ */
 export function unknownReason(body: Body, field: FactKey): string | undefined {
   const notes = body.facts.discoveryNotes ?? "";
   const source = body.meta.source ?? body.meta.provenance ?? "";
   const blob = `${notes} ${source}`;
-  if (field === "massKg") {
-    if (/upper\s*bound/i.test(blob)) return "upper bound only";
-    if (/mass\s+(unknown|unavailable|not\s+used|omitted)/i.test(blob)) {
-      return "not in catalog";
-    }
-  }
-  if (field === "radiusMeanKm" && /radius\s+(unknown|unavailable)/i.test(blob)) {
-    return "not in catalog";
+  if (field === "massKg" && /upper\s*bound/i.test(blob)) {
+    return "upper bound only";
   }
   return undefined;
 }
@@ -77,10 +76,12 @@ export function factRow(
   format: (n: number) => string,
 ): FactRow {
   if (raw != null && Number.isFinite(raw)) {
+    const approx = isApproximate(body, field);
     return {
       key: field,
       label,
-      value: withApprox(format(raw), isApproximate(body, field)),
+      value: withApprox(format(raw), approx),
+      approximate: approx || undefined,
     };
   }
   if (isExpectedFact(body.kind, field)) {
@@ -124,10 +125,12 @@ export function rotationFactRow(body: Body): FactRow {
   if (r != null && Number.isFinite(r)) {
     const text =
       formatPeriodDays(Math.abs(r)) + (r < 0 ? " (retrograde)" : "");
+    const approx = isApproximate(body, "rotationPeriodD");
     return {
       key: "rotationPeriodD",
       label: "Rotation period",
-      value: withApprox(text, isApproximate(body, "rotationPeriodD")),
+      value: withApprox(text, approx),
+      approximate: approx || undefined,
     };
   }
   // Rotation is optional for all kinds — omit when missing.
