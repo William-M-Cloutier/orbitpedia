@@ -135,6 +135,17 @@ export function resolveParentTree(bodyId: string): Body[] {
   return chain;
 }
 
+export function getParent(id: string): Body | undefined {
+  const b = bodyById.get(id);
+  if (!b?.parentId) return undefined;
+  return bodyById.get(b.parentId);
+}
+
+/** Direct children of a body (parentId === parentId), catalog order. */
+export function listChildren(parentId: string): Body[] {
+  return bodies.filter((b) => b.parentId === parentId);
+}
+
 export function getBodiesByKind(kind: BodyKind): Body[] {
   return bodies.filter((b) => b.kind === kind);
 }

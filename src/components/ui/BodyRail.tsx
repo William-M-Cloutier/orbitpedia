@@ -2,13 +2,18 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { getBodiesForSystem, getHomeSystem, KIND_LABEL } from "@/data/catalog";
-import type { BodyKind } from "@/data/schema";
+import {
+  getBodiesForSystem,
+  getHomeSystem,
+  KIND_LABEL,
+} from "@/data/catalog";
+import type { Body, BodyKind } from "@/data/schema";
 
 const FILTERS: Array<BodyKind | "all"> = [
   "all",
   "star",
   "planet",
+  "moon",
   "dwarf_planet",
   "asteroid",
 ];
@@ -28,6 +33,38 @@ type Props = {
   systemId?: string;
 };
 
+type RailRow = { body: Body; depth: number };
+
+/** Parent→child tree in member order; children nest under parent when both in set. */
+function buildRailTree(bodies: Body[]): RailRow[] {
+  const byId = new Map(bodies.map((b) => [b.id, b]));
+  const index = new Map(bodies.map((b, i) => [b.id, i]));
+  const children = new Map<string, Body[]>();
+  const roots: Body[] = [];
+
+  for (const b of bodies) {
+    if (b.parentId && byId.has(b.parentId)) {
+      const list = children.get(b.parentId) ?? [];
+      list.push(b);
+      children.set(b.parentId, list);
+    } else {
+      roots.push(b);
+    }
+  }
+
+  for (const [, list] of children) {
+    list.sort((a, b) => (index.get(a.id) ?? 0) - (index.get(b.id) ?? 0));
+  }
+
+  const rows: RailRow[] = [];
+  const walk = (b: Body, depth: number) => {
+    rows.push({ body: b, depth });
+    for (const kid of children.get(b.id) ?? []) walk(kid, depth + 1);
+  };
+  for (const r of roots) walk(r, 0);
+  return rows;
+}
+
 export function BodyRail({
   activeId,
   selectedIds = [],
@@ -46,10 +83,15 @@ export function BodyRail({
     return getBodiesForSystem(id);
   }, [systemId]);
 
-  const list = useMemo(
-    () => (filter === "all" ? bodies : bodies.filter((b) => b.kind === filter)),
-    [filter, bodies],
-  );
+  const rows = useMemo(() => {
+    const filtered =
+      filter === "all" ? bodies : bodies.filter((b) => b.kind === filter);
+    // Kind filter: flat list (tree only when viewing the full system graph).
+    if (filter !== "all") {
+      return filtered.map((body) => ({ body, depth: 0 }));
+    }
+    return buildRailTree(bodies);
+  }, [bodies, filter]);
 
   if (!open) {
     return (
@@ -112,10 +154,11 @@ export function BodyRail({
         </div>
       </div>
       <ul className="flex-1 overflow-y-auto p-2">
-        {list.map((b) => {
+        {rows.map(({ body: b, depth }) => {
           const selected = selectedIds.includes(b.id);
           const active = activeId === b.id;
           const hidden = hiddenIds?.has(b.id) ?? false;
+          const pad = depth > 0 ? { paddingLeft: `${8 + depth * 12}px` } : undefined;
           const rowClass = `flex min-w-0 flex-1 items-center gap-2 rounded-md px-2 py-1.5 text-left text-sm ${
             hidden
               ? "text-zinc-500 line-through opacity-60"
@@ -129,6 +172,18 @@ export function BodyRail({
               className={`h-2.5 w-2.5 shrink-0 rounded-full ${hidden ? "opacity-40" : ""}`}
               style={{ background: b.color ?? "#888" }}
             />
+          );
+
+          const label = (
+            <>
+              {depth > 0 && (
+                <span className="shrink-0 text-[10px] text-zinc-600" aria-hidden>
+                  └
+                </span>
+              )}
+              {swatch}
+              <span className="truncate">{b.name}</span>
+            </>
           );
 
           const hideBtn =
@@ -153,7 +208,11 @@ export function BodyRail({
             ) : null;
 
           return (
-            <li key={b.id} className="mb-0.5 flex items-center gap-0.5">
+            <li
+              key={b.id}
+              className="mb-0.5 flex items-center gap-0.5"
+              style={pad}
+            >
               {selectMode && onToggleSelect ? (
                 <button
                   type="button"
@@ -164,8 +223,7 @@ export function BodyRail({
                       : "text-zinc-300 hover:bg-white/5"
                   }`}
                 >
-                  {swatch}
-                  <span className="truncate">{b.name}</span>
+                  {label}
                 </button>
               ) : onFocus ? (
                 <>
@@ -174,15 +232,13 @@ export function BodyRail({
                     onClick={() => onFocus(b.id)}
                     className={rowClass}
                   >
-                    {swatch}
-                    <span className="truncate">{b.name}</span>
+                    {label}
                   </button>
                   {hideBtn}
                 </>
               ) : (
                 <Link href={`/body/${b.id}`} className={rowClass}>
-                  {swatch}
-                  <span className="truncate">{b.name}</span>
+                  {label}
                 </Link>
               )}
             </li>
