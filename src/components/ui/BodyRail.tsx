@@ -18,6 +18,19 @@ const FILTERS: Array<BodyKind | "all"> = [
   "asteroid",
 ];
 
+/** All-tab kind sections (moons nest under planet/dwarf, not their own section). */
+const KIND_GROUPS: Array<{
+  kind: BodyKind;
+  label: string;
+  /** Always render the section header (multi-star ready). */
+  always?: boolean;
+}> = [
+  { kind: "star", label: "Star", always: true },
+  { kind: "planet", label: "Planets" },
+  { kind: "dwarf_planet", label: "Dwarf planets" },
+  { kind: "asteroid", label: "Asteroids" },
+];
+
 type Props = {
   activeId?: string;
   selectedIds?: string[];
@@ -62,12 +75,18 @@ function buildChildrenMap(bodies: Body[]): {
   return { roots, children };
 }
 
-/** Tree rows; skip children of ids in `collapsed`. */
-function buildRailTree(
+/** Rows for one kind section: section roots + nested children (moons). */
+function buildGroupRows(
   bodies: Body[],
+  groupKind: BodyKind,
   collapsed: ReadonlySet<string>,
 ): RailRow[] {
-  const { roots, children } = buildChildrenMap(bodies);
+  const { children } = buildChildrenMap(bodies);
+  const index = new Map(bodies.map((b, i) => [b.id, i]));
+  const sectionRoots = bodies
+    .filter((b) => b.kind === groupKind)
+    .sort((a, b) => (index.get(a.id) ?? 0) - (index.get(b.id) ?? 0));
+
   const rows: RailRow[] = [];
   const walk = (b: Body, depth: number) => {
     const kids = children.get(b.id) ?? [];
@@ -75,7 +94,7 @@ function buildRailTree(
     if (collapsed.has(b.id)) return;
     for (const kid of kids) walk(kid, depth + 1);
   };
-  for (const r of roots) walk(r, 0);
+  for (const r of sectionRoots) walk(r, 0);
   return rows;
 }
 
@@ -93,6 +112,10 @@ export function BodyRail({
   const [open, setOpen] = useState(true);
   /** Parent ids whose children are folded in the All-tab tree (list only). */
   const [collapsed, setCollapsed] = useState<Set<string>>(() => new Set());
+  /** Collapsed kind-group headers on All tab. */
+  const [groupCollapsed, setGroupCollapsed] = useState<Set<BodyKind>>(
+    () => new Set(),
+  );
 
   const bodies = useMemo(() => {
     const id = systemId ?? getHomeSystem().id;
@@ -108,14 +131,19 @@ export function BodyRail({
     parentIdsWithChildren.length > 0 &&
     parentIdsWithChildren.every((id) => collapsed.has(id));
 
-  const rows = useMemo(() => {
-    const filtered =
-      filter === "all" ? bodies : bodies.filter((b) => b.kind === filter);
-    // Kind filter: flat list (tree only when viewing the full system graph).
-    if (filter !== "all") {
-      return filtered.map((body) => ({ body, depth: 0, childCount: 0 }));
-    }
-    return buildRailTree(bodies, collapsed);
+  const flatKindRows = useMemo((): RailRow[] => {
+    if (filter === "all") return [];
+    return bodies
+      .filter((b) => b.kind === filter)
+      .map((body) => ({ body, depth: 0, childCount: 0 }));
+  }, [bodies, filter]);
+
+  const groupedSections = useMemo(() => {
+    if (filter !== "all") return [];
+    return KIND_GROUPS.map((g) => {
+      const rows = buildGroupRows(bodies, g.kind, collapsed);
+      return { ...g, rows };
+    }).filter((g) => g.always || g.rows.length > 0);
   }, [bodies, filter, collapsed]);
 
   const toggleAllMoonsInList = useCallback(() => {
@@ -138,6 +166,137 @@ export function BodyRail({
       return next;
     });
   }, []);
+
+  const toggleGroup = useCallback((kind: BodyKind) => {
+    setGroupCollapsed((prev) => {
+      const next = new Set(prev);
+      if (next.has(kind)) next.delete(kind);
+      else next.add(kind);
+      return next;
+    });
+  }, []);
+
+  const renderRow = (row: RailRow) => {
+    const { body: b, depth, childCount } = row;
+    const selected = selectedIds.includes(b.id);
+    const active = activeId === b.id;
+    const hidden = hiddenIds?.has(b.id) ?? false;
+    const isCollapsed = collapsed.has(b.id);
+    const pad =
+      depth > 0 ? { paddingLeft: `${8 + depth * 12}px` } : undefined;
+    const rowClass = `flex min-w-0 flex-1 items-center gap-2 rounded-md px-2 py-1.5 text-left text-sm ${
+      hidden
+        ? "text-zinc-500 line-through opacity-60"
+        : active || selected
+          ? "bg-sky-500/20 text-sky-100"
+          : "text-zinc-300 hover:bg-white/5"
+    }`;
+
+    const swatch = (
+      <span
+        className={`h-2.5 w-2.5 shrink-0 rounded-full ${hidden ? "opacity-40" : ""}`}
+        style={{ background: b.color ?? "#888" }}
+      />
+    );
+
+    const twisty =
+      filter === "all" && childCount > 0 ? (
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleCollapsed(b.id);
+          }}
+          className="shrink-0 rounded px-1 py-0.5 font-mono text-xs text-zinc-500 hover:bg-white/5 hover:text-zinc-200"
+          aria-expanded={!isCollapsed}
+          aria-label={
+            isCollapsed
+              ? `Expand ${b.name} moons`
+              : `Collapse ${b.name} moons`
+          }
+          title={isCollapsed ? "Expand children" : "Collapse children"}
+        >
+          {isCollapsed ? ">" : "<"}
+        </button>
+      ) : null;
+
+    const label = (
+      <>
+        {depth > 0 ? (
+          <span className="shrink-0 text-[10px] text-zinc-600" aria-hidden>
+            └
+          </span>
+        ) : null}
+        {swatch}
+        <span className="truncate">{b.name}</span>
+      </>
+    );
+
+    const hideBtn =
+      onToggleHidden != null ? (
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            onToggleHidden(b.id);
+          }}
+          className={`shrink-0 rounded px-1.5 py-0.5 text-[10px] uppercase tracking-wide ${
+            hidden
+              ? "bg-amber-500/15 text-amber-200/90 hover:bg-amber-500/25"
+              : "text-zinc-500 hover:bg-white/5 hover:text-zinc-300"
+          }`}
+          aria-pressed={hidden}
+          aria-label={hidden ? `Show ${b.name}` : `Hide ${b.name}`}
+          title={hidden ? "Show in Explore" : "Hide in Explore"}
+        >
+          {hidden ? "Hidden" : "Hide"}
+        </button>
+      ) : null;
+
+    return (
+      <li
+        key={b.id}
+        className="mb-0.5 flex items-center gap-0.5"
+        style={pad}
+      >
+        {selectMode && onToggleSelect ? (
+          <>
+            <button
+              type="button"
+              onClick={() => onToggleSelect(b.id)}
+              className={`flex min-w-0 flex-1 items-center gap-2 rounded-md px-2 py-1.5 text-left text-sm ${
+                selected
+                  ? "bg-violet-500/20 text-violet-100"
+                  : "text-zinc-300 hover:bg-white/5"
+              }`}
+            >
+              {label}
+            </button>
+            {twisty}
+          </>
+        ) : onFocus ? (
+          <>
+            <button
+              type="button"
+              onClick={() => onFocus(b.id)}
+              className={rowClass}
+            >
+              {label}
+            </button>
+            {twisty}
+            {hideBtn}
+          </>
+        ) : (
+          <>
+            <Link href={`/body/${b.id}`} className={rowClass}>
+              {label}
+            </Link>
+            {twisty}
+          </>
+        )}
+      </li>
+    );
+  };
 
   if (!open) {
     return (
@@ -218,132 +377,44 @@ export function BodyRail({
           </button>
         ) : null}
       </div>
-      <ul className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-2">
-        {rows.map(({ body: b, depth, childCount }) => {
-          const selected = selectedIds.includes(b.id);
-          const active = activeId === b.id;
-          const hidden = hiddenIds?.has(b.id) ?? false;
-          const isCollapsed = collapsed.has(b.id);
-          const pad =
-            depth > 0 ? { paddingLeft: `${8 + depth * 12}px` } : undefined;
-          const rowClass = `flex min-w-0 flex-1 items-center gap-2 rounded-md px-2 py-1.5 text-left text-sm ${
-            hidden
-              ? "text-zinc-500 line-through opacity-60"
-              : active || selected
-                ? "bg-sky-500/20 text-sky-100"
-                : "text-zinc-300 hover:bg-white/5"
-          }`;
-
-          const swatch = (
-            <span
-              className={`h-2.5 w-2.5 shrink-0 rounded-full ${hidden ? "opacity-40" : ""}`}
-              style={{ background: b.color ?? "#888" }}
-            />
-          );
-
-          const twisty =
-            filter === "all" && childCount > 0 ? (
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  toggleCollapsed(b.id);
-                }}
-                className="shrink-0 rounded px-1 py-0.5 font-mono text-xs text-zinc-500 hover:bg-white/5 hover:text-zinc-200"
-                aria-expanded={!isCollapsed}
-                aria-label={
-                  isCollapsed
-                    ? `Expand ${b.name} moons`
-                    : `Collapse ${b.name} moons`
-                }
-                title={isCollapsed ? "Expand children" : "Collapse children"}
-              >
-                {isCollapsed ? ">" : "<"}
-              </button>
-            ) : null;
-
-          // Twisty sits to the RIGHT of the planet row — never nest <button> in <button>.
-          const label = (
-            <>
-              {depth > 0 ? (
-                <span
-                  className="shrink-0 text-[10px] text-zinc-600"
-                  aria-hidden
-                >
-                  └
-                </span>
-              ) : null}
-              {swatch}
-              <span className="truncate">{b.name}</span>
-            </>
-          );
-
-          const hideBtn =
-            onToggleHidden != null ? (
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onToggleHidden(b.id);
-                }}
-                className={`shrink-0 rounded px-1.5 py-0.5 text-[10px] uppercase tracking-wide ${
-                  hidden
-                    ? "bg-amber-500/15 text-amber-200/90 hover:bg-amber-500/25"
-                    : "text-zinc-500 hover:bg-white/5 hover:text-zinc-300"
-                }`}
-                aria-pressed={hidden}
-                aria-label={hidden ? `Show ${b.name}` : `Hide ${b.name}`}
-                title={hidden ? "Show in Explore" : "Hide in Explore"}
-              >
-                {hidden ? "Hidden" : "Hide"}
-              </button>
-            ) : null;
-
-          return (
-            <li
-              key={b.id}
-              className="mb-0.5 flex items-center gap-0.5"
-              style={pad}
-            >
-              {selectMode && onToggleSelect ? (
-                <>
+      <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-2">
+        {filter === "all" ? (
+          <div className="space-y-2">
+            {groupedSections.map((g) => {
+              const closed = groupCollapsed.has(g.kind);
+              return (
+                <div key={g.kind}>
                   <button
                     type="button"
-                    onClick={() => onToggleSelect(b.id)}
-                    className={`flex min-w-0 flex-1 items-center gap-2 rounded-md px-2 py-1.5 text-left text-sm ${
-                      selected
-                        ? "bg-violet-500/20 text-violet-100"
-                        : "text-zinc-300 hover:bg-white/5"
-                    }`}
+                    onClick={() => toggleGroup(g.kind)}
+                    className="mb-0.5 flex w-full items-center gap-1 rounded px-1.5 py-1 text-left text-[11px] font-medium uppercase tracking-wider text-zinc-500 hover:bg-white/5 hover:text-zinc-300"
+                    aria-expanded={!closed}
                   >
-                    {label}
+                    <span className="font-mono text-zinc-600" aria-hidden>
+                      {closed ? "▸" : "▾"}
+                    </span>
+                    <span>{g.label}</span>
+                    <span className="ml-auto tabular-nums text-zinc-600">
+                      {g.rows.filter((r) => r.depth === 0).length}
+                    </span>
                   </button>
-                  {twisty}
-                </>
-              ) : onFocus ? (
-                <>
-                  <button
-                    type="button"
-                    onClick={() => onFocus(b.id)}
-                    className={rowClass}
-                  >
-                    {label}
-                  </button>
-                  {twisty}
-                  {hideBtn}
-                </>
-              ) : (
-                <>
-                  <Link href={`/body/${b.id}`} className={rowClass}>
-                    {label}
-                  </Link>
-                  {twisty}
-                </>
-              )}
-            </li>
-          );
-        })}
-      </ul>
+                  {!closed ? (
+                    g.rows.length > 0 ? (
+                      <ul>{g.rows.map((row) => renderRow(row))}</ul>
+                    ) : (
+                      <p className="px-2 py-1 text-[11px] text-zinc-600">
+                        None in this system
+                      </p>
+                    )
+                  ) : null}
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <ul>{flatKindRows.map((row) => renderRow(row))}</ul>
+        )}
+      </div>
     </aside>
   );
 }
