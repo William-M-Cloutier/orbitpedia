@@ -142,6 +142,21 @@ export function searchBodies(query: string): Body[] {
 
 export { hasUsableOrbit };
 
+
+/** Explore deep-link for a body (includes ?system= for non-home). */
+export function exploreHref(bodyId: string, systemId?: string): string {
+  const body = bodyById.get(bodyId);
+  const sid = systemId ?? body?.systemId;
+  const homeId = getHomeSystem().id;
+  const params = new URLSearchParams();
+  if (sid && sid !== homeId && systemById.has(sid)) {
+    params.set("system", sid);
+  }
+  if (body) params.set("focus", bodyId);
+  const qs = params.toString();
+  return qs ? `/?${qs}` : "/";
+}
+
 export const KIND_LABEL: Record<BodyKind, string> = {
   star: "Star",
   planet: "Planet",

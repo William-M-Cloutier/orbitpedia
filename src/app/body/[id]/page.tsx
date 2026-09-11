@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AppShell } from "@/components/ui/AppShell";
 import { BodyRail } from "@/components/ui/BodyRail";
-import { bodies, getBody, KIND_LABEL } from "@/data/catalog";
+import { bodies, exploreHref, getBody, getHomeSystem, KIND_LABEL } from "@/data/catalog";
 import { bodyProvenance } from "@/data/schema";
 import { periodFromA } from "@/lib/kepler";
 import {
@@ -38,7 +38,7 @@ export default async function BodyPage({ params }: Props) {
     (body.orbit ? periodFromA(body.orbit.aAu) : undefined);
 
   return (
-    <AppShell rail={<BodyRail activeId={body.id} />}>
+    <AppShell rail={<BodyRail activeId={body.id} systemId={body.systemId} />}>
       <div className="mx-auto max-w-4xl space-y-8 p-6">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="flex items-center gap-3">
@@ -52,6 +52,9 @@ export default async function BodyPage({ params }: Props) {
               </h1>
               <p className="text-sm text-zinc-500">
                 {KIND_LABEL[body.kind]}
+                {body.systemId !== getHomeSystem().id
+                  ? ` · ${body.systemId}`
+                  : ""}
                 {body.aliases?.length
                   ? ` · also ${body.aliases.join(", ")}`
                   : ""}
@@ -59,7 +62,7 @@ export default async function BodyPage({ params }: Props) {
             </div>
           </div>
           <Link
-            href={`/?focus=${encodeURIComponent(body.id)}`}
+            href={exploreHref(body.id, body.systemId)}
             className="rounded-lg bg-sky-500/20 px-4 py-2 text-sm text-sky-200 hover:bg-sky-500/30"
           >
             Open in Explore →
@@ -175,7 +178,7 @@ export default async function BodyPage({ params }: Props) {
           <h2 className="mb-4 text-lg font-medium text-zinc-200">
             Catalog graphs
           </h2>
-          <CatalogChartsLazy />
+          <CatalogChartsLazy systemId={body.systemId} />
         </section>
       </div>
     </AppShell>

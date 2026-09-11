@@ -257,15 +257,17 @@ function proportionalRadius(body: Body, bodies: readonly Body[]): number {
   const { maxNonStarKm, innerKm, innerQAu } = clearanceRefs(bodies);
   // Solve: star = S, maxPlanet = 0.92*S, innerMesh = maxPlanet * (innerKm/maxKm)
   // S + innerMesh + margin <= inner q  (clearance S).
-  // Compact systems: clearance S can be ≪ schematic star tier — floor S at
-  // STAR_VISUAL_RADIUS and let heliocentricSharedDisplayScale inflate orbits
-  // so the host stays the biggest readable mesh (Sol clearance S unchanged).
+  // Clearance S from inner primary-frame perihelion (formula, no Sol ids).
+  // Do NOT floor at STAR_VISUAL_RADIUS: that pinned Prop/True star mesh to the
+  // schematic tier in compact systems (TRAPPIST/Kepler) so size modes looked
+  // identical and forced huge helio orbit inflate. Sol clearance S ≫ schematic
+  // tier (~0.26) so Sol Prop feel is unchanged. Explore framing zooms compact
+  // systems so small absolute meshes stay readable.
   const ratioInnerToMax =
     maxNonStarKm > 0 ? innerKm / maxNonStarKm : 1;
   const denom = 1 + 0.92 * ratioInnerToMax;
   const margin = clearanceMarginAu(innerQAu);
-  const clearanceSun = Math.max(1e-6, (innerQAu - margin) / denom);
-  const sunMesh = Math.max(STAR_VISUAL_RADIUS, clearanceSun);
+  const sunMesh = Math.max(1e-6, (innerQAu - margin) / denom);
   const scale = (0.92 * sunMesh) / Math.max(maxNonStarKm, 1); // km → scene
 
   if (body.kind === "star") {
@@ -285,9 +287,8 @@ function trueRadius(body: Body, bodies: readonly Body[]): number {
   const { starKm, innerKm, innerQAu } = clearanceRefs(bodies);
   const denom = 1 + innerKm / Math.max(starKm, 1);
   const margin = clearanceMarginAu(innerQAu);
-  const clearanceSun = Math.max(1e-6, (innerQAu - margin) / denom);
-  // Same floor as Prop: compact hosts stay readable; Sol clearance S unchanged.
-  const sunMesh = Math.max(STAR_VISUAL_RADIUS, clearanceSun);
+  // No schematic-tier floor — same rationale as proportionalRadius.
+  const sunMesh = Math.max(1e-6, (innerQAu - margin) / denom);
   const scale = sunMesh / Math.max(starKm, 1);
   const km = body.facts.radiusMeanKm ?? 1;
   return Math.max(1e-6, km * scale);

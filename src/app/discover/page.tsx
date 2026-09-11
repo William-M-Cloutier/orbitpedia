@@ -1,10 +1,19 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import { AppShell } from "@/components/ui/AppShell";
 import { BodyRail } from "@/components/ui/BodyRail";
 import { BodyCard } from "@/components/ui/BodyCard";
-import { bodies, getBody, KIND_LABEL } from "@/data/catalog";
+import {
+  getBodiesForSystem,
+  getBody,
+  getHomeSystem,
+  getSystem,
+  KIND_LABEL,
+  listSystems,
+} from "@/data/catalog";
 import {
   formatAu,
   formatDensity,
@@ -17,8 +26,44 @@ import { CatalogCharts } from "@/viz/charts";
 
 const MAX_COMPARE = 4;
 
-export default function DiscoverPage() {
-  const [selected, setSelected] = useState<string[]>(["earth", "mars"]);
+function DiscoverInner() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const homeId = getHomeSystem().id;
+  const systems = listSystems();
+
+  const systemId = useMemo(() => {
+    const p = searchParams.get("system");
+    if (p && getSystem(p)) return p;
+    return homeId;
+  }, [searchParams, homeId]);
+
+  const systemBodies = useMemo(
+    () => getBodiesForSystem(systemId),
+    [systemId],
+  );
+
+  const defaultCompare = useMemo(() => {
+    const planets = systemBodies.filter((b) => b.kind === "planet");
+    return planets.slice(0, 2).map((b) => b.id);
+  }, [systemBodies]);
+
+  const [selected, setSelected] = useState<string[]>(defaultCompare);
+
+  // Reset compare picks when switching systems (avoid silent Sol leftovers).
+  useEffect(() => {
+    setSelected(defaultCompare);
+  }, [systemId, defaultCompare]);
+
+  const setSystem = useCallback(
+    (id: string) => {
+      const params = new URLSearchParams();
+      if (id !== homeId) params.set("system", id);
+      const qs = params.toString();
+      router.replace(qs ? `/discover?${qs}` : "/discover", { scroll: false });
+    },
+    [router, homeId],
+  );
 
   const toggle = useCallback((id: string) => {
     setSelected((prev) => {
@@ -33,6 +78,8 @@ export default function DiscoverPage() {
     [selected],
   );
 
+  const system = getSystem(systemId);
+
   return (
     <AppShell
       rail={
@@ -40,6 +87,7 @@ export default function DiscoverPage() {
           selectMode
           selectedIds={selected}
           onToggleSelect={toggle}
+          systemId={systemId}
         />
       }
     >
@@ -47,12 +95,32 @@ export default function DiscoverPage() {
         <section>
           <h1 className="text-2xl font-semibold text-zinc-50">Discover</h1>
           <p className="mt-2 text-zinc-400">
-            Browse cards and compare up to {MAX_COMPARE} bodies side by side.
+            Browse cards and compare up to {MAX_COMPARE} bodies side by side
+            within one system.
           </p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {systems.map((s) => (
+              <button
+                key={s.id}
+                type="button"
+                onClick={() => setSystem(s.id)}
+                className={`rounded-lg px-3 py-1.5 text-sm ${
+                  s.id === systemId
+                    ? "bg-sky-500/25 text-sky-100"
+                    : "bg-white/5 text-zinc-400 hover:bg-white/10 hover:text-zinc-200"
+                }`}
+              >
+                {s.name}
+              </button>
+            ))}
+          </div>
+          {system?.blurb ? (
+            <p className="mt-3 max-w-2xl text-sm text-zinc-500">{system.blurb}</p>
+          ) : null}
         </section>
 
         <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {bodies.map((b) => (
+          {systemBodies.map((b) => (
             <BodyCard
               key={b.id}
               body={b}
@@ -128,10 +196,24 @@ export default function DiscoverPage() {
         )}
 
         <section>
-          <h2 className="mb-4 text-lg font-medium text-zinc-200">Graphs</h2>
-          <CatalogCharts />
+          <h2 className="mb-4 text-lg font-medium text-zinc-200">
+            Graphs · {system?.name ?? systemId}
+          </h2>
+          <CatalogCharts systemId={systemId} />
         </section>
       </div>
     </AppShell>
+  );
+}
+
+export default function DiscoverPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="p-6 text-sm text-zinc-500">Loading Discover…</div>
+      }
+    >
+      <DiscoverInner />
+    </Suspense>
   );
 }

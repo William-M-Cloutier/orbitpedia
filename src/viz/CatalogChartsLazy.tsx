@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 
-export const CatalogChartsLazy = dynamic(
+const CatalogChartsDynamic = dynamic(
   () => import("./charts").then((m) => m.CatalogCharts),
   {
     ssr: false,
@@ -11,3 +11,9 @@ export const CatalogChartsLazy = dynamic(
     ),
   },
 );
+
+type Props = { systemId?: string };
+
+export function CatalogChartsLazy({ systemId }: Props) {
+  return <CatalogChartsDynamic systemId={systemId} />;
+}
