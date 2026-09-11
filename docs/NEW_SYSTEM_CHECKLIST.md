@@ -6,6 +6,7 @@ Archive-first sources only (human-readable pages; never raw API JSON;
 never nssdc planetary factsheet).
 
 Also available as the Grok Bot skill **Orbitpedia new system checklist**.
+How to build cards consistently: [DATA_SETUP.md](./DATA_SETUP.md).
 
 ## A. Store B / catalog
 
