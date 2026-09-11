@@ -97,6 +97,16 @@ function SystemMapView() {
   /** Facts overlay only when a node is selected — no always-on card grid. */
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const nodes = useMemo(() => buildNodes(), []);
+  const selectedSystem = selectedId ? getSystem(selectedId) : null;
+
+  function openExplore(systemId: string) {
+    router.push(
+      systemId === homeId
+        ? "/"
+        : `/?system=${encodeURIComponent(systemId)}`,
+    );
+  }
+
   // Fixed design size; SVG scales via viewBox.
   const W = 960;
   const H = 420;
@@ -113,8 +123,8 @@ function SystemMapView() {
             <h1 className="text-lg font-medium text-zinc-100">System map</h1>
             <p className="mt-0.5 max-w-2xl text-sm text-zinc-500">
               Systems as nodes — spacing is Schematic or Proportional only (not
-              true inter-system distances). Click a system for facts, then open
-              Explore.
+              true inter-system distances). Click a system for facts; double-click
+              or Open Explore to enter it.
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -207,6 +217,11 @@ function SystemMapView() {
                   e.stopPropagation();
                   setSelectedId(n.id);
                 }}
+                onDoubleClick={(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                  openExplore(n.id);
+                }}
                 role="button"
                 tabIndex={0}
                 onKeyDown={(e) => {
@@ -269,9 +284,10 @@ function SystemMapView() {
             ))}
           </svg>
 
-          {selectedId && getSystem(selectedId) ? (
-            <div
-              className="pointer-events-auto absolute bottom-3 right-3 top-3 z-10 flex w-[min(100%,20rem)] flex-col overflow-hidden rounded-lg border border-white/15 bg-[#080d18]/95 p-3 shadow-xl backdrop-blur"
+          {selectedSystem ? (
+            <aside
+              className="pointer-events-auto absolute bottom-3 right-3 top-3 z-10 flex w-[min(100%-1.5rem,20rem)] flex-col overflow-hidden rounded-lg border border-sky-500/25 bg-[#080d18]/95 p-3 shadow-xl backdrop-blur"
+              aria-label={`${selectedSystem.name} system facts`}
               onClick={(e) => e.stopPropagation()}
             >
               <div className="mb-2 flex items-center justify-between gap-2">
@@ -284,26 +300,20 @@ function SystemMapView() {
                   className="rounded px-1.5 py-0.5 text-xs text-zinc-500 hover:bg-white/10 hover:text-zinc-300"
                   aria-label="Close system facts"
                 >
-                  ✕
+                  Close
                 </button>
               </div>
               <div className="min-h-0 flex-1 overflow-y-auto">
-                <SystemFacts system={getSystem(selectedId)!} compact />
+                <SystemFacts system={selectedSystem} compact />
               </div>
               <button
                 type="button"
-                onClick={() => {
-                  const qs =
-                    selectedId === homeId
-                      ? "/"
-                      : `/?system=${encodeURIComponent(selectedId)}`;
-                  router.push(qs);
-                }}
+                onClick={() => openExplore(selectedSystem.id)}
                 className="mt-3 shrink-0 rounded-md border border-sky-500/30 bg-sky-500/15 px-2.5 py-1.5 text-xs text-sky-200 hover:bg-sky-500/25"
               >
                 Open in Explore
               </button>
-            </div>
+            </aside>
           ) : null}
         </div>
 
