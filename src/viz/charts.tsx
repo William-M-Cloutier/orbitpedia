@@ -56,6 +56,32 @@ function formatShortNumber(v: number): string {
   return String(Number(v.toPrecision(3)));
 }
 
+/** Room for axis titles outside ticks — titles must never collide with tick numbers.
+ *  Tick `unit` is omitted on purpose: units live in the axis title only, so tick
+ *  strings stay short ("0.06") and don’t smash into the rotated Y title. */
+const SCATTER_MARGIN = { top: 12, right: 24, bottom: 56, left: 72 } as const;
+
+function scatterXLabel(value: string) {
+  return {
+    value,
+    position: "bottom" as const,
+    offset: 16,
+    fill: "#71717a",
+    fontSize: 11,
+  };
+}
+
+function scatterYLabel(value: string) {
+  return {
+    value,
+    angle: -90,
+    position: "left" as const,
+    offset: 10,
+    fill: "#71717a",
+    fontSize: 11,
+  };
+}
+
 function ChartCard({
   title,
   children,
@@ -213,47 +239,35 @@ function MassRadiusChart({
   }
 
   return (
-    <ChartCard title={title}>
+    <ChartCard title={title} heightClass="h-52">
       <ResponsiveContainer>
-        <ScatterChart margin={{ top: 8, right: 12, bottom: 20, left: 8 }}>
+        <ScatterChart margin={SCATTER_MARGIN}>
           <CartesianGrid stroke="rgba(255,255,255,0.06)" />
           <XAxis
             type="number"
             dataKey="massMe"
             name="Mass"
-            unit=" M⊕"
             scale="log"
             domain={["auto", "auto"]}
             stroke="#71717a"
             tick={{ fontSize: 11 }}
+            tickMargin={6}
             tickFormatter={formatShortNumber}
-            label={{
-              value: "Mass (M⊕)",
-              position: "insideBottom",
-              offset: -8,
-              fill: "#71717a",
-              fontSize: 11,
-            }}
+            height={40}
+            label={scatterXLabel("Mass (M⊕)")}
           />
           <YAxis
             type="number"
             dataKey="radiusRe"
             name="Radius"
-            unit=" R⊕"
             scale="log"
             domain={["auto", "auto"]}
             stroke="#71717a"
             tick={{ fontSize: 11 }}
+            tickMargin={6}
             tickFormatter={formatShortNumber}
-            width={52}
-            label={{
-              value: "Radius (R⊕)",
-              angle: -90,
-              position: "insideLeft",
-              offset: 12,
-              fill: "#71717a",
-              fontSize: 11,
-            }}
+            width={48}
+            label={scatterYLabel("Radius (R⊕)")}
           />
           <ZAxis range={[80, 80]} />
           <Tooltip
@@ -322,47 +336,35 @@ function APeriodChart({
   }
 
   return (
-    <ChartCard title={title}>
+    <ChartCard title={title} heightClass="h-52">
       <ResponsiveContainer>
-        <ScatterChart margin={{ top: 8, right: 12, bottom: 20, left: 8 }}>
+        <ScatterChart margin={SCATTER_MARGIN}>
           <CartesianGrid stroke="rgba(255,255,255,0.06)" />
           <XAxis
             type="number"
             dataKey="aAu"
             name="a"
-            unit=" AU"
             scale="log"
             domain={["auto", "auto"]}
             stroke="#71717a"
             tick={{ fontSize: 11 }}
+            tickMargin={6}
             tickFormatter={formatShortNumber}
-            label={{
-              value: "a (AU)",
-              position: "insideBottom",
-              offset: -8,
-              fill: "#71717a",
-              fontSize: 11,
-            }}
+            height={40}
+            label={scatterXLabel("a (AU)")}
           />
           <YAxis
             type="number"
             dataKey="periodYr"
             name="Period"
-            unit=" yr"
             scale="log"
             domain={["auto", "auto"]}
             stroke="#71717a"
             tick={{ fontSize: 11 }}
+            tickMargin={6}
             tickFormatter={formatShortNumber}
-            width={52}
-            label={{
-              value: "Period (yr)",
-              angle: -90,
-              position: "insideLeft",
-              offset: 12,
-              fill: "#71717a",
-              fontSize: 11,
-            }}
+            width={48}
+            label={scatterYLabel("Period (yr)")}
           />
           <ZAxis range={[80, 80]} />
           <Tooltip
@@ -843,34 +845,65 @@ function HowFarOutMulti({
   const unitLabel = useRadii ? "parent radii" : "×10³ km";
   const unitShort = useRadii ? "R" : "k";
 
-  // Lean SVG number-line. Parent at origin; moons placed by a / max(a).
-  const W = 420;
-  const padL = 28;
-  const padR = 16;
-  const trackX0 = padL + 18;
-  const trackX1 = W - padR;
-  const trackW = trackX1 - trackX0;
+  // Bigger number-line. Parent at origin; moons placed by a / max(a).
+  // N≥3 (or packed labels): wider inner SVG + horizontal scroll so scale stays readable.
   const n = rows.length;
-  const fontSize = n >= 5 ? 9 : 10;
+  const fontSize = n >= 5 ? 12 : 13;
+  const distFont = 11;
+  const parentR = 20;
+  const moonR = 8;
+  const padL = 44;
+  const padR = 32;
+  const trackStartGap = 26; // parent disc clearance before track
+
+  const labelHalfW = (name: string) => {
+    const short = name.length > 9 ? `${name.slice(0, 8)}…` : name;
+    return Math.max(18, short.length * fontSize * 0.34 + 8);
+  };
+
+  // Width budget: show orbital scale with a *gentle* overflow — enough to
+  // separate packed inners and feel distance, not a year-long scrub.
+  // Soft max ≈ 1.5–1.7× a typical catalog card (~400px); collision tiers
+  // still handle ultra-tight pairs after the cap.
+  const viewW = 420;
+  const softMaxW = Math.min(680, Math.round(viewW * 1.6)); // ~672
+  const maxTrack = softMaxW - padL - trackStartGap - padR;
+
+  let trackW = Math.max(260, n * 68);
+  const minPairPx = 22;
+  if (maxVal > 0 && n >= 3) {
+    for (let i = 1; i < n; i++) {
+      const frac = (values[i] - values[i - 1]) / maxVal;
+      if (frac > 1e-6) {
+        // Cap each pair’s ask at maxTrack so one tight pair can’t explode W.
+        trackW = Math.max(trackW, Math.min(minPairPx / frac, maxTrack));
+      }
+    }
+  }
+  trackW = Math.min(Math.max(trackW, n < 3 ? 260 : 300), maxTrack);
+
+  const W = Math.round(padL + trackStartGap + trackW + padR);
+  const trackX0 = padL + trackStartGap;
+  const trackX1 = W - padR;
+  // Scroll only for comparison-worthy packs (Saturn/Jupiter…); Mars (2) fits.
+  const needsHScroll = n >= 3;
 
   const xs = values.map((v) => {
     const t = maxVal > 0 ? v / maxVal : 0;
-    // Parent disc sits left of trackX0; moons span the track by a/max(a).
     return trackX0 + Math.min(1, Math.max(0, t)) * trackW;
   });
 
   // Collision-aware sides: prefer below; when x-close, alternate above/below
   // and fan to extra tiers so Saturn’s tight inner moons stay readable.
-  const labelHalfW = (name: string) => {
-    const short = name.length > 9 ? `${name.slice(0, 8)}…` : name;
-    return Math.max(16, short.length * fontSize * 0.33 + 6);
-  };
   type Slot = { side: 1 | -1; tier: number };
   const slots: Slot[] = [];
   for (let i = 0; i < n; i++) {
     const occupied = new Set<string>();
     for (let j = 0; j < i; j++) {
-      if (Math.abs(xs[i] - xs[j]) < labelHalfW(rows[i].name) + labelHalfW(rows[j].name)) {
+      if (
+        Math.abs(xs[i] - xs[j]) <
+        labelHalfW(rows[i].name) + labelHalfW(rows[j].name)
+      ) {
         occupied.add(`${slots[j].side}:${slots[j].tier}`);
       }
     }
@@ -894,15 +927,109 @@ function HowFarOutMulti({
     (m, s) => (s.side === 1 ? Math.max(m, s.tier) : m),
     -1,
   );
-  // Tight marker→label gap; pairH covers name + distance stack.
-  const labelGap = 12;
-  const pairH = 22;
+  // Marker→label gap; pairH covers name + distance stack (bigger type).
+  const labelGap = 16;
+  const pairH = 28;
   const topRoom =
-    maxAbove >= 0 ? labelGap + (maxAbove + 1) * pairH + 2 : 16;
-  const axisY = Math.max(18, topRoom);
+    maxAbove >= 0 ? labelGap + (maxAbove + 1) * pairH + 4 : 20;
+  const axisY = Math.max(parentR + 4, topRoom);
   const bottomRoom =
-    maxBelow >= 0 ? labelGap + (maxBelow + 1) * pairH + 2 : 10;
+    maxBelow >= 0 ? labelGap + (maxBelow + 1) * pairH + 4 : 14;
   const H = axisY + bottomRoom;
+
+  const svg = (
+    <svg
+      viewBox={`0 0 ${W} ${H}`}
+      width={needsHScroll ? W : undefined}
+      height={needsHScroll ? H : undefined}
+      className={
+        needsHScroll
+          ? "block h-auto max-w-none"
+          : "mx-auto block h-auto w-full max-w-lg"
+      }
+      style={needsHScroll ? { minWidth: W } : undefined}
+      role="img"
+      aria-label={`${parent.name} moons by orbital distance`}
+    >
+      {/* track */}
+      <line
+        x1={trackX0 - 10}
+        y1={axisY}
+        x2={trackX1}
+        y2={axisY}
+        stroke="rgba(255,255,255,0.16)"
+        strokeWidth={5}
+        strokeLinecap="round"
+      />
+      {/* parent at origin */}
+      <circle
+        cx={padL}
+        cy={axisY}
+        r={parentR}
+        fill={parent.color ?? "#888"}
+      >
+        <title>{parent.name}</title>
+      </circle>
+      {rows.map((r, i) => {
+        const x = xs[i];
+        const val = values[i];
+        const { side, tier } = slots[i];
+        const nameY = axisY + side * (labelGap + tier * pairH);
+        const distY = nameY + side * 13;
+        const tickEnd =
+          axisY + side * Math.max(8, labelGap + tier * pairH - 4);
+        const shortName =
+          r.name.length > 9 ? `${r.name.slice(0, 8)}…` : r.name;
+        return (
+          <g key={r.id}>
+            <line
+              x1={x}
+              y1={axisY}
+              x2={x}
+              y2={tickEnd}
+              stroke="rgba(255,255,255,0.4)"
+              strokeWidth={2}
+            />
+            <circle
+              cx={x}
+              cy={axisY}
+              r={moonR}
+              fill={r.fill}
+              stroke="rgba(255,255,255,0.45)"
+              strokeWidth={2}
+            >
+              <title>{`${r.name}: ${shortRatio(val)} ${unitLabel}`}</title>
+            </circle>
+            <a href={`/body/${r.id}`}>
+              <text
+                x={x}
+                y={nameY}
+                textAnchor="middle"
+                dominantBaseline={side === 1 ? "hanging" : "auto"}
+                fill="#e4e4e7"
+                style={{ fontSize, fontWeight: 500 }}
+              >
+                {shortName}
+              </text>
+              <text
+                x={x}
+                y={distY}
+                textAnchor="middle"
+                dominantBaseline={side === 1 ? "hanging" : "auto"}
+                fill="#a1a1aa"
+                style={{
+                  fontSize: distFont,
+                  fontVariantNumeric: "tabular-nums",
+                }}
+              >
+                {shortRatio(val)} {unitShort}
+              </text>
+            </a>
+          </g>
+        );
+      })}
+    </svg>
+  );
 
   return (
     <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3">
@@ -910,88 +1037,16 @@ function HowFarOutMulti({
         How far out
         <span className="ml-1.5 font-normal text-zinc-500">({unitLabel})</span>
       </h3>
-      <svg
-        viewBox={`0 0 ${W} ${H}`}
-        className="mx-auto block h-auto w-full max-w-lg"
-        role="img"
-        aria-label={`${parent.name} moons by orbital distance`}
-      >
-        {/* track */}
-        <line
-          x1={trackX0 - 8}
-          y1={axisY}
-          x2={trackX1}
-          y2={axisY}
-          stroke="rgba(255,255,255,0.12)"
-          strokeWidth={3}
-          strokeLinecap="round"
-        />
-        {/* parent at origin */}
-        <circle
-          cx={padL}
-          cy={axisY}
-          r={14}
-          fill={parent.color ?? "#888"}
-        >
-          <title>{parent.name}</title>
-        </circle>
-        {rows.map((r, i) => {
-          const x = xs[i];
-          const val = values[i];
-          const { side, tier } = slots[i];
-          const nameY = axisY + side * (labelGap + tier * pairH);
-          const distY = nameY + side * 11;
-          const tickEnd = axisY + side * Math.max(6, labelGap + tier * pairH - 4);
-          const shortName =
-            r.name.length > 9 ? `${r.name.slice(0, 8)}…` : r.name;
-          return (
-            <g key={r.id}>
-              <line
-                x1={x}
-                y1={axisY}
-                x2={x}
-                y2={tickEnd}
-                stroke="rgba(255,255,255,0.35)"
-                strokeWidth={1.5}
-              />
-              <circle
-                cx={x}
-                cy={axisY}
-                r={5}
-                fill={r.fill}
-                stroke="rgba(255,255,255,0.4)"
-                strokeWidth={1.5}
-              >
-                <title>{`${r.name}: ${shortRatio(val)} ${unitLabel}`}</title>
-              </circle>
-              <a href={`/body/${r.id}`}>
-                <text
-                  x={x}
-                  y={nameY}
-                  textAnchor="middle"
-                  dominantBaseline={side === 1 ? "hanging" : "auto"}
-                  fill="#d4d4d8"
-                  style={{ fontSize }}
-                >
-                  {shortName}
-                </text>
-                <text
-                  x={x}
-                  y={distY}
-                  textAnchor="middle"
-                  dominantBaseline={side === 1 ? "hanging" : "auto"}
-                  fill="#71717a"
-                  style={{ fontSize: 9, fontVariantNumeric: "tabular-nums" }}
-                >
-                  {shortRatio(val)} {unitShort}
-                </text>
-              </a>
-            </g>
-          );
-        })}
-      </svg>
+      {needsHScroll ? (
+        <div className="w-full overflow-x-auto overscroll-x-contain">
+          {svg}
+        </div>
+      ) : (
+        svg
+      )}
       <p className="mt-1 text-center text-[11px] text-zinc-600">
         Sorted by semi-major axis · not system AU
+        {needsHScroll ? " · swipe for scale" : ""}
       </p>
     </div>
   );
