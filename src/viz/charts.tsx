@@ -805,8 +805,8 @@ function HowFarOut({ parent, moon }: { parent: Body; moon: Body }) {
   );
 }
 
-/** Compact distance bars for multiple moons (parent-radii, else ×10³ km). */
-function MoonDistanceBars({
+/** Multi-moon “How far out”: parent at origin, moons on a number-line by a. */
+function HowFarOutMulti({
   parent,
   moons,
 }: {
@@ -820,7 +820,7 @@ function MoonDistanceBars({
       return {
         id: m.id,
         name: m.name,
-        fill: m.color ?? "#888",
+        fill: m.color ?? "#a1a1aa",
         radii,
         aKm,
         sort:
@@ -840,56 +840,116 @@ function MoonDistanceBars({
     useRadii ? (r.radii as number) : (r.aKm as number) / 1000,
   );
   const maxVal = Math.max(...values);
-  const unit = useRadii ? "parent radii" : "×10³ km";
-  const ROW = 26;
-  const CAP = 8;
-  const scroll = rows.length > CAP;
-  const listH = Math.min(rows.length, CAP) * ROW;
+  const unitLabel = useRadii ? "parent radii" : "×10³ km";
+  const unitShort = useRadii ? "R" : "k";
+
+  // Lean SVG number-line. Parent at origin; moons placed by a / max(a).
+  const W = 420;
+  const padL = 28;
+  const padR = 16;
+  const trackX0 = padL + 18;
+  const trackX1 = W - padR;
+  const trackW = trackX1 - trackX0;
+  const axisY = 28;
+  const n = rows.length;
+  // Two label rows when ≥3 moons (Jupiter 4, Saturn, …) to avoid overlap.
+  const stagger = n >= 3;
+  const labelBase = axisY + 18;
+  const labelRowH = 28;
+  const H = stagger ? labelBase + labelRowH * 2 + 4 : labelBase + labelRowH + 2;
+
+  const xs = values.map((v) => {
+    const t = maxVal > 0 ? v / maxVal : 0;
+    // Parent disc sits left of trackX0; moons span the track by a/max(a).
+    return trackX0 + Math.min(1, Math.max(0, t)) * trackW;
+  });
 
   return (
     <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3">
-      <h3 className="mb-2 text-sm font-medium text-zinc-300">
-        Distance from {parent.name}
-        <span className="ml-1.5 font-normal text-zinc-500">({unit})</span>
+      <h3 className="mb-1 text-sm font-medium text-zinc-300">
+        How far out
+        <span className="ml-1.5 font-normal text-zinc-500">({unitLabel})</span>
       </h3>
-      <ul
-        className={scroll ? "overflow-y-auto pr-1" : undefined}
-        style={{ maxHeight: scroll ? listH : undefined }}
+      <svg
+        viewBox={`0 0 ${W} ${H}`}
+        className="mx-auto block h-auto w-full max-w-lg"
+        role="img"
+        aria-label={`${parent.name} moons by orbital distance`}
       >
+        {/* track */}
+        <line
+          x1={trackX0 - 8}
+          y1={axisY}
+          x2={trackX1}
+          y2={axisY}
+          stroke="rgba(255,255,255,0.12)"
+          strokeWidth={3}
+          strokeLinecap="round"
+        />
+        {/* parent at origin */}
+        <circle
+          cx={padL}
+          cy={axisY}
+          r={14}
+          fill={parent.color ?? "#888"}
+        >
+          <title>{parent.name}</title>
+        </circle>
         {rows.map((r, i) => {
+          const x = xs[i];
           const val = values[i];
-          const pct = Math.max(3, (val / maxVal) * 100);
+          const row = stagger && i % 2 === 1 ? 1 : 0;
+          const ly = labelBase + row * labelRowH;
+          const tickH = stagger ? 8 + row * 6 : 8;
+          const shortName =
+            r.name.length > 9 ? `${r.name.slice(0, 8)}…` : r.name;
           return (
-            <li
-              key={r.id}
-              className="flex items-center gap-2"
-              style={{ height: ROW }}
-            >
-              <Link
-                href={`/body/${r.id}`}
-                className="w-[5.5rem] shrink-0 truncate text-xs text-zinc-300 hover:text-sky-300"
-                title={r.name}
+            <g key={r.id}>
+              <line
+                x1={x}
+                y1={axisY}
+                x2={x}
+                y2={axisY + tickH}
+                stroke="rgba(255,255,255,0.35)"
+                strokeWidth={1.5}
+              />
+              <circle
+                cx={x}
+                cy={axisY}
+                r={5}
+                fill={r.fill}
+                stroke="rgba(255,255,255,0.4)"
+                strokeWidth={1.5}
               >
-                {r.name}
-              </Link>
-              <div className="relative h-2.5 min-w-0 flex-1 rounded-full bg-white/5">
-                <div
-                  className="absolute inset-y-0 left-0 rounded-full"
-                  style={{
-                    width: `${pct}%`,
-                    background: r.fill,
-                    opacity: 0.9,
-                  }}
-                />
-              </div>
-              <span className="w-14 shrink-0 text-right font-mono text-[11px] tabular-nums text-zinc-400">
-                {shortRatio(val)}
-                {useRadii ? " R" : ""}
-              </span>
-            </li>
+                <title>{`${r.name}: ${shortRatio(val)} ${unitLabel}`}</title>
+              </circle>
+              <a href={`/body/${r.id}`}>
+                <text
+                  x={x}
+                  y={ly}
+                  textAnchor="middle"
+                  fill="#d4d4d8"
+                  style={{ fontSize: n >= 5 ? 9 : 10 }}
+                >
+                  {shortName}
+                </text>
+                <text
+                  x={x}
+                  y={ly + 12}
+                  textAnchor="middle"
+                  fill="#71717a"
+                  style={{ fontSize: 9, fontVariantNumeric: "tabular-nums" }}
+                >
+                  {shortRatio(val)} {unitShort}
+                </text>
+              </a>
+            </g>
           );
         })}
-      </ul>
+      </svg>
+      <p className="mt-1 text-center text-[11px] text-zinc-600">
+        Sorted by semi-major axis · not system AU
+      </p>
     </div>
   );
 }
@@ -1210,7 +1270,7 @@ function BodyDials({
   );
 }
 
-/** Moon compare: size pairs/strip + distance bars; mass–radius only if ≥3 points. */
+/** Moon compare: size pairs/strip + multi How-far-out; mass–radius only if ≥3 points. */
 function MoonsOfSection({
   parent,
   moons,
@@ -1241,7 +1301,7 @@ function MoonsOfSection({
         ) : (
           <SizeStrip parent={parent} moons={moons} />
         )}
-        <MoonDistanceBars parent={parent} moons={moons} />
+        <HowFarOutMulti parent={parent} moons={moons} />
         {showMR ? (
           <MassRadiusChart
             bodies={moons}
