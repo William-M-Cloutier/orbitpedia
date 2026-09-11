@@ -397,7 +397,8 @@
         "discoveryNotes": "Discovered 1781 by William Herschel",
         "densityGcm3": 1.27,
         "rotationPeriodD": -0.71833,
-        "albedo": 0.51
+        "albedo": 0.51,
+        "discoveryDate": "1781-03-13"
       },
       "orbit": {
         "epochJd": 2451545,
@@ -439,9 +440,16 @@
               "facts.rotationPeriodD",
               "facts.albedo"
             ]
+          },
+          {
+            "name": "Historical discovery date (IAU / NASA fact sheets)",
+            "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/",
+            "fields": [
+              "facts.discoveryDate"
+            ]
           }
         ],
-        "fetchedAt": "2026-09-11T01:39:34.674Z",
+        "fetchedAt": "2026-09-11T02:02:58.076Z",
         "unitsVersion": 1
       }
     },
@@ -455,7 +463,8 @@
         "discoveryNotes": "Discovered 1846 by Galle (Adams/Le Verrier prediction)",
         "densityGcm3": 1.638,
         "rotationPeriodD": 0.67125,
-        "albedo": 0.41
+        "albedo": 0.41,
+        "discoveryDate": "1846-09-23"
       },
       "orbit": {
         "epochJd": 2451545,
@@ -497,9 +506,16 @@
               "facts.rotationPeriodD",
               "facts.albedo"
             ]
+          },
+          {
+            "name": "Historical discovery date (IAU / NASA fact sheets)",
+            "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/",
+            "fields": [
+              "facts.discoveryDate"
+            ]
           }
         ],
-        "fetchedAt": "2026-09-11T01:39:34.674Z",
+        "fetchedAt": "2026-09-11T02:02:58.076Z",
         "unitsVersion": 1
       }
     },
@@ -513,7 +529,8 @@
         "discoveryNotes": "Discovered 1930 by Clyde Tombaugh; reclassified dwarf planet 2006",
         "densityGcm3": 1.853,
         "rotationPeriodD": -6.3872,
-        "albedo": 0.3
+        "albedo": 0.3,
+        "discoveryDate": "1930-02-18"
       },
       "orbit": {
         "epochJd": 2451545,
@@ -555,9 +572,16 @@
               "facts.rotationPeriodD",
               "facts.albedo"
             ]
+          },
+          {
+            "name": "Historical discovery date (IAU / NASA fact sheets)",
+            "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/",
+            "fields": [
+              "facts.discoveryDate"
+            ]
           }
         ],
-        "fetchedAt": "2026-09-11T01:39:34.674Z",
+        "fetchedAt": "2026-09-11T02:02:58.076Z",
         "unitsVersion": 1
       }
     },
@@ -574,7 +598,8 @@
         "densityGcm3": 2.162,
         "albedo": 0.09,
         "rotationPeriodD": 0.3780904166666667,
-        "massKg": 938351587432390100000
+        "massKg": 938351587432390100000,
+        "discoveryDate": "1801-01-01"
       },
       "orbit": {
         "epochJd": 2461200.5,
@@ -610,9 +635,16 @@
               "facts.rotationPeriodD",
               "sbdbDes"
             ]
+          },
+          {
+            "name": "Historical discovery date (IAU / NASA fact sheets)",
+            "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/",
+            "fields": [
+              "facts.discoveryDate"
+            ]
           }
         ],
-        "fetchedAt": "2026-09-11T01:39:34.674Z",
+        "fetchedAt": "2026-09-11T02:02:58.076Z",
         "unitsVersion": 1
       }
     },
@@ -629,7 +661,8 @@
         "densityGcm3": 3.46,
         "albedo": 0.4228,
         "rotationPeriodD": 0.2225886513416667,
-        "massKg": 259027679307193300000
+        "massKg": 259027679307193300000,
+        "discoveryDate": "1807-03-29"
       },
       "orbit": {
         "epochJd": 2461200.5,
@@ -665,9 +698,16 @@
               "facts.rotationPeriodD",
               "sbdbDes"
             ]
+          },
+          {
+            "name": "Historical discovery date (IAU / NASA fact sheets)",
+            "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/",
+            "fields": [
+              "facts.discoveryDate"
+            ]
           }
         ],
-        "fetchedAt": "2026-09-11T01:39:34.674Z",
+        "fetchedAt": "2026-09-11T02:02:58.076Z",
         "unitsVersion": 1
       }
     },
@@ -684,7 +724,8 @@
         "densityGcm3": 2.89,
         "albedo": 0.155,
         "rotationPeriodD": 0.3255508916666667,
-        "massKg": 204216172482507540000
+        "massKg": 204216172482507540000,
+        "discoveryDate": "1802-03-28"
       },
       "orbit": {
         "epochJd": 2461200.5,
@@ -720,9 +761,16 @@
               "facts.rotationPeriodD",
               "sbdbDes"
             ]
+          },
+          {
+            "name": "Historical discovery date (IAU / NASA fact sheets)",
+            "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/",
+            "fields": [
+              "facts.discoveryDate"
+            ]
           }
         ],
-        "fetchedAt": "2026-09-11T01:39:34.674Z",
+        "fetchedAt": "2026-09-11T02:02:58.076Z",
         "unitsVersion": 1
       }
     },
@@ -738,7 +786,8 @@
         "radiusMeanKm": 203.56,
         "albedo": 0.0717,
         "rotationPeriodD": 0.5761666666666666,
-        "massKg": 104879912500187300000
+        "massKg": 104879912500187300000,
+        "discoveryDate": "1849-04-12"
       },
       "orbit": {
         "epochJd": 2461200.5,
@@ -773,9 +822,16 @@
               "facts.rotationPeriodD",
               "sbdbDes"
             ]
+          },
+          {
+            "name": "Historical discovery date (IAU / NASA fact sheets)",
+            "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/",
+            "fields": [
+              "facts.discoveryDate"
+            ]
           }
         ],
-        "fetchedAt": "2026-09-11T01:39:34.674Z",
+        "fetchedAt": "2026-09-11T02:02:58.076Z",
         "unitsVersion": 1
       }
     }

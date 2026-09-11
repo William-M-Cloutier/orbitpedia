@@ -27,6 +27,8 @@ export const FactsSchema = z.object({
   rotationPeriodD: z.number().optional(),
   albedo: z.number().min(0).max(1).optional(),
   discoveryNotes: z.string().optional(),
+  /** ISO date (YYYY-MM-DD) when known; omit for antiquity / N/A. */
+  discoveryDate: z.string().optional(),
 });
 
 export const BodyMetaSchema = z.object({
