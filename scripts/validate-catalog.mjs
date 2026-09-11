@@ -13,6 +13,8 @@
  * central body's physical radius in au). If omitted, radius is taken from the
  * central body's facts.radiusMeanKm in the catalog.
  *
+ * Orbit clearance uses EPS_AU=1e-9 (same as scripts/orbit-sanity.mjs).
+ *
  * Zod shapes below must stay in sync with src/data/schema.ts until scripts can
  * import TypeScript directly (tracked follow-up: share one schema module).
  */
@@ -22,6 +24,8 @@ import { fileURLToPath } from "node:url";
 import { z } from "zod";
 
 const AU_KM = 149_597_870.7;
+/** Match scripts/orbit-sanity.mjs — float compare margin (au). */
+const EPS_AU = 1e-9;
 const HERE = dirname(fileURLToPath(import.meta.url));
 
 const BodyKindSchema = z.enum(["star", "planet", "dwarf_planet", "asteroid"]);
@@ -194,7 +198,7 @@ for (const b of bodies) {
     continue;
   }
   const q = periapsisAu(b.orbit);
-  if (!(q > centralRadiusAu)) {
+  if (!(q > centralRadiusAu + EPS_AU)) {
     hardErrors.push(
       `${b.id}: periapsis q=${q.toPrecision(8)} au does not clear central '${central.id}' radius ${centralRadiusAu.toPrecision(8)} au (intersects or subsurface)`,
     );
