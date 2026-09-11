@@ -35,6 +35,8 @@ type Props = {
   simDaysPerSec?: number;
   /** Mesh size mode — render layer on catalog radii (default schematic). */
   sizeMode?: SizeMode;
+  /** Session-only ids with mesh + orbit line suppressed (Explore hide). */
+  hiddenIds?: ReadonlySet<string>;
   /**
    * Canvas-space insets (px) covered by Explore overlays. BodyRail is a flex
    * sibling (outside the canvas) so left is usually 0; Facts overlays the
@@ -371,6 +373,19 @@ function focusMeshScale(body: Body): number {
 const FOCUS_FILL = 0.48;
 
 /**
+ * OrbitControls dolly floor. True-scale meshes are tiny — allow ~45% closer
+ * than schematic/proportional so planets remain inspectable.
+ */
+function orbitMinDistance(sizeMode: SizeMode): number {
+  return sizeMode === "true" ? 0.23 : 0.4;
+}
+
+/** Auto-frame floor — slightly below orbitMinDistance so focus can use the dolly. */
+function focusDistanceFloor(sizeMode: SizeMode): number {
+  return sizeMode === "true" ? 0.2 : 0.36;
+}
+
+/**
  * FOV-based focus distance for ALL bodies (sun + planets + asteroids).
  * On-screen diameter ≈ fill * min(viewport width, height):
  *   d = r / (fill * tan(fovY/2) * min(1, aspect))
@@ -391,7 +406,7 @@ function focusFrameDistance(
   const a = Number.isFinite(aspect) && aspect > 1e-6 ? aspect : 1;
   const halfMin = a >= 1 ? tanHalf : tanHalf * a;
   // Floor keeps dolly above OrbitControls minDistance / near plane comfort.
-  return Math.max(0.38, r / (fill * halfMin));
+  return Math.max(focusDistanceFloor(sizeMode), r / (fill * halfMin));
 }
 
 /** Aspect of the *visible* sub-rect when setViewOffset is active. */
@@ -775,6 +790,7 @@ function SceneContent({
   highlightColor,
   simDaysPerSec,
   sizeMode = DEFAULT_SIZE_MODE,
+  hiddenIds,
   viewInsetLeft = 0,
   viewInsetRight = 0,
 }: Props) {
@@ -784,9 +800,24 @@ function SceneContent({
     () => systemBodies.filter((b) => hasUsableOrbit(b)),
     [],
   );
+  const visibleOrbiters = useMemo(
+    () =>
+      hiddenIds && hiddenIds.size > 0
+        ? orbiters.filter((b) => !hiddenIds.has(b.id))
+        : orbiters,
+    [orbiters, hiddenIds],
+  );
+  const visibleBodies = useMemo(
+    () =>
+      hiddenIds && hiddenIds.size > 0
+        ? systemBodies.filter((b) => !hiddenIds.has(b.id))
+        : systemBodies,
+    [hiddenIds],
+  );
   // Idle system view: no camera autoRotate (user orbits manually).
   // Follow mode still ride-alongs when a planet is selected.
   const invalidate = useThree((s) => s.invalidate);
+  const minDistance = orbitMinDistance(sizeMode);
 
   return (
     <SizeModeContext.Provider value={sizeMode}>
@@ -797,7 +828,7 @@ function SceneContent({
       <ambientLight intensity={0.32} />
       <BarycentricRoot focusId={focusId}>
         {/* pointLight lives on the sun BodyMesh so it follows barycentric wobble */}
-        {orbiters.map((b) => (
+        {visibleOrbiters.map((b) => (
           <OrbitLine
             key={`o-${b.id}`}
             body={b}
@@ -805,7 +836,7 @@ function SceneContent({
             highlightColor={highlightColor}
           />
         ))}
-        {systemBodies.map((b) => (
+        {visibleBodies.map((b) => (
           <BodyMesh
             key={`${b.id}-${sizeMode}`}
             body={b}
@@ -826,7 +857,7 @@ function SceneContent({
         enableRotate
         autoRotate={false}
         enableDamping={false}
-        minDistance={0.425}
+        minDistance={minDistance}
         maxDistance={80}
         onChange={() => invalidate()}
       />
@@ -842,6 +873,7 @@ export function OrbitScene({
   highlightColor,
   simDaysPerSec,
   sizeMode = DEFAULT_SIZE_MODE,
+  hiddenIds,
   viewInsetLeft = 0,
   viewInsetRight = 0,
 }: Props) {
@@ -868,6 +900,7 @@ export function OrbitScene({
           highlightColor={highlightColor}
           simDaysPerSec={simDaysPerSec}
           sizeMode={sizeMode}
+          hiddenIds={hiddenIds}
           viewInsetLeft={viewInsetLeft}
           viewInsetRight={viewInsetRight}
         />

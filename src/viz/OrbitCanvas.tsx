@@ -23,6 +23,8 @@ type Props = {
   /** Simulated days advanced per real second (idle + follow). UI owns presets. */
   simDaysPerSec?: number;
   sizeMode?: SizeMode;
+  /** Session-only ids with mesh + orbit line suppressed (Explore hide). */
+  hiddenIds?: ReadonlySet<string>;
   /** Canvas-space overlay insets for setViewOffset (see OrbitScene). */
   viewInsetLeft?: number;
   viewInsetRight?: number;

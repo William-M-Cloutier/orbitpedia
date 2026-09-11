@@ -20,6 +20,10 @@ type Props = {
   selectMode?: boolean;
   /** When set, row click focuses instead of navigating to detail. */
   onFocus?: (id: string) => void;
+  /** Session-only hidden body ids (Explore). Rows stay listed muted/struck. */
+  hiddenIds?: ReadonlySet<string>;
+  /** Toggle hide/unhide for a body (mesh + orbit). */
+  onToggleHidden?: (id: string) => void;
   /** Limit rail to one system graph (default: home). */
   systemId?: string;
 };
@@ -30,6 +34,8 @@ export function BodyRail({
   onToggleSelect,
   selectMode = false,
   onFocus,
+  hiddenIds,
+  onToggleHidden,
   systemId,
 }: Props) {
   const [filter, setFilter] = useState<(typeof FILTERS)[number]>("all");
@@ -109,14 +115,45 @@ export function BodyRail({
         {list.map((b) => {
           const selected = selectedIds.includes(b.id);
           const active = activeId === b.id;
-          const rowClass = `flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-left text-sm ${
-            active || selected
-              ? "bg-sky-500/20 text-sky-100"
-              : "text-zinc-300 hover:bg-white/5"
+          const hidden = hiddenIds?.has(b.id) ?? false;
+          const rowClass = `flex min-w-0 flex-1 items-center gap-2 rounded-md px-2 py-1.5 text-left text-sm ${
+            hidden
+              ? "text-zinc-500 line-through opacity-60"
+              : active || selected
+                ? "bg-sky-500/20 text-sky-100"
+                : "text-zinc-300 hover:bg-white/5"
           }`;
 
+          const swatch = (
+            <span
+              className={`h-2.5 w-2.5 shrink-0 rounded-full ${hidden ? "opacity-40" : ""}`}
+              style={{ background: b.color ?? "#888" }}
+            />
+          );
+
+          const hideBtn =
+            onToggleHidden != null ? (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onToggleHidden(b.id);
+                }}
+                className={`shrink-0 rounded px-1.5 py-0.5 text-[10px] uppercase tracking-wide ${
+                  hidden
+                    ? "bg-amber-500/15 text-amber-200/90 hover:bg-amber-500/25"
+                    : "text-zinc-500 hover:bg-white/5 hover:text-zinc-300"
+                }`}
+                aria-pressed={hidden}
+                aria-label={hidden ? `Show ${b.name}` : `Hide ${b.name}`}
+                title={hidden ? "Show in Explore" : "Hide in Explore"}
+              >
+                {hidden ? "Hidden" : "Hide"}
+              </button>
+            ) : null;
+
           return (
-            <li key={b.id} className="mb-0.5">
+            <li key={b.id} className="mb-0.5 flex items-center gap-0.5">
               {selectMode && onToggleSelect ? (
                 <button
                   type="button"
@@ -127,30 +164,24 @@ export function BodyRail({
                       : "text-zinc-300 hover:bg-white/5"
                   }`}
                 >
-                  <span
-                    className="h-2.5 w-2.5 rounded-full"
-                    style={{ background: b.color ?? "#888" }}
-                  />
+                  {swatch}
                   <span className="truncate">{b.name}</span>
                 </button>
               ) : onFocus ? (
-                <button
-                  type="button"
-                  onClick={() => onFocus(b.id)}
-                  className={rowClass}
-                >
-                  <span
-                    className="h-2.5 w-2.5 rounded-full"
-                    style={{ background: b.color ?? "#888" }}
-                  />
-                  <span className="truncate">{b.name}</span>
-                </button>
+                <>
+                  <button
+                    type="button"
+                    onClick={() => onFocus(b.id)}
+                    className={rowClass}
+                  >
+                    {swatch}
+                    <span className="truncate">{b.name}</span>
+                  </button>
+                  {hideBtn}
+                </>
               ) : (
                 <Link href={`/body/${b.id}`} className={rowClass}>
-                  <span
-                    className="h-2.5 w-2.5 rounded-full"
-                    style={{ background: b.color ?? "#888" }}
-                  />
+                  {swatch}
                   <span className="truncate">{b.name}</span>
                 </Link>
               )}

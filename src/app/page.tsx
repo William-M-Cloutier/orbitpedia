@@ -32,6 +32,8 @@ function ExploreHome() {
   const [focusId, setFocusId] = useState<string | null>(null);
   const [speedMultiple, setSpeedMultiple] = useState(DEFAULT_SPEED_PRESET.multiple);
   const [sizeMode, setSizeMode] = useState<SizeMode>(DEFAULT_SIZE_MODE);
+  /** Session-only — never written to catalog JSON. */
+  const [hiddenIds, setHiddenIds] = useState<Set<string>>(() => new Set());
   const focus = focusId ? getBody(focusId) : undefined;
   const simDaysPerSec = useMemo(
     () => multipleToDaysPerSec(speedMultiple),
@@ -70,6 +72,20 @@ function ExploreHome() {
     [setFocus, focusId],
   );
 
+  const onToggleHidden = useCallback(
+    (id: string) => {
+      const willHide = !hiddenIds.has(id);
+      setHiddenIds((prev) => {
+        const next = new Set(prev);
+        if (willHide) next.add(id);
+        else next.delete(id);
+        return next;
+      });
+      if (willHide && focusId === id) setFocus(null);
+    },
+    [hiddenIds, focusId, setFocus],
+  );
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setFocus(null);
@@ -80,7 +96,16 @@ function ExploreHome() {
 
 
   return (
-    <AppShell rail={<BodyRail activeId={focusId ?? undefined} onFocus={onRailFocus} />}>
+    <AppShell
+      rail={
+        <BodyRail
+          activeId={focusId ?? undefined}
+          onFocus={onRailFocus}
+          hiddenIds={hiddenIds}
+          onToggleHidden={onToggleHidden}
+        />
+      }
+    >
       <div className="relative flex h-[calc(100vh-3.5rem)] flex-col md:flex-row">
         <div className="relative flex min-h-0 min-w-0 flex-1 flex-col">
           <div className="flex items-center justify-between gap-3 border-b border-white/10 px-4 py-2">
@@ -100,6 +125,7 @@ function ExploreHome() {
                 highlightColor={focus?.color}
                 simDaysPerSec={simDaysPerSec}
                 sizeMode={sizeMode}
+                hiddenIds={hiddenIds}
               />
               <div className="pointer-events-none absolute left-3 top-3 z-10 flex flex-col gap-2 items-start">
                 <SizeModeControl mode={sizeMode} onModeChange={setSizeMode} />
