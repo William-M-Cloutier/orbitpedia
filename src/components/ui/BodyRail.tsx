@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import {
   getBodiesForSystem,
   getHomeSystem,
@@ -33,10 +33,13 @@ type Props = {
   systemId?: string;
 };
 
-type RailRow = { body: Body; depth: number };
+type RailRow = { body: Body; depth: number; childCount: number };
 
-/** Parent→child tree in member order; children nest under parent when both in set. */
-function buildRailTree(bodies: Body[]): RailRow[] {
+/** Parent→child map in member order. */
+function buildChildrenMap(bodies: Body[]): {
+  roots: Body[];
+  children: Map<string, Body[]>;
+} {
   const byId = new Map(bodies.map((b) => [b.id, b]));
   const index = new Map(bodies.map((b, i) => [b.id, i]));
   const children = new Map<string, Body[]>();
@@ -56,10 +59,21 @@ function buildRailTree(bodies: Body[]): RailRow[] {
     list.sort((a, b) => (index.get(a.id) ?? 0) - (index.get(b.id) ?? 0));
   }
 
+  return { roots, children };
+}
+
+/** Tree rows; skip children of ids in `collapsed`. */
+function buildRailTree(
+  bodies: Body[],
+  collapsed: ReadonlySet<string>,
+): RailRow[] {
+  const { roots, children } = buildChildrenMap(bodies);
   const rows: RailRow[] = [];
   const walk = (b: Body, depth: number) => {
-    rows.push({ body: b, depth });
-    for (const kid of children.get(b.id) ?? []) walk(kid, depth + 1);
+    const kids = children.get(b.id) ?? [];
+    rows.push({ body: b, depth, childCount: kids.length });
+    if (collapsed.has(b.id)) return;
+    for (const kid of kids) walk(kid, depth + 1);
   };
   for (const r of roots) walk(r, 0);
   return rows;
@@ -77,6 +91,8 @@ export function BodyRail({
 }: Props) {
   const [filter, setFilter] = useState<(typeof FILTERS)[number]>("all");
   const [open, setOpen] = useState(true);
+  /** Parent ids whose children are folded in the All-tab tree (list only). */
+  const [collapsed, setCollapsed] = useState<Set<string>>(() => new Set());
 
   const bodies = useMemo(() => {
     const id = systemId ?? getHomeSystem().id;
@@ -88,10 +104,19 @@ export function BodyRail({
       filter === "all" ? bodies : bodies.filter((b) => b.kind === filter);
     // Kind filter: flat list (tree only when viewing the full system graph).
     if (filter !== "all") {
-      return filtered.map((body) => ({ body, depth: 0 }));
+      return filtered.map((body) => ({ body, depth: 0, childCount: 0 }));
     }
-    return buildRailTree(bodies);
-  }, [bodies, filter]);
+    return buildRailTree(bodies, collapsed);
+  }, [bodies, filter, collapsed]);
+
+  const toggleCollapsed = useCallback((id: string) => {
+    setCollapsed((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }, []);
 
   if (!open) {
     return (
@@ -154,11 +179,13 @@ export function BodyRail({
         </div>
       </div>
       <ul className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-2">
-        {rows.map(({ body: b, depth }) => {
+        {rows.map(({ body: b, depth, childCount }) => {
           const selected = selectedIds.includes(b.id);
           const active = activeId === b.id;
           const hidden = hiddenIds?.has(b.id) ?? false;
-          const pad = depth > 0 ? { paddingLeft: `${8 + depth * 12}px` } : undefined;
+          const isCollapsed = collapsed.has(b.id);
+          const pad =
+            depth > 0 ? { paddingLeft: `${8 + depth * 12}px` } : undefined;
           const rowClass = `flex min-w-0 flex-1 items-center gap-2 rounded-md px-2 py-1.5 text-left text-sm ${
             hidden
               ? "text-zinc-500 line-through opacity-60"
@@ -174,13 +201,36 @@ export function BodyRail({
             />
           );
 
+          const twisty =
+            filter === "all" && childCount > 0 ? (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleCollapsed(b.id);
+                }}
+                className="shrink-0 rounded px-1 py-0.5 font-mono text-xs text-zinc-500 hover:bg-white/5 hover:text-zinc-200"
+                aria-expanded={!isCollapsed}
+                aria-label={
+                  isCollapsed
+                    ? `Expand ${b.name} moons`
+                    : `Collapse ${b.name} moons`
+                }
+                title={isCollapsed ? "Expand children" : "Collapse children"}
+              >
+                {isCollapsed ? ">" : "<"}
+              </button>
+            ) : depth > 0 ? (
+              <span className="w-4 shrink-0 text-center text-[10px] text-zinc-600" aria-hidden>
+                └
+              </span>
+            ) : (
+              <span className="w-4 shrink-0" aria-hidden />
+            );
+
           const label = (
             <>
-              {depth > 0 && (
-                <span className="shrink-0 text-[10px] text-zinc-600" aria-hidden>
-                  └
-                </span>
-              )}
+              {twisty}
               {swatch}
               <span className="truncate">{b.name}</span>
             </>
