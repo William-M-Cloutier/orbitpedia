@@ -344,3 +344,35 @@ export function parentFrameSharedDisplayScale(
   }
   return s;
 }
+
+/**
+ * Viz-only primary-frame (heliocentric / star-centered) display scale for ANY
+ * system. Formula — not per-system magic:
+ * 1) Star↔periapsis clearance for every primary-frame orbiter (incl. asteroids).
+ * 2) Sibling mesh-gap inflate only for planet + dwarf_planet (asteroids often
+ *    cross; including them once blew Schematic Sol ~35× via Vesta/Ceres).
+ * Catalog a/e/i unchanged. Moons use {@link parentFrameSharedDisplayScale}.
+ */
+export function heliocentricSharedDisplayScale(
+  starVis: number,
+  primaryOrbiters: ReadonlyArray<{
+    kind: Body["kind"];
+    qAu: number;
+    aAu: number;
+    e: number;
+    vis: number;
+  }>,
+): number {
+  if (!(starVis > 0) || !Number.isFinite(starVis)) return 1;
+  let s = 1;
+  for (const c of primaryOrbiters) {
+    s = Math.max(s, parentFrameDisplayScale(c.qAu, starVis, c.vis));
+  }
+  const spaced = primaryOrbiters.filter(
+    (c) => c.kind === "planet" || c.kind === "dwarf_planet",
+  );
+  if (spaced.length > 0) {
+    s = Math.max(s, parentFrameSharedDisplayScale(starVis, spaced));
+  }
+  return s;
+}

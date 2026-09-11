@@ -327,19 +327,40 @@ function runSystemSanity(system) {
 
   const orbiters = bodies.filter((b) => b.id !== central.id);
 
-  // Heliocentric display scale: star clearance only (not sibling planet gaps —
-  // shared sibling inflate ruined Schematic solar ~35×).
+  // Heliocentric display scale (matches sizeTiers.heliocentricSharedDisplayScale):
+  // star clearance for all primary orbiters; sibling gaps for planet+dwarf only
+  // (asteroids excluded — crossing Vesta/Ceres once blew Sol ~35×).
   const helioKids = orbiters.filter(
     (b) => hasUsableOrbit(b) && b.orbit?.frame !== "parent",
   );
+  const helioRows = helioKids.map((c) => ({
+    kind: c.kind,
+    qAu: periapsisAu(c.orbit),
+    aAu: c.orbit.aAu,
+    e: c.orbit.e,
+    vis: visualRadius(c, tiers),
+  }));
   let helioScale = 1;
-  for (const c of helioKids) {
+  for (const c of helioRows) {
     helioScale = Math.max(
       helioScale,
       parentFrameDisplayScale(
-        periapsisAu(c.orbit),
+        c.qAu,
         sunVisual,
-        visualRadius(c, tiers),
+        c.vis,
+        tiers.PERIHELION_CLEARANCE_MARGIN_AU,
+      ),
+    );
+  }
+  const spaced = helioRows.filter(
+    (c) => c.kind === "planet" || c.kind === "dwarf_planet",
+  );
+  if (spaced.length) {
+    helioScale = Math.max(
+      helioScale,
+      parentFrameSharedDisplayScale(
+        sunVisual,
+        spaced,
         tiers.PERIHELION_CLEARANCE_MARGIN_AU,
       ),
     );
@@ -347,12 +368,25 @@ function runSystemSanity(system) {
   if (helioKids.length) {
     ok(`${system.id}: heliocentric display scale=${helioScale.toPrecision(4)}`);
     if (system.id === "solar" || system.id === "sol" || system.id === "solar-system") {
-      // Star clearance alone is ~1.05; sibling-gap blow-up was ~35.
       if (helioScale > 2) {
-        fail(`${system.id}: schematic heliocentric scale ${helioScale} must stay near 1 (no sibling-gap blow-up)`);
+        fail(`${system.id}: schematic heliocentric scale ${helioScale} must stay near 1 (asteroids must not drive sibling inflate)`);
       } else {
-        ok(`${system.id}: heliocentric scale near 1 (no sibling-gap blow-up)`);
+        ok(`${system.id}: heliocentric scale near 1 (asteroids excluded from sibling inflate)`);
       }
+    }
+    // Planet/dwarf meshes must not overlap after shared helio scale.
+    const sorted = [...spaced].sort((a, b) => a.aAu - b.aAu);
+    for (let i = 0; i < sorted.length - 1; i++) {
+      const inner = sorted[i];
+      const outer = sorted[i + 1];
+      const gap = (outer.aAu - inner.aAu) * helioScale;
+      const need = inner.vis + outer.vis;
+      if (gap + 1e-9 < need) {
+        fail(`${system.id}: primary siblings overlap after helio scale (gap=${gap} need=${need})`);
+      }
+    }
+    if (sorted.length > 1) {
+      ok(`${system.id}: planet/dwarf primary siblings clear after helio scale`);
     }
   }
 
