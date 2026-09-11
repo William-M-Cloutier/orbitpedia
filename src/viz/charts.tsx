@@ -59,14 +59,23 @@ function formatShortNumber(v: number): string {
 function ChartCard({
   title,
   children,
+  /** Fixed plot height (scatters). Omit for auto-height (bar / custom). */
+  heightClass = "h-44",
+  autoHeight = false,
 }: {
   title: string;
   children: React.ReactNode;
+  heightClass?: string;
+  autoHeight?: boolean;
 }) {
   return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-      <h3 className="mb-3 text-sm font-medium text-zinc-300">{title}</h3>
-      <div className="h-64 w-full">{children}</div>
+    <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3">
+      <h3 className="mb-2 text-sm font-medium text-zinc-300">{title}</h3>
+      {autoHeight ? (
+        <div className="w-full">{children}</div>
+      ) : (
+        <div className={`w-full ${heightClass}`}>{children}</div>
+      )}
     </div>
   );
 }
@@ -415,8 +424,8 @@ function DistanceBarChart({
 
   if (distanceData.length === 0) {
     return (
-      <ChartCard title={title}>
-        <p className="flex h-full items-center justify-center text-sm text-zinc-500">
+      <ChartCard title={title} autoHeight>
+        <p className="py-6 text-center text-sm text-zinc-500">
           No orbits in this group
         </p>
       </ChartCard>
@@ -429,15 +438,19 @@ function DistanceBarChart({
   const hideEveryOther = n >= 8;
   const categoryTick = (value: string, index: number) =>
     hideEveryOther && index % 2 === 1 ? "" : value;
+  const plotH = horizontal
+    ? Math.min(280, Math.max(120, n * 26 + 24))
+    : Math.min(200, Math.max(140, 44 + n * 8));
 
   if (horizontal) {
     return (
-      <ChartCard title={title}>
-        <ResponsiveContainer>
+      <ChartCard title={title} autoHeight>
+        <div style={{ height: plotH }} className="w-full">
+        <ResponsiveContainer width="100%" height="100%">
           <BarChart
             layout="vertical"
             data={distanceData}
-            margin={{ top: 8, right: 16, bottom: 8, left: 8 }}
+            margin={{ top: 4, right: 12, bottom: 4, left: 4 }}
           >
             <CartesianGrid stroke="rgba(255,255,255,0.06)" horizontal={false} />
             <XAxis
@@ -484,16 +497,18 @@ function DistanceBarChart({
             </Bar>
           </BarChart>
         </ResponsiveContainer>
+        </div>
       </ChartCard>
     );
   }
 
   return (
-    <ChartCard title={title}>
-      <ResponsiveContainer>
+    <ChartCard title={title} autoHeight>
+      <div style={{ height: plotH }} className="w-full">
+      <ResponsiveContainer width="100%" height="100%">
         <BarChart
           data={distanceData}
-          margin={{ top: 8, right: 8, bottom: 8, left: 8 }}
+          margin={{ top: 4, right: 8, bottom: 4, left: 4 }}
         >
           <CartesianGrid stroke="rgba(255,255,255,0.06)" vertical={false} />
           <XAxis
@@ -541,6 +556,7 @@ function DistanceBarChart({
           </Bar>
         </BarChart>
       </ResponsiveContainer>
+      </div>
     </ChartCard>
   );
 }
@@ -665,10 +681,10 @@ function SizePair({
   const rS = smaller.facts.radiusMeanKm;
   if (rL == null || rS == null || rL <= 0 || rS <= 0) return null;
 
-  const dL = 112;
+  const dL = 88;
   // Keep the larger body fixed; scale the other by radius ratio.
-  const sizeA = rL >= rS ? dL : Math.max(18, (rL / rS) * dL);
-  const sizeB = rS >= rL ? dL : Math.max(18, (rS / rL) * dL);
+  const sizeA = rL >= rS ? dL : Math.max(14, (rL / rS) * dL);
+  const sizeB = rS >= rL ? dL : Math.max(14, (rS / rL) * dL);
 
   const mL = larger.facts.massKg;
   const mS = smaller.facts.massKg;
@@ -680,9 +696,9 @@ function SizePair({
         : null;
 
   return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-      <h3 className="mb-3 text-sm font-medium text-zinc-300">Size pair</h3>
-      <div className="flex items-end justify-center gap-8 py-4">
+    <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3">
+      <h3 className="mb-2 text-sm font-medium text-zinc-300">Size pair</h3>
+      <div className="flex items-end justify-center gap-6 py-2">
         <div className="flex flex-col items-center gap-2">
           <div
             className="rounded-full shadow-[inset_0_-8px_24px_rgba(0,0,0,0.35)]"
@@ -735,9 +751,9 @@ function HowFarOut({ parent, moon }: { parent: Body; moon: Body }) {
     radii != null ? Math.min(96, Math.max(6, (radii / maxR) * 100)) : 50;
 
   return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-      <h3 className="mb-3 text-sm font-medium text-zinc-300">How far out</h3>
-      <div className="relative mx-auto mt-2 h-16 max-w-md">
+    <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3">
+      <h3 className="mb-2 text-sm font-medium text-zinc-300">How far out</h3>
+      <div className="relative mx-auto mt-1 h-12 max-w-md">
         <div className="absolute left-0 top-1/2 h-1.5 w-full -translate-y-1/2 rounded-full bg-white/10" />
         <div
           className="absolute left-0 top-1/2 h-10 w-10 -translate-y-1/2 rounded-full"
@@ -789,8 +805,8 @@ function HowFarOut({ parent, moon }: { parent: Body; moon: Body }) {
   );
 }
 
-/** Horizontal ladder of moon distances in parent-radii (fallback: 1000 km). */
-function OrbitLadder({
+/** Compact distance bars for multiple moons (parent-radii, else ×10³ km). */
+function MoonDistanceBars({
   parent,
   moons,
 }: {
@@ -807,7 +823,11 @@ function OrbitLadder({
         fill: m.color ?? "#888",
         radii,
         aKm,
-        sort: radii ?? (aKm != null ? aKm / (parent.facts.radiusMeanKm ?? 1) : null),
+        sort:
+          radii ??
+          (aKm != null
+            ? aKm / (parent.facts.radiusMeanKm ?? 1)
+            : null),
       };
     })
     .filter((r) => r.sort != null)
@@ -816,35 +836,53 @@ function OrbitLadder({
   if (rows.length === 0) return null;
 
   const useRadii = rows.every((r) => r.radii != null);
-  const maxVal = Math.max(
-    ...rows.map((r) => (useRadii ? (r.radii as number) : (r.aKm as number) / 1000)),
+  const values = rows.map((r) =>
+    useRadii ? (r.radii as number) : (r.aKm as number) / 1000,
   );
+  const maxVal = Math.max(...values);
+  const unit = useRadii ? "parent radii" : "×10³ km";
+  const ROW = 26;
+  const CAP = 8;
+  const scroll = rows.length > CAP;
+  const listH = Math.min(rows.length, CAP) * ROW;
 
   return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-      <h3 className="mb-3 text-sm font-medium text-zinc-300">
-        Orbit ladder · from {parent.name} (
-        {useRadii ? "parent radii" : "×10³ km"})
+    <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3">
+      <h3 className="mb-2 text-sm font-medium text-zinc-300">
+        Distance from {parent.name}
+        <span className="ml-1.5 font-normal text-zinc-500">({unit})</span>
       </h3>
-      <ul className="space-y-2">
-        {rows.map((r) => {
-          const val = useRadii ? (r.radii as number) : (r.aKm as number) / 1000;
-          const pct = Math.max(4, (val / maxVal) * 100);
+      <ul
+        className={scroll ? "overflow-y-auto pr-1" : undefined}
+        style={{ maxHeight: scroll ? listH : undefined }}
+      >
+        {rows.map((r, i) => {
+          const val = values[i];
+          const pct = Math.max(3, (val / maxVal) * 100);
           return (
-            <li key={r.id} className="flex items-center gap-2 text-xs">
+            <li
+              key={r.id}
+              className="flex items-center gap-2"
+              style={{ height: ROW }}
+            >
               <Link
                 href={`/body/${r.id}`}
-                className="w-20 shrink-0 truncate text-zinc-300 hover:text-sky-300"
+                className="w-[5.5rem] shrink-0 truncate text-xs text-zinc-300 hover:text-sky-300"
+                title={r.name}
               >
                 {r.name}
               </Link>
-              <div className="relative h-3 flex-1 rounded bg-white/5">
+              <div className="relative h-2.5 min-w-0 flex-1 rounded-full bg-white/5">
                 <div
-                  className="absolute inset-y-0 left-0 rounded"
-                  style={{ width: `${pct}%`, background: r.fill, opacity: 0.85 }}
+                  className="absolute inset-y-0 left-0 rounded-full"
+                  style={{
+                    width: `${pct}%`,
+                    background: r.fill,
+                    opacity: 0.9,
+                  }}
                 />
               </div>
-              <span className="w-16 shrink-0 text-right font-mono text-[11px] text-zinc-400">
+              <span className="w-14 shrink-0 text-right font-mono text-[11px] tabular-nums text-zinc-400">
                 {shortRatio(val)}
                 {useRadii ? " R" : ""}
               </span>
@@ -852,6 +890,185 @@ function OrbitLadder({
           );
         })}
       </ul>
+    </div>
+  );
+}
+
+/** Compact size pair (planet vs one moon) for multi-pair rows. */
+function SizePairCompact({
+  parent,
+  moon,
+}: {
+  parent: Body;
+  moon: Body;
+}) {
+  const rP = parent.facts.radiusMeanKm;
+  const rM = moon.facts.radiusMeanKm;
+  if (rP == null || rM == null || rP <= 0 || rM <= 0) return null;
+
+  const dP = 56;
+  const dM = Math.max(10, (rM / rP) * dP);
+
+  return (
+    <div className="flex flex-col items-center gap-1.5 rounded-lg bg-white/[0.02] px-2 py-2">
+      <div className="flex items-end gap-2">
+        <div
+          className="rounded-full"
+          style={{
+            width: dP,
+            height: dP,
+            background: parent.color ?? "#888",
+          }}
+          title={`${parent.name}: ${formatRadius(rP)}`}
+        />
+        <div
+          className="rounded-full"
+          style={{
+            width: dM,
+            height: dM,
+            background: moon.color ?? "#a1a1aa",
+          }}
+          title={`${moon.name}: ${formatRadius(rM)}`}
+        />
+      </div>
+      <div className="text-center text-[11px] leading-tight text-zinc-400">
+        <span className="text-zinc-300">{parent.name}</span>
+        <span className="mx-1 text-zinc-600">·</span>
+        <Link
+          href={`/body/${moon.id}`}
+          className="text-sky-400/80 hover:text-sky-300"
+        >
+          {moon.name}
+        </Link>
+      </div>
+      <div className="text-[10px] text-zinc-600">
+        {shortRatio(rP / rM)}× radius
+      </div>
+    </div>
+  );
+}
+
+/** Row of planet↔moon size pairs when N≤3. */
+function SizePairsRow({
+  parent,
+  moons,
+}: {
+  parent: Body;
+  moons: Body[];
+}) {
+  const sorted = [...moons].sort((a, b) => {
+    const aa = orbitAKm(a) ?? Number.POSITIVE_INFINITY;
+    const ba = orbitAKm(b) ?? Number.POSITIVE_INFINITY;
+    return aa - ba;
+  });
+  const usable = sorted.filter(
+    (m) =>
+      m.facts.radiusMeanKm != null &&
+      parent.facts.radiusMeanKm != null &&
+      (m.facts.radiusMeanKm as number) > 0,
+  );
+  if (usable.length === 0) return null;
+
+  return (
+    <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3">
+      <h3 className="mb-2 text-sm font-medium text-zinc-300">Size pairs</h3>
+      <div className="flex flex-wrap justify-center gap-3">
+        {usable.map((m) => (
+          <SizePairCompact key={m.id} parent={parent} moon={m} />
+        ))}
+      </div>
+      <p className="mt-1.5 text-center text-[11px] text-zinc-600">
+        Discs scaled by mean radius (not mass)
+      </p>
+    </div>
+  );
+}
+
+/** Single size strip: parent + moons as discs sorted by a (N≥4). */
+function SizeStrip({
+  parent,
+  moons,
+}: {
+  parent: Body;
+  moons: Body[];
+}) {
+  const rP = parent.facts.radiusMeanKm;
+  if (rP == null || rP <= 0) return null;
+
+  const sorted = [...moons]
+    .filter(
+      (m) =>
+        m.facts.radiusMeanKm != null && (m.facts.radiusMeanKm as number) > 0,
+    )
+    .sort((a, b) => {
+      const aa = orbitAKm(a) ?? Number.POSITIVE_INFINITY;
+      const ba = orbitAKm(b) ?? Number.POSITIVE_INFINITY;
+      return aa - ba;
+    });
+  if (sorted.length === 0) return null;
+
+  const maxMoonR = Math.max(
+    ...sorted.map((m) => m.facts.radiusMeanKm as number),
+  );
+  // Parent disc fixed; moons scale vs largest moon so tiny ones stay visible.
+  const dP = 64;
+  const dMoonMax = 36;
+
+  return (
+    <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3">
+      <h3 className="mb-2 text-sm font-medium text-zinc-300">
+        Size strip
+        <span className="ml-1.5 font-normal text-zinc-500">
+          (sorted by orbit)
+        </span>
+      </h3>
+      <div className="flex flex-wrap items-end justify-center gap-3 py-1">
+        <div className="flex flex-col items-center gap-1">
+          <div
+            className="rounded-full shadow-[inset_0_-6px_16px_rgba(0,0,0,0.35)]"
+            style={{
+              width: dP,
+              height: dP,
+              background: parent.color ?? "#888",
+            }}
+            title={`${parent.name}: ${formatRadius(rP)}`}
+          />
+          <div className="max-w-[4.5rem] truncate text-center text-[11px] text-zinc-300">
+            {parent.name}
+          </div>
+          <div className="text-[10px] text-zinc-600">{formatRadius(rP)}</div>
+        </div>
+        {sorted.map((m) => {
+          const rM = m.facts.radiusMeanKm as number;
+          const d = Math.max(8, (rM / maxMoonR) * dMoonMax);
+          return (
+            <div key={m.id} className="flex flex-col items-center gap-1">
+              <div
+                className="rounded-full shadow-[inset_0_-4px_10px_rgba(0,0,0,0.35)]"
+                style={{
+                  width: d,
+                  height: d,
+                  background: m.color ?? "#a1a1aa",
+                }}
+                title={`${m.name}: ${formatRadius(rM)}`}
+              />
+              <Link
+                href={`/body/${m.id}`}
+                className="max-w-[4.5rem] truncate text-center text-[11px] text-zinc-300 hover:text-sky-300"
+              >
+                {m.name}
+              </Link>
+              <div className="text-[10px] text-zinc-600">
+                {formatRadius(rM)}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      <p className="mt-1 text-center text-[11px] text-zinc-600">
+        Moon discs scaled to each other; {parent.name} shown at fixed size for
+        context (not same scale)
+      </p>
     </div>
   );
 }
@@ -866,8 +1083,8 @@ function ParentContextCard({ moon, parent }: { moon: Body; parent: Body }) {
     mM != null && mP != null && mP > 0 ? mM / mP : null;
 
   return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-      <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+    <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3">
+      <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
         <h3 className="text-sm font-medium text-zinc-300">Parent context</h3>
         <Link
           href={`/body/${parent.id}`}
@@ -956,8 +1173,8 @@ function BodyDials({
   if (usable.length === 0) return null;
 
   return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-      <h3 className="mb-3 text-sm font-medium text-zinc-300">
+    <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3">
+      <h3 className="mb-2 text-sm font-medium text-zinc-300">
         Body dials · vs {vs.name}
       </h3>
       <ul className="space-y-3">
@@ -993,7 +1210,7 @@ function BodyDials({
   );
 }
 
-/** Moon compare section: mass–radius + a–period when useful; orbit ladder (not host AU). */
+/** Moon compare: size pairs/strip + distance bars; mass–radius only if ≥3 points. */
 function MoonsOfSection({
   parent,
   moons,
@@ -1003,10 +1220,12 @@ function MoonsOfSection({
   moons: Body[];
   headerExtra?: React.ReactNode;
 }) {
-  const hasMR = moons.some(
+  const n = moons.length;
+  const mrCount = moons.filter(
     (b) => b.facts.massKg != null && b.facts.radiusMeanKm != null,
-  );
-  const hasOrbit = moons.some((b) => hasUsableOrbit(b));
+  ).length;
+  // Earns space only when enough moons to compare physically.
+  const showMR = mrCount >= 3;
 
   return (
     <section className="space-y-3">
@@ -1016,20 +1235,19 @@ function MoonsOfSection({
         </h3>
         {headerExtra}
       </div>
-      <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
-        {hasMR ? (
+      <div className="grid gap-3 lg:grid-cols-2">
+        {n <= 3 ? (
+          <SizePairsRow parent={parent} moons={moons} />
+        ) : (
+          <SizeStrip parent={parent} moons={moons} />
+        )}
+        <MoonDistanceBars parent={parent} moons={moons} />
+        {showMR ? (
           <MassRadiusChart
             bodies={moons}
             title={`Moons of ${parent.name}: mass vs radius (Earth units)`}
           />
         ) : null}
-        {hasOrbit ? (
-          <APeriodChart
-            bodies={moons}
-            title={`Moons of ${parent.name}: a vs orbital period`}
-          />
-        ) : null}
-        <OrbitLadder parent={parent} moons={moons} />
       </div>
     </section>
   );
@@ -1092,8 +1310,8 @@ function BodyFocusCharts({
     const vs = earth && earth.id !== focus.id ? earth : undefined;
 
     return (
-      <div className="space-y-8">
-        <div className="grid gap-4 lg:grid-cols-2">
+      <div className="space-y-6">
+        <div className="grid gap-3 lg:grid-cols-2">
           {vs ? <BodyDials body={focus} vs={vs} /> : null}
           {moons.length === 1 ? (
             <>
@@ -1106,7 +1324,7 @@ function BodyFocusCharts({
           <MoonsOfSection parent={focus} moons={moons} />
         ) : null}
         {moons.length === 0 && !vs ? (
-          <div className="rounded-xl border border-white/10 bg-white/[0.03] p-6 text-sm text-zinc-500">
+          <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4 text-sm text-zinc-500">
             See Key facts above — no comparison set for this body
           </div>
         ) : null}
@@ -1118,8 +1336,8 @@ function BodyFocusCharts({
     const parent = focus.parentId ? getBody(focus.parentId) : undefined;
     const vs = parent ?? earth;
     return (
-      <div className="space-y-8">
-        <div className="grid gap-4 lg:grid-cols-2">
+      <div className="space-y-6">
+        <div className="grid gap-3 lg:grid-cols-2">
           {parent ? (
             <ParentContextCard moon={focus} parent={parent} />
           ) : null}
