@@ -1,0 +1,61 @@
+{
+  "id": "saturn",
+  "name": "Saturn",
+  "kind": "planet",
+  "systemId": "solar",
+  "facts": {
+    "massKg": 5.68317e+26,
+    "radiusMeanKm": 58232,
+    "discoveryNotes": "Known since antiquity",
+    "densityGcm3": 0.6871,
+    "rotationPeriodD": 0.44401,
+    "albedo": 0.47
+  },
+  "color": "#E4D191",
+  "horizonId": "699",
+  "meta": {
+    "source": "JPL Horizons + SSD phys_par",
+    "sources": [
+      {
+        "name": "JPL Horizons API (ELEMENTS @ J2000)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='699'&EPHEM_TYPE=ELEMENTS&CENTER='500@10'&START_TIME='JD2451545.0'",
+        "fields": [
+          "orbit.epochJd",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "horizonId"
+        ]
+      },
+      {
+        "name": "JPL SSD Planetary Physical Parameters",
+        "url": "https://ssd.jpl.nasa.gov/planets/phys_par.html",
+        "fields": [
+          "facts.massKg",
+          "facts.radiusMeanKm",
+          "facts.densityGcm3",
+          "facts.rotationPeriodD",
+          "facts.albedo"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-11T01:39:34.674Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  },
+  "orbit": {
+    "frame": "heliocentric",
+    "epochJd": 2451545,
+    "aAu": 9.581929200478722,
+    "e": 0.05563834267345058,
+    "iDeg": 2.484252387625145,
+    "omDeg": 113.6996600266686,
+    "wDeg": 335.8655937185864,
+    "maDeg": 320.4255572592746,
+    "periodD": 10832.17850474218
+  }
+}

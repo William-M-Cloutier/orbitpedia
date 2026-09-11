@@ -1,0 +1,64 @@
+{
+  "id": "earth",
+  "name": "Earth",
+  "kind": "planet",
+  "systemId": "solar",
+  "aliases": [
+    "Terra"
+  ],
+  "facts": {
+    "massKg": 5.97217e+24,
+    "radiusMeanKm": 6371.0084,
+    "discoveryNotes": "Home world",
+    "densityGcm3": 5.5134,
+    "rotationPeriodD": 0.99726968,
+    "albedo": 0.367
+  },
+  "color": "#6B93D6",
+  "horizonId": "399",
+  "meta": {
+    "source": "JPL Horizons + SSD phys_par",
+    "sources": [
+      {
+        "name": "JPL Horizons API (ELEMENTS @ J2000)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='399'&EPHEM_TYPE=ELEMENTS&CENTER='500@10'&START_TIME='JD2451545.0'",
+        "fields": [
+          "orbit.epochJd",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "horizonId"
+        ]
+      },
+      {
+        "name": "JPL SSD Planetary Physical Parameters",
+        "url": "https://ssd.jpl.nasa.gov/planets/phys_par.html",
+        "fields": [
+          "facts.massKg",
+          "facts.radiusMeanKm",
+          "facts.densityGcm3",
+          "facts.rotationPeriodD",
+          "facts.albedo"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-11T01:39:34.674Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  },
+  "orbit": {
+    "frame": "heliocentric",
+    "epochJd": 2451545,
+    "aAu": 1.000448828934185,
+    "e": 0.01711862906746885,
+    "iDeg": 0.000418108606546181,
+    "omDeg": 135.0807182572469,
+    "wDeg": 326.7282188569271,
+    "maDeg": 358.6172562416435,
+    "periodD": 365.5022838235192
+  }
+}

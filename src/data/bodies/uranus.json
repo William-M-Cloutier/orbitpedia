@@ -1,0 +1,71 @@
+{
+  "id": "uranus",
+  "name": "Uranus",
+  "kind": "planet",
+  "systemId": "solar",
+  "facts": {
+    "massKg": 8.68099e+25,
+    "radiusMeanKm": 25362,
+    "discoveryNotes": "Discovered 1781 by William Herschel",
+    "densityGcm3": 1.27,
+    "rotationPeriodD": -0.71833,
+    "albedo": 0.51,
+    "discoveryDate": "1781-03-13"
+  },
+  "color": "#7EC8E3",
+  "horizonId": "799",
+  "meta": {
+    "source": "JPL Horizons + SSD phys_par",
+    "sources": [
+      {
+        "name": "JPL Horizons API (ELEMENTS @ J2000)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='799'&EPHEM_TYPE=ELEMENTS&CENTER='500@10'&START_TIME='JD2451545.0'",
+        "fields": [
+          "orbit.epochJd",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "horizonId",
+          "facts.discoveryDate"
+        ]
+      },
+      {
+        "name": "JPL SSD Planetary Physical Parameters",
+        "url": "https://ssd.jpl.nasa.gov/planets/phys_par.html",
+        "fields": [
+          "facts.massKg",
+          "facts.radiusMeanKm",
+          "facts.densityGcm3",
+          "facts.rotationPeriodD",
+          "facts.albedo",
+          "facts.discoveryDate"
+        ]
+      },
+      {
+        "name": "Historical discovery date (IAU / NASA fact sheets)",
+        "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/",
+        "fields": [
+          "facts.discoveryDate"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-11T02:02:58.076Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  },
+  "orbit": {
+    "frame": "heliocentric",
+    "epochJd": 2451545,
+    "aAu": 19.23014765915149,
+    "e": 0.04439276513323943,
+    "iDeg": 0.7726757776955633,
+    "omDeg": 74.00474642693433,
+    "wDeg": 96.58872479766525,
+    "maDeg": 142.8895756517994,
+    "periodD": 30800.86231423645
+  }
+}

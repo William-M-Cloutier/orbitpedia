@@ -1,0 +1,65 @@
+{
+  "id": "hygiea",
+  "name": "Hygiea",
+  "kind": "asteroid",
+  "systemId": "solar",
+  "aliases": [
+    "10 Hygiea"
+  ],
+  "facts": {
+    "discoveryNotes": "Discovered 1849 by Annibale de Gasparis",
+    "radiusMeanKm": 203.56,
+    "albedo": 0.0717,
+    "rotationPeriodD": 0.5761666666666666,
+    "massKg": 104879912500187300000,
+    "discoveryDate": "1849-04-12"
+  },
+  "color": "#7A7A78",
+  "sbdbDes": "10",
+  "meta": {
+    "source": "JPL SBDB (full-prec + phys-par)",
+    "sources": [
+      {
+        "name": "JPL SBDB API",
+        "url": "https://ssd-api.jpl.nasa.gov/sbdb.api?des=10&phys-par=true&full-prec=true",
+        "fields": [
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "orbit.epochJd",
+          "facts.radiusMeanKm",
+          "facts.massKg",
+          "facts.albedo",
+          "facts.rotationPeriodD",
+          "sbdbDes",
+          "facts.discoveryDate"
+        ]
+      },
+      {
+        "name": "Historical discovery date (IAU / NASA fact sheets)",
+        "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/",
+        "fields": [
+          "facts.discoveryDate"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-11T02:02:58.076Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  },
+  "orbit": {
+    "frame": "heliocentric",
+    "epochJd": 2461200.5,
+    "aAu": 3.150974033963701,
+    "e": 0.1067092741240963,
+    "iDeg": 3.829529946447122,
+    "omDeg": 283.1198927508594,
+    "wDeg": 312.4242387344704,
+    "maDeg": 252.0344242359649,
+    "periodD": 2042.987283349627
+  }
+}

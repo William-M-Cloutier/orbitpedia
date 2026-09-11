@@ -1,0 +1,67 @@
+{
+  "id": "vesta",
+  "name": "Vesta",
+  "kind": "asteroid",
+  "systemId": "solar",
+  "aliases": [
+    "4 Vesta"
+  ],
+  "facts": {
+    "discoveryNotes": "Discovered 1807 by Heinrich Olbers",
+    "radiusMeanKm": 261.385,
+    "densityGcm3": 3.46,
+    "albedo": 0.4228,
+    "rotationPeriodD": 0.2225886513416667,
+    "massKg": 259027679307193300000,
+    "discoveryDate": "1807-03-29"
+  },
+  "color": "#A8A090",
+  "sbdbDes": "4",
+  "meta": {
+    "source": "JPL SBDB (full-prec + phys-par)",
+    "sources": [
+      {
+        "name": "JPL SBDB API",
+        "url": "https://ssd-api.jpl.nasa.gov/sbdb.api?des=4&phys-par=true&full-prec=true",
+        "fields": [
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "orbit.epochJd",
+          "facts.radiusMeanKm",
+          "facts.massKg",
+          "facts.densityGcm3",
+          "facts.albedo",
+          "facts.rotationPeriodD",
+          "sbdbDes",
+          "facts.discoveryDate"
+        ]
+      },
+      {
+        "name": "Historical discovery date (IAU / NASA fact sheets)",
+        "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/",
+        "fields": [
+          "facts.discoveryDate"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-11T02:02:58.076Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  },
+  "orbit": {
+    "frame": "heliocentric",
+    "epochJd": 2461200.5,
+    "aAu": 2.361365965127599,
+    "e": 0.09020374382834395,
+    "iDeg": 7.143925545058711,
+    "omDeg": 103.701293265032,
+    "wDeg": 151.4686478221564,
+    "maDeg": 81.19015607686903,
+    "periodD": 1325.389042911101
+  }
+}

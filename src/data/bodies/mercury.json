@@ -1,0 +1,61 @@
+{
+  "id": "mercury",
+  "name": "Mercury",
+  "kind": "planet",
+  "systemId": "solar",
+  "facts": {
+    "massKg": 3.3010299999999994e+23,
+    "radiusMeanKm": 2439.4,
+    "discoveryNotes": "Known since antiquity",
+    "densityGcm3": 5.4289,
+    "rotationPeriodD": 58.6462,
+    "albedo": 0.106
+  },
+  "color": "#B5B5B5",
+  "horizonId": "199",
+  "meta": {
+    "source": "JPL Horizons + SSD phys_par",
+    "sources": [
+      {
+        "name": "JPL Horizons API (ELEMENTS @ J2000)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='199'&EPHEM_TYPE=ELEMENTS&CENTER='500@10'&START_TIME='JD2451545.0'",
+        "fields": [
+          "orbit.epochJd",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "horizonId"
+        ]
+      },
+      {
+        "name": "JPL SSD Planetary Physical Parameters",
+        "url": "https://ssd.jpl.nasa.gov/planets/phys_par.html",
+        "fields": [
+          "facts.massKg",
+          "facts.radiusMeanKm",
+          "facts.densityGcm3",
+          "facts.rotationPeriodD",
+          "facts.albedo"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-11T01:39:34.674Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  },
+  "orbit": {
+    "frame": "heliocentric",
+    "epochJd": 2451545,
+    "aAu": 0.3870982121841597,
+    "e": 0.2056302933705567,
+    "iDeg": 7.005014303275355,
+    "omDeg": 48.33053855197922,
+    "wDeg": 29.12428165737838,
+    "maDeg": 174.7958829169579,
+    "periodD": 87.96909804206008
+  }
+}

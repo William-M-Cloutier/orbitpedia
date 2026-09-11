@@ -1,0 +1,61 @@
+{
+  "id": "jupiter",
+  "name": "Jupiter",
+  "kind": "planet",
+  "systemId": "solar",
+  "facts": {
+    "massKg": 1.898125e+27,
+    "radiusMeanKm": 69911,
+    "discoveryNotes": "Known since antiquity",
+    "densityGcm3": 1.3262,
+    "rotationPeriodD": 0.41354,
+    "albedo": 0.52
+  },
+  "color": "#C88B3A",
+  "horizonId": "599",
+  "meta": {
+    "source": "JPL Horizons + SSD phys_par",
+    "sources": [
+      {
+        "name": "JPL Horizons API (ELEMENTS @ J2000)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='599'&EPHEM_TYPE=ELEMENTS&CENTER='500@10'&START_TIME='JD2451545.0'",
+        "fields": [
+          "orbit.epochJd",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "horizonId"
+        ]
+      },
+      {
+        "name": "JPL SSD Planetary Physical Parameters",
+        "url": "https://ssd.jpl.nasa.gov/planets/phys_par.html",
+        "fields": [
+          "facts.massKg",
+          "facts.radiusMeanKm",
+          "facts.densityGcm3",
+          "facts.rotationPeriodD",
+          "facts.albedo"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-11T01:39:34.674Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  },
+  "orbit": {
+    "frame": "heliocentric",
+    "epochJd": 2451545,
+    "aAu": 5.204336211826348,
+    "e": 0.04878759429164036,
+    "iDeg": 1.30463058652005,
+    "omDeg": 100.4911499502671,
+    "wDeg": 275.0690666066695,
+    "maDeg": 18.81562710723796,
+    "periodD": 4334.502482619944
+  }
+}

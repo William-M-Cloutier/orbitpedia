@@ -1,0 +1,61 @@
+{
+  "id": "mars",
+  "name": "Mars",
+  "kind": "planet",
+  "systemId": "solar",
+  "facts": {
+    "massKg": 6.41691e+23,
+    "radiusMeanKm": 3389.5,
+    "discoveryNotes": "Known since antiquity",
+    "densityGcm3": 3.934,
+    "rotationPeriodD": 1.02595676,
+    "albedo": 0.15
+  },
+  "color": "#C1440E",
+  "horizonId": "499",
+  "meta": {
+    "source": "JPL Horizons + SSD phys_par",
+    "sources": [
+      {
+        "name": "JPL Horizons API (ELEMENTS @ J2000)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='499'&EPHEM_TYPE=ELEMENTS&CENTER='500@10'&START_TIME='JD2451545.0'",
+        "fields": [
+          "orbit.epochJd",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "horizonId"
+        ]
+      },
+      {
+        "name": "JPL SSD Planetary Physical Parameters",
+        "url": "https://ssd.jpl.nasa.gov/planets/phys_par.html",
+        "fields": [
+          "facts.massKg",
+          "facts.radiusMeanKm",
+          "facts.densityGcm3",
+          "facts.rotationPeriodD",
+          "facts.albedo"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-11T01:39:34.674Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  },
+  "orbit": {
+    "frame": "heliocentric",
+    "epochJd": 2451545,
+    "aAu": 1.523678992938582,
+    "e": 0.09331510145811761,
+    "iDeg": 1.849876477109795,
+    "omDeg": 49.56200565858587,
+    "wDeg": 286.5373830861814,
+    "maDeg": 19.35648274730694,
+    "periodD": 686.9712731787955
+  }
+}

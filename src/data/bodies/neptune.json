@@ -1,0 +1,71 @@
+{
+  "id": "neptune",
+  "name": "Neptune",
+  "kind": "planet",
+  "systemId": "solar",
+  "facts": {
+    "massKg": 1.024092e+26,
+    "radiusMeanKm": 24622,
+    "discoveryNotes": "Discovered 1846 by Galle (Adams/Le Verrier prediction)",
+    "densityGcm3": 1.638,
+    "rotationPeriodD": 0.67125,
+    "albedo": 0.41,
+    "discoveryDate": "1846-09-23"
+  },
+  "color": "#5B5DDF",
+  "horizonId": "899",
+  "meta": {
+    "source": "JPL Horizons + SSD phys_par",
+    "sources": [
+      {
+        "name": "JPL Horizons API (ELEMENTS @ J2000)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='899'&EPHEM_TYPE=ELEMENTS&CENTER='500@10'&START_TIME='JD2451545.0'",
+        "fields": [
+          "orbit.epochJd",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "horizonId",
+          "facts.discoveryDate"
+        ]
+      },
+      {
+        "name": "JPL SSD Planetary Physical Parameters",
+        "url": "https://ssd.jpl.nasa.gov/planets/phys_par.html",
+        "fields": [
+          "facts.massKg",
+          "facts.radiusMeanKm",
+          "facts.densityGcm3",
+          "facts.rotationPeriodD",
+          "facts.albedo",
+          "facts.discoveryDate"
+        ]
+      },
+      {
+        "name": "Historical discovery date (IAU / NASA fact sheets)",
+        "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/",
+        "fields": [
+          "facts.discoveryDate"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-11T02:02:58.076Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  },
+  "orbit": {
+    "frame": "heliocentric",
+    "epochJd": 2451545,
+    "aAu": 30.09392256174911,
+    "e": 0.0112035281453876,
+    "iDeg": 1.770214094050088,
+    "omDeg": 131.7838769748161,
+    "wDeg": 267.3158054938996,
+    "maDeg": 266.105015787093,
+    "periodD": 60298.35191079151
+  }
+}

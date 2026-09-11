@@ -1,0 +1,71 @@
+{
+  "id": "pluto",
+  "name": "Pluto",
+  "kind": "dwarf_planet",
+  "systemId": "solar",
+  "facts": {
+    "massKg": 1.30246e+22,
+    "radiusMeanKm": 1188.3,
+    "discoveryNotes": "Discovered 1930 by Clyde Tombaugh; reclassified dwarf planet 2006",
+    "densityGcm3": 1.853,
+    "rotationPeriodD": -6.3872,
+    "albedo": 0.3,
+    "discoveryDate": "1930-02-18"
+  },
+  "color": "#C9B8A8",
+  "horizonId": "999",
+  "meta": {
+    "source": "JPL Horizons + SSD phys_par",
+    "sources": [
+      {
+        "name": "JPL Horizons API (ELEMENTS @ J2000)",
+        "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='999'&EPHEM_TYPE=ELEMENTS&CENTER='500@10'&START_TIME='JD2451545.0'",
+        "fields": [
+          "orbit.epochJd",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "horizonId",
+          "facts.discoveryDate"
+        ]
+      },
+      {
+        "name": "JPL SSD Planetary Physical Parameters",
+        "url": "https://ssd.jpl.nasa.gov/planets/phys_par.html",
+        "fields": [
+          "facts.massKg",
+          "facts.radiusMeanKm",
+          "facts.densityGcm3",
+          "facts.rotationPeriodD",
+          "facts.albedo",
+          "facts.discoveryDate"
+        ]
+      },
+      {
+        "name": "Historical discovery date (IAU / NASA fact sheets)",
+        "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/",
+        "fields": [
+          "facts.discoveryDate"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-11T02:02:58.076Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  },
+  "orbit": {
+    "frame": "heliocentric",
+    "epochJd": 2451545,
+    "aAu": 39.57126152242962,
+    "e": 0.2494484952274253,
+    "iDeg": 17.23565301572196,
+    "omDeg": 110.03993995362,
+    "wDeg": 115.178665976094,
+    "maDeg": 14.14365453678677,
+    "periodD": 90921.85108674582
+  }
+}
