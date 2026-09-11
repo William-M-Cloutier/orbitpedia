@@ -81,14 +81,14 @@ function heliocentricDisplayScale(bodies: Body[], sizeMode: SizeMode): number {
   );
   if (kids.length === 0) return 1;
   return parentFrameSharedDisplayScale(
-    visualRadius(star, sizeMode),
+    visualRadius(star, sizeMode, bodies),
     kids.map((c) => {
       const o = c.orbit!;
       return {
         qAu: orbitQAu(o),
         aAu: o.aAu,
         e: o.e,
-        vis: visualRadius(c, sizeMode),
+        vis: visualRadius(c, sizeMode, bodies),
       };
     }),
   );
@@ -170,7 +170,11 @@ function orbitQAu(orbit: NonNullable<Body["orbit"]>): number {
  * keep relative spacing instead of each child independently mapping to the
  * same display periapsis (catalog a/e/i unchanged).
  */
-function parentDisplayScale(body: Body, sizeMode: SizeMode): number {
+function parentDisplayScale(
+  body: Body,
+  sizeMode: SizeMode,
+  systemBodies?: readonly Body[],
+): number {
   if (body.orbit?.frame !== "parent" || !body.parentId) return 1;
   const parent = getParent(body.id) ?? getBody(body.parentId);
   if (!parent) return 1;
@@ -178,15 +182,19 @@ function parentDisplayScale(body: Body, sizeMode: SizeMode): number {
     (c) => c.orbit?.frame === "parent" && hasUsableOrbit(c),
   );
   if (kids.length === 0) return 1;
+  const bodies =
+    systemBodies && systemBodies.length > 0
+      ? systemBodies
+      : getSystemGraph(parent.systemId).bodies;
   return parentFrameSharedDisplayScale(
-    visualRadius(parent, sizeMode),
+    visualRadius(parent, sizeMode, bodies),
     kids.map((c) => {
       const o = c.orbit!;
       return {
         qAu: orbitQAu(o),
         aAu: o.aAu,
         e: o.e,
-        vis: visualRadius(c, sizeMode),
+        vis: visualRadius(c, sizeMode, bodies),
       };
     }),
   );
@@ -220,6 +228,7 @@ function bodyPosition(
   distScale: number = 1,
   sizeMode: SizeMode = DEFAULT_SIZE_MODE,
   helioScale: number = 1,
+  systemBodies?: readonly Body[],
   seen: Set<string> = new Set(),
 ): [number, number, number] {
   if (body.kind === "star" || !body.orbit) return [0, 0, 0];
@@ -237,9 +246,10 @@ function bodyPosition(
         distScale,
         sizeMode,
         helioScale,
+        systemBodies,
         seen,
       );
-      const ps = parentDisplayScale(body, sizeMode);
+      const ps = parentDisplayScale(body, sizeMode, systemBodies);
       const local = localOrbitPosition(body, simDays, s * ps);
       return [
         parentPos[0] + local[0],
@@ -259,8 +269,16 @@ function bodyWorldPosition(
   distScale: number = 1,
   sizeMode: SizeMode = DEFAULT_SIZE_MODE,
   helioScale: number = 1,
+  systemBodies?: readonly Body[],
 ): [number, number, number] {
-  const [x, y, z] = bodyPosition(body, simDays, distScale, sizeMode, helioScale);
+  const [x, y, z] = bodyPosition(
+    body,
+    simDays,
+    distScale,
+    sizeMode,
+    helioScale,
+    systemBodies,
+  );
   return [x + bary[0], y + bary[1], z + bary[2]];
 }
 
@@ -361,7 +379,7 @@ const OrbitLine = memo(function OrbitLine({
   const group = useRef<THREE.Group>(null);
   const sizeMode = useSizeMode();
   const distScale = orbitDistanceScale(sizeMode);
-  const { helioScale } = useSystemViz();
+  const { bodies: systemBodies, helioScale } = useSystemViz();
   const { getSimDays } = useSimApi();
   const parent =
     body.orbit?.frame === "parent" && body.parentId
@@ -369,9 +387,9 @@ const OrbitLine = memo(function OrbitLine({
       : undefined;
   const relScale = useMemo(() => {
     if (!hasUsableOrbit(body)) return distScale;
-    if (parent) return distScale * parentDisplayScale(body, sizeMode);
+    if (parent) return distScale * parentDisplayScale(body, sizeMode, systemBodies);
     return distScale * helioScale;
-  }, [body, parent, distScale, sizeMode, helioScale]);
+  }, [body, parent, distScale, sizeMode, helioScale, systemBodies]);
 
   const points = useMemo(() => {
     if (!hasUsableOrbit(body)) return null;
@@ -384,7 +402,14 @@ const OrbitLine = memo(function OrbitLine({
 
   const syncParent = (days: number) => {
     if (!parent || !group.current) return;
-    const [x, y, z] = bodyPosition(parent, days, distScale, sizeMode, helioScale);
+    const [x, y, z] = bodyPosition(
+      parent,
+      days,
+      distScale,
+      sizeMode,
+      helioScale,
+      systemBodies,
+    );
     group.current.position.set(x, y, z);
   };
 
@@ -433,10 +458,10 @@ const BodyMesh = memo(function BodyMesh({
 }) {
   const group = useRef<THREE.Group>(null);
   const { getSimDays } = useSimApi();
-  const { helioScale } = useSystemViz();
+  const { bodies: systemBodies, helioScale } = useSystemViz();
   const sizeMode = useSizeMode();
   const distScale = orbitDistanceScale(sizeMode);
-  const r = visualRadius(body, sizeMode);
+  const r = visualRadius(body, sizeMode, systemBodies);
   const color = body.color ?? "#888";
   const accent = highlightColor ?? color;
 
@@ -462,7 +487,14 @@ const BodyMesh = memo(function BodyMesh({
 
   const applyPose = (days: number) => {
     if (!group.current) return;
-    const [x, y, z] = bodyPosition(body, days, distScale, sizeMode, helioScale);
+    const [x, y, z] = bodyPosition(
+      body,
+      days,
+      distScale,
+      sizeMode,
+      helioScale,
+      systemBodies,
+    );
     group.current.position.set(x, y, z);
     const period = body.facts.rotationPeriodD;
     if (spinMesh.current && period != null && period !== 0) {
@@ -549,8 +581,12 @@ function focusMeshScale(body: Body): number {
  */
 const FOCUS_FRAMING_RADIUS_MIN = 0.03;
 
-function focusFramingRadius(body: Body, sizeMode: SizeMode): number {
-  const r = visualRadius(body, sizeMode) * focusMeshScale(body);
+function focusFramingRadius(
+  body: Body,
+  sizeMode: SizeMode,
+  systemBodies?: readonly Body[],
+): number {
+  const r = visualRadius(body, sizeMode, systemBodies) * focusMeshScale(body);
   return Math.max(r, FOCUS_FRAMING_RADIUS_MIN);
 }
 
@@ -572,10 +608,12 @@ function orbitMinDistance(
   sizeMode: SizeMode,
   focusBody?: Body | null,
   cameraNear: number = CAMERA_NEAR,
+  systemBodies?: readonly Body[],
 ): number {
   const idle = sizeMode === "true" ? 0.23 : 0.4;
   if (!focusBody) return idle;
-  const rMesh = visualRadius(focusBody, sizeMode) * focusMeshScale(focusBody);
+  const rMesh =
+    visualRadius(focusBody, sizeMode, systemBodies) * focusMeshScale(focusBody);
   const r = Math.max(rMesh, FOCUS_FRAMING_RADIUS_MIN);
   const near = cameraNear > 0 ? cameraNear : CAMERA_NEAR;
   // Keep outside real mesh, and never so close tiny True/Prop bodies vanish.
@@ -587,9 +625,11 @@ function focusDistanceFloor(
   sizeMode: SizeMode,
   focusBody?: Body | null,
   cameraNear: number = CAMERA_NEAR,
+  systemBodies?: readonly Body[],
 ): number {
   if (focusBody) {
-    const rMesh = visualRadius(focusBody, sizeMode) * focusMeshScale(focusBody);
+    const rMesh =
+      visualRadius(focusBody, sizeMode, systemBodies) * focusMeshScale(focusBody);
     const r = Math.max(rMesh, FOCUS_FRAMING_RADIUS_MIN);
     const near = cameraNear > 0 ? cameraNear : CAMERA_NEAR;
     // Outside real mesh; framing floor keeps Tiny True/Prop bodies visible.
@@ -613,8 +653,9 @@ function focusFrameDistance(
   fill: number = FOCUS_FILL,
   sizeMode: SizeMode = DEFAULT_SIZE_MODE,
   cameraNear: number = CAMERA_NEAR,
+  systemBodies?: readonly Body[],
 ): number {
-  const r = focusFramingRadius(body, sizeMode);
+  const r = focusFramingRadius(body, sizeMode, systemBodies);
   const halfRad = ((fovYDeg * Math.PI) / 180) / 2;
   const tanHalf = Math.tan(halfRad);
   if (!(tanHalf > 1e-6) || !(fill > 1e-6)) return 12;
@@ -624,7 +665,10 @@ function focusFrameDistance(
   const a = Number.isFinite(aspect) && aspect > 1e-6 ? aspect : 1;
   const halfMin = Math.min(tanHalf, tanHalf * a);
   const framed = r / (fill * halfMin);
-  return Math.max(focusDistanceFloor(sizeMode, body, cameraNear), framed);
+  return Math.max(
+    focusDistanceFloor(sizeMode, body, cameraNear, systemBodies),
+    framed,
+  );
 }
 
 /** Aspect of the *visible* sub-rect when setViewOffset is active. */
@@ -700,7 +744,7 @@ function ViewOffsetController({
 function FollowCamera() {
   const sizeMode = useSizeMode();
   const distScale = orbitDistanceScale(sizeMode);
-  const { helioScale } = useSystemViz();
+  const { bodies: systemBodies, helioScale } = useSystemViz();
   const { getSimDays, getFollowing, getFocusId, getBaryOffset } = useSimApi();
   const focusId = getFocusId();
   const camera = useThree((s) => s.camera);
@@ -751,8 +795,23 @@ function FollowCamera() {
     }
     poseFrozen.current = false;
     const days = getSimDays();
-    const helio = bodyPosition(b, days, distScale, sizeMode, helioScale);
-    const pos = bodyWorldPosition(b, days, getBaryOffset(), distScale, sizeMode, helioScale);
+    const helio = bodyPosition(
+      b,
+      days,
+      distScale,
+      sizeMode,
+      helioScale,
+      systemBodies,
+    );
+    const pos = bodyWorldPosition(
+      b,
+      days,
+      getBaryOffset(),
+      distScale,
+      sizeMode,
+      helioScale,
+      systemBodies,
+    );
     const fovY =
       camera instanceof THREE.PerspectiveCamera ? camera.fov : 45;
     const aspect =
@@ -768,6 +827,7 @@ function FollowCamera() {
       FOCUS_FILL,
       sizeMode,
       near,
+      systemBodies,
     );
     target.current.set(pos[0], pos[1], pos[2]);
     desired.current.copy(target.current);
@@ -812,8 +872,23 @@ function FollowCamera() {
     poseFrozen.current = false;
 
     const days = getSimDays();
-    const helio = bodyPosition(b, days, distScale, sizeMode, helioScale);
-    const pos = bodyWorldPosition(b, days, getBaryOffset(), distScale, sizeMode, helioScale);
+    const helio = bodyPosition(
+      b,
+      days,
+      distScale,
+      sizeMode,
+      helioScale,
+      systemBodies,
+    );
+    const pos = bodyWorldPosition(
+      b,
+      days,
+      getBaryOffset(),
+      distScale,
+      sizeMode,
+      helioScale,
+      systemBodies,
+    );
     desired.current.set(pos[0], pos[1], pos[2]);
 
     // Sync offset from what OrbitControls did (dolly / orbit / pan) relative
@@ -1240,7 +1315,12 @@ function SceneContent({
   const focusBody = focusId ? getBody(focusId) : null;
   const cameraNear =
     camera instanceof THREE.PerspectiveCamera ? camera.near : CAMERA_NEAR;
-  const minDistance = orbitMinDistance(sizeMode, focusBody, cameraNear);
+  const minDistance = orbitMinDistance(
+    sizeMode,
+    focusBody,
+    cameraNear,
+    systemBodies,
+  );
 
   return (
     <SystemVizContext.Provider value={systemViz}>

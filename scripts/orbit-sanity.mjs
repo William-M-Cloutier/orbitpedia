@@ -549,6 +549,27 @@ if (!Number.isFinite(c)) {
   ok(`kepler.ts GAUSS_YEAR_D matches ${GAUSS_YEAR_D}`);
 }
 
+// Prop/True must dial off the *active* system (star + innermost primary-frame
+// perihelion) — never hardcode Sol/Mercury ids. Framing floor stays locked.
+{
+  const sizeSrc = fs.readFileSync(path.join(ROOT, "src/viz/sizeTiers.ts"), "utf8");
+  if (/getBody\(["']mercury["']\)/.test(sizeSrc) || /MERCURY_Q_AU/.test(sizeSrc)) {
+    fail("sizeTiers Prop/True still hardcodes Mercury/Sol clearance");
+  } else if (!/innermostPrimaryOrbitBody/.test(sizeSrc)) {
+    fail("sizeTiers missing innermostPrimaryOrbitBody active-system clearance");
+  } else if (!/getSystemGraph/.test(sizeSrc)) {
+    fail("sizeTiers must resolve Prop/True via getSystemGraph / active bodies");
+  } else {
+    ok("sizeTiers Prop/True use active-system clearance (no Mercury/Sol hardcode)");
+  }
+  const sceneSrc = fs.readFileSync(path.join(ROOT, "src/viz/OrbitScene.tsx"), "utf8");
+  if (!/FOCUS_FRAMING_RADIUS_MIN/.test(sceneSrc)) {
+    fail("OrbitScene missing FOCUS_FRAMING_RADIUS_MIN (Pluto True/Prop focus floor)");
+  } else {
+    ok("OrbitScene keeps FOCUS_FRAMING_RADIUS_MIN framing floor");
+  }
+}
+
 if (process.exitCode) {
   console.error("\norbit-sanity FAILED");
   process.exit(process.exitCode);

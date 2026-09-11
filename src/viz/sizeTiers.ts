@@ -1,5 +1,5 @@
-import type { Body, BodyKind } from "@/data/schema";
-import { getBody, getHomeSystemGraph } from "@/data/catalog";
+import { hasUsableOrbit, type Body, type BodyKind } from "@/data/schema";
+import { getBody, getHomeSystemGraph, getSystemGraph } from "@/data/catalog";
 
 /**
  * Visual mesh radii (render layer). LOCKED scale contract — do not one-off
@@ -10,8 +10,12 @@ import { getBody, getHomeSystemGraph } from "@/data/catalog";
  *
  * - schematic: fixed tiers for star/planet/dwarf/asteroid; moons =
  *   parentMesh * (R_moon/R_parent) clamped [MIN, MAX_OF_PARENT]
- * - proportional: one global km→scene scale (sun largest, Mercury clearance)
- * - true: one global km→scene scale (sun clearance); honest tiny planets
+ * - proportional: one system-local km→scene scale (star largest, inner
+ *   primary-frame clearance body)
+ * - true: one system-local km→scene scale (star clearance); honest tiny planets
+ *
+ * Prop/True dial off the *active* system graph (star + innermost non-star
+ * primary-frame perihelion) — never hardcode Sol/Mercury ids.
  *
  * Never explode orbit distances to match a magnified sun. Parent-frame orbit
  * display spacing is separate (parentFrameSharedDisplayScale) and also
@@ -49,8 +53,11 @@ export const STAR_VISUAL_RADIUS = 0.12;
 
 const AU_KM = 149_597_870.7;
 
-/** Mercury perihelion (AU) — used for proportional/true sun clearance. */
-const MERCURY_Q_AU = 0.307;
+/** Fallback when a system has no usable primary-frame orbiter (rare). */
+const FALLBACK_INNER_Q_AU = 0.307;
+const FALLBACK_INNER_RADIUS_KM = 2_439.7;
+const FALLBACK_STAR_RADIUS_KM = 695_700;
+const FALLBACK_MAX_NON_STAR_KM = 69_911;
 
 export function minClearanceAu(
   bodyRadius: number = PLANET_VISUAL_RADIUS_SMALL,
@@ -99,42 +106,124 @@ function schematicRadius(body: Body): number {
   return schematicRadiusNonMoon(body);
 }
 
-/** Max non-star radius (km) in the home system — for proportional fit. */
-function maxNonStarRadiusKm(): number {
+/** Periapsis (AU) from elements — matches catalog qAu when present. */
+function orbitQAu(orbit: NonNullable<Body["orbit"]>): number {
+  if (orbit.qAu != null && Number.isFinite(orbit.qAu)) return orbit.qAu;
+  return orbit.aAu * (1 - orbit.e);
+}
+
+/**
+ * Resolve the system graph Prop/True dial against. Prefer explicit bodies
+ * (Explore active system); else the body's systemId; else home.
+ */
+function resolveSystemBodies(
+  body: Body,
+  systemBodies?: readonly Body[],
+): readonly Body[] {
+  if (systemBodies && systemBodies.length > 0) return systemBodies;
+  if (body.systemId) {
+    try {
+      return getSystemGraph(body.systemId).bodies;
+    } catch {
+      /* fall through */
+    }
+  }
+  return getHomeSystemGraph().bodies;
+}
+
+/** Clearance star = system kind==="star" (prefer root / no parentId). */
+function systemStar(bodies: readonly Body[]): Body | undefined {
+  return (
+    bodies.find((b) => b.kind === "star" && !b.parentId) ??
+    bodies.find((b) => b.kind === "star")
+  );
+}
+
+/**
+ * Inner clearance reference: smallest perihelion among non-star bodies with a
+ * usable *primary-frame* orbit (frame !== "parent") in this system.
+ */
+function innermostPrimaryOrbitBody(
+  bodies: readonly Body[],
+): Body | undefined {
+  let best: Body | undefined;
+  let bestQ = Infinity;
+  for (const b of bodies) {
+    if (b.kind === "star") continue;
+    if (!hasUsableOrbit(b)) continue;
+    if (b.orbit.frame === "parent") continue;
+    const q = orbitQAu(b.orbit);
+    if (!(q > 0) || !Number.isFinite(q)) continue;
+    if (q < bestQ) {
+      bestQ = q;
+      best = b;
+    }
+  }
+  return best;
+}
+
+/** Max non-star radius (km) in the active system — for proportional fit. */
+function maxNonStarRadiusKm(bodies: readonly Body[]): number {
   let max = 0;
-  for (const b of getHomeSystemGraph().bodies) {
+  for (const b of bodies) {
     if (b.kind === "star") continue;
     const r = b.facts.radiusMeanKm;
     if (r != null && r > max) max = r;
   }
-  return max > 0 ? max : 69_911; // Jupiter fallback
+  return max > 0 ? max : FALLBACK_MAX_NON_STAR_KM;
 }
 
-function mercuryRadiusKm(): number {
-  const m = getBody("mercury");
-  return m?.facts.radiusMeanKm ?? 2_439.7;
-}
-
-function sunRadiusKm(): number {
-  const sun =
-    getBody("sun") ??
-    getHomeSystemGraph().bodies.find((b) => b.kind === "star");
-  return sun?.facts.radiusMeanKm ?? 695_700;
+function starRadiusKm(bodies: readonly Body[]): number {
+  const star = systemStar(bodies);
+  return star?.facts.radiusMeanKm ?? FALLBACK_STAR_RADIUS_KM;
 }
 
 /**
- * Proportional: sun is the biggest mesh; other bodies keep true radius ratios
- * and are scaled so the sun still clears Mercury's perihelion on real AU.
+ * Margin capped so compact exoplanet systems (q ≪ 0.04 AU) still get a
+ * positive clearance budget. Solar Mercury q≈0.307 → full 0.04 margin.
  */
-function proportionalRadius(body: Body): number {
-  const mercKm = mercuryRadiusKm();
-  const maxKm = maxNonStarRadiusKm();
-  // Solve: sun = S, maxPlanet = 0.92*S, mercMesh = maxPlanet * (mercKm/maxKm)
-  // S + mercMesh + margin <= Mercury q
-  const ratioMercToMax = mercKm / maxKm;
-  const denom = 1 + 0.92 * ratioMercToMax;
-  const sunMesh = (MERCURY_Q_AU - PERIHELION_CLEARANCE_MARGIN_AU) / denom;
-  const scale = (0.92 * sunMesh) / maxKm; // km → scene AU
+function clearanceMarginAu(innerQAu: number): number {
+  if (!(innerQAu > 0) || !Number.isFinite(innerQAu)) {
+    return PERIHELION_CLEARANCE_MARGIN_AU;
+  }
+  return Math.min(PERIHELION_CLEARANCE_MARGIN_AU, innerQAu * 0.25);
+}
+
+type ClearanceRefs = {
+  starKm: number;
+  maxNonStarKm: number;
+  innerKm: number;
+  innerQAu: number;
+};
+
+function clearanceRefs(bodies: readonly Body[]): ClearanceRefs {
+  const inner = innermostPrimaryOrbitBody(bodies);
+  const innerQAu =
+    inner && hasUsableOrbit(inner)
+      ? orbitQAu(inner.orbit)
+      : FALLBACK_INNER_Q_AU;
+  return {
+    starKm: starRadiusKm(bodies),
+    maxNonStarKm: maxNonStarRadiusKm(bodies),
+    innerKm: inner?.facts.radiusMeanKm ?? FALLBACK_INNER_RADIUS_KM,
+    innerQAu: innerQAu > 0 ? innerQAu : FALLBACK_INNER_Q_AU,
+  };
+}
+
+/**
+ * Proportional: star is the biggest mesh; other bodies keep true radius ratios
+ * and are scaled so the star still clears the innermost primary-frame
+ * perihelion on real AU.
+ */
+function proportionalRadius(body: Body, bodies: readonly Body[]): number {
+  const { maxNonStarKm, innerKm, innerQAu } = clearanceRefs(bodies);
+  // Solve: star = S, maxPlanet = 0.92*S, innerMesh = maxPlanet * (innerKm/maxKm)
+  // S + innerMesh + margin <= inner q
+  const ratioInnerToMax = innerKm / maxNonStarKm;
+  const denom = 1 + 0.92 * ratioInnerToMax;
+  const margin = clearanceMarginAu(innerQAu);
+  const sunMesh = (innerQAu - margin) / denom;
+  const scale = (0.92 * sunMesh) / maxNonStarKm; // km → scene AU
 
   if (body.kind === "star") {
     return sunMesh; // largest by construction
@@ -144,26 +233,34 @@ function proportionalRadius(body: Body): number {
 }
 
 /**
- * True ratios on real-AU orbits: sunMesh * (1 + R_merc/R_sun) + margin <= q.
- * Planets stay tiny vs the sun (honest) and the system fits the zoom box.
+ * True ratios on real-AU orbits: starMesh * (1 + R_inner/R_star) + margin <= q.
+ * Planets stay tiny vs the star (honest) and the system fits the zoom box.
  */
-function trueRadius(body: Body): number {
-  const sunKm = sunRadiusKm();
-  const mercKm = mercuryRadiusKm();
-  const denom = 1 + mercKm / sunKm;
-  const sunMesh = (MERCURY_Q_AU - PERIHELION_CLEARANCE_MARGIN_AU) / denom;
-  const scale = sunMesh / sunKm; // km → scene AU
+function trueRadius(body: Body, bodies: readonly Body[]): number {
+  const { starKm, innerKm, innerQAu } = clearanceRefs(bodies);
+  const denom = 1 + innerKm / starKm;
+  const margin = clearanceMarginAu(innerQAu);
+  const sunMesh = (innerQAu - margin) / denom;
+  const scale = sunMesh / starKm; // km → scene AU
   const km = body.facts.radiusMeanKm ?? 1;
   return Math.max(1e-6, km * scale);
 }
 
-/** Visual mesh radius in scene units (≈ AU for orbit layout). */
+/**
+ * Visual mesh radius in scene units (≈ AU for orbit layout).
+ * Pass `systemBodies` from Explore's active graph when available; otherwise
+ * Prop/True resolve via `body.systemId` (never silent Sol for exoplanets).
+ */
 export function visualRadius(
   body: Body,
   mode: SizeMode = DEFAULT_SIZE_MODE,
+  systemBodies?: readonly Body[],
 ): number {
-  if (mode === "proportional") return proportionalRadius(body);
-  if (mode === "true") return trueRadius(body);
+  if (mode === "proportional" || mode === "true") {
+    const bodies = resolveSystemBodies(body, systemBodies);
+    if (mode === "proportional") return proportionalRadius(body, bodies);
+    return trueRadius(body, bodies);
+  }
   return schematicRadius(body);
 }
 
