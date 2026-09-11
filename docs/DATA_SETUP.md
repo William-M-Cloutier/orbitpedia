@@ -95,6 +95,26 @@ Do **not** fill unknowns with zeros or Wikipedia guesses.
 
 Optional hex for rail / mesh tint. Keep readable on dark UI; one stable color per body.
 
+### Appearance (procedural + optional textureId)
+
+Explore always draws a **procedural** surface by kind/traits (rocky / gas / ice /
+star + light noise; uses `color` when helpful). Most bodies will never have real
+maps — that look must stay intentional.
+
+Optional additive field (omit on existing cards):
+
+```json
+"appearance": { "textureId": "some-registry-key" }
+```
+
+- `textureId` = registry key only (kebab-case). **No** URLs, paths, or bytes on the card.
+- Fail-open: missing key / empty registry / failed load → procedural; never block Explore.
+- Keep textures **out of** `facts` and `meta.sources` (citations stay science pages).
+- No map asset pack this slice. Future Guard caps: ≤512KB/file, ≤2048², ≤12 Sol maps,
+  ≤6MB pack, lazy on focus. Marquee Sol maps = later ticket.
+
+See [APPEARANCE.md](./APPEARANCE.md).
+
 ## Sources policy (locked)
 
 **Allow (human-readable pages people can open):**
@@ -144,6 +164,7 @@ Ingest scripts may *fetch* APIs; the **cited** URL for Facts links must still be
 - Ship gates: `docs/NEW_SYSTEM_CHECKLIST.md`
 - Solar ingest mechanics: `scripts/INGEST_NOTES.md`
 - Schema: `src/data/schema.ts` (CATALOG_VERSION = 2)
+- Appearance / procedural: `docs/APPEARANCE.md`
 
 ## UI fixture: `sparse-test`
 

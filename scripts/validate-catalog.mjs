@@ -275,6 +275,17 @@ function collectWeakFieldFlags(body, centralId) {
     if (/nssdc\.gsfc\.nasa\.gov/i.test(u)) {
       flags.push(`meta.sources blocked host (bad cert/HSTS): ${u.slice(0, 96)}`);
     }
+    // Textures / appearance live on body.appearance — keep out of Facts citations.
+    for (const field of s.fields ?? []) {
+      if (/^(appearance|textureId|texture)\b/i.test(String(field))) {
+        flags.push(
+          `meta.sources fields must not cite textures/appearance (use appearance.textureId): ${field}`,
+        );
+      }
+    }
+  }
+  if (body.appearance?.textureId != null && typeof body.appearance.textureId !== "string") {
+    flags.push("appearance.textureId must be a string registry key");
   }
   if (!body.meta.fetchedAt) flags.push("meta.fetchedAt missing");
   if (!body.meta.provenance && !body.meta.source) {
