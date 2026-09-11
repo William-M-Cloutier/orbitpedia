@@ -747,7 +747,8 @@ function FollowCamera() {
  */
 function WasdFly() {
   const keys = useRef({ w: false, a: false, s: false, d: false });
-  const canvasFocused = useRef(false);
+  /** True after pointerdown on the WebGL canvas until pointerdown outside it. */
+  const canvasArmed = useRef(false);
   const { getFollowing } = useSimApi();
   const camera = useThree((s) => s.camera);
   const controls = useThree((s) => s.controls) as OrbitControlsImpl | null;
@@ -758,9 +759,7 @@ function WasdFly() {
   const move = useRef(new THREE.Vector3());
 
   useEffect(() => {
-    const el = gl.domElement;
-    el.tabIndex = 0;
-    el.style.outline = "none";
+    const canvas = gl.domElement;
 
     const isTypingTarget = (t: EventTarget | null) => {
       if (!(t instanceof HTMLElement)) return false;
@@ -773,19 +772,21 @@ function WasdFly() {
       );
     };
 
-    const onPointerDown = () => {
-      el.focus({ preventScroll: true });
-      canvasFocused.current = true;
-    };
-    const onFocus = () => {
-      canvasFocused.current = true;
-    };
-    const onBlur = () => {
-      canvasFocused.current = false;
+    const clearKeys = () => {
       keys.current = { w: false, a: false, s: false, d: false };
     };
+
+    const onCanvasPointerDown = () => {
+      canvasArmed.current = true;
+    };
+    const onDocPointerDown = (e: PointerEvent) => {
+      const t = e.target;
+      if (t instanceof Node && canvas.contains(t)) return;
+      canvasArmed.current = false;
+      clearKeys();
+    };
     const onKeyDown = (e: KeyboardEvent) => {
-      if (!canvasFocused.current) return;
+      if (!canvasArmed.current) return;
       if (isTypingTarget(e.target) || isTypingTarget(document.activeElement)) {
         return;
       }
@@ -805,21 +806,17 @@ function WasdFly() {
     };
 
     const onVis = () => {
-      if (document.hidden) {
-        keys.current = { w: false, a: false, s: false, d: false };
-      }
+      if (document.hidden) clearKeys();
     };
 
-    el.addEventListener("pointerdown", onPointerDown);
-    el.addEventListener("focus", onFocus);
-    el.addEventListener("blur", onBlur);
+    canvas.addEventListener("pointerdown", onCanvasPointerDown);
+    document.addEventListener("pointerdown", onDocPointerDown, true);
     window.addEventListener("keydown", onKeyDown);
     window.addEventListener("keyup", onKeyUp);
     document.addEventListener("visibilitychange", onVis);
     return () => {
-      el.removeEventListener("pointerdown", onPointerDown);
-      el.removeEventListener("focus", onFocus);
-      el.removeEventListener("blur", onBlur);
+      canvas.removeEventListener("pointerdown", onCanvasPointerDown);
+      document.removeEventListener("pointerdown", onDocPointerDown, true);
       window.removeEventListener("keydown", onKeyDown);
       window.removeEventListener("keyup", onKeyUp);
       document.removeEventListener("visibilitychange", onVis);
@@ -829,7 +826,7 @@ function WasdFly() {
   useFrame((_, delta) => {
     if (typeof document !== "undefined" && document.hidden) return;
     const { w, a, s, d } = keys.current;
-    if (!(w || a || s || d) || !canvasFocused.current) return;
+    if (!(w || a || s || d) || !canvasArmed.current) return;
 
     camera.getWorldDirection(forward.current);
     if (forward.current.lengthSq() < 1e-12) return;
