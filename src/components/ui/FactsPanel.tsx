@@ -61,21 +61,8 @@ export function FactsPanel({ body, onClear }: Props) {
     setExpanded(false);
   }, [body?.id]);
 
-  if (!body) {
-    return (
-      <aside className="pointer-events-auto flex w-full flex-col border-t border-white/10 bg-[#080d18]/95 p-4 backdrop-blur md:h-full md:w-72 md:shrink-0 md:border-l md:border-t-0 lg:w-80">
-        <p className="text-xs font-medium uppercase tracking-wider text-zinc-500">
-          Facts
-        </p>
-        <p className="mt-3 text-sm text-zinc-500">
-          Select a body in the scene or rail to see cool facts.
-        </p>
-        <p className="mt-2 text-xs text-zinc-600">
-          Clear with Esc, panel ✕, second click, or right-click.
-        </p>
-      </aside>
-    );
-  }
+  // Hidden entirely when nothing is focused — no empty stub taking layout space.
+  if (!body) return null;
 
   const period =
     body.orbit?.periodD ??

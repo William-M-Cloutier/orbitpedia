@@ -30,18 +30,56 @@ export function BodyRail({
   onFocus,
 }: Props) {
   const [filter, setFilter] = useState<(typeof FILTERS)[number]>("all");
+  const [open, setOpen] = useState(true);
 
   const list = useMemo(
     () => (filter === "all" ? bodies : bodies.filter((b) => b.kind === filter)),
     [filter],
   );
 
+  if (!open) {
+    return (
+      <aside className="flex h-full w-9 shrink-0 flex-col border-r border-white/10 bg-[#080d18]">
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          className="flex flex-1 flex-col items-center gap-2 px-1 py-3 text-zinc-400 hover:bg-white/5 hover:text-zinc-200"
+          aria-expanded={false}
+          aria-label="Expand bodies list"
+          title="Expand bodies"
+        >
+          <span className="text-sm leading-none" aria-hidden>
+            ›
+          </span>
+          <span
+            className="text-[10px] font-medium uppercase tracking-wider"
+            style={{ writingMode: "vertical-rl" }}
+          >
+            Bodies
+          </span>
+        </button>
+      </aside>
+    );
+  }
+
   return (
     <aside className="flex h-full w-56 shrink-0 flex-col border-r border-white/10 bg-[#080d18]">
       <div className="border-b border-white/10 p-3">
-        <p className="mb-2 text-xs font-medium uppercase tracking-wider text-zinc-500">
-          Bodies
-        </p>
+        <div className="mb-2 flex items-center justify-between gap-2">
+          <p className="text-xs font-medium uppercase tracking-wider text-zinc-500">
+            Bodies
+          </p>
+          <button
+            type="button"
+            onClick={() => setOpen(false)}
+            className="rounded px-1.5 py-0.5 text-xs text-zinc-500 hover:bg-white/5 hover:text-zinc-300"
+            aria-expanded={true}
+            aria-label="Collapse bodies list"
+            title="Collapse"
+          >
+            ‹
+          </button>
+        </div>
         <div className="flex flex-wrap gap-1">
           {FILTERS.map((f) => (
             <button

@@ -99,7 +99,11 @@ function bodyWorldPosition(
 
 const sharedSunMat = new THREE.MeshBasicMaterial({ color: "#FDB813" });
 
+/** Slow yaw for idle starfield drift (rad/s). Tiny — readable only over many seconds. */
+const STARFIELD_DRIFT_RAD_PER_SEC = 0.004;
+
 function Starfield({ count = 3200 }: { count?: number }) {
+  const group = useRef<THREE.Points>(null);
   const { positions, colors } = useMemo(() => {
     const pos = new Float32Array(count * 3);
     const col = new Float32Array(count * 3);
@@ -135,8 +139,15 @@ function Starfield({ count = 3200 }: { count?: number }) {
     [colors],
   );
 
+  // Subtle drift while SimDriver keeps demand frames flowing; skip when tab hidden.
+  useFrame((_, delta) => {
+    if (typeof document !== "undefined" && document.hidden) return;
+    if (!group.current) return;
+    group.current.rotation.y += STARFIELD_DRIFT_RAD_PER_SEC * Math.min(delta, 0.25);
+  });
+
   return (
-    <points frustumCulled={false}>
+    <points ref={group} frustumCulled={false}>
       <bufferGeometry>
         <primitive attach="attributes-position" object={posAttr} />
         <primitive attach="attributes-color" object={colAttr} />
@@ -320,22 +331,24 @@ function FollowCamera() {
   const offset = useRef(new THREE.Vector3());
   const lastBearing = useRef<number | null>(null);
 
-  // Snap / re-frame when focus changes (canned offset only on focus change).
+  // Snap / re-frame only when acquiring a focus. Clearing focus must leave
+  // camera position + OrbitControls target/zoom as-is (stop Follow tracking only).
   useEffect(() => {
-    let pos: [number, number, number] = [0, 0, 0];
-    let dist = 12;
-    let helio: [number, number, number] = [0, 0, 0];
-    if (focusId) {
-      const b = bodies.find((x) => x.id === focusId);
-      if (b) {
-        const days = getSimDays();
-        helio = bodyPosition(b, days);
-        pos = bodyWorldPosition(b, days);
-        if (b.orbit) {
-          dist = Math.max(1.2, b.orbit.aAu * 0.55 + 1.5);
-        }
-      }
+    if (!focusId) {
+      lastBearing.current = null;
+      return;
     }
+    const b = bodies.find((x) => x.id === focusId);
+    if (!b) {
+      lastBearing.current = null;
+      return;
+    }
+    const days = getSimDays();
+    const helio = bodyPosition(b, days);
+    const pos = bodyWorldPosition(b, days);
+    const dist = b.orbit
+      ? Math.max(1.2, b.orbit.aAu * 0.55 + 1.5)
+      : 12;
     target.current.set(pos[0], pos[1], pos[2]);
     desired.current.copy(target.current);
     camera.position.set(
@@ -353,7 +366,7 @@ function FollowCamera() {
       ? Math.atan2(helio[0], helio[2])
       : null;
     invalidate();
-  }, [focusId, camera, controls, invalidate]); // eslint-disable-line react-hooks/exhaustive-deps -- snap on focus change only
+  }, [focusId, camera, controls, invalidate]); // eslint-disable-line react-hooks/exhaustive-deps -- snap on focus acquire only
 
   useFrame((_, delta) => {
     const followingNow = getFollowing();
