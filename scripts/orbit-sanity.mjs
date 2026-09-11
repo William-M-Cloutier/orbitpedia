@@ -613,6 +613,16 @@ if (!Number.isFinite(c)) {
   } else {
     ok("OrbitScene keeps FOCUS_FRAMING_RADIUS_MIN framing floor");
   }
+  // Size-mode camera: proportional offset scale only — not a full FollowCamera reset.
+  if (!/sizeModeFrameRef/.test(sceneSrc) || !/framingMetricFor/.test(sceneSrc)) {
+    fail("OrbitScene missing proportional size-mode camera framing scale");
+  } else if (
+    /}, \[focusId, camera, controls, invalidate, distScale, sizeMode\]/.test(sceneSrc)
+  ) {
+    fail("FollowCamera must not re-snap pose when sizeMode is in focus-effect deps");
+  } else {
+    ok("FollowCamera scales camera by size-mode framing ratio (no full reset)");
+  }
 }
 
 if (process.exitCode) {

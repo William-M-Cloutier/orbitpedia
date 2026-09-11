@@ -799,6 +799,11 @@ function ViewOffsetController({
  * - Explore FactsPanel is a canvas overlay (page) so unfocus does not resize
  *   the WebGL viewport (layout shift looked like a left pan)
  * Idle OrbitControls still work — we do not overwrite pose every idle frame.
+ *
+ * Size-mode contract: do NOT snap azimuth/elevation back to the focus pose.
+ * When Schematic/Prop/True changes mesh + helio display scale, multiply the
+ * current camera offset length (and idle look-at from origin) by the ratio of
+ * old→new framing metric — focusFrameDistance while focused, else helioScale.
  */
 function FollowCamera() {
   const sizeMode = useSizeMode();
@@ -820,6 +825,48 @@ function FollowCamera() {
    * Cleared only on focus acquire snap.
    */
   const poseFrozen = useRef(false);
+  /**
+   * Baseline for proportional size-mode camera scale. Updated after focus snap
+   * / freeze and after each size-mode adjust — never used to hard-reset pose.
+   */
+  const sizeModeFrameRef = useRef<{
+    sizeMode: SizeMode;
+    helioScale: number;
+    metric: number;
+    ready: boolean;
+  }>({ sizeMode, helioScale, metric: 0, ready: false });
+
+  const framingMetricFor = (body: Body | null | undefined): number => {
+    if (body) {
+      const fovY =
+        camera instanceof THREE.PerspectiveCamera ? camera.fov : 45;
+      const aspect =
+        camera instanceof THREE.PerspectiveCamera
+          ? visibleAspect(camera)
+          : 1;
+      const near =
+        camera instanceof THREE.PerspectiveCamera ? camera.near : CAMERA_NEAR;
+      return focusFrameDistance(
+        body,
+        fovY,
+        aspect,
+        FOCUS_FILL,
+        sizeMode,
+        near,
+        systemBodies,
+      );
+    }
+    return Math.max(helioScale, 1e-9);
+  };
+
+  const rememberSizeModeFrame = (metric: number) => {
+    sizeModeFrameRef.current = {
+      sizeMode,
+      helioScale,
+      metric: Math.max(metric, 1e-9),
+      ready: true,
+    };
+  };
 
   /** Snapshot live camera + controls into follow refs without moving either. */
   const freezePoseRefs = () => {
@@ -844,12 +891,14 @@ function FollowCamera() {
     if (!focusId) {
       wasFollowing.current = false;
       freezePoseRefs();
+      rememberSizeModeFrame(framingMetricFor(null));
       return;
     }
     const b = getBody(focusId ?? "");
     if (!b) {
       wasFollowing.current = false;
       freezePoseRefs();
+      rememberSizeModeFrame(framingMetricFor(null));
       return;
     }
     poseFrozen.current = false;
@@ -904,8 +953,88 @@ function FollowCamera() {
       ? Math.atan2(helio[0], helio[2])
       : null;
     wasFollowing.current = focusIsOrbiter(focusId);
+    rememberSizeModeFrame(dist);
     invalidate();
-  }, [focusId, camera, controls, invalidate]); // eslint-disable-line react-hooks/exhaustive-deps -- snap on focus acquire only; size mode must not reset pose/zoom
+  }, [focusId, camera, controls, invalidate]); // eslint-disable-line react-hooks/exhaustive-deps -- snap on focus acquire only; size mode uses proportional scale effect below
+
+  // Size mode: scale distance/offset by framing-metric ratio; keep look direction.
+  useLayoutEffect(() => {
+    const prev = sizeModeFrameRef.current;
+    const focusNow = getFocusId();
+    const body = focusNow ? getBody(focusNow) : null;
+    const nextMetric = framingMetricFor(body);
+
+    if (!prev.ready) {
+      rememberSizeModeFrame(nextMetric);
+      return;
+    }
+    if (prev.sizeMode === sizeMode) {
+      // Focus snap/clear owns pose; keep baseline metric in sync only.
+      rememberSizeModeFrame(nextMetric);
+      return;
+    }
+
+    const ratio =
+      prev.metric > 0 && Number.isFinite(nextMetric)
+        ? nextMetric / prev.metric
+        : 1;
+    const helioRatio =
+      prev.helioScale > 0 && Number.isFinite(helioScale)
+        ? helioScale / prev.helioScale
+        : 1;
+
+    if (controls?.target) {
+      offset.current.copy(camera.position).sub(controls.target);
+      target.current.copy(controls.target);
+    } else {
+      offset.current.copy(camera.position).sub(target.current);
+    }
+
+    if (body) {
+      const pos = bodyWorldPosition(
+        body,
+        getSimDays(),
+        getBaryOffset(),
+        distScale,
+        sizeMode,
+        helioScale,
+        systemBodies,
+        faceOn,
+      );
+      target.current.set(pos[0], pos[1], pos[2]);
+      desired.current.copy(target.current);
+    } else if (
+      Number.isFinite(helioRatio) &&
+      helioRatio > 0 &&
+      Math.abs(helioRatio - 1) > 1e-9
+    ) {
+      // Idle: system display scale changed — scale look-at from origin with orbits.
+      target.current.multiplyScalar(helioRatio);
+      desired.current.copy(target.current);
+    } else {
+      desired.current.copy(target.current);
+    }
+
+    const len = offset.current.length();
+    if (len > 1e-9 && Number.isFinite(ratio) && ratio > 0) {
+      const near =
+        camera instanceof THREE.PerspectiveCamera ? camera.near : CAMERA_NEAR;
+      const minD = orbitMinDistance(sizeMode, body, near, systemBodies);
+      const nextLen = Math.max(len * ratio, minD);
+      offset.current.multiplyScalar(nextLen / len);
+    }
+
+    camera.position.copy(target.current).add(offset.current);
+    if (controls?.target) {
+      controls.target.copy(target.current);
+      controls.update();
+    } else {
+      camera.lookAt(target.current);
+    }
+    rememberSizeModeFrame(nextMetric);
+    invalidate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- proportional size-mode scale only; focus snap is separate
+  }, [sizeMode, helioScale, camera, controls, invalidate]);
 
   useFrame((_, delta) => {
     const followingNow = getFollowing();
