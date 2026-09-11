@@ -46,8 +46,8 @@
         ]
       },
       {
-        "name": "Historical discovery date (IAU / NASA fact sheets)",
-        "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/",
+        "name": "NASA Solar System \u2014 planets",
+        "url": "https://science.nasa.gov/solar-system/planets/",
         "fields": [
           "facts.discoveryDate"
         ]

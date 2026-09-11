@@ -42,8 +42,8 @@
         ]
       },
       {
-        "name": "Historical discovery date (IAU / NASA fact sheets)",
-        "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/",
+        "name": "JPL SBDB lookup",
+        "url": "https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/",
         "fields": [
           "facts.discoveryDate"
         ]

@@ -2,20 +2,22 @@ import type { Body, BodyKind } from "@/data/schema";
 import { getBody, getHomeSystemGraph } from "@/data/catalog";
 
 /**
- * Visual mesh radii (render layer). Orbit paths stay in real AU so the
- * current Explore zoom bounds (min~0.5, max~80) remain the working box.
+ * Visual mesh radii (render layer). LOCKED scale contract — do not one-off
+ * tweak per body when seeding moons/planets. New cards only add catalog
+ * facts; these formulas must apply unchanged.
  *
- * - schematic: readable size tiers (default)
- * - proportional: true radius ratios; sun largest, capped so Mercury clears
- *   on real-AU orbits
- * - true: real radius ratios to the sun; sun sized to Mercury clearance on
- *   real-AU orbits (planets stay tiny vs sun — honest, still fits zoom)
+ * Orbit paths stay in real AU (Explore zoom box min~0.425, max~80).
  *
- * Never explode orbit distances to match a magnified sun — that shrinks the
- * whole system under the same camera. Clearance = cap the sun, keep AU paths.
+ * - schematic: fixed tiers for star/planet/dwarf/asteroid; moons =
+ *   parentMesh * (R_moon/R_parent) clamped [MIN, MAX_OF_PARENT]
+ * - proportional: one global km→scene scale (sun largest, Mercury clearance)
+ * - true: one global km→scene scale (sun clearance); honest tiny planets
  *
- * Adding a planet later = body-card facts only; this module maps radius → mesh.
- * Scoped to the home system graph for now (additive systems later).
+ * Never explode orbit distances to match a magnified sun. Parent-frame orbit
+ * display spacing is separate (parentFrameSharedDisplayScale) and also
+ * formula-driven — not per-moon constants.
+ *
+ * Adding a body later = Store B card only; sizeTiers maps radius → mesh.
  */
 
 export type SizeMode = "schematic" | "proportional" | "true";
