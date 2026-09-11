@@ -19,7 +19,7 @@ type Props = {
   focusId?: string | null;
   onSelect?: (id: string | null) => void;
   highlightColor?: string;
-  /** Simulated days advanced per real second while following. */
+  /** Simulated days advanced per real second (idle + follow). UI owns presets. */
   simDaysPerSec?: number;
 };
 

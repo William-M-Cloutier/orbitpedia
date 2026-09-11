@@ -22,16 +22,23 @@ type Props = {
   focusId?: string | null;
   onSelect?: (id: string | null) => void;
   highlightColor?: string;
-  /** Simulated days advanced per real second while following. */
+  /** Simulated days advanced per real second (idle + follow). UI owns presets. */
   simDaysPerSec?: number;
 };
 
 /** Fallback when UI omits speed — matches Explore Default preset (0.5 d/s). */
 const DEFAULT_SIM_DAYS_PER_SEC = 0.5;
 
+/**
+ * Idle OrbitControls autoRotate at default speed.
+ * Negative ⇒ counter-clockwise when viewed from +Y (matches follow ride-along).
+ */
+const IDLE_AUTOROTATE_AT_DEFAULT = -0.35;
+
 type SimApi = {
-  /** Simulated days since follow started (or resumed). */
+  /** Shared simulated days since Explore mounted (paused while tab hidden). */
   getSimDays: () => number;
+  /** True when focus is an orbiter (ride-along follow). */
   following: boolean;
   focusId: string | null | undefined;
 };
@@ -179,7 +186,7 @@ const BodyMesh = memo(function BodyMesh({
   highlightColor?: string;
 }) {
   const group = useRef<THREE.Group>(null);
-  const { getSimDays, following } = useContext(SimContext);
+  const { getSimDays } = useContext(SimContext);
   const r = visualRadius(body);
   const color = body.color ?? "#888";
   const accent = highlightColor ?? color;
@@ -202,18 +209,20 @@ const BodyMesh = memo(function BodyMesh({
     [onSelect],
   );
 
-  // Epoch pose when idle; sim clock while following.
-  useEffect(() => {
-    if (!group.current) return;
-    if (following) return;
-    const [x, y, z] = bodyPosition(body, 0);
-    group.current.position.set(x, y, z);
-  }, [body, following]);
+  const spinMesh = useRef<THREE.Mesh>(null);
 
+  // Shared sim clock drives orbital MA whenever Explore is animating (idle or follow).
   useFrame(() => {
-    if (!group.current || !following) return;
-    const [x, y, z] = bodyPosition(body, getSimDays());
+    if (!group.current) return;
+    const days = getSimDays();
+    const [x, y, z] = bodyPosition(body, days);
     group.current.position.set(x, y, z);
+
+    // Axial spin from facts.rotationPeriodD (negative = retrograde). At least Earth.
+    const period = body.facts.rotationPeriodD;
+    if (spinMesh.current && period != null && period !== 0) {
+      spinMesh.current.rotation.y = (days / period) * Math.PI * 2;
+    }
   });
 
   if (body.kind === "star") {
@@ -221,6 +230,7 @@ const BodyMesh = memo(function BodyMesh({
     return (
       <group ref={group}>
         <mesh
+          ref={spinMesh}
           onClick={handleClick}
           onContextMenu={handleContextMenu}
           material={sharedSunMat}
@@ -246,7 +256,12 @@ const BodyMesh = memo(function BodyMesh({
 
   return (
     <group ref={group}>
-      <mesh onClick={handleClick} onContextMenu={handleContextMenu} scale={focused ? 1.35 : 1}>
+      <mesh
+        ref={spinMesh}
+        onClick={handleClick}
+        onContextMenu={handleContextMenu}
+        scale={focused ? 1.35 : 1}
+      >
         <sphereGeometry args={[r, 24, 24]} />
         <meshStandardMaterial
           color={color}
@@ -301,7 +316,7 @@ function FollowCamera() {
     if (focusId && focusId !== "sun") {
       const b = bodies.find((x) => x.id === focusId);
       if (b?.orbit) {
-        pos = bodyPosition(b, following ? getSimDays() : 0);
+        pos = bodyPosition(b, getSimDays());
         dist = Math.max(1.2, b.orbit.aAu * 0.55 + 1.5);
       }
     }
@@ -372,8 +387,9 @@ function FollowCamera() {
 }
 
 /**
- * Demand frameloop: keep invalidating while following OR idle-ambient.
- * Pause while the tab is hidden; OrbitControls onChange still invalidates
+ * Demand frameloop: keep invalidating while the shared sim clock runs
+ * (idle, follow, or sun focus — planets always advance when Explore is visible).
+ * Skip frames while the tab is hidden; OrbitControls onChange still invalidates
  * during active user interaction.
  */
 function DemandInvalidator({ active }: { active: boolean }) {
@@ -418,17 +434,10 @@ function SimProvider({
   const rateRef = useRef(simDaysPerSec);
   rateRef.current = simDaysPerSec;
 
+  // Shared clock runs whenever Explore is mounted (idle OR following OR sun focus).
+  // Pause accumulation while the tab is hidden; do not reset on selection change
+  // so idle→follow keeps continuous orbital motion.
   useEffect(() => {
-    // Reset clock when selection changes so new body starts from epoch + 0
-    simDaysRef.current = 0;
-    lastWallRef.current = null;
-  }, [focusId]);
-
-  useEffect(() => {
-    if (!following) {
-      lastWallRef.current = null;
-      return;
-    }
     let id = 0;
     const tick = (now: number) => {
       if (typeof document !== "undefined" && document.hidden) {
@@ -437,9 +446,8 @@ function SimProvider({
         const dt = (now - lastWallRef.current) / 1000;
         simDaysRef.current += dt * rateRef.current;
       }
-      lastWallRef.current = typeof document !== "undefined" && document.hidden
-        ? null
-        : now;
+      lastWallRef.current =
+        typeof document !== "undefined" && document.hidden ? null : now;
       id = requestAnimationFrame(tick);
     };
     id = requestAnimationFrame(tick);
@@ -452,7 +460,7 @@ function SimProvider({
       cancelAnimationFrame(id);
       document.removeEventListener("visibilitychange", onVis);
     };
-  }, [following]);
+  }, []);
 
   const api = useMemo<SimApi>(
     () => ({
@@ -467,14 +475,18 @@ function SimProvider({
 }
 
 function SceneContent({ focusId, onSelect, highlightColor, simDaysPerSec }: Props) {
+  // Orbit ellipses only for bodies with heliocentric orbits — never the sun.
   const orbiters = useMemo(
     () => bodies.filter((b) => b.orbit && b.kind !== "star"),
     [],
   );
-  const following = focusIsOrbiter(focusId);
   // Idle system view: gentle camera yaw via OrbitControls autoRotate.
-  // (Cheaper than a root-group spin; no residual transform on follow handoff.)
+  // Stops when anything is selected (including sun); planets still advance.
   const idleAmbient = !focusId;
+  const rate = simDaysPerSec ?? DEFAULT_SIM_DAYS_PER_SEC;
+  // Negative = CCW from +Y; magnitude scales with global sim speed.
+  const autoRotateSpeed =
+    IDLE_AUTOROTATE_AT_DEFAULT * (rate / DEFAULT_SIM_DAYS_PER_SEC);
   const invalidate = useThree((s) => s.invalidate);
 
   return (
@@ -507,13 +519,14 @@ function SceneContent({ focusId, onSelect, highlightColor, simDaysPerSec }: Prop
         enableZoom
         enableRotate
         autoRotate={idleAmbient}
-        autoRotateSpeed={0.35}
+        autoRotateSpeed={autoRotateSpeed}
         minDistance={0.5}
         maxDistance={80}
         onChange={() => invalidate()}
       />
       <FollowCamera />
-      <DemandInvalidator active={following || idleAmbient} />
+      {/* Sim always runs while Explore is visible → keep demand frameloop fed. */}
+      <DemandInvalidator active />
     </SimProvider>
   );
 }
