@@ -47,7 +47,10 @@ function formatDiscoveryDate(raw: string): string {
 
 function discoveryDisplay(body: Body): string {
   if (body.facts.discoveryDate) return formatDiscoveryDate(body.facts.discoveryDate);
+  // Sun/star: N/A (don't use central-star prose as a "discovered" value).
   if (body.kind === "star" || body.id === "sun") return "N/A";
+  // Prefer catalog prose when no date — never invent a calendar date.
+  if (body.facts.discoveryNotes) return body.facts.discoveryNotes;
   return "Known since antiquity";
 }
 
