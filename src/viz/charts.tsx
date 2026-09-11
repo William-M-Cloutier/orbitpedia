@@ -97,19 +97,36 @@ function ChartCard({
   /** Fixed plot height (scatters). Omit for auto-height (bar / custom). */
   heightClass = "h-44",
   autoHeight = false,
+  /** Stretch plot to fill a grid cell (moons Size + mass–radius row). */
+  fillHeight = false,
 }: {
   title: string;
   children: React.ReactNode;
   heightClass?: string;
   autoHeight?: boolean;
+  fillHeight?: boolean;
 }) {
   return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3">
-      <h3 className="mb-2 text-sm font-medium text-zinc-300">{title}</h3>
+    <div
+      className={
+        fillHeight
+          ? "flex h-full min-h-0 flex-col rounded-xl border border-white/10 bg-white/[0.03] p-3"
+          : "rounded-xl border border-white/10 bg-white/[0.03] p-3"
+      }
+    >
+      <h3 className="mb-2 shrink-0 text-sm font-medium text-zinc-300">{title}</h3>
       {autoHeight ? (
         <div className="w-full">{children}</div>
       ) : (
-        <div className={`w-full ${heightClass}`}>{children}</div>
+        <div
+          className={
+            fillHeight
+              ? "min-h-[13rem] w-full flex-1"
+              : `w-full ${heightClass}`
+          }
+        >
+          {children}
+        </div>
       )}
     </div>
   );
@@ -213,10 +230,13 @@ function MassRadiusChart({
   bodies,
   title,
   focusId,
+  fillHeight,
 }: {
   bodies: Body[];
   title: string;
   focusId?: string;
+  /** Fill grid-cell Y next to Size strip (moons-of section). */
+  fillHeight?: boolean;
 }) {
   const massRadiusData = useMemo(
     () =>
@@ -239,7 +259,7 @@ function MassRadiusChart({
 
   if (massRadiusData.length === 0) {
     return (
-      <ChartCard title={title}>
+      <ChartCard title={title} fillHeight={fillHeight}>
         <p className="flex h-full items-center justify-center text-sm text-zinc-500">
           No mass+radius pairs in this group
         </p>
@@ -248,7 +268,7 @@ function MassRadiusChart({
   }
 
   return (
-    <ChartCard title={title} heightClass="h-52">
+    <ChartCard title={title} heightClass="h-52" fillHeight={fillHeight}>
       <ResponsiveContainer>
         <ScatterChart margin={SCATTER_MARGIN}>
           <CartesianGrid stroke="rgba(255,255,255,0.06)" />
@@ -870,10 +890,9 @@ function HowFarOutMulti({
     return Math.max(18, short.length * fontSize * 0.34 + 8);
   };
 
-  // Width budget: gentle overflow (~1.6× card), never a marathon scrub.
-  // Soft max ≈ 1.5–1.7× a typical catalog card (~400px).
-  const viewW = 420;
-  const softMaxW = Math.min(680, Math.round(viewW * 1.6)); // ~672
+  // Width budget for full-width row under Size + mass–radius: longer X,
+  // gentle scroll cap (never a marathon scrub).
+  const softMaxW = 960;
   const maxTrack = softMaxW - padL - trackStartGap - padR;
 
   // Min center-to-center gap between moon markers (moonR=8 → 16px disc).
@@ -881,11 +900,15 @@ function HowFarOutMulti({
   // guarantees this gap while still weighting leftover span by √(Δa) so
   // one huge outer step (Titan→Iapetus) doesn’t starve the inner pack.
   const minPairPx = 48;
-  let trackW = Math.max(260, n * 76);
+  let trackW = Math.max(260, n * 90);
   if (n >= 3) {
     const needMin = (n - 1) * minPairPx;
-    // ~1.6× min-gap span so approximate scale still reads; soft-capped.
-    trackW = Math.max(trackW, Math.min(maxTrack, Math.round(needMin * 1.6)));
+    // Prefer a long horizontal number line on the full-width row; soft-capped.
+    trackW = Math.max(
+      trackW,
+      Math.min(maxTrack, Math.round(needMin * 1.8)),
+      Math.min(maxTrack, Math.round(maxTrack * 0.9)),
+    );
   }
   trackW = Math.min(Math.max(trackW, n < 3 ? 260 : 300), maxTrack);
 
@@ -1429,20 +1452,28 @@ function MoonsOfSection({
         </h3>
         {headerExtra}
       </div>
-      <div className="grid gap-3 lg:grid-cols-2">
+      {/* Top: Size + mass–radius; How far out full-width below (short + wide). */}
+      <div
+        className={
+          showMR
+            ? "grid gap-3 lg:grid-cols-2 lg:items-stretch"
+            : "grid gap-3"
+        }
+      >
         {n <= 3 ? (
           <SizePairsRow parent={parent} moons={moons} />
         ) : (
           <SizeStrip parent={parent} moons={moons} />
         )}
-        <HowFarOutMulti parent={parent} moons={moons} />
         {showMR ? (
           <MassRadiusChart
             bodies={moons}
             title={`Moons of ${parent.name}: mass vs radius (Earth units)`}
+            fillHeight
           />
         ) : null}
       </div>
+      <HowFarOutMulti parent={parent} moons={moons} />
     </section>
   );
 }
