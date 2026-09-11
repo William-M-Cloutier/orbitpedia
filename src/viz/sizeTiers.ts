@@ -2,13 +2,13 @@ import type { Body, BodyKind } from "@/data/schema";
 import { bodies } from "@/data/catalog";
 
 /**
- * Visual mesh radii — render layer only. Orbit paths always use real AU.
+ * Visual mesh radii + orbit distance scale (render layer).
  *
- * - schematic: readable size tiers (default)
- * - proportional: true radius ratios; sun is largest mesh and still clears
- *   Mercury's orbit (planets scaled to fit under that sun)
- * - true: real radius ratios with uncapped sun (readable). Sun sphere is larger
- *   than Mercury's orbit — honest true scale; planets stay tiny vs the sun.
+ * - schematic: readable size tiers; orbits stay real AU (default)
+ * - proportional / true: one linear scale for meshes AND orbits
+ *   (sunMesh / sunPhysical). Planets are never swallowed by the sun.
+ *   Proportional: sun largest, capped to clear Mercury on that scale.
+ *   True: larger readable sun; same uniform scale for paths.
  *
  * Adding a planet later = catalog facts only; this module maps radius → mesh.
  */
@@ -100,9 +100,8 @@ function proportionalRadius(body: Body): number {
 }
 
 /**
- * True ratios, sun uncapped: pick a readable sun mesh, scale every body by
- * radiusMeanKm / R_sun. Inner orbits will lie inside the sun sphere — that is
- * real scale (sun ≫ Mercury distance). Focus framing still works on tiny planets.
+ * True ratios: readable sun mesh; every body scales by radiusMeanKm / R_sun.
+ * orbitDistanceScale expands paths by the same factor so Mercury stays outside.
  */
 const TRUE_SUN_MESH_AU = 0.85;
 
@@ -126,4 +125,20 @@ export function visualRadius(
 /** True radius in AU (catalog), for tools/tests — not mesh size. */
 export function physicalRadiusAu(body: Body): number {
   return body.facts.radiusMeanKm / AU_KM;
+}
+
+/**
+ * Scale factor for orbit distances (and bary wobble) so mesh sizes and paths
+ * share one linear scale. Schematic keeps real AU (1). Proportional/True use
+ * sunMesh / sunPhysical so planets are not swallowed by a magnified sun.
+ */
+export function orbitDistanceScale(mode: SizeMode = DEFAULT_SIZE_MODE): number {
+  if (mode === "schematic") return 1;
+  const sun =
+    bodies.find((b) => b.kind === "star") ??
+    bodies.find((b) => b.id === "sun");
+  if (!sun) return 1;
+  const physical = physicalRadiusAu(sun);
+  if (!(physical > 0)) return 1;
+  return visualRadius(sun, mode) / physical;
 }

@@ -19,6 +19,7 @@ import type { Body } from "@/data/schema";
 import { periodFromA, positionAtMa, sampleOrbit } from "@/lib/kepler";
 import {
   DEFAULT_SIZE_MODE,
+  orbitDistanceScale,
   visualRadius,
   type SizeMode,
 } from "./sizeTiers";
@@ -92,10 +93,14 @@ const SUN_WOBBLE_RADIUS_AU = 0.035;
 /** Sidereal period for the marker orbit (days). Short enough to read at 0.2 d/s. */
 const SUN_WOBBLE_PERIOD_D = 90;
 
-function sunBarycentricOffset(simDays: number): [number, number, number] {
+function sunBarycentricOffset(
+  simDays: number,
+  distScale: number = 1,
+): [number, number, number] {
+  const s = distScale > 0 ? distScale : 1;
   const ang = (2 * Math.PI * simDays) / SUN_WOBBLE_PERIOD_D;
-  const x = SUN_WOBBLE_RADIUS_AU * Math.cos(ang);
-  const y = SUN_WOBBLE_RADIUS_AU * Math.sin(ang);
+  const x = SUN_WOBBLE_RADIUS_AU * s * Math.cos(ang);
+  const y = SUN_WOBBLE_RADIUS_AU * s * Math.sin(ang);
   return eclipticToScene(x, y, 0);
 }
 
@@ -103,12 +108,14 @@ function sunBarycentricOffset(simDays: number): [number, number, number] {
 function bodyPosition(
   body: Body,
   simDays: number,
+  distScale: number = 1,
 ): [number, number, number] {
   if (body.kind === "star" || !body.orbit) return [0, 0, 0];
   const period = body.orbit.periodD ?? periodFromA(body.orbit.aAu);
   const ma = body.orbit.maDeg + (360 * simDays) / period;
   const [x, y, z] = positionAtMa(body.orbit, ma);
-  return eclipticToScene(x, y, z);
+  const s = distScale > 0 ? distScale : 1;
+  return eclipticToScene(x * s, y * s, z * s);
 }
 
 /** World-space position including the applied barycentric translation. */
@@ -116,8 +123,9 @@ function bodyWorldPosition(
   body: Body,
   simDays: number,
   bary: readonly [number, number, number],
+  distScale: number = 1,
 ): [number, number, number] {
-  const [x, y, z] = bodyPosition(body, simDays);
+  const [x, y, z] = bodyPosition(body, simDays, distScale);
   return [x + bary[0], y + bary[1], z + bary[2]];
 }
 
@@ -213,13 +221,15 @@ const OrbitLine = memo(function OrbitLine({
   highlighted: boolean;
   highlightColor?: string;
 }) {
+  const sizeMode = useSizeMode();
+  const distScale = orbitDistanceScale(sizeMode);
   const points = useMemo(() => {
     if (!body.orbit) return null;
     return sampleOrbit(body.orbit, 96).map(([x, y, z]) => {
-      const [sx, sy, sz] = eclipticToScene(x, y, z);
+      const [sx, sy, sz] = eclipticToScene(x * distScale, y * distScale, z * distScale);
       return new THREE.Vector3(sx, sy, sz);
     });
-  }, [body.orbit]);
+  }, [body.orbit, distScale]);
 
   if (!points) return null;
   const base = body.color ?? "#666";
@@ -249,6 +259,7 @@ const BodyMesh = memo(function BodyMesh({
   const group = useRef<THREE.Group>(null);
   const { getSimDays } = useSimApi();
   const sizeMode = useSizeMode();
+  const distScale = orbitDistanceScale(sizeMode);
   const r = visualRadius(body, sizeMode);
   const color = body.color ?? "#888";
   const accent = highlightColor ?? color;
@@ -275,7 +286,7 @@ const BodyMesh = memo(function BodyMesh({
 
   const applyPose = (days: number) => {
     if (!group.current) return;
-    const [x, y, z] = bodyPosition(body, days);
+    const [x, y, z] = bodyPosition(body, days, distScale);
     group.current.position.set(x, y, z);
     const period = body.facts.rotationPeriodD;
     if (spinMesh.current && period != null && period !== 0) {
@@ -452,6 +463,7 @@ function ViewOffsetController({
  */
 function FollowCamera() {
   const sizeMode = useSizeMode();
+  const distScale = orbitDistanceScale(sizeMode);
   const { getSimDays, getFollowing, getFocusId, getBaryOffset } = useSimApi();
   const focusId = getFocusId();
   const camera = useThree((s) => s.camera);
@@ -502,8 +514,8 @@ function FollowCamera() {
     }
     poseFrozen.current = false;
     const days = getSimDays();
-    const helio = bodyPosition(b, days);
-    const pos = bodyWorldPosition(b, days, getBaryOffset());
+    const helio = bodyPosition(b, days, distScale);
+    const pos = bodyWorldPosition(b, days, getBaryOffset(), distScale);
     const fovY =
       camera instanceof THREE.PerspectiveCamera ? camera.fov : 45;
     const aspect =
@@ -526,7 +538,7 @@ function FollowCamera() {
       : null;
     wasFollowing.current = focusIsOrbiter(focusId);
     invalidate();
-  }, [focusId, camera, controls, invalidate]); // eslint-disable-line react-hooks/exhaustive-deps -- snap on focus acquire only
+  }, [focusId, camera, controls, invalidate, distScale, sizeMode]); // eslint-disable-line react-hooks/exhaustive-deps -- snap on focus acquire / size mode
 
   useFrame((_, delta) => {
     const followingNow = getFollowing();
@@ -554,8 +566,8 @@ function FollowCamera() {
     poseFrozen.current = false;
 
     const days = getSimDays();
-    const helio = bodyPosition(b, days);
-    const pos = bodyWorldPosition(b, days, getBaryOffset());
+    const helio = bodyPosition(b, days, distScale);
+    const pos = bodyWorldPosition(b, days, getBaryOffset(), distScale);
     desired.current.set(pos[0], pos[1], pos[2]);
 
     // Sync offset from what OrbitControls did (dolly / orbit / pan) relative
@@ -673,6 +685,8 @@ function BarycentricRoot({
 }) {
   const group = useRef<THREE.Group>(null);
   const { getSimDays, getFollowing, getBaryOffset } = useSimApi();
+  const sizeMode = useSizeMode();
+  const distScale = orbitDistanceScale(sizeMode);
 
   const applyOffset = (next: readonly [number, number, number]) => {
     const cur = getBaryOffset() as [number, number, number];
@@ -686,7 +700,7 @@ function BarycentricRoot({
   // bodyWorldPosition(getBaryOffset()) matches the group translation.
   useLayoutEffect(() => {
     if (getFollowing()) {
-      applyOffset(sunBarycentricOffset(getSimDays()));
+      applyOffset(sunBarycentricOffset(getSimDays(), distScale));
     } else if (group.current) {
       const [x, y, z] = getBaryOffset();
       group.current.position.set(x, y, z);
@@ -709,7 +723,7 @@ function BarycentricRoot({
       }
       return;
     }
-    applyOffset(sunBarycentricOffset(getSimDays()));
+    applyOffset(sunBarycentricOffset(getSimDays(), distScale));
   });
 
   return <group ref={group}>{children}</group>;
