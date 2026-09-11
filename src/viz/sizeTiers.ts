@@ -86,7 +86,42 @@ function schematicRadiusNonMoon(body: Body): number {
  * clamped for readability. Flat moon tier made Charon ~57% of Pluto while
  * tiny moons looked fine under gas giants — inconsistent scale.
  */
-function schematicRadius(body: Body): number {
+/**
+ * When primary planet/dwarf schematic meshes would force a huge orbit inflate
+ * past star-clearance scale, shrink those meshes (shared factor) instead of
+ * blowing the system — keeps the star readable. Sol: factor 1 (unchanged).
+ */
+function schematicPrimaryMeshFactor(bodies: readonly Body[]): number {
+  const star = systemStar(bodies);
+  if (!star) return 1;
+  const starVis = schematicRadiusNonMoon(star);
+  const kids = bodies.filter(
+    (b) => hasUsableOrbit(b) && b.orbit?.frame !== "parent",
+  );
+  if (kids.length === 0) return 1;
+  const rows = kids.map((c) => ({
+    kind: c.kind,
+    qAu: orbitQAu(c.orbit!),
+    aAu: c.orbit!.aAu,
+    e: c.orbit!.e,
+    vis: schematicRadiusNonMoon(c),
+  }));
+  let starOnly = 1;
+  for (const c of rows) {
+    starOnly = Math.max(starOnly, parentFrameDisplayScale(c.qAu, starVis, c.vis));
+  }
+  const spaced = rows.filter(
+    (c) => c.kind === "planet" || c.kind === "dwarf_planet",
+  );
+  const shared =
+    spaced.length > 0
+      ? parentFrameSharedDisplayScale(starVis, spaced)
+      : starOnly;
+  if (!(shared > starOnly * 1.01)) return 1;
+  return starOnly / shared;
+}
+
+function schematicRadius(body: Body, systemBodies?: readonly Body[]): number {
   if (body.kind === "moon") {
     const parent = body.parentId ? getBody(body.parentId) : undefined;
     if (parent && parent.kind !== "moon") {
@@ -103,7 +138,10 @@ function schematicRadius(body: Body): number {
     }
     return SCHEMATIC_MOON_MIN;
   }
-  return schematicRadiusNonMoon(body);
+  const base = schematicRadiusNonMoon(body);
+  if (body.kind !== "planet" && body.kind !== "dwarf_planet") return base;
+  const bodies = resolveSystemBodies(body, systemBodies);
+  return base * schematicPrimaryMeshFactor(bodies);
 }
 
 /** Periapsis (AU) from elements — matches catalog qAu when present. */
@@ -218,18 +256,25 @@ function clearanceRefs(bodies: readonly Body[]): ClearanceRefs {
 function proportionalRadius(body: Body, bodies: readonly Body[]): number {
   const { maxNonStarKm, innerKm, innerQAu } = clearanceRefs(bodies);
   // Solve: star = S, maxPlanet = 0.92*S, innerMesh = maxPlanet * (innerKm/maxKm)
-  // S + innerMesh + margin <= inner q
-  const ratioInnerToMax = innerKm / maxNonStarKm;
+  // S + innerMesh + margin <= inner q  (clearance S).
+  // Compact systems: clearance S can be ≪ schematic star tier — floor S at
+  // STAR_VISUAL_RADIUS and let heliocentricSharedDisplayScale inflate orbits
+  // so the host stays the biggest readable mesh (Sol clearance S unchanged).
+  const ratioInnerToMax =
+    maxNonStarKm > 0 ? innerKm / maxNonStarKm : 1;
   const denom = 1 + 0.92 * ratioInnerToMax;
   const margin = clearanceMarginAu(innerQAu);
-  const sunMesh = (innerQAu - margin) / denom;
-  const scale = (0.92 * sunMesh) / maxNonStarKm; // km → scene AU
+  const clearanceSun = Math.max(1e-6, (innerQAu - margin) / denom);
+  const sunMesh = Math.max(STAR_VISUAL_RADIUS, clearanceSun);
+  const scale = (0.92 * sunMesh) / Math.max(maxNonStarKm, 1); // km → scene
 
   if (body.kind === "star") {
     return sunMesh; // largest by construction
   }
   const km = body.facts.radiusMeanKm ?? 1;
-  return Math.max(0.008, km * scale);
+  // No absolute 0.008 floor — it exceeded sunMesh on TRAPPIST and made
+  // planets bigger than the star.
+  return Math.min(sunMesh * 0.92, Math.max(1e-6, km * scale));
 }
 
 /**
@@ -238,10 +283,12 @@ function proportionalRadius(body: Body, bodies: readonly Body[]): number {
  */
 function trueRadius(body: Body, bodies: readonly Body[]): number {
   const { starKm, innerKm, innerQAu } = clearanceRefs(bodies);
-  const denom = 1 + innerKm / starKm;
+  const denom = 1 + innerKm / Math.max(starKm, 1);
   const margin = clearanceMarginAu(innerQAu);
-  const sunMesh = (innerQAu - margin) / denom;
-  const scale = sunMesh / starKm; // km → scene AU
+  const clearanceSun = Math.max(1e-6, (innerQAu - margin) / denom);
+  // Same floor as Prop: compact hosts stay readable; Sol clearance S unchanged.
+  const sunMesh = Math.max(STAR_VISUAL_RADIUS, clearanceSun);
+  const scale = sunMesh / Math.max(starKm, 1);
   const km = body.facts.radiusMeanKm ?? 1;
   return Math.max(1e-6, km * scale);
 }
@@ -261,7 +308,7 @@ export function visualRadius(
     if (mode === "proportional") return proportionalRadius(body, bodies);
     return trueRadius(body, bodies);
   }
-  return schematicRadius(body);
+  return schematicRadius(body, systemBodies);
 }
 
 /** True radius in AU (catalog), for tools/tests — not mesh size. */

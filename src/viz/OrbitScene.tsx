@@ -905,7 +905,7 @@ function FollowCamera() {
       : null;
     wasFollowing.current = focusIsOrbiter(focusId);
     invalidate();
-  }, [focusId, camera, controls, invalidate, distScale, sizeMode]); // eslint-disable-line react-hooks/exhaustive-deps -- snap on focus acquire / size mode
+  }, [focusId, camera, controls, invalidate]); // eslint-disable-line react-hooks/exhaustive-deps -- snap on focus acquire only; size mode must not reset pose/zoom
 
   useFrame((_, delta) => {
     const followingNow = getFollowing();
