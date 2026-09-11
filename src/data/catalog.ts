@@ -32,6 +32,15 @@ export function getSystem(id: string): System | undefined {
   return systemById.get(id);
 }
 
+/** All systems; home system first, then id order. For system map / Discover. */
+export function listSystems(): System[] {
+  return [...systems].sort((a, b) => {
+    if (a.home === true && b.home !== true) return -1;
+    if (b.home === true && a.home !== true) return 1;
+    return a.id.localeCompare(b.id);
+  });
+}
+
 export function getBody(id: string): Body | undefined {
   return bodyById.get(id);
 }
