@@ -395,12 +395,14 @@ function ViewOffsetController({
     const fullH = Math.max(1, size.height);
     const L = Math.max(0, Math.min(insetLeft, fullW - 1));
     const R = Math.max(0, Math.min(insetRight, fullW - L - 1));
-    const w = fullW - L - R;
 
-    if ((L <= 0 && R <= 0) || w <= 1) {
+    // Insets cover the canvas (Facts on the right). Cropping to the visible
+    // sub-rect with x=L made optical center LEFT of mid → body appeared RIGHT.
+    // Shift full-frame film by (L-R)/2 so optical center matches the visible gap.
+    if (L <= 0 && R <= 0) {
       camera.clearViewOffset();
     } else {
-      camera.setViewOffset(fullW, fullH, L, 0, w, fullH);
+      camera.setViewOffset(fullW, fullH, (L - R) / 2, 0, fullW, fullH);
     }
     camera.updateProjectionMatrix();
     invalidate();
