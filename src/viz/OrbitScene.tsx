@@ -39,15 +39,19 @@ type SimApi = {
   /** Shared simulated days since Explore mounted (paused while tab hidden). */
   getSimDays: () => number;
   /** True when focus is an orbiter (ride-along follow). */
-  following: boolean;
-  focusId: string | null | undefined;
+  getFollowing: () => boolean;
+  getFocusId: () => string | null | undefined;
 };
 
-const SimContext = createContext<SimApi>({
-  getSimDays: () => 0,
-  following: false,
-  focusId: null,
-});
+const SimContext = createContext<SimApi | null>(null);
+
+function useSimApi(): SimApi {
+  const api = useContext(SimContext);
+  if (!api) {
+    throw new Error("useSimApi must be used inside SimProvider");
+  }
+  return api;
+}
 
 /** True only when focus refers to a body that has an orbit (not sun / not star). */
 function focusIsOrbiter(focusId?: string | null): boolean {
@@ -60,6 +64,23 @@ function eclipticToScene(x: number, y: number, z: number): [number, number, numb
   return [x, z, -y];
 }
 
+/**
+ * Viz-only barycentric sun wobble (NOT a catalog heliocentric orbit).
+ * Small circular offset in the ecliptic so the sun is not glued to the origin;
+ * orbit-sanity still requires sun.orbit absent — do not draw an OrbitLine.
+ */
+const SUN_WOBBLE_RADIUS_AU = 0.035;
+/** Sidereal period for the marker orbit (days). Short enough to read at 0.2 d/s. */
+const SUN_WOBBLE_PERIOD_D = 90;
+
+function sunBarycentricOffset(simDays: number): [number, number, number] {
+  const ang = (2 * Math.PI * simDays) / SUN_WOBBLE_PERIOD_D;
+  const x = SUN_WOBBLE_RADIUS_AU * Math.cos(ang);
+  const y = SUN_WOBBLE_RADIUS_AU * Math.sin(ang);
+  return eclipticToScene(x, y, 0);
+}
+
+/** Heliocentric (sun-at-origin) scene position. BarycentricRoot adds the wobble. */
 function bodyPosition(
   body: Body,
   simDays: number,
@@ -69,6 +90,16 @@ function bodyPosition(
   const ma = body.orbit.maDeg + (360 * simDays) / period;
   const [x, y, z] = positionAtMa(body.orbit, ma);
   return eclipticToScene(x, y, z);
+}
+
+/** World-space position including viz-only barycentric sun wobble. */
+function bodyWorldPosition(
+  body: Body,
+  simDays: number,
+): [number, number, number] {
+  const [bx, by, bz] = sunBarycentricOffset(simDays);
+  const [x, y, z] = bodyPosition(body, simDays);
+  return [x + bx, y + by, z + bz];
 }
 
 const sharedSunMat = new THREE.MeshBasicMaterial({ color: "#FDB813" });
@@ -186,7 +217,7 @@ const BodyMesh = memo(function BodyMesh({
   highlightColor?: string;
 }) {
   const group = useRef<THREE.Group>(null);
-  const { getSimDays } = useContext(SimContext);
+  const { getSimDays } = useSimApi();
   const r = visualRadius(body);
   const color = body.color ?? "#888";
   const accent = highlightColor ?? color;
@@ -229,6 +260,8 @@ const BodyMesh = memo(function BodyMesh({
     const sunRing = highlightColor ?? "#FDB813";
     return (
       <group ref={group}>
+        {/* Viz-only barycentric wobble drives this group via useFrame; no OrbitLine. */}
+        <pointLight intensity={2.2} distance={80} />
         <mesh
           ref={spinMesh}
           onClick={handleClick}
@@ -300,7 +333,8 @@ function wrapDeltaAngle(d: number): number {
  * user OrbitControls dolly/orbit/pan still win on offset length/direction.
  */
 function FollowCamera() {
-  const { getSimDays, following, focusId } = useContext(SimContext);
+  const { getSimDays, getFollowing, getFocusId } = useSimApi();
+  const focusId = getFocusId();
   const camera = useThree((s) => s.camera);
   const controls = useThree((s) => s.controls) as OrbitControlsImpl | null;
   const invalidate = useThree((s) => s.invalidate);
@@ -313,11 +347,16 @@ function FollowCamera() {
   useEffect(() => {
     let pos: [number, number, number] = [0, 0, 0];
     let dist = 12;
-    if (focusId && focusId !== "sun") {
+    let helio: [number, number, number] = [0, 0, 0];
+    if (focusId) {
       const b = bodies.find((x) => x.id === focusId);
-      if (b?.orbit) {
-        pos = bodyPosition(b, getSimDays());
-        dist = Math.max(1.2, b.orbit.aAu * 0.55 + 1.5);
+      if (b) {
+        const days = getSimDays();
+        helio = bodyPosition(b, days);
+        pos = bodyWorldPosition(b, days);
+        if (b.orbit) {
+          dist = Math.max(1.2, b.orbit.aAu * 0.55 + 1.5);
+        }
       }
     }
     target.current.set(pos[0], pos[1], pos[2]);
@@ -334,18 +373,22 @@ function FollowCamera() {
     }
     offset.current.copy(camera.position).sub(target.current);
     lastBearing.current = focusIsOrbiter(focusId)
-      ? Math.atan2(pos[0], pos[2])
+      ? Math.atan2(helio[0], helio[2])
       : null;
     invalidate();
   }, [focusId, camera, controls, invalidate]); // eslint-disable-line react-hooks/exhaustive-deps -- snap on focus change only
 
   useFrame((_, delta) => {
-    if (!following || !focusId) return;
+    const followingNow = getFollowing();
+    const focusNow = getFocusId();
+    if (!followingNow || !focusNow) return;
 
-    const b = bodies.find((x) => x.id === focusId);
+    const b = bodies.find((x) => x.id === focusNow);
     if (!b?.orbit) return;
 
-    const pos = bodyPosition(b, getSimDays());
+    const days = getSimDays();
+    const helio = bodyPosition(b, days);
+    const pos = bodyWorldPosition(b, days);
     desired.current.set(pos[0], pos[1], pos[2]);
 
     // Sync offset from what OrbitControls did (dolly / orbit / pan) relative
@@ -356,8 +399,8 @@ function FollowCamera() {
       offset.current.copy(camera.position).sub(target.current);
     }
 
-    // Ride-along: yaw horizontal offset by change in body's orbital bearing.
-    const bearing = Math.atan2(pos[0], pos[2]);
+    // Ride-along: yaw from heliocentric bearing (ignore barycentric translation).
+    const bearing = Math.atan2(helio[0], helio[2]);
     if (lastBearing.current != null) {
       const dYaw = wrapDeltaAngle(bearing - lastBearing.current);
       if (dYaw !== 0) {
@@ -419,6 +462,45 @@ function DemandInvalidator({ active }: { active: boolean }) {
   return null;
 }
 
+/**
+ * Translates the whole heliocentric system by the viz-only sun wobble so
+ * orbit ellipses stay glued to bodies and the sun describes a small circle
+ * about the scene origin (barycenter). Not a catalog orbit — no OrbitLine.
+ */
+function BarycentricRoot({ children }: { children: React.ReactNode }) {
+  const group = useRef<THREE.Group>(null);
+  const { getSimDays } = useSimApi();
+  useFrame(() => {
+    if (!group.current) return;
+    const [x, y, z] = sunBarycentricOffset(getSimDays());
+    group.current.position.set(x, y, z);
+  });
+  return <group ref={group}>{children}</group>;
+}
+
+/**
+ * Advances shared simDays inside R3F useFrame (priority -2, before BodyMesh).
+ * Root cause of idle freeze: the previous clock lived on a detached window rAF
+ * while meshes only sampled getSimDays() in useFrame under frameloop="demand".
+ * Coupling the clock to rendered frames + always-on DemandInvalidator makes
+ * orbiter MA advance whenever Explore is visible, with or without focusId.
+ */
+function SimTicker({
+  simDaysRef,
+  rateRef,
+}: {
+  simDaysRef: React.MutableRefObject<number>;
+  rateRef: React.MutableRefObject<number>;
+}) {
+  useFrame((_, delta) => {
+    if (typeof document !== "undefined" && document.hidden) return;
+    // Clamp to avoid huge jumps after tab sleep; DemandInvalidator skips hidden.
+    const dt = Math.min(Math.max(delta, 0), 0.25);
+    simDaysRef.current += dt * rateRef.current;
+  }, -2);
+  return null;
+}
+
 function SimProvider({
   focusId,
   simDaysPerSec = DEFAULT_SIM_DAYS_PER_SEC,
@@ -428,54 +510,34 @@ function SimProvider({
   simDaysPerSec?: number;
   children: React.ReactNode;
 }) {
-  const following = focusIsOrbiter(focusId);
   const simDaysRef = useRef(0);
-  const lastWallRef = useRef<number | null>(null);
   const rateRef = useRef(simDaysPerSec);
   rateRef.current = simDaysPerSec;
 
-  // Shared clock runs whenever Explore is mounted (idle OR following OR sun focus).
-  // Pause accumulation while the tab is hidden; do not reset on selection change
-  // so idle→follow keeps continuous orbital motion.
-  useEffect(() => {
-    let id = 0;
-    const tick = (now: number) => {
-      if (typeof document !== "undefined" && document.hidden) {
-        lastWallRef.current = null;
-      } else if (lastWallRef.current != null) {
-        const dt = (now - lastWallRef.current) / 1000;
-        simDaysRef.current += dt * rateRef.current;
-      }
-      lastWallRef.current =
-        typeof document !== "undefined" && document.hidden ? null : now;
-      id = requestAnimationFrame(tick);
-    };
-    id = requestAnimationFrame(tick);
+  const followingRef = useRef(focusIsOrbiter(focusId));
+  followingRef.current = focusIsOrbiter(focusId);
+  const focusIdRef = useRef(focusId);
+  focusIdRef.current = focusId;
 
-    const onVis = () => {
-      if (document.hidden) lastWallRef.current = null;
-    };
-    document.addEventListener("visibilitychange", onVis);
-    return () => {
-      cancelAnimationFrame(id);
-      document.removeEventListener("visibilitychange", onVis);
-    };
-  }, []);
+  // Stable API object: memoized BodyMesh useFrame always calls fresh getters
+  // (never the createContext default `() => 0`).
+  const api = useRef<SimApi>({
+    getSimDays: () => simDaysRef.current,
+    getFollowing: () => followingRef.current,
+    getFocusId: () => focusIdRef.current,
+  }).current;
 
-  const api = useMemo<SimApi>(
-    () => ({
-      getSimDays: () => simDaysRef.current,
-      following,
-      focusId,
-    }),
-    [following, focusId],
+  return (
+    <SimContext.Provider value={api}>
+      <SimTicker simDaysRef={simDaysRef} rateRef={rateRef} />
+      {children}
+    </SimContext.Provider>
   );
-
-  return <SimContext.Provider value={api}>{children}</SimContext.Provider>;
 }
 
 function SceneContent({ focusId, onSelect, highlightColor, simDaysPerSec }: Props) {
-  // Orbit ellipses only for bodies with heliocentric orbits — never the sun.
+  // Orbit ellipses only for catalog heliocentric orbits — never the sun
+  // (sun wobble is BarycentricRoot viz-only; no catalog OrbitLine).
   const orbiters = useMemo(
     () => bodies.filter((b) => b.orbit && b.kind !== "star"),
     [],
@@ -495,24 +557,26 @@ function SceneContent({ focusId, onSelect, highlightColor, simDaysPerSec }: Prop
       <Starfield />
       <SoftHaze />
       <ambientLight intensity={0.32} />
-      <pointLight position={[0, 0, 0]} intensity={2.2} distance={80} />
-      {orbiters.map((b) => (
-        <OrbitLine
-          key={`o-${b.id}`}
-          body={b}
-          highlighted={focusId === b.id}
-          highlightColor={highlightColor}
-        />
-      ))}
-      {bodies.map((b) => (
-        <BodyMesh
-          key={b.id}
-          body={b}
-          focused={focusId === b.id}
-          onSelect={onSelect}
-          highlightColor={highlightColor}
-        />
-      ))}
+      <BarycentricRoot>
+        {/* pointLight lives on the sun BodyMesh so it follows barycentric wobble */}
+        {orbiters.map((b) => (
+          <OrbitLine
+            key={`o-${b.id}`}
+            body={b}
+            highlighted={focusId === b.id}
+            highlightColor={highlightColor}
+          />
+        ))}
+        {bodies.map((b) => (
+          <BodyMesh
+            key={b.id}
+            body={b}
+            focused={focusId === b.id}
+            onSelect={onSelect}
+            highlightColor={highlightColor}
+          />
+        ))}
+      </BarycentricRoot>
       <OrbitControls
         makeDefault
         enablePan
