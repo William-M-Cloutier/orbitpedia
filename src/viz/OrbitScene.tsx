@@ -265,7 +265,6 @@ const BodyMesh = memo(function BodyMesh({
   });
 
   if (body.kind === "star") {
-    const sunRing = highlightColor ?? "#FDB813";
     return (
       <group ref={group} name={body.id}>
         {/* Viz-only barycentric wobble drives this group via useFrame; no OrbitLine. */}
@@ -279,18 +278,6 @@ const BodyMesh = memo(function BodyMesh({
         >
           <sphereGeometry args={[r, 32, 32]} />
         </mesh>
-        {focused && (
-          <mesh rotation={[Math.PI / 2, 0, 0]}>
-            <ringGeometry args={[r * 1.35, r * 1.55, 64]} />
-            <meshBasicMaterial
-              color={sunRing}
-              transparent
-              opacity={0.55}
-              side={THREE.DoubleSide}
-              depthWrite={false}
-            />
-          </mesh>
-        )}
       </group>
     );
   }
@@ -310,18 +297,6 @@ const BodyMesh = memo(function BodyMesh({
           emissiveIntensity={focused ? 0.45 : 0}
         />
       </mesh>
-      {focused && (
-        <mesh rotation={[Math.PI / 2, 0, 0]}>
-          <ringGeometry args={[r * 1.4, r * 1.65, 64]} />
-          <meshBasicMaterial
-            color={accent}
-            transparent
-            opacity={0.7}
-            side={THREE.DoubleSide}
-            depthWrite={false}
-          />
-        </mesh>
-      )}
     </group>
   );
 });
