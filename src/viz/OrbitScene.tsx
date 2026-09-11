@@ -30,12 +30,6 @@ type Props = {
 /** Fallback when UI omits speed — matches Explore Default preset (0.2 d/s = 1 day / 5s). */
 const DEFAULT_SIM_DAYS_PER_SEC = 0.2;
 
-/**
- * Idle OrbitControls autoRotate at default speed.
- * Negative ⇒ counter-clockwise when viewed from +Y (matches follow ride-along).
- */
-const IDLE_AUTOROTATE_AT_DEFAULT = -0.35;
-
 type SimApi = {
   /** Shared simulated days since Explore mounted (paused while tab hidden). */
   getSimDays: () => number;
@@ -525,12 +519,8 @@ function SceneContent({ focusId, onSelect, highlightColor, simDaysPerSec }: Prop
     () => bodies.filter((b) => b.orbit && b.kind !== "star"),
     [],
   );
-  // Idle system view: gentle camera yaw via OrbitControls autoRotate.
-  // Stops when anything is selected (including sun); planets still advance.
-  const idleAmbient = !focusId;
-  // Gentle constant CCW ambient — do NOT scale with sim speed, or Warp whirls
-  // the camera so fast orbital MA looks like a rigid spin / "stuck on ellipses".
-  const autoRotateSpeed = IDLE_AUTOROTATE_AT_DEFAULT;
+  // Idle system view: no camera autoRotate (user orbits manually).
+  // Follow mode still ride-alongs when a planet is selected.
   const invalidate = useThree((s) => s.invalidate);
 
   return (
@@ -564,8 +554,7 @@ function SceneContent({ focusId, onSelect, highlightColor, simDaysPerSec }: Prop
         enablePan
         enableZoom
         enableRotate
-        autoRotate={idleAmbient}
-        autoRotateSpeed={autoRotateSpeed}
+        autoRotate={false}
         minDistance={0.5}
         maxDistance={80}
         onChange={() => invalidate()}
