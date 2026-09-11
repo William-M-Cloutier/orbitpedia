@@ -21,6 +21,7 @@ import { visualRadius } from "./sizeTiers";
 type Props = {
   focusId?: string | null;
   onSelect?: (id: string) => void;
+  highlightColor?: string;
 };
 
 /** Wall-clock days advanced per real second while following (paused when hidden). */
@@ -38,6 +39,13 @@ const SimContext = createContext<SimApi>({
   following: false,
   focusId: null,
 });
+
+/** True only when focus refers to a body that has an orbit (not sun / not star). */
+function focusIsOrbiter(focusId?: string | null): boolean {
+  if (!focusId) return false;
+  const b = bodies.find((x) => x.id === focusId);
+  return Boolean(b?.orbit && b.kind !== "star");
+}
 
 function eclipticToScene(x: number, y: number, z: number): [number, number, number] {
   return [x, z, -y];
@@ -129,9 +137,11 @@ function SoftHaze() {
 const OrbitLine = memo(function OrbitLine({
   body,
   highlighted,
+  highlightColor,
 }: {
   body: Body;
   highlighted: boolean;
+  highlightColor?: string;
 }) {
   const points = useMemo(() => {
     if (!body.orbit) return null;
@@ -142,10 +152,12 @@ const OrbitLine = memo(function OrbitLine({
   }, [body.orbit]);
 
   if (!points) return null;
+  const base = body.color ?? "#666";
+  const color = highlighted ? (highlightColor ?? base) : base;
   return (
     <Line
       points={points}
-      color={body.color ?? "#666"}
+      color={color}
       lineWidth={highlighted ? 2.2 : 1}
       transparent
       opacity={highlighted ? 0.85 : 0.4}
@@ -157,15 +169,18 @@ const BodyMesh = memo(function BodyMesh({
   body,
   focused,
   onSelect,
+  highlightColor,
 }: {
   body: Body;
   focused: boolean;
   onSelect?: (id: string) => void;
+  highlightColor?: string;
 }) {
   const group = useRef<THREE.Group>(null);
   const { getSimDays, following } = useContext(SimContext);
   const r = visualRadius(body);
   const color = body.color ?? "#888";
+  const accent = highlightColor ?? color;
 
   const handleClick = useCallback(
     (e: { stopPropagation: () => void }) => {
@@ -190,6 +205,7 @@ const BodyMesh = memo(function BodyMesh({
   });
 
   if (body.kind === "star") {
+    const sunRing = highlightColor ?? "#FDB813";
     return (
       <group ref={group}>
         <mesh
@@ -203,7 +219,7 @@ const BodyMesh = memo(function BodyMesh({
           <mesh rotation={[Math.PI / 2, 0, 0]}>
             <ringGeometry args={[r * 1.35, r * 1.55, 64]} />
             <meshBasicMaterial
-              color="#FDB813"
+              color={sunRing}
               transparent
               opacity={0.55}
               side={THREE.DoubleSide}
@@ -221,7 +237,7 @@ const BodyMesh = memo(function BodyMesh({
         <sphereGeometry args={[r, 24, 24]} />
         <meshStandardMaterial
           color={color}
-          emissive={focused ? color : "#000000"}
+          emissive={focused ? accent : "#000000"}
           emissiveIntensity={focused ? 0.45 : 0}
         />
       </mesh>
@@ -229,7 +245,7 @@ const BodyMesh = memo(function BodyMesh({
         <mesh rotation={[Math.PI / 2, 0, 0]}>
           <ringGeometry args={[r * 1.4, r * 1.65, 64]} />
           <meshBasicMaterial
-            color="#7dd3fc"
+            color={accent}
             transparent
             opacity={0.7}
             side={THREE.DoubleSide}
@@ -248,10 +264,9 @@ function FollowCamera() {
   const invalidate = useThree((s) => s.invalidate);
   const target = useRef(new THREE.Vector3(0, 0, 0));
   const desired = useRef(new THREE.Vector3(0, 0, 0));
-  const camGoal = useRef(new THREE.Vector3(0, 8, 14));
-  const primed = useRef<string | null | undefined>(null);
+  const offset = useRef(new THREE.Vector3());
 
-  // Snap / re-prime when focus changes (even if not following yet).
+  // Snap / re-frame when focus changes (canned offset only on focus change).
   useEffect(() => {
     let pos: [number, number, number] = [0, 0, 0];
     let dist = 12;
@@ -264,43 +279,40 @@ function FollowCamera() {
     }
     target.current.set(pos[0], pos[1], pos[2]);
     desired.current.copy(target.current);
-    camGoal.current.set(
+    camera.position.set(
       pos[0] + dist * 0.6,
       dist * 0.45,
       pos[2] + dist * 0.7,
     );
-    camera.position.copy(camGoal.current);
     camera.lookAt(target.current);
     if (controls?.target) {
       controls.target.copy(target.current);
       controls.update();
     }
-    primed.current = focusId;
+    offset.current.copy(camera.position).sub(target.current);
     invalidate();
   }, [focusId, camera, controls, invalidate]); // eslint-disable-line react-hooks/exhaustive-deps -- snap on focus change only
 
   useFrame((_, delta) => {
     if (!following || !focusId) return;
 
-    let pos: [number, number, number] = [0, 0, 0];
-    let dist = 12;
-    if (focusId !== "sun") {
-      const b = bodies.find((x) => x.id === focusId);
-      if (b?.orbit) {
-        pos = bodyPosition(b, getSimDays());
-        dist = Math.max(1.2, b.orbit.aAu * 0.55 + 1.5);
-      }
-    }
+    const b = bodies.find((x) => x.id === focusId);
+    if (!b?.orbit) return;
+
+    const pos = bodyPosition(b, getSimDays());
     desired.current.set(pos[0], pos[1], pos[2]);
+
+    // Preserve user's relative camera offset; only slide the look-at target.
+    if (controls?.target) {
+      offset.current.copy(camera.position).sub(controls.target);
+    } else {
+      offset.current.copy(camera.position).sub(target.current);
+    }
+
     const lerp = 1 - Math.exp(-4 * delta);
     target.current.lerp(desired.current, lerp);
 
-    camGoal.current.set(
-      target.current.x + dist * 0.6,
-      dist * 0.45,
-      target.current.z + dist * 0.7,
-    );
-    camera.position.lerp(camGoal.current, lerp * 0.85);
+    camera.position.copy(target.current).add(offset.current);
     if (controls?.target) {
       controls.target.copy(target.current);
       controls.update();
@@ -335,7 +347,7 @@ function SimProvider({
   focusId?: string | null;
   children: React.ReactNode;
 }) {
-  const following = Boolean(focusId);
+  const following = focusIsOrbiter(focusId);
   const simDaysRef = useRef(0);
   const lastWallRef = useRef<number | null>(null);
 
@@ -387,12 +399,12 @@ function SimProvider({
   return <SimContext.Provider value={api}>{children}</SimContext.Provider>;
 }
 
-function SceneContent({ focusId, onSelect }: Props) {
+function SceneContent({ focusId, onSelect, highlightColor }: Props) {
   const orbiters = useMemo(
     () => bodies.filter((b) => b.orbit && b.kind !== "star"),
     [],
   );
-  const following = Boolean(focusId);
+  const following = focusIsOrbiter(focusId);
   const invalidate = useThree((s) => s.invalidate);
 
   return (
@@ -407,6 +419,7 @@ function SceneContent({ focusId, onSelect }: Props) {
           key={`o-${b.id}`}
           body={b}
           highlighted={focusId === b.id}
+          highlightColor={highlightColor}
         />
       ))}
       {bodies.map((b) => (
@@ -415,6 +428,7 @@ function SceneContent({ focusId, onSelect }: Props) {
           body={b}
           focused={focusId === b.id}
           onSelect={onSelect}
+          highlightColor={highlightColor}
         />
       ))}
       <OrbitControls
@@ -430,7 +444,7 @@ function SceneContent({ focusId, onSelect }: Props) {
   );
 }
 
-export function OrbitScene({ focusId, onSelect }: Props) {
+export function OrbitScene({ focusId, onSelect, highlightColor }: Props) {
   return (
     <div className="h-full w-full">
       <Canvas
@@ -442,7 +456,11 @@ export function OrbitScene({ focusId, onSelect }: Props) {
           /* keep selection; Esc clears at page level */
         }}
       >
-        <SceneContent focusId={focusId} onSelect={onSelect} />
+        <SceneContent
+          focusId={focusId}
+          onSelect={onSelect}
+          highlightColor={highlightColor}
+        />
       </Canvas>
     </div>
   );
