@@ -1490,16 +1490,16 @@ function BodyDials({
       <h3 className="mb-2 text-sm font-medium text-zinc-300">
         Body dials · vs {vs.name}
       </h3>
-      <ul className="space-y-3">
+      <ul className="grid grid-cols-2 gap-x-4 gap-y-3">
         {usable.map((d) => {
           const bv = d.bodyVal as number;
           const rv = d.refVal as number;
           const ratio = bv / rv;
           return (
-            <li key={d.key}>
-              <div className="mb-1 flex justify-between text-[11px]">
-                <span className="text-zinc-400">{d.label}</span>
-                <span className="text-zinc-500">
+            <li key={d.key} className="min-w-0">
+              <div className="mb-1 flex justify-between gap-2 text-[11px]">
+                <span className="shrink-0 text-zinc-400">{d.label}</span>
+                <span className="truncate text-right text-zinc-500">
                   {d.format(bv)}
                   <span className="mx-1 text-zinc-600">·</span>
                   {shortRatio(ratio)}× {vs.name}
