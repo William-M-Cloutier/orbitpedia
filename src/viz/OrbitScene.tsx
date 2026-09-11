@@ -543,6 +543,18 @@ function focusMeshScale(body: Body): number {
 }
 
 /**
+ * FOV framing must not use microscopic True/Prop radii or the camera sits
+ * near the near plane and the mesh vanishes (Pluto → black void). Floor the
+ * *framing* radius only — catalog/visualRadius formulas stay locked.
+ */
+const FOCUS_FRAMING_RADIUS_MIN = 0.03;
+
+function focusFramingRadius(body: Body, sizeMode: SizeMode): number {
+  const r = visualRadius(body, sizeMode) * focusMeshScale(body);
+  return Math.max(r, FOCUS_FRAMING_RADIUS_MIN);
+}
+
+/**
  * Target on-screen diameter as a fraction of min(Explore viewport w, h).
  * Pluto gold standard ≈25–30%; prior sin/height framing read ~10% on screen,
  * so FOCUS_FILL is raised (0.48) with tan + min(w,h) so framed bodies land
@@ -563,9 +575,11 @@ function orbitMinDistance(
 ): number {
   const idle = sizeMode === "true" ? 0.23 : 0.4;
   if (!focusBody) return idle;
-  const r = visualRadius(focusBody, sizeMode) * focusMeshScale(focusBody);
+  const rMesh = visualRadius(focusBody, sizeMode) * focusMeshScale(focusBody);
+  const r = Math.max(rMesh, FOCUS_FRAMING_RADIUS_MIN);
   const near = cameraNear > 0 ? cameraNear : CAMERA_NEAR;
-  return Math.max(r * 2.2, near + r, 0.004);
+  // Keep outside real mesh, and never so close tiny True/Prop bodies vanish.
+  return Math.max(rMesh * 2.2, r * 1.15, near + rMesh, 0.05);
 }
 
 /** Auto-frame floor — tracks orbitMinDistance so focus snap can use the dolly. */
@@ -575,10 +589,11 @@ function focusDistanceFloor(
   cameraNear: number = CAMERA_NEAR,
 ): number {
   if (focusBody) {
-    const r = visualRadius(focusBody, sizeMode) * focusMeshScale(focusBody);
+    const rMesh = visualRadius(focusBody, sizeMode) * focusMeshScale(focusBody);
+    const r = Math.max(rMesh, FOCUS_FRAMING_RADIUS_MIN);
     const near = cameraNear > 0 ? cameraNear : CAMERA_NEAR;
-    // Strictly outside the focused mesh (+ margin) and in front of near plane.
-    return Math.max(r * 2.5, near + r, 0.0035);
+    // Outside real mesh; framing floor keeps Tiny True/Prop bodies visible.
+    return Math.max(rMesh * 2.5, r * 1.2, near + rMesh, 0.06);
   }
   return sizeMode === "true" ? 0.2 : 0.36;
 }
@@ -599,7 +614,7 @@ function focusFrameDistance(
   sizeMode: SizeMode = DEFAULT_SIZE_MODE,
   cameraNear: number = CAMERA_NEAR,
 ): number {
-  const r = visualRadius(body, sizeMode) * focusMeshScale(body);
+  const r = focusFramingRadius(body, sizeMode);
   const halfRad = ((fovYDeg * Math.PI) / 180) / 2;
   const tanHalf = Math.tan(halfRad);
   if (!(tanHalf > 1e-6) || !(fill > 1e-6)) return 12;
@@ -1299,7 +1314,7 @@ export function OrbitScene({
     >
       <Canvas
         frameloop="demand"
-        camera={{ position: [0, 8, 14], fov: 45, near: CAMERA_NEAR, far: 250 }}
+        camera={{ position: [0, 8, 14], fov: 45, near: CAMERA_NEAR, far: 5000 }}
         dpr={[1, 1.5]}
         gl={{ antialias: true, powerPreference: "high-performance" }}
         onPointerMissed={() => {
