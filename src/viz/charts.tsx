@@ -25,7 +25,15 @@ import {
 } from "@/data/catalog";
 import type { Body, BodyKind } from "@/data/schema";
 import { periodFromA } from "@/lib/kepler";
-import { EARTH_MASS_KG, EARTH_RADIUS_KM } from "@/lib/units";
+import {
+  AU_KM,
+  EARTH_MASS_KG,
+  EARTH_RADIUS_KM,
+  formatDensity,
+  formatMass,
+  formatPeriodDays,
+  formatRadius,
+} from "@/lib/units";
 
 const tipStyle = {
   background: "#0c1220",
@@ -112,7 +120,7 @@ function moonChildrenOf(parentId: string, systemBodies: Body[]): Body[] {
   );
 }
 
-/** Parents with ≥1 moon in this system, sorted by child count desc. */
+/** Parents with ≥2 moons in this system (comparison-worthy), sorted desc. */
 function moonParentOptions(systemBodies: Body[]): {
   parent: Body;
   count: number;
@@ -123,6 +131,7 @@ function moonParentOptions(systemBodies: Body[]): {
     counts.set(b.parentId, (counts.get(b.parentId) ?? 0) + 1);
   }
   return [...counts.entries()]
+    .filter(([, count]) => count >= 2)
     .map(([id, count]) => {
       const parent = getBody(id);
       return parent ? { parent, count } : null;
@@ -619,16 +628,433 @@ function MoonParentPicker({
   );
 }
 
-/** Body-page sections: always scoped by focus kind — never mix frames. */
-function buildBodySections(
-  focus: Body,
-  systemBodies: Body[],
-): ChartSection[] {
+function orbitAKm(body: Body): number | null {
+  if (!hasUsableOrbit(body)) return null;
+  return body.orbit!.aAu * AU_KM;
+}
+
+function aInParentRadii(moon: Body, parent: Body): number | null {
+  const aKm = orbitAKm(moon);
+  const r = parent.facts.radiusMeanKm;
+  if (aKm == null || r == null || r <= 0) return null;
+  return aKm / r;
+}
+
+function periodDaysOf(body: Body): number | null {
+  if (!body.orbit) return null;
+  if (body.orbit.periodD != null) return body.orbit.periodD;
+  if (hasUsableOrbit(body)) return periodFromA(body.orbit.aAu);
+  return null;
+}
+
+function shortRatio(v: number): string {
+  if (!Number.isFinite(v)) return "—";
+  if (v >= 100 || v < 0.01) return formatShortNumber(v);
+  return String(Number(v.toPrecision(3)));
+}
+
+/** Two discs scaled by radiusMeanKm + mass ratio caption (planet vs its only moon). */
+function SizePair({
+  larger,
+  smaller,
+}: {
+  larger: Body;
+  smaller: Body;
+}) {
+  const rL = larger.facts.radiusMeanKm;
+  const rS = smaller.facts.radiusMeanKm;
+  if (rL == null || rS == null || rL <= 0 || rS <= 0) return null;
+
+  const dL = 112;
+  // Keep the larger body fixed; scale the other by radius ratio.
+  const sizeA = rL >= rS ? dL : Math.max(18, (rL / rS) * dL);
+  const sizeB = rS >= rL ? dL : Math.max(18, (rS / rL) * dL);
+
+  const mL = larger.facts.massKg;
+  const mS = smaller.facts.massKg;
+  const massCaption =
+    mL != null && mS != null && mS > 0
+      ? `Mass ratio ${larger.name} / ${smaller.name}: ${shortRatio(mL / mS)}×`
+      : mL != null && mS != null && mL > 0
+        ? `Mass ratio ${smaller.name} / ${larger.name}: ${shortRatio(mS / mL)}×`
+        : null;
+
+  return (
+    <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
+      <h3 className="mb-3 text-sm font-medium text-zinc-300">Size pair</h3>
+      <div className="flex items-end justify-center gap-8 py-4">
+        <div className="flex flex-col items-center gap-2">
+          <div
+            className="rounded-full shadow-[inset_0_-8px_24px_rgba(0,0,0,0.35)]"
+            style={{
+              width: sizeA,
+              height: sizeA,
+              background: larger.color ?? "#888",
+            }}
+            title={`${larger.name}: ${formatRadius(rL)}`}
+          />
+          <div className="text-center">
+            <div className="text-sm text-zinc-200">{larger.name}</div>
+            <div className="text-[11px] text-zinc-500">{formatRadius(rL)}</div>
+          </div>
+        </div>
+        <div className="flex flex-col items-center gap-2">
+          <div
+            className="rounded-full shadow-[inset_0_-6px_16px_rgba(0,0,0,0.35)]"
+            style={{
+              width: sizeB,
+              height: sizeB,
+              background: smaller.color ?? "#888",
+            }}
+            title={`${smaller.name}: ${formatRadius(rS)}`}
+          />
+          <div className="text-center">
+            <div className="text-sm text-zinc-200">{smaller.name}</div>
+            <div className="text-[11px] text-zinc-500">{formatRadius(rS)}</div>
+          </div>
+        </div>
+      </div>
+      {massCaption ? (
+        <p className="mt-1 text-center text-xs text-zinc-400">{massCaption}</p>
+      ) : null}
+      <p className="mt-1 text-center text-[11px] text-zinc-600">
+        Discs scaled by mean radius (not mass)
+      </p>
+    </div>
+  );
+}
+
+/** Moon semi-major axis in parent radii — readable “how far out”. */
+function HowFarOut({ parent, moon }: { parent: Body; moon: Body }) {
+  const radii = aInParentRadii(moon, parent);
+  const aKm = orbitAKm(moon);
+  if (radii == null && aKm == null) return null;
+
+  const maxR = 60; // visual scale cap for the marker track
+  const markerPct =
+    radii != null ? Math.min(96, Math.max(6, (radii / maxR) * 100)) : 50;
+
+  return (
+    <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
+      <h3 className="mb-3 text-sm font-medium text-zinc-300">How far out</h3>
+      <div className="relative mx-auto mt-2 h-16 max-w-md">
+        <div className="absolute left-0 top-1/2 h-1.5 w-full -translate-y-1/2 rounded-full bg-white/10" />
+        <div
+          className="absolute left-0 top-1/2 h-10 w-10 -translate-y-1/2 rounded-full"
+          style={{ background: parent.color ?? "#888" }}
+          title={parent.name}
+        />
+        <div
+          className="absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full ring-2 ring-white/40"
+          style={{
+            left: `calc(${markerPct}% )`,
+            background: moon.color ?? "#a1a1aa",
+          }}
+          title={moon.name}
+        />
+      </div>
+      <dl className="mt-3 grid grid-cols-2 gap-2 text-center text-sm">
+        {radii != null ? (
+          <div className="rounded-lg bg-white/[0.03] px-2 py-2">
+            <dt className="text-[11px] text-zinc-500">
+              a / R<sub className="text-[9px]">{parent.name[0]}</sub>
+            </dt>
+            <dd className="font-medium text-zinc-100">
+              {shortRatio(radii)} parent radii
+            </dd>
+          </div>
+        ) : null}
+        {aKm != null ? (
+          <div className="rounded-lg bg-white/[0.03] px-2 py-2">
+            <dt className="text-[11px] text-zinc-500">Semi-major axis</dt>
+            <dd className="font-medium text-zinc-100">
+              {aKm >= 1e6
+                ? `${shortRatio(aKm / 1e6)} M km`
+                : `${shortRatio(aKm / 1e3)} ×10³ km`}
+            </dd>
+          </div>
+        ) : null}
+      </dl>
+      <p className="mt-2 text-center text-[11px] text-zinc-600">
+        <Link
+          href={`/body/${moon.id}`}
+          className="text-sky-400/80 hover:text-sky-300"
+        >
+          {moon.name} →
+        </Link>
+        {" · "}
+        not system AU
+      </p>
+    </div>
+  );
+}
+
+/** Horizontal ladder of moon distances in parent-radii (fallback: 1000 km). */
+function OrbitLadder({
+  parent,
+  moons,
+}: {
+  parent: Body;
+  moons: Body[];
+}) {
+  const rows = moons
+    .map((m) => {
+      const radii = aInParentRadii(m, parent);
+      const aKm = orbitAKm(m);
+      return {
+        id: m.id,
+        name: m.name,
+        fill: m.color ?? "#888",
+        radii,
+        aKm,
+        sort: radii ?? (aKm != null ? aKm / (parent.facts.radiusMeanKm ?? 1) : null),
+      };
+    })
+    .filter((r) => r.sort != null)
+    .sort((a, b) => (a.sort as number) - (b.sort as number));
+
+  if (rows.length === 0) return null;
+
+  const useRadii = rows.every((r) => r.radii != null);
+  const maxVal = Math.max(
+    ...rows.map((r) => (useRadii ? (r.radii as number) : (r.aKm as number) / 1000)),
+  );
+
+  return (
+    <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
+      <h3 className="mb-3 text-sm font-medium text-zinc-300">
+        Orbit ladder · from {parent.name} (
+        {useRadii ? "parent radii" : "×10³ km"})
+      </h3>
+      <ul className="space-y-2">
+        {rows.map((r) => {
+          const val = useRadii ? (r.radii as number) : (r.aKm as number) / 1000;
+          const pct = Math.max(4, (val / maxVal) * 100);
+          return (
+            <li key={r.id} className="flex items-center gap-2 text-xs">
+              <Link
+                href={`/body/${r.id}`}
+                className="w-20 shrink-0 truncate text-zinc-300 hover:text-sky-300"
+              >
+                {r.name}
+              </Link>
+              <div className="relative h-3 flex-1 rounded bg-white/5">
+                <div
+                  className="absolute inset-y-0 left-0 rounded"
+                  style={{ width: `${pct}%`, background: r.fill, opacity: 0.85 }}
+                />
+              </div>
+              <span className="w-16 shrink-0 text-right font-mono text-[11px] text-zinc-400">
+                {shortRatio(val)}
+                {useRadii ? " R" : ""}
+              </span>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
+
+/** Moon page: parent link + a in parent-radii, period, mass fraction. */
+function ParentContextCard({ moon, parent }: { moon: Body; parent: Body }) {
+  const radii = aInParentRadii(moon, parent);
+  const period = periodDaysOf(moon);
+  const mM = moon.facts.massKg;
+  const mP = parent.facts.massKg;
+  const massFrac =
+    mM != null && mP != null && mP > 0 ? mM / mP : null;
+
+  return (
+    <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
+      <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+        <h3 className="text-sm font-medium text-zinc-300">Parent context</h3>
+        <Link
+          href={`/body/${parent.id}`}
+          className="rounded-full bg-white/5 px-2.5 py-1 text-[11px] text-zinc-400 hover:bg-white/10 hover:text-zinc-200"
+        >
+          {parent.name} →
+        </Link>
+      </div>
+      <dl className="grid gap-2 sm:grid-cols-3">
+        {radii != null ? (
+          <div className="rounded-lg bg-white/[0.03] px-3 py-2">
+            <dt className="text-[11px] text-zinc-500">a in parent radii</dt>
+            <dd className="text-sm text-zinc-100">{shortRatio(radii)} R</dd>
+          </div>
+        ) : null}
+        {period != null ? (
+          <div className="rounded-lg bg-white/[0.03] px-3 py-2">
+            <dt className="text-[11px] text-zinc-500">Orbital period</dt>
+            <dd className="text-sm text-zinc-100">
+              {formatPeriodDays(period)}
+            </dd>
+          </div>
+        ) : null}
+        {massFrac != null ? (
+          <div className="rounded-lg bg-white/[0.03] px-3 py-2">
+            <dt className="text-[11px] text-zinc-500">Mass fraction</dt>
+            <dd className="text-sm text-zinc-100">
+              {shortRatio(massFrac * 100)}% of {parent.name}
+            </dd>
+          </div>
+        ) : null}
+      </dl>
+    </div>
+  );
+}
+
+function dialPct(value: number, ref: number): number {
+  if (!Number.isFinite(value) || !Number.isFinite(ref) || ref <= 0) return 0;
+  // log-ish compression so tiny moons still show a sliver
+  const ratio = value / ref;
+  return Math.min(100, Math.max(3, (Math.log10(ratio + 0.01) + 2) / 4 * 100));
+}
+
+/** Compact dials vs Earth (or parent) for radius/mass/density/albedo. */
+function BodyDials({
+  body,
+  vs,
+}: {
+  body: Body;
+  vs: Body;
+}) {
+  const dials: { key: string; label: string; bodyVal: number | null | undefined; refVal: number | null | undefined; format: (n: number) => string }[] = [
+    {
+      key: "radius",
+      label: "Radius",
+      bodyVal: body.facts.radiusMeanKm,
+      refVal: vs.facts.radiusMeanKm,
+      format: (n) => formatRadius(n),
+    },
+    {
+      key: "mass",
+      label: "Mass",
+      bodyVal: body.facts.massKg,
+      refVal: vs.facts.massKg,
+      format: (n) => formatMass(n),
+    },
+    {
+      key: "density",
+      label: "Density",
+      bodyVal: body.facts.densityGcm3,
+      refVal: vs.facts.densityGcm3,
+      format: (n) => formatDensity(n),
+    },
+    {
+      key: "albedo",
+      label: "Albedo",
+      bodyVal: body.facts.albedo,
+      refVal: vs.facts.albedo,
+      format: (n) => n.toPrecision(3),
+    },
+  ];
+
+  const usable = dials.filter(
+    (d) => d.bodyVal != null && d.refVal != null && (d.refVal as number) > 0,
+  );
+  if (usable.length === 0) return null;
+
+  return (
+    <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
+      <h3 className="mb-3 text-sm font-medium text-zinc-300">
+        Body dials · vs {vs.name}
+      </h3>
+      <ul className="space-y-3">
+        {usable.map((d) => {
+          const bv = d.bodyVal as number;
+          const rv = d.refVal as number;
+          const ratio = bv / rv;
+          return (
+            <li key={d.key}>
+              <div className="mb-1 flex justify-between text-[11px]">
+                <span className="text-zinc-400">{d.label}</span>
+                <span className="text-zinc-500">
+                  {d.format(bv)}
+                  <span className="mx-1 text-zinc-600">·</span>
+                  {shortRatio(ratio)}× {vs.name}
+                </span>
+              </div>
+              <div className="h-2 rounded-full bg-white/5">
+                <div
+                  className="h-2 rounded-full"
+                  style={{
+                    width: `${dialPct(bv, rv)}%`,
+                    background: body.color ?? "#38bdf8",
+                    opacity: 0.9,
+                  }}
+                />
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
+
+/** Moon compare section: mass–radius + a–period when useful; orbit ladder (not host AU). */
+function MoonsOfSection({
+  parent,
+  moons,
+  headerExtra,
+}: {
+  parent: Body;
+  moons: Body[];
+  headerExtra?: React.ReactNode;
+}) {
+  const hasMR = moons.some(
+    (b) => b.facts.massKg != null && b.facts.radiusMeanKm != null,
+  );
+  const hasOrbit = moons.some((b) => hasUsableOrbit(b));
+
+  return (
+    <section className="space-y-3">
+      <div className="flex flex-wrap items-center gap-2">
+        <h3 className="text-base font-semibold text-zinc-200">
+          Moons of {parent.name}
+        </h3>
+        {headerExtra}
+      </div>
+      <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
+        {hasMR ? (
+          <MassRadiusChart
+            bodies={moons}
+            title={`Moons of ${parent.name}: mass vs radius (Earth units)`}
+          />
+        ) : null}
+        {hasOrbit ? (
+          <APeriodChart
+            bodies={moons}
+            title={`Moons of ${parent.name}: a vs orbital period`}
+          />
+        ) : null}
+        <OrbitLadder parent={parent} moons={moons} />
+      </div>
+    </section>
+  );
+}
+
+function earthRef(): Body | undefined {
+  return getBody("earth");
+}
+
+/** Body-page focus layout — no system Planets dump; no sibling moon graphs. */
+function BodyFocusCharts({
+  focus,
+  systemBodies,
+  host,
+}: {
+  focus: Body;
+  systemBodies: Body[];
+  host: string;
+}) {
   const planets = filterKinds(systemBodies, ["planet", "dwarf_planet"]);
   const asteroids = filterKinds(systemBodies, ["asteroid"]);
-  const sections: ChartSection[] = [];
+  const earth = earthRef();
 
   if (focus.kind === "star") {
+    const sections: ChartSection[] = [];
     if (groupHasChartData(planets)) {
       sections.push({
         key: "planets",
@@ -645,81 +1071,96 @@ function buildBodySections(
         distanceSubject: "host",
       });
     }
-    return sections;
+    if (sections.length === 0) {
+      return (
+        <div className="rounded-xl border border-white/10 bg-white/[0.03] p-6 text-sm text-zinc-500">
+          No chartable bodies for this focus
+        </div>
+      );
+    }
+    return (
+      <div className="space-y-8">
+        {sections.map((section) => (
+          <SectionCharts key={section.key} section={section} host={host} />
+        ))}
+      </div>
+    );
   }
 
   if (focus.kind === "planet" || focus.kind === "dwarf_planet") {
-    if (groupHasChartData(planets)) {
-      sections.push({
-        key: "planets",
-        title: "Planets",
-        subset: planets,
-        distanceSubject: "host",
-        focusId: focus.id,
-      });
-    }
     const moons = moonChildrenOf(focus.id, systemBodies);
-    if (groupHasChartData(moons)) {
-      sections.push({
-        key: `moons-${focus.id}`,
-        title: `Moons of ${focus.name}`,
-        subset: moons,
-        distanceSubject: "parent",
-        parentName: focus.name,
-      });
-    }
-    return sections;
+    const vs = earth && earth.id !== focus.id ? earth : undefined;
+
+    return (
+      <div className="space-y-8">
+        <div className="grid gap-4 lg:grid-cols-2">
+          {vs ? <BodyDials body={focus} vs={vs} /> : null}
+          {moons.length === 1 ? (
+            <>
+              <SizePair larger={focus} smaller={moons[0]} />
+              <HowFarOut parent={focus} moon={moons[0]} />
+            </>
+          ) : null}
+        </div>
+        {moons.length >= 2 ? (
+          <MoonsOfSection parent={focus} moons={moons} />
+        ) : null}
+        {moons.length === 0 && !vs ? (
+          <div className="rounded-xl border border-white/10 bg-white/[0.03] p-6 text-sm text-zinc-500">
+            See Key facts above — no comparison set for this body
+          </div>
+        ) : null}
+      </div>
+    );
   }
 
   if (focus.kind === "moon") {
     const parent = focus.parentId ? getBody(focus.parentId) : undefined;
-    const siblings = parent
-      ? moonChildrenOf(parent.id, systemBodies)
-      : [focus];
-    const parentName = parent?.name ?? "parent";
-    if (groupHasChartData(siblings)) {
-      sections.push({
-        key: `moons-${parent?.id ?? focus.id}`,
-        title: `Moons of ${parentName}`,
-        subset: siblings,
-        distanceSubject: "parent",
-        parentName,
-        focusId: focus.id,
-        headerExtra: parent ? (
-          <Link
-            href={`/body/${parent.id}`}
-            className="rounded-full bg-white/5 px-2 py-0.5 text-[11px] text-zinc-400 hover:bg-white/10 hover:text-zinc-200"
-          >
-            Parent: {parent.name} →
-          </Link>
-        ) : undefined,
-      });
-    }
-    return sections;
+    const vs = parent ?? earth;
+    return (
+      <div className="space-y-8">
+        <div className="grid gap-4 lg:grid-cols-2">
+          {parent ? (
+            <ParentContextCard moon={focus} parent={parent} />
+          ) : null}
+          {vs ? <BodyDials body={focus} vs={vs} /> : null}
+          {parent &&
+          focus.facts.radiusMeanKm != null &&
+          parent.facts.radiusMeanKm != null ? (
+            <SizePair larger={parent} smaller={focus} />
+          ) : null}
+        </div>
+      </div>
+    );
   }
 
   if (focus.kind === "asteroid") {
-    if (groupHasChartData(asteroids)) {
-      sections.push({
-        key: "asteroids",
-        title: "Asteroids",
-        subset: asteroids,
-        distanceSubject: "host",
-        focusId: focus.id,
-      });
-    }
-    return sections;
+    const vs = earth;
+    return (
+      <div className="space-y-8">
+        <div className="grid gap-4 lg:grid-cols-2">
+          {vs ? <BodyDials body={focus} vs={vs} /> : null}
+        </div>
+        {!vs ? (
+          <div className="rounded-xl border border-white/10 bg-white/[0.03] p-6 text-sm text-zinc-500">
+            See Key facts above
+          </div>
+        ) : null}
+      </div>
+    );
   }
 
-  return sections;
+  return (
+    <div className="rounded-xl border border-white/10 bg-white/[0.03] p-6 text-sm text-zinc-500">
+      No chartable bodies for this focus
+    </div>
+  );
 }
 
 function DiscoverMoonSection({
   systemBodies,
-  host,
 }: {
   systemBodies: Body[];
-  host: string;
 }) {
   const options = useMemo(
     () => moonParentOptions(systemBodies),
@@ -737,30 +1178,25 @@ function DiscoverMoonSection({
 
   const parent = getBody(selectedId);
   const moons = parent ? moonChildrenOf(parent.id, systemBodies) : [];
-  const section: ChartSection = {
-    key: `moons-${selectedId}`,
-    title: parent ? `Moons of ${parent.name}` : "Moons",
-    subset: moons,
-    distanceSubject: "parent",
-    parentName: parent?.name,
-    headerExtra: (
-      <MoonParentPicker
-        options={options}
-        selectedId={selectedId}
-        onSelect={setMoonParentId}
-      />
-    ),
-  };
 
-  if (!groupHasChartData(moons)) {
-    // Parent chips still shown — avoid permanent dead empty-state for moons.
+  if (!parent) return null;
+
+  const headerExtra = (
+    <MoonParentPicker
+      options={options}
+      selectedId={selectedId}
+      onSelect={setMoonParentId}
+    />
+  );
+
+  if (!groupHasChartData(moons) && moons.every((m) => orbitAKm(m) == null)) {
     return (
       <section className="space-y-3">
         <div className="flex flex-wrap items-center gap-2">
           <h3 className="text-base font-semibold text-zinc-200">
-            {section.title}
+            Moons of {parent.name}
           </h3>
-          {section.headerExtra}
+          {headerExtra}
         </div>
         <p className="text-sm text-zinc-500">
           No chartable orbits for this parent&apos;s moons
@@ -769,7 +1205,9 @@ function DiscoverMoonSection({
     );
   }
 
-  return <SectionCharts section={section} host={host} />;
+  return (
+    <MoonsOfSection parent={parent} moons={moons} headerExtra={headerExtra} />
+  );
 }
 
 export function CatalogCharts({ systemId, focusId }: ChartsProps) {
@@ -777,22 +1215,10 @@ export function CatalogCharts({ systemId, focusId }: ChartsProps) {
   const host = hostLabel(systemId);
   const focus = focusId ? getBody(focusId) : undefined;
 
-  // Body page: kind-scoped sections for the focused body.
+  // Body page: kind-scoped focus layout (never system Planets dump on a planet).
   if (focus && focus.systemId === (systemId ?? getHomeSystem().id)) {
-    const sections = buildBodySections(focus, bodies);
-    if (sections.length === 0) {
-      return (
-        <div className="rounded-xl border border-white/10 bg-white/[0.03] p-6 text-sm text-zinc-500">
-          No chartable bodies for this focus
-        </div>
-      );
-    }
     return (
-      <div className="space-y-8">
-        {sections.map((section) => (
-          <SectionCharts key={section.key} section={section} host={host} />
-        ))}
-      </div>
+      <BodyFocusCharts focus={focus} systemBodies={bodies} host={host} />
     );
   }
 
@@ -816,9 +1242,9 @@ export function CatalogCharts({ systemId, focusId }: ChartsProps) {
       }
     : null;
 
-  const hasMoons = bodies.some((b) => b.kind === "moon");
+  const hasMultiMoonParents = moonParentOptions(bodies).length > 0;
 
-  if (!planetSection && !asteroidSection && !hasMoons) {
+  if (!planetSection && !asteroidSection && !hasMultiMoonParents) {
     return (
       <div className="rounded-xl border border-white/10 bg-white/[0.03] p-6 text-sm text-zinc-500">
         No chartable bodies in this system
@@ -831,8 +1257,8 @@ export function CatalogCharts({ systemId, focusId }: ChartsProps) {
       {planetSection ? (
         <SectionCharts section={planetSection} host={host} />
       ) : null}
-      {hasMoons ? (
-        <DiscoverMoonSection systemBodies={bodies} host={host} />
+      {hasMultiMoonParents ? (
+        <DiscoverMoonSection systemBodies={bodies} />
       ) : null}
       {asteroidSection ? (
         <SectionCharts section={asteroidSection} host={host} />
