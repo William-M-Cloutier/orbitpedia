@@ -56,16 +56,22 @@ function formatShortNumber(v: number): string {
   return String(Number(v.toPrecision(3)));
 }
 
-/** Room for axis titles outside ticks — titles must never collide with tick numbers.
- *  Tick `unit` is omitted on purpose: units live in the axis title only, so tick
- *  strings stay short ("0.06") and don’t smash into the rotated Y title. */
-const SCATTER_MARGIN = { top: 12, right: 24, bottom: 56, left: 72 } as const;
+/** Scatter chrome: full-width plot. Titles clear ticks by sitting in the
+ *  axis band (Y) / under the plot (X) — never by fat empty gutters.
+ *  Recharts `position:"left"` is measured from the YAxis band’s LEFT edge
+ *  (margin.left), not the plot; a large positive offset clips off-canvas,
+ *  while a huge margin.left only adds dead space left of the band.
+ *  Tick `unit` stays in titles so tick strings stay short. */
+const SCATTER_MARGIN = { top: 12, right: 20, bottom: 40, left: 8 } as const;
+/** Title strip + gap + short tick numbers inside the Y band. */
+const SCATTER_Y_WIDTH = 52;
 
 function scatterXLabel(value: string) {
   return {
     value,
-    position: "bottom" as const,
-    offset: 16,
+    // Center under the plot/axis, not the whole card.
+    position: "insideBottom" as const,
+    offset: -2,
     fill: "#71717a",
     fontSize: 11,
   };
@@ -76,7 +82,10 @@ function scatterYLabel(value: string) {
     value,
     angle: -90,
     position: "left" as const,
-    offset: 10,
+    // Negative offset pulls the title INTO the Y band (left of ticks).
+    // Band layout: [title | gap | ticks] within SCATTER_Y_WIDTH.
+    // Closer to 0 = further left (away from tick numbers near the plot).
+    offset: 0,
     fill: "#71717a",
     fontSize: 11,
   };
@@ -253,7 +262,7 @@ function MassRadiusChart({
             tick={{ fontSize: 11 }}
             tickMargin={6}
             tickFormatter={formatShortNumber}
-            height={40}
+            height={36}
             label={scatterXLabel("Mass (M⊕)")}
           />
           <YAxis
@@ -266,7 +275,7 @@ function MassRadiusChart({
             tick={{ fontSize: 11 }}
             tickMargin={6}
             tickFormatter={formatShortNumber}
-            width={48}
+            width={SCATTER_Y_WIDTH}
             label={scatterYLabel("Radius (R⊕)")}
           />
           <ZAxis range={[80, 80]} />
@@ -350,7 +359,7 @@ function APeriodChart({
             tick={{ fontSize: 11 }}
             tickMargin={6}
             tickFormatter={formatShortNumber}
-            height={40}
+            height={36}
             label={scatterXLabel("a (AU)")}
           />
           <YAxis
@@ -363,7 +372,7 @@ function APeriodChart({
             tick={{ fontSize: 11 }}
             tickMargin={6}
             tickFormatter={formatShortNumber}
-            width={48}
+            width={SCATTER_Y_WIDTH}
             label={scatterYLabel("Period (yr)")}
           />
           <ZAxis range={[80, 80]} />
@@ -861,24 +870,22 @@ function HowFarOutMulti({
     return Math.max(18, short.length * fontSize * 0.34 + 8);
   };
 
-  // Width budget: show orbital scale with a *gentle* overflow — enough to
-  // separate packed inners and feel distance, not a year-long scrub.
-  // Soft max ≈ 1.5–1.7× a typical catalog card (~400px); collision tiers
-  // still handle ultra-tight pairs after the cap.
+  // Width budget: gentle overflow (~1.6× card), never a marathon scrub.
+  // Soft max ≈ 1.5–1.7× a typical catalog card (~400px).
   const viewW = 420;
   const softMaxW = Math.min(680, Math.round(viewW * 1.6)); // ~672
   const maxTrack = softMaxW - padL - trackStartGap - padR;
 
-  let trackW = Math.max(260, n * 68);
-  const minPairPx = 22;
-  if (maxVal > 0 && n >= 3) {
-    for (let i = 1; i < n; i++) {
-      const frac = (values[i] - values[i - 1]) / maxVal;
-      if (frac > 1e-6) {
-        // Cap each pair’s ask at maxTrack so one tight pair can’t explode W.
-        trackW = Math.max(trackW, Math.min(minPairPx / frac, maxTrack));
-      }
-    }
+  // Min center-to-center gap between moon markers (moonR=8 → 16px disc).
+  // Linear a/max(a) alone leaves Saturn’s inners bunched; hybrid layout below
+  // guarantees this gap while still weighting leftover span by √(Δa) so
+  // one huge outer step (Titan→Iapetus) doesn’t starve the inner pack.
+  const minPairPx = 48;
+  let trackW = Math.max(260, n * 76);
+  if (n >= 3) {
+    const needMin = (n - 1) * minPairPx;
+    // ~1.6× min-gap span so approximate scale still reads; soft-capped.
+    trackW = Math.max(trackW, Math.min(maxTrack, Math.round(needMin * 1.6)));
   }
   trackW = Math.min(Math.max(trackW, n < 3 ? 260 : 300), maxTrack);
 
@@ -888,10 +895,39 @@ function HowFarOutMulti({
   // Scroll only for comparison-worthy packs (Saturn/Jupiter…); Mars (2) fits.
   const needsHScroll = n >= 3;
 
-  const xs = values.map((v) => {
-    const t = maxVal > 0 ? v / maxVal : 0;
-    return trackX0 + Math.min(1, Math.max(0, t)) * trackW;
-  });
+  // Hybrid x positions: order + approximate scale, readable min gaps.
+  const xs: number[] = new Array(n);
+  if (n === 1) {
+    const t = maxVal > 0 ? values[0] / maxVal : 0;
+    xs[0] = trackX0 + Math.min(1, Math.max(0, t)) * trackW;
+  } else {
+    const diffs = values.slice(1).map((v, i) => Math.max(0, v - values[i]));
+    const sumDiff = diffs.reduce((a, b) => a + b, 0) || 1;
+    const leftT = maxVal > 0 ? Math.min(1, Math.max(0, values[0] / maxVal)) : 0;
+    const needMin = (n - 1) * minPairPx;
+    // Span available for first→last after innermost inset.
+    let gapBudget = Math.max(trackW * (1 - leftT), needMin);
+    // If min gaps won’t fit past the inset, shrink inset so last stays on-track.
+    let x0 = trackX0 + leftT * trackW;
+    if (x0 + gapBudget > trackX1) {
+      gapBudget = Math.max(needMin, trackX1 - trackX0);
+      x0 = trackX1 - gapBudget;
+      if (x0 < trackX0) {
+        x0 = trackX0;
+        gapBudget = trackX1 - trackX0;
+      }
+    }
+    const gapScale = gapBudget < needMin ? gapBudget / needMin : 1;
+    const extra = Math.max(0, gapBudget - needMin * gapScale);
+    // √Δa weights: preserve order/scale feel without outer-pair monopoly.
+    const weights = diffs.map((d) => Math.sqrt(d / sumDiff));
+    const wSum = weights.reduce((a, b) => a + b, 0) || 1;
+    const gaps = weights.map(
+      (w) => minPairPx * gapScale + (extra * w) / wSum,
+    );
+    xs[0] = x0;
+    for (let i = 1; i < n; i++) xs[i] = xs[i - 1] + gaps[i - 1];
+  }
 
   // Collision-aware sides: prefer below; when x-close, alternate above/below
   // and fan to extra tiers so Saturn’s tight inner moons stay readable.
