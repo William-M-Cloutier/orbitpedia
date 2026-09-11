@@ -13,6 +13,7 @@ import sun from "./bodies/sun.json";
 import mercury from "./bodies/mercury.json";
 import venus from "./bodies/venus.json";
 import earth from "./bodies/earth.json";
+import moon from "./bodies/moon.json";
 import mars from "./bodies/mars.json";
 import jupiter from "./bodies/jupiter.json";
 import saturn from "./bodies/saturn.json";
@@ -36,6 +37,7 @@ const raw = {
     mercury,
     venus,
     earth,
+    moon,
     mars,
     jupiter,
     saturn,

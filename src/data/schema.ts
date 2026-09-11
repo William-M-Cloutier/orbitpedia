@@ -8,7 +8,7 @@ export const BodyKindSchema = z.enum([
   "planet",
   "dwarf_planet",
   "asteroid",
-  /** Reserved for additive Earth–Moon / satellite graphs (not seeded this pass). */
+  /** Natural satellite (parent-frame orbit around parentId). */
   "moon",
 ]);
 

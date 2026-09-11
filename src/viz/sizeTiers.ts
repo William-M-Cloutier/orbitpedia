@@ -149,3 +149,20 @@ export function physicalRadiusAu(body: Body): number {
 export function orbitDistanceScale(_mode: SizeMode = DEFAULT_SIZE_MODE): number {
   return 1;
 }
+
+/**
+ * Viz-only multiplier for parent-frame relative orbits (e.g. Moon).
+ * Catalog a/e stay real; schematic/oversized parent meshes otherwise swallow
+ * the child path. Scales relative Kepler XYZ so periapsis clears
+ * parentVis + childVis + a small margin (never written back to Store B).
+ */
+export function parentFrameDisplayScale(
+  childOrbitQAu: number,
+  parentVis: number,
+  childVis: number,
+): number {
+  const margin = Math.min(PERIHELION_CLEARANCE_MARGIN_AU, Math.max(parentVis * 0.35, childVis));
+  const need = Math.max(parentVis + childVis + margin, parentVis * 1.85 + childVis);
+  if (!(childOrbitQAu > 0) || !Number.isFinite(childOrbitQAu)) return 1;
+  return childOrbitQAu >= need ? 1 : need / childOrbitQAu;
+}

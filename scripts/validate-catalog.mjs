@@ -340,6 +340,8 @@ if (!(centralRadiusAu > 0)) {
 const hardErrors = [];
 const warnings = [];
 
+const bodyById = new Map(catalog.bodies.map((b) => [b.id, b]));
+
 for (const b of graphBodies) {
   if (b.systemId !== system.id) {
     hardErrors.push(`${b.id}: systemId ${b.systemId} ≠ system ${system.id}`);
@@ -350,7 +352,30 @@ for (const b of graphBodies) {
     continue;
   }
   const q = periapsisAu(b.orbit);
-  if (!(q > centralRadiusAu + EPS_AU)) {
+  if (b.orbit.frame === "parent") {
+    if (!b.parentId) {
+      hardErrors.push(`${b.id}: orbit.frame=parent requires parentId`);
+    } else {
+      const parent = bodyById.get(b.parentId);
+      if (!parent) {
+        hardErrors.push(`${b.id}: parentId ${b.parentId} not in catalog`);
+      } else {
+        const parentRkm = parent.facts?.radiusMeanKm;
+        if (parentRkm == null || !(parentRkm > 0)) {
+          hardErrors.push(
+            `${b.id}: parent ${parent.id} missing facts.radiusMeanKm for parent-frame clearance`,
+          );
+        } else {
+          const parentR = parentRkm / AU_KM;
+          if (!(q > parentR + EPS_AU)) {
+            hardErrors.push(
+              `${b.id}: parent-frame periapsis q=${q.toPrecision(8)} au does not clear parent '${parent.id}' radius ${parentR.toPrecision(8)} au`,
+            );
+          }
+        }
+      }
+    }
+  } else if (!(q > centralRadiusAu + EPS_AU)) {
     hardErrors.push(
       `${b.id}: periapsis q=${q.toPrecision(8)} au does not clear central '${central.id}' radius ${centralRadiusAu.toPrecision(8)} au (intersects or subsurface)`,
     );

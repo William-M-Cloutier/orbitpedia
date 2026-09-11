@@ -14,7 +14,7 @@ import {
 } from "react";
 import * as THREE from "three";
 import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
-import { getBody, getHomeSystemGraph, hasUsableOrbit } from "@/data/catalog";
+import { getBody, getHomeSystemGraph, getParent, hasUsableOrbit } from "@/data/catalog";
 import type { Body } from "@/data/schema";
 
 /** Explore default: one system graph (home = solar). Additive systems plug in later. */
@@ -23,6 +23,7 @@ import { periodFromA, positionAtMa, sampleOrbit } from "@/lib/kepler";
 import {
   DEFAULT_SIZE_MODE,
   orbitDistanceScale,
+  parentFrameDisplayScale,
   visualRadius,
   type SizeMode,
 } from "./sizeTiers";
@@ -109,18 +110,66 @@ function sunBarycentricOffset(
   return eclipticToScene(x, y, 0);
 }
 
-/** Heliocentric (sun-at-origin) scene position. BarycentricRoot adds the wobble. */
-function bodyPosition(
+/**
+ * Periapsis (au) from elements — matches catalog qAu when present.
+ */
+function orbitQAu(orbit: NonNullable<Body["orbit"]>): number {
+  if (orbit.qAu != null && Number.isFinite(orbit.qAu)) return orbit.qAu;
+  return orbit.aAu * (1 - orbit.e);
+}
+
+/**
+ * Scene-local Kepler position for one body's own elements (no parent offset).
+ * `relScale` folds orbitDistanceScale and optional parent-frame display scale.
+ */
+function localOrbitPosition(
   body: Body,
   simDays: number,
-  distScale: number = 1,
+  relScale: number,
 ): [number, number, number] {
   if (body.kind === "star" || !body.orbit) return [0, 0, 0];
   const period = body.orbit.periodD ?? periodFromA(body.orbit.aAu);
   const ma = body.orbit.maDeg + (360 * simDays) / period;
   const [x, y, z] = positionAtMa(body.orbit, ma);
-  const s = distScale > 0 ? distScale : 1;
+  const s = relScale > 0 ? relScale : 1;
   return eclipticToScene(x * s, y * s, z * s);
+}
+
+/**
+ * Heliocentric (sun-at-origin within BarycentricRoot) scene position.
+ * Parent-frame bodies (Moon) are offset by the resolved parent chain so the
+ * mesh tracks a derived path around Earth — not a fake heliocentric ellipse.
+ */
+function bodyPosition(
+  body: Body,
+  simDays: number,
+  distScale: number = 1,
+  sizeMode: SizeMode = DEFAULT_SIZE_MODE,
+  seen: Set<string> = new Set(),
+): [number, number, number] {
+  if (body.kind === "star" || !body.orbit) return [0, 0, 0];
+  if (seen.has(body.id)) return [0, 0, 0];
+  seen.add(body.id);
+
+  const s = distScale > 0 ? distScale : 1;
+  if (body.orbit.frame === "parent" && body.parentId) {
+    const parent = getParent(body.id) ?? getBody(body.parentId);
+    if (parent) {
+      const parentPos = bodyPosition(parent, simDays, distScale, sizeMode, seen);
+      const ps = parentFrameDisplayScale(
+        orbitQAu(body.orbit),
+        visualRadius(parent, sizeMode),
+        visualRadius(body, sizeMode),
+      );
+      const local = localOrbitPosition(body, simDays, s * ps);
+      return [
+        parentPos[0] + local[0],
+        parentPos[1] + local[1],
+        parentPos[2] + local[2],
+      ];
+    }
+  }
+  return localOrbitPosition(body, simDays, s);
 }
 
 /** World-space position including the applied barycentric translation. */
@@ -129,8 +178,9 @@ function bodyWorldPosition(
   simDays: number,
   bary: readonly [number, number, number],
   distScale: number = 1,
+  sizeMode: SizeMode = DEFAULT_SIZE_MODE,
 ): [number, number, number] {
-  const [x, y, z] = bodyPosition(body, simDays, distScale);
+  const [x, y, z] = bodyPosition(body, simDays, distScale, sizeMode);
   return [x + bary[0], y + bary[1], z + bary[2]];
 }
 
@@ -217,6 +267,8 @@ function SoftHaze() {
   );
 }
 
+const ORBIT_LINE_SAMPLES = 192;
+
 const OrbitLine = memo(function OrbitLine({
   body,
   highlighted,
@@ -226,20 +278,55 @@ const OrbitLine = memo(function OrbitLine({
   highlighted: boolean;
   highlightColor?: string;
 }) {
+  const group = useRef<THREE.Group>(null);
   const sizeMode = useSizeMode();
   const distScale = orbitDistanceScale(sizeMode);
+  const { getSimDays } = useSimApi();
+  const parent =
+    body.orbit?.frame === "parent" && body.parentId
+      ? getParent(body.id) ?? getBody(body.parentId)
+      : undefined;
+  const relScale = useMemo(() => {
+    if (!hasUsableOrbit(body)) return distScale;
+    if (!parent) return distScale;
+    return (
+      distScale *
+      parentFrameDisplayScale(
+        orbitQAu(body.orbit),
+        visualRadius(parent, sizeMode),
+        visualRadius(body, sizeMode),
+      )
+    );
+  }, [body, parent, distScale, sizeMode]);
+
   const points = useMemo(() => {
     if (!hasUsableOrbit(body)) return null;
-    return sampleOrbit(body.orbit, 96).map(([x, y, z]) => {
-      const [sx, sy, sz] = eclipticToScene(x * distScale, y * distScale, z * distScale);
+    // True-anomaly sampling (see sampleOrbit) keeps eccentric bodies on the polyline.
+    return sampleOrbit(body.orbit, ORBIT_LINE_SAMPLES).map(([x, y, z]) => {
+      const [sx, sy, sz] = eclipticToScene(x * relScale, y * relScale, z * relScale);
       return new THREE.Vector3(sx, sy, sz);
     });
-  }, [body.orbit, distScale]);
+  }, [body.orbit, relScale]);
+
+  const syncParent = (days: number) => {
+    if (!parent || !group.current) return;
+    const [x, y, z] = bodyPosition(parent, days, distScale, sizeMode);
+    group.current.position.set(x, y, z);
+  };
+
+  useLayoutEffect(() => {
+    syncParent(getSimDays());
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- parent pose sync
+  }, [parent, distScale, sizeMode]);
+
+  useFrame(() => {
+    syncParent(getSimDays());
+  });
 
   if (!points) return null;
   const base = body.color ?? "#666";
   const color = highlighted ? (highlightColor ?? base) : base;
-  return (
+  const line = (
     <Line
       points={points}
       color={color}
@@ -248,6 +335,15 @@ const OrbitLine = memo(function OrbitLine({
       opacity={highlighted ? 0.85 : 0.4}
     />
   );
+  // Parent-frame: line lives in a group that tracks the parent mesh.
+  if (parent) {
+    return (
+      <group ref={group} name={`orbit-${body.id}`}>
+        {line}
+      </group>
+    );
+  }
+  return line;
 });
 
 const BodyMesh = memo(function BodyMesh({
@@ -291,7 +387,7 @@ const BodyMesh = memo(function BodyMesh({
 
   const applyPose = (days: number) => {
     if (!group.current) return;
-    const [x, y, z] = bodyPosition(body, days, distScale);
+    const [x, y, z] = bodyPosition(body, days, distScale, sizeMode);
     group.current.position.set(x, y, z);
     const period = body.facts.rotationPeriodD;
     if (spinMesh.current && period != null && period !== 0) {
@@ -373,15 +469,30 @@ function focusMeshScale(body: Body): number {
 const FOCUS_FILL = 0.48;
 
 /**
- * OrbitControls dolly floor. True-scale meshes are tiny — allow ~45% closer
- * than schematic/proportional so planets remain inspectable.
+ * OrbitControls dolly floor. Idle keeps Explore True floor (~0.23 from
+ * closer-True UX). While a body is focused/followed, drop to ~2.2× its focused
+ * mesh radius so tiny True-scale planets (and Moon) stay inspectable.
  */
-function orbitMinDistance(sizeMode: SizeMode): number {
-  return sizeMode === "true" ? 0.23 : 0.4;
+function orbitMinDistance(
+  sizeMode: SizeMode,
+  focusBody?: Body | null,
+): number {
+  const idle = sizeMode === "true" ? 0.23 : 0.4;
+  if (!focusBody) return idle;
+  const r = visualRadius(focusBody, sizeMode) * focusMeshScale(focusBody);
+  const tight = Math.max(0.004, r * 2.2);
+  return Math.min(idle, tight);
 }
 
-/** Auto-frame floor — slightly below orbitMinDistance so focus can use the dolly. */
-function focusDistanceFloor(sizeMode: SizeMode): number {
+/** Auto-frame floor — tracks orbitMinDistance so focus snap can use the dolly. */
+function focusDistanceFloor(
+  sizeMode: SizeMode,
+  focusBody?: Body | null,
+): number {
+  if (focusBody) {
+    const r = visualRadius(focusBody, sizeMode) * focusMeshScale(focusBody);
+    return Math.max(0.0035, r * 2.0);
+  }
   return sizeMode === "true" ? 0.2 : 0.36;
 }
 
@@ -406,7 +517,7 @@ function focusFrameDistance(
   const a = Number.isFinite(aspect) && aspect > 1e-6 ? aspect : 1;
   const halfMin = a >= 1 ? tanHalf : tanHalf * a;
   // Floor keeps dolly above OrbitControls minDistance / near plane comfort.
-  return Math.max(focusDistanceFloor(sizeMode), r / (fill * halfMin));
+  return Math.max(focusDistanceFloor(sizeMode, body), r / (fill * halfMin));
 }
 
 /** Aspect of the *visible* sub-rect when setViewOffset is active. */
@@ -532,8 +643,8 @@ function FollowCamera() {
     }
     poseFrozen.current = false;
     const days = getSimDays();
-    const helio = bodyPosition(b, days, distScale);
-    const pos = bodyWorldPosition(b, days, getBaryOffset(), distScale);
+    const helio = bodyPosition(b, days, distScale, sizeMode);
+    const pos = bodyWorldPosition(b, days, getBaryOffset(), distScale, sizeMode);
     const fovY =
       camera instanceof THREE.PerspectiveCamera ? camera.fov : 45;
     const aspect =
@@ -584,8 +695,8 @@ function FollowCamera() {
     poseFrozen.current = false;
 
     const days = getSimDays();
-    const helio = bodyPosition(b, days, distScale);
-    const pos = bodyWorldPosition(b, days, getBaryOffset(), distScale);
+    const helio = bodyPosition(b, days, distScale, sizeMode);
+    const pos = bodyWorldPosition(b, days, getBaryOffset(), distScale, sizeMode);
     desired.current.set(pos[0], pos[1], pos[2]);
 
     // Sync offset from what OrbitControls did (dolly / orbit / pan) relative
@@ -622,6 +733,136 @@ function FollowCamera() {
     } else {
       camera.lookAt(target.current);
     }
+  });
+
+  return null;
+}
+
+
+/**
+ * WASD fly while the Explore canvas is focused (click into the WebGL view).
+ * Moves relative to camera facing; skips when focus is an input/UI control.
+ * Idle: pan camera + OrbitControls target together. Follow: move camera only
+ * so the ride-along offset changes without fighting the body target.
+ */
+function WasdFly() {
+  const keys = useRef({ w: false, a: false, s: false, d: false });
+  const canvasFocused = useRef(false);
+  const { getFollowing } = useSimApi();
+  const camera = useThree((s) => s.camera);
+  const controls = useThree((s) => s.controls) as OrbitControlsImpl | null;
+  const gl = useThree((s) => s.gl);
+  const invalidate = useThree((s) => s.invalidate);
+  const forward = useRef(new THREE.Vector3());
+  const right = useRef(new THREE.Vector3());
+  const move = useRef(new THREE.Vector3());
+
+  useEffect(() => {
+    const el = gl.domElement;
+    el.tabIndex = 0;
+    el.style.outline = "none";
+
+    const isTypingTarget = (t: EventTarget | null) => {
+      if (!(t instanceof HTMLElement)) return false;
+      const tag = t.tagName;
+      return (
+        tag === "INPUT" ||
+        tag === "TEXTAREA" ||
+        tag === "SELECT" ||
+        t.isContentEditable
+      );
+    };
+
+    const onPointerDown = () => {
+      el.focus({ preventScroll: true });
+      canvasFocused.current = true;
+    };
+    const onFocus = () => {
+      canvasFocused.current = true;
+    };
+    const onBlur = () => {
+      canvasFocused.current = false;
+      keys.current = { w: false, a: false, s: false, d: false };
+    };
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (!canvasFocused.current) return;
+      if (isTypingTarget(e.target) || isTypingTarget(document.activeElement)) {
+        return;
+      }
+      const k = e.key.toLowerCase();
+      if (k === "w" || k === "a" || k === "s" || k === "d") {
+        if (keys.current[k]) return;
+        keys.current[k] = true;
+        e.preventDefault();
+        invalidate();
+      }
+    };
+    const onKeyUp = (e: KeyboardEvent) => {
+      const k = e.key.toLowerCase();
+      if (k === "w" || k === "a" || k === "s" || k === "d") {
+        keys.current[k] = false;
+      }
+    };
+
+    const onVis = () => {
+      if (document.hidden) {
+        keys.current = { w: false, a: false, s: false, d: false };
+      }
+    };
+
+    el.addEventListener("pointerdown", onPointerDown);
+    el.addEventListener("focus", onFocus);
+    el.addEventListener("blur", onBlur);
+    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("keyup", onKeyUp);
+    document.addEventListener("visibilitychange", onVis);
+    return () => {
+      el.removeEventListener("pointerdown", onPointerDown);
+      el.removeEventListener("focus", onFocus);
+      el.removeEventListener("blur", onBlur);
+      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("keyup", onKeyUp);
+      document.removeEventListener("visibilitychange", onVis);
+    };
+  }, [gl, invalidate]);
+
+  useFrame((_, delta) => {
+    if (typeof document !== "undefined" && document.hidden) return;
+    const { w, a, s, d } = keys.current;
+    if (!(w || a || s || d) || !canvasFocused.current) return;
+
+    camera.getWorldDirection(forward.current);
+    if (forward.current.lengthSq() < 1e-12) return;
+    forward.current.normalize();
+    right.current.crossVectors(forward.current, camera.up);
+    if (right.current.lengthSq() < 1e-12) {
+      right.current.set(1, 0, 0);
+    } else {
+      right.current.normalize();
+    }
+
+    move.current.set(0, 0, 0);
+    if (w) move.current.add(forward.current);
+    if (s) move.current.sub(forward.current);
+    if (d) move.current.add(right.current);
+    if (a) move.current.sub(right.current);
+    if (move.current.lengthSq() < 1e-12) return;
+    move.current.normalize();
+
+    let speed = 2.5;
+    if (controls?.target) {
+      const dist = camera.position.distanceTo(controls.target);
+      speed = Math.max(0.35, Math.min(14, dist * 0.9));
+    }
+    move.current.multiplyScalar(speed * Math.min(delta, 0.1));
+
+    camera.position.add(move.current);
+    // Follow owns the look-at; only nudge camera so offset updates.
+    if (!getFollowing() && controls?.target) {
+      controls.target.add(move.current);
+      controls.update();
+    }
+    invalidate();
   });
 
   return null;
@@ -817,7 +1058,8 @@ function SceneContent({
   // Idle system view: no camera autoRotate (user orbits manually).
   // Follow mode still ride-alongs when a planet is selected.
   const invalidate = useThree((s) => s.invalidate);
-  const minDistance = orbitMinDistance(sizeMode);
+  const focusBody = focusId ? getBody(focusId) : null;
+  const minDistance = orbitMinDistance(sizeMode, focusBody);
 
   return (
     <SizeModeContext.Provider value={sizeMode}>
@@ -862,6 +1104,7 @@ function SceneContent({
         onChange={() => invalidate()}
       />
       <FollowCamera />
+      <WasdFly />
     </SimProvider>
     </SizeModeContext.Provider>
   );

@@ -6,10 +6,13 @@
  *   q = orbit.qAu ?? aAu*(1-e)  MUST  q > centralRadiusAu (real km→AU).
  *
  * This script owns schematic + Kepler checks on getHomeSystem members:
- *   1) For every orbiter: q > visualRadius(sun) + visualRadius(body) + margin
- *   2) Sampled ellipse |r| stays outside REAL sun radius (au)
- *   3) periodD ≈ GAUSS_YEAR_D * aAu^1.5 within relative tolerance
+ *   1) Heliocentric orbiters: q > visualRadius(sun) + visualRadius(body) + margin
+ *   2) Sampled ellipse |r| stays outside REAL sun radius (au) [heliocentric]
+ *   3) periodD ≈ GAUSS_YEAR_D * aAu^1.5 within relative tolerance [heliocentric]
  *   4) Central star has no heliocentric orbit / no OrbitLine required
+ *   5) Parent-frame: q clears parent real radius; viz scale clears parent mesh;
+ *      skip sun Kepler-3; require periodD > 0
+ *   6) Epoch MA pose lies on true-anomaly OrbitLine polyline (body-on-line)
  *
  * Usage: node scripts/orbit-sanity.mjs
  *        npm test
@@ -27,7 +30,7 @@ const GAUSS_YEAR_D = 365.256363;
 const AU_KM = 1.495_978_707e8;
 const EPS_AU = 1e-9;
 const PERIOD_REL_TOL = 0.02;
-const SAMPLE_N = 96;
+const SAMPLE_N = 192;
 const DEG = Math.PI / 180;
 
 function fail(msg) {
@@ -45,9 +48,12 @@ function periapsisAu(orbit) {
 }
 
 function solveKepler(M, e, tol = 1e-12) {
-  let E = e < 0.8 ? M : Math.PI;
+  let m = M % (Math.PI * 2);
+  if (m > Math.PI) m -= Math.PI * 2;
+  if (m < -Math.PI) m += Math.PI * 2;
+  let E = e < 0.8 ? m : Math.PI;
   for (let i = 0; i < 32; i++) {
-    const f = E - e * Math.sin(E) - M;
+    const f = E - e * Math.sin(E) - m;
     const fp = 1 - e * Math.cos(E);
     const d = f / fp;
     E -= d;
@@ -88,6 +94,73 @@ function positionAtMa(el, maDeg) {
 
 function hypot3(x, y, z) {
   return Math.hypot(x, y, z);
+}
+
+function positionAtTrueAnomaly(el, nuDeg) {
+  const nu = nuDeg * DEG;
+  const r = (el.aAu * (1 - el.e * el.e)) / (1 + el.e * Math.cos(nu));
+  const xOrb = r * Math.cos(nu);
+  const yOrb = r * Math.sin(nu);
+  const i = el.iDeg * DEG;
+  const om = el.omDeg * DEG;
+  const w = el.wDeg * DEG;
+  const cosOm = Math.cos(om);
+  const sinOm = Math.sin(om);
+  const cosW = Math.cos(w);
+  const sinW = Math.sin(w);
+  const cosI = Math.cos(i);
+  const sinI = Math.sin(i);
+  const x =
+    (cosOm * cosW - sinOm * sinW * cosI) * xOrb +
+    (-cosOm * sinW - sinOm * cosW * cosI) * yOrb;
+  const y =
+    (sinOm * cosW + cosOm * sinW * cosI) * xOrb +
+    (-sinOm * sinW + cosOm * cosW * cosI) * yOrb;
+  const z = sinW * sinI * xOrb + cosW * sinI * yOrb;
+  return [x, y, z];
+}
+
+function sampleOrbitTrueAnomaly(el, n) {
+  const pts = [];
+  for (let i = 0; i <= n; i++) {
+    pts.push(positionAtTrueAnomaly(el, (360 * i) / n));
+  }
+  return pts;
+}
+
+/** Distance from point p to segment ab. */
+function distPointToSeg(p, a, b) {
+  const abx = b[0] - a[0];
+  const aby = b[1] - a[1];
+  const abz = b[2] - a[2];
+  const apx = p[0] - a[0];
+  const apy = p[1] - a[1];
+  const apz = p[2] - a[2];
+  const ab2 = abx * abx + aby * aby + abz * abz;
+  let t = ab2 > 0 ? (apx * abx + apy * aby + apz * abz) / ab2 : 0;
+  if (t < 0) t = 0;
+  else if (t > 1) t = 1;
+  return hypot3(a[0] + abx * t - p[0], a[1] + aby * t - p[1], a[2] + abz * t - p[2]);
+}
+
+/** Min distance from live MA pose to the drawn true-anomaly polyline. */
+function distBodyToOrbitLine(el, maDeg, n) {
+  const live = positionAtMa(el, maDeg);
+  const pts = sampleOrbitTrueAnomaly(el, n);
+  let minD = Infinity;
+  for (let i = 0; i < pts.length - 1; i++) {
+    const d = distPointToSeg(live, pts[i], pts[i + 1]);
+    if (d < minD) minD = d;
+  }
+  return minD;
+}
+
+/** Match src/viz/sizeTiers.ts parentFrameDisplayScale (viz-only). */
+function parentFrameDisplayScale(childOrbitQAu, parentVis, childVis, marginCap) {
+  const margin = Math.min(marginCap, Math.max(parentVis * 0.35, childVis));
+  const need = Math.max(parentVis + childVis + margin, parentVis * 1.85 + childVis);
+  if (!(childOrbitQAu > 0) || !Number.isFinite(childOrbitQAu)) return 1;
+  return childOrbitQAu >= need ? 1 : need / childOrbitQAu;
 }
 
 function loadJsonDir(dir) {
@@ -212,6 +285,8 @@ if (central.orbit) {
 }
 
 const orbiters = bodies.filter((b) => b.id !== central.id);
+/** Max allowed distance from epoch MA pose to OrbitLine polyline (au). */
+const BODY_ON_LINE_TOL_AU = 0.02;
 
 for (const b of orbiters) {
   if (!hasUsableOrbit(b)) {
@@ -221,47 +296,126 @@ for (const b of orbiters) {
   const o = b.orbit;
   const q = periapsisAu(o);
   const bodyVis = visualRadius(b, tiers);
-  const need = sunVisual + bodyVis + tiers.PERIHELION_CLEARANCE_MARGIN_AU;
+  const parentFrame = o.frame === "parent";
 
-  if (!(q > need + EPS_AU)) {
-    fail(
-      `${b.id}: schematic clearance q=${q} ≯ sunVis(${sunVisual})+bodyVis(${bodyVis})+margin(${tiers.PERIHELION_CLEARANCE_MARGIN_AU})=${need}`,
-    );
-  } else {
-    ok(`${b.id}: viz clearance q=${q.toPrecision(6)} > ${need.toPrecision(6)}`);
-  }
-
-  let minR = Infinity;
-  for (let i = 0; i <= SAMPLE_N; i++) {
-    const ma = (360 * i) / SAMPLE_N;
-    const [x, y, z] = positionAtMa(o, ma);
-    const r = hypot3(x, y, z);
-    if (r < minR) minR = r;
-  }
-  if (!(minR > realSunRadiusAu + EPS_AU)) {
-    fail(
-      `${b.id}: sampled min |r|=${minR} does not clear real sun radius ${realSunRadiusAu}`,
-    );
-  } else {
-    ok(`${b.id}: sampled min|r|=${minR.toPrecision(6)} > realSun ${realSunRadiusAu.toPrecision(6)}`);
-  }
-
-  if (Math.abs(minR - q) > 1e-3) {
-    fail(`${b.id}: sampled min|r|=${minR} far from q=${q}`);
-  }
-
-  if (o.periodD != null && Number.isFinite(o.periodD)) {
-    const pred = meanPeriodDays(o.aAu);
-    const rel = Math.abs(o.periodD - pred) / pred;
-    if (rel > PERIOD_REL_TOL) {
+  if (parentFrame) {
+    if (!b.parentId) {
+      fail(`${b.id}: parent-frame orbit missing parentId`);
+      continue;
+    }
+    const parent = bodyById.get(b.parentId);
+    if (!parent) {
+      fail(`${b.id}: parentId ${b.parentId} not found`);
+      continue;
+    }
+    const parentRkm = parent.facts?.radiusMeanKm;
+    if (!(parentRkm > 0)) {
+      fail(`${b.id}: parent ${parent.id} missing facts.radiusMeanKm`);
+      continue;
+    }
+    const parentRealAu = parentRkm / AU_KM;
+    if (!(q > parentRealAu + EPS_AU)) {
       fail(
-        `${b.id}: periodD=${o.periodD} vs ${GAUSS_YEAR_D}*a^1.5=${pred} rel=${rel} > ${PERIOD_REL_TOL}`,
+        `${b.id}: parent-frame q=${q} ≯ parent ${parent.id} real radius ${parentRealAu}`,
       );
     } else {
-      ok(`${b.id}: periodD vs Kepler-3 rel=${rel.toExponential(2)}`);
+      ok(
+        `${b.id}: parent-frame physical q=${q.toPrecision(6)} > ${parent.id} ${parentRealAu.toPrecision(6)}`,
+      );
+    }
+
+    const parentVis = visualRadius(parent, tiers);
+    const scale = parentFrameDisplayScale(
+      q,
+      parentVis,
+      bodyVis,
+      tiers.PERIHELION_CLEARANCE_MARGIN_AU,
+    );
+    const qVis = q * scale;
+    const need = parentVis + bodyVis + Math.min(
+      tiers.PERIHELION_CLEARANCE_MARGIN_AU,
+      Math.max(parentVis * 0.35, bodyVis),
+    );
+    if (!(qVis > need - 1e-9)) {
+      fail(
+        `${b.id}: parent-frame viz q*scale=${qVis} ≯ parentVis+childVis+margin=${need} (scale=${scale})`,
+      );
+    } else {
+      ok(
+        `${b.id}: parent-frame viz q*scale=${qVis.toPrecision(6)} > ${need.toPrecision(6)} (scale=${scale.toPrecision(4)})`,
+      );
+    }
+
+    // Relative ellipse samples clear origin (parent) by q — true-anomaly sweep.
+    let minR = Infinity;
+    for (let i = 0; i <= SAMPLE_N; i++) {
+      const [x, y, z] = positionAtTrueAnomaly(o, (360 * i) / SAMPLE_N);
+      const r = hypot3(x, y, z);
+      if (r < minR) minR = r;
+    }
+    if (Math.abs(minR - q) > 1e-3) {
+      fail(`${b.id}: parent-frame sampled min|r|=${minR} far from q=${q}`);
+    } else {
+      ok(`${b.id}: parent-frame sampled min|r|=${minR.toPrecision(6)} ≈ q`);
+    }
+
+    if (!(o.periodD != null && Number.isFinite(o.periodD) && o.periodD > 0)) {
+      fail(`${b.id}: periodD missing (parent-frame; skip heliocentric Kepler-3)`);
+    } else {
+      ok(`${b.id}: parent-frame periodD=${o.periodD} (no sun Kepler-3)`);
     }
   } else {
-    fail(`${b.id}: periodD missing`);
+    const need = sunVisual + bodyVis + tiers.PERIHELION_CLEARANCE_MARGIN_AU;
+
+    if (!(q > need + EPS_AU)) {
+      fail(
+        `${b.id}: schematic clearance q=${q} ≯ sunVis(${sunVisual})+bodyVis(${bodyVis})+margin(${tiers.PERIHELION_CLEARANCE_MARGIN_AU})=${need}`,
+      );
+    } else {
+      ok(`${b.id}: viz clearance q=${q.toPrecision(6)} > ${need.toPrecision(6)}`);
+    }
+
+    let minR = Infinity;
+    for (let i = 0; i <= SAMPLE_N; i++) {
+      const [x, y, z] = positionAtTrueAnomaly(o, (360 * i) / SAMPLE_N);
+      const r = hypot3(x, y, z);
+      if (r < minR) minR = r;
+    }
+    if (!(minR > realSunRadiusAu + EPS_AU)) {
+      fail(
+        `${b.id}: sampled min |r|=${minR} does not clear real sun radius ${realSunRadiusAu}`,
+      );
+    } else {
+      ok(`${b.id}: sampled min|r|=${minR.toPrecision(6)} > realSun ${realSunRadiusAu.toPrecision(6)}`);
+    }
+
+    if (Math.abs(minR - q) > 1e-3) {
+      fail(`${b.id}: sampled min|r|=${minR} far from q=${q}`);
+    }
+
+    if (o.periodD != null && Number.isFinite(o.periodD)) {
+      const pred = meanPeriodDays(o.aAu);
+      const rel = Math.abs(o.periodD - pred) / pred;
+      if (rel > PERIOD_REL_TOL) {
+        fail(
+          `${b.id}: periodD=${o.periodD} vs ${GAUSS_YEAR_D}*a^1.5=${pred} rel=${rel} > ${PERIOD_REL_TOL}`,
+        );
+      } else {
+        ok(`${b.id}: periodD vs Kepler-3 rel=${rel.toExponential(2)}`);
+      }
+    } else {
+      fail(`${b.id}: periodD missing`);
+    }
+  }
+
+  // Mesh must sit on the OrbitLine polyline (same elements / MA / scale).
+  const off = distBodyToOrbitLine(o, o.maDeg, SAMPLE_N);
+  if (!(off <= BODY_ON_LINE_TOL_AU)) {
+    fail(
+      `${b.id}: epoch pose is ${off} au off OrbitLine polyline (tol ${BODY_ON_LINE_TOL_AU})`,
+    );
+  } else {
+    ok(`${b.id}: body-on-line dist=${off.toExponential(2)} au`);
   }
 }
 
