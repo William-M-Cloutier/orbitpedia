@@ -51,7 +51,7 @@ const FactsSchema = z.object({
   radiusMeanKm: z.number().positive().optional(),
   densityGcm3: z.number().positive().optional(),
   rotationPeriodD: z.number().optional(),
-  albedo: z.number().min(0).max(1).optional(),
+  albedo: z.number().min(0).max(2).optional(), // geometric albedo can exceed 1 (e.g. Enceladus)
   discoveryNotes: z.string().optional(),
   discoveryDate: z.string().optional(),
 });

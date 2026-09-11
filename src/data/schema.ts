@@ -42,7 +42,7 @@ export const FactsSchema = z.object({
   radiusMeanKm: z.number().positive().optional(),
   densityGcm3: z.number().positive().optional(),
   rotationPeriodD: z.number().optional(),
-  albedo: z.number().min(0).max(1).optional(),
+  albedo: z.number().nonnegative().max(2).optional(),
   discoveryNotes: z.string().optional(),
   /** ISO date (YYYY-MM-DD) or year (YYYY) when known; omit for antiquity / N/A. */
   discoveryDate: z.string().optional(),

@@ -15,11 +15,30 @@ import venus from "./bodies/venus.json";
 import earth from "./bodies/earth.json";
 import moon from "./bodies/moon.json";
 import mars from "./bodies/mars.json";
+import phobos from "./bodies/phobos.json";
+import deimos from "./bodies/deimos.json";
 import jupiter from "./bodies/jupiter.json";
+import io from "./bodies/io.json";
+import europa from "./bodies/europa.json";
+import ganymede from "./bodies/ganymede.json";
+import callisto from "./bodies/callisto.json";
 import saturn from "./bodies/saturn.json";
+import enceladus from "./bodies/enceladus.json";
+import tethys from "./bodies/tethys.json";
+import dione from "./bodies/dione.json";
+import rhea from "./bodies/rhea.json";
+import titan from "./bodies/titan.json";
+import iapetus from "./bodies/iapetus.json";
 import uranus from "./bodies/uranus.json";
+import ariel from "./bodies/ariel.json";
+import umbriel from "./bodies/umbriel.json";
+import titania from "./bodies/titania.json";
+import oberon from "./bodies/oberon.json";
+import miranda from "./bodies/miranda.json";
 import neptune from "./bodies/neptune.json";
+import triton from "./bodies/triton.json";
 import pluto from "./bodies/pluto.json";
+import charon from "./bodies/charon.json";
 import ceres from "./bodies/ceres.json";
 import vesta from "./bodies/vesta.json";
 import pallas from "./bodies/pallas.json";
@@ -39,11 +58,30 @@ const raw = {
     earth,
     moon,
     mars,
+    phobos,
+    deimos,
     jupiter,
+    io,
+    europa,
+    ganymede,
+    callisto,
     saturn,
+    enceladus,
+    tethys,
+    dione,
+    rhea,
+    titan,
+    iapetus,
     uranus,
+    ariel,
+    umbriel,
+    titania,
+    oberon,
+    miranda,
     neptune,
+    triton,
     pluto,
+    charon,
     ceres,
     vesta,
     pallas,
