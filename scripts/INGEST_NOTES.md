@@ -75,3 +75,21 @@ node validate.mjs
 ```
 
 No NASA API keys required.
+## Catalog validation (sanity)
+
+From repo root (needs `zod` from package dependencies):
+
+```bash
+npm run validate:catalog
+# or
+node scripts/validate-catalog.mjs
+```
+
+Options:
+
+- `--catalog <path>` — default `src/data/catalog/bodies.json`
+- `--central-body <id>` — default first `kind=star` (else `sun`)
+- `--central-radius-au <n>` — override central radius for non-solar / alternate systems
+- `--strict-warnings` — fail on missing weak fields (density, albedo, provenance, ids)
+
+Hard-fail rule: every non-central body with an orbit must have periapsis `qAu` or `aAu*(1-e)` **greater than** the central body's physical radius (au). This catches sun-intersecting (or star-intersecting) elements. Schematic viz radii are out of scope — pass a larger `--central-radius-au` only when intentionally testing clearance against a display scale.

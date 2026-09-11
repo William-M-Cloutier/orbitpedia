@@ -16,6 +16,8 @@ export const OrbitSchema = z.object({
   wDeg: z.number(),
   maDeg: z.number(),
   periodD: z.number().positive().optional(),
+  /** Periapsis distance (au). If omitted, validators use aAu*(1-e). */
+  qAu: z.number().positive().optional(),
 });
 
 export const FactsSchema = z.object({
