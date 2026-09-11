@@ -16,7 +16,7 @@ const OrbitScene = dynamic(
 );
 
 type Props = {
-  focusId?: string;
+  focusId?: string | null;
   onSelect?: (id: string) => void;
 };
 

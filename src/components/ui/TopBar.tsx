@@ -6,9 +6,9 @@ import { useMemo, useState } from "react";
 import { searchBodies } from "@/data/catalog";
 
 const MODES = [
-  { href: "/", label: "Search" },
+  { href: "/", label: "Explore" },
   { href: "/discover", label: "Discover" },
-  { href: "/explore", label: "Explore" },
+  { href: "/search", label: "Search" },
 ] as const;
 
 export function TopBar() {
@@ -30,7 +30,7 @@ export function TopBar() {
           {MODES.map((m) => {
             const active =
               m.href === "/"
-                ? pathname === "/"
+                ? pathname === "/" || pathname.startsWith("/explore")
                 : pathname.startsWith(m.href);
             return (
               <Link

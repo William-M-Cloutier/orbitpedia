@@ -6,16 +6,16 @@ Search, discover, and explore Solar System bodies — facts, orbits, and graphs.
 
 ## Modes
 
-- **Search** (`/`) — typeahead + body index + catalog graphs
+- **Explore** (`/`) — lightweight 3D orbits (React Three Fiber); select a body to highlight, camera-follow, and open the Facts panel. `/explore` redirects here. Sizes are schematic tiers, not true scale
 - **Discover** (`/discover`) — cards and compare up to 4 bodies
-- **Explore** (`/explore`) — lightweight 3D orbits (React Three Fiber); sizes are schematic tiers, not true scale
+- **Search** (`/search`) — body index; top-bar typeahead works from every mode
 - **Body detail** (`/body/[id]`) — overview, key facts, orbit elements, graphs
 
 ## Stack
 
 - Next.js App Router + TypeScript + Tailwind
-- React Three Fiber + drei + three.js (client-only canvas)
-- Recharts
+- React Three Fiber + drei + three.js (client-only canvas, `frameloop="demand"`)
+- Recharts (lazy / off cold Explore path)
 - Zod + versioned JSON seed (`src/data/catalog/`)
 
 SI units internally; display adapters in `src/lib/units.ts`. Orbital math in `src/lib/kepler.ts`.
