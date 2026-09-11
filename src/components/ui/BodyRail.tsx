@@ -93,6 +93,8 @@ export function BodyRail({
   const [open, setOpen] = useState(true);
   /** Parent ids whose children are folded in the All-tab tree (list only). */
   const [collapsed, setCollapsed] = useState<Set<string>>(() => new Set());
+  /** All-tab only: when false, moon rows are omitted from the list (Explore unchanged). */
+  const [showMoonsInAll, setShowMoonsInAll] = useState(true);
 
   const bodies = useMemo(() => {
     const id = systemId ?? getHomeSystem().id;
@@ -106,8 +108,11 @@ export function BodyRail({
     if (filter !== "all") {
       return filtered.map((body) => ({ body, depth: 0, childCount: 0 }));
     }
-    return buildRailTree(bodies, collapsed);
-  }, [bodies, filter, collapsed]);
+    const treeBodies = showMoonsInAll
+      ? bodies
+      : bodies.filter((b) => b.kind !== "moon");
+    return buildRailTree(treeBodies, collapsed);
+  }, [bodies, filter, collapsed, showMoonsInAll]);
 
   const toggleCollapsed = useCallback((id: string) => {
     setCollapsed((prev) => {
@@ -177,6 +182,25 @@ export function BodyRail({
             </button>
           ))}
         </div>
+        {filter === "all" ? (
+          <button
+            type="button"
+            onClick={() => setShowMoonsInAll((v) => !v)}
+            className={`mt-2 w-full rounded px-2 py-1 text-[11px] ${
+              showMoonsInAll
+                ? "bg-white/5 text-zinc-400 hover:text-zinc-200"
+                : "bg-sky-500/15 text-sky-200"
+            }`}
+            aria-pressed={!showMoonsInAll}
+            title={
+              showMoonsInAll
+                ? "Hide moons from this list only"
+                : "Show moons in this list"
+            }
+          >
+            {showMoonsInAll ? "Hide moons in list" : "Show moons in list"}
+          </button>
+        ) : null}
       </div>
       <ul className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-2">
         {rows.map(({ body: b, depth, childCount }) => {
