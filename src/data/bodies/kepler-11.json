@@ -10,7 +10,9 @@
   "facts": {
     "massKg": 1.91091967e+30,
     "radiusMeanKm": 740920.5,
-    "discoveryNotes": "Sun-like host of six tightly packed transiting planets — the whole known system fits well inside Mercury’s orbit; open from the Systems map to explore the flat, compact layout."
+    "discoveryNotes": "Sun-like host of six tightly packed transiting planets — the whole known system fits well inside Mercury’s orbit; open from the Systems map to explore the flat, compact layout.",
+    "discoveryDate": "2011-02-02",
+    "densityGcm3": 1.122
   },
   "color": "#F5D76E",
   "meta": {
@@ -22,7 +24,9 @@
         "fields": [
           "facts.massKg",
           "facts.radiusMeanKm",
-          "facts.discoveryNotes"
+          "facts.discoveryNotes",
+          "facts.discoveryDate",
+          "facts.densityGcm3"
         ]
       },
       {
@@ -34,7 +38,7 @@
         ]
       }
     ],
-    "fetchedAt": "2026-09-11T18:59:48.654Z",
+    "fetchedAt": "2026-09-11T19:12:40.496Z",
     "confidence": "known",
     "unitsVersion": 1
   }

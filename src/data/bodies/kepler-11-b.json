@@ -7,7 +7,8 @@
     "massKg": 1.660216e+25,
     "radiusMeanKm": 11658.93,
     "discoveryNotes": "Innermost; low-density mini-Neptune class",
-    "discoveryDate": "2011-02-02"
+    "discoveryDate": "2011-02-02",
+    "densityGcm3": 1.72
   },
   "color": "#C4A574",
   "meta": {
@@ -22,7 +23,9 @@
           "orbit.aAu",
           "orbit.e",
           "orbit.iDeg",
-          "orbit.periodD"
+          "orbit.periodD",
+          "facts.densityGcm3",
+          "facts.discoveryDate"
         ]
       },
       {
@@ -34,11 +37,13 @@
           "orbit.aAu",
           "orbit.e",
           "orbit.iDeg",
-          "orbit.periodD"
+          "orbit.periodD",
+          "facts.densityGcm3",
+          "facts.discoveryDate"
         ]
       }
     ],
-    "fetchedAt": "2026-09-11T18:59:48.654Z",
+    "fetchedAt": "2026-09-11T19:12:40.496Z",
     "confidence": "known",
     "unitsVersion": 1
   },

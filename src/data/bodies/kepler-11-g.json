@@ -20,7 +20,8 @@
           "orbit.aAu",
           "orbit.e",
           "orbit.iDeg",
-          "orbit.periodD"
+          "orbit.periodD",
+          "facts.discoveryDate"
         ]
       },
       {
@@ -35,7 +36,7 @@
         ]
       }
     ],
-    "fetchedAt": "2026-09-11T18:59:48.654Z",
+    "fetchedAt": "2026-09-11T19:12:40.496Z",
     "confidence": "assumed",
     "unitsVersion": 1
   },

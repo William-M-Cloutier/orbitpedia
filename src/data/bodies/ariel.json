@@ -13,7 +13,8 @@
     "densityGcm3": 1.54,
     "albedo": 0.34,
     "rotationPeriodD": 2.520725632150754,
-    "discoveryNotes": "Discovered by William Lassell (1851)"
+    "discoveryNotes": "Discovered by William Lassell (1851)",
+    "discoveryDate": "1851"
   },
   "orbit": {
     "frame": "parent",
@@ -59,9 +60,16 @@
           "facts.albedo",
           "facts.rotationPeriodD"
         ]
+      },
+      {
+        "name": "NASA SSE — Ariel",
+        "url": "https://science.nasa.gov/uranus/moons/ariel/",
+        "fields": [
+          "facts.discoveryDate"
+        ]
       }
     ],
-    "fetchedAt": "2026-09-11T17:19:56.708Z",
+    "fetchedAt": "2026-09-11T19:12:40.496Z",
     "confidence": "known",
     "unitsVersion": 1
   }

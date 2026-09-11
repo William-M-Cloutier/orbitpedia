@@ -13,7 +13,8 @@
     "densityGcm3": 0.956,
     "albedo": 0.8,
     "rotationPeriodD": 1.89172053804673,
-    "discoveryNotes": "Discovered by Giovanni Cassini (1684)"
+    "discoveryNotes": "Discovered by Giovanni Cassini (1684)",
+    "discoveryDate": "1684"
   },
   "orbit": {
     "frame": "parent",
@@ -59,9 +60,16 @@
           "facts.albedo",
           "facts.rotationPeriodD"
         ]
+      },
+      {
+        "name": "NASA SSE — Tethys",
+        "url": "https://science.nasa.gov/saturn/moons/tethys/",
+        "fields": [
+          "facts.discoveryDate"
+        ]
       }
     ],
-    "fetchedAt": "2026-09-11T17:19:56.708Z",
+    "fetchedAt": "2026-09-11T19:12:40.496Z",
     "confidence": "known",
     "unitsVersion": 1
   }

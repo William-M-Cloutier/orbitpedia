@@ -13,7 +13,8 @@
     "densityGcm3": 1.18,
     "albedo": 0.27,
     "rotationPeriodD": 1.414004013381316,
-    "discoveryNotes": "Discovered by Gerard Kuiper (1948)"
+    "discoveryNotes": "Discovered by Gerard Kuiper (1948)",
+    "discoveryDate": "1948"
   },
   "orbit": {
     "frame": "parent",
@@ -59,9 +60,16 @@
           "facts.albedo",
           "facts.rotationPeriodD"
         ]
+      },
+      {
+        "name": "NASA SSE — Miranda",
+        "url": "https://science.nasa.gov/uranus/moons/miranda/",
+        "fields": [
+          "facts.discoveryDate"
+        ]
       }
     ],
-    "fetchedAt": "2026-09-11T17:19:56.708Z",
+    "fetchedAt": "2026-09-11T19:12:40.496Z",
     "confidence": "known",
     "unitsVersion": 1
   }

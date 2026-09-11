@@ -7,14 +7,15 @@
     "massKg": 7.889236569999999e+24,
     "radiusMeanKm": 7192.868483599999,
     "discoveryNotes": "Near outer HZ; largest radius among the seven",
-    "discoveryDate": "2017"
+    "discoveryDate": "2017",
+    "densityGcm3": 5.055986
   },
   "color": "#4A6FA5",
   "meta": {
     "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host TRAPPIST-1 (not Solar-System barycenter). omDeg=0 and maDeg=0 assumed (absolute node/mean anomaly not published in composite; epochJd=transit mid-time). wDeg from pl_orblper.",
     "sources": [
       {
-        "name": "NASA Exoplanet Archive \u2014 TRAPPIST-1 overview",
+        "name": "NASA Exoplanet Archive — TRAPPIST-1 overview",
         "url": "https://exoplanetarchive.ipac.caltech.edu/overview/TRAPPIST-1",
         "fields": [
           "facts.massKg",
@@ -24,7 +25,9 @@
           "orbit.iDeg",
           "orbit.periodD",
           "orbit.epochJd",
-          "orbit.wDeg"
+          "orbit.wDeg",
+          "facts.densityGcm3",
+          "facts.discoveryDate"
         ]
       },
       {
@@ -38,11 +41,13 @@
           "orbit.iDeg",
           "orbit.periodD",
           "orbit.epochJd",
-          "orbit.wDeg"
+          "orbit.wDeg",
+          "facts.densityGcm3",
+          "facts.discoveryDate"
         ]
       }
     ],
-    "fetchedAt": "2026-09-11T17:51:20.163Z",
+    "fetchedAt": "2026-09-11T19:12:40.496Z",
     "confidence": "assumed",
     "unitsVersion": 1
   },

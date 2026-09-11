@@ -12,7 +12,8 @@
     "massKg": 1.3455299999999999e+23,
     "densityGcm3": 1.88,
     "albedo": 0.2,
-    "discoveryNotes": "Discovered by Christiaan Huygens (1655)"
+    "discoveryNotes": "Discovered by Christiaan Huygens (1655)",
+    "discoveryDate": "1655"
   },
   "orbit": {
     "frame": "parent",
@@ -57,9 +58,16 @@
           "facts.densityGcm3",
           "facts.albedo"
         ]
+      },
+      {
+        "name": "NASA SSE — Titan",
+        "url": "https://science.nasa.gov/saturn/moons/titan/",
+        "fields": [
+          "facts.discoveryDate"
+        ]
       }
     ],
-    "fetchedAt": "2026-09-11T17:19:56.708Z",
+    "fetchedAt": "2026-09-11T19:12:40.496Z",
     "confidence": "known",
     "unitsVersion": 1
   }

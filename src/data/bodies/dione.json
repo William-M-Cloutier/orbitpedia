@@ -13,7 +13,8 @@
     "densityGcm3": 1.469,
     "albedo": 0.6,
     "rotationPeriodD": 2.740345816432255,
-    "discoveryNotes": "Discovered by Giovanni Cassini (1684)"
+    "discoveryNotes": "Discovered by Giovanni Cassini (1684)",
+    "discoveryDate": "1684"
   },
   "orbit": {
     "frame": "parent",
@@ -59,9 +60,16 @@
           "facts.albedo",
           "facts.rotationPeriodD"
         ]
+      },
+      {
+        "name": "NASA SSE — Dione",
+        "url": "https://science.nasa.gov/saturn/moons/dione/",
+        "fields": [
+          "facts.discoveryDate"
+        ]
       }
     ],
-    "fetchedAt": "2026-09-11T17:19:56.708Z",
+    "fetchedAt": "2026-09-11T19:12:40.496Z",
     "confidence": "known",
     "unitsVersion": 1
   }

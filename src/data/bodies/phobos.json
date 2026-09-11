@@ -13,7 +13,8 @@
     "densityGcm3": 1.9,
     "albedo": 0.06,
     "rotationPeriodD": 0.3191597103826502,
-    "discoveryNotes": "Discovered by Asaph Hall (1877)"
+    "discoveryNotes": "Discovered by Asaph Hall (1877)",
+    "discoveryDate": "1877"
   },
   "orbit": {
     "frame": "parent",
@@ -59,9 +60,16 @@
           "facts.albedo",
           "facts.rotationPeriodD"
         ]
+      },
+      {
+        "name": "NASA SSE — Phobos",
+        "url": "https://science.nasa.gov/mars/moons/phobos/",
+        "fields": [
+          "facts.discoveryDate"
+        ]
       }
     ],
-    "fetchedAt": "2026-09-11T17:19:56.708Z",
+    "fetchedAt": "2026-09-11T19:12:40.496Z",
     "confidence": "known",
     "unitsVersion": 1
   }

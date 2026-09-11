@@ -13,7 +13,8 @@
     "densityGcm3": 1.088,
     "albedo": 0.6,
     "rotationPeriodD": 79.39837044190301,
-    "discoveryNotes": "Discovered by Giovanni Cassini (1671)"
+    "discoveryNotes": "Discovered by Giovanni Cassini (1671)",
+    "discoveryDate": "1671"
   },
   "orbit": {
     "frame": "parent",
@@ -59,9 +60,16 @@
           "facts.albedo",
           "facts.rotationPeriodD"
         ]
+      },
+      {
+        "name": "NASA SSE — Iapetus",
+        "url": "https://science.nasa.gov/saturn/moons/iapetus/",
+        "fields": [
+          "facts.discoveryDate"
+        ]
       }
     ],
-    "fetchedAt": "2026-09-11T17:19:56.708Z",
+    "fetchedAt": "2026-09-11T19:12:40.496Z",
     "confidence": "known",
     "unitsVersion": 1
   }

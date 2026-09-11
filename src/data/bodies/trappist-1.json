@@ -10,7 +10,10 @@
   "facts": {
     "massKg": 1.78559218e+29,
     "radiusMeanKm": 82927.44,
-    "discoveryNotes": "Ultra-cool M-dwarf host of seven Earth-size planets — all orbit closer than Mercury does to the Sun; open this system from the Systems map to explore the packed layout."
+    "discoveryNotes": "Ultra-cool M-dwarf host of seven Earth-size planets — all orbit closer than Mercury does to the Sun; open this system from the Systems map to explore the packed layout.",
+    "discoveryDate": "2016",
+    "densityGcm3": 75.05,
+    "rotationPeriodD": 1.4
   },
   "color": "#E84A3C",
   "meta": {
@@ -22,7 +25,10 @@
         "fields": [
           "facts.massKg",
           "facts.radiusMeanKm",
-          "facts.discoveryNotes"
+          "facts.discoveryNotes",
+          "facts.discoveryDate",
+          "facts.densityGcm3",
+          "facts.rotationPeriodD"
         ]
       },
       {
@@ -34,7 +40,7 @@
         ]
       }
     ],
-    "fetchedAt": "2026-09-11T17:51:20.163Z",
+    "fetchedAt": "2026-09-11T19:12:40.496Z",
     "confidence": "known",
     "unitsVersion": 1
   }
