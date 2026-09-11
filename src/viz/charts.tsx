@@ -850,19 +850,59 @@ function HowFarOutMulti({
   const trackX0 = padL + 18;
   const trackX1 = W - padR;
   const trackW = trackX1 - trackX0;
-  const axisY = 28;
   const n = rows.length;
-  // Two label rows when ≥3 moons (Jupiter 4, Saturn, …) to avoid overlap.
-  const stagger = n >= 3;
-  const labelBase = axisY + 18;
-  const labelRowH = 28;
-  const H = stagger ? labelBase + labelRowH * 2 + 4 : labelBase + labelRowH + 2;
+  const fontSize = n >= 5 ? 9 : 10;
 
   const xs = values.map((v) => {
     const t = maxVal > 0 ? v / maxVal : 0;
     // Parent disc sits left of trackX0; moons span the track by a/max(a).
     return trackX0 + Math.min(1, Math.max(0, t)) * trackW;
   });
+
+  // Collision-aware sides: prefer below; when x-close, alternate above/below
+  // and fan to extra tiers so Saturn’s tight inner moons stay readable.
+  const labelHalfW = (name: string) => {
+    const short = name.length > 9 ? `${name.slice(0, 8)}…` : name;
+    return Math.max(16, short.length * fontSize * 0.33 + 6);
+  };
+  type Slot = { side: 1 | -1; tier: number };
+  const slots: Slot[] = [];
+  for (let i = 0; i < n; i++) {
+    const occupied = new Set<string>();
+    for (let j = 0; j < i; j++) {
+      if (Math.abs(xs[i] - xs[j]) < labelHalfW(rows[i].name) + labelHalfW(rows[j].name)) {
+        occupied.add(`${slots[j].side}:${slots[j].tier}`);
+      }
+    }
+    let chosen: Slot | null = null;
+    for (let tier = 0; tier < n && !chosen; tier++) {
+      // side +1 = below (prefer), -1 = above
+      for (const side of [1, -1] as const) {
+        if (!occupied.has(`${side}:${tier}`)) {
+          chosen = { side, tier };
+          break;
+        }
+      }
+    }
+    slots.push(chosen ?? { side: 1, tier: i });
+  }
+  const maxAbove = slots.reduce(
+    (m, s) => (s.side === -1 ? Math.max(m, s.tier) : m),
+    -1,
+  );
+  const maxBelow = slots.reduce(
+    (m, s) => (s.side === 1 ? Math.max(m, s.tier) : m),
+    -1,
+  );
+  // Tight marker→label gap; pairH covers name + distance stack.
+  const labelGap = 12;
+  const pairH = 22;
+  const topRoom =
+    maxAbove >= 0 ? labelGap + (maxAbove + 1) * pairH + 2 : 16;
+  const axisY = Math.max(18, topRoom);
+  const bottomRoom =
+    maxBelow >= 0 ? labelGap + (maxBelow + 1) * pairH + 2 : 10;
+  const H = axisY + bottomRoom;
 
   return (
     <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3">
@@ -898,9 +938,10 @@ function HowFarOutMulti({
         {rows.map((r, i) => {
           const x = xs[i];
           const val = values[i];
-          const row = stagger && i % 2 === 1 ? 1 : 0;
-          const ly = labelBase + row * labelRowH;
-          const tickH = stagger ? 8 + row * 6 : 8;
+          const { side, tier } = slots[i];
+          const nameY = axisY + side * (labelGap + tier * pairH);
+          const distY = nameY + side * 11;
+          const tickEnd = axisY + side * Math.max(6, labelGap + tier * pairH - 4);
           const shortName =
             r.name.length > 9 ? `${r.name.slice(0, 8)}…` : r.name;
           return (
@@ -909,7 +950,7 @@ function HowFarOutMulti({
                 x1={x}
                 y1={axisY}
                 x2={x}
-                y2={axisY + tickH}
+                y2={tickEnd}
                 stroke="rgba(255,255,255,0.35)"
                 strokeWidth={1.5}
               />
@@ -926,17 +967,19 @@ function HowFarOutMulti({
               <a href={`/body/${r.id}`}>
                 <text
                   x={x}
-                  y={ly}
+                  y={nameY}
                   textAnchor="middle"
+                  dominantBaseline={side === 1 ? "hanging" : "auto"}
                   fill="#d4d4d8"
-                  style={{ fontSize: n >= 5 ? 9 : 10 }}
+                  style={{ fontSize }}
                 >
                   {shortName}
                 </text>
                 <text
                   x={x}
-                  y={ly + 12}
+                  y={distY}
                   textAnchor="middle"
+                  dominantBaseline={side === 1 ? "hanging" : "auto"}
                   fill="#71717a"
                   style={{ fontSize: 9, fontVariantNumeric: "tabular-nums" }}
                 >
