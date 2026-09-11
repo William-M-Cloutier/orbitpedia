@@ -893,10 +893,11 @@ function WasdFly() {
     if (move.current.lengthSq() < 1e-12) return;
     move.current.normalize();
 
-    let speed = 2.5;
+    // Base fly is intentionally gentle; Shift still boosts for long hops.
+    let speed = 1.1;
     if (controls?.target) {
       const dist = camera.position.distanceTo(controls.target);
-      speed = Math.max(0.35, Math.min(14, dist * 0.9));
+      speed = Math.max(0.18, Math.min(6, dist * 0.4));
     }
     if (shift) speed *= 2.75;
     move.current.multiplyScalar(speed * Math.min(delta, 0.1));
