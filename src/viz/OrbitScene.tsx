@@ -7,6 +7,7 @@ import {
   useCallback,
   memo,
   useEffect,
+  useLayoutEffect,
   useRef,
   createContext,
   useContext,
@@ -242,24 +243,31 @@ const BodyMesh = memo(function BodyMesh({
 
   const spinMesh = useRef<THREE.Mesh>(null);
 
-  // Shared sim clock drives orbital MA whenever Explore is animating (idle or follow).
-  useFrame(() => {
+  const applyPose = (days: number) => {
     if (!group.current) return;
-    const days = getSimDays();
     const [x, y, z] = bodyPosition(body, days);
     group.current.position.set(x, y, z);
-
-    // Axial spin from facts.rotationPeriodD (negative = retrograde). At least Earth.
     const period = body.facts.rotationPeriodD;
     if (spinMesh.current && period != null && period !== 0) {
       spinMesh.current.rotation.y = (days / period) * Math.PI * 2;
     }
+  };
+
+  // Epoch pose before first painted frame (demand mode may not have run useFrame yet).
+  useLayoutEffect(() => {
+    applyPose(getSimDays());
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- mount / body identity only
+  }, [body]);
+
+  // Shared sim clock drives orbital MA whenever Explore is animating (idle or follow).
+  useFrame(() => {
+    applyPose(getSimDays());
   });
 
   if (body.kind === "star") {
     const sunRing = highlightColor ?? "#FDB813";
     return (
-      <group ref={group}>
+      <group ref={group} name={body.id}>
         {/* Viz-only barycentric wobble drives this group via useFrame; no OrbitLine. */}
         <pointLight intensity={2.2} distance={80} />
         <mesh
@@ -288,7 +296,7 @@ const BodyMesh = memo(function BodyMesh({
   }
 
   return (
-    <group ref={group}>
+    <group ref={group} name={body.id}>
       <mesh
         ref={spinMesh}
         onClick={handleClick}
@@ -430,27 +438,50 @@ function FollowCamera() {
 }
 
 /**
- * Demand frameloop: keep invalidating while the shared sim clock runs
- * (idle, follow, or sun focus — planets always advance when Explore is visible).
- * Skip frames while the tab is hidden; OrbitControls onChange still invalidates
- * during active user interaction.
+ * Demand frameloop driver: advance shared simDays on the same wall rAF that
+ * calls invalidate(). Coupling clock + invalidate in one loop avoids demand-mode
+ * stalls where OrbitControls autoRotate still spins the camera (controls.update
+ * in useFrame) while BodyMesh samples a clock that never moved (R3F delta≈0 or
+ * a ticker that only ran when frames were already flowing for another reason).
+ * Pauses while the tab is hidden.
  */
-function DemandInvalidator({ active }: { active: boolean }) {
+function SimDriver({
+  active,
+  simDaysRef,
+  rateRef,
+}: {
+  active: boolean;
+  simDaysRef: React.MutableRefObject<number>;
+  rateRef: React.MutableRefObject<number>;
+}) {
   const invalidate = useThree((s) => s.invalidate);
   useEffect(() => {
     if (!active) return;
     let id = 0;
     let alive = true;
-    const loop = () => {
+    let lastWall: number | null = null;
+    const loop = (now: number) => {
       if (!alive) return;
-      if (typeof document === "undefined" || !document.hidden) {
+      if (typeof document !== "undefined" && document.hidden) {
+        lastWall = null;
+      } else {
+        if (lastWall != null) {
+          const dt = Math.min((now - lastWall) / 1000, 0.25);
+          simDaysRef.current += dt * rateRef.current;
+        }
+        lastWall = now;
         invalidate();
       }
       id = requestAnimationFrame(loop);
     };
     id = requestAnimationFrame(loop);
     const onVis = () => {
-      if (!document.hidden) invalidate();
+      if (!document.hidden) {
+        lastWall = null; // avoid a huge catch-up step
+        invalidate();
+      } else {
+        lastWall = null;
+      }
     };
     document.addEventListener("visibilitychange", onVis);
     return () => {
@@ -458,7 +489,7 @@ function DemandInvalidator({ active }: { active: boolean }) {
       cancelAnimationFrame(id);
       document.removeEventListener("visibilitychange", onVis);
     };
-  }, [active, invalidate]);
+  }, [active, invalidate, simDaysRef, rateRef]);
   return null;
 }
 
@@ -476,29 +507,6 @@ function BarycentricRoot({ children }: { children: React.ReactNode }) {
     group.current.position.set(x, y, z);
   });
   return <group ref={group}>{children}</group>;
-}
-
-/**
- * Advances shared simDays inside R3F useFrame (priority -2, before BodyMesh).
- * Root cause of idle freeze: the previous clock lived on a detached window rAF
- * while meshes only sampled getSimDays() in useFrame under frameloop="demand".
- * Coupling the clock to rendered frames + always-on DemandInvalidator makes
- * orbiter MA advance whenever Explore is visible, with or without focusId.
- */
-function SimTicker({
-  simDaysRef,
-  rateRef,
-}: {
-  simDaysRef: React.MutableRefObject<number>;
-  rateRef: React.MutableRefObject<number>;
-}) {
-  useFrame((_, delta) => {
-    if (typeof document !== "undefined" && document.hidden) return;
-    // Clamp to avoid huge jumps after tab sleep; DemandInvalidator skips hidden.
-    const dt = Math.min(Math.max(delta, 0), 0.25);
-    simDaysRef.current += dt * rateRef.current;
-  }, -2);
-  return null;
 }
 
 function SimProvider({
@@ -519,8 +527,7 @@ function SimProvider({
   const focusIdRef = useRef(focusId);
   focusIdRef.current = focusId;
 
-  // Stable API object: memoized BodyMesh useFrame always calls fresh getters
-  // (never the createContext default `() => 0`).
+  // Stable API object: memoized BodyMesh useFrame always calls fresh getters.
   const api = useRef<SimApi>({
     getSimDays: () => simDaysRef.current,
     getFollowing: () => followingRef.current,
@@ -529,7 +536,8 @@ function SimProvider({
 
   return (
     <SimContext.Provider value={api}>
-      <SimTicker simDaysRef={simDaysRef} rateRef={rateRef} />
+      {/* Clock + invalidate share one wall rAF — works idle and follow. */}
+      <SimDriver active simDaysRef={simDaysRef} rateRef={rateRef} />
       {children}
     </SimContext.Provider>
   );
@@ -545,10 +553,9 @@ function SceneContent({ focusId, onSelect, highlightColor, simDaysPerSec }: Prop
   // Idle system view: gentle camera yaw via OrbitControls autoRotate.
   // Stops when anything is selected (including sun); planets still advance.
   const idleAmbient = !focusId;
-  const rate = simDaysPerSec ?? DEFAULT_SIM_DAYS_PER_SEC;
-  // Negative = CCW from +Y; magnitude scales with global sim speed.
-  const autoRotateSpeed =
-    IDLE_AUTOROTATE_AT_DEFAULT * (rate / DEFAULT_SIM_DAYS_PER_SEC);
+  // Gentle constant CCW ambient — do NOT scale with sim speed, or Warp whirls
+  // the camera so fast orbital MA looks like a rigid spin / "stuck on ellipses".
+  const autoRotateSpeed = IDLE_AUTOROTATE_AT_DEFAULT;
   const invalidate = useThree((s) => s.invalidate);
 
   return (
@@ -589,8 +596,6 @@ function SceneContent({ focusId, onSelect, highlightColor, simDaysPerSec }: Prop
         onChange={() => invalidate()}
       />
       <FollowCamera />
-      {/* Sim always runs while Explore is visible → keep demand frameloop fed. */}
-      <DemandInvalidator active />
     </SimProvider>
   );
 }
