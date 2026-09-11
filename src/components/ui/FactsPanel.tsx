@@ -71,7 +71,7 @@ export function FactsPanel({ body, onClear }: Props) {
   const discovered = discoveryDisplay(body);
 
   return (
-    <aside className="pointer-events-auto flex max-h-[45vh] w-full flex-col overflow-hidden border-t border-white/10 bg-[#080d18]/95 backdrop-blur md:max-h-none md:h-full md:w-72 md:shrink-0 md:border-l md:border-t-0 lg:w-80">
+    <aside className="pointer-events-auto flex max-h-[45vh] w-full flex-col overflow-hidden border-t border-white/10 bg-[#080d18]/95 backdrop-blur md:max-h-none md:h-full md:w-full md:border-l md:border-t-0">
       <div className="flex items-start justify-between gap-2 border-b border-white/10 px-4 py-3">
         <div className="min-w-0">
           <div className="flex items-center gap-2">

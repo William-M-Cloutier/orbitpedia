@@ -321,18 +321,36 @@ function wrapDeltaAngle(d: number): number {
 }
 
 /**
- * Canned focus distance on acquire.
- * Orbiters: neighborhood scale from a (unchanged — William likes planet framing).
- * Star / central (no orbit): close readable sun — visualRadius×8–12 so the
- * schematic disc fills a similar portion of view as a focused planet, NOT a
- * 3.5 AU overview floor (that still felt far). Mid of band: ×10.
+ * Focused mesh scale (BodyMesh). Framing uses the on-screen sphere, so include
+ * this when computing FOV distance — matches Pluto gold-standard screenshot.
  */
-function focusFrameDistance(body: Body): number {
-  const r = visualRadius(body);
-  if (body.kind === "star" || !body.orbit) {
-    return r * 10;
-  }
-  return Math.max(1.2, body.orbit.aAu * 0.55 + 1.5);
+function focusMeshScale(body: Body): number {
+  return body.kind === "star" ? 1.2 : 1.35;
+}
+
+/**
+ * Viewport height fill fraction for the focused visual sphere.
+ * Pluto gold standard ≈25–30% with margins; 0.25 keeps edges clear.
+ */
+const FOCUS_FILL = 0.25;
+
+/**
+ * FOV-based focus distance for ALL bodies (sun + planets + asteroids).
+ * Same rule: visual sphere fills ~FOCUS_FILL of Explore viewport height.
+ *   distance = visualRadius / sin(fovY_rad / 2) / fill
+ * Replaces aAu-based / hardcoded sun distances.
+ */
+function focusFrameDistance(
+  body: Body,
+  fovYDeg: number,
+  fill: number = FOCUS_FILL,
+): number {
+  const r = visualRadius(body) * focusMeshScale(body);
+  const halfRad = ((fovYDeg * Math.PI) / 180) / 2;
+  const sinHalf = Math.sin(halfRad);
+  if (!(sinHalf > 1e-6) || !(fill > 1e-6)) return 12;
+  // Floor keeps dolly above OrbitControls minDistance / near plane comfort.
+  return Math.max(0.45, r / sinHalf / fill);
 }
 
 /**
@@ -348,8 +366,12 @@ function focusFrameDistance(body: Body): number {
  * - BarycentricRoot freezes its translation while not following an orbiter
  *   (idle / sun focus) so the world does not slide under a world-fixed
  *   camera (apparent pan on clear)
+ * - Hard pose snapshot on focus→null / follow→idle; idle useFrame never
+ *   writes camera/target (kills one-extra-frame lerp)
  * - Starfield yaw is local to the points mesh only (does not move camera)
- * Idle OrbitControls still work — we do not overwrite pose every frame.
+ * - Explore FactsPanel is a canvas overlay (page) so unfocus does not resize
+ *   the WebGL viewport (layout shift looked like a left pan)
+ * Idle OrbitControls still work — we do not overwrite pose every idle frame.
  */
 function FollowCamera() {
   const { getSimDays, getFollowing, getFocusId, getBaryOffset } = useSimApi();
@@ -363,6 +385,11 @@ function FollowCamera() {
   const lastBearing = useRef<number | null>(null);
   /** Edge-detect follow→idle so we hard-freeze pose and kill residual motion. */
   const wasFollowing = useRef(false);
+  /**
+   * Once set (focus cleared / follow stopped), useFrame must not write pose.
+   * Cleared only on focus acquire snap.
+   */
+  const poseFrozen = useRef(false);
 
   /** Snapshot live camera + controls into follow refs without moving either. */
   const freezePoseRefs = () => {
@@ -375,6 +402,10 @@ function FollowCamera() {
       desired.current.copy(target.current);
       offset.current.copy(camera.position).sub(target.current);
     }
+    poseFrozen.current = true;
+    // One update() with damping off clears sphericalDelta / panOffset so the
+    // next drei useFrame controls.update() is a true no-op on the pose.
+    if (controls) controls.update();
   };
 
   // Snap / re-frame only when acquiring a focus. Clearing focus must leave
@@ -391,23 +422,23 @@ function FollowCamera() {
       freezePoseRefs();
       return;
     }
+    poseFrozen.current = false;
     const days = getSimDays();
     const helio = bodyPosition(b, days);
     const pos = bodyWorldPosition(b, days, getBaryOffset());
-    const dist = focusFrameDistance(b);
+    const fovY =
+      camera instanceof THREE.PerspectiveCamera ? camera.fov : 45;
+    const dist = focusFrameDistance(b, fovY);
     target.current.set(pos[0], pos[1], pos[2]);
     desired.current.copy(target.current);
-    camera.position.set(
-      pos[0] + dist * 0.6,
-      dist * 0.45,
-      pos[2] + dist * 0.7,
-    );
+    // Pleasant elevation/azimuth at EXACT framing distance (fill is distance).
+    offset.current.set(0.55, 0.42, 0.72).normalize().multiplyScalar(dist);
+    camera.position.copy(target.current).add(offset.current);
     camera.lookAt(target.current);
     if (controls?.target) {
       controls.target.copy(target.current);
       controls.update();
     }
-    offset.current.copy(camera.position).sub(target.current);
     lastBearing.current = focusIsOrbiter(focusId)
       ? Math.atan2(helio[0], helio[2])
       : null;
@@ -419,8 +450,8 @@ function FollowCamera() {
     const followingNow = getFollowing();
     const focusNow = getFocusId();
 
-    if (!followingNow || !focusNow) {
-      // Stop follow: freeze camera + OrbitControls target; no lerp / bearing / retarget.
+    // Hard freeze: after unfocus / follow stop, never touch camera or target.
+    if (poseFrozen.current || !followingNow || !focusNow) {
       if (wasFollowing.current) {
         wasFollowing.current = false;
         freezePoseRefs();
@@ -438,6 +469,7 @@ function FollowCamera() {
     }
 
     wasFollowing.current = true;
+    poseFrozen.current = false;
 
     const days = getSimDays();
     const helio = bodyPosition(b, days);
@@ -465,7 +497,8 @@ function FollowCamera() {
     }
     lastBearing.current = bearing;
 
-    const lerp = 1 - Math.exp(-4 * delta);
+    // Snap target on the final follow frames — no lag left to bleed past unfocus.
+    const lerp = 1 - Math.exp(-8 * delta);
     target.current.lerp(desired.current, lerp);
 
     camera.position.copy(target.current).add(offset.current);
@@ -581,9 +614,17 @@ function BarycentricRoot({
 
   useFrame(() => {
     if (!group.current) return;
+    // Idle / sun focus / unfocus: hold last offset bit-stable. Live wobble under
+    // a world-fixed camera is the classic unfocus "left pan".
     if (!getFollowing()) {
       const [x, y, z] = getBaryOffset();
-      group.current.position.set(x, y, z);
+      if (
+        group.current.position.x !== x ||
+        group.current.position.y !== y ||
+        group.current.position.z !== z
+      ) {
+        group.current.position.set(x, y, z);
+      }
       return;
     }
     applyOffset(sunBarycentricOffset(getSimDays()));

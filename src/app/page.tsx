@@ -92,9 +92,16 @@ function ExploreHome() {
                 onMultipleChange={setSpeedMultiple}
               />
             </div>
+            {/*
+              Overlay Facts on the canvas — do NOT flex-shrink the WebGL viewport
+              when focus clears. Unmounting a side column resized the canvas and
+              looked like a left camera pan even when pose was bit-stable.
+            */}
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex justify-end md:inset-y-0 md:left-auto md:right-0 md:w-72 lg:w-80">
+              <FactsPanel body={focus} onClear={onClear} />
+            </div>
           </div>
         </div>
-        <FactsPanel body={focus} onClear={onClear} />
       </div>
     </AppShell>
   );
