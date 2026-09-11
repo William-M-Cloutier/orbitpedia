@@ -56,13 +56,69 @@ function formatShortNumber(v: number): string {
   return String(Number(v.toPrecision(3)));
 }
 
+/** Axis ticks: prefer readable decimals over sparse auto log picks. */
+function formatAxisTick(v: number): string {
+  if (!Number.isFinite(v)) return String(v);
+  if (v === 0) return "0";
+  const abs = Math.abs(v);
+  if (abs >= 1e4 || abs < 1e-3) {
+    return v
+      .toExponential(0)
+      .replace(/e\+/, "e")
+      .replace(/e(-?)0+(\d)/, "e$1$2");
+  }
+  if (abs >= 100) return String(Math.round(v));
+  // 2 sig for round 1–2–5 mantissas (0.01, 0.02, 0.05, …).
+  return String(Number(v.toPrecision(2)));
+}
+
+/** Nice log ticks on a 1–2–5 (or 1–2–3–5) ladder — avoid Recharts’ 0.04/0.07/0.0225. */
+function niceLogTicks(min: number, max: number, target = 7): number[] {
+  if (!(min > 0 && max > 0) || !(max > min)) return [];
+  const decades = Math.log10(max) - Math.log10(min);
+  // Short spans: add 3 so Y like 0.05…0.5 gets 0.3 too (denser, still round).
+  const mantissas = decades < 1.6 ? [1, 2, 3, 5] : [1, 2, 5];
+  const all: number[] = [];
+  const e0 = Math.floor(Math.log10(min) + 1e-12);
+  const e1 = Math.ceil(Math.log10(max) - 1e-12);
+  for (let e = e0; e <= e1; e++) {
+    for (const m of mantissas) {
+      const v = m * 10 ** e;
+      if (v >= min * 0.999 && v <= max * 1.001) all.push(v);
+    }
+  }
+  if (all.length === 0) return [min, max];
+  if (all.length <= target) return all;
+  // Evenly sample the ladder in index space so wide spans stay dense
+  // and readable (not a lone endpoint like 0.0225).
+  const out: number[] = [];
+  for (let i = 0; i < target; i++) {
+    const idx = Math.round((i * (all.length - 1)) / (target - 1));
+    const v = all[idx];
+    if (out.length === 0 || out[out.length - 1] !== v) out.push(v);
+  }
+  return out;
+}
+
+/** Pad a positive log domain so points aren’t glued to the frame. */
+function padLogDomain(
+  dataMin: number,
+  dataMax: number,
+  padFrac = 0.12,
+): [number, number] {
+  const lo = Math.log10(dataMin);
+  const hi = Math.log10(dataMax);
+  const span = Math.max(hi - lo, 0.35);
+  return [10 ** (lo - span * padFrac), 10 ** (hi + span * padFrac)];
+}
+
 /** Scatter chrome: full-width plot. Titles clear ticks by sitting in the
  *  axis band (Y) / under the plot (X) — never by fat empty gutters.
  *  Recharts `position:"left"` is measured from the YAxis band’s LEFT edge
  *  (margin.left), not the plot; a large positive offset clips off-canvas,
  *  while a huge margin.left only adds dead space left of the band.
  *  Tick `unit` stays in titles so tick strings stay short. */
-const SCATTER_MARGIN = { top: 12, right: 20, bottom: 40, left: 8 } as const;
+const SCATTER_MARGIN = { top: 6, right: 14, bottom: 28, left: 6 } as const;
 /** Title strip + gap + short tick numbers inside the Y band. */
 const SCATTER_Y_WIDTH = 52;
 
@@ -70,8 +126,10 @@ function scatterXLabel(value: string) {
   return {
     value,
     // Center under the plot/axis, not the whole card.
+    // More negative offset sits the title nearer the SVG bottom
+    // so fillHeight cards don’t show a dead band under the label.
     position: "insideBottom" as const,
-    offset: -2,
+    offset: -10,
     fill: "#71717a",
     fontSize: 11,
   };
@@ -121,8 +179,10 @@ function ChartCard({
         <div
           className={
             fillHeight
-              ? "min-h-[13rem] w-full flex-1"
-              : `w-full ${heightClass}`
+              ? // Explicit min height + flex-1 so ResponsiveContainer measures the
+                // full stretched cell Y (plot grows; margins stay fixed px).
+                "relative min-h-[18rem] w-full flex-1"
+              : `relative w-full ${heightClass}`
           }
         >
           {children}
@@ -257,7 +317,21 @@ function MassRadiusChart({
     [bodies],
   );
 
-  if (massRadiusData.length === 0) {
+  const axes = useMemo(() => {
+    if (massRadiusData.length === 0) return null;
+    const masses = massRadiusData.map((d) => d.massMe);
+    const radii = massRadiusData.map((d) => d.radiusRe);
+    const xDomain = padLogDomain(Math.min(...masses), Math.max(...masses));
+    const yDomain = padLogDomain(Math.min(...radii), Math.max(...radii));
+    return {
+      xDomain,
+      yDomain,
+      xTicks: niceLogTicks(xDomain[0], xDomain[1], fillHeight ? 8 : 6),
+      yTicks: niceLogTicks(yDomain[0], yDomain[1], fillHeight ? 8 : 6),
+    };
+  }, [massRadiusData, fillHeight]);
+
+  if (massRadiusData.length === 0 || !axes) {
     return (
       <ChartCard title={title} fillHeight={fillHeight}>
         <p className="flex h-full items-center justify-center text-sm text-zinc-500">
@@ -269,7 +343,7 @@ function MassRadiusChart({
 
   return (
     <ChartCard title={title} heightClass="h-52" fillHeight={fillHeight}>
-      <ResponsiveContainer>
+      <ResponsiveContainer width="100%" height="100%">
         <ScatterChart margin={SCATTER_MARGIN}>
           <CartesianGrid stroke="rgba(255,255,255,0.06)" />
           <XAxis
@@ -277,12 +351,14 @@ function MassRadiusChart({
             dataKey="massMe"
             name="Mass"
             scale="log"
-            domain={["auto", "auto"]}
+            domain={axes.xDomain}
+            ticks={axes.xTicks}
+            allowDataOverflow
             stroke="#71717a"
             tick={{ fontSize: 11 }}
             tickMargin={6}
-            tickFormatter={formatShortNumber}
-            height={36}
+            tickFormatter={formatAxisTick}
+            height={26}
             label={scatterXLabel("Mass (M⊕)")}
           />
           <YAxis
@@ -290,11 +366,13 @@ function MassRadiusChart({
             dataKey="radiusRe"
             name="Radius"
             scale="log"
-            domain={["auto", "auto"]}
+            domain={axes.yDomain}
+            ticks={axes.yTicks}
+            allowDataOverflow
             stroke="#71717a"
             tick={{ fontSize: 11 }}
             tickMargin={6}
-            tickFormatter={formatShortNumber}
+            tickFormatter={formatAxisTick}
             width={SCATTER_Y_WIDTH}
             label={scatterYLabel("Radius (R⊕)")}
           />
@@ -354,7 +432,21 @@ function APeriodChart({
     });
   }, [bodies]);
 
-  if (aPeriodData.length === 0) {
+  const axes = useMemo(() => {
+    if (aPeriodData.length === 0) return null;
+    const as = aPeriodData.map((d) => d.aAu);
+    const ps = aPeriodData.map((d) => d.periodYr);
+    const xDomain = padLogDomain(Math.min(...as), Math.max(...as));
+    const yDomain = padLogDomain(Math.min(...ps), Math.max(...ps));
+    return {
+      xDomain,
+      yDomain,
+      xTicks: niceLogTicks(xDomain[0], xDomain[1], 6),
+      yTicks: niceLogTicks(yDomain[0], yDomain[1], 6),
+    };
+  }, [aPeriodData]);
+
+  if (aPeriodData.length === 0 || !axes) {
     return (
       <ChartCard title={title}>
         <p className="flex h-full items-center justify-center text-sm text-zinc-500">
@@ -366,7 +458,7 @@ function APeriodChart({
 
   return (
     <ChartCard title={title} heightClass="h-52">
-      <ResponsiveContainer>
+      <ResponsiveContainer width="100%" height="100%">
         <ScatterChart margin={SCATTER_MARGIN}>
           <CartesianGrid stroke="rgba(255,255,255,0.06)" />
           <XAxis
@@ -374,12 +466,14 @@ function APeriodChart({
             dataKey="aAu"
             name="a"
             scale="log"
-            domain={["auto", "auto"]}
+            domain={axes.xDomain}
+            ticks={axes.xTicks}
+            allowDataOverflow
             stroke="#71717a"
             tick={{ fontSize: 11 }}
             tickMargin={6}
-            tickFormatter={formatShortNumber}
-            height={36}
+            tickFormatter={formatAxisTick}
+            height={26}
             label={scatterXLabel("a (AU)")}
           />
           <YAxis
@@ -387,11 +481,13 @@ function APeriodChart({
             dataKey="periodYr"
             name="Period"
             scale="log"
-            domain={["auto", "auto"]}
+            domain={axes.yDomain}
+            ticks={axes.yTicks}
+            allowDataOverflow
             stroke="#71717a"
             tick={{ fontSize: 11 }}
             tickMargin={6}
-            tickFormatter={formatShortNumber}
+            tickFormatter={formatAxisTick}
             width={SCATTER_Y_WIDTH}
             label={scatterYLabel("Period (yr)")}
           />
@@ -1187,9 +1283,9 @@ function SizePairsRow({
   if (usable.length === 0) return null;
 
   return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3">
-      <h3 className="mb-2 text-sm font-medium text-zinc-300">Size pairs</h3>
-      <div className="flex flex-wrap justify-center gap-3">
+    <div className="flex h-full min-h-0 flex-col rounded-xl border border-white/10 bg-white/[0.03] p-3">
+      <h3 className="mb-2 shrink-0 text-sm font-medium text-zinc-300">Size pairs</h3>
+      <div className="flex flex-1 flex-wrap content-end justify-center gap-3">
         {usable.map((m) => (
           <SizePairCompact key={m.id} parent={parent} moon={m} />
         ))}
@@ -1232,14 +1328,14 @@ function SizeStrip({
   const dMoonMax = 36;
 
   return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3">
-      <h3 className="mb-2 text-sm font-medium text-zinc-300">
+    <div className="flex h-full min-h-0 flex-col rounded-xl border border-white/10 bg-white/[0.03] p-3">
+      <h3 className="mb-2 shrink-0 text-sm font-medium text-zinc-300">
         Size strip
         <span className="ml-1.5 font-normal text-zinc-500">
           (sorted by orbit)
         </span>
       </h3>
-      <div className="flex flex-wrap items-end justify-center gap-3 py-1">
+      <div className="flex flex-1 flex-wrap items-end justify-center gap-3 py-1">
         <div className="flex flex-col items-center gap-1">
           <div
             className="rounded-full shadow-[inset_0_-6px_16px_rgba(0,0,0,0.35)]"
