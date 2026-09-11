@@ -1,18 +1,23 @@
 #!/usr/bin/env node
 /**
- * Orbitpedia Phase 1 catalog enrichment — reproducible one-shot ingest.
+ * Orbitpedia Store B solar ingest — reproducible one-shot.
  * Public HTTP only; no API keys / secrets.
  *
- * Usage: node ingest.mjs
- * Writes: bodies.json
+ * Usage (from repo root): node scripts/ingest.mjs
+ * Writes: src/data/bodies/<id>.json + refreshes src/data/systems/solar.json
+ * Cache/temp under /tmp (not committed).
  */
-import { writeFileSync, readFileSync, existsSync } from "node:fs";
+import { writeFileSync, readFileSync, existsSync, mkdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const OUT = join(__dirname, "bodies.json");
-const PHYS_PAR_CACHE = join(__dirname, "phys_par.html");
+const DATA_DIR = join(__dirname, "../src/data");
+const BODIES_DIR = join(DATA_DIR, "bodies");
+const SYSTEMS_DIR = join(DATA_DIR, "systems");
+const PHYS_PAR_CACHE = join("/tmp", "orbitpedia-phys_par.html");
+const OMITTED_OUT = join("/tmp", "orbitpedia-ingest-omitted.json");
+const SYSTEM_ID = "solar";
 
 const HORIZONS = "https://ssd.jpl.nasa.gov/api/horizons.api";
 const SBDB = "https://ssd-api.jpl.nasa.gov/sbdb.api";
@@ -55,6 +60,16 @@ const DISCOVERY = {
   vesta: "Discovered 1807 by Heinrich Olbers",
   pallas: "Discovered 1802 by Heinrich Olbers",
   hygiea: "Discovered 1849 by Annibale de Gasparis",
+};
+
+const DISCOVERY_DATES = {
+  uranus: "1781-03-13",
+  neptune: "1846-09-23",
+  pluto: "1930-02-18",
+  ceres: "1801-01-01",
+  pallas: "1802-03-28",
+  vesta: "1807-03-29",
+  hygiea: "1849-04-12",
 };
 
 const PLANETS = [
@@ -322,20 +337,25 @@ function asteroidFromSbdb(meta, data) {
     },
   ];
 
+  if (DISCOVERY_DATES[meta.id]) facts.discoveryDate = DISCOVERY_DATES[meta.id];
+  facts.discoveryNotes = DISCOVERY[meta.id];
+
   return {
     body: {
       id: meta.id,
       name: meta.name,
       kind: meta.kind,
+      systemId: SYSTEM_ID,
       aliases: meta.aliases,
       facts,
-      orbit,
+      orbit: { ...orbit, frame: "heliocentric" },
       color: COLORS[meta.id],
       sbdbDes: meta.sbdbDes,
       meta: {
         source: "JPL SBDB (full-prec + phys-par)",
         sources,
         fetchedAt: FETCHED_AT,
+        confidence: "known",
         unitsVersion: 1,
       },
     },
@@ -356,10 +376,12 @@ async function main() {
   // Sun
   console.log("Fetching Sun (Horizons OBJ_DATA)…");
   const sunFacts = await fetchSunFacts();
+  sunFacts.discoveryNotes = DISCOVERY.sun;
   bodies.push({
     id: "sun",
     name: "Sun",
     kind: "star",
+    systemId: SYSTEM_ID,
     aliases: ["Sol"],
     facts: sunFacts,
     color: COLORS.sun,
@@ -380,6 +402,7 @@ async function main() {
         },
       ],
       fetchedAt: FETCHED_AT,
+      confidence: "known",
       unitsVersion: 1,
     },
   });
@@ -399,13 +422,17 @@ async function main() {
     const physName = p.name;
     const facts = factsFromPhysPar(physName, p.id, massScale);
 
+    facts.discoveryNotes = DISCOVERY[p.id];
+    if (DISCOVERY_DATES[p.id]) facts.discoveryDate = DISCOVERY_DATES[p.id];
+
     const body = {
       id: p.id,
       name: p.name,
       kind: p.kind,
+      systemId: SYSTEM_ID,
       ...(p.aliases ? { aliases: p.aliases } : {}),
       facts,
-      orbit,
+      orbit: { ...orbit, frame: "heliocentric" },
       color: COLORS[p.id],
       horizonId: p.horizonId,
       meta: {
@@ -423,6 +450,7 @@ async function main() {
               "orbit.wDeg",
               "orbit.maDeg",
               "orbit.periodD",
+              "orbit.frame",
               "horizonId",
             ],
           },
@@ -439,6 +467,7 @@ async function main() {
           },
         ],
         fetchedAt: FETCHED_AT,
+        confidence: "known",
         unitsVersion: 1,
       },
     };
@@ -465,13 +494,32 @@ async function main() {
     await sleep(150);
   }
 
-  const catalog = { version: 1, bodies };
-  writeFileSync(OUT, JSON.stringify(catalog, null, 2) + "\n");
+  mkdirSync(BODIES_DIR, { recursive: true });
+  mkdirSync(SYSTEMS_DIR, { recursive: true });
+
+  for (const body of bodies) {
+    const path = join(BODIES_DIR, `${body.id}.json`);
+    writeFileSync(path, JSON.stringify(body, null, 2) + "\n");
+  }
+
+  const system = {
+    id: SYSTEM_ID,
+    name: "Solar System",
+    home: true,
+    memberIds: bodies.map((b) => b.id),
+  };
   writeFileSync(
-    join(__dirname, "ingest-omitted.json"),
+    join(SYSTEMS_DIR, `${SYSTEM_ID}.json`),
+    JSON.stringify(system, null, 2) + "\n",
+  );
+
+  writeFileSync(
+    OMITTED_OUT,
     JSON.stringify({ fetchedAt: FETCHED_AT, omitted: notesOmitted }, null, 2) + "\n",
   );
-  console.log(`Wrote ${OUT} with ${bodies.length} bodies`);
+  console.log(`Wrote ${bodies.length} body cards under ${BODIES_DIR}`);
+  console.log(`Wrote ${join(SYSTEMS_DIR, SYSTEM_ID + ".json")}`);
+  console.log(`Omitted log: ${OMITTED_OUT}`);
   console.log("Omitted fields:", JSON.stringify(notesOmitted, null, 2));
 }
 

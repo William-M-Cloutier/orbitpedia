@@ -1,3 +1,33 @@
+# Orbitpedia Store B — solar ingest notes
+
+## Usage (repo root)
+
+```bash
+node scripts/ingest.mjs
+npm run validate:catalog
+```
+
+Writes:
+- `src/data/bodies/<id>.json` — one card per body (`systemId`, `orbit.frame`, `meta.confidence`)
+- `src/data/systems/solar.json` — home System doc + `memberIds`
+
+Cache / omitted log go under `/tmp` (not committed).
+
+## Contract
+- Public HTTP only (Horizons, SSD phys_par, SBDB) — no secrets
+- Omit unknowns; never invent elements
+- Solar planets: `systemId: "solar"`, no `parentId`, `orbit.frame: "heliocentric"`
+- Sun: no orbit
+- `meta.confidence: "known"` for fetched solar seeds
+
+## Validation
+`scripts/validate-catalog.mjs` loads Store B (`--data-dir src/data`) and asserts periapsis clearance vs central radius (EPS_AU=1e-9).
+
+
+---
+
+## Legacy notes (pre–Store B)
+
 # Orbitpedia Phase 1 — catalog enrichment notes
 
 Work dir: `/workspace/orbitpedia-enrich`  
