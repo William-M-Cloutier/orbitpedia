@@ -95,7 +95,7 @@ export function BodyRail({
 
   if (!open) {
     return (
-      <aside className="flex h-full w-9 shrink-0 flex-col border-r border-white/10 bg-[#080d18]">
+      <aside className="flex h-full min-h-0 w-9 shrink-0 flex-col overflow-hidden border-r border-white/10 bg-[#080d18]">
         <button
           type="button"
           onClick={() => setOpen(true)}
@@ -119,7 +119,7 @@ export function BodyRail({
   }
 
   return (
-    <aside className="flex h-full w-56 shrink-0 flex-col border-r border-white/10 bg-[#080d18]">
+    <aside className="flex h-full min-h-0 w-56 shrink-0 flex-col overflow-hidden border-r border-white/10 bg-[#080d18]">
       <div className="border-b border-white/10 p-3">
         <div className="mb-2 flex items-center justify-between gap-2">
           <p className="text-xs font-medium uppercase tracking-wider text-zinc-500">
@@ -153,7 +153,7 @@ export function BodyRail({
           ))}
         </div>
       </div>
-      <ul className="flex-1 overflow-y-auto p-2">
+      <ul className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-2">
         {rows.map(({ body: b, depth }) => {
           const selected = selectedIds.includes(b.id);
           const active = activeId === b.id;
