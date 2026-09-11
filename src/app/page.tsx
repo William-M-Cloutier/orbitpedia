@@ -87,9 +87,6 @@ function ExploreHome() {
             <div>
               <h1 className="text-sm font-medium text-zinc-200">Explore</h1>
               <p className="text-xs text-zinc-500">
-                {sizeMode === "proportional"
-                  ? "Proportional radii (sun capped for orbit clearance). "
-                  : "Schematic size tiers — not true scale. "}
                 Click to follow; click again or right-click to clear; Esc also
                 clears.
               </p>
@@ -104,12 +101,12 @@ function ExploreHome() {
                 simDaysPerSec={simDaysPerSec}
                 sizeMode={sizeMode}
               />
-              <div className="pointer-events-none absolute bottom-3 left-3 z-10 flex flex-col gap-2 items-start">
+              <div className="pointer-events-none absolute left-3 top-3 z-10 flex flex-col gap-2 items-start">
+                <SizeModeControl mode={sizeMode} onModeChange={setSizeMode} />
                 <SpeedControl
                   multiple={speedMultiple}
                   onMultipleChange={setSpeedMultiple}
                 />
-                <SizeModeControl mode={sizeMode} onModeChange={setSizeMode} />
               </div>
             </div>
             {/*

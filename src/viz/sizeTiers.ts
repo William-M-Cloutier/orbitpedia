@@ -1,28 +1,24 @@
 import type { Body, BodyKind } from "@/data/schema";
+import { bodies } from "@/data/catalog";
 
 /**
  * Visual mesh radii — render layer only. Orbit paths always use real AU.
  *
  * - schematic: readable size tiers (default)
- * - proportional: body radii in true ratio to each other from catalog
- *   radiusMeanKm (sun mesh capped so it never swallows Mercury's orbit)
+ * - proportional: true radius ratios; sun is largest mesh and still clears
+ *   Mercury's orbit (planets scaled to fit under that sun)
+ * - true: physical radii in AU (uncapped sun). Orbits stay correct so meshes
+ *   do not intersect paths; bodies are tiny in the system view.
  *
  * Adding a planet later = catalog facts only; this module maps radius → mesh.
  */
 
-export type SizeMode = "schematic" | "proportional";
+export type SizeMode = "schematic" | "proportional" | "true";
 
-export const SIZE_MODES: { id: SizeMode; label: string; blurb: string }[] = [
-  {
-    id: "schematic",
-    label: "Schematic",
-    blurb: "Readable size tiers — not true scale",
-  },
-  {
-    id: "proportional",
-    label: "Proportional",
-    blurb: "True radius ratios (sun capped for clearance)",
-  },
+export const SIZE_MODES: { id: SizeMode; label: string }[] = [
+  { id: "schematic", label: "Schematic" },
+  { id: "proportional", label: "Proportional" },
+  { id: "true", label: "True" },
 ];
 
 export const DEFAULT_SIZE_MODE: SizeMode = "schematic";
@@ -35,7 +31,6 @@ export const PLANET_VISUAL_RADIUS_LARGE = 0.18;
 
 /**
  * Extra perihelion gap (AU) between schematic sun surface and body surface.
- * Required: a(1−e) ≥ STAR_VISUAL_RADIUS + bodyVisual + PERIHELION_CLEARANCE_MARGIN_AU
  */
 export const PERIHELION_CLEARANCE_MARGIN_AU = 0.04;
 
@@ -47,20 +42,8 @@ export const STAR_VISUAL_RADIUS = 0.12;
 
 const AU_KM = 149_597_870.7;
 
-/** Earth mean radius (km) — proportional reference. */
-const EARTH_RADIUS_KM = 6_371;
-
-/**
- * In proportional mode, Earth mesh radius (scene AU). Other bodies scale by
- * radiusMeanKm / Earth. Chosen so Jupiter (~11 R⊕) stays readable vs orbits.
- */
-const PROPORTIONAL_EARTH_MESH_AU = 0.045;
-
-/** Cap star mesh in proportional mode so Mercury's path stays clear. */
-function proportionalStarCapAu(): number {
-  // Mercury q≈0.307; leave room for a small body + margin.
-  return 0.307 - PLANET_VISUAL_RADIUS_SMALL - PERIHELION_CLEARANCE_MARGIN_AU;
-}
+/** Mercury perihelion (AU) — used for proportional sun clearance. */
+const MERCURY_Q_AU = 0.307;
 
 export function minClearanceAu(
   bodyRadius: number = PLANET_VISUAL_RADIUS_SMALL,
@@ -80,15 +63,45 @@ function schematicRadius(body: Body): number {
   return tiers[body.kind];
 }
 
-function proportionalRadius(body: Body): number {
-  const raw =
-    (body.facts.radiusMeanKm / EARTH_RADIUS_KM) * PROPORTIONAL_EARTH_MESH_AU;
-  if (body.kind === "star") {
-    // True sun/Earth ≈ 109 → would be huge; cap for orbit clearance.
-    return Math.min(raw, Math.max(STAR_VISUAL_RADIUS, proportionalStarCapAu()));
+/** Max non-star catalog radius (km) — for proportional fit. */
+function maxNonStarRadiusKm(): number {
+  let max = 0;
+  for (const b of bodies) {
+    if (b.kind === "star") continue;
+    if (b.facts.radiusMeanKm > max) max = b.facts.radiusMeanKm;
   }
-  // Floor so tiny asteroids stay clickable/visible.
-  return Math.max(0.012, raw);
+  return max > 0 ? max : 69_911; // Jupiter fallback
+}
+
+function mercuryRadiusKm(): number {
+  const m = bodies.find((b) => b.id === "mercury");
+  return m?.facts.radiusMeanKm ?? 2_439.7;
+}
+
+/**
+ * Proportional: sun is the biggest mesh; other bodies keep true radius ratios
+ * and are scaled so the sun still clears Mercury's perihelion.
+ */
+function proportionalRadius(body: Body): number {
+  const mercKm = mercuryRadiusKm();
+  const maxKm = maxNonStarRadiusKm();
+  // Solve: sun = S, maxPlanet = 0.92*S, mercMesh = maxPlanet * (mercKm/maxKm)
+  // S + mercMesh + margin <= Mercury q
+  // S * (1 + 0.92 * mercKm/maxKm) <= q - margin
+  const ratioMercToMax = mercKm / maxKm;
+  const denom = 1 + 0.92 * ratioMercToMax;
+  const sunMesh = (MERCURY_Q_AU - PERIHELION_CLEARANCE_MARGIN_AU) / denom;
+  const scale = (0.92 * sunMesh) / maxKm; // km → scene AU
+
+  if (body.kind === "star") {
+    return sunMesh; // largest by construction
+  }
+  return Math.max(0.008, body.facts.radiusMeanKm * scale);
+}
+
+/** True physical radius in scene AU (uncapped). */
+function trueRadius(body: Body): number {
+  return body.facts.radiusMeanKm / AU_KM;
 }
 
 /** Visual mesh radius in scene units (≈ AU for orbit layout). */
@@ -96,9 +109,9 @@ export function visualRadius(
   body: Body,
   mode: SizeMode = DEFAULT_SIZE_MODE,
 ): number {
-  return mode === "proportional"
-    ? proportionalRadius(body)
-    : schematicRadius(body);
+  if (mode === "proportional") return proportionalRadius(body);
+  if (mode === "true") return trueRadius(body);
+  return schematicRadius(body);
 }
 
 /** True radius in AU (catalog), for tools/tests — not mesh size. */

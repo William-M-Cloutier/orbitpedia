@@ -12,15 +12,12 @@ type Props = {
 };
 
 export function SizeModeControl({ mode, onModeChange }: Props) {
-  const active = SIZE_MODES.find((m) => m.id === mode) ?? SIZE_MODES[0]!;
-
   return (
     <div className="pointer-events-auto rounded-lg border border-white/10 bg-zinc-950/80 px-3 py-2 text-xs text-zinc-300 shadow-lg backdrop-blur">
-      <div className="mb-1.5 flex items-baseline justify-between gap-3">
+      <div className="mb-1.5">
         <span className="font-medium uppercase tracking-wide text-zinc-500">
           Size
         </span>
-        <span className="text-[10px] text-zinc-500">{active.blurb}</span>
       </div>
       <div className="flex flex-wrap gap-1">
         {SIZE_MODES.map((m) => {
