@@ -42,6 +42,7 @@ import {
   visualRadius,
   type SizeMode,
 } from "./sizeTiers";
+import { getBodyAppearanceMaterial } from "./appearance";
 
 /** Must match <Canvas camera.near> — focus floors stay outside the near plane. */
 const CAMERA_NEAR = 0.01;
@@ -391,8 +392,6 @@ function bodyWorldPosition(
   return [x + bary[0], y + bary[1], z + bary[2]];
 }
 
-const sharedSunMat = new THREE.MeshBasicMaterial({ color: "#FDB813" });
-
 /** Slow yaw for idle starfield drift (rad/s). Tiny — readable only over many seconds. */
 const STARFIELD_DRIFT_RAD_PER_SEC = 0.004;
 
@@ -577,8 +576,8 @@ const BodyMesh = memo(function BodyMesh({
   const sizeMode = useSizeMode();
   const distScale = orbitDistanceScale(sizeMode);
   const r = visualRadius(body, sizeMode, systemBodies);
-  const color = body.color ?? "#888";
-  const accent = highlightColor ?? color;
+  // Procedural shared pool by kind/traits; textureId ignored this slice.
+  const mat = getBodyAppearanceMaterial(body, focused, highlightColor);
 
   const handleClick = useCallback(
     (e: { stopPropagation: () => void }) => {
@@ -630,10 +629,6 @@ const BodyMesh = memo(function BodyMesh({
   });
 
   if (body.kind === "star") {
-    const starMat =
-      body.color && body.color.toLowerCase() !== "#fdb813"
-        ? undefined
-        : sharedSunMat;
     return (
       <group ref={group} name={body.id}>
         {/* Viz-only barycentric wobble drives this group via useFrame; no OrbitLine. */}
@@ -642,13 +637,10 @@ const BodyMesh = memo(function BodyMesh({
           ref={spinMesh}
           onClick={handleClick}
           onContextMenu={handleContextMenu}
-          material={starMat}
+          material={mat}
           scale={focused ? 1.2 : 1}
         >
           <sphereGeometry args={[r, 32, 32]} />
-          {starMat ? null : (
-            <meshBasicMaterial color={body.color ?? "#FDB813"} />
-          )}
         </mesh>
       </group>
     );
@@ -660,14 +652,10 @@ const BodyMesh = memo(function BodyMesh({
         ref={spinMesh}
         onClick={handleClick}
         onContextMenu={handleContextMenu}
+        material={mat}
         scale={focused ? 1.35 : 1}
       >
         <sphereGeometry args={[r, 24, 24]} />
-        <meshStandardMaterial
-          color={color}
-          emissive={focused ? accent : "#000000"}
-          emissiveIntensity={focused ? 0.45 : 0}
-        />
       </mesh>
     </group>
   );

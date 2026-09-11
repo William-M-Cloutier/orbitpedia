@@ -636,6 +636,92 @@ if (!Number.isFinite(c)) {
   }
 }
 
+// Procedural body materials (shared pool by kind/traits; textureId ignored).
+{
+  const appearanceDir = path.join(ROOT, "src/viz/appearance");
+  const need = [
+    "surfaceFamily.ts",
+    "proceduralTextures.ts",
+    "materialPool.ts",
+    "index.ts",
+  ];
+  for (const f of need) {
+    if (!fs.existsSync(path.join(appearanceDir, f))) {
+      fail(`missing appearance module ${f}`);
+    }
+  }
+  const poolSrc = fs.readFileSync(path.join(appearanceDir, "materialPool.ts"), "utf8");
+  const famSrc = fs.readFileSync(path.join(appearanceDir, "surfaceFamily.ts"), "utf8");
+  const sceneSrc = fs.readFileSync(path.join(ROOT, "src/viz/OrbitScene.tsx"), "utf8");
+  if (!/getBodyAppearanceMaterial/.test(poolSrc)) {
+    fail("materialPool missing getBodyAppearanceMaterial");
+  }
+  if (!/inferSurfaceFamily/.test(famSrc) || !/SurfaceFamily/.test(famSrc)) {
+    fail("surfaceFamily missing inferSurfaceFamily / SurfaceFamily");
+  }
+  if (!/getBodyAppearanceMaterial/.test(sceneSrc)) {
+    fail("OrbitScene BodyMesh must use getBodyAppearanceMaterial");
+  }
+  if (/sharedSunMat/.test(sceneSrc)) {
+    fail("OrbitScene still uses sharedSunMat flat star color");
+  }
+  // textureId must not drive rendering this slice (fail-open forever later).
+  if (/lookupTextureId\(/.test(poolSrc) || /appearance\?\.textureId/.test(poolSrc)) {
+    fail("materialPool must ignore appearance.textureId this slice");
+  }
+  // Facts must not surface texture/appearance fields.
+  const factsSrc = fs.readFileSync(path.join(ROOT, "src/lib/factsDisplay.ts"), "utf8");
+  if (/textureId|appearance/.test(factsSrc)) {
+    fail("factsDisplay must not expose textureId/appearance");
+  }
+  // Golden family inference (mirrors surfaceFamily.ts thresholds).
+  const GAS_RADIUS_KM = 20_000;
+  const CLASSIC_GAS_RADIUS_KM = 40_000;
+  function inferFamily(body) {
+    if (body.kind === "star") return "star";
+    const r = body.facts?.radiusMeanKm;
+    const density = body.facts?.densityGcm3;
+    const albedo = body.facts?.albedo;
+    if (body.kind === "planet" && r != null && r > GAS_RADIUS_KM) {
+      return r < CLASSIC_GAS_RADIUS_KM ? "ice" : "gas";
+    }
+    if (albedo != null && albedo >= 0.5) return "ice";
+    if (
+      density != null &&
+      density < 2.0 &&
+      (r == null || r < 5_000) &&
+      body.kind !== "planet"
+    ) {
+      return "ice";
+    }
+    return "rocky";
+  }
+  const expect = {
+    sun: "star",
+    jupiter: "gas",
+    saturn: "gas",
+    uranus: "ice",
+    neptune: "ice",
+    earth: "rocky",
+    mars: "rocky",
+    ceres: "rocky",
+  };
+  for (const [id, want] of Object.entries(expect)) {
+    const body = bodyById.get(id);
+    if (!body) {
+      fail(`appearance golden missing body ${id}`);
+      continue;
+    }
+    const got = inferFamily(body);
+    if (got !== want) {
+      fail(`appearance family ${id}: got ${got}, want ${want}`);
+    } else {
+      ok(`appearance family ${id} → ${got}`);
+    }
+  }
+  ok("procedural body materials wired (pool + BodyMesh; textureId ignored)");
+}
+
 if (process.exitCode) {
   console.error("\norbit-sanity FAILED");
   process.exit(process.exitCode);

@@ -41,4 +41,4 @@ When marquee Sol maps land (separate ticket), stay under Guard caps:
 
 - Schema: `src/data/schema.ts` (`AppearanceSchema`)
 - Card guide: [DATA_SETUP.md](./DATA_SETUP.md) (Appearance section)
-- Viz materials: Explore `BodyMesh` / appearance helpers under `src/viz/`
+- Viz materials: `src/viz/appearance/` (`surfaceFamily`, `proceduralTextures`, `materialPool`) wired from Explore `BodyMesh`
