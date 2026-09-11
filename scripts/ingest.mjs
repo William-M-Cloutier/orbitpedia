@@ -322,7 +322,7 @@ function asteroidFromSbdb(meta, data) {
   const sources = [
     {
       name: "JPL SBDB API",
-      url: `${SBDB_LOOKUP}${encodeURIComponent(meta.sbdbDes)}`,
+      url: `https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/?sstr=${encodeURIComponent(meta.sbdbDes)}`,
       fields: [
         "orbit.aAu",
         "orbit.e",

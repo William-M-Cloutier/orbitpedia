@@ -21,8 +21,8 @@
     "source": "JPL SBDB (full-prec + phys-par)",
     "sources": [
       {
-        "name": "JPL SBDB API",
-        "url": "https://ssd-api.jpl.nasa.gov/sbdb.api?des=2&phys-par=true&full-prec=true",
+        "name": "JPL Small-Body Database lookup",
+        "url": "https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/?sstr=2",
         "fields": [
           "orbit.aAu",
           "orbit.e",
