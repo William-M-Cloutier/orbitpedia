@@ -94,7 +94,8 @@ function SystemMapView() {
   const router = useRouter();
   const homeId = getHomeSystem().id;
   const [spacing, setSpacing] = useState<MapSpacing>("schematic");
-  const [selectedId, setSelectedId] = useState(homeId);
+  /** Facts overlay only when a node is selected — no always-on card grid. */
+  const [selectedId, setSelectedId] = useState<string | null>(null);
   const nodes = useMemo(() => buildNodes(), []);
   // Fixed design size; SVG scales via viewBox.
   const W = 960;
@@ -112,8 +113,8 @@ function SystemMapView() {
             <h1 className="text-lg font-medium text-zinc-100">System map</h1>
             <p className="mt-0.5 max-w-2xl text-sm text-zinc-500">
               Systems as nodes — spacing is Schematic or Proportional only (not
-              true inter-system distances). Select a system below or on the
-              map, then Explore.
+              true inter-system distances). Click a system for facts, then open
+              Explore.
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -154,6 +155,7 @@ function SystemMapView() {
             className="h-full w-full"
             role="img"
             aria-label="System map"
+            onClick={() => setSelectedId(null)}
           >
             <defs>
               <radialGradient id="mapGlow" cx="50%" cy="50%" r="50%">
@@ -201,7 +203,10 @@ function SystemMapView() {
               <g
                 key={n.id}
                 className="cursor-pointer"
-                onClick={() => setSelectedId(n.id)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedId(n.id);
+                }}
                 role="button"
                 tabIndex={0}
                 onKeyDown={(e) => {
@@ -211,7 +216,6 @@ function SystemMapView() {
                   }
                 }}
               >
-                {/* Orbit rings hint */}
                 <circle
                   cx={n.x}
                   cy={n.y}
@@ -264,46 +268,50 @@ function SystemMapView() {
               </g>
             ))}
           </svg>
+
+          {selectedId && getSystem(selectedId) ? (
+            <div
+              className="pointer-events-auto absolute bottom-3 right-3 top-3 z-10 flex w-[min(100%,20rem)] flex-col overflow-hidden rounded-lg border border-white/15 bg-[#080d18]/95 p-3 shadow-xl backdrop-blur"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="mb-2 flex items-center justify-between gap-2">
+                <p className="text-[11px] font-medium uppercase tracking-wider text-zinc-500">
+                  System facts
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setSelectedId(null)}
+                  className="rounded px-1.5 py-0.5 text-xs text-zinc-500 hover:bg-white/10 hover:text-zinc-300"
+                  aria-label="Close system facts"
+                >
+                  ✕
+                </button>
+              </div>
+              <div className="min-h-0 flex-1 overflow-y-auto">
+                <SystemFacts system={getSystem(selectedId)!} compact />
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  const qs =
+                    selectedId === homeId
+                      ? "/"
+                      : `/?system=${encodeURIComponent(selectedId)}`;
+                  router.push(qs);
+                }}
+                className="mt-3 shrink-0 rounded-md border border-sky-500/30 bg-sky-500/15 px-2.5 py-1.5 text-xs text-sky-200 hover:bg-sky-500/25"
+              >
+                Open in Explore
+              </button>
+            </div>
+          ) : null}
         </div>
 
         <p className="mt-2 text-xs text-zinc-600">
           Proportional spacing uses each system&apos;s outermost catalog
           semi-major axis as a weight — educational layout only, not light-year
-          realism.
+          realism. Click empty map to dismiss facts.
         </p>
-
-        <div className="mt-4 grid gap-3 md:grid-cols-2">
-          {nodes.map((n) => {
-            const sys = getSystem(n.id);
-            if (!sys) return null;
-            return (
-              <div
-                key={n.id}
-                className={`rounded-xl border p-4 ${
-                  n.id === selectedId
-                    ? "border-sky-500/40 bg-sky-500/10"
-                    : "border-white/10 bg-[#080d18]/90"
-                }`}
-                onClick={() => setSelectedId(n.id)}
-              >
-                <SystemFacts system={sys} compact />
-                <button
-                  type="button"
-                  onClick={() => {
-                    const qs =
-                      n.id === homeId
-                        ? "/"
-                        : `/?system=${encodeURIComponent(n.id)}`;
-                    router.push(qs);
-                  }}
-                  className="mt-3 rounded-md border border-sky-500/30 bg-sky-500/15 px-2.5 py-1.5 text-xs text-sky-200 hover:bg-sky-500/25"
-                >
-                  Open in Explore
-                </button>
-              </div>
-            );
-          })}
-        </div>
       </div>
     </AppShell>
   );
