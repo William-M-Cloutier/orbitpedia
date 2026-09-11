@@ -5,347 +5,779 @@
       "id": "sun",
       "name": "Sun",
       "kind": "star",
-      "aliases": ["Sol"],
+      "aliases": [
+        "Sol"
+      ],
       "facts": {
-        "massKg": 1.98847e30,
+        "massKg": 1.98841e+30,
         "radiusMeanKm": 695700,
-        "densityGcm3": 1.41,
-        "rotationPeriodD": 25.05,
-        "albedo": 0,
-        "discoveryNotes": "Central star of the Solar System"
+        "discoveryNotes": "Central star of the Solar System",
+        "densityGcm3": 1.408,
+        "rotationPeriodD": 25.38
       },
       "color": "#FDB813",
-      "meta": { "source": "IAU / NASA fact sheet (approx)", "unitsVersion": 1 }
+      "horizonId": "10",
+      "meta": {
+        "source": "JPL Horizons Sun physical properties (IAU2015 radius)",
+        "sources": [
+          {
+            "name": "JPL Horizons API (Sun OBJ_DATA)",
+            "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=10&OBJ_DATA=YES&MAKE_EPHEM=NO",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.densityGcm3",
+              "facts.rotationPeriodD",
+              "horizonId"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-11T01:39:34.674Z",
+        "unitsVersion": 1
+      }
     },
     {
       "id": "mercury",
       "name": "Mercury",
       "kind": "planet",
       "facts": {
-        "massKg": 3.3011e23,
-        "radiusMeanKm": 2439.7,
-        "densityGcm3": 5.43,
-        "rotationPeriodD": 58.646,
-        "albedo": 0.088,
-        "discoveryNotes": "Known since antiquity"
+        "massKg": 3.3010299999999994e+23,
+        "radiusMeanKm": 2439.4,
+        "discoveryNotes": "Known since antiquity",
+        "densityGcm3": 5.4289,
+        "rotationPeriodD": 58.6462,
+        "albedo": 0.106
       },
       "orbit": {
-        "epochJd": 2451545.0,
-        "aAu": 0.387098,
-        "e": 0.20563,
-        "iDeg": 7.0049,
-        "omDeg": 48.331,
-        "wDeg": 29.124,
-        "maDeg": 174.796,
-        "periodD": 87.969
+        "epochJd": 2451545,
+        "aAu": 0.3870982121841597,
+        "e": 0.2056302933705567,
+        "iDeg": 7.005014303275355,
+        "omDeg": 48.33053855197922,
+        "wDeg": 29.12428165737838,
+        "maDeg": 174.7958829169579,
+        "periodD": 87.96909804206008
       },
       "color": "#B5B5B5",
-      "meta": { "source": "JPL SSD / NASA planetary fact sheet (approx)", "unitsVersion": 1 }
+      "horizonId": "199",
+      "meta": {
+        "source": "JPL Horizons + SSD phys_par",
+        "sources": [
+          {
+            "name": "JPL Horizons API (ELEMENTS @ J2000)",
+            "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='199'&EPHEM_TYPE=ELEMENTS&CENTER='500@10'&START_TIME='JD2451545.0'",
+            "fields": [
+              "orbit.epochJd",
+              "orbit.aAu",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.omDeg",
+              "orbit.wDeg",
+              "orbit.maDeg",
+              "orbit.periodD",
+              "horizonId"
+            ]
+          },
+          {
+            "name": "JPL SSD Planetary Physical Parameters",
+            "url": "https://ssd.jpl.nasa.gov/planets/phys_par.html",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.densityGcm3",
+              "facts.rotationPeriodD",
+              "facts.albedo"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-11T01:39:34.674Z",
+        "unitsVersion": 1
+      }
     },
     {
       "id": "venus",
       "name": "Venus",
       "kind": "planet",
       "facts": {
-        "massKg": 4.8675e24,
+        "massKg": 4.867309999999999e+24,
         "radiusMeanKm": 6051.8,
-        "densityGcm3": 5.24,
-        "rotationPeriodD": -243.025,
-        "albedo": 0.77,
-        "discoveryNotes": "Known since antiquity"
+        "discoveryNotes": "Known since antiquity",
+        "densityGcm3": 5.243,
+        "rotationPeriodD": -243.018,
+        "albedo": 0.65
       },
       "orbit": {
-        "epochJd": 2451545.0,
-        "aAu": 0.723332,
-        "e": 0.006772,
-        "iDeg": 3.3946,
-        "omDeg": 76.68,
-        "wDeg": 54.884,
-        "maDeg": 50.115,
-        "periodD": 224.701
+        "epochJd": 2451545,
+        "aAu": 0.723326927479651,
+        "e": 0.006755786251885615,
+        "iDeg": 3.39458964908054,
+        "omDeg": 76.67837411646899,
+        "wDeg": 55.18596702940252,
+        "maDeg": 50.11477187404461,
+        "periodD": 224.6983300747629
       },
       "color": "#E8CDA0",
-      "meta": { "source": "JPL SSD / NASA planetary fact sheet (approx)", "unitsVersion": 1 }
+      "horizonId": "299",
+      "meta": {
+        "source": "JPL Horizons + SSD phys_par",
+        "sources": [
+          {
+            "name": "JPL Horizons API (ELEMENTS @ J2000)",
+            "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='299'&EPHEM_TYPE=ELEMENTS&CENTER='500@10'&START_TIME='JD2451545.0'",
+            "fields": [
+              "orbit.epochJd",
+              "orbit.aAu",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.omDeg",
+              "orbit.wDeg",
+              "orbit.maDeg",
+              "orbit.periodD",
+              "horizonId"
+            ]
+          },
+          {
+            "name": "JPL SSD Planetary Physical Parameters",
+            "url": "https://ssd.jpl.nasa.gov/planets/phys_par.html",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.densityGcm3",
+              "facts.rotationPeriodD",
+              "facts.albedo"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-11T01:39:34.674Z",
+        "unitsVersion": 1
+      }
     },
     {
       "id": "earth",
       "name": "Earth",
       "kind": "planet",
-      "aliases": ["Terra"],
+      "aliases": [
+        "Terra"
+      ],
       "facts": {
-        "massKg": 5.9722e24,
-        "radiusMeanKm": 6371.0,
-        "densityGcm3": 5.51,
+        "massKg": 5.97217e+24,
+        "radiusMeanKm": 6371.0084,
+        "discoveryNotes": "Home world",
+        "densityGcm3": 5.5134,
         "rotationPeriodD": 0.99726968,
-        "albedo": 0.306,
-        "discoveryNotes": "Home world"
+        "albedo": 0.367
       },
       "orbit": {
-        "epochJd": 2451545.0,
-        "aAu": 1.000001,
-        "e": 0.0167086,
-        "iDeg": 0.00005,
-        "omDeg": -11.26064,
-        "wDeg": 114.207,
-        "maDeg": 358.617,
-        "periodD": 365.256
+        "epochJd": 2451545,
+        "aAu": 1.000448828934185,
+        "e": 0.01711862906746885,
+        "iDeg": 0.000418108606546181,
+        "omDeg": 135.0807182572469,
+        "wDeg": 326.7282188569271,
+        "maDeg": 358.6172562416435,
+        "periodD": 365.5022838235192
       },
       "color": "#6B93D6",
-      "meta": { "source": "JPL SSD / NASA planetary fact sheet (approx)", "unitsVersion": 1 }
+      "horizonId": "399",
+      "meta": {
+        "source": "JPL Horizons + SSD phys_par",
+        "sources": [
+          {
+            "name": "JPL Horizons API (ELEMENTS @ J2000)",
+            "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='399'&EPHEM_TYPE=ELEMENTS&CENTER='500@10'&START_TIME='JD2451545.0'",
+            "fields": [
+              "orbit.epochJd",
+              "orbit.aAu",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.omDeg",
+              "orbit.wDeg",
+              "orbit.maDeg",
+              "orbit.periodD",
+              "horizonId"
+            ]
+          },
+          {
+            "name": "JPL SSD Planetary Physical Parameters",
+            "url": "https://ssd.jpl.nasa.gov/planets/phys_par.html",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.densityGcm3",
+              "facts.rotationPeriodD",
+              "facts.albedo"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-11T01:39:34.674Z",
+        "unitsVersion": 1
+      }
     },
     {
       "id": "mars",
       "name": "Mars",
       "kind": "planet",
       "facts": {
-        "massKg": 6.4171e23,
+        "massKg": 6.41691e+23,
         "radiusMeanKm": 3389.5,
-        "densityGcm3": 3.93,
-        "rotationPeriodD": 1.025957,
-        "albedo": 0.25,
-        "discoveryNotes": "Known since antiquity"
+        "discoveryNotes": "Known since antiquity",
+        "densityGcm3": 3.934,
+        "rotationPeriodD": 1.02595676,
+        "albedo": 0.15
       },
       "orbit": {
-        "epochJd": 2451545.0,
-        "aAu": 1.523679,
-        "e": 0.0934,
-        "iDeg": 1.850,
-        "omDeg": 49.558,
-        "wDeg": 286.502,
-        "maDeg": 19.373,
-        "periodD": 686.98
+        "epochJd": 2451545,
+        "aAu": 1.523678992938582,
+        "e": 0.09331510145811761,
+        "iDeg": 1.849876477109795,
+        "omDeg": 49.56200565858587,
+        "wDeg": 286.5373830861814,
+        "maDeg": 19.35648274730694,
+        "periodD": 686.9712731787955
       },
       "color": "#C1440E",
-      "meta": { "source": "JPL SSD / NASA planetary fact sheet (approx)", "unitsVersion": 1 }
+      "horizonId": "499",
+      "meta": {
+        "source": "JPL Horizons + SSD phys_par",
+        "sources": [
+          {
+            "name": "JPL Horizons API (ELEMENTS @ J2000)",
+            "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='499'&EPHEM_TYPE=ELEMENTS&CENTER='500@10'&START_TIME='JD2451545.0'",
+            "fields": [
+              "orbit.epochJd",
+              "orbit.aAu",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.omDeg",
+              "orbit.wDeg",
+              "orbit.maDeg",
+              "orbit.periodD",
+              "horizonId"
+            ]
+          },
+          {
+            "name": "JPL SSD Planetary Physical Parameters",
+            "url": "https://ssd.jpl.nasa.gov/planets/phys_par.html",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.densityGcm3",
+              "facts.rotationPeriodD",
+              "facts.albedo"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-11T01:39:34.674Z",
+        "unitsVersion": 1
+      }
     },
     {
       "id": "jupiter",
       "name": "Jupiter",
       "kind": "planet",
       "facts": {
-        "massKg": 1.8982e27,
+        "massKg": 1.898125e+27,
         "radiusMeanKm": 69911,
-        "densityGcm3": 1.33,
+        "discoveryNotes": "Known since antiquity",
+        "densityGcm3": 1.3262,
         "rotationPeriodD": 0.41354,
-        "albedo": 0.503,
-        "discoveryNotes": "Known since antiquity"
+        "albedo": 0.52
       },
       "orbit": {
-        "epochJd": 2451545.0,
-        "aAu": 5.2044,
-        "e": 0.0489,
-        "iDeg": 1.303,
-        "omDeg": 100.464,
-        "wDeg": 273.867,
-        "maDeg": 20.02,
-        "periodD": 4332.59
+        "epochJd": 2451545,
+        "aAu": 5.204336211826348,
+        "e": 0.04878759429164036,
+        "iDeg": 1.30463058652005,
+        "omDeg": 100.4911499502671,
+        "wDeg": 275.0690666066695,
+        "maDeg": 18.81562710723796,
+        "periodD": 4334.502482619944
       },
       "color": "#C88B3A",
-      "meta": { "source": "JPL SSD / NASA planetary fact sheet (approx)", "unitsVersion": 1 }
+      "horizonId": "599",
+      "meta": {
+        "source": "JPL Horizons + SSD phys_par",
+        "sources": [
+          {
+            "name": "JPL Horizons API (ELEMENTS @ J2000)",
+            "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='599'&EPHEM_TYPE=ELEMENTS&CENTER='500@10'&START_TIME='JD2451545.0'",
+            "fields": [
+              "orbit.epochJd",
+              "orbit.aAu",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.omDeg",
+              "orbit.wDeg",
+              "orbit.maDeg",
+              "orbit.periodD",
+              "horizonId"
+            ]
+          },
+          {
+            "name": "JPL SSD Planetary Physical Parameters",
+            "url": "https://ssd.jpl.nasa.gov/planets/phys_par.html",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.densityGcm3",
+              "facts.rotationPeriodD",
+              "facts.albedo"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-11T01:39:34.674Z",
+        "unitsVersion": 1
+      }
     },
     {
       "id": "saturn",
       "name": "Saturn",
       "kind": "planet",
       "facts": {
-        "massKg": 5.6834e26,
+        "massKg": 5.68317e+26,
         "radiusMeanKm": 58232,
-        "densityGcm3": 0.687,
+        "discoveryNotes": "Known since antiquity",
+        "densityGcm3": 0.6871,
         "rotationPeriodD": 0.44401,
-        "albedo": 0.342,
-        "discoveryNotes": "Known since antiquity"
+        "albedo": 0.47
       },
       "orbit": {
-        "epochJd": 2451545.0,
-        "aAu": 9.5826,
-        "e": 0.0565,
-        "iDeg": 2.485,
-        "omDeg": 113.665,
-        "wDeg": 339.392,
-        "maDeg": 317.02,
-        "periodD": 10759.22
+        "epochJd": 2451545,
+        "aAu": 9.581929200478722,
+        "e": 0.05563834267345058,
+        "iDeg": 2.484252387625145,
+        "omDeg": 113.6996600266686,
+        "wDeg": 335.8655937185864,
+        "maDeg": 320.4255572592746,
+        "periodD": 10832.17850474218
       },
       "color": "#E4D191",
-      "meta": { "source": "JPL SSD / NASA planetary fact sheet (approx)", "unitsVersion": 1 }
+      "horizonId": "699",
+      "meta": {
+        "source": "JPL Horizons + SSD phys_par",
+        "sources": [
+          {
+            "name": "JPL Horizons API (ELEMENTS @ J2000)",
+            "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='699'&EPHEM_TYPE=ELEMENTS&CENTER='500@10'&START_TIME='JD2451545.0'",
+            "fields": [
+              "orbit.epochJd",
+              "orbit.aAu",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.omDeg",
+              "orbit.wDeg",
+              "orbit.maDeg",
+              "orbit.periodD",
+              "horizonId"
+            ]
+          },
+          {
+            "name": "JPL SSD Planetary Physical Parameters",
+            "url": "https://ssd.jpl.nasa.gov/planets/phys_par.html",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.densityGcm3",
+              "facts.rotationPeriodD",
+              "facts.albedo"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-11T01:39:34.674Z",
+        "unitsVersion": 1
+      }
     },
     {
       "id": "uranus",
       "name": "Uranus",
       "kind": "planet",
       "facts": {
-        "massKg": 8.6810e25,
+        "massKg": 8.68099e+25,
         "radiusMeanKm": 25362,
+        "discoveryNotes": "Discovered 1781 by William Herschel",
         "densityGcm3": 1.27,
         "rotationPeriodD": -0.71833,
-        "albedo": 0.3,
-        "discoveryNotes": "Discovered 1781 by William Herschel"
+        "albedo": 0.51
       },
       "orbit": {
-        "epochJd": 2451545.0,
-        "aAu": 19.2184,
-        "e": 0.0463,
-        "iDeg": 0.773,
-        "omDeg": 74.006,
-        "wDeg": 96.998,
-        "maDeg": 142.24,
-        "periodD": 30688.5
+        "epochJd": 2451545,
+        "aAu": 19.23014765915149,
+        "e": 0.04439276513323943,
+        "iDeg": 0.7726757776955633,
+        "omDeg": 74.00474642693433,
+        "wDeg": 96.58872479766525,
+        "maDeg": 142.8895756517994,
+        "periodD": 30800.86231423645
       },
       "color": "#7EC8E3",
-      "meta": { "source": "JPL SSD / NASA planetary fact sheet (approx)", "unitsVersion": 1 }
+      "horizonId": "799",
+      "meta": {
+        "source": "JPL Horizons + SSD phys_par",
+        "sources": [
+          {
+            "name": "JPL Horizons API (ELEMENTS @ J2000)",
+            "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='799'&EPHEM_TYPE=ELEMENTS&CENTER='500@10'&START_TIME='JD2451545.0'",
+            "fields": [
+              "orbit.epochJd",
+              "orbit.aAu",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.omDeg",
+              "orbit.wDeg",
+              "orbit.maDeg",
+              "orbit.periodD",
+              "horizonId"
+            ]
+          },
+          {
+            "name": "JPL SSD Planetary Physical Parameters",
+            "url": "https://ssd.jpl.nasa.gov/planets/phys_par.html",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.densityGcm3",
+              "facts.rotationPeriodD",
+              "facts.albedo"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-11T01:39:34.674Z",
+        "unitsVersion": 1
+      }
     },
     {
       "id": "neptune",
       "name": "Neptune",
       "kind": "planet",
       "facts": {
-        "massKg": 1.02413e26,
+        "massKg": 1.024092e+26,
         "radiusMeanKm": 24622,
-        "densityGcm3": 1.64,
+        "discoveryNotes": "Discovered 1846 by Galle (Adams/Le Verrier prediction)",
+        "densityGcm3": 1.638,
         "rotationPeriodD": 0.67125,
-        "albedo": 0.29,
-        "discoveryNotes": "Discovered 1846 by Galle (Adams/Le Verrier prediction)"
+        "albedo": 0.41
       },
       "orbit": {
-        "epochJd": 2451545.0,
-        "aAu": 30.11,
-        "e": 0.009456,
-        "iDeg": 1.767,
-        "omDeg": 131.784,
-        "wDeg": 276.336,
-        "maDeg": 256.228,
-        "periodD": 60182
+        "epochJd": 2451545,
+        "aAu": 30.09392256174911,
+        "e": 0.0112035281453876,
+        "iDeg": 1.770214094050088,
+        "omDeg": 131.7838769748161,
+        "wDeg": 267.3158054938996,
+        "maDeg": 266.105015787093,
+        "periodD": 60298.35191079151
       },
       "color": "#5B5DDF",
-      "meta": { "source": "JPL SSD / NASA planetary fact sheet (approx)", "unitsVersion": 1 }
+      "horizonId": "899",
+      "meta": {
+        "source": "JPL Horizons + SSD phys_par",
+        "sources": [
+          {
+            "name": "JPL Horizons API (ELEMENTS @ J2000)",
+            "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='899'&EPHEM_TYPE=ELEMENTS&CENTER='500@10'&START_TIME='JD2451545.0'",
+            "fields": [
+              "orbit.epochJd",
+              "orbit.aAu",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.omDeg",
+              "orbit.wDeg",
+              "orbit.maDeg",
+              "orbit.periodD",
+              "horizonId"
+            ]
+          },
+          {
+            "name": "JPL SSD Planetary Physical Parameters",
+            "url": "https://ssd.jpl.nasa.gov/planets/phys_par.html",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.densityGcm3",
+              "facts.rotationPeriodD",
+              "facts.albedo"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-11T01:39:34.674Z",
+        "unitsVersion": 1
+      }
     },
     {
       "id": "pluto",
       "name": "Pluto",
       "kind": "dwarf_planet",
       "facts": {
-        "massKg": 1.303e22,
+        "massKg": 1.30246e+22,
         "radiusMeanKm": 1188.3,
-        "densityGcm3": 1.854,
+        "discoveryNotes": "Discovered 1930 by Clyde Tombaugh; reclassified dwarf planet 2006",
+        "densityGcm3": 1.853,
         "rotationPeriodD": -6.3872,
-        "albedo": 0.52,
-        "discoveryNotes": "Discovered 1930 by Clyde Tombaugh; reclassified dwarf planet 2006"
+        "albedo": 0.3
       },
       "orbit": {
-        "epochJd": 2451545.0,
-        "aAu": 39.482,
-        "e": 0.2488,
-        "iDeg": 17.16,
-        "omDeg": 110.299,
-        "wDeg": 113.834,
-        "maDeg": 14.53,
-        "periodD": 90560
+        "epochJd": 2451545,
+        "aAu": 39.57126152242962,
+        "e": 0.2494484952274253,
+        "iDeg": 17.23565301572196,
+        "omDeg": 110.03993995362,
+        "wDeg": 115.178665976094,
+        "maDeg": 14.14365453678677,
+        "periodD": 90921.85108674582
       },
       "color": "#C9B8A8",
-      "meta": { "source": "JPL SSD / NASA fact sheet (approx)", "unitsVersion": 1 }
+      "horizonId": "999",
+      "meta": {
+        "source": "JPL Horizons + SSD phys_par",
+        "sources": [
+          {
+            "name": "JPL Horizons API (ELEMENTS @ J2000)",
+            "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND='999'&EPHEM_TYPE=ELEMENTS&CENTER='500@10'&START_TIME='JD2451545.0'",
+            "fields": [
+              "orbit.epochJd",
+              "orbit.aAu",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.omDeg",
+              "orbit.wDeg",
+              "orbit.maDeg",
+              "orbit.periodD",
+              "horizonId"
+            ]
+          },
+          {
+            "name": "JPL SSD Planetary Physical Parameters",
+            "url": "https://ssd.jpl.nasa.gov/planets/phys_par.html",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.densityGcm3",
+              "facts.rotationPeriodD",
+              "facts.albedo"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-11T01:39:34.674Z",
+        "unitsVersion": 1
+      }
     },
     {
       "id": "ceres",
       "name": "Ceres",
       "kind": "asteroid",
-      "aliases": ["1 Ceres"],
+      "aliases": [
+        "1 Ceres"
+      ],
       "facts": {
-        "massKg": 9.3835e20,
+        "discoveryNotes": "Discovered 1801 by Giuseppe Piazzi; also classified as dwarf planet",
         "radiusMeanKm": 469.7,
-        "densityGcm3": 2.16,
-        "rotationPeriodD": 0.3781,
+        "densityGcm3": 2.162,
         "albedo": 0.09,
-        "discoveryNotes": "Discovered 1801 by Giuseppe Piazzi; also classified as dwarf planet"
+        "rotationPeriodD": 0.3780904166666667,
+        "massKg": 938351587432390100000
       },
       "orbit": {
-        "epochJd": 2451545.0,
-        "aAu": 2.7675,
-        "e": 0.0785,
-        "iDeg": 10.593,
-        "omDeg": 80.305,
-        "wDeg": 73.597,
-        "maDeg": 95.989,
-        "periodD": 1681.6
+        "epochJd": 2461200.5,
+        "aAu": 2.765552595034094,
+        "e": 0.07969229514816586,
+        "iDeg": 10.58802780183462,
+        "omDeg": 80.24862682043221,
+        "wDeg": 73.29421453021587,
+        "maDeg": 274.4193463761342,
+        "periodD": 1679.853119758983
       },
       "color": "#8A8A8A",
-      "meta": { "source": "JPL SSD small-body DB (approx)", "unitsVersion": 1 }
+      "sbdbDes": "1",
+      "meta": {
+        "source": "JPL SBDB (full-prec + phys-par)",
+        "sources": [
+          {
+            "name": "JPL SBDB API",
+            "url": "https://ssd-api.jpl.nasa.gov/sbdb.api?des=1&phys-par=true&full-prec=true",
+            "fields": [
+              "orbit.aAu",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.omDeg",
+              "orbit.wDeg",
+              "orbit.maDeg",
+              "orbit.periodD",
+              "orbit.epochJd",
+              "facts.radiusMeanKm",
+              "facts.massKg",
+              "facts.densityGcm3",
+              "facts.albedo",
+              "facts.rotationPeriodD",
+              "sbdbDes"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-11T01:39:34.674Z",
+        "unitsVersion": 1
+      }
     },
     {
       "id": "vesta",
       "name": "Vesta",
       "kind": "asteroid",
-      "aliases": ["4 Vesta"],
+      "aliases": [
+        "4 Vesta"
+      ],
       "facts": {
-        "massKg": 2.5908e20,
-        "radiusMeanKm": 262.7,
-        "densityGcm3": 3.456,
-        "rotationPeriodD": 0.2226,
-        "albedo": 0.423,
-        "discoveryNotes": "Discovered 1807 by Heinrich Olbers"
+        "discoveryNotes": "Discovered 1807 by Heinrich Olbers",
+        "radiusMeanKm": 261.385,
+        "densityGcm3": 3.46,
+        "albedo": 0.4228,
+        "rotationPeriodD": 0.2225886513416667,
+        "massKg": 259027679307193300000
       },
       "orbit": {
-        "epochJd": 2451545.0,
-        "aAu": 2.3617,
-        "e": 0.0887,
-        "iDeg": 7.140,
-        "omDeg": 103.851,
-        "wDeg": 151.198,
-        "maDeg": 20.863,
-        "periodD": 1325.5
+        "epochJd": 2461200.5,
+        "aAu": 2.361365965127599,
+        "e": 0.09020374382834395,
+        "iDeg": 7.143925545058711,
+        "omDeg": 103.701293265032,
+        "wDeg": 151.4686478221564,
+        "maDeg": 81.19015607686903,
+        "periodD": 1325.389042911101
       },
       "color": "#A8A090",
-      "meta": { "source": "JPL SSD small-body DB (approx)", "unitsVersion": 1 }
+      "sbdbDes": "4",
+      "meta": {
+        "source": "JPL SBDB (full-prec + phys-par)",
+        "sources": [
+          {
+            "name": "JPL SBDB API",
+            "url": "https://ssd-api.jpl.nasa.gov/sbdb.api?des=4&phys-par=true&full-prec=true",
+            "fields": [
+              "orbit.aAu",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.omDeg",
+              "orbit.wDeg",
+              "orbit.maDeg",
+              "orbit.periodD",
+              "orbit.epochJd",
+              "facts.radiusMeanKm",
+              "facts.massKg",
+              "facts.densityGcm3",
+              "facts.albedo",
+              "facts.rotationPeriodD",
+              "sbdbDes"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-11T01:39:34.674Z",
+        "unitsVersion": 1
+      }
     },
     {
       "id": "pallas",
       "name": "Pallas",
       "kind": "asteroid",
-      "aliases": ["2 Pallas"],
+      "aliases": [
+        "2 Pallas"
+      ],
       "facts": {
-        "massKg": 2.04e20,
-        "radiusMeanKm": 256,
-        "densityGcm3": 2.92,
-        "rotationPeriodD": 0.32555,
-        "albedo": 0.101,
-        "discoveryNotes": "Discovered 1802 by Heinrich Olbers"
+        "discoveryNotes": "Discovered 1802 by Heinrich Olbers",
+        "radiusMeanKm": 256.5,
+        "densityGcm3": 2.89,
+        "albedo": 0.155,
+        "rotationPeriodD": 0.3255508916666667,
+        "massKg": 204216172482507540000
       },
       "orbit": {
-        "epochJd": 2451545.0,
-        "aAu": 2.772,
-        "e": 0.230,
-        "iDeg": 34.84,
-        "omDeg": 173.0,
-        "wDeg": 310.0,
-        "maDeg": 40.0,
-        "periodD": 1686
+        "epochJd": 2461200.5,
+        "aAu": 2.769559010737709,
+        "e": 0.2307000995648547,
+        "iDeg": 34.93279321851542,
+        "omDeg": 172.8866193357694,
+        "wDeg": 310.9699161652136,
+        "maDeg": 254.2496521742734,
+        "periodD": 1683.504809564834
       },
       "color": "#9A9590",
-      "meta": { "source": "JPL SSD small-body DB (approx)", "unitsVersion": 1 }
+      "sbdbDes": "2",
+      "meta": {
+        "source": "JPL SBDB (full-prec + phys-par)",
+        "sources": [
+          {
+            "name": "JPL SBDB API",
+            "url": "https://ssd-api.jpl.nasa.gov/sbdb.api?des=2&phys-par=true&full-prec=true",
+            "fields": [
+              "orbit.aAu",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.omDeg",
+              "orbit.wDeg",
+              "orbit.maDeg",
+              "orbit.periodD",
+              "orbit.epochJd",
+              "facts.radiusMeanKm",
+              "facts.massKg",
+              "facts.densityGcm3",
+              "facts.albedo",
+              "facts.rotationPeriodD",
+              "sbdbDes"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-11T01:39:34.674Z",
+        "unitsVersion": 1
+      }
     },
     {
       "id": "hygiea",
       "name": "Hygiea",
       "kind": "asteroid",
-      "aliases": ["10 Hygiea"],
+      "aliases": [
+        "10 Hygiea"
+      ],
       "facts": {
-        "massKg": 8.32e19,
-        "radiusMeanKm": 217,
-        "densityGcm3": 1.94,
-        "rotationPeriodD": 1.151,
-        "albedo": 0.072,
-        "discoveryNotes": "Discovered 1849 by Annibale de Gasparis"
+        "discoveryNotes": "Discovered 1849 by Annibale de Gasparis",
+        "radiusMeanKm": 203.56,
+        "albedo": 0.0717,
+        "rotationPeriodD": 0.5761666666666666,
+        "massKg": 104879912500187300000
       },
       "orbit": {
-        "epochJd": 2451545.0,
-        "aAu": 3.142,
-        "e": 0.117,
-        "iDeg": 3.83,
-        "omDeg": 283.2,
-        "wDeg": 312.3,
-        "maDeg": 155.0,
-        "periodD": 2031
+        "epochJd": 2461200.5,
+        "aAu": 3.150974033963701,
+        "e": 0.1067092741240963,
+        "iDeg": 3.829529946447122,
+        "omDeg": 283.1198927508594,
+        "wDeg": 312.4242387344704,
+        "maDeg": 252.0344242359649,
+        "periodD": 2042.987283349627
       },
       "color": "#7A7A78",
-      "meta": { "source": "JPL SSD small-body DB (approx)", "unitsVersion": 1 }
+      "sbdbDes": "10",
+      "meta": {
+        "source": "JPL SBDB (full-prec + phys-par)",
+        "sources": [
+          {
+            "name": "JPL SBDB API",
+            "url": "https://ssd-api.jpl.nasa.gov/sbdb.api?des=10&phys-par=true&full-prec=true",
+            "fields": [
+              "orbit.aAu",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.omDeg",
+              "orbit.wDeg",
+              "orbit.maDeg",
+              "orbit.periodD",
+              "orbit.epochJd",
+              "facts.radiusMeanKm",
+              "facts.massKg",
+              "facts.albedo",
+              "facts.rotationPeriodD",
+              "sbdbDes"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-11T01:39:34.674Z",
+        "unitsVersion": 1
+      }
     }
   ]
 }

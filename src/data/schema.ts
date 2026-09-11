@@ -28,7 +28,17 @@ export const FactsSchema = z.object({
 });
 
 export const BodyMetaSchema = z.object({
-  source: z.string(),
+  source: z.string(), // keep as primary human-readable label
+  sources: z
+    .array(
+      z.object({
+        name: z.string(),
+        url: z.string().url(),
+        fields: z.array(z.string()).optional(),
+      }),
+    )
+    .optional(),
+  fetchedAt: z.string().optional(), // ISO-8601
   unitsVersion: z.literal(1),
 });
 
@@ -40,6 +50,8 @@ export const BodySchema = z.object({
   facts: FactsSchema,
   orbit: OrbitSchema.optional(),
   color: z.string().optional(),
+  horizonId: z.string().optional(),
+  sbdbDes: z.string().optional(),
   meta: BodyMetaSchema,
 });
 
