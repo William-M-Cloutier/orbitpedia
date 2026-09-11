@@ -72,7 +72,8 @@ export function TopBar() {
                     onClick={() => {
                       setQ("");
                       setOpen(false);
-                      router.push(`/body/${b.id}`);
+                      // Phase 1: focus in Explore; full page via FactsPanel secondary link
+                      router.push(`/?focus=${encodeURIComponent(b.id)}`);
                     }}
                   >
                     <span className="text-zinc-100">{b.name}</span>

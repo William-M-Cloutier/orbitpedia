@@ -1,26 +1,52 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { Suspense, useCallback, useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { AppShell } from "@/components/ui/AppShell";
 import { BodyRail } from "@/components/ui/BodyRail";
 import { FactsPanel } from "@/components/ui/FactsPanel";
 import { OrbitCanvas } from "@/viz/OrbitCanvas";
 import { getBody } from "@/data/catalog";
 
-export default function ExploreHomePage() {
+function ExploreHome() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const focusParam = searchParams.get("focus");
+
   const [focusId, setFocusId] = useState<string | null>(null);
   const focus = focusId ? getBody(focusId) : undefined;
 
-  const onSelect = useCallback((id: string) => setFocusId(id), []);
-  const onClear = useCallback(() => setFocusId(null), []);
+  // Hydrate (and re-hydrate) from ?focus=
+  useEffect(() => {
+    if (focusParam) {
+      setFocusId(getBody(focusParam) ? focusParam : null);
+      return;
+    }
+    setFocusId(null);
+  }, [focusParam]);
+
+  const setFocus = useCallback(
+    (id: string | null) => {
+      setFocusId(id);
+      if (id && getBody(id)) {
+        router.replace(`/?focus=${encodeURIComponent(id)}`, { scroll: false });
+      } else {
+        router.replace("/", { scroll: false });
+      }
+    },
+    [router],
+  );
+
+  const onSelect = useCallback((id: string) => setFocus(id), [setFocus]);
+  const onClear = useCallback(() => setFocus(null), [setFocus]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setFocusId(null);
+      if (e.key === "Escape") setFocus(null);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, []);
+  }, [setFocus]);
 
   return (
     <AppShell rail={<BodyRail activeId={focusId ?? undefined} onFocus={onSelect} />}>
@@ -42,5 +68,19 @@ export default function ExploreHomePage() {
         <FactsPanel body={focus} onClear={onClear} />
       </div>
     </AppShell>
+  );
+}
+
+export default function ExploreHomePage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-[calc(100vh-3.5rem)] items-center justify-center text-sm text-zinc-500">
+          Loading Explore…
+        </div>
+      }
+    >
+      <ExploreHome />
+    </Suspense>
   );
 }

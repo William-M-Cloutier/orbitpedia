@@ -58,7 +58,7 @@ export default async function BodyPage({ params }: Props) {
             </div>
           </div>
           <Link
-            href={`/explore`}
+            href={`/?focus=${encodeURIComponent(body.id)}`}
             className="rounded-lg bg-sky-500/20 px-4 py-2 text-sm text-sky-200 hover:bg-sky-500/30"
           >
             Open in Explore →
