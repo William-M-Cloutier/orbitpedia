@@ -4,6 +4,7 @@ import { Canvas, useThree } from "@react-three/fiber";
 import { OrbitControls, Line } from "@react-three/drei";
 import { useMemo, useCallback, memo, useEffect } from "react";
 import * as THREE from "three";
+import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 import { bodies } from "@/data/catalog";
 import type { Body } from "@/data/schema";
 import { positionAtMa, sampleOrbit } from "@/lib/kepler";
@@ -89,7 +90,9 @@ const BodyMesh = memo(function BodyMesh({
 });
 
 function FocusCamera({ focusId }: { focusId?: string }) {
-  const { camera, controls } = useThree();
+  const camera = useThree((s) => s.camera);
+  const controls = useThree((s) => s.controls) as OrbitControlsImpl | null;
+  const invalidate = useThree((s) => s.invalidate);
 
   useEffect(() => {
     let target: [number, number, number] = [0, 0, 0];
@@ -104,13 +107,12 @@ function FocusCamera({ focusId }: { focusId?: string }) {
     }
     camera.position.set(target[0] + dist * 0.6, dist * 0.45, target[2] + dist * 0.7);
     camera.lookAt(target[0], target[1], target[2]);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const ctrl = controls as any;
-    if (ctrl?.target) {
-      ctrl.target.set(target[0], target[1], target[2]);
-      ctrl.update?.();
+    if (controls?.target) {
+      controls.target.set(target[0], target[1], target[2]);
+      controls.update();
     }
-  }, [focusId, camera, controls]);
+    invalidate();
+  }, [focusId, camera, controls, invalidate]);
 
   return null;
 }
@@ -147,6 +149,7 @@ export function OrbitScene({ focusId, onSelect }: Props) {
   return (
     <div className="h-full w-full">
       <Canvas
+        frameloop="demand"
         camera={{ position: [0, 8, 14], fov: 45, near: 0.01, far: 200 }}
         dpr={[1, 1.5]}
         gl={{ antialias: true, powerPreference: "high-performance" }}

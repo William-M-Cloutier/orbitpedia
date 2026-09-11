@@ -11,7 +11,7 @@ import {
   formatPeriodDays,
   formatRadius,
 } from "@/lib/units";
-import { CatalogCharts } from "@/viz/charts";
+import { CatalogChartsLazy } from "@/viz/CatalogChartsLazy";
 
 type Props = { params: Promise<{ id: string }> };
 
@@ -158,7 +158,7 @@ export default async function BodyPage({ params }: Props) {
           <h2 className="mb-4 text-lg font-medium text-zinc-200">
             Catalog graphs
           </h2>
-          <CatalogCharts />
+          <CatalogChartsLazy />
         </section>
       </div>
     </AppShell>

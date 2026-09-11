@@ -2,7 +2,6 @@ import Link from "next/link";
 import { AppShell } from "@/components/ui/AppShell";
 import { BodyRail } from "@/components/ui/BodyRail";
 import { bodies, KIND_LABEL } from "@/data/catalog";
-import { CatalogCharts } from "@/viz/charts";
 
 export default function SearchPage() {
   return (
@@ -45,12 +44,6 @@ export default function SearchPage() {
           ))}
         </section>
 
-        <section>
-          <h2 className="mb-4 text-lg font-medium text-zinc-200">
-            Catalog graphs
-          </h2>
-          <CatalogCharts />
-        </section>
       </div>
     </AppShell>
   );
