@@ -18,6 +18,11 @@ import {
 } from "@/components/ui/SpeedControl";
 import { OrbitCanvas } from "@/viz/OrbitCanvas";
 import { getBody } from "@/data/catalog";
+import {
+  SizeModeControl,
+  DEFAULT_SIZE_MODE,
+} from "@/components/ui/SizeModeControl";
+import type { SizeMode } from "@/viz/sizeTiers";
 
 function ExploreHome() {
   const router = useRouter();
@@ -26,6 +31,7 @@ function ExploreHome() {
 
   const [focusId, setFocusId] = useState<string | null>(null);
   const [speedMultiple, setSpeedMultiple] = useState(DEFAULT_SPEED_PRESET.multiple);
+  const [sizeMode, setSizeMode] = useState<SizeMode>(DEFAULT_SIZE_MODE);
   const focus = focusId ? getBody(focusId) : undefined;
   const simDaysPerSec = useMemo(
     () => multipleToDaysPerSec(speedMultiple),
@@ -81,8 +87,11 @@ function ExploreHome() {
             <div>
               <h1 className="text-sm font-medium text-zinc-200">Explore</h1>
               <p className="text-xs text-zinc-500">
-                Size tiers are schematic — not true scale. Click to follow;
-                click again or right-click to clear; Esc also clears.
+                {sizeMode === "proportional"
+                  ? "Proportional radii (sun capped for orbit clearance). "
+                  : "Schematic size tiers — not true scale. "}
+                Click to follow; click again or right-click to clear; Esc also
+                clears.
               </p>
             </div>
           </div>
@@ -93,12 +102,14 @@ function ExploreHome() {
                 onSelect={onSelect}
                 highlightColor={focus?.color}
                 simDaysPerSec={simDaysPerSec}
+                sizeMode={sizeMode}
               />
-              <div className="pointer-events-none absolute bottom-3 left-3 z-10 flex justify-start">
+              <div className="pointer-events-none absolute bottom-3 left-3 z-10 flex flex-col gap-2 items-start">
                 <SpeedControl
                   multiple={speedMultiple}
                   onMultipleChange={setSpeedMultiple}
                 />
+                <SizeModeControl mode={sizeMode} onModeChange={setSizeMode} />
               </div>
             </div>
             {/*

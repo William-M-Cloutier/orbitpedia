@@ -17,7 +17,11 @@ import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 import { bodies } from "@/data/catalog";
 import type { Body } from "@/data/schema";
 import { periodFromA, positionAtMa, sampleOrbit } from "@/lib/kepler";
-import { visualRadius } from "./sizeTiers";
+import {
+  DEFAULT_SIZE_MODE,
+  visualRadius,
+  type SizeMode,
+} from "./sizeTiers";
 
 type Props = {
   focusId?: string | null;
@@ -25,6 +29,8 @@ type Props = {
   highlightColor?: string;
   /** Simulated days advanced per real second (idle + follow). UI owns presets. */
   simDaysPerSec?: number;
+  /** Mesh size mode — render layer on catalog radii (default schematic). */
+  sizeMode?: SizeMode;
   /**
    * Canvas-space insets (px) covered by Explore overlays. BodyRail is a flex
    * sibling (outside the canvas) so left is usually 0; Facts overlays the
@@ -36,6 +42,12 @@ type Props = {
 
 /** Fallback when UI omits speed — matches Explore Default preset (0.2 d/s = 1 day / 5s). */
 const DEFAULT_SIM_DAYS_PER_SEC = 0.2;
+
+const SizeModeContext = createContext<SizeMode>(DEFAULT_SIZE_MODE);
+function useSizeMode(): SizeMode {
+  return useContext(SizeModeContext);
+}
+
 
 type SimApi = {
   /** Shared simulated days since Explore mounted (paused while tab hidden). */
@@ -236,7 +248,8 @@ const BodyMesh = memo(function BodyMesh({
 }) {
   const group = useRef<THREE.Group>(null);
   const { getSimDays } = useSimApi();
-  const r = visualRadius(body);
+  const sizeMode = useSizeMode();
+  const r = visualRadius(body, sizeMode);
   const color = body.color ?? "#888";
   const accent = highlightColor ?? color;
 
@@ -354,8 +367,9 @@ function focusFrameDistance(
   fovYDeg: number,
   aspect: number = 1,
   fill: number = FOCUS_FILL,
+  sizeMode: SizeMode = DEFAULT_SIZE_MODE,
 ): number {
-  const r = visualRadius(body) * focusMeshScale(body);
+  const r = visualRadius(body, sizeMode) * focusMeshScale(body);
   const halfRad = ((fovYDeg * Math.PI) / 180) / 2;
   const tanHalf = Math.tan(halfRad);
   if (!(tanHalf > 1e-6) || !(fill > 1e-6)) return 12;
@@ -437,6 +451,7 @@ function ViewOffsetController({
  * Idle OrbitControls still work — we do not overwrite pose every idle frame.
  */
 function FollowCamera() {
+  const sizeMode = useSizeMode();
   const { getSimDays, getFollowing, getFocusId, getBaryOffset } = useSimApi();
   const focusId = getFocusId();
   const camera = useThree((s) => s.camera);
@@ -495,7 +510,7 @@ function FollowCamera() {
       camera instanceof THREE.PerspectiveCamera
         ? visibleAspect(camera)
         : 1;
-    const dist = focusFrameDistance(b, fovY, aspect);
+    const dist = focusFrameDistance(b, fovY, aspect, FOCUS_FILL, sizeMode);
     target.current.set(pos[0], pos[1], pos[2]);
     desired.current.copy(target.current);
     // Pleasant elevation/azimuth at EXACT framing distance (fill is distance).
@@ -742,6 +757,7 @@ function SceneContent({
   onSelect,
   highlightColor,
   simDaysPerSec,
+  sizeMode = DEFAULT_SIZE_MODE,
   viewInsetLeft = 0,
   viewInsetRight = 0,
 }: Props) {
@@ -756,6 +772,7 @@ function SceneContent({
   const invalidate = useThree((s) => s.invalidate);
 
   return (
+    <SizeModeContext.Provider value={sizeMode}>
     <SimProvider focusId={focusId} simDaysPerSec={simDaysPerSec}>
       <color attach="background" args={["#02040a"]} />
       <Starfield />
@@ -773,7 +790,7 @@ function SceneContent({
         ))}
         {bodies.map((b) => (
           <BodyMesh
-            key={b.id}
+            key={`${b.id}-${sizeMode}`}
             body={b}
             focused={focusId === b.id}
             onSelect={onSelect}
@@ -798,6 +815,7 @@ function SceneContent({
       />
       <FollowCamera />
     </SimProvider>
+    </SizeModeContext.Provider>
   );
 }
 
@@ -806,6 +824,7 @@ export function OrbitScene({
   onSelect,
   highlightColor,
   simDaysPerSec,
+  sizeMode = DEFAULT_SIZE_MODE,
   viewInsetLeft = 0,
   viewInsetRight = 0,
 }: Props) {
@@ -831,6 +850,7 @@ export function OrbitScene({
           onSelect={onSelect}
           highlightColor={highlightColor}
           simDaysPerSec={simDaysPerSec}
+          sizeMode={sizeMode}
           viewInsetLeft={viewInsetLeft}
           viewInsetRight={viewInsetRight}
         />

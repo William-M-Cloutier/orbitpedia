@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
+import type { SizeMode } from "./sizeTiers";
 
 const OrbitScene = dynamic(
   () => import("./OrbitScene").then((m) => m.OrbitScene),
@@ -21,6 +22,7 @@ type Props = {
   highlightColor?: string;
   /** Simulated days advanced per real second (idle + follow). UI owns presets. */
   simDaysPerSec?: number;
+  sizeMode?: SizeMode;
   /** Canvas-space overlay insets for setViewOffset (see OrbitScene). */
   viewInsetLeft?: number;
   viewInsetRight?: number;
