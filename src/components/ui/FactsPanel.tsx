@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { KIND_LABEL } from "@/data/catalog";
-import { bodyProvenance, type Body } from "@/data/schema";
+import { bodyProvenance, type Body, type System } from "@/data/schema";
+import { SystemFacts } from "@/components/ui/SystemFacts";
 import { periodFromA } from "@/lib/kepler";
 import {
   formatAu,
@@ -15,6 +16,8 @@ import {
 
 type Props = {
   body: Body | null | undefined;
+  /** Active system — shown when nothing is focused. */
+  system?: System | null;
   onClear?: () => void;
 };
 
@@ -90,15 +93,27 @@ function SourcesList({ body }: { body: Body }) {
 }
 
 
-export function FactsPanel({ body, onClear }: Props) {
+export function FactsPanel({ body, system, onClear }: Props) {
   const [expanded, setExpanded] = useState(false);
 
   useEffect(() => {
     setExpanded(false);
   }, [body?.id]);
 
-  // Hidden entirely when nothing is focused — no empty stub taking layout space.
-  if (!body) return null;
+  // Empty selection: lean system facts (not a blank column).
+  if (!body) {
+    if (!system) return null;
+    return (
+      <aside className="pointer-events-auto flex max-h-[45vh] w-full flex-col overflow-hidden border-t border-white/10 bg-[#080d18]/95 backdrop-blur md:max-h-none md:h-full md:w-full md:border-l md:border-t-0">
+        <div className="flex-1 overflow-y-auto p-4">
+          <SystemFacts system={system} />
+          <p className="mt-4 text-xs text-zinc-600">
+            Select a body in the scene or rail for body facts.
+          </p>
+        </div>
+      </aside>
+    );
+  }
 
   const period =
     body.orbit?.periodD ??

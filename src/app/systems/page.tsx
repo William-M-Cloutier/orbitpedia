@@ -6,9 +6,11 @@ import { AppShell } from "@/components/ui/AppShell";
 import {
   getBodiesForSystem,
   getHomeSystem,
+  getSystem,
   listSystems,
 } from "@/data/catalog";
 import { hasUsableOrbit } from "@/data/schema";
+import { SystemFacts } from "@/components/ui/SystemFacts";
 
 /** Inter-system node spacing — Schematic / Proportional only (no True). */
 type MapSpacing = "schematic" | "proportional";
@@ -271,6 +273,34 @@ function SystemMapView() {
           semi-major axis as a weight — educational layout only, not light-year
           realism.
         </p>
+
+        <div className="mt-4 grid gap-3 md:grid-cols-2">
+          {nodes.map((n) => {
+            const sys = getSystem(n.id);
+            if (!sys) return null;
+            return (
+              <div
+                key={n.id}
+                className="rounded-xl border border-white/10 bg-[#080d18]/90 p-4"
+              >
+                <SystemFacts system={sys} compact />
+                <button
+                  type="button"
+                  onClick={() => {
+                    const qs =
+                      n.id === homeId
+                        ? "/"
+                        : `/?system=${encodeURIComponent(n.id)}`;
+                    router.push(qs);
+                  }}
+                  className="mt-3 rounded-md border border-sky-500/30 bg-sky-500/15 px-2.5 py-1.5 text-xs text-sky-200 hover:bg-sky-500/25"
+                >
+                  Open in Explore
+                </button>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </AppShell>
   );

@@ -212,7 +212,7 @@ function ExploreHome() {
             */}
             <div className="pointer-events-none hidden w-72 shrink-0 border-l border-white/10 md:block lg:w-80">
               <div className="pointer-events-auto h-full">
-                <FactsPanel body={focus} onClear={onClear} />
+                <FactsPanel body={focus} system={system} onClear={onClear} />
               </div>
             </div>
           </div>
