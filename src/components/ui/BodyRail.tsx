@@ -244,17 +244,15 @@ export function BodyRail({
               >
                 {isCollapsed ? ">" : "<"}
               </button>
-            ) : depth > 0 ? (
-              <span className="w-4 shrink-0 text-center text-[10px] text-zinc-600" aria-hidden>
-                └
-              </span>
             ) : (
-              <span className="w-4 shrink-0" aria-hidden />
+              <span className="inline-flex w-4 shrink-0 justify-center text-[10px] text-zinc-600" aria-hidden>
+                {depth > 0 ? "└" : ""}
+              </span>
             );
 
+          // Twisty is a sibling of the row control — never nest <button> in <button>.
           const label = (
             <>
-              {twisty}
               {swatch}
               <span className="truncate">{b.name}</span>
             </>
@@ -288,19 +286,23 @@ export function BodyRail({
               style={pad}
             >
               {selectMode && onToggleSelect ? (
-                <button
-                  type="button"
-                  onClick={() => onToggleSelect(b.id)}
-                  className={`flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-left text-sm ${
-                    selected
-                      ? "bg-violet-500/20 text-violet-100"
-                      : "text-zinc-300 hover:bg-white/5"
-                  }`}
-                >
-                  {label}
-                </button>
+                <>
+                  {twisty}
+                  <button
+                    type="button"
+                    onClick={() => onToggleSelect(b.id)}
+                    className={`flex min-w-0 flex-1 items-center gap-2 rounded-md px-2 py-1.5 text-left text-sm ${
+                      selected
+                        ? "bg-violet-500/20 text-violet-100"
+                        : "text-zinc-300 hover:bg-white/5"
+                    }`}
+                  >
+                    {label}
+                  </button>
+                </>
               ) : onFocus ? (
                 <>
+                  {twisty}
                   <button
                     type="button"
                     onClick={() => onFocus(b.id)}
@@ -311,9 +313,12 @@ export function BodyRail({
                   {hideBtn}
                 </>
               ) : (
-                <Link href={`/body/${b.id}`} className={rowClass}>
-                  {label}
-                </Link>
+                <>
+                  {twisty}
+                  <Link href={`/body/${b.id}`} className={rowClass}>
+                    {label}
+                  </Link>
+                </>
               )}
             </li>
           );
