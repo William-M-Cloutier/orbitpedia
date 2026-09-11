@@ -54,6 +54,7 @@ const FactsSchema = z.object({
   albedo: z.number().min(0).max(2).optional(), // geometric albedo can exceed 1 (e.g. Enceladus)
   discoveryNotes: z.string().optional(),
   discoveryDate: z.string().optional(),
+  approximateFields: z.array(z.string().min(1)).optional(),
 });
 const BodyMetaSchema = z
   .object({

@@ -3,6 +3,7 @@
 
 import system_kepler_11 from "./systems/kepler-11.json";
 import system_solar from "./systems/solar.json";
+import system_sparse_test from "./systems/sparse-test.json";
 import system_trappist_1 from "./systems/trappist-1.json";
 
 import body_ariel from "./bodies/ariel.json";
@@ -37,6 +38,15 @@ import body_phobos from "./bodies/phobos.json";
 import body_pluto from "./bodies/pluto.json";
 import body_rhea from "./bodies/rhea.json";
 import body_saturn from "./bodies/saturn.json";
+import body_sparse_test_b from "./bodies/sparse-test-b.json";
+import body_sparse_test_c from "./bodies/sparse-test-c.json";
+import body_sparse_test_complete from "./bodies/sparse-test-complete.json";
+import body_sparse_test_d from "./bodies/sparse-test-d.json";
+import body_sparse_test_e from "./bodies/sparse-test-e.json";
+import body_sparse_test_f from "./bodies/sparse-test-f.json";
+import body_sparse_test_g from "./bodies/sparse-test-g.json";
+import body_sparse_test_moon from "./bodies/sparse-test-moon.json";
+import body_sparse_test from "./bodies/sparse-test.json";
 import body_sun from "./bodies/sun.json";
 import body_tethys from "./bodies/tethys.json";
 import body_titan from "./bodies/titan.json";
@@ -55,5 +65,5 @@ import body_uranus from "./bodies/uranus.json";
 import body_venus from "./bodies/venus.json";
 import body_vesta from "./bodies/vesta.json";
 
-export const loadedSystems = [system_kepler_11, system_solar, system_trappist_1];
-export const loadedBodies = [body_ariel, body_callisto, body_ceres, body_charon, body_deimos, body_dione, body_earth, body_enceladus, body_europa, body_ganymede, body_hygiea, body_iapetus, body_io, body_jupiter, body_kepler_11_b, body_kepler_11_c, body_kepler_11_d, body_kepler_11_e, body_kepler_11_f, body_kepler_11_g, body_kepler_11, body_mars, body_mercury, body_miranda, body_moon, body_neptune, body_oberon, body_pallas, body_phobos, body_pluto, body_rhea, body_saturn, body_sun, body_tethys, body_titan, body_titania, body_trappist_1_b, body_trappist_1_c, body_trappist_1_d, body_trappist_1_e, body_trappist_1_f, body_trappist_1_g, body_trappist_1_h, body_trappist_1, body_triton, body_umbriel, body_uranus, body_venus, body_vesta];
+export const loadedSystems = [system_kepler_11, system_solar, system_sparse_test, system_trappist_1];
+export const loadedBodies = [body_ariel, body_callisto, body_ceres, body_charon, body_deimos, body_dione, body_earth, body_enceladus, body_europa, body_ganymede, body_hygiea, body_iapetus, body_io, body_jupiter, body_kepler_11_b, body_kepler_11_c, body_kepler_11_d, body_kepler_11_e, body_kepler_11_f, body_kepler_11_g, body_kepler_11, body_mars, body_mercury, body_miranda, body_moon, body_neptune, body_oberon, body_pallas, body_phobos, body_pluto, body_rhea, body_saturn, body_sparse_test_b, body_sparse_test_c, body_sparse_test_complete, body_sparse_test_d, body_sparse_test_e, body_sparse_test_f, body_sparse_test_g, body_sparse_test_moon, body_sparse_test, body_sun, body_tethys, body_titan, body_titania, body_trappist_1_b, body_trappist_1_c, body_trappist_1_d, body_trappist_1_e, body_trappist_1_f, body_trappist_1_g, body_trappist_1_h, body_trappist_1, body_triton, body_umbriel, body_uranus, body_venus, body_vesta];

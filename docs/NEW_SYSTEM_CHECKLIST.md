@@ -48,3 +48,9 @@ How to build cards consistently: [DATA_SETUP.md](./DATA_SETUP.md).
 - [ ] Hard-refresh new system — all of B–D
 
 Ship only with commit SHA(s) and a short pass/fail note against this list.
+
+## Fixture exception
+
+`sparse-test` is a non-science UI fixture. It must pass catalog/orbit gates but is
+excluded from real-system polish expectations in sections B–E.
+

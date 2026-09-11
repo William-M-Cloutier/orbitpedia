@@ -144,3 +144,16 @@ Ingest scripts may *fetch* APIs; the **cited** URL for Facts links must still be
 - Ship gates: `docs/NEW_SYSTEM_CHECKLIST.md`
 - Solar ingest mechanics: `scripts/INGEST_NOTES.md`
 - Schema: `src/data/schema.ts` (CATALOG_VERSION = 2)
+
+## UI fixture: `sparse-test`
+
+`systemId: sparse-test` (“Sparse Test (fixture)”) is a **non-science** catalog system for Facts / dials / charts edge cases (missing mass → Unknown, omitted albedo, `~` approximateFields, moon with parent, etc.).
+
+- Marked in blurb/highlights as a UI fixture — exclude from real-system polish expectations.
+- Values are placeholders for Explore scale / Kepler gates only; omit fields rather than invent science numbers when testing “missing”.
+- Still must pass `validate:catalog` + `orbit-sanity` (structural gates).
+
+### `facts.approximateFields`
+
+Optional string list of fact keys whose **stored** values should render with a leading `~` (archive-backed estimates). Cite the estimate in `meta.sources`. Never invent estimates just to fill the UI.
+

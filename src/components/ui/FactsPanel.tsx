@@ -5,14 +5,13 @@ import Link from "next/link";
 import { KIND_LABEL } from "@/data/catalog";
 import { bodyProvenance, type Body, type System } from "@/data/schema";
 import { SystemFacts } from "@/components/ui/SystemFacts";
-import { periodFromA } from "@/lib/kepler";
 import {
-  formatAu,
-  formatDensity,
-  formatMass,
-  formatPeriodDays,
-  formatRadius,
-} from "@/lib/units";
+  keyFactRows,
+  quickPhysFactRows,
+  type FactRow,
+} from "@/lib/factsDisplay";
+import { periodFromA } from "@/lib/kepler";
+import { formatAu, formatPeriodDays } from "@/lib/units";
 
 type Props = {
   body: Body | null | undefined;
@@ -21,23 +20,65 @@ type Props = {
   onClear?: () => void;
 };
 
-function Stat({ label, value }: { label: string; value: string }) {
+function Stat({
+  label,
+  value,
+  unknown,
+  reason,
+}: {
+  label: string;
+  value: string;
+  unknown?: boolean;
+  reason?: string;
+}) {
   return (
     <div className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
       <dt className="text-[11px] uppercase tracking-wider text-zinc-500">
         {label}
       </dt>
-      <dd className="mt-0.5 text-sm text-zinc-100">{value}</dd>
+      <dd
+        className={
+          unknown
+            ? "mt-0.5 text-sm text-zinc-500"
+            : "mt-0.5 text-sm text-zinc-100"
+        }
+      >
+        {value}
+        {unknown && reason ? (
+          <span className="mt-0.5 block text-[11px] font-normal text-zinc-600">
+            {reason}
+          </span>
+        ) : null}
+      </dd>
     </div>
   );
 }
 
+function FactStats({ rows }: { rows: FactRow[] }) {
+  return (
+    <>
+      {rows.map((r) =>
+        r.value != null ? (
+          <Stat
+            key={r.key}
+            label={r.label}
+            value={r.value}
+            unknown={r.unknown}
+            reason={r.reason}
+          />
+        ) : null,
+      )}
+    </>
+  );
+}
 
 function formatDiscoveryDate(raw: string): string {
   // Prefer readable calendar date; fall back to the raw catalog string.
   const iso = /^(\d{4})-(\d{2})-(\d{2})$/.exec(raw);
   if (iso) {
-    const d = new Date(Date.UTC(Number(iso[1]), Number(iso[2]) - 1, Number(iso[3])));
+    const d = new Date(
+      Date.UTC(Number(iso[1]), Number(iso[2]) - 1, Number(iso[3])),
+    );
     return d.toLocaleDateString("en-US", {
       year: "numeric",
       month: "short",
@@ -48,11 +89,13 @@ function formatDiscoveryDate(raw: string): string {
   return raw;
 }
 
+/**
+ * Discovery display — special-cased (not expected-by-kind Unknown).
+ * Stars / Sun → N/A; dated cards → date; else notes or antiquity prose.
+ */
 function discoveryDisplay(body: Body): string {
   if (body.facts.discoveryDate) return formatDiscoveryDate(body.facts.discoveryDate);
-  // Sun/star: N/A (don't use central-star prose as a "discovered" value).
   if (body.kind === "star" || body.id === "sun") return "N/A";
-  // Prefer catalog prose when no date — never invent a calendar date.
   if (body.facts.discoveryNotes) return body.facts.discoveryNotes;
   return "Known since antiquity";
 }
@@ -92,7 +135,6 @@ function SourcesList({ body }: { body: Body }) {
   );
 }
 
-
 export function FactsPanel({ body, system, onClear }: Props) {
   const [expanded, setExpanded] = useState(false);
 
@@ -120,6 +162,8 @@ export function FactsPanel({ body, system, onClear }: Props) {
     (body.orbit ? periodFromA(body.orbit.aAu) : undefined);
   const note = body.facts.discoveryNotes;
   const discovered = discoveryDisplay(body);
+  const quickRows = quickPhysFactRows(body);
+  const fullRows = keyFactRows(body);
 
   return (
     <aside className="pointer-events-auto flex max-h-[45vh] w-full flex-col overflow-hidden border-t border-white/10 bg-[#080d18]/95 backdrop-blur md:max-h-none md:h-full md:w-full md:border-l md:border-t-0">
@@ -163,15 +207,7 @@ export function FactsPanel({ body, system, onClear }: Props) {
           <div className="space-y-3">
             <dl className="grid gap-2">
               <Stat label="Discovered" value={discovered} />
-              {body.facts.massKg != null && (
-                <Stat label="Mass" value={formatMass(body.facts.massKg)} />
-              )}
-              {body.facts.radiusMeanKm != null && (
-                <Stat
-                  label="Mean radius"
-                  value={formatRadius(body.facts.radiusMeanKm)}
-                />
-              )}
+              <FactStats rows={quickRows} />
               {period != null && (
                 <Stat label="Orbital period" value={formatPeriodDays(period)} />
               )}
@@ -218,36 +254,7 @@ export function FactsPanel({ body, system, onClear }: Props) {
               </h3>
               <dl className="grid gap-2">
                 <Stat label="Discovered" value={discovered} />
-                {body.facts.massKg != null && (
-                  <Stat label="Mass" value={formatMass(body.facts.massKg)} />
-                )}
-                {body.facts.radiusMeanKm != null && (
-                  <Stat
-                    label="Mean radius"
-                    value={formatRadius(body.facts.radiusMeanKm)}
-                  />
-                )}
-                {body.facts.densityGcm3 != null && (
-                  <Stat
-                    label="Density"
-                    value={formatDensity(body.facts.densityGcm3)}
-                  />
-                )}
-                {body.facts.rotationPeriodD != null && (
-                  <Stat
-                    label="Rotation period"
-                    value={
-                      formatPeriodDays(Math.abs(body.facts.rotationPeriodD)) +
-                      (body.facts.rotationPeriodD < 0 ? " (retrograde)" : "")
-                    }
-                  />
-                )}
-                {body.facts.albedo != null && (
-                  <Stat
-                    label="Albedo"
-                    value={body.facts.albedo.toPrecision(3)}
-                  />
-                )}
+                <FactStats rows={fullRows} />
               </dl>
             </section>
 

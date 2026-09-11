@@ -46,6 +46,11 @@ export const FactsSchema = z.object({
   discoveryNotes: z.string().optional(),
   /** ISO date (YYYY-MM-DD) or year (YYYY) when known; omit for antiquity / N/A. */
   discoveryDate: z.string().optional(),
+  /**
+   * Archive-backed estimates: list fact keys shown with a leading ~ in UI
+   * (e.g. ["massKg"]). Never invent estimates — only mark stored values.
+   */
+  approximateFields: z.array(z.string().min(1)).optional(),
 });
 
 /**

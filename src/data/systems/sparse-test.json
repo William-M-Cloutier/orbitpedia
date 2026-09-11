@@ -1,0 +1,39 @@
+{
+  "id": "sparse-test",
+  "name": "Sparse Test (fixture)",
+  "home": false,
+  "memberIds": [
+    "sparse-test",
+    "sparse-test-b",
+    "sparse-test-c",
+    "sparse-test-d",
+    "sparse-test-e",
+    "sparse-test-f",
+    "sparse-test-g",
+    "sparse-test-complete",
+    "sparse-test-moon"
+  ],
+  "blurb": "UI fixture only \u2014 not real astronomy. Synthetic star + planets (and one moon) with deliberately missing fields to exercise sparse Facts / dials / charts. Do not treat values as science.",
+  "highlights": [
+    "UI fixture \u2014 not a real planetary system",
+    "Each member omits different optional / expected fields on purpose",
+    "Exclude from real-system polish expectations"
+  ],
+  "planetCount": 7,
+  "hostSpectralType": "Fixture",
+  "compactnessNote": "Packed toy orbits for Explore scale only \u2014 not archive data.",
+  "meta": {
+    "confidence": "placeholder",
+    "fetchedAt": "2026-09-11T23:20:00.000Z",
+    "sources": [
+      {
+        "name": "Orbitpedia DATA_SETUP \u2014 honesty / sparse facts",
+        "url": "https://github.com/William-M-Cloutier/orbitpedia/blob/main/docs/DATA_SETUP.md",
+        "fields": [
+          "fixture",
+          "facts.approximateFields"
+        ]
+      }
+    ]
+  }
+}

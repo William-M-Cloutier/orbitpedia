@@ -1,0 +1,42 @@
+{
+  "id": "sparse-test-b",
+  "name": "Sparse b (no mass)",
+  "kind": "planet",
+  "systemId": "sparse-test",
+  "facts": {
+    "radiusMeanKm": 6500,
+    "densityGcm3": 4.1,
+    "albedo": 0.25,
+    "rotationPeriodD": 1.1,
+    "discoveryDate": "2026-01-01",
+    "discoveryNotes": "UI fixture: mass upper bound only (not used) \u2014 tests Unknown mass row."
+  },
+  "color": "#F472B6",
+  "orbit": {
+    "frame": "heliocentric",
+    "aAu": 0.04,
+    "e": 0.01,
+    "iDeg": 89.5,
+    "omDeg": 0,
+    "wDeg": 0,
+    "maDeg": 10,
+    "periodD": 8.435234
+  },
+  "meta": {
+    "source": "Orbitpedia UI fixture (non-science) \u2014 not an astronomical catalog object.",
+    "provenance": "UI fixture / sparse-test \u2014 synthetic cards for FactsPanel edge cases only.",
+    "confidence": "placeholder",
+    "fetchedAt": "2026-09-11T23:20:00.000Z",
+    "unitsVersion": 1,
+    "sources": [
+      {
+        "name": "Orbitpedia DATA_SETUP \u2014 honesty / sparse facts",
+        "url": "https://github.com/William-M-Cloutier/orbitpedia/blob/main/docs/DATA_SETUP.md",
+        "fields": [
+          "fixture",
+          "facts.approximateFields"
+        ]
+      }
+    ]
+  }
+}

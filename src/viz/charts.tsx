@@ -1441,7 +1441,7 @@ function dialPct(value: number, ref: number): number {
   return Math.min(100, Math.max(3, (Math.log10(ratio + 0.01) + 2) / 4 * 100));
 }
 
-/** Compact dials vs Earth (or parent) for radius/mass/density/albedo. */
+/** Compact dials vs Earth (or parent). Only dials with real body+ref values — skip missing albedo/density/etc. (never fake 0). */
 function BodyDials({
   body,
   vs,

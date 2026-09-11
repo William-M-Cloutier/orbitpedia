@@ -1,0 +1,29 @@
+{
+  "id": "sparse-test",
+  "name": "Sparse Test",
+  "kind": "star",
+  "systemId": "sparse-test",
+  "facts": {
+    "massKg": 2.3861639999999997e+29,
+    "radiusMeanKm": 70000,
+    "discoveryNotes": "UI fixture host star \u2014 placeholder radius/mass for Explore scale and Kepler gates only. Not a real star."
+  },
+  "color": "#A78BFA",
+  "meta": {
+    "source": "Orbitpedia UI fixture (non-science) \u2014 not an astronomical catalog object.",
+    "provenance": "UI fixture / sparse-test \u2014 synthetic cards for FactsPanel edge cases only.",
+    "confidence": "placeholder",
+    "fetchedAt": "2026-09-11T23:20:00.000Z",
+    "unitsVersion": 1,
+    "sources": [
+      {
+        "name": "Orbitpedia DATA_SETUP \u2014 honesty / sparse facts",
+        "url": "https://github.com/William-M-Cloutier/orbitpedia/blob/main/docs/DATA_SETUP.md",
+        "fields": [
+          "fixture",
+          "facts.approximateFields"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "id": "sparse-test-e",
+  "name": "Sparse e (no rotation)",
+  "kind": "planet",
+  "systemId": "sparse-test",
+  "facts": {
+    "massKg": 8e+24,
+    "radiusMeanKm": 8000,
+    "densityGcm3": 3.2,
+    "albedo": 0.4,
+    "discoveryDate": "2026-01-04",
+    "discoveryNotes": "UI fixture: rotationPeriodD omitted on purpose."
+  },
+  "color": "#60A5FA",
+  "orbit": {
+    "frame": "heliocentric",
+    "aAu": 0.14,
+    "e": 0.01,
+    "iDeg": 89.5,
+    "omDeg": 0,
+    "wDeg": 0,
+    "maDeg": 120,
+    "periodD": 55.233075
+  },
+  "meta": {
+    "source": "Orbitpedia UI fixture (non-science) \u2014 not an astronomical catalog object.",
+    "provenance": "UI fixture / sparse-test \u2014 synthetic cards for FactsPanel edge cases only.",
+    "confidence": "placeholder",
+    "fetchedAt": "2026-09-11T23:20:00.000Z",
+    "unitsVersion": 1,
+    "sources": [
+      {
+        "name": "Orbitpedia DATA_SETUP \u2014 honesty / sparse facts",
+        "url": "https://github.com/William-M-Cloutier/orbitpedia/blob/main/docs/DATA_SETUP.md",
+        "fields": [
+          "fixture",
+          "facts.approximateFields"
+        ]
+      }
+    ]
+  }
+}

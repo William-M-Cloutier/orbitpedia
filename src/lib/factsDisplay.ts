@@ -1,0 +1,157 @@
+import type { Body, BodyKind } from "@/data/schema";
+import {
+  formatDensity,
+  formatMass,
+  formatPeriodDays,
+  formatRadius,
+} from "@/lib/units";
+
+/** Fact keys the UI treats as expected for a kind (show muted Unknown if missing). */
+const EXPECTED_BY_KIND: Record<BodyKind, ReadonlySet<string>> = {
+  star: new Set(["massKg", "radiusMeanKm"]),
+  planet: new Set(["massKg", "radiusMeanKm"]),
+  dwarf_planet: new Set(["massKg", "radiusMeanKm"]),
+  /** Radius preferred; mass often unknown — omit mass row when missing. */
+  asteroid: new Set(["radiusMeanKm"]),
+  moon: new Set(["radiusMeanKm"]),
+};
+
+export type FactKey =
+  | "massKg"
+  | "radiusMeanKm"
+  | "densityGcm3"
+  | "rotationPeriodD"
+  | "albedo";
+
+export type FactRow = {
+  key: FactKey;
+  label: string;
+  /** Display string; null means omit the row entirely. */
+  value: string | null;
+  /** True when showing honest Unknown for an expected-by-kind gap. */
+  unknown?: boolean;
+  /** Optional short reason (e.g. upper bound only) under Unknown. */
+  reason?: string;
+};
+
+function isApproximate(body: Body, field: FactKey): boolean {
+  const list = body.facts.approximateFields;
+  return Array.isArray(list) && list.includes(field);
+}
+
+function withApprox(text: string, approx: boolean): string {
+  if (!approx) return text;
+  return text.startsWith("~") ? text : `~${text}`;
+}
+
+/** Short reason for Unknown — only when card already explains the gap. */
+export function unknownReason(body: Body, field: FactKey): string | undefined {
+  const notes = body.facts.discoveryNotes ?? "";
+  const source = body.meta.source ?? body.meta.provenance ?? "";
+  const blob = `${notes} ${source}`;
+  if (field === "massKg") {
+    if (/upper\s*bound/i.test(blob)) return "upper bound only";
+    if (/mass\s+(unknown|unavailable|not\s+used|omitted)/i.test(blob)) {
+      return "not in catalog";
+    }
+  }
+  if (field === "radiusMeanKm" && /radius\s+(unknown|unavailable)/i.test(blob)) {
+    return "not in catalog";
+  }
+  return undefined;
+}
+
+export function isExpectedFact(kind: BodyKind, field: FactKey): boolean {
+  return EXPECTED_BY_KIND[kind].has(field);
+}
+
+/**
+ * Build a fact row: value when present; muted Unknown only if expected-by-kind;
+ * otherwise omit (null value). Never invent zeros.
+ */
+export function factRow(
+  body: Body,
+  field: FactKey,
+  label: string,
+  raw: number | null | undefined,
+  format: (n: number) => string,
+): FactRow {
+  if (raw != null && Number.isFinite(raw)) {
+    return {
+      key: field,
+      label,
+      value: withApprox(format(raw), isApproximate(body, field)),
+    };
+  }
+  if (isExpectedFact(body.kind, field)) {
+    return {
+      key: field,
+      label,
+      value: "Unknown",
+      unknown: true,
+      reason: unknownReason(body, field),
+    };
+  }
+  return { key: field, label, value: null };
+}
+
+export function massFactRow(body: Body): FactRow {
+  return factRow(body, "massKg", "Mass", body.facts.massKg, formatMass);
+}
+
+export function radiusFactRow(body: Body): FactRow {
+  return factRow(
+    body,
+    "radiusMeanKm",
+    "Mean radius",
+    body.facts.radiusMeanKm,
+    formatRadius,
+  );
+}
+
+export function densityFactRow(body: Body): FactRow {
+  return factRow(
+    body,
+    "densityGcm3",
+    "Density",
+    body.facts.densityGcm3,
+    formatDensity,
+  );
+}
+
+export function rotationFactRow(body: Body): FactRow {
+  const r = body.facts.rotationPeriodD;
+  if (r != null && Number.isFinite(r)) {
+    const text =
+      formatPeriodDays(Math.abs(r)) + (r < 0 ? " (retrograde)" : "");
+    return {
+      key: "rotationPeriodD",
+      label: "Rotation period",
+      value: withApprox(text, isApproximate(body, "rotationPeriodD")),
+    };
+  }
+  // Rotation is optional for all kinds — omit when missing.
+  return { key: "rotationPeriodD", label: "Rotation period", value: null };
+}
+
+export function albedoFactRow(body: Body): FactRow {
+  return factRow(body, "albedo", "Albedo", body.facts.albedo, (n) =>
+    n.toPrecision(3),
+  );
+}
+
+/** Compact Quick Facts: discovered + expected phys + orbit when present. */
+export function quickPhysFactRows(body: Body): FactRow[] {
+  return [massFactRow(body), radiusFactRow(body)].filter((r) => r.value != null);
+}
+
+/** Full Key facts panel / body page. */
+export function keyFactRows(body: Body): FactRow[] {
+  return [
+    massFactRow(body),
+    radiusFactRow(body),
+    densityFactRow(body),
+    rotationFactRow(body),
+    albedoFactRow(body),
+  ].filter((r) => r.value != null);
+}

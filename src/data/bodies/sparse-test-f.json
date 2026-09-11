@@ -1,0 +1,42 @@
+{
+  "id": "sparse-test-f",
+  "name": "Sparse f (no discoveryDate)",
+  "kind": "planet",
+  "systemId": "sparse-test",
+  "facts": {
+    "massKg": 3e+24,
+    "radiusMeanKm": 5500,
+    "densityGcm3": 5.0,
+    "albedo": 0.15,
+    "rotationPeriodD": 2.0,
+    "discoveryNotes": "UI fixture: discoveryDate omitted \u2014 Discovered shows notes, not Unknown."
+  },
+  "color": "#FBBF24",
+  "orbit": {
+    "frame": "heliocentric",
+    "aAu": 0.18,
+    "e": 0.01,
+    "iDeg": 89.5,
+    "omDeg": 0,
+    "wDeg": 0,
+    "maDeg": 160,
+    "periodD": 80.522254
+  },
+  "meta": {
+    "source": "Orbitpedia UI fixture (non-science) \u2014 not an astronomical catalog object.",
+    "provenance": "UI fixture / sparse-test \u2014 synthetic cards for FactsPanel edge cases only.",
+    "confidence": "placeholder",
+    "fetchedAt": "2026-09-11T23:20:00.000Z",
+    "unitsVersion": 1,
+    "sources": [
+      {
+        "name": "Orbitpedia DATA_SETUP \u2014 honesty / sparse facts",
+        "url": "https://github.com/William-M-Cloutier/orbitpedia/blob/main/docs/DATA_SETUP.md",
+        "fields": [
+          "fixture",
+          "facts.approximateFields"
+        ]
+      }
+    ]
+  }
+}

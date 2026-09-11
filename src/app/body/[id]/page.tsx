@@ -4,14 +4,9 @@ import { AppShell } from "@/components/ui/AppShell";
 import { BodyRail } from "@/components/ui/BodyRail";
 import { bodies, exploreHref, getBody, getHomeSystem, KIND_LABEL } from "@/data/catalog";
 import { bodyProvenance } from "@/data/schema";
+import { keyFactRows } from "@/lib/factsDisplay";
 import { periodFromA } from "@/lib/kepler";
-import {
-  formatAu,
-  formatDensity,
-  formatMass,
-  formatPeriodDays,
-  formatRadius,
-} from "@/lib/units";
+import { formatAu, formatPeriodDays } from "@/lib/units";
 import { CatalogChartsLazy } from "@/viz/CatalogChartsLazy";
 
 type Props = { params: Promise<{ id: string }> };
@@ -85,51 +80,28 @@ export default async function BodyPage({ params }: Props) {
         <section>
           <h2 className="mb-3 text-lg font-medium text-zinc-200">Key facts</h2>
           <dl className="grid gap-3 sm:grid-cols-2">
-            {(
-              [
-                [
-                  "Mass",
-                  body.facts.massKg != null
-                    ? formatMass(body.facts.massKg)
-                    : null,
-                ],
-                [
-                  "Mean radius",
-                  body.facts.radiusMeanKm != null
-                    ? formatRadius(body.facts.radiusMeanKm)
-                    : null,
-                ],
-                [
-                  "Density",
-                  body.facts.densityGcm3 != null
-                    ? formatDensity(body.facts.densityGcm3)
-                    : null,
-                ],
-                [
-                  "Rotation period",
-                  body.facts.rotationPeriodD != null
-                    ? formatPeriodDays(Math.abs(body.facts.rotationPeriodD)) +
-                      (body.facts.rotationPeriodD < 0 ? " (retrograde)" : "")
-                    : null,
-                ],
-                [
-                  "Albedo",
-                  body.facts.albedo != null
-                    ? body.facts.albedo.toPrecision(3)
-                    : null,
-                ],
-              ] as Array<[string, string | null]>
-            )
-              .filter(([, v]) => v != null)
-              .map(([k, v]) => (
-                <div
-                  key={k}
-                  className="rounded-lg border border-white/10 bg-white/[0.02] px-4 py-3"
+            {keyFactRows(body).map((row) => (
+              <div
+                key={row.key}
+                className="rounded-lg border border-white/10 bg-white/[0.02] px-4 py-3"
+              >
+                <dt className="text-xs text-zinc-500">{row.label}</dt>
+                <dd
+                  className={
+                    row.unknown
+                      ? "mt-0.5 text-zinc-500"
+                      : "mt-0.5 text-zinc-100"
+                  }
                 >
-                  <dt className="text-xs text-zinc-500">{k}</dt>
-                  <dd className="mt-0.5 text-zinc-100">{v}</dd>
-                </div>
-              ))}
+                  {row.value}
+                  {row.unknown && row.reason ? (
+                    <span className="mt-0.5 block text-[11px] text-zinc-600">
+                      {row.reason}
+                    </span>
+                  ) : null}
+                </dd>
+              </div>
+            ))}
           </dl>
         </section>
 
