@@ -37,8 +37,16 @@ function ExploreHome() {
     [router],
   );
 
-  const onSelect = useCallback((id: string) => setFocus(id), [setFocus]);
+  // Viz (and UI) may clear via onSelect(null) — drops ?focus= and empties FactsPanel.
+  const onSelect = useCallback(
+    (id: string | null) => setFocus(id),
+    [setFocus],
+  );
   const onClear = useCallback(() => setFocus(null), [setFocus]);
+  const onRailFocus = useCallback(
+    (id: string) => setFocus(focusId === id ? null : id),
+    [setFocus, focusId],
+  );
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -49,15 +57,15 @@ function ExploreHome() {
   }, [setFocus]);
 
   return (
-    <AppShell rail={<BodyRail activeId={focusId ?? undefined} onFocus={onSelect} />}>
+    <AppShell rail={<BodyRail activeId={focusId ?? undefined} onFocus={onRailFocus} />}>
       <div className="relative flex h-[calc(100vh-3.5rem)] flex-col md:flex-row">
         <div className="flex min-h-0 min-w-0 flex-1 flex-col">
           <div className="flex items-center justify-between gap-3 border-b border-white/10 px-4 py-2">
             <div>
               <h1 className="text-sm font-medium text-zinc-200">Explore</h1>
               <p className="text-xs text-zinc-500">
-                Size tiers are schematic — not true scale. Click a body to
-                follow; Esc clears.
+                Size tiers are schematic — not true scale. Click to follow;
+                click again or right-click to clear; Esc also clears.
               </p>
             </div>
           </div>

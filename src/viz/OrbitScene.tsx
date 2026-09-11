@@ -20,7 +20,7 @@ import { visualRadius } from "./sizeTiers";
 
 type Props = {
   focusId?: string | null;
-  onSelect?: (id: string) => void;
+  onSelect?: (id: string | null) => void;
   highlightColor?: string;
 };
 
@@ -173,7 +173,7 @@ const BodyMesh = memo(function BodyMesh({
 }: {
   body: Body;
   focused: boolean;
-  onSelect?: (id: string) => void;
+  onSelect?: (id: string | null) => void;
   highlightColor?: string;
 }) {
   const group = useRef<THREE.Group>(null);
@@ -185,9 +185,19 @@ const BodyMesh = memo(function BodyMesh({
   const handleClick = useCallback(
     (e: { stopPropagation: () => void }) => {
       e.stopPropagation();
-      onSelect?.(body.id);
+      // Second click on the focused body clears (William deselect).
+      onSelect?.(focused ? null : body.id);
     },
-    [body.id, onSelect],
+    [body.id, focused, onSelect],
+  );
+
+  const handleContextMenu = useCallback(
+    (e: { stopPropagation: () => void; nativeEvent?: { preventDefault?: () => void } }) => {
+      e.stopPropagation();
+      e.nativeEvent?.preventDefault?.();
+      onSelect?.(null);
+    },
+    [onSelect],
   );
 
   // Epoch pose when idle; sim clock while following.
@@ -210,6 +220,7 @@ const BodyMesh = memo(function BodyMesh({
       <group ref={group}>
         <mesh
           onClick={handleClick}
+          onContextMenu={handleContextMenu}
           material={sharedSunMat}
           scale={focused ? 1.2 : 1}
         >
@@ -233,7 +244,7 @@ const BodyMesh = memo(function BodyMesh({
 
   return (
     <group ref={group}>
-      <mesh onClick={handleClick} scale={focused ? 1.35 : 1}>
+      <mesh onClick={handleClick} onContextMenu={handleContextMenu} scale={focused ? 1.35 : 1}>
         <sphereGeometry args={[r, 24, 24]} />
         <meshStandardMaterial
           color={color}

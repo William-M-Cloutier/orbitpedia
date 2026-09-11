@@ -17,7 +17,7 @@ const OrbitScene = dynamic(
 
 type Props = {
   focusId?: string | null;
-  onSelect?: (id: string) => void;
+  onSelect?: (id: string | null) => void;
   highlightColor?: string;
 };
 

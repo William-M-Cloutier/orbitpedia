@@ -45,7 +45,9 @@ export function FactsPanel({ body, onClear }: Props) {
         <p className="mt-3 text-sm text-zinc-500">
           Select a body in the scene or rail to see cool facts.
         </p>
-        <p className="mt-2 text-xs text-zinc-600">Press Esc to clear selection.</p>
+        <p className="mt-2 text-xs text-zinc-600">
+          Clear with Esc, panel ✕, second click, or right-click.
+        </p>
       </aside>
     );
   }
