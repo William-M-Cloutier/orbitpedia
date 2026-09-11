@@ -21,6 +21,9 @@ type Props = {
   highlightColor?: string;
   /** Simulated days advanced per real second (idle + follow). UI owns presets. */
   simDaysPerSec?: number;
+  /** Canvas-space overlay insets for setViewOffset (see OrbitScene). */
+  viewInsetLeft?: number;
+  viewInsetRight?: number;
 };
 
 export function OrbitCanvas(props: Props) {

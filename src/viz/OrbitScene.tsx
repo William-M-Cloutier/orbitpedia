@@ -25,6 +25,13 @@ type Props = {
   highlightColor?: string;
   /** Simulated days advanced per real second (idle + follow). UI owns presets. */
   simDaysPerSec?: number;
+  /**
+   * Canvas-space insets (px) covered by Explore overlays. BodyRail is a flex
+   * sibling (outside the canvas) so left is usually 0; Facts overlays the
+   * right when a body is selected (~288–320px on md+).
+   */
+  viewInsetLeft?: number;
+  viewInsetRight?: number;
 };
 
 /** Fallback when UI omits speed — matches Explore Default preset (0.2 d/s = 1 day / 5s). */
@@ -331,10 +338,10 @@ function focusMeshScale(body: Body): number {
 /**
  * Target on-screen diameter as a fraction of min(Explore viewport w, h).
  * Pluto gold standard ≈25–30%; prior sin/height framing read ~10% on screen,
- * so FOCUS_FILL is raised (0.42) with tan + min(w,h) so framed bodies land
+ * so FOCUS_FILL is raised (0.48) with tan + min(w,h) so framed bodies land
  * in that band for sun / planets / dwarf planets / asteroids.
  */
-const FOCUS_FILL = 0.42;
+const FOCUS_FILL = 0.48;
 
 /**
  * FOV-based focus distance for ALL bodies (sun + planets + asteroids).
@@ -357,6 +364,54 @@ function focusFrameDistance(
   const halfMin = a >= 1 ? tanHalf : tanHalf * a;
   // Floor keeps dolly above OrbitControls minDistance / near plane comfort.
   return Math.max(0.45, r / (fill * halfMin));
+}
+
+/** Aspect of the *visible* sub-rect when setViewOffset is active. */
+function visibleAspect(camera: THREE.PerspectiveCamera): number {
+  const v = camera.view;
+  if (v?.enabled && v.height > 1e-6) return v.width / v.height;
+  return camera.aspect > 1e-6 ? camera.aspect : 1;
+}
+
+/**
+ * Shift PerspectiveCamera projection center into the visible gap between
+ * Explore overlays (Facts on the right; BodyRail is outside the canvas).
+ * Clears on unmount / when insets are zero.
+ */
+function ViewOffsetController({
+  insetLeft = 0,
+  insetRight = 0,
+}: {
+  insetLeft?: number;
+  insetRight?: number;
+}) {
+  const camera = useThree((s) => s.camera);
+  const size = useThree((s) => s.size);
+  const invalidate = useThree((s) => s.invalidate);
+
+  useLayoutEffect(() => {
+    if (!(camera instanceof THREE.PerspectiveCamera)) return;
+    const fullW = Math.max(1, size.width);
+    const fullH = Math.max(1, size.height);
+    const L = Math.max(0, Math.min(insetLeft, fullW - 1));
+    const R = Math.max(0, Math.min(insetRight, fullW - L - 1));
+    const w = fullW - L - R;
+
+    if ((L <= 0 && R <= 0) || w <= 1) {
+      camera.clearViewOffset();
+    } else {
+      camera.setViewOffset(fullW, fullH, L, 0, w, fullH);
+    }
+    camera.updateProjectionMatrix();
+    invalidate();
+
+    return () => {
+      camera.clearViewOffset();
+      camera.updateProjectionMatrix();
+    };
+  }, [camera, size.width, size.height, insetLeft, insetRight, invalidate]);
+
+  return null;
 }
 
 /**
@@ -435,8 +490,8 @@ function FollowCamera() {
     const fovY =
       camera instanceof THREE.PerspectiveCamera ? camera.fov : 45;
     const aspect =
-      camera instanceof THREE.PerspectiveCamera && camera.aspect > 1e-6
-        ? camera.aspect
+      camera instanceof THREE.PerspectiveCamera
+        ? visibleAspect(camera)
         : 1;
     const dist = focusFrameDistance(b, fovY, aspect);
     target.current.set(pos[0], pos[1], pos[2]);
@@ -680,7 +735,14 @@ function SimProvider({
   );
 }
 
-function SceneContent({ focusId, onSelect, highlightColor, simDaysPerSec }: Props) {
+function SceneContent({
+  focusId,
+  onSelect,
+  highlightColor,
+  simDaysPerSec,
+  viewInsetLeft = 0,
+  viewInsetRight = 0,
+}: Props) {
   // Orbit ellipses only for catalog heliocentric orbits — never the sun
   // (sun wobble is BarycentricRoot viz-only; no catalog OrbitLine).
   const orbiters = useMemo(
@@ -717,6 +779,10 @@ function SceneContent({ focusId, onSelect, highlightColor, simDaysPerSec }: Prop
           />
         ))}
       </BarycentricRoot>
+      <ViewOffsetController
+        insetLeft={viewInsetLeft}
+        insetRight={viewInsetRight}
+      />
       <OrbitControls
         makeDefault
         enablePan
@@ -733,7 +799,14 @@ function SceneContent({ focusId, onSelect, highlightColor, simDaysPerSec }: Prop
   );
 }
 
-export function OrbitScene({ focusId, onSelect, highlightColor, simDaysPerSec }: Props) {
+export function OrbitScene({
+  focusId,
+  onSelect,
+  highlightColor,
+  simDaysPerSec,
+  viewInsetLeft = 0,
+  viewInsetRight = 0,
+}: Props) {
   return (
     <div
       className="h-full w-full"
@@ -756,6 +829,8 @@ export function OrbitScene({ focusId, onSelect, highlightColor, simDaysPerSec }:
           onSelect={onSelect}
           highlightColor={highlightColor}
           simDaysPerSec={simDaysPerSec}
+          viewInsetLeft={viewInsetLeft}
+          viewInsetRight={viewInsetRight}
         />
       </Canvas>
     </div>
