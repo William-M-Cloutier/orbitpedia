@@ -124,12 +124,12 @@ export function FactsPanel({ body, onClear }: Props) {
         {!expanded ? (
           <div className="space-y-3">
             <dl className="grid gap-2">
+              <Stat label="Discovered" value={discovered} />
               <Stat label="Mass" value={formatMass(body.facts.massKg)} />
               <Stat
                 label="Mean radius"
                 value={formatRadius(body.facts.radiusMeanKm)}
               />
-              <Stat label="Discovered" value={discovered} />
               {period != null && (
                 <Stat label="Orbital period" value={formatPeriodDays(period)} />
               )}
@@ -168,12 +168,12 @@ export function FactsPanel({ body, onClear }: Props) {
                 Key facts
               </h3>
               <dl className="grid gap-2">
+                <Stat label="Discovered" value={discovered} />
                 <Stat label="Mass" value={formatMass(body.facts.massKg)} />
                 <Stat
                   label="Mean radius"
                   value={formatRadius(body.facts.radiusMeanKm)}
                 />
-                <Stat label="Discovered" value={discovered} />
                 {body.facts.densityGcm3 != null && (
                   <Stat
                     label="Density"
