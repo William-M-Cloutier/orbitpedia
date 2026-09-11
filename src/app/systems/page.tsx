@@ -94,6 +94,7 @@ function SystemMapView() {
   const router = useRouter();
   const homeId = getHomeSystem().id;
   const [spacing, setSpacing] = useState<MapSpacing>("schematic");
+  const [selectedId, setSelectedId] = useState(homeId);
   const nodes = useMemo(() => buildNodes(), []);
   // Fixed design size; SVG scales via viewBox.
   const W = 960;
@@ -111,7 +112,8 @@ function SystemMapView() {
             <h1 className="text-lg font-medium text-zinc-100">System map</h1>
             <p className="mt-0.5 max-w-2xl text-sm text-zinc-500">
               Systems as nodes — spacing is Schematic or Proportional only (not
-              true inter-system distances). Click a system to open Explore.
+              true inter-system distances). Select a system below or on the
+              map, then Explore.
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -199,23 +201,13 @@ function SystemMapView() {
               <g
                 key={n.id}
                 className="cursor-pointer"
-                onClick={() => {
-                  const qs =
-                    n.id === homeId
-                      ? "/"
-                      : `/?system=${encodeURIComponent(n.id)}`;
-                  router.push(qs);
-                }}
+                onClick={() => setSelectedId(n.id)}
                 role="button"
                 tabIndex={0}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" || e.key === " ") {
                     e.preventDefault();
-                    const qs =
-                      n.id === homeId
-                        ? "/"
-                        : `/?system=${encodeURIComponent(n.id)}`;
-                    router.push(qs);
+                    setSelectedId(n.id);
                   }
                 }}
               >
@@ -241,8 +233,14 @@ function SystemMapView() {
                   cy={n.y}
                   r={n.r}
                   fill={n.starColor}
-                  stroke={n.home ? "#7dd3fc" : "rgba(255,255,255,0.35)"}
-                  strokeWidth={n.home ? 2.5 : 1.5}
+                  stroke={
+                    n.id === selectedId
+                      ? "#38bdf8"
+                      : n.home
+                        ? "#7dd3fc"
+                        : "rgba(255,255,255,0.35)"
+                  }
+                  strokeWidth={n.id === selectedId ? 3 : n.home ? 2.5 : 1.5}
                 />
                 <text
                   x={n.x}
@@ -281,7 +279,12 @@ function SystemMapView() {
             return (
               <div
                 key={n.id}
-                className="rounded-xl border border-white/10 bg-[#080d18]/90 p-4"
+                className={`rounded-xl border p-4 ${
+                  n.id === selectedId
+                    ? "border-sky-500/40 bg-sky-500/10"
+                    : "border-white/10 bg-[#080d18]/90"
+                }`}
+                onClick={() => setSelectedId(n.id)}
               >
                 <SystemFacts system={sys} compact />
                 <button
