@@ -388,7 +388,7 @@ function focusFrameDistance(
   const a = Number.isFinite(aspect) && aspect > 1e-6 ? aspect : 1;
   const halfMin = a >= 1 ? tanHalf : tanHalf * a;
   // Floor keeps dolly above OrbitControls minDistance / near plane comfort.
-  return Math.max(0.45, r / (fill * halfMin));
+  return Math.max(0.38, r / (fill * halfMin));
 }
 
 /** Aspect of the *visible* sub-rect when setViewOffset is active. */
@@ -823,7 +823,7 @@ function SceneContent({
         enableRotate
         autoRotate={false}
         enableDamping={false}
-        minDistance={0.5}
+        minDistance={0.425}
         maxDistance={80}
         onChange={() => invalidate()}
       />
