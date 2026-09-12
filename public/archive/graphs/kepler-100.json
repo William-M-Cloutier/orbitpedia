@@ -6,15 +6,19 @@
     "memberIds": [
       "kepler-100",
       "kepler-100-b",
-      "kepler-100-c"
+      "kepler-100-c",
+      "kepler-100-d",
+      "kepler-100-e"
     ],
-    "blurb": "Kepler-100 — 2 confirmed planets · 993.6 ly",
+    "primaryStarId": "kepler-100",
+    "starCount": 1,
+    "blurb": "Kepler-100 — 4 confirmed planets · 993.6 ly",
     "planetCount": 4,
     "distanceLy": 993.6,
-    "hasGas": false,
+    "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:35:53.307Z",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-100 overview",
@@ -22,6 +26,7 @@
           "fields": [
             "blurb",
             "planetCount",
+            "starCount",
             "distanceLy"
           ]
         }
@@ -53,7 +58,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -87,7 +92,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -132,7 +137,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -146,6 +151,93 @@
         "wDeg": 0,
         "maDeg": 0,
         "periodD": 12.8159
+      }
+    },
+    {
+      "id": "kepler-100-d",
+      "name": "Kepler-100 d",
+      "kind": "planet",
+      "systemId": "kepler-100",
+      "facts": {
+        "massKg": 1.7916600000000002e+25,
+        "radiusMeanKm": 10257.310000000001,
+        "discoveryDate": "2014"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-100 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-100 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-100",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454986.98031,
+        "aAu": 0.21747,
+        "e": 0.38,
+        "iDeg": 88.92,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 35.3331
+      }
+    },
+    {
+      "id": "kepler-100-e",
+      "name": "Kepler-100 e",
+      "kind": "planet",
+      "systemId": "kepler-100",
+      "facts": {
+        "massKg": 1.44185142052094e+26,
+        "radiusMeanKm": 33575.17,
+        "discoveryDate": "2014"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-100 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg, wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-100 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-100",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.312391586,
+        "e": 0.026437,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 60.888588
       }
     }
   ]

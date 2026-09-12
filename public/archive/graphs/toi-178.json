@@ -12,6 +12,8 @@
       "toi-178-f",
       "toi-178-g"
     ],
+    "primaryStarId": "toi-178",
+    "starCount": 1,
     "blurb": "TOI-178 (K) — 6 confirmed planets · 204.5 ly",
     "planetCount": 6,
     "distanceLy": 204.5,
@@ -19,7 +21,7 @@
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:35:53.307Z",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — TOI-178 overview",
@@ -27,6 +29,7 @@
           "fields": [
             "blurb",
             "planetCount",
+            "starCount",
             "distanceLy",
             "hostSpectralType"
           ]
@@ -59,7 +62,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -92,7 +95,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -138,7 +141,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -184,7 +187,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -230,7 +233,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -276,7 +279,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -322,7 +325,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

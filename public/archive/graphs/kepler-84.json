@@ -6,15 +6,18 @@
     "memberIds": [
       "kepler-84",
       "kepler-84-b",
+      "kepler-84-e",
       "kepler-84-f"
     ],
-    "blurb": "Kepler-84 — 2 confirmed planets · 3339.5 ly",
+    "primaryStarId": "kepler-84",
+    "starCount": 1,
+    "blurb": "Kepler-84 — 3 confirmed planets · 3339.5 ly",
     "planetCount": 5,
     "distanceLy": 3339.5,
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:35:53.307Z",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-84 overview",
@@ -22,6 +25,7 @@
           "fields": [
             "blurb",
             "planetCount",
+            "starCount",
             "distanceLy"
           ]
         }
@@ -53,7 +57,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -87,7 +91,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -104,13 +108,13 @@
       }
     },
     {
-      "id": "kepler-84-f",
-      "name": "Kepler-84 f",
+      "id": "kepler-84-e",
+      "name": "Kepler-84 e",
       "kind": "planet",
       "systemId": "kepler-84",
       "facts": {
-        "massKg": 3.2727656000000003e+25,
-        "radiusMeanKm": 14016.2,
+        "massKg": 4.3417894e+25,
+        "radiusMeanKm": 16564.600000000002,
         "discoveryDate": "2012"
       },
       "color": "#D4A574",
@@ -132,7 +136,52 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454978.1254,
+        "aAu": 0.181,
+        "e": 0,
+        "iDeg": 88.99,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 27.434389
+      }
+    },
+    {
+      "id": "kepler-84-f",
+      "name": "Kepler-84 f",
+      "kind": "planet",
+      "systemId": "kepler-84",
+      "facts": {
+        "massKg": 3.2727656000000003e+25,
+        "radiusMeanKm": 14016.2,
+        "discoveryDate": "2012"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-84 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-84 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-84",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

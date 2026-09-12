@@ -6,16 +6,20 @@
     "memberIds": [
       "au-mic",
       "au-mic-b",
-      "au-mic-c"
+      "au-mic-c",
+      "au-mic-d",
+      "au-mic-e"
     ],
-    "blurb": "AU Mic (M1 V) — 2 confirmed planets · 31.7 ly",
+    "primaryStarId": "au-mic",
+    "starCount": 1,
+    "blurb": "AU Mic (M1 V) — 4 confirmed planets · 31.7 ly",
     "planetCount": 4,
     "distanceLy": 31.7,
     "hostSpectralType": "M1 V",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:35:53.307Z",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — AU Mic overview",
@@ -23,6 +27,7 @@
           "fields": [
             "blurb",
             "planetCount",
+            "starCount",
             "distanceLy",
             "hostSpectralType"
           ]
@@ -55,7 +60,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -90,7 +95,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -136,7 +141,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -150,6 +155,64 @@
         "wDeg": 72.8,
         "maDeg": 0,
         "periodD": 18.859023
+      }
+    },
+    {
+      "id": "au-mic-d",
+      "name": "AU Mic d",
+      "kind": "planet",
+      "systemId": "au-mic",
+      "facts": {
+        "massKg": 6.288726599999999e+24,
+        "radiusMeanKm": 6498.42,
+        "discoveryDate": "2020"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; no pl_orbsmax — orbit omitted.",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — AU Mic overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/AU%20Mic",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "au-mic-e",
+      "name": "AU Mic e",
+      "kind": "planet",
+      "systemId": "au-mic",
+      "facts": {
+        "massKg": 1.2601342000000002e+26,
+        "radiusMeanKm": 31026.77,
+        "discoveryDate": "2020"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; no pl_orbsmax — orbit omitted.",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — AU Mic overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/AU%20Mic",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "known",
+        "unitsVersion": 1
       }
     }
   ]

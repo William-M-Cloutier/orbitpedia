@@ -1,0 +1,112 @@
+{
+  "system": {
+    "id": "gliese-12",
+    "name": "Gliese 12",
+    "home": false,
+    "memberIds": [
+      "gliese-12",
+      "gliese-12-b"
+    ],
+    "primaryStarId": "gliese-12",
+    "starCount": 1,
+    "blurb": "Gliese 12 (M4 V) — 1 confirmed planet · 39.8 ly",
+    "planetCount": 1,
+    "distanceLy": 39.8,
+    "hostSpectralType": "M4 V",
+    "hasGas": false,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — Gliese 12 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Gliese%2012",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "starCount",
+            "distanceLy",
+            "hostSpectralType"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "gliese-12",
+      "name": "Gliese 12",
+      "kind": "star",
+      "systemId": "gliese-12",
+      "facts": {
+        "massKg": 5.0705985e+29,
+        "radiusMeanKm": 184360.5,
+        "discoveryDate": "2024"
+      },
+      "color": "#E84A3C",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Gliese 12 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Gliese%2012",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "gliese-12-b",
+      "name": "Gliese 12 b",
+      "kind": "planet",
+      "systemId": "gliese-12",
+      "facts": {
+        "massKg": 5.67359e+24,
+        "radiusMeanKm": 5925.030000000001,
+        "discoveryDate": "2024"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Gliese 12 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Gliese 12 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Gliese%2012",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2460033.16351,
+        "aAu": 0.067,
+        "e": 0.24,
+        "iDeg": 89.25,
+        "omDeg": 0,
+        "wDeg": -16,
+        "maDeg": 0,
+        "periodD": 12.761418
+      }
+    }
+  ]
+}

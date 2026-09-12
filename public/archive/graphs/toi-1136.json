@@ -12,13 +12,15 @@
       "toi-1136-f",
       "toi-1136-g"
     ],
+    "primaryStarId": "toi-1136",
+    "starCount": 1,
     "blurb": "TOI-1136 — 6 confirmed planets · 275.7 ly",
     "planetCount": 6,
     "distanceLy": 275.7,
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:35:53.307Z",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — TOI-1136 overview",
@@ -26,6 +28,7 @@
           "fields": [
             "blurb",
             "planetCount",
+            "starCount",
             "distanceLy"
           ]
         }
@@ -57,7 +60,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -92,7 +95,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -138,7 +141,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -184,7 +187,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -230,7 +233,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -276,7 +279,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -322,7 +325,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

@@ -1,0 +1,134 @@
+{
+  "system": {
+    "id": "hat-p-1",
+    "name": "HAT-P-1",
+    "home": false,
+    "memberIds": [
+      "hat-p-1",
+      "hat-p-1-star-1",
+      "hat-p-1-b"
+    ],
+    "primaryStarId": "hat-p-1",
+    "starCount": 2,
+    "blurb": "HAT-P-1 (G0 V) — 1 confirmed planet · 518.5 ly",
+    "planetCount": 1,
+    "distanceLy": 518.5,
+    "hostSpectralType": "G0 V",
+    "hasGas": true,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — HAT-P-1 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HAT-P-1",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "starCount",
+            "distanceLy",
+            "hostSpectralType"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "hat-p-1",
+      "name": "HAT-P-1",
+      "kind": "star",
+      "systemId": "hat-p-1",
+      "facts": {
+        "massKg": 2.28872897e+30,
+        "radiusMeanKm": 816751.7999999999,
+        "discoveryDate": "2006"
+      },
+      "color": "#FDB813",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HAT-P-1 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HAT-P-1",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "hat-p-1-star-1",
+      "name": "HAT-P-1 companion",
+      "kind": "star",
+      "systemId": "hat-p-1",
+      "parentId": "hat-p-1",
+      "color": "#9aa3ad",
+      "meta": {
+        "source": "Placeholder companion — sy_snum slot with no archive stellar row",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HAT-P-1",
+            "fields": []
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "placeholder",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "hat-p-1-b",
+      "name": "HAT-P-1 b",
+      "kind": "planet",
+      "systemId": "hat-p-1",
+      "facts": {
+        "massKg": 9.9652577115e+26,
+        "radiusMeanKm": 94193.138941,
+        "discoveryDate": "2006"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HAT-P-1 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HAT-P-1 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HAT-P-1",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2453979.93202,
+        "aAu": 0.05561,
+        "e": 0,
+        "iDeg": 85.634,
+        "omDeg": 0,
+        "wDeg": 253.1,
+        "maDeg": 0,
+        "periodD": 4.46529976
+      }
+    }
+  ]
+}

@@ -1,0 +1,283 @@
+{
+  "system": {
+    "id": "gj-667",
+    "name": "GJ 667",
+    "home": false,
+    "memberIds": [
+      "gj-667",
+      "gj-667-star-1",
+      "gj-667-star-2",
+      "gj-667-b",
+      "gj-667-c",
+      "gj-667-f",
+      "gj-667-e"
+    ],
+    "primaryStarId": "gj-667",
+    "starCount": 3,
+    "blurb": "GJ 667 (M1.5 V) — 4 confirmed planets · 23.6 ly",
+    "planetCount": 5,
+    "distanceLy": 23.6,
+    "hostSpectralType": "M1.5 V",
+    "hasGas": false,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — GJ 667 C overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20667%20C",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "starCount",
+            "distanceLy",
+            "hostSpectralType"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "gj-667",
+      "name": "GJ 667 C",
+      "kind": "star",
+      "systemId": "gj-667",
+      "facts": {
+        "massKg": 6.561951e+29,
+        "discoveryDate": "2012"
+      },
+      "color": "#E84A3C",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — GJ 667 C overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20667%20C",
+            "fields": [
+              "facts.massKg",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "gj-667-star-1",
+      "name": "GJ 667 companion",
+      "kind": "star",
+      "systemId": "gj-667",
+      "parentId": "gj-667",
+      "color": "#9aa3ad",
+      "meta": {
+        "source": "Placeholder companion — sy_snum slot with no archive stellar row",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20667%20C",
+            "fields": []
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "placeholder",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "gj-667-star-2",
+      "name": "GJ 667 companion",
+      "kind": "star",
+      "systemId": "gj-667",
+      "parentId": "gj-667",
+      "color": "#9aa3ad",
+      "meta": {
+        "source": "Placeholder companion — sy_snum slot with no archive stellar row",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20667%20C",
+            "fields": []
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "placeholder",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "gj-667-b",
+      "name": "GJ 667 C b",
+      "kind": "planet",
+      "systemId": "gj-667",
+      "facts": {
+        "massKg": 3.3922096e+25,
+        "radiusMeanKm": 14334.75,
+        "discoveryDate": "2012"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host GJ 667 C (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — GJ 667 C overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20667%20C",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.050431,
+        "e": 0.2,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": -2.7,
+        "maDeg": 0,
+        "periodD": 7.203
+      }
+    },
+    {
+      "id": "gj-667-c",
+      "name": "GJ 667 C c",
+      "kind": "planet",
+      "systemId": "gj-667",
+      "facts": {
+        "massKg": 2.269436e+25,
+        "radiusMeanKm": 11276.67,
+        "discoveryDate": "2012"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host GJ 667 C (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — GJ 667 C overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20667%20C",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.125,
+        "e": 0.02,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 292.2,
+        "maDeg": 0,
+        "periodD": 28.14
+      }
+    },
+    {
+      "id": "gj-667-f",
+      "name": "GJ 667 C f",
+      "kind": "planet",
+      "systemId": "gj-667",
+      "facts": {
+        "massKg": 1.6124940000000002e+25,
+        "radiusMeanKm": 9237.949999999999,
+        "discoveryDate": "2012"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host GJ 667 C (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — GJ 667 C overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20667%20C",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.156,
+        "e": 0.03,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 103.1,
+        "maDeg": 0,
+        "periodD": 39.026
+      }
+    },
+    {
+      "id": "gj-667-e",
+      "name": "GJ 667 C e",
+      "kind": "planet",
+      "systemId": "gj-667",
+      "facts": {
+        "massKg": 1.6124940000000002e+25,
+        "radiusMeanKm": 9237.949999999999,
+        "discoveryDate": "2012"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host GJ 667 C (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — GJ 667 C overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20667%20C",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.213,
+        "e": 0.02,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 28.6,
+        "maDeg": 0,
+        "periodD": 62.24
+      }
+    }
+  ]
+}

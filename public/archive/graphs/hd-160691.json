@@ -5,16 +5,21 @@
     "home": false,
     "memberIds": [
       "hd-160691",
-      "hd-160691-b"
+      "hd-160691-d",
+      "hd-160691-e",
+      "hd-160691-b",
+      "hd-160691-c"
     ],
-    "blurb": "HD 160691 (G3 IV-V) — 1 confirmed planet · 50.9 ly",
+    "primaryStarId": "hd-160691",
+    "starCount": 1,
+    "blurb": "HD 160691 (G3 IV-V) — 4 confirmed planets · 50.9 ly",
     "planetCount": 4,
     "distanceLy": 50.9,
     "hostSpectralType": "G3 IV-V",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:35:53.307Z",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — HD 160691 overview",
@@ -22,6 +27,7 @@
           "fields": [
             "blurb",
             "planetCount",
+            "starCount",
             "distanceLy",
             "hostSpectralType"
           ]
@@ -38,7 +44,7 @@
       "facts": {
         "massKg": 2.2469710999999996e+30,
         "radiusMeanKm": 925281,
-        "discoveryDate": "2000"
+        "discoveryDate": "2004"
       },
       "color": "#FDB813",
       "meta": {
@@ -54,21 +60,66 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "known",
         "unitsVersion": 1
       }
     },
     {
-      "id": "hd-160691-b",
-      "name": "HD 160691 b",
+      "id": "hd-160691-d",
+      "name": "HD 160691 d",
       "kind": "planet",
       "systemId": "hd-160691",
       "facts": {
-        "massKg": 8.16197969282722e+27,
-        "discoveryDate": "2000"
+        "massKg": 6.2648378e+25,
+        "radiusMeanKm": 20578.329999999998,
+        "discoveryDate": "2004"
       },
       "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 160691 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 160691 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20160691",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455205.15,
+        "aAu": 0.0952,
+        "e": 0,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 197,
+        "maDeg": 0,
+        "periodD": 9.6392
+      }
+    },
+    {
+      "id": "hd-160691-e",
+      "name": "HD 160691 e",
+      "kind": "planet",
+      "systemId": "hd-160691",
+      "facts": {
+        "massKg": 1.32869436859978e+28,
+        "discoveryDate": "2004"
+      },
+      "color": "#D4A574",
       "meta": {
         "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 160691 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
         "sources": [
@@ -87,7 +138,51 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454483.8,
+        "aAu": 0.96,
+        "e": 0.0666,
+        "iDeg": 60,
+        "omDeg": 0,
+        "wDeg": 193,
+        "maDeg": 0,
+        "periodD": 307.9
+      }
+    },
+    {
+      "id": "hd-160691-b",
+      "name": "HD 160691 b",
+      "kind": "planet",
+      "systemId": "hd-160691",
+      "facts": {
+        "massKg": 8.16197969282722e+27,
+        "discoveryDate": "2004"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 160691 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 160691 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20160691",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -101,6 +196,50 @@
         "wDeg": 39,
         "maDeg": 0,
         "periodD": 645
+      }
+    },
+    {
+      "id": "hd-160691-c",
+      "name": "HD 160691 c",
+      "kind": "planet",
+      "systemId": "hd-160691",
+      "facts": {
+        "massKg": 8.35179317405576e+27,
+        "discoveryDate": "2004"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 160691 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 160691 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20160691",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2453237,
+        "aAu": 4.17,
+        "e": 0.039,
+        "iDeg": 60,
+        "omDeg": 0,
+        "wDeg": 84,
+        "maDeg": 0,
+        "periodD": 3947
       }
     }
   ]

@@ -8,6 +8,8 @@
       "dmpp-1-e",
       "dmpp-1-c"
     ],
+    "primaryStarId": "dmpp-1",
+    "starCount": 1,
     "blurb": "DMPP-1 (F8 V) — 2 confirmed planets · 204 ly",
     "planetCount": 4,
     "distanceLy": 204,
@@ -15,7 +17,7 @@
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:35:53.307Z",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — DMPP-1 overview",
@@ -23,6 +25,7 @@
           "fields": [
             "blurb",
             "planetCount",
+            "starCount",
             "distanceLy",
             "hostSpectralType"
           ]
@@ -55,7 +58,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -87,7 +90,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -130,7 +133,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

@@ -1,0 +1,112 @@
+{
+  "system": {
+    "id": "gj-463",
+    "name": "GJ 463",
+    "home": false,
+    "memberIds": [
+      "gj-463",
+      "gj-463-b"
+    ],
+    "primaryStarId": "gj-463",
+    "starCount": 1,
+    "blurb": "GJ 463 (M3.0 V) — 1 confirmed planet · 59.9 ly",
+    "planetCount": 1,
+    "distanceLy": 59.9,
+    "hostSpectralType": "M3.0 V",
+    "hasGas": true,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — GJ 463 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20463",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "starCount",
+            "distanceLy",
+            "hostSpectralType"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "gj-463",
+      "name": "GJ 463",
+      "kind": "star",
+      "systemId": "gj-463",
+      "facts": {
+        "massKg": 9.6639642e+29,
+        "radiusMeanKm": 336023.1,
+        "discoveryDate": "2022"
+      },
+      "color": "#E84A3C",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — GJ 463 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20463",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "gj-463-b",
+      "name": "GJ 463 b",
+      "kind": "planet",
+      "systemId": "gj-463",
+      "facts": {
+        "massKg": 6.45365836177036e+27,
+        "radiusMeanKm": 83460.09999999999,
+        "discoveryDate": "2022"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host GJ 463 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — GJ 463 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20463",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454313,
+        "aAu": 3.53,
+        "e": 0.146,
+        "iDeg": 152,
+        "omDeg": 0,
+        "wDeg": 329.3,
+        "maDeg": 0,
+        "periodD": 3459
+      }
+    }
+  ]
+}

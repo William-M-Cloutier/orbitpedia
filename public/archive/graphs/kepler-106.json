@@ -6,16 +6,19 @@
     "memberIds": [
       "kepler-106",
       "kepler-106-b",
+      "kepler-106-c",
       "kepler-106-d",
       "kepler-106-e"
     ],
-    "blurb": "Kepler-106 — 3 confirmed planets · 1449.2 ly",
+    "primaryStarId": "kepler-106",
+    "starCount": 1,
+    "blurb": "Kepler-106 — 4 confirmed planets · 1449.2 ly",
     "planetCount": 4,
     "distanceLy": 1449.2,
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:35:53.307Z",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-106 overview",
@@ -23,6 +26,7 @@
           "fields": [
             "blurb",
             "planetCount",
+            "starCount",
             "distanceLy"
           ]
         }
@@ -54,7 +58,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -88,7 +92,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -105,13 +109,13 @@
       }
     },
     {
-      "id": "kepler-106-d",
-      "name": "Kepler-106 d",
+      "id": "kepler-106-c",
+      "name": "Kepler-106 c",
       "kind": "planet",
       "systemId": "kepler-106",
       "facts": {
-        "massKg": 4.837482e+25,
-        "radiusMeanKm": 6052.45,
+        "massKg": 6.2349768e+25,
+        "radiusMeanKm": 15927.5,
         "discoveryDate": "2014"
       },
       "color": "#D4A574",
@@ -133,7 +137,52 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454969.27837,
+        "aAu": 0.10987,
+        "e": 0,
+        "iDeg": 87.07,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 13.5708
+      }
+    },
+    {
+      "id": "kepler-106-d",
+      "name": "Kepler-106 d",
+      "kind": "planet",
+      "systemId": "kepler-106",
+      "facts": {
+        "massKg": 4.837482e+25,
+        "radiusMeanKm": 6052.45,
+        "discoveryDate": "2014"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-106 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-106 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-106",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -159,7 +208,7 @@
         "radiusMeanKm": 16309.76,
         "discoveryDate": "2014"
       },
-      "color": "#6B93D6",
+      "color": "#C1440E",
       "meta": {
         "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-106 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
         "sources": [
@@ -178,7 +227,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

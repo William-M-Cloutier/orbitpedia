@@ -1,0 +1,243 @@
+{
+  "system": {
+    "id": "hd-34445",
+    "name": "HD 34445",
+    "home": false,
+    "memberIds": [
+      "hd-34445",
+      "hd-34445-d",
+      "hd-34445-c",
+      "hd-34445-b",
+      "hd-34445-g"
+    ],
+    "primaryStarId": "hd-34445",
+    "starCount": 1,
+    "blurb": "HD 34445 (G0 V) — 4 confirmed planets · 150.3 ly",
+    "planetCount": 6,
+    "distanceLy": 150.3,
+    "hostSpectralType": "G0 V",
+    "hasGas": true,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — HD 34445 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2034445",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "starCount",
+            "distanceLy",
+            "hostSpectralType"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "hd-34445",
+      "name": "HD 34445",
+      "kind": "star",
+      "systemId": "hd-34445",
+      "facts": {
+        "massKg": 2.1276629000000002e+30,
+        "radiusMeanKm": 960065.9999999999,
+        "discoveryDate": "2017"
+      },
+      "color": "#FDB813",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 34445 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2034445",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "hd-34445-d",
+      "name": "HD 34445 d",
+      "kind": "planet",
+      "systemId": "hd-34445",
+      "facts": {
+        "massKg": 1.8334654e+26,
+        "radiusMeanKm": 38671.97,
+        "discoveryDate": "2017"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 34445 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 34445 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2034445",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.4817,
+        "e": 0.027,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 246.4,
+        "maDeg": 0,
+        "periodD": 117.87
+      }
+    },
+    {
+      "id": "hd-34445-c",
+      "name": "HD 34445 c",
+      "kind": "planet",
+      "systemId": "hd-34445",
+      "facts": {
+        "massKg": 3.1951270000000004e+26,
+        "radiusMeanKm": 53643.82,
+        "discoveryDate": "2017"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 34445 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 34445 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2034445",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.7181,
+        "e": 0.036,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 149,
+        "maDeg": 0,
+        "periodD": 214.67
+      }
+    },
+    {
+      "id": "hd-34445-b",
+      "name": "HD 34445 b",
+      "kind": "planet",
+      "systemId": "hd-34445",
+      "facts": {
+        "massKg": 1.5564783473200001e+27,
+        "radiusMeanKm": 88556.90000000001,
+        "discoveryDate": "2017"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 34445 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 34445 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2034445",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454809,
+        "aAu": 2.07,
+        "e": 0.27,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 104,
+        "maDeg": 0,
+        "periodD": 1049
+      }
+    },
+    {
+      "id": "hd-34445-g",
+      "name": "HD 34445 g",
+      "kind": "planet",
+      "systemId": "hd-34445",
+      "facts": {
+        "massKg": 7.2024732e+26,
+        "radiusMeanKm": 86645.59999999999,
+        "discoveryDate": "2017"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 34445 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 34445 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2034445",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 6.36,
+        "e": 0.032,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 234.9,
+        "maDeg": 0,
+        "periodD": 5700
+      }
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "system": {
+    "id": "dmpp-8",
+    "name": "DMPP-8",
+    "home": false,
+    "memberIds": [
+      "dmpp-8",
+      "dmpp-8-b"
+    ],
+    "primaryStarId": "dmpp-8",
+    "starCount": 1,
+    "blurb": "DMPP-8 — 1 confirmed planet · 248.3 ly",
+    "planetCount": 1,
+    "distanceLy": 248.3,
+    "hasGas": true,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — DMPP-8 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/DMPP-8",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "starCount",
+            "distanceLy"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "dmpp-8",
+      "name": "DMPP-8",
+      "kind": "star",
+      "systemId": "dmpp-8",
+      "facts": {
+        "massKg": 1.9685853e+30,
+        "radiusMeanKm": 862668,
+        "discoveryDate": "2026"
+      },
+      "color": "#F8F7FF",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — DMPP-8 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/DMPP-8",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "dmpp-8-b",
+      "name": "DMPP-8 b",
+      "kind": "planet",
+      "systemId": "dmpp-8",
+      "facts": {
+        "massKg": 4.8428569800000005e+26,
+        "radiusMeanKm": 68806.8,
+        "discoveryDate": "2026"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host DMPP-8 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — DMPP-8 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/DMPP-8",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.3098,
+        "e": 0.275,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 187,
+        "maDeg": 0,
+        "periodD": 62.915
+      }
+    }
+  ]
+}

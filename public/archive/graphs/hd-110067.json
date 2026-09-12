@@ -5,6 +5,8 @@
     "home": false,
     "memberIds": [
       "hd-110067",
+      "hd-110067-star-1",
+      "hd-110067-star-2",
       "hd-110067-b",
       "hd-110067-c",
       "hd-110067-d",
@@ -12,6 +14,8 @@
       "hd-110067-f",
       "hd-110067-g"
     ],
+    "primaryStarId": "hd-110067",
+    "starCount": 3,
     "blurb": "HD 110067 (K0.0 V) — 6 confirmed planets · 104.9 ly",
     "planetCount": 6,
     "distanceLy": 104.9,
@@ -19,7 +23,7 @@
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:35:53.307Z",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — HD 110067 overview",
@@ -27,6 +31,7 @@
           "fields": [
             "blurb",
             "planetCount",
+            "starCount",
             "distanceLy",
             "hostSpectralType"
           ]
@@ -59,8 +64,50 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "hd-110067-star-1",
+      "name": "HD 110067 companion",
+      "kind": "star",
+      "systemId": "hd-110067",
+      "parentId": "hd-110067",
+      "color": "#9aa3ad",
+      "meta": {
+        "source": "Placeholder companion — sy_snum slot with no archive stellar row",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20110067",
+            "fields": []
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "placeholder",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "hd-110067-star-2",
+      "name": "HD 110067 companion",
+      "kind": "star",
+      "systemId": "hd-110067",
+      "parentId": "hd-110067",
+      "color": "#9aa3ad",
+      "meta": {
+        "source": "Placeholder companion — sy_snum slot with no archive stellar row",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20110067",
+            "fields": []
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "placeholder",
         "unitsVersion": 1
       }
     },
@@ -92,7 +139,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -136,7 +183,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -180,7 +227,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -224,7 +271,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -268,7 +315,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -312,7 +359,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

@@ -5,17 +5,22 @@
     "home": false,
     "memberIds": [
       "hd-219134",
+      "hd-219134-b",
+      "hd-219134-f",
+      "hd-219134-d",
       "hd-219134-g",
       "hd-219134-h"
     ],
-    "blurb": "HD 219134 (K3 V) — 2 confirmed planets · 21.3 ly",
+    "primaryStarId": "hd-219134",
+    "starCount": 1,
+    "blurb": "HD 219134 (K3 V) — 5 confirmed planets · 21.3 ly",
     "planetCount": 6,
     "distanceLy": 21.3,
     "hostSpectralType": "K3 V",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:35:53.307Z",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — HD 219134 overview",
@@ -23,6 +28,7 @@
           "fields": [
             "blurb",
             "planetCount",
+            "starCount",
             "distanceLy",
             "hostSpectralType"
           ]
@@ -37,8 +43,8 @@
       "kind": "star",
       "systemId": "hd-219134",
       "facts": {
-        "massKg": 1.57884518e+30,
-        "radiusMeanKm": 535689,
+        "massKg": 1.6106607e+30,
+        "radiusMeanKm": 541254.6,
         "discoveryDate": "2015"
       },
       "color": "#FF8C42",
@@ -55,9 +61,145 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "known",
         "unitsVersion": 1
+      }
+    },
+    {
+      "id": "hd-219134-b",
+      "name": "HD 219134 b",
+      "kind": "planet",
+      "systemId": "hd-219134",
+      "facts": {
+        "massKg": 2.8308228e+25,
+        "radiusMeanKm": 10206.342,
+        "discoveryDate": "2015"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 219134 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 219134 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20219134",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2457126.69913,
+        "aAu": 0.03876,
+        "e": 0,
+        "iDeg": 85.05,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 3.092926
+      }
+    },
+    {
+      "id": "hd-219134-f",
+      "name": "HD 219134 f",
+      "kind": "planet",
+      "systemId": "hd-219134",
+      "facts": {
+        "massKg": 4.359706e+25,
+        "radiusMeanKm": 8346.01,
+        "discoveryDate": "2015"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 219134 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 219134 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20219134",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455210.72,
+        "aAu": 0.1463,
+        "e": 0.148,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 81,
+        "maDeg": 0,
+        "periodD": 22.717
+      }
+    },
+    {
+      "id": "hd-219134-d",
+      "name": "HD 219134 d",
+      "kind": "planet",
+      "systemId": "hd-219134",
+      "facts": {
+        "massKg": 9.657047400000001e+25,
+        "radiusMeanKm": 10257.310000000001,
+        "discoveryDate": "2015"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 219134 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 219134 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20219134",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455207.93,
+        "aAu": 0.237,
+        "e": 0.138,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 173,
+        "maDeg": 0,
+        "periodD": 46.859
       }
     },
     {
@@ -70,7 +212,7 @@
         "radiusMeanKm": 20896.879999999997,
         "discoveryDate": "2015"
       },
-      "color": "#C45C26",
+      "color": "#C1440E",
       "meta": {
         "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 219134 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
         "sources": [
@@ -88,7 +230,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -113,7 +255,7 @@
         "radiusMeanKm": 80911.7,
         "discoveryDate": "2015"
       },
-      "color": "#D4A574",
+      "color": "#C88B3A",
       "meta": {
         "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 219134 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
         "sources": [
@@ -132,7 +274,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

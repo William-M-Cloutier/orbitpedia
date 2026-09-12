@@ -1,0 +1,112 @@
+{
+  "system": {
+    "id": "gj-1214",
+    "name": "GJ 1214",
+    "home": false,
+    "memberIds": [
+      "gj-1214",
+      "gj-1214-b"
+    ],
+    "primaryStarId": "gj-1214",
+    "starCount": 1,
+    "blurb": "GJ 1214 (M4 V) — 1 confirmed planet · 47.8 ly",
+    "planetCount": 1,
+    "distanceLy": 47.8,
+    "hostSpectralType": "M4 V",
+    "hasGas": false,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — GJ 1214 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%201214",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "starCount",
+            "distanceLy",
+            "hostSpectralType"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "gj-1214",
+      "name": "GJ 1214",
+      "kind": "star",
+      "systemId": "gj-1214",
+      "facts": {
+        "massKg": 3.6190153999999996e+29,
+        "radiusMeanKm": 150410.34,
+        "discoveryDate": "2009"
+      },
+      "color": "#E84A3C",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — GJ 1214 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%201214",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "gj-1214-b",
+      "name": "GJ 1214 b",
+      "kind": "planet",
+      "systemId": "gj-1214",
+      "facts": {
+        "massKg": 5.0226202e+25,
+        "radiusMeanKm": 17411.943,
+        "discoveryDate": "2009"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host GJ 1214 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — GJ 1214 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%201214",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2459639.7812619,
+        "aAu": 0.01505,
+        "e": 0.0062,
+        "iDeg": 88.98,
+        "omDeg": 0,
+        "wDeg": 77,
+        "maDeg": 0,
+        "periodD": 1.580404531
+      }
+    }
+  ]
+}

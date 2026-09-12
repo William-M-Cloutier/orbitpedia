@@ -5,11 +5,14 @@
     "home": false,
     "memberIds": [
       "kepler-167",
+      "kepler-167-star-1",
       "kepler-167-b",
       "kepler-167-c",
       "kepler-167-d",
       "kepler-167-e"
     ],
+    "primaryStarId": "kepler-167",
+    "starCount": 2,
     "blurb": "Kepler-167 (K4) — 4 confirmed planets · 1115.2 ly",
     "planetCount": 4,
     "distanceLy": 1115.2,
@@ -17,7 +20,7 @@
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:35:53.307Z",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-167 overview",
@@ -25,6 +28,7 @@
           "fields": [
             "blurb",
             "planetCount",
+            "starCount",
             "distanceLy",
             "hostSpectralType"
           ]
@@ -57,8 +61,29 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "kepler-167-star-1",
+      "name": "Kepler-167 companion",
+      "kind": "star",
+      "systemId": "kepler-167",
+      "parentId": "kepler-167",
+      "color": "#9aa3ad",
+      "meta": {
+        "source": "Placeholder companion — sy_snum slot with no archive stellar row",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-167",
+            "fields": []
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "placeholder",
         "unitsVersion": 1
       }
     },
@@ -91,7 +116,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -136,7 +161,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -181,7 +206,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -227,7 +252,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

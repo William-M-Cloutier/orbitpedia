@@ -1,0 +1,93 @@
+{
+  "system": {
+    "id": "epic-212499991",
+    "name": "EPIC 212499991",
+    "home": false,
+    "memberIds": [
+      "epic-212499991",
+      "epic-212499991-b"
+    ],
+    "primaryStarId": "epic-212499991",
+    "starCount": 1,
+    "blurb": "EPIC 212499991 — 1 confirmed planet · 924 ly",
+    "planetCount": 1,
+    "distanceLy": 924,
+    "hasGas": false,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — EPIC 212499991 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/EPIC%20212499991",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "starCount",
+            "distanceLy"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "epic-212499991",
+      "name": "EPIC 212499991",
+      "kind": "star",
+      "systemId": "epic-212499991",
+      "facts": {
+        "massKg": 1.81348464e+30,
+        "radiusMeanKm": 527021.2737,
+        "discoveryDate": "2019"
+      },
+      "color": "#FF8C42",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — EPIC 212499991 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/EPIC%20212499991",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "epic-212499991-b",
+      "name": "EPIC 212499991 b",
+      "kind": "planet",
+      "systemId": "epic-212499991",
+      "facts": {
+        "massKg": 1.9051318000000001e+25,
+        "radiusMeanKm": 10193.6,
+        "discoveryDate": "2019"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; no pl_orbsmax — orbit omitted.",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — EPIC 212499991 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/EPIC%20212499991",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    }
+  ]
+}

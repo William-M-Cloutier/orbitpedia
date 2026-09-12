@@ -5,17 +5,22 @@
     "home": false,
     "memberIds": [
       "hd-134606",
+      "hd-134606-e",
       "hd-134606-b",
-      "hd-134606-c"
+      "hd-134606-f",
+      "hd-134606-c",
+      "hd-134606-d"
     ],
-    "blurb": "HD 134606 (G5IV) — 2 confirmed planets · 87.4 ly",
+    "primaryStarId": "hd-134606",
+    "starCount": 1,
+    "blurb": "HD 134606 (G5IV) — 5 confirmed planets · 87.4 ly",
     "planetCount": 5,
     "distanceLy": 87.4,
     "hostSpectralType": "G5IV",
-    "hasGas": false,
+    "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:35:53.307Z",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — HD 134606 overview",
@@ -23,6 +28,7 @@
           "fields": [
             "blurb",
             "planetCount",
+            "starCount",
             "distanceLy",
             "hostSpectralType"
           ]
@@ -55,19 +61,19 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "known",
         "unitsVersion": 1
       }
     },
     {
-      "id": "hd-134606-b",
-      "name": "HD 134606 b",
+      "id": "hd-134606-e",
+      "name": "HD 134606 e",
       "kind": "planet",
       "systemId": "hd-134606",
       "facts": {
-        "massKg": 5.4287298e+25,
-        "radiusMeanKm": 18921.870000000003,
+        "massKg": 1.3974948e+25,
+        "radiusMeanKm": 8473.43,
         "discoveryDate": "2024"
       },
       "color": "#C45C26",
@@ -88,29 +94,29 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
       "orbit": {
         "frame": "heliocentric",
-        "aAu": 0.1046,
-        "e": 0.092,
+        "aAu": 0.0527,
+        "e": 0.2,
         "iDeg": 90,
         "omDeg": 0,
-        "wDeg": 157,
+        "wDeg": 54,
         "maDeg": 0,
-        "periodD": 12.089
+        "periodD": 4.3203
       }
     },
     {
-      "id": "hd-134606-c",
-      "name": "HD 134606 c",
+      "id": "hd-134606-b",
+      "name": "HD 134606 b",
       "kind": "planet",
       "systemId": "hd-134606",
       "facts": {
-        "massKg": 6.754558200000001e+25,
-        "radiusMeanKm": 21470.27,
+        "massKg": 5.4287298e+25,
+        "radiusMeanKm": 18921.870000000003,
         "discoveryDate": "2024"
       },
       "color": "#D4A574",
@@ -131,7 +137,93 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.1046,
+        "e": 0.092,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 157,
+        "maDeg": 0,
+        "periodD": 12.089
+      }
+    },
+    {
+      "id": "hd-134606-f",
+      "name": "HD 134606 f",
+      "kind": "planet",
+      "systemId": "hd-134606",
+      "facts": {
+        "massKg": 3.3623486e+25,
+        "radiusMeanKm": 14271.04,
+        "discoveryDate": "2024"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 134606 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 134606 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20134606",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.1784,
+        "e": 0.081,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 63,
+        "maDeg": 0,
+        "periodD": 26.915
+      }
+    },
+    {
+      "id": "hd-134606-c",
+      "name": "HD 134606 c",
+      "kind": "planet",
+      "systemId": "hd-134606",
+      "facts": {
+        "massKg": 6.754558200000001e+25,
+        "radiusMeanKm": 21470.27,
+        "discoveryDate": "2024"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 134606 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 134606 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20134606",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -144,6 +236,49 @@
         "wDeg": 172,
         "maDeg": 0,
         "periodD": 58.883
+      }
+    },
+    {
+      "id": "hd-134606-d",
+      "name": "HD 134606 d",
+      "kind": "planet",
+      "systemId": "hd-134606",
+      "facts": {
+        "massKg": 2.6755456e+26,
+        "radiusMeanKm": 48355.89,
+        "discoveryDate": "2024"
+      },
+      "color": "#C88B3A",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 134606 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 134606 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20134606",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 1.941,
+        "e": 0.092,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 194,
+        "maDeg": 0,
+        "periodD": 966.5
       }
     }
   ]

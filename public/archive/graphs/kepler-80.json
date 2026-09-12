@@ -5,16 +5,21 @@
     "home": false,
     "memberIds": [
       "kepler-80",
-      "kepler-80-c"
+      "kepler-80-f",
+      "kepler-80-e",
+      "kepler-80-c",
+      "kepler-80-g"
     ],
-    "blurb": "Kepler-80 (K5) — 1 confirmed planet · 1205 ly",
+    "primaryStarId": "kepler-80",
+    "starCount": 1,
+    "blurb": "Kepler-80 (K5) — 4 confirmed planets · 1205 ly",
     "planetCount": 6,
     "distanceLy": 1205,
     "hostSpectralType": "K5",
-    "hasGas": false,
+    "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:35:53.307Z",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-80 overview",
@@ -22,6 +27,7 @@
           "fields": [
             "blurb",
             "planetCount",
+            "starCount",
             "distanceLy",
             "hostSpectralType"
           ]
@@ -38,7 +44,7 @@
       "facts": {
         "massKg": 1.4515831e+30,
         "radiusMeanKm": 471684.60000000003,
-        "discoveryDate": "2012"
+        "discoveryDate": "2016"
       },
       "color": "#FF8C42",
       "meta": {
@@ -54,22 +60,67 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "known",
         "unitsVersion": 1
       }
     },
     {
-      "id": "kepler-80-c",
-      "name": "Kepler-80 c",
+      "id": "kepler-80-f",
+      "name": "Kepler-80 f",
       "kind": "planet",
       "systemId": "kepler-80",
       "facts": {
-        "massKg": 4.0252628000000005e+25,
-        "radiusMeanKm": 17456.54,
-        "discoveryDate": "2012"
+        "massKg": 2.6634399506e+28,
+        "radiusMeanKm": 7708.91,
+        "discoveryDate": "2016"
       },
       "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-80 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-80 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-80",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454966.17036,
+        "aAu": 0.0175,
+        "e": 0.186,
+        "iDeg": 86.5,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 0.9867873
+      }
+    },
+    {
+      "id": "kepler-80-e",
+      "name": "Kepler-80 e",
+      "kind": "planet",
+      "systemId": "kepler-80",
+      "facts": {
+        "massKg": 2.4665186e+25,
+        "radiusMeanKm": 10193.6,
+        "discoveryDate": "2016"
+      },
+      "color": "#D4A574",
       "meta": {
         "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-80 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
         "sources": [
@@ -89,7 +140,53 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455696.915,
+        "aAu": 0.0491,
+        "e": 0.0035,
+        "iDeg": 88.79,
+        "omDeg": 0,
+        "wDeg": 71,
+        "maDeg": 0,
+        "periodD": 4.64489
+      }
+    },
+    {
+      "id": "kepler-80-c",
+      "name": "Kepler-80 c",
+      "kind": "planet",
+      "systemId": "kepler-80",
+      "facts": {
+        "massKg": 4.0252628000000005e+25,
+        "radiusMeanKm": 17456.54,
+        "discoveryDate": "2016"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-80 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-80 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-80",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -103,6 +200,35 @@
         "wDeg": 190,
         "maDeg": 0,
         "periodD": 9.52355
+      }
+    },
+    {
+      "id": "kepler-80-g",
+      "name": "Kepler-80 g",
+      "kind": "planet",
+      "systemId": "kepler-80",
+      "facts": {
+        "massKg": 3.8819300000000005e+23,
+        "radiusMeanKm": 7199.23,
+        "discoveryDate": "2016"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; no pl_orbsmax — orbit omitted.",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-80 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-80",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "known",
+        "unitsVersion": 1
       }
     }
   ]

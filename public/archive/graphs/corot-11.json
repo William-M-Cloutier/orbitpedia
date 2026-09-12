@@ -1,0 +1,111 @@
+{
+  "system": {
+    "id": "corot-11",
+    "name": "CoRoT-11",
+    "home": false,
+    "memberIds": [
+      "corot-11",
+      "corot-11-b"
+    ],
+    "primaryStarId": "corot-11",
+    "starCount": 1,
+    "blurb": "CoRoT-11 (F6 V) — 1 confirmed planet · 2136.4 ly",
+    "planetCount": 1,
+    "distanceLy": 2136.4,
+    "hostSpectralType": "F6 V",
+    "hasGas": true,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — CoRoT-11 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/CoRoT-11",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "starCount",
+            "distanceLy",
+            "hostSpectralType"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "corot-11",
+      "name": "CoRoT-11",
+      "kind": "star",
+      "systemId": "corot-11",
+      "facts": {
+        "massKg": 2.5253569e+30,
+        "radiusMeanKm": 953109.0000000001,
+        "discoveryDate": "2010"
+      },
+      "color": "#F8F7FF",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — CoRoT-11 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/CoRoT-11",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "corot-11-b",
+      "name": "CoRoT-11 b",
+      "kind": "planet",
+      "systemId": "corot-11",
+      "facts": {
+        "massKg": 4.422473822e+27,
+        "radiusMeanKm": 102127.13,
+        "discoveryDate": "2010"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host CoRoT-11 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — CoRoT-11 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/CoRoT-11",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454597.679,
+        "aAu": 0.0436,
+        "e": 0,
+        "iDeg": 83.17,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 2.99433
+      }
+    }
+  ]
+}

@@ -5,12 +5,14 @@
     "home": false,
     "memberIds": [
       "hd-40307",
+      "hd-40307-f",
+      "hd-40307-g",
       "hd-40307-b",
       "hd-40307-c",
-      "hd-40307-d",
-      "hd-40307-f",
-      "hd-40307-g"
+      "hd-40307-d"
     ],
+    "primaryStarId": "hd-40307",
+    "starCount": 1,
     "blurb": "HD 40307 (K2.5 V) — 5 confirmed planets · 42.2 ly",
     "planetCount": 5,
     "distanceLy": 42.2,
@@ -18,7 +20,7 @@
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:35:53.307Z",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — HD 40307 overview",
@@ -26,6 +28,7 @@
           "fields": [
             "blurb",
             "planetCount",
+            "starCount",
             "distanceLy",
             "hostSpectralType"
           ]
@@ -58,135 +61,9 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "known",
         "unitsVersion": 1
-      }
-    },
-    {
-      "id": "hd-40307-b",
-      "name": "HD 40307 b",
-      "kind": "planet",
-      "systemId": "hd-40307",
-      "facts": {
-        "massKg": 7.100922332777599e+27,
-        "discoveryDate": "2009"
-      },
-      "color": "#C45C26",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 40307 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — HD 40307 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2040307",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.e",
-              "orbit.iDeg",
-              "orbit.wDeg",
-              "facts.massKg",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "aAu": 0.0468,
-        "e": 0.2,
-        "iDeg": 0.2022,
-        "omDeg": 0,
-        "wDeg": 194.8,
-        "maDeg": 0,
-        "periodD": 4.3123
-      }
-    },
-    {
-      "id": "hd-40307-c",
-      "name": "HD 40307 c",
-      "kind": "planet",
-      "systemId": "hd-40307",
-      "facts": {
-        "massKg": 1.115913456140795e+28,
-        "discoveryDate": "2009"
-      },
-      "color": "#D4A574",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 40307 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — HD 40307 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2040307",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.e",
-              "orbit.iDeg",
-              "orbit.wDeg",
-              "facts.massKg",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "aAu": 0.0799,
-        "e": 0.06,
-        "iDeg": 0.2109,
-        "omDeg": 0,
-        "wDeg": 234.9,
-        "maDeg": 0,
-        "periodD": 9.6184
-      }
-    },
-    {
-      "id": "hd-40307-d",
-      "name": "HD 40307 d",
-      "kind": "planet",
-      "systemId": "hd-40307",
-      "facts": {
-        "massKg": 1.0602981061414301e+28,
-        "discoveryDate": "2009"
-      },
-      "color": "#6B93D6",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 40307 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — HD 40307 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2040307",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.e",
-              "orbit.iDeg",
-              "orbit.wDeg",
-              "facts.massKg",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "aAu": 0.1321,
-        "e": 0.07,
-        "iDeg": 0.2855,
-        "omDeg": 0,
-        "wDeg": 17.2,
-        "maDeg": 0,
-        "periodD": 20.432
       }
     },
     {
@@ -199,7 +76,7 @@
         "radiusMeanKm": 13570.23,
         "discoveryDate": "2009"
       },
-      "color": "#C1440E",
+      "color": "#C45C26",
       "meta": {
         "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 40307 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
         "sources": [
@@ -217,7 +94,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -242,7 +119,7 @@
         "radiusMeanKm": 16309.76,
         "discoveryDate": "2009"
       },
-      "color": "#C88B3A",
+      "color": "#D4A574",
       "meta": {
         "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 40307 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
         "sources": [
@@ -260,7 +137,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -273,6 +150,132 @@
         "wDeg": 91.7,
         "maDeg": 0,
         "periodD": 197.8
+      }
+    },
+    {
+      "id": "hd-40307-b",
+      "name": "HD 40307 b",
+      "kind": "planet",
+      "systemId": "hd-40307",
+      "facts": {
+        "massKg": 7.100922332777599e+27,
+        "discoveryDate": "2009"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 40307 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 40307 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2040307",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "facts.massKg",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.0468,
+        "e": 0.2,
+        "iDeg": 0.2022,
+        "omDeg": 0,
+        "wDeg": 194.8,
+        "maDeg": 0,
+        "periodD": 4.3123
+      }
+    },
+    {
+      "id": "hd-40307-c",
+      "name": "HD 40307 c",
+      "kind": "planet",
+      "systemId": "hd-40307",
+      "facts": {
+        "massKg": 1.115913456140795e+28,
+        "discoveryDate": "2009"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 40307 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 40307 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2040307",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "facts.massKg",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.0799,
+        "e": 0.06,
+        "iDeg": 0.2109,
+        "omDeg": 0,
+        "wDeg": 234.9,
+        "maDeg": 0,
+        "periodD": 9.6184
+      }
+    },
+    {
+      "id": "hd-40307-d",
+      "name": "HD 40307 d",
+      "kind": "planet",
+      "systemId": "hd-40307",
+      "facts": {
+        "massKg": 1.0602981061414301e+28,
+        "discoveryDate": "2009"
+      },
+      "color": "#C88B3A",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 40307 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 40307 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2040307",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "facts.massKg",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.1321,
+        "e": 0.07,
+        "iDeg": 0.2855,
+        "omDeg": 0,
+        "wDeg": 17.2,
+        "maDeg": 0,
+        "periodD": 20.432
       }
     }
   ]

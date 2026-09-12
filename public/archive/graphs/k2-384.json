@@ -1,0 +1,125 @@
+{
+  "system": {
+    "id": "k2-384",
+    "name": "K2-384",
+    "home": false,
+    "memberIds": [
+      "k2-384",
+      "k2-384-e",
+      "k2-384-f"
+    ],
+    "primaryStarId": "k2-384",
+    "starCount": 1,
+    "blurb": "K2-384 (M4 V) — 2 confirmed planets · 269.6 ly",
+    "planetCount": 5,
+    "distanceLy": 269.6,
+    "hostSpectralType": "M4 V",
+    "hasGas": false,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — K2-384 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-384",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "starCount",
+            "distanceLy",
+            "hostSpectralType"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "k2-384",
+      "name": "K2-384",
+      "kind": "star",
+      "systemId": "k2-384",
+      "facts": {
+        "massKg": 6.561951e+29,
+        "radiusMeanKm": 242103.59999999998,
+        "discoveryDate": "2022"
+      },
+      "color": "#E84A3C",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — K2-384 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-384",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "k2-384-e",
+      "name": "K2-384 e",
+      "kind": "planet",
+      "systemId": "k2-384",
+      "facts": {
+        "massKg": 1.4154114e+25,
+        "radiusMeanKm": 8568.994999999999,
+        "discoveryDate": "2022"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; no pl_orbsmax — orbit omitted.",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — K2-384 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-384",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "k2-384-f",
+      "name": "K2-384 f",
+      "kind": "planet",
+      "systemId": "k2-384",
+      "facts": {
+        "massKg": 3.3265154000000005e+25,
+        "radiusMeanKm": 14156.362,
+        "discoveryDate": "2022"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; no pl_orbsmax — orbit omitted.",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — K2-384 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-384",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    }
+  ]
+}

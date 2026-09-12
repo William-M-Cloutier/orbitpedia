@@ -9,16 +9,19 @@
       "hip-41378-c",
       "hip-41378-e",
       "hip-41378-d",
-      "hip-41378-f"
+      "hip-41378-f",
+      "hip-41378-g"
     ],
-    "blurb": "HIP 41378 (F6) — 5 confirmed planets · 346.7 ly",
+    "primaryStarId": "hip-41378",
+    "starCount": 1,
+    "blurb": "HIP 41378 (F6) — 6 confirmed planets · 346.7 ly",
     "planetCount": 6,
     "distanceLy": 346.7,
     "hostSpectralType": "F6",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:35:53.307Z",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — HIP 41378 overview",
@@ -26,6 +29,7 @@
           "fields": [
             "blurb",
             "planetCount",
+            "starCount",
             "distanceLy",
             "hostSpectralType"
           ]
@@ -58,7 +62,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -93,7 +97,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -139,7 +143,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -184,7 +188,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -229,7 +233,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -274,7 +278,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -288,6 +292,35 @@
         "wDeg": 0,
         "maDeg": 0,
         "periodD": 542.0797
+      }
+    },
+    {
+      "id": "hip-41378-g",
+      "name": "HIP 41378 g",
+      "kind": "planet",
+      "systemId": "hip-41378",
+      "facts": {
+        "massKg": 4.0670682e+25,
+        "radiusMeanKm": 15927.5,
+        "discoveryDate": "2016"
+      },
+      "color": "#7EC8E3",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; no pl_orbsmax — orbit omitted.",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HIP 41378 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HIP%2041378",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "known",
+        "unitsVersion": 1
       }
     }
   ]

@@ -5,17 +5,21 @@
     "home": false,
     "memberIds": [
       "kepler-132",
+      "kepler-132-star-1",
       "kepler-132-b",
       "kepler-132-c",
-      "kepler-132-d"
+      "kepler-132-d",
+      "kepler-132-e"
     ],
-    "blurb": "Kepler-132 — 3 confirmed planets · 1140.1 ly",
+    "primaryStarId": "kepler-132",
+    "starCount": 2,
+    "blurb": "Kepler-132 — 4 confirmed planets · 1140.1 ly",
     "planetCount": 4,
     "distanceLy": 1140.1,
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:35:53.307Z",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-132 overview",
@@ -23,6 +27,7 @@
           "fields": [
             "blurb",
             "planetCount",
+            "starCount",
             "distanceLy"
           ]
         }
@@ -54,8 +59,29 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "kepler-132-star-1",
+      "name": "Kepler-132 companion",
+      "kind": "star",
+      "systemId": "kepler-132",
+      "parentId": "kepler-132",
+      "color": "#9aa3ad",
+      "meta": {
+        "source": "Placeholder companion — sy_snum slot with no archive stellar row",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-132",
+            "fields": []
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "placeholder",
         "unitsVersion": 1
       }
     },
@@ -88,7 +114,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -133,7 +159,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -178,7 +204,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -192,6 +218,51 @@
         "wDeg": 0,
         "maDeg": 0,
         "periodD": 18.010199
+      }
+    },
+    {
+      "id": "kepler-132-e",
+      "name": "Kepler-132 e",
+      "kind": "planet",
+      "systemId": "kepler-132",
+      "facts": {
+        "massKg": 1.0511072000000001e+25,
+        "radiusMeanKm": 7517.78,
+        "discoveryDate": "2014"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-132 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-132 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-132",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455072.21903,
+        "aAu": 0.43927,
+        "e": 0,
+        "iDeg": 89.73,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 110.2869374
       }
     }
   ]

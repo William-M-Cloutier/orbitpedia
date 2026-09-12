@@ -5,15 +5,18 @@
     "home": false,
     "memberIds": [
       "k2-187",
+      "k2-187-b",
       "k2-187-d"
     ],
-    "blurb": "K2-187 — 1 confirmed planet · 1079.3 ly",
+    "primaryStarId": "k2-187",
+    "starCount": 1,
+    "blurb": "K2-187 — 2 confirmed planets · 1079.3 ly",
     "planetCount": 4,
     "distanceLy": 1079.3,
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:35:53.307Z",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — K2-187 overview",
@@ -21,6 +24,7 @@
           "fields": [
             "blurb",
             "planetCount",
+            "starCount",
             "distanceLy"
           ]
         }
@@ -52,19 +56,19 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "known",
         "unitsVersion": 1
       }
     },
     {
-      "id": "k2-187-d",
-      "name": "K2-187 d",
+      "id": "k2-187-b",
+      "name": "K2-187 b",
       "kind": "planet",
       "systemId": "k2-187",
       "facts": {
-        "massKg": 3.792347e+25,
-        "radiusMeanKm": 15290.4,
+        "massKg": 1.1168014000000001e+25,
+        "radiusMeanKm": 7645.2,
         "discoveryDate": "2018"
       },
       "color": "#C45C26",
@@ -85,7 +89,51 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2457184.43637,
+        "aAu": 0.0164,
+        "e": 0,
+        "iDeg": 89.7,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 0.77401
+      }
+    },
+    {
+      "id": "k2-187-d",
+      "name": "K2-187 d",
+      "kind": "planet",
+      "systemId": "k2-187",
+      "facts": {
+        "massKg": 3.792347e+25,
+        "radiusMeanKm": 15290.4,
+        "discoveryDate": "2018"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host K2-187 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: e, wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — K2-187 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-187",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

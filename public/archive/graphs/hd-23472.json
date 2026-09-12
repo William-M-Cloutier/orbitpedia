@@ -1,0 +1,300 @@
+{
+  "system": {
+    "id": "hd-23472",
+    "name": "HD 23472",
+    "home": false,
+    "memberIds": [
+      "hd-23472",
+      "hd-23472-d",
+      "hd-23472-e",
+      "hd-23472-f",
+      "hd-23472-b",
+      "hd-23472-c"
+    ],
+    "primaryStarId": "hd-23472",
+    "starCount": 1,
+    "blurb": "HD 23472 (K4 V) — 5 confirmed planets · 127.3 ly",
+    "planetCount": 5,
+    "distanceLy": 127.3,
+    "hostSpectralType": "K4 V",
+    "hasGas": false,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — HD 23472 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2023472",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "starCount",
+            "distanceLy",
+            "hostSpectralType"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "hd-23472",
+      "name": "HD 23472",
+      "kind": "star",
+      "systemId": "hd-23472",
+      "facts": {
+        "massKg": 1.3322749000000001e+30,
+        "radiusMeanKm": 493947,
+        "discoveryDate": "2022"
+      },
+      "color": "#FF8C42",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 23472 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2023472",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "hd-23472-d",
+      "name": "HD 23472 d",
+      "kind": "planet",
+      "systemId": "hd-23472",
+      "facts": {
+        "massKg": 3.2847100000000006e+24,
+        "radiusMeanKm": 4778.25,
+        "discoveryDate": "2022"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 23472 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 23472 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2023472",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2458357.8398,
+        "aAu": 0.04298,
+        "e": 0.07,
+        "iDeg": 87.95,
+        "omDeg": 0,
+        "wDeg": 19,
+        "maDeg": 0,
+        "periodD": 3.97664
+      }
+    },
+    {
+      "id": "hd-23472-e",
+      "name": "HD 23472 e",
+      "kind": "planet",
+      "systemId": "hd-23472",
+      "facts": {
+        "massKg": 4.299984e+24,
+        "radiusMeanKm": 5211.478,
+        "discoveryDate": "2022"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 23472 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 23472 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2023472",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2458354.5659,
+        "aAu": 0.068,
+        "e": 0.07,
+        "iDeg": 88.63,
+        "omDeg": 0,
+        "wDeg": 46,
+        "maDeg": 0,
+        "periodD": 7.90754
+      }
+    },
+    {
+      "id": "hd-23472-f",
+      "name": "HD 23472 f",
+      "kind": "planet",
+      "systemId": "hd-23472",
+      "facts": {
+        "massKg": 4.598594e+24,
+        "radiusMeanKm": 7243.827,
+        "discoveryDate": "2022"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 23472 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 23472 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2023472",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2458360.0754,
+        "aAu": 0.0906,
+        "e": 0.07,
+        "iDeg": 88.81,
+        "omDeg": 0,
+        "wDeg": 4,
+        "maDeg": 0,
+        "periodD": 12.1621839
+      }
+    },
+    {
+      "id": "hd-23472-b",
+      "name": "HD 23472 b",
+      "kind": "planet",
+      "systemId": "hd-23472",
+      "facts": {
+        "massKg": 4.968870400000001e+25,
+        "radiusMeanKm": 12742,
+        "discoveryDate": "2022"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 23472 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 23472 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2023472",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2458360.6641,
+        "aAu": 0.1162,
+        "e": 0.072,
+        "iDeg": 88.93,
+        "omDeg": 0,
+        "wDeg": 114,
+        "maDeg": 0,
+        "periodD": 17.667087
+      }
+    },
+    {
+      "id": "hd-23472-c",
+      "name": "HD 23472 c",
+      "kind": "planet",
+      "systemId": "hd-23472",
+      "facts": {
+        "massKg": 2.0365202e+25,
+        "radiusMeanKm": 11913.77,
+        "discoveryDate": "2022"
+      },
+      "color": "#C88B3A",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 23472 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 23472 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2023472",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2458370.1037,
+        "aAu": 0.1646,
+        "e": 0.063,
+        "iDeg": 89.095,
+        "omDeg": 0,
+        "wDeg": 2,
+        "maDeg": 0,
+        "periodD": 29.79749
+      }
+    }
+  ]
+}

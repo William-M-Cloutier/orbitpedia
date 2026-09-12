@@ -1,0 +1,201 @@
+{
+  "system": {
+    "id": "kepler-107",
+    "name": "Kepler-107",
+    "home": false,
+    "memberIds": [
+      "kepler-107",
+      "kepler-107-b",
+      "kepler-107-c",
+      "kepler-107-d"
+    ],
+    "primaryStarId": "kepler-107",
+    "starCount": 1,
+    "blurb": "Kepler-107 — 3 confirmed planets · 1715.6 ly",
+    "planetCount": 4,
+    "distanceLy": 1715.6,
+    "hasGas": false,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — Kepler-107 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-107",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "starCount",
+            "distanceLy"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "kepler-107",
+      "name": "Kepler-107",
+      "kind": "star",
+      "systemId": "kepler-107",
+      "facts": {
+        "massKg": 2.46172586e+30,
+        "radiusMeanKm": 1006677.9,
+        "discoveryDate": "2014"
+      },
+      "color": "#FDB813",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-107 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-107",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "kepler-107-b",
+      "name": "Kepler-107 b",
+      "kind": "planet",
+      "systemId": "kepler-107",
+      "facts": {
+        "massKg": 2.269436e+25,
+        "radiusMeanKm": 9785.856,
+        "discoveryDate": "2014"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-107 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-107 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-107",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455701.08414,
+        "aAu": 0.04544,
+        "e": 0.1,
+        "iDeg": 89.05,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 3.1800218
+      }
+    },
+    {
+      "id": "kepler-107-c",
+      "name": "Kepler-107 c",
+      "kind": "planet",
+      "systemId": "kepler-107",
+      "facts": {
+        "massKg": 5.9722e+25,
+        "radiusMeanKm": 10174.487,
+        "discoveryDate": "2014"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-107 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-107 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-107",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455697.01829,
+        "aAu": 0.06064,
+        "e": 0.08,
+        "iDeg": 89.49,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 4.901452
+      }
+    },
+    {
+      "id": "kepler-107-d",
+      "name": "Kepler-107 d",
+      "kind": "planet",
+      "systemId": "kepler-107",
+      "facts": {
+        "massKg": 4.598594e+25,
+        "radiusMeanKm": 5479.0599999999995,
+        "discoveryDate": "2014"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-107 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-107 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-107",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455702.9547,
+        "aAu": 0.08377,
+        "e": 0.11,
+        "iDeg": 87.55,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 7.95839
+      }
+    }
+  ]
+}

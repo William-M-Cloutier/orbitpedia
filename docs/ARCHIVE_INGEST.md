@@ -23,15 +23,16 @@ bundle. `generate:catalog` must stay curated-only.
   `https://exoplanetarchive.ipac.caltech.edu/overview/<hostname>`
   (never TAP/JSON/API query URLs in `meta.sources`).
 - Public HTTP only — no API keys / secrets.
+- Extra columns (v2): `sy_snum` (star count), `cb_flag` (circumbinary).
 
-## Filter defaults (dump v1)
+## Filter defaults (dump v2 — William lock)
 
 | Flag / setting | Default | Meaning |
 |----------------|---------|---------|
-| `--min-planets` | **2** | Multi-planet hosts only (`sy_pnum >= 2`) |
-| `--include-single-planet` | off | Sets `--min-planets 1` when you explicitly want singles |
+| `--min-planets` | **1** | Include single-planet hosts (`sy_pnum >= 1`) |
+| `--include-single-planet` | sets min=1 | Kept for compat (redundant with default) |
 | `--limit` | **100** | Bounded smoke / sample (git-friendly) |
-| `--all` | off | No system cap — **full multi-planet dump** |
+| `--all` | off | No system cap — **full dump** into bulk plane |
 
 **Never commit `--all` into `public/archive/graphs/`.**
 
@@ -42,29 +43,52 @@ bundle. `generate:catalog` must stay curated-only.
 | **Override** | `ARCHIVE_OUT=/path` | that directory (`systems.index.json` + `graphs/`) |
 
 Full dump = CI/release artifact or local cache under the bulk plane — not a fat
-main-branch commit. Committed smoke stays small (e.g. `--limit 100` on `843338a`).
+main-branch commit. Committed smoke stays small (e.g. `--limit 100`).
 
-## What we write (hosts + planets + stars only)
+## Multi-star families
+
+Hostnames that share a **family key** are merged into one system:
+
+- `familyKey(hostname)` strips a trailing single-letter / N / S suffix
+  (`"55 Cnc A"` / `"55 Cnc B"` → `"55 Cnc"`).
+- `systemId` = kebab of the family key (e.g. `55-cnc`).
+- Companion **star body** ids use `<systemId>-comp-<letter>` so they do not
+  collide with planet ids like `55-cnc-b`.
+- `sy_snum` drives how many `kind:star` bodies are emitted; remaining slots
+  after archive-backed siblings become **placeholders**
+  (`id: <systemId>-star-N`, `meta.confidence: "placeholder"`, neutral color
+  `#9aa3ad`, no invented spectype/mass/teff/orbit).
+- `cb_flag === 1` → system / index `circumbinary: true`.
+
+## What we write (hosts + planets + stars)
 
 Per archive system chunk `graphs/<systemId>.json`:
 
 ```json
 {
-  "system": { "id", "name", "memberIds", "planetCount", "distanceLy?", "hostSpectralType?", "blurb?", "meta" },
-  "bodies": [ /* star + planets */ ]
+  "system": {
+    "id", "name", "memberIds", "primaryStarId", "planetCount", "starCount",
+    "distanceLy?", "hostSpectralType?", "hasGas", "circumbinary?", "blurb?", "meta"
+  },
+  "bodies": [ /* N stars (primary + comps + placeholders) + planets */ ]
 }
 ```
 
-- Star card: no heliocentric orbit; mass/radius from `st_mass` / `st_rad` when present.
-- Planet cards: Kepler elements with `orbit.frame: "heliocentric"` (host-centric).
-  Sparse OK — omit empty optionals; never invent moons/asteroids; omit `parentId`.
+- Star cards: **primary has no orbit**; mass/radius from `st_mass` / `st_rad` when
+  present. Companion stars + placeholders set `parentId` → `primaryStarId` (Orbit Viz
+  Explore rail) but **omit `orbit`** unless real NEA binary elements exist (none
+  invented). Placeholders: `kind:star`, `meta.confidence: "placeholder"`, no
+  invented spectype/mass/teff/orbit.
+- Planet cards: if `pl_orbsmax` present → Kepler elements with
+  `orbit.frame: "heliocentric"` (host-centric). If missing/invalid → **omit
+  `orbit` entirely** but still emit the planet card when mass/radius/discovery
+  facts exist. Planets without `a` sort after those with `a`.
 - Absolute Ω / M usually unpublished → `omDeg: 0`, `maDeg: 0`,
   `meta.confidence: "assumed"` with a short note in `meta.source`.
 - Missing `e` → `0` (assumed); missing `iDeg` → `90` (assumed, transit-typical).
-- Skip rows without `pl_orbsmax` (schema requires `aAu`).
-- Binary companion hostnames (`55 Cnc B`) get system ids
-  `<primary>-comp-<letter>` so they do not collide with planet ids like
-  `55-cnc-b` on the primary host.
+- **`pl_orbsmax` is no longer required** to ingest a planet row.
+- Sparse OK — omit empty optionals; never invent moons/asteroids. Planet cards omit
+  `parentId`; companion/placeholder **stars** set `parentId` → primary (no orbit).
 
 Thin index `systems.index.json`:
 
@@ -74,7 +98,10 @@ Thin index `systems.index.json`:
   "fetchedAt": "<ISO>",
   "source": "NASA Exoplanet Archive pscomppars",
   "systems": [
-    { "id", "name", "planetCount", "distanceLy?", "hostSpectralType?", "hasGas", "overviewUrl" }
+    {
+      "id", "name", "planetCount", "starCount", "distanceLy?",
+      "hostSpectralType?", "hasGas", "circumbinary?", "overviewUrl", "primaryStarId?"
+    }
   ]
 }
 ```
@@ -90,10 +117,10 @@ Thin index `systems.index.json`:
 ## Importer
 
 ```bash
-# Bounded multi-planet sample (default --limit 100, --min-planets 2)
+# Bounded sample (default --limit 100, --min-planets 1)
 npm run ingest:nea-sample
 # or:
-node scripts/ingest-exoplanet-archive.mjs --limit 100 --min-planets 2
+node scripts/ingest-exoplanet-archive.mjs --limit 100 --min-planets 1
 
 # Smaller smoke
 node scripts/ingest-exoplanet-archive.mjs --limit 5
@@ -104,17 +131,17 @@ node scripts/ingest-exoplanet-archive.mjs --limit 5 --dry-run
 # Named hosts (still skips protected unless --force-ids)
 node scripts/ingest-exoplanet-archive.mjs --hosts "KOI-351,AU Mic"
 
-# Single-planet hosts (explicit opt-in)
+# Explicit single-planet (same as default min-planets 1)
 node scripts/ingest-exoplanet-archive.mjs --include-single-planet --limit 50
 
-# Full multi-planet dump → gitignored public/archive/bulk/ (hold until Guard says go)
-node scripts/ingest-exoplanet-archive.mjs --all --min-planets 2
+# Full dump → gitignored public/archive/bulk/
+node scripts/ingest-exoplanet-archive.mjs --all --min-planets 1
 
 # Or explicit output dir (CI artifact)
-ARCHIVE_OUT=/tmp/orbitpedia-nea-bulk node scripts/ingest-exoplanet-archive.mjs --all --min-planets 2
+ARCHIVE_OUT=/tmp/orbitpedia-nea-bulk node scripts/ingest-exoplanet-archive.mjs --all --min-planets 1
 
 # Large limit also goes to bulk (not the committed smoke plane)
-node scripts/ingest-exoplanet-archive.mjs --limit 500 --min-planets 2
+node scripts/ingest-exoplanet-archive.mjs --limit 500 --min-planets 1
 ```
 
 After ingest, curated gates must still pass unchanged:
@@ -140,15 +167,11 @@ Systems map shows archive **index stubs**; graph loads on Explore open.
 
 ## Scale notes
 
-- Multi-planet (`sy_pnum >= 2`) set is the v1 dump target; singles later via
-  `--include-single-planet`.
+- Default includes singles (`sy_pnum >= 1`); raise `--min-planets` to narrow.
 - On-disk: one JSON graph per system; index stays small.
 - **Full `--all`:** writes `public/archive/bulk/` (gitignored) or `ARCHIVE_OUT` —
   **not** `public/archive/graphs/`. Sample/`--limit 100` stays the committed smoke plane.
 - Index: single `systems.index.json` OK until ~5k; paginate/shard only if needed.
-
-
-
 
 ## Facts copy (no process meta)
 
@@ -182,17 +205,17 @@ re-ingest into `public/archive/bulk/` (`--all`); committed smoke alone is not en
 
 NEA ADQL `TOP` applies to **planet rows**, not host systems. For `--all`, the
 importer currently fetches at most **`TAP_ROW_CAP_ALL = 20000`** rows
-(`sy_pnum >= --min-planets`, `pl_orbsmax` present), then groups by hostname.
-That is why a bulk run can land ~**1023** hosts while NEA cites ~**1056**
-multi-planet hosts — the remaining gap needs **TAP pagination** (not shipped yet).
-
-Bounded `--limit N` uses `TOP max(N*12, 200)` rows, then takes the first N hosts.
+(`sy_pnum >= --min-planets`; **`pl_orbsmax` not required**), then groups by
+**family** (multi-star merge). Bounded `--limit N` uses `TOP max(N*12, 200)`
+rows, then takes the first N families.
 
 ```bash
 # Census vs current window (no writes)
-node scripts/ingest-exoplanet-archive.mjs --all --min-planets 2 --verify
-node scripts/ingest-exoplanet-archive.mjs --limit 100 --min-planets 2 --verify
+node scripts/ingest-exoplanet-archive.mjs --all --min-planets 1 --verify
+node scripts/ingest-exoplanet-archive.mjs --limit 100 --min-planets 1 --verify
 ```
+
+`--verify` reports hosts/families with and without `pl_orbsmax` (a is optional).
 
 ## Checklist when expanding the dump
 
@@ -202,3 +225,16 @@ node scripts/ingest-exoplanet-archive.mjs --limit 100 --min-planets 2 --verify
 4. Smoke: ≥1 archive chunk + index row; `getSystemGraphAsync` resolves it.
 5. Do **not** add archive graphs to `catalog.generated.ts`.
 6. Before `--all`: Guard sign-off; run into `public/archive/bulk/` or `ARCHIVE_OUT` only.
+7. Spot-check: `starCount` on index; multi-star graphs have N star bodies; some
+   planets omit `orbit`; single-planet systems present; blurbs stay factual.
+
+## Multi-star / single-planet / no-aAu (William overnight)
+
+- **`starCount`** ← NEA `sy_snum` on index + system; Filters bins 1 / 2 / 3+.
+- **`primaryStarId`** on system; Explore shows **N** `kind:star` members.
+- Companions: archive-backed when sibling hostname exists; else `meta.confidence: placeholder`
+  (no invented spectype/mass/orbit). Companions set `parentId` → primary for rail; omit `orbit`
+  unless archive has real binary elements.
+- **`circumbinary`** when `cb_flag==1`.
+- **Single-planet** hosts included (`--min-planets 1` / default for this dump).
+- **no-aAu** planets: omit `orbit` entirely; Facts stay sparse/honest — never invent a.

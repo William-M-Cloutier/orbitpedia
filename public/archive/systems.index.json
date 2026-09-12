@@ -1,848 +1,1073 @@
 {
   "version": 1,
-  "fetchedAt": "2026-09-12T07:35:53.307Z",
+  "fetchedAt": "2026-09-12T08:17:16.771Z",
   "source": "NASA Exoplanet Archive pscomppars",
   "systems": [
+    {
+      "id": "2mass-j04414489-2301513",
+      "name": "2MASS J04414489+2301513",
+      "planetCount": 1,
+      "starCount": 1,
+      "distanceLy": 392.8,
+      "hostSpectralType": "M8.5",
+      "hasGas": true,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/2MASS%20J04414489%2B2301513",
+      "primaryStarId": "2mass-j04414489-2301513"
+    },
+    {
+      "id": "2mass-j22362452-4751425",
+      "name": "2MASS J22362452+4751425",
+      "planetCount": 1,
+      "starCount": 1,
+      "distanceLy": 226.9,
+      "hostSpectralType": "K7 V",
+      "hasGas": true,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/2MASS%20J22362452%2B4751425",
+      "primaryStarId": "2mass-j22362452-4751425"
+    },
     {
       "id": "55-cnc",
       "name": "55 Cnc",
       "planetCount": 7,
+      "starCount": 2,
       "distanceLy": 41,
       "hostSpectralType": "G8 V",
       "hasGas": true,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/55%20Cnc"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/55%20Cnc",
+      "primaryStarId": "55-cnc"
     },
     {
-      "id": "55-cnc-comp-b",
-      "name": "55 Cnc B",
-      "planetCount": 7,
-      "distanceLy": 40.7,
-      "hostSpectralType": "M4.5 V",
-      "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/55%20Cnc%20B"
+      "id": "ab-pic",
+      "name": "AB Pic",
+      "planetCount": 1,
+      "starCount": 1,
+      "distanceLy": 163.2,
+      "hostSpectralType": "K2 V",
+      "hasGas": true,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/AB%20Pic",
+      "primaryStarId": "ab-pic"
     },
     {
       "id": "au-mic",
       "name": "AU Mic",
       "planetCount": 4,
+      "starCount": 1,
       "distanceLy": 31.7,
       "hostSpectralType": "M1 V",
       "hasGas": true,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/AU%20Mic"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/AU%20Mic",
+      "primaryStarId": "au-mic"
     },
     {
-      "id": "barnards-star",
-      "name": "Barnard's star",
-      "planetCount": 4,
-      "distanceLy": 6,
-      "hostSpectralType": "M3.5-4 V",
+      "id": "bd-05-4868",
+      "name": "BD+05 4868",
+      "planetCount": 1,
+      "starCount": 2,
+      "distanceLy": 142.1,
+      "hostSpectralType": "K V",
       "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Barnard's%20star"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/BD%2B05%204868%20A",
+      "primaryStarId": "bd-05-4868"
+    },
+    {
+      "id": "cd-35-2722",
+      "name": "CD-35 2722",
+      "planetCount": 1,
+      "starCount": 2,
+      "hostSpectralType": "L4.5 V",
+      "hasGas": true,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/CD-35%202722%20B",
+      "primaryStarId": "cd-35-2722"
+    },
+    {
+      "id": "corot-10",
+      "name": "CoRoT-10",
+      "planetCount": 1,
+      "starCount": 1,
+      "distanceLy": 1103.7,
+      "hostSpectralType": "K1 V",
+      "hasGas": true,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/CoRoT-10",
+      "primaryStarId": "corot-10"
+    },
+    {
+      "id": "corot-11",
+      "name": "CoRoT-11",
+      "planetCount": 1,
+      "starCount": 1,
+      "distanceLy": 2136.4,
+      "hostSpectralType": "F6 V",
+      "hasGas": true,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/CoRoT-11",
+      "primaryStarId": "corot-11"
+    },
+    {
+      "id": "corot-12",
+      "name": "CoRoT-12",
+      "planetCount": 1,
+      "starCount": 1,
+      "distanceLy": 3673.7,
+      "hasGas": true,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/CoRoT-12",
+      "primaryStarId": "corot-12"
+    },
+    {
+      "id": "corot-13",
+      "name": "CoRoT-13",
+      "planetCount": 1,
+      "starCount": 1,
+      "distanceLy": 3747.3,
+      "hostSpectralType": "G0 V",
+      "hasGas": true,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/CoRoT-13",
+      "primaryStarId": "corot-13"
+    },
+    {
+      "id": "corot-28",
+      "name": "CoRoT-28",
+      "planetCount": 1,
+      "starCount": 1,
+      "distanceLy": 2499,
+      "hostSpectralType": "G8/9 IV",
+      "hasGas": true,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/CoRoT-28",
+      "primaryStarId": "corot-28"
+    },
+    {
+      "id": "corot-3",
+      "name": "CoRoT-3",
+      "planetCount": 1,
+      "starCount": 1,
+      "distanceLy": 2507.4,
+      "hostSpectralType": "F3 V",
+      "hasGas": true,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/CoRoT-3",
+      "primaryStarId": "corot-3"
+    },
+    {
+      "id": "corot-8",
+      "name": "CoRoT-8",
+      "planetCount": 1,
+      "starCount": 1,
+      "distanceLy": 1050.3,
+      "hostSpectralType": "K1 V",
+      "hasGas": true,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/CoRoT-8",
+      "primaryStarId": "corot-8"
+    },
+    {
+      "id": "ct-cha",
+      "name": "CT Cha",
+      "planetCount": 1,
+      "starCount": 1,
+      "distanceLy": 622,
+      "hostSpectralType": "K5e",
+      "hasGas": true,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/CT%20Cha",
+      "primaryStarId": "ct-cha"
     },
     {
       "id": "dmpp-1",
       "name": "DMPP-1",
       "planetCount": 4,
+      "starCount": 1,
       "distanceLy": 204,
       "hostSpectralType": "F8 V",
       "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/DMPP-1"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/DMPP-1",
+      "primaryStarId": "dmpp-1"
     },
     {
-      "id": "gj-667-comp-c",
-      "name": "GJ 667 C",
+      "id": "dmpp-4",
+      "name": "DMPP-4",
+      "planetCount": 1,
+      "starCount": 1,
+      "distanceLy": 82.6,
+      "hostSpectralType": "F5-F8 V",
+      "hasGas": false,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/DMPP-4",
+      "primaryStarId": "dmpp-4"
+    },
+    {
+      "id": "dmpp-8",
+      "name": "DMPP-8",
+      "planetCount": 1,
+      "starCount": 1,
+      "distanceLy": 248.3,
+      "hasGas": true,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/DMPP-8",
+      "primaryStarId": "dmpp-8"
+    },
+    {
+      "id": "epic-212499991",
+      "name": "EPIC 212499991",
+      "planetCount": 1,
+      "starCount": 1,
+      "distanceLy": 924,
+      "hasGas": false,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/EPIC%20212499991",
+      "primaryStarId": "epic-212499991"
+    },
+    {
+      "id": "g-9-40",
+      "name": "G 9-40",
+      "planetCount": 1,
+      "starCount": 1,
+      "distanceLy": 91.1,
+      "hostSpectralType": "M2.5 V",
+      "hasGas": false,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/G%209-40",
+      "primaryStarId": "g-9-40"
+    },
+    {
+      "id": "gj-1214",
+      "name": "GJ 1214",
+      "planetCount": 1,
+      "starCount": 1,
+      "distanceLy": 47.8,
+      "hostSpectralType": "M4 V",
+      "hasGas": false,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%201214",
+      "primaryStarId": "gj-1214"
+    },
+    {
+      "id": "gj-3021",
+      "name": "GJ 3021",
+      "planetCount": 1,
+      "starCount": 2,
+      "distanceLy": 57.3,
+      "hostSpectralType": "G6 V",
+      "hasGas": true,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%203021",
+      "primaryStarId": "gj-3021"
+    },
+    {
+      "id": "gj-3293",
+      "name": "GJ 3293",
+      "planetCount": 4,
+      "starCount": 1,
+      "distanceLy": 65.9,
+      "hostSpectralType": "M2.5",
+      "hasGas": true,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%203293",
+      "primaryStarId": "gj-3293"
+    },
+    {
+      "id": "gj-3378",
+      "name": "GJ 3378",
+      "planetCount": 1,
+      "starCount": 1,
+      "distanceLy": 25.2,
+      "hostSpectralType": "M4 V",
+      "hasGas": false,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%203378",
+      "primaryStarId": "gj-3378"
+    },
+    {
+      "id": "gj-341",
+      "name": "GJ 341",
+      "planetCount": 1,
+      "starCount": 1,
+      "distanceLy": 34.1,
+      "hostSpectralType": "M1",
+      "hasGas": false,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20341",
+      "primaryStarId": "gj-341"
+    },
+    {
+      "id": "gj-3470",
+      "name": "GJ 3470",
+      "planetCount": 1,
+      "starCount": 1,
+      "distanceLy": 96,
+      "hostSpectralType": "M1.5",
+      "hasGas": true,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%203470",
+      "primaryStarId": "gj-3470"
+    },
+    {
+      "id": "gj-436",
+      "name": "GJ 436",
+      "planetCount": 1,
+      "starCount": 1,
+      "distanceLy": 31.8,
+      "hostSpectralType": "M2.5 V",
+      "hasGas": true,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20436",
+      "primaryStarId": "gj-436"
+    },
+    {
+      "id": "gj-463",
+      "name": "GJ 463",
+      "planetCount": 1,
+      "starCount": 1,
+      "distanceLy": 59.9,
+      "hostSpectralType": "M3.0 V",
+      "hasGas": true,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20463",
+      "primaryStarId": "gj-463"
+    },
+    {
+      "id": "gj-486",
+      "name": "GJ 486",
+      "planetCount": 1,
+      "starCount": 1,
+      "distanceLy": 26.3,
+      "hostSpectralType": "M3.5 V",
+      "hasGas": false,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20486",
+      "primaryStarId": "gj-486"
+    },
+    {
+      "id": "gj-667",
+      "name": "GJ 667",
       "planetCount": 5,
+      "starCount": 3,
       "distanceLy": 23.6,
       "hostSpectralType": "M1.5 V",
       "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20667%20C"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20667%20C",
+      "primaryStarId": "gj-667"
     },
     {
-      "id": "gj-676-comp-a",
-      "name": "GJ 676 A",
+      "id": "gj-674",
+      "name": "GJ 674",
+      "planetCount": 1,
+      "starCount": 1,
+      "distanceLy": 14.8,
+      "hostSpectralType": "M2.5",
+      "hasGas": false,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20674",
+      "primaryStarId": "gj-674"
+    },
+    {
+      "id": "gj-676",
+      "name": "GJ 676",
       "planetCount": 4,
+      "starCount": 2,
       "distanceLy": 52.3,
       "hostSpectralType": "M0",
-      "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20676%20A"
-    },
-    {
-      "id": "gj-876",
-      "name": "GJ 876",
-      "planetCount": 4,
-      "distanceLy": 15.2,
-      "hostSpectralType": "M2.5V",
       "hasGas": true,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20876"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20676%20A",
+      "primaryStarId": "gj-676"
     },
     {
       "id": "gj-887",
       "name": "GJ 887",
       "planetCount": 4,
+      "starCount": 1,
       "distanceLy": 10.7,
       "hostSpectralType": "M1 V",
       "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20887"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20887",
+      "primaryStarId": "gj-887"
+    },
+    {
+      "id": "gliese-12",
+      "name": "Gliese 12",
+      "planetCount": 1,
+      "starCount": 1,
+      "distanceLy": 39.8,
+      "hostSpectralType": "M4 V",
+      "hasGas": false,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Gliese%2012",
+      "primaryStarId": "gliese-12"
+    },
+    {
+      "id": "gsc-06214-00210",
+      "name": "GSC 06214-00210",
+      "planetCount": 1,
+      "starCount": 1,
+      "distanceLy": 353.9,
+      "hostSpectralType": "K7",
+      "hasGas": true,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/GSC%2006214-00210",
+      "primaryStarId": "gsc-06214-00210"
+    },
+    {
+      "id": "hat-p-1",
+      "name": "HAT-P-1",
+      "planetCount": 1,
+      "starCount": 2,
+      "distanceLy": 518.5,
+      "hostSpectralType": "G0 V",
+      "hasGas": true,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HAT-P-1",
+      "primaryStarId": "hat-p-1"
+    },
+    {
+      "id": "hat-p-12",
+      "name": "HAT-P-12",
+      "planetCount": 1,
+      "starCount": 1,
+      "distanceLy": 465.6,
+      "hostSpectralType": "K4",
+      "hasGas": true,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HAT-P-12",
+      "primaryStarId": "hat-p-12"
+    },
+    {
+      "id": "hd-10180",
+      "name": "HD 10180",
+      "planetCount": 6,
+      "starCount": 1,
+      "distanceLy": 127.1,
+      "hostSpectralType": "G1 V",
+      "hasGas": true,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2010180",
+      "primaryStarId": "hd-10180"
     },
     {
       "id": "hd-108236",
       "name": "HD 108236",
       "planetCount": 5,
+      "starCount": 1,
       "distanceLy": 210.7,
       "hostSpectralType": "G3 V",
       "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20108236"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20108236",
+      "primaryStarId": "hd-108236"
     },
     {
       "id": "hd-110067",
       "name": "HD 110067",
       "planetCount": 6,
+      "starCount": 3,
       "distanceLy": 104.9,
       "hostSpectralType": "K0.0 V",
       "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20110067"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20110067",
+      "primaryStarId": "hd-110067"
     },
     {
       "id": "hd-134606",
       "name": "HD 134606",
       "planetCount": 5,
+      "starCount": 1,
       "distanceLy": 87.4,
       "hostSpectralType": "G5IV",
-      "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20134606"
+      "hasGas": true,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20134606",
+      "primaryStarId": "hd-134606"
     },
     {
       "id": "hd-141399",
       "name": "HD 141399",
       "planetCount": 4,
+      "starCount": 1,
       "distanceLy": 120.7,
       "hostSpectralType": "K0",
       "hasGas": true,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20141399"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20141399",
+      "primaryStarId": "hd-141399"
+    },
+    {
+      "id": "hd-158259",
+      "name": "HD 158259",
+      "planetCount": 5,
+      "starCount": 1,
+      "distanceLy": 88.2,
+      "hostSpectralType": "G0",
+      "hasGas": false,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20158259",
+      "primaryStarId": "hd-158259"
     },
     {
       "id": "hd-160691",
       "name": "HD 160691",
       "planetCount": 4,
+      "starCount": 1,
       "distanceLy": 50.9,
       "hostSpectralType": "G3 IV-V",
       "hasGas": true,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20160691"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20160691",
+      "primaryStarId": "hd-160691"
     },
     {
       "id": "hd-191939",
       "name": "HD 191939",
       "planetCount": 6,
+      "starCount": 1,
       "distanceLy": 174.8,
       "hostSpectralType": "G9 V",
       "hasGas": true,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20191939"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20191939",
+      "primaryStarId": "hd-191939"
     },
     {
-      "id": "hd-20782",
-      "name": "HD 20782",
+      "id": "hd-20781",
+      "name": "HD 20781",
       "planetCount": 5,
-      "distanceLy": 117.4,
-      "hostSpectralType": "G1.5 V",
-      "hasGas": true,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2020782"
-    },
-    {
-      "id": "hd-20794",
-      "name": "HD 20794",
-      "planetCount": 4,
-      "distanceLy": 19.6,
-      "hostSpectralType": "G6 V",
+      "starCount": 2,
+      "distanceLy": 117.3,
+      "hostSpectralType": "K0 V",
       "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2020794"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2020781",
+      "primaryStarId": "hd-20781"
     },
     {
       "id": "hd-215152",
       "name": "HD 215152",
       "planetCount": 4,
+      "starCount": 1,
       "distanceLy": 70.4,
       "hostSpectralType": "K3 V",
       "hasGas": true,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20215152"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20215152",
+      "primaryStarId": "hd-215152"
     },
     {
       "id": "hd-219134",
       "name": "HD 219134",
       "planetCount": 6,
+      "starCount": 1,
       "distanceLy": 21.3,
       "hostSpectralType": "K3 V",
       "hasGas": true,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20219134"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20219134",
+      "primaryStarId": "hd-219134"
+    },
+    {
+      "id": "hd-23472",
+      "name": "HD 23472",
+      "planetCount": 5,
+      "starCount": 1,
+      "distanceLy": 127.3,
+      "hostSpectralType": "K4 V",
+      "hasGas": false,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2023472",
+      "primaryStarId": "hd-23472"
     },
     {
       "id": "hd-3167",
       "name": "HD 3167",
       "planetCount": 4,
+      "starCount": 1,
       "distanceLy": 154.2,
       "hostSpectralType": "K0 V",
       "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%203167"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%203167",
+      "primaryStarId": "hd-3167"
+    },
+    {
+      "id": "hd-34445",
+      "name": "HD 34445",
+      "planetCount": 6,
+      "starCount": 1,
+      "distanceLy": 150.3,
+      "hostSpectralType": "G0 V",
+      "hasGas": true,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2034445",
+      "primaryStarId": "hd-34445"
     },
     {
       "id": "hd-40307",
       "name": "HD 40307",
       "planetCount": 5,
+      "starCount": 1,
       "distanceLy": 42.2,
       "hostSpectralType": "K2.5 V",
       "hasGas": true,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2040307"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2040307",
+      "primaryStarId": "hd-40307"
     },
     {
       "id": "hip-41378",
       "name": "HIP 41378",
       "planetCount": 6,
+      "starCount": 1,
       "distanceLy": 346.7,
       "hostSpectralType": "F6",
       "hasGas": true,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HIP%2041378"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HIP%2041378",
+      "primaryStarId": "hip-41378"
     },
     {
       "id": "hr-8799",
       "name": "HR 8799",
       "planetCount": 4,
+      "starCount": 1,
       "distanceLy": 134.5,
       "hostSpectralType": "A5 V",
       "hasGas": true,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HR%208799"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HR%208799",
+      "primaryStarId": "hr-8799"
+    },
+    {
+      "id": "k2-133",
+      "name": "K2-133",
+      "planetCount": 4,
+      "starCount": 1,
+      "distanceLy": 245.2,
+      "hostSpectralType": "M1.5 V",
+      "hasGas": false,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-133",
+      "primaryStarId": "k2-133"
     },
     {
       "id": "k2-138",
       "name": "K2-138",
       "planetCount": 6,
+      "starCount": 1,
       "distanceLy": 660.7,
       "hostSpectralType": "G8 V",
       "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-138"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-138",
+      "primaryStarId": "k2-138"
     },
     {
       "id": "k2-187",
       "name": "K2-187",
       "planetCount": 4,
+      "starCount": 1,
       "distanceLy": 1079.3,
       "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-187"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-187",
+      "primaryStarId": "k2-187"
+    },
+    {
+      "id": "k2-266",
+      "name": "K2-266",
+      "planetCount": 4,
+      "starCount": 2,
+      "distanceLy": 253,
+      "hasGas": false,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-266",
+      "primaryStarId": "k2-266"
     },
     {
       "id": "k2-268",
       "name": "K2-268",
       "planetCount": 5,
+      "starCount": 1,
       "distanceLy": 1069.1,
       "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-268"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-268",
+      "primaryStarId": "k2-268"
     },
     {
       "id": "k2-285",
       "name": "K2-285",
       "planetCount": 4,
+      "starCount": 1,
       "distanceLy": 505.4,
       "hostSpectralType": "K2 V",
       "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-285"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-285",
+      "primaryStarId": "k2-285"
+    },
+    {
+      "id": "k2-32",
+      "name": "K2-32",
+      "planetCount": 4,
+      "starCount": 2,
+      "distanceLy": 514.3,
+      "hostSpectralType": "G9 V",
+      "hasGas": true,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-32",
+      "primaryStarId": "k2-32"
+    },
+    {
+      "id": "k2-384",
+      "name": "K2-384",
+      "planetCount": 5,
+      "starCount": 1,
+      "distanceLy": 269.6,
+      "hostSpectralType": "M4 V",
+      "hasGas": false,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-384",
+      "primaryStarId": "k2-384"
     },
     {
       "id": "k2-72",
       "name": "K2-72",
       "planetCount": 4,
+      "starCount": 1,
       "distanceLy": 216.7,
       "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-72"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-72",
+      "primaryStarId": "k2-72"
     },
     {
       "id": "kepler-100",
       "name": "Kepler-100",
       "planetCount": 4,
+      "starCount": 1,
       "distanceLy": 993.6,
-      "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-100"
+      "hasGas": true,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-100",
+      "primaryStarId": "kepler-100"
     },
     {
       "id": "kepler-102",
       "name": "Kepler-102",
       "planetCount": 5,
+      "starCount": 1,
       "distanceLy": 351.6,
       "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-102"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-102",
+      "primaryStarId": "kepler-102"
     },
     {
       "id": "kepler-106",
       "name": "Kepler-106",
       "planetCount": 4,
+      "starCount": 1,
       "distanceLy": 1449.2,
       "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-106"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-106",
+      "primaryStarId": "kepler-106"
+    },
+    {
+      "id": "kepler-107",
+      "name": "Kepler-107",
+      "planetCount": 4,
+      "starCount": 1,
+      "distanceLy": 1715.6,
+      "hasGas": false,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-107",
+      "primaryStarId": "kepler-107"
     },
     {
       "id": "kepler-122",
       "name": "Kepler-122",
       "planetCount": 5,
+      "starCount": 1,
       "distanceLy": 3351.1,
-      "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-122"
+      "hasGas": true,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-122",
+      "primaryStarId": "kepler-122"
     },
     {
       "id": "kepler-132",
       "name": "Kepler-132",
       "planetCount": 4,
+      "starCount": 2,
       "distanceLy": 1140.1,
       "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-132"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-132",
+      "primaryStarId": "kepler-132"
     },
     {
       "id": "kepler-138",
       "name": "Kepler-138",
       "planetCount": 4,
+      "starCount": 1,
       "distanceLy": 218.1,
       "hostSpectralType": "M1 V",
       "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-138"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-138",
+      "primaryStarId": "kepler-138"
     },
     {
       "id": "kepler-1388",
       "name": "Kepler-1388",
       "planetCount": 4,
+      "starCount": 1,
       "distanceLy": 1480.1,
       "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-1388"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-1388",
+      "primaryStarId": "kepler-1388"
     },
     {
       "id": "kepler-139",
       "name": "Kepler-139",
       "planetCount": 5,
+      "starCount": 1,
       "distanceLy": 1275.4,
       "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-139"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-139",
+      "primaryStarId": "kepler-139"
     },
     {
       "id": "kepler-150",
       "name": "Kepler-150",
       "planetCount": 5,
+      "starCount": 1,
       "distanceLy": 2906.4,
       "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-150"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-150",
+      "primaryStarId": "kepler-150"
     },
     {
       "id": "kepler-154",
       "name": "Kepler-154",
       "planetCount": 5,
+      "starCount": 1,
       "distanceLy": 2985,
       "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-154"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-154",
+      "primaryStarId": "kepler-154"
     },
     {
       "id": "kepler-1542",
       "name": "Kepler-1542",
       "planetCount": 4,
+      "starCount": 1,
       "distanceLy": 1301.7,
       "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-1542"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-1542",
+      "primaryStarId": "kepler-1542"
     },
     {
       "id": "kepler-164",
       "name": "Kepler-164",
       "planetCount": 4,
+      "starCount": 1,
       "distanceLy": 2905.3,
-      "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-164"
+      "hasGas": true,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-164",
+      "primaryStarId": "kepler-164"
     },
     {
       "id": "kepler-167",
       "name": "Kepler-167",
       "planetCount": 4,
+      "starCount": 2,
       "distanceLy": 1115.2,
       "hostSpectralType": "K4",
       "hasGas": true,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-167"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-167",
+      "primaryStarId": "kepler-167"
     },
     {
       "id": "kepler-169",
       "name": "Kepler-169",
       "planetCount": 5,
+      "starCount": 1,
       "distanceLy": 1325.9,
       "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-169"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-169",
+      "primaryStarId": "kepler-169"
     },
     {
       "id": "kepler-172",
       "name": "Kepler-172",
       "planetCount": 4,
+      "starCount": 1,
       "distanceLy": 2702.5,
       "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-172"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-172",
+      "primaryStarId": "kepler-172"
     },
     {
       "id": "kepler-176",
       "name": "Kepler-176",
       "planetCount": 4,
+      "starCount": 1,
       "distanceLy": 1719.9,
       "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-176"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-176",
+      "primaryStarId": "kepler-176"
     },
     {
       "id": "kepler-186",
       "name": "Kepler-186",
       "planetCount": 5,
+      "starCount": 1,
       "distanceLy": 579.2,
       "hostSpectralType": "M1",
       "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-186"
-    },
-    {
-      "id": "kepler-197",
-      "name": "Kepler-197",
-      "planetCount": 4,
-      "distanceLy": 1078.2,
-      "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-197"
-    },
-    {
-      "id": "kepler-1987",
-      "name": "Kepler-1987",
-      "planetCount": 4,
-      "distanceLy": 1942.9,
-      "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-1987"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-186",
+      "primaryStarId": "kepler-186"
     },
     {
       "id": "kepler-20",
       "name": "Kepler-20",
       "planetCount": 6,
+      "starCount": 2,
       "distanceLy": 921.6,
-      "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-20"
-    },
-    {
-      "id": "kepler-208",
-      "name": "Kepler-208",
-      "planetCount": 4,
-      "distanceLy": 2528.8,
-      "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-208"
-    },
-    {
-      "id": "kepler-215",
-      "name": "Kepler-215",
-      "planetCount": 4,
-      "distanceLy": 1585.1,
-      "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-215"
-    },
-    {
-      "id": "kepler-220",
-      "name": "Kepler-220",
-      "planetCount": 4,
-      "distanceLy": 558.1,
-      "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-220"
-    },
-    {
-      "id": "kepler-221",
-      "name": "Kepler-221",
-      "planetCount": 4,
-      "distanceLy": 1256.5,
-      "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-221"
-    },
-    {
-      "id": "kepler-224",
-      "name": "Kepler-224",
-      "planetCount": 4,
-      "distanceLy": 2550.8,
-      "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-224"
-    },
-    {
-      "id": "kepler-235",
-      "name": "Kepler-235",
-      "planetCount": 4,
-      "distanceLy": 1396,
-      "hostSpectralType": "M0 V",
-      "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-235"
+      "hasGas": true,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-20",
+      "primaryStarId": "kepler-20"
     },
     {
       "id": "kepler-238",
       "name": "Kepler-238",
       "planetCount": 5,
+      "starCount": 1,
       "distanceLy": 5866.7,
       "hasGas": true,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-238"
-    },
-    {
-      "id": "kepler-24",
-      "name": "Kepler-24",
-      "planetCount": 4,
-      "distanceLy": 3773,
-      "hasGas": true,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-24"
-    },
-    {
-      "id": "kepler-245",
-      "name": "Kepler-245",
-      "planetCount": 4,
-      "distanceLy": 2809.9,
-      "hasGas": true,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-245"
-    },
-    {
-      "id": "kepler-247",
-      "name": "Kepler-247",
-      "planetCount": 4,
-      "distanceLy": 2164.7,
-      "hostSpectralType": "K",
-      "hasGas": true,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-247"
-    },
-    {
-      "id": "kepler-251",
-      "name": "Kepler-251",
-      "planetCount": 4,
-      "distanceLy": 3015.7,
-      "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-251"
-    },
-    {
-      "id": "kepler-256",
-      "name": "Kepler-256",
-      "planetCount": 4,
-      "distanceLy": 3347.8,
-      "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-256"
-    },
-    {
-      "id": "kepler-26",
-      "name": "Kepler-26",
-      "planetCount": 4,
-      "distanceLy": 1093.6,
-      "hostSpectralType": "M0 V",
-      "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-26"
-    },
-    {
-      "id": "kepler-265",
-      "name": "Kepler-265",
-      "planetCount": 4,
-      "distanceLy": 4175.6,
-      "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-265"
-    },
-    {
-      "id": "kepler-279",
-      "name": "Kepler-279",
-      "planetCount": 4,
-      "distanceLy": 3383.5,
-      "hasGas": true,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-279"
-    },
-    {
-      "id": "kepler-282",
-      "name": "Kepler-282",
-      "planetCount": 4,
-      "distanceLy": 4362.7,
-      "hasGas": true,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-282"
-    },
-    {
-      "id": "kepler-286",
-      "name": "Kepler-286",
-      "planetCount": 4,
-      "distanceLy": 4001.4,
-      "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-286"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-238",
+      "primaryStarId": "kepler-238"
     },
     {
       "id": "kepler-292",
       "name": "Kepler-292",
       "planetCount": 5,
+      "starCount": 1,
       "distanceLy": 3445.8,
       "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-292"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-292",
+      "primaryStarId": "kepler-292"
     },
     {
       "id": "kepler-296",
       "name": "Kepler-296",
       "planetCount": 5,
+      "starCount": 2,
       "distanceLy": 544.7,
       "hostSpectralType": "M2 V",
       "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-296"
-    },
-    {
-      "id": "kepler-299",
-      "name": "Kepler-299",
-      "planetCount": 4,
-      "distanceLy": 3431.9,
-      "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-299"
-    },
-    {
-      "id": "kepler-304",
-      "name": "Kepler-304",
-      "planetCount": 4,
-      "distanceLy": 1417.7,
-      "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-304"
-    },
-    {
-      "id": "kepler-305",
-      "name": "Kepler-305",
-      "planetCount": 4,
-      "distanceLy": 2832.6,
-      "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-305"
-    },
-    {
-      "id": "kepler-306",
-      "name": "Kepler-306",
-      "planetCount": 4,
-      "distanceLy": 2529.9,
-      "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-306"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-296",
+      "primaryStarId": "kepler-296"
     },
     {
       "id": "kepler-32",
       "name": "Kepler-32",
       "planetCount": 5,
+      "starCount": 1,
       "distanceLy": 1056.2,
       "hostSpectralType": "M1 V",
       "hasGas": true,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-32"
-    },
-    {
-      "id": "kepler-324",
-      "name": "Kepler-324",
-      "planetCount": 4,
-      "distanceLy": 1635.9,
-      "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-324"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-32",
+      "primaryStarId": "kepler-32"
     },
     {
       "id": "kepler-33",
       "name": "Kepler-33",
       "planetCount": 5,
+      "starCount": 1,
       "distanceLy": 3943.7,
       "hasGas": true,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-33"
-    },
-    {
-      "id": "kepler-338",
-      "name": "Kepler-338",
-      "planetCount": 4,
-      "distanceLy": 1803,
-      "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-338"
-    },
-    {
-      "id": "kepler-341",
-      "name": "Kepler-341",
-      "planetCount": 4,
-      "distanceLy": 3415,
-      "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-341"
-    },
-    {
-      "id": "kepler-342",
-      "name": "Kepler-342",
-      "planetCount": 4,
-      "distanceLy": 2549.3,
-      "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-342"
-    },
-    {
-      "id": "kepler-37",
-      "name": "Kepler-37",
-      "planetCount": 4,
-      "distanceLy": 208.5,
-      "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-37"
-    },
-    {
-      "id": "kepler-402",
-      "name": "Kepler-402",
-      "planetCount": 4,
-      "distanceLy": 2039.6,
-      "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-402"
-    },
-    {
-      "id": "kepler-411",
-      "name": "Kepler-411",
-      "planetCount": 4,
-      "distanceLy": 501.2,
-      "hostSpectralType": "K2 V",
-      "hasGas": true,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-411"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-33",
+      "primaryStarId": "kepler-33"
     },
     {
       "id": "kepler-444",
       "name": "Kepler-444",
       "planetCount": 5,
+      "starCount": 3,
       "distanceLy": 118.8,
       "hostSpectralType": "K",
       "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-444"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-444",
+      "primaryStarId": "kepler-444"
     },
     {
       "id": "kepler-48",
       "name": "Kepler-48",
       "planetCount": 5,
+      "starCount": 1,
       "distanceLy": 1000.4,
       "hasGas": true,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-48"
-    },
-    {
-      "id": "kepler-49",
-      "name": "Kepler-49",
-      "planetCount": 4,
-      "distanceLy": 1015.1,
-      "hostSpectralType": "M1 V",
-      "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-49"
-    },
-    {
-      "id": "kepler-51",
-      "name": "Kepler-51",
-      "planetCount": 4,
-      "distanceLy": 2556.5,
-      "hasGas": true,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-51"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-48",
+      "primaryStarId": "kepler-48"
     },
     {
       "id": "kepler-55",
       "name": "Kepler-55",
       "planetCount": 5,
+      "starCount": 1,
       "distanceLy": 1887.8,
       "hasGas": true,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-55"
-    },
-    {
-      "id": "kepler-58",
-      "name": "Kepler-58",
-      "planetCount": 4,
-      "distanceLy": 3161.3,
-      "hasGas": true,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-58"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-55",
+      "primaryStarId": "kepler-55"
     },
     {
       "id": "kepler-62",
       "name": "Kepler-62",
       "planetCount": 5,
+      "starCount": 1,
       "distanceLy": 981.3,
       "hostSpectralType": "K2 V",
       "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-62"
-    },
-    {
-      "id": "kepler-65",
-      "name": "Kepler-65",
-      "planetCount": 4,
-      "distanceLy": 990.6,
-      "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-65"
-    },
-    {
-      "id": "kepler-68",
-      "name": "Kepler-68",
-      "planetCount": 4,
-      "distanceLy": 470.2,
-      "hasGas": true,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-68"
-    },
-    {
-      "id": "kepler-758",
-      "name": "Kepler-758",
-      "planetCount": 4,
-      "distanceLy": 4899.9,
-      "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-758"
-    },
-    {
-      "id": "kepler-79",
-      "name": "Kepler-79",
-      "planetCount": 4,
-      "distanceLy": 3329.1,
-      "hasGas": true,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-79"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-62",
+      "primaryStarId": "kepler-62"
     },
     {
       "id": "kepler-80",
       "name": "Kepler-80",
       "planetCount": 6,
+      "starCount": 1,
       "distanceLy": 1205,
       "hostSpectralType": "K5",
-      "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-80"
+      "hasGas": true,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-80",
+      "primaryStarId": "kepler-80"
     },
     {
       "id": "kepler-82",
       "name": "Kepler-82",
       "planetCount": 5,
+      "starCount": 1,
       "distanceLy": 2949.5,
       "hostSpectralType": "G",
       "hasGas": true,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-82"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-82",
+      "primaryStarId": "kepler-82"
     },
     {
       "id": "kepler-84",
       "name": "Kepler-84",
       "planetCount": 5,
+      "starCount": 1,
       "distanceLy": 3339.5,
       "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-84"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-84",
+      "primaryStarId": "kepler-84"
     },
     {
       "id": "koi-351",
       "name": "KOI-351",
       "planetCount": 8,
+      "starCount": 1,
       "distanceLy": 2766.6,
       "hasGas": true,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/KOI-351"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/KOI-351",
+      "primaryStarId": "koi-351"
     },
     {
       "id": "koi-94",
       "name": "KOI-94",
       "planetCount": 4,
+      "starCount": 2,
       "distanceLy": 1555.9,
       "hasGas": true,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/KOI-94"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/KOI-94",
+      "primaryStarId": "koi-94"
     },
     {
       "id": "l-98-59",
       "name": "L 98-59",
       "planetCount": 5,
+      "starCount": 1,
       "distanceLy": 34.6,
       "hostSpectralType": "M3 V",
       "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/L%2098-59"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/L%2098-59",
+      "primaryStarId": "l-98-59"
     },
     {
       "id": "toi-1136",
       "name": "TOI-1136",
       "planetCount": 6,
+      "starCount": 1,
       "distanceLy": 275.7,
       "hasGas": true,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/TOI-1136"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/TOI-1136",
+      "primaryStarId": "toi-1136"
     },
     {
       "id": "toi-178",
       "name": "TOI-178",
       "planetCount": 6,
+      "starCount": 1,
       "distanceLy": 204.5,
       "hostSpectralType": "K",
       "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/TOI-178"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/TOI-178",
+      "primaryStarId": "toi-178"
     },
     {
       "id": "toi-5624",
       "name": "TOI-5624",
       "planetCount": 5,
+      "starCount": 1,
       "distanceLy": 332.4,
       "hasGas": false,
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/TOI-5624"
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/TOI-5624",
+      "primaryStarId": "toi-5624"
     }
   ]
 }

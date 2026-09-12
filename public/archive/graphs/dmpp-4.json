@@ -1,0 +1,111 @@
+{
+  "system": {
+    "id": "dmpp-4",
+    "name": "DMPP-4",
+    "home": false,
+    "memberIds": [
+      "dmpp-4",
+      "dmpp-4-b"
+    ],
+    "primaryStarId": "dmpp-4",
+    "starCount": 1,
+    "blurb": "DMPP-4 (F5-F8 V) — 1 confirmed planet · 82.6 ly",
+    "planetCount": 1,
+    "distanceLy": 82.6,
+    "hostSpectralType": "F5-F8 V",
+    "hasGas": false,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — DMPP-4 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/DMPP-4",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "starCount",
+            "distanceLy",
+            "hostSpectralType"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "dmpp-4",
+      "name": "DMPP-4",
+      "kind": "star",
+      "systemId": "dmpp-4",
+      "facts": {
+        "massKg": 2.4855875e+30,
+        "radiusMeanKm": 960065.9999999999,
+        "discoveryDate": "2023"
+      },
+      "color": "#F8F7FF",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — DMPP-4 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/DMPP-4",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "dmpp-4-b",
+      "name": "DMPP-4 b",
+      "kind": "planet",
+      "systemId": "dmpp-4",
+      "facts": {
+        "massKg": 7.286084e+25,
+        "radiusMeanKm": 22489.629999999997,
+        "discoveryDate": "2023"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host DMPP-4 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — DMPP-4 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/DMPP-4",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2457139.9,
+        "aAu": 0.04853,
+        "e": 0.063,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 200,
+        "maDeg": 0,
+        "periodD": 3.4982
+      }
+    }
+  ]
+}

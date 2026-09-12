@@ -5,15 +5,20 @@
     "home": false,
     "memberIds": [
       "k2-72",
-      "k2-72-b"
+      "k2-72-b",
+      "k2-72-d",
+      "k2-72-c",
+      "k2-72-e"
     ],
-    "blurb": "K2-72 — 1 confirmed planet · 216.7 ly",
+    "primaryStarId": "k2-72",
+    "starCount": 1,
+    "blurb": "K2-72 — 4 confirmed planets · 216.7 ly",
     "planetCount": 4,
     "distanceLy": 216.7,
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:35:53.307Z",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — K2-72 overview",
@@ -21,6 +26,7 @@
           "fields": [
             "blurb",
             "planetCount",
+            "starCount",
             "distanceLy"
           ]
         }
@@ -52,7 +58,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -87,7 +93,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -101,6 +107,144 @@
         "wDeg": 7.49,
         "maDeg": 0,
         "periodD": 5.577212
+      }
+    },
+    {
+      "id": "k2-72-d",
+      "name": "K2-72 d",
+      "kind": "planet",
+      "systemId": "k2-72",
+      "facts": {
+        "massKg": 6.031922000000001e+24,
+        "radiusMeanKm": 6434.71,
+        "discoveryDate": "2016"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host K2-72 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — K2-72 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-72",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2456984.788,
+        "aAu": 0.05,
+        "e": 0.11,
+        "iDeg": 89.26,
+        "omDeg": 0,
+        "wDeg": 14.28,
+        "maDeg": 0,
+        "periodD": 7.760178
+      }
+    },
+    {
+      "id": "k2-72-c",
+      "name": "K2-72 c",
+      "kind": "planet",
+      "systemId": "k2-72",
+      "facts": {
+        "massKg": 9.85413e+24,
+        "radiusMeanKm": 7390.36,
+        "discoveryDate": "2016"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host K2-72 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — K2-72 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-72",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2456989.465,
+        "aAu": 0.078,
+        "e": 0.11,
+        "iDeg": 89.54,
+        "omDeg": 0,
+        "wDeg": 16.83,
+        "maDeg": 0,
+        "periodD": 15.189034
+      }
+    },
+    {
+      "id": "k2-72-e",
+      "name": "K2-72 e",
+      "kind": "planet",
+      "systemId": "k2-72",
+      "facts": {
+        "massKg": 1.3198562e+25,
+        "radiusMeanKm": 8218.59,
+        "discoveryDate": "2016"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host K2-72 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — K2-72 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-72",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2456987.054,
+        "aAu": 0.106,
+        "e": 0.11,
+        "iDeg": 89.68,
+        "omDeg": 0,
+        "wDeg": 11.39,
+        "maDeg": 0,
+        "periodD": 24.158868
       }
     }
   ]

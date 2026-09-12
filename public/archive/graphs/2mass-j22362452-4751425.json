@@ -1,0 +1,105 @@
+{
+  "system": {
+    "id": "2mass-j22362452-4751425",
+    "name": "2MASS J22362452+4751425",
+    "home": false,
+    "memberIds": [
+      "2mass-j22362452-4751425",
+      "2mass-j22362452-4751425-b"
+    ],
+    "primaryStarId": "2mass-j22362452-4751425",
+    "starCount": 1,
+    "blurb": "2MASS J22362452+4751425 (K7 V) — 1 confirmed planet · 226.9 ly",
+    "planetCount": 1,
+    "distanceLy": 226.9,
+    "hostSpectralType": "K7 V",
+    "hasGas": true,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — 2MASS J22362452+4751425 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/2MASS%20J22362452%2B4751425",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "starCount",
+            "distanceLy",
+            "hostSpectralType"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "2mass-j22362452-4751425",
+      "name": "2MASS J22362452+4751425",
+      "kind": "star",
+      "systemId": "2mass-j22362452-4751425",
+      "facts": {
+        "massKg": 1.193082e+30,
+        "radiusMeanKm": 446049.4464,
+        "discoveryDate": "2016"
+      },
+      "color": "#FF8C42",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — 2MASS J22362452+4751425 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/2MASS%20J22362452%2B4751425",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "2mass-j22362452-4751425-b",
+      "name": "2MASS J22362452+4751425 b",
+      "kind": "planet",
+      "systemId": "2mass-j22362452-4751425",
+      "facts": {
+        "massKg": 2.3726804075e+28,
+        "radiusMeanKm": 78363.3,
+        "discoveryDate": "2016"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host 2MASS J22362452+4751425 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: e, iDeg, wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — 2MASS J22362452+4751425 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/2MASS%20J22362452%2B4751425",
+            "fields": [
+              "orbit.aAu",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 230,
+        "e": 0,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0
+      }
+    }
+  ]
+}

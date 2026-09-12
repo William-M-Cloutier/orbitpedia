@@ -5,15 +5,20 @@
     "home": false,
     "memberIds": [
       "k2-268",
-      "k2-268-b"
+      "k2-268-b",
+      "k2-268-d",
+      "k2-268-e",
+      "k2-268-f"
     ],
-    "blurb": "K2-268 — 1 confirmed planet · 1069.1 ly",
+    "primaryStarId": "k2-268",
+    "starCount": 1,
+    "blurb": "K2-268 — 4 confirmed planets · 1069.1 ly",
     "planetCount": 5,
     "distanceLy": 1069.1,
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:35:53.307Z",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — K2-268 overview",
@@ -21,6 +26,7 @@
           "fields": [
             "blurb",
             "planetCount",
+            "starCount",
             "distanceLy"
           ]
         }
@@ -52,7 +58,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -84,7 +90,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -98,6 +104,93 @@
         "wDeg": 0,
         "maDeg": 0,
         "periodD": 2.151676
+      }
+    },
+    {
+      "id": "k2-268-d",
+      "name": "K2-268 d",
+      "kind": "planet",
+      "systemId": "k2-268",
+      "facts": {
+        "massKg": 1.6901326e+25,
+        "radiusMeanKm": 9492.789999999999,
+        "discoveryDate": "2018"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; no pl_orbsmax — orbit omitted.",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — K2-268 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-268",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "k2-268-e",
+      "name": "K2-268 e",
+      "kind": "planet",
+      "systemId": "k2-268",
+      "facts": {
+        "massKg": 1.3915226000000001e+25,
+        "radiusMeanKm": 8473.43,
+        "discoveryDate": "2018"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; no pl_orbsmax — orbit omitted.",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — K2-268 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-268",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "k2-268-f",
+      "name": "K2-268 f",
+      "kind": "planet",
+      "systemId": "k2-268",
+      "facts": {
+        "massKg": 3.344432e+25,
+        "radiusMeanKm": 14207.33,
+        "discoveryDate": "2018"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; no pl_orbsmax — orbit omitted.",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — K2-268 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-268",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "known",
+        "unitsVersion": 1
       }
     }
   ]

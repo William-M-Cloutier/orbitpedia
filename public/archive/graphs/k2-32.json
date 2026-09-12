@@ -1,0 +1,275 @@
+{
+  "system": {
+    "id": "k2-32",
+    "name": "K2-32",
+    "home": false,
+    "memberIds": [
+      "k2-32",
+      "k2-32-star-1",
+      "k2-32-e",
+      "k2-32-b",
+      "k2-32-c",
+      "k2-32-d"
+    ],
+    "primaryStarId": "k2-32",
+    "starCount": 2,
+    "blurb": "K2-32 (G9 V) — 4 confirmed planets · 514.3 ly",
+    "planetCount": 4,
+    "distanceLy": 514.3,
+    "hostSpectralType": "G9 V",
+    "hasGas": true,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — K2-32 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-32",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "starCount",
+            "distanceLy",
+            "hostSpectralType"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "k2-32",
+      "name": "K2-32",
+      "kind": "star",
+      "systemId": "k2-32",
+      "facts": {
+        "massKg": 1.6504300999999998e+30,
+        "radiusMeanKm": 598302,
+        "discoveryDate": "2019"
+      },
+      "color": "#FDB813",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — K2-32 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-32",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "k2-32-star-1",
+      "name": "K2-32 companion",
+      "kind": "star",
+      "systemId": "k2-32",
+      "parentId": "k2-32",
+      "color": "#9aa3ad",
+      "meta": {
+        "source": "Placeholder companion — sy_snum slot with no archive stellar row",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-32",
+            "fields": []
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "placeholder",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "k2-32-e",
+      "name": "K2-32 e",
+      "kind": "planet",
+      "systemId": "k2-32",
+      "facts": {
+        "massKg": 1.254162e+25,
+        "radiusMeanKm": 7721.652,
+        "discoveryDate": "2019"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host K2-32 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — K2-32 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-32",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2456898.87863,
+        "aAu": 0.04899,
+        "e": 0.043,
+        "iDeg": 89,
+        "omDeg": 0,
+        "wDeg": 205,
+        "maDeg": 0,
+        "periodD": 4.34934
+      }
+    },
+    {
+      "id": "k2-32-b",
+      "name": "K2-32 b",
+      "kind": "planet",
+      "systemId": "k2-32",
+      "facts": {
+        "massKg": 8.9583e+25,
+        "radiusMeanKm": 33759.929000000004,
+        "discoveryDate": "2019"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host K2-32 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — K2-32 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-32",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2456900.92676,
+        "aAu": 0.0795,
+        "e": 0.03,
+        "iDeg": 89,
+        "omDeg": 0,
+        "wDeg": 220,
+        "maDeg": 0,
+        "periodD": 8.992
+      }
+    },
+    {
+      "id": "k2-32-c",
+      "name": "K2-32 c",
+      "kind": "planet",
+      "systemId": "k2-32",
+      "facts": {
+        "massKg": 4.837482e+25,
+        "radiusMeanKm": 19966.714,
+        "discoveryDate": "2019"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host K2-32 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — K2-32 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-32",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2456899.42344,
+        "aAu": 0.13843,
+        "e": 0.049,
+        "iDeg": 89.4,
+        "omDeg": 0,
+        "wDeg": 168,
+        "maDeg": 0,
+        "periodD": 20.66093
+      }
+    },
+    {
+      "id": "k2-32-d",
+      "name": "K2-32 d",
+      "kind": "planet",
+      "systemId": "k2-32",
+      "facts": {
+        "massKg": 4.001374e+25,
+        "radiusMeanKm": 22196.564,
+        "discoveryDate": "2019"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host K2-32 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — K2-32 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-32",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2456903.78707,
+        "aAu": 0.18422,
+        "e": 0.05,
+        "iDeg": 89.4,
+        "omDeg": 0,
+        "wDeg": 185,
+        "maDeg": 0,
+        "periodD": 31.71701
+      }
+    }
+  ]
+}

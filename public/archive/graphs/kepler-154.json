@@ -5,15 +5,19 @@
     "home": false,
     "memberIds": [
       "kepler-154",
+      "kepler-154-f",
+      "kepler-154-d",
       "kepler-154-b"
     ],
-    "blurb": "Kepler-154 — 1 confirmed planet · 2985 ly",
+    "primaryStarId": "kepler-154",
+    "starCount": 1,
+    "blurb": "Kepler-154 — 3 confirmed planets · 2985 ly",
     "planetCount": 5,
     "distanceLy": 2985,
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:35:53.307Z",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-154 overview",
@@ -21,6 +25,7 @@
           "fields": [
             "blurb",
             "planetCount",
+            "starCount",
             "distanceLy"
           ]
         }
@@ -34,9 +39,9 @@
       "kind": "star",
       "systemId": "kepler-154",
       "facts": {
-        "massKg": 1.85524251e+30,
-        "radiusMeanKm": 696395.7,
-        "discoveryDate": "2014"
+        "massKg": 1.9487006e+30,
+        "radiusMeanKm": 681786,
+        "discoveryDate": "2016"
       },
       "color": "#FDB813",
       "meta": {
@@ -52,20 +57,20 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "known",
         "unitsVersion": 1
       }
     },
     {
-      "id": "kepler-154-b",
-      "name": "Kepler-154 b",
+      "id": "kepler-154-f",
+      "name": "Kepler-154 f",
       "kind": "planet",
       "systemId": "kepler-154",
       "facts": {
-        "massKg": 3.4220706000000003e+25,
-        "radiusMeanKm": 14398.46,
-        "discoveryDate": "2014"
+        "massKg": 1.7080492e+25,
+        "radiusMeanKm": 9556.5,
+        "discoveryDate": "2016"
       },
       "color": "#C45C26",
       "meta": {
@@ -86,7 +91,97 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454969.87656,
+        "aAu": 0.08832,
+        "e": 0,
+        "iDeg": 89.47,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 9.91935684
+      }
+    },
+    {
+      "id": "kepler-154-d",
+      "name": "Kepler-154 d",
+      "kind": "planet",
+      "systemId": "kepler-154",
+      "facts": {
+        "massKg": 8.420802e+25,
+        "radiusMeanKm": 24464.64,
+        "discoveryDate": "2016"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-154 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-154 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-154",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455011.94612,
+        "aAu": 0.14354,
+        "e": 0,
+        "iDeg": 88.38,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 20.54981883
+      }
+    },
+    {
+      "id": "kepler-154-b",
+      "name": "Kepler-154 b",
+      "kind": "planet",
+      "systemId": "kepler-154",
+      "facts": {
+        "massKg": 3.4220706000000003e+25,
+        "radiusMeanKm": 14398.46,
+        "discoveryDate": "2016"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-154 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-154 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-154",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

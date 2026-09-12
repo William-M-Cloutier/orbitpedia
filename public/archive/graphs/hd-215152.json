@@ -5,16 +5,20 @@
     "home": false,
     "memberIds": [
       "hd-215152",
+      "hd-215152-c",
+      "hd-215152-d",
       "hd-215152-e"
     ],
-    "blurb": "HD 215152 (K3 V) — 1 confirmed planet · 70.4 ly",
+    "primaryStarId": "hd-215152",
+    "starCount": 1,
+    "blurb": "HD 215152 (K3 V) — 3 confirmed planets · 70.4 ly",
     "planetCount": 4,
     "distanceLy": 70.4,
     "hostSpectralType": "K3 V",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:35:53.307Z",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — HD 215152 overview",
@@ -22,6 +26,7 @@
           "fields": [
             "blurb",
             "planetCount",
+            "starCount",
             "distanceLy",
             "hostSpectralType"
           ]
@@ -54,18 +59,18 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "known",
         "unitsVersion": 1
       }
     },
     {
-      "id": "hd-215152-e",
-      "name": "HD 215152 e",
+      "id": "hd-215152-c",
+      "name": "HD 215152 c",
       "kind": "planet",
       "systemId": "hd-215152",
       "facts": {
-        "massKg": 5.825375738885976e+27,
+        "massKg": 2.799748848150826e+27,
         "discoveryDate": "2018"
       },
       "color": "#C45C26",
@@ -85,7 +90,89 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.067393,
+        "e": 0,
+        "iDeg": 0.2035,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 7.28243
+      }
+    },
+    {
+      "id": "hd-215152-d",
+      "name": "HD 215152 d",
+      "kind": "planet",
+      "systemId": "hd-215152",
+      "facts": {
+        "massKg": 4.601078784991754e+27,
+        "discoveryDate": "2018"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 215152 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 215152 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20215152",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "facts.massKg",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.08799,
+        "e": 0,
+        "iDeg": 0.1998,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 10.86499
+      }
+    },
+    {
+      "id": "hd-215152-e",
+      "name": "HD 215152 e",
+      "kind": "planet",
+      "systemId": "hd-215152",
+      "facts": {
+        "massKg": 5.825375738885976e+27,
+        "discoveryDate": "2018"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 215152 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 215152 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20215152",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "facts.massKg",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

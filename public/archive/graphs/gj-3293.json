@@ -1,0 +1,239 @@
+{
+  "system": {
+    "id": "gj-3293",
+    "name": "GJ 3293",
+    "home": false,
+    "memberIds": [
+      "gj-3293",
+      "gj-3293-e",
+      "gj-3293-b",
+      "gj-3293-d",
+      "gj-3293-c"
+    ],
+    "primaryStarId": "gj-3293",
+    "starCount": 1,
+    "blurb": "GJ 3293 (M2.5) — 4 confirmed planets · 65.9 ly",
+    "planetCount": 4,
+    "distanceLy": 65.9,
+    "hostSpectralType": "M2.5",
+    "hasGas": true,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — GJ 3293 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%203293",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "starCount",
+            "distanceLy",
+            "hostSpectralType"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "gj-3293",
+      "name": "GJ 3293",
+      "kind": "star",
+      "systemId": "gj-3293",
+      "facts": {
+        "massKg": 8.351574e+29,
+        "radiusMeanKm": 281062.80000000005,
+        "discoveryDate": "2017"
+      },
+      "color": "#E84A3C",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — GJ 3293 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%203293",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "gj-3293-e",
+      "name": "GJ 3293 e",
+      "kind": "planet",
+      "systemId": "gj-3293",
+      "facts": {
+        "massKg": 1.9588816e+25,
+        "radiusMeanKm": 10384.73,
+        "discoveryDate": "2017"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host GJ 3293 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg, wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — GJ 3293 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%203293",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.08208,
+        "e": 0.21,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 13.2543
+      }
+    },
+    {
+      "id": "gj-3293-b",
+      "name": "GJ 3293 b",
+      "kind": "planet",
+      "systemId": "gj-3293",
+      "facts": {
+        "massKg": 1.40585588e+26,
+        "radiusMeanKm": 33065.490000000005,
+        "discoveryDate": "2017"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host GJ 3293 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — GJ 3293 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%203293",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.14339,
+        "e": 0.06,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": -103,
+        "maDeg": 0,
+        "periodD": 30.5987
+      }
+    },
+    {
+      "id": "gj-3293-d",
+      "name": "GJ 3293 d",
+      "kind": "planet",
+      "systemId": "gj-3293",
+      "facts": {
+        "massKg": 4.538872e+25,
+        "radiusMeanKm": 17010.57,
+        "discoveryDate": "2017"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host GJ 3293 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg, wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — GJ 3293 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%203293",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.19394,
+        "e": 0.12,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 48.1345
+      }
+    },
+    {
+      "id": "gj-3293-c",
+      "name": "GJ 3293 c",
+      "kind": "planet",
+      "systemId": "gj-3293",
+      "facts": {
+        "massKg": 1.25953698e+26,
+        "radiusMeanKm": 31026.77,
+        "discoveryDate": "2017"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host GJ 3293 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — GJ 3293 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%203293",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.36175,
+        "e": 0.11,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": -21.4,
+        "maDeg": 0,
+        "periodD": 122.6196
+      }
+    }
+  ]
+}

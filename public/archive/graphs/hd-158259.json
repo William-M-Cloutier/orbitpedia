@@ -1,0 +1,215 @@
+{
+  "system": {
+    "id": "hd-158259",
+    "name": "HD 158259",
+    "home": false,
+    "memberIds": [
+      "hd-158259",
+      "hd-158259-b",
+      "hd-158259-c",
+      "hd-158259-d",
+      "hd-158259-e",
+      "hd-158259-f"
+    ],
+    "primaryStarId": "hd-158259",
+    "starCount": 1,
+    "blurb": "HD 158259 (G0) — 5 confirmed planets · 88.2 ly",
+    "planetCount": 5,
+    "distanceLy": 88.2,
+    "hostSpectralType": "G0",
+    "hasGas": false,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — HD 158259 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20158259",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "starCount",
+            "distanceLy",
+            "hostSpectralType"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "hd-158259",
+      "name": "HD 158259",
+      "kind": "star",
+      "systemId": "hd-158259",
+      "facts": {
+        "massKg": 2.1475476e+30,
+        "radiusMeanKm": 841797,
+        "discoveryDate": "2020"
+      },
+      "color": "#FDB813",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 158259 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20158259",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "hd-158259-b",
+      "name": "HD 158259 b",
+      "kind": "planet",
+      "systemId": "hd-158259",
+      "facts": {
+        "massKg": 1.3258284000000001e+25,
+        "radiusMeanKm": 8169.40588,
+        "discoveryDate": "2020"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; no pl_orbsmax — orbit omitted.",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 158259 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20158259",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "hd-158259-c",
+      "name": "HD 158259 c",
+      "kind": "planet",
+      "systemId": "hd-158259",
+      "facts": {
+        "massKg": 3.344432e+25,
+        "radiusMeanKm": 14207.33,
+        "discoveryDate": "2020"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; no pl_orbsmax — orbit omitted.",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 158259 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20158259",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "hd-158259-d",
+      "name": "HD 158259 d",
+      "kind": "planet",
+      "systemId": "hd-158259",
+      "facts": {
+        "massKg": 3.2309602000000002e+25,
+        "radiusMeanKm": 13888.78,
+        "discoveryDate": "2020"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; no pl_orbsmax — orbit omitted.",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 158259 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20158259",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "hd-158259-e",
+      "name": "HD 158259 e",
+      "kind": "planet",
+      "systemId": "hd-158259",
+      "facts": {
+        "massKg": 3.6310976000000003e+25,
+        "radiusMeanKm": 14908.14,
+        "discoveryDate": "2020"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; no pl_orbsmax — orbit omitted.",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 158259 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20158259",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "hd-158259-f",
+      "name": "HD 158259 f",
+      "kind": "planet",
+      "systemId": "hd-158259",
+      "facts": {
+        "massKg": 3.6669308e+25,
+        "radiusMeanKm": 14971.85,
+        "discoveryDate": "2020"
+      },
+      "color": "#C88B3A",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; no pl_orbsmax — orbit omitted.",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 158259 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20158259",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    }
+  ]
+}

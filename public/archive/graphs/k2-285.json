@@ -6,16 +6,20 @@
     "memberIds": [
       "k2-285",
       "k2-285-b",
-      "k2-285-c"
+      "k2-285-c",
+      "k2-285-d",
+      "k2-285-e"
     ],
-    "blurb": "K2-285 (K2 V) — 2 confirmed planets · 505.4 ly",
+    "primaryStarId": "k2-285",
+    "starCount": 1,
+    "blurb": "K2-285 (K2 V) — 4 confirmed planets · 505.4 ly",
     "planetCount": 4,
     "distanceLy": 505.4,
     "hostSpectralType": "K2 V",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:35:53.307Z",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — K2-285 overview",
@@ -23,6 +27,7 @@
           "fields": [
             "blurb",
             "planetCount",
+            "starCount",
             "distanceLy",
             "hostSpectralType"
           ]
@@ -55,7 +60,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -89,7 +94,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -134,7 +139,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -148,6 +153,96 @@
         "wDeg": 0,
         "maDeg": 0,
         "periodD": 7.138048
+      }
+    },
+    {
+      "id": "k2-285-d",
+      "name": "K2-285 d",
+      "kind": "planet",
+      "systemId": "k2-285",
+      "facts": {
+        "massKg": 3.88193e+25,
+        "radiusMeanKm": 15800.08,
+        "discoveryDate": "2018"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host K2-285 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — K2-285 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-285",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2457745.201,
+        "aAu": 0.1178,
+        "e": 0,
+        "iDeg": 89.6431,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 10.45582
+      }
+    },
+    {
+      "id": "k2-285-e",
+      "name": "K2-285 e",
+      "kind": "planet",
+      "systemId": "k2-285",
+      "facts": {
+        "massKg": 6.390254e+25,
+        "radiusMeanKm": 12423.449999999999,
+        "discoveryDate": "2018"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host K2-285 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — K2-285 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-285",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2457741.8969,
+        "aAu": 0.18041,
+        "e": 0,
+        "iDeg": 89.7994,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 14.76289
       }
     }
   ]

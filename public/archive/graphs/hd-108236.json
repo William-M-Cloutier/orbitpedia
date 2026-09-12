@@ -5,17 +5,21 @@
     "home": false,
     "memberIds": [
       "hd-108236",
+      "hd-108236-b",
       "hd-108236-d",
+      "hd-108236-e",
       "hd-108236-f"
     ],
-    "blurb": "HD 108236 (G3 V) — 2 confirmed planets · 210.7 ly",
+    "primaryStarId": "hd-108236",
+    "starCount": 1,
+    "blurb": "HD 108236 (G3 V) — 4 confirmed planets · 210.7 ly",
     "planetCount": 5,
     "distanceLy": 210.7,
     "hostSpectralType": "G3 V",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:35:53.307Z",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — HD 108236 overview",
@@ -23,6 +27,7 @@
           "fields": [
             "blurb",
             "planetCount",
+            "starCount",
             "distanceLy",
             "hostSpectralType"
           ]
@@ -39,7 +44,7 @@
       "facts": {
         "massKg": 1.72798043e+30,
         "radiusMeanKm": 610128.9,
-        "discoveryDate": "2021"
+        "discoveryDate": "2020"
       },
       "color": "#FDB813",
       "meta": {
@@ -55,20 +60,20 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "known",
         "unitsVersion": 1
       }
     },
     {
-      "id": "hd-108236-d",
-      "name": "TOI-1233.01",
+      "id": "hd-108236-b",
+      "name": "HD 108236 b",
       "kind": "planet",
       "systemId": "hd-108236",
       "facts": {
-        "massKg": 4.168595600000001e+25,
-        "radiusMeanKm": 16175.969000000001,
-        "discoveryDate": "2021"
+        "massKg": 1.9349928000000003e+25,
+        "radiusMeanKm": 10289.164999999999,
+        "discoveryDate": "2020"
       },
       "color": "#C45C26",
       "meta": {
@@ -90,31 +95,31 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
       "orbit": {
         "frame": "heliocentric",
-        "epochJd": 2458769.79682,
-        "aAu": 0.1074,
-        "e": 0.055,
-        "iDeg": 89.06,
+        "epochJd": 2458773.2964,
+        "aAu": 0.04527,
+        "e": 0.045,
+        "iDeg": 87.59,
         "omDeg": 0,
-        "wDeg": 151,
+        "wDeg": 126,
         "maDeg": 0,
-        "periodD": 14.175685
+        "periodD": 3.795963
       }
     },
     {
-      "id": "hd-108236-f",
-      "name": "HD 108236 f",
+      "id": "hd-108236-d",
+      "name": "TOI-1233.01",
       "kind": "planet",
       "systemId": "hd-108236",
       "facts": {
-        "massKg": 2.8188784e+25,
-        "radiusMeanKm": 12850.306999999999,
-        "discoveryDate": "2021"
+        "massKg": 4.168595600000001e+25,
+        "radiusMeanKm": 16175.969000000001,
+        "discoveryDate": "2020"
       },
       "color": "#D4A574",
       "meta": {
@@ -136,7 +141,99 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2458769.79682,
+        "aAu": 0.1074,
+        "e": 0.055,
+        "iDeg": 89.06,
+        "omDeg": 0,
+        "wDeg": 151,
+        "maDeg": 0,
+        "periodD": 14.175685
+      }
+    },
+    {
+      "id": "hd-108236-e",
+      "name": "HD 108236 e",
+      "kind": "planet",
+      "systemId": "hd-108236",
+      "facts": {
+        "massKg": 5.799006200000001e+25,
+        "radiusMeanKm": 19641.793,
+        "discoveryDate": "2020"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 108236 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 108236 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20108236",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2458782.46935,
+        "aAu": 0.1367,
+        "e": 0.058,
+        "iDeg": 89.245,
+        "omDeg": 0,
+        "wDeg": 128,
+        "maDeg": 0,
+        "periodD": 19.590025
+      }
+    },
+    {
+      "id": "hd-108236-f",
+      "name": "HD 108236 f",
+      "kind": "planet",
+      "systemId": "hd-108236",
+      "facts": {
+        "massKg": 2.8188784e+25,
+        "radiusMeanKm": 12850.306999999999,
+        "discoveryDate": "2020"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 108236 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 108236 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20108236",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

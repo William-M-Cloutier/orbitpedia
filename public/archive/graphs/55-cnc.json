@@ -5,12 +5,15 @@
     "home": false,
     "memberIds": [
       "55-cnc",
+      "55-cnc-comp-b",
       "55-cnc-e",
       "55-cnc-b",
       "55-cnc-c",
       "55-cnc-f",
       "55-cnc-d"
     ],
+    "primaryStarId": "55-cnc",
+    "starCount": 2,
     "blurb": "55 Cnc (G8 V) — 5 confirmed planets · 41 ly",
     "planetCount": 7,
     "distanceLy": 41,
@@ -18,7 +21,7 @@
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:35:53.307Z",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — 55 Cnc overview",
@@ -26,6 +29,7 @@
           "fields": [
             "blurb",
             "planetCount",
+            "starCount",
             "distanceLy",
             "hostSpectralType"
           ]
@@ -58,7 +62,37 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "55-cnc-comp-b",
+      "name": "55 Cnc B",
+      "kind": "star",
+      "systemId": "55-cnc",
+      "parentId": "55-cnc",
+      "facts": {
+        "massKg": 5.1700220000000004e+29,
+        "radiusMeanKm": 190621.80000000002,
+        "discoveryDate": "2004"
+      },
+      "color": "#E84A3C",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — companion star; no invented binary orbit",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — 55 Cnc B overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/55%20Cnc%20B",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -93,7 +127,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -139,7 +173,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -185,7 +219,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -231,7 +265,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -277,7 +311,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

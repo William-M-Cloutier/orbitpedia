@@ -5,15 +5,19 @@
     "home": false,
     "memberIds": [
       "kepler-150",
-      "kepler-150-e"
+      "kepler-150-d",
+      "kepler-150-e",
+      "kepler-150-f"
     ],
-    "blurb": "Kepler-150 — 1 confirmed planet · 2906.4 ly",
+    "primaryStarId": "kepler-150",
+    "starCount": 1,
+    "blurb": "Kepler-150 — 3 confirmed planets · 2906.4 ly",
     "planetCount": 5,
     "distanceLy": 2906.4,
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:35:53.307Z",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-150 overview",
@@ -21,6 +25,7 @@
           "fields": [
             "blurb",
             "planetCount",
+            "starCount",
             "distanceLy"
           ]
         }
@@ -52,19 +57,19 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "known",
         "unitsVersion": 1
       }
     },
     {
-      "id": "kepler-150-e",
-      "name": "Kepler-150 e",
+      "id": "kepler-150-d",
+      "name": "Kepler-150 d",
       "kind": "planet",
       "systemId": "kepler-150",
       "facts": {
-        "massKg": 5.918450200000001e+25,
-        "radiusMeanKm": 19877.52,
+        "massKg": 4.897204e+25,
+        "radiusMeanKm": 17775.09,
         "discoveryDate": "2014"
       },
       "color": "#C45C26",
@@ -86,7 +91,52 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454999.79588,
+        "aAu": 0.104,
+        "e": 0,
+        "iDeg": 89.95,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 12.56093
+      }
+    },
+    {
+      "id": "kepler-150-e",
+      "name": "Kepler-150 e",
+      "kind": "planet",
+      "systemId": "kepler-150",
+      "facts": {
+        "massKg": 5.918450200000001e+25,
+        "radiusMeanKm": 19877.52,
+        "discoveryDate": "2014"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-150 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-150 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-150",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -100,6 +150,50 @@
         "wDeg": 0,
         "maDeg": 0,
         "periodD": 30.826557
+      }
+    },
+    {
+      "id": "kepler-150-f",
+      "name": "Kepler-150 f",
+      "kind": "planet",
+      "systemId": "kepler-150",
+      "facts": {
+        "massKg": 7.704138000000001e+25,
+        "radiusMeanKm": 23190.440000000002,
+        "discoveryDate": "2014"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-150 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: e, wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-150 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-150",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455979.2422,
+        "aAu": 1.24,
+        "e": 0,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 637.2093
       }
     }
   ]

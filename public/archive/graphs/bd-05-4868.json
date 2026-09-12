@@ -1,0 +1,129 @@
+{
+  "system": {
+    "id": "bd-05-4868",
+    "name": "BD+05 4868",
+    "home": false,
+    "memberIds": [
+      "bd-05-4868",
+      "bd-05-4868-star-1",
+      "bd-05-4868-b"
+    ],
+    "primaryStarId": "bd-05-4868",
+    "starCount": 2,
+    "blurb": "BD+05 4868 (K V) — 1 confirmed planet · 142.1 ly",
+    "planetCount": 1,
+    "distanceLy": 142.1,
+    "hostSpectralType": "K V",
+    "hasGas": false,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — BD+05 4868 A overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/BD%2B05%204868%20A",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "starCount",
+            "distanceLy",
+            "hostSpectralType"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "bd-05-4868",
+      "name": "BD+05 4868 A",
+      "kind": "star",
+      "systemId": "bd-05-4868",
+      "facts": {
+        "massKg": 1.391929e+30,
+        "radiusMeanKm": 480032.99999999994,
+        "discoveryDate": "2025"
+      },
+      "color": "#FF8C42",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — BD+05 4868 A overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/BD%2B05%204868%20A",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "bd-05-4868-star-1",
+      "name": "BD+05 4868 companion",
+      "kind": "star",
+      "systemId": "bd-05-4868",
+      "parentId": "bd-05-4868",
+      "color": "#9aa3ad",
+      "meta": {
+        "source": "Placeholder companion — sy_snum slot with no archive stellar row",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/BD%2B05%204868%20A",
+            "fields": []
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "placeholder",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "bd-05-4868-b",
+      "name": "BD+05 4868 A b",
+      "kind": "planet",
+      "systemId": "bd-05-4868",
+      "facts": {
+        "massKg": 3.7027640000000003e+25,
+        "discoveryDate": "2025"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host BD+05 4868 A (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: e, iDeg, wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — BD+05 4868 A overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/BD%2B05%204868%20A",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2460556.2892,
+        "aAu": 0.0208,
+        "e": 0,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 1.271869
+      }
+    }
+  ]
+}

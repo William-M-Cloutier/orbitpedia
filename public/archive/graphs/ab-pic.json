@@ -1,0 +1,105 @@
+{
+  "system": {
+    "id": "ab-pic",
+    "name": "AB Pic",
+    "home": false,
+    "memberIds": [
+      "ab-pic",
+      "ab-pic-b"
+    ],
+    "primaryStarId": "ab-pic",
+    "starCount": 1,
+    "blurb": "AB Pic (K2 V) — 1 confirmed planet · 163.2 ly",
+    "planetCount": 1,
+    "distanceLy": 163.2,
+    "hostSpectralType": "K2 V",
+    "hasGas": true,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — AB Pic overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/AB%20Pic",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "starCount",
+            "distanceLy",
+            "hostSpectralType"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "ab-pic",
+      "name": "AB Pic",
+      "kind": "star",
+      "systemId": "ab-pic",
+      "facts": {
+        "massKg": 1.789623e+30,
+        "radiusMeanKm": 695278.4058,
+        "discoveryDate": "2005"
+      },
+      "color": "#FDB813",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — AB Pic overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/AB%20Pic",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "ab-pic-b",
+      "name": "AB Pic b",
+      "kind": "planet",
+      "systemId": "ab-pic",
+      "facts": {
+        "massKg": 2.56237241e+28,
+        "radiusMeanKm": 78363.3,
+        "discoveryDate": "2005"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host AB Pic (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: e, iDeg, wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — AB Pic overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/AB%20Pic",
+            "fields": [
+              "orbit.aAu",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 260,
+        "e": 0,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0
+      }
+    }
+  ]
+}

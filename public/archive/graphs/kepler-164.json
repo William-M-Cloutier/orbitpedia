@@ -5,15 +5,20 @@
     "home": false,
     "memberIds": [
       "kepler-164",
-      "kepler-164-d"
+      "kepler-164-b",
+      "kepler-164-c",
+      "kepler-164-d",
+      "kepler-164-e"
     ],
-    "blurb": "Kepler-164 — 1 confirmed planet · 2905.3 ly",
+    "primaryStarId": "kepler-164",
+    "starCount": 1,
+    "blurb": "Kepler-164 — 4 confirmed planets · 2905.3 ly",
     "planetCount": 4,
     "distanceLy": 2905.3,
-    "hasGas": false,
+    "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:35:53.307Z",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-164 overview",
@@ -21,6 +26,7 @@
           "fields": [
             "blurb",
             "planetCount",
+            "starCount",
             "distanceLy"
           ]
         }
@@ -52,19 +58,19 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "known",
         "unitsVersion": 1
       }
     },
     {
-      "id": "kepler-164-d",
-      "name": "Kepler-164 d",
+      "id": "kepler-164-b",
+      "name": "Kepler-164 b",
       "kind": "planet",
       "systemId": "kepler-164",
       "facts": {
-        "massKg": 3.9237354e+25,
-        "radiusMeanKm": 15608.95,
+        "massKg": 1.5348553999999999e+25,
+        "radiusMeanKm": 8983.109999999999,
         "discoveryDate": "2014"
       },
       "color": "#C45C26",
@@ -86,7 +92,97 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454965.65465,
+        "aAu": 0.058,
+        "e": 0,
+        "iDeg": 84.49,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 5.03503
+      }
+    },
+    {
+      "id": "kepler-164-c",
+      "name": "Kepler-164 c",
+      "kind": "planet",
+      "systemId": "kepler-164",
+      "facts": {
+        "massKg": 4.718038e+25,
+        "radiusMeanKm": 17392.829999999998,
+        "discoveryDate": "2014"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-164 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-164 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-164",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455009.72046,
+        "aAu": 0.097,
+        "e": 0,
+        "iDeg": 87.17,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 10.945723
+      }
+    },
+    {
+      "id": "kepler-164-d",
+      "name": "Kepler-164 d",
+      "kind": "planet",
+      "systemId": "kepler-164",
+      "facts": {
+        "massKg": 3.9237354e+25,
+        "radiusMeanKm": 15608.95,
+        "discoveryDate": "2014"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-164 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-164 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-164",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -100,6 +196,51 @@
         "wDeg": 0,
         "maDeg": 0,
         "periodD": 28.986769
+      }
+    },
+    {
+      "id": "kepler-164-e",
+      "name": "Kepler-164 e",
+      "kind": "planet",
+      "systemId": "kepler-164",
+      "facts": {
+        "massKg": 9.973574e+25,
+        "radiusMeanKm": 27013.04,
+        "discoveryDate": "2014"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-164 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-164 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-164",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455047.82879,
+        "aAu": 0.4025,
+        "e": 0,
+        "iDeg": 88.37,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 94.886902
       }
     }
   ]

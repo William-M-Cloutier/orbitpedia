@@ -5,17 +5,21 @@
     "home": false,
     "memberIds": [
       "hd-141399",
+      "hd-141399-b",
+      "hd-141399-c",
       "hd-141399-d",
       "hd-141399-e"
     ],
-    "blurb": "HD 141399 (K0) — 2 confirmed planets · 120.7 ly",
+    "primaryStarId": "hd-141399",
+    "starCount": 1,
+    "blurb": "HD 141399 (K0) — 4 confirmed planets · 120.7 ly",
     "planetCount": 4,
     "distanceLy": 120.7,
     "hostSpectralType": "K0",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:35:53.307Z",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — HD 141399 overview",
@@ -23,6 +27,7 @@
           "fields": [
             "blurb",
             "planetCount",
+            "starCount",
             "distanceLy",
             "hostSpectralType"
           ]
@@ -55,19 +60,19 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "known",
         "unitsVersion": 1
       }
     },
     {
-      "id": "hd-141399-d",
-      "name": "HD 141399 d",
+      "id": "hd-141399-b",
+      "name": "HD 141399 b",
       "kind": "planet",
       "systemId": "hd-141399",
       "facts": {
-        "massKg": 2.23981030468e+27,
-        "radiusMeanKm": 87282.7,
+        "massKg": 8.56063091026e+26,
+        "radiusMeanKm": 91105.3,
         "discoveryDate": "2014"
       },
       "color": "#C45C26",
@@ -89,7 +94,97 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455205.19,
+        "aAu": 0.415,
+        "e": 0.04,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": -90,
+        "maDeg": 0,
+        "periodD": 94.44
+      }
+    },
+    {
+      "id": "hd-141399-c",
+      "name": "HD 141399 c",
+      "kind": "planet",
+      "systemId": "hd-141399",
+      "facts": {
+        "massKg": 2.52453195358e+27,
+        "radiusMeanKm": 86645.59999999999,
+        "discoveryDate": "2014"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 141399 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 141399 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20141399",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455626.02,
+        "aAu": 0.689,
+        "e": 0.048,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": -140,
+        "maDeg": 0,
+        "periodD": 201.99
+      }
+    },
+    {
+      "id": "hd-141399-d",
+      "name": "HD 141399 d",
+      "kind": "planet",
+      "systemId": "hd-141399",
+      "facts": {
+        "massKg": 2.23981030468e+27,
+        "radiusMeanKm": 87282.7,
+        "discoveryDate": "2014"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 141399 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 141399 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20141399",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -115,7 +210,7 @@
         "radiusMeanKm": 89831.09999999999,
         "discoveryDate": "2014"
       },
-      "color": "#D4A574",
+      "color": "#C1440E",
       "meta": {
         "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 141399 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
         "sources": [
@@ -134,7 +229,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

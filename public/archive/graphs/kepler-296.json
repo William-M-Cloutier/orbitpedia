@@ -5,17 +5,22 @@
     "home": false,
     "memberIds": [
       "kepler-296",
+      "kepler-296-star-1",
       "kepler-296-b",
+      "kepler-296-d",
+      "kepler-296-e",
       "kepler-296-f"
     ],
-    "blurb": "Kepler-296 (M2 V) — 2 confirmed planets · 544.7 ly",
+    "primaryStarId": "kepler-296",
+    "starCount": 2,
+    "blurb": "Kepler-296 (M2 V) — 4 confirmed planets · 544.7 ly",
     "planetCount": 5,
     "distanceLy": 544.7,
     "hostSpectralType": "M2 V",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:35:53.307Z",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-296 overview",
@@ -23,6 +28,7 @@
           "fields": [
             "blurb",
             "planetCount",
+            "starCount",
             "distanceLy",
             "hostSpectralType"
           ]
@@ -55,8 +61,29 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "kepler-296-star-1",
+      "name": "Kepler-296 companion",
+      "kind": "star",
+      "systemId": "kepler-296",
+      "parentId": "kepler-296",
+      "color": "#9aa3ad",
+      "meta": {
+        "source": "Placeholder companion — sy_snum slot with no archive stellar row",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-296",
+            "fields": []
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "placeholder",
         "unitsVersion": 1
       }
     },
@@ -89,7 +116,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -106,13 +133,13 @@
       }
     },
     {
-      "id": "kepler-296-f",
-      "name": "Kepler-296 f",
+      "id": "kepler-296-d",
+      "name": "Kepler-296 d",
       "kind": "planet",
       "systemId": "kepler-296",
       "facts": {
-        "massKg": 2.3231858000000003e+25,
-        "radiusMeanKm": 11467.800000000001,
+        "massKg": 2.9980443999999997e+25,
+        "radiusMeanKm": 13315.39,
         "discoveryDate": "2014"
       },
       "color": "#D4A574",
@@ -134,7 +161,97 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454966.6496,
+        "aAu": 0.118,
+        "e": 0.33,
+        "iDeg": 89.77,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 19.850291
+      }
+    },
+    {
+      "id": "kepler-296-e",
+      "name": "Kepler-296 e",
+      "kind": "planet",
+      "systemId": "kepler-296",
+      "facts": {
+        "massKg": 1.7677712e+25,
+        "radiusMeanKm": 9747.630000000001,
+        "discoveryDate": "2014"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-296 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-296 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-296",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454969.035,
+        "aAu": 0.169,
+        "e": 0.33,
+        "iDeg": 89.89,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 34.14211
+      }
+    },
+    {
+      "id": "kepler-296-f",
+      "name": "Kepler-296 f",
+      "kind": "planet",
+      "systemId": "kepler-296",
+      "facts": {
+        "massKg": 2.3231858000000003e+25,
+        "radiusMeanKm": 11467.800000000001,
+        "discoveryDate": "2014"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-296 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-296 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-296",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

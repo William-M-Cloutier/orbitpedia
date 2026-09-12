@@ -1,0 +1,220 @@
+{
+  "system": {
+    "id": "gj-676",
+    "name": "GJ 676",
+    "home": false,
+    "memberIds": [
+      "gj-676",
+      "gj-676-star-1",
+      "gj-676-d",
+      "gj-676-e",
+      "gj-676-c"
+    ],
+    "primaryStarId": "gj-676",
+    "starCount": 2,
+    "blurb": "GJ 676 (M0) — 3 confirmed planets · 52.3 ly",
+    "planetCount": 4,
+    "distanceLy": 52.3,
+    "hostSpectralType": "M0",
+    "hasGas": true,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — GJ 676 A overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20676%20A",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "starCount",
+            "distanceLy",
+            "hostSpectralType"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "gj-676",
+      "name": "GJ 676 A",
+      "kind": "star",
+      "systemId": "gj-676",
+      "facts": {
+        "massKg": 1.24478222e+30,
+        "radiusMeanKm": 480032.99999999994,
+        "discoveryDate": "2012"
+      },
+      "color": "#FF8C42",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — GJ 676 A overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20676%20A",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "gj-676-star-1",
+      "name": "GJ 676 companion",
+      "kind": "star",
+      "systemId": "gj-676",
+      "parentId": "gj-676",
+      "color": "#9aa3ad",
+      "meta": {
+        "source": "Placeholder companion — sy_snum slot with no archive stellar row",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20676%20A",
+            "fields": []
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "placeholder",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "gj-676-d",
+      "name": "GJ 676 A d",
+      "kind": "planet",
+      "systemId": "gj-676",
+      "facts": {
+        "massKg": 2.2777617723536e+25,
+        "radiusMeanKm": 11340.380000000001,
+        "discoveryDate": "2012"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host GJ 676 A (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — GJ 676 A overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20676%20A",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.039,
+        "e": 0.192,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 304.698,
+        "maDeg": 0,
+        "periodD": 3.60076
+      }
+    },
+    {
+      "id": "gj-676-e",
+      "name": "GJ 676 A e",
+      "kind": "planet",
+      "systemId": "gj-676",
+      "facts": {
+        "massKg": 3.986083107591e+25,
+        "radiusMeanKm": 15736.37,
+        "discoveryDate": "2012"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host GJ 676 A (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — GJ 676 A overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20676%20A",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.181,
+        "e": 0.152,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 117.523,
+        "maDeg": 0,
+        "periodD": 35.47358
+      }
+    },
+    {
+      "id": "gj-676-c",
+      "name": "GJ 676 A c",
+      "kind": "planet",
+      "systemId": "gj-676",
+      "facts": {
+        "massKg": 2.560963488733073e+28,
+        "radiusMeanKm": 78363.3,
+        "discoveryDate": "2012"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host GJ 676 A (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — GJ 676 A overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20676%20A",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 9.726,
+        "e": 0.295,
+        "iDeg": 33.69,
+        "omDeg": 0,
+        "wDeg": 263.949,
+        "maDeg": 0,
+        "periodD": 13921.42302
+      }
+    }
+  ]
+}

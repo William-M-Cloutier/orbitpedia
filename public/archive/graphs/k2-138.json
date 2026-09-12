@@ -5,16 +5,22 @@
     "home": false,
     "memberIds": [
       "k2-138",
+      "k2-138-c",
+      "k2-138-d",
+      "k2-138-e",
+      "k2-138-f",
       "k2-138-g"
     ],
-    "blurb": "K2-138 (G8 V) — 1 confirmed planet · 660.7 ly",
+    "primaryStarId": "k2-138",
+    "starCount": 1,
+    "blurb": "K2-138 (G8 V) — 5 confirmed planets · 660.7 ly",
     "planetCount": 6,
     "distanceLy": 660.7,
     "hostSpectralType": "G8 V",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:35:53.307Z",
+      "fetchedAt": "2026-09-12T08:17:16.771Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — K2-138 overview",
@@ -22,6 +28,7 @@
           "fields": [
             "blurb",
             "planetCount",
+            "starCount",
             "distanceLy",
             "hostSpectralType"
           ]
@@ -38,7 +45,7 @@
       "facts": {
         "massKg": 1.85921945e+30,
         "radiusMeanKm": 600389.1,
-        "discoveryDate": "2021"
+        "discoveryDate": "2017"
       },
       "color": "#FDB813",
       "meta": {
@@ -54,20 +61,20 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "known",
         "unitsVersion": 1
       }
     },
     {
-      "id": "k2-138-g",
-      "name": "K2-138 g",
+      "id": "k2-138-c",
+      "name": "K2-138 c",
       "kind": "planet",
       "systemId": "k2-138",
       "facts": {
-        "massKg": 2.5799904e+25,
-        "radiusMeanKm": 19195.823,
-        "discoveryDate": "2021"
+        "massKg": 3.7684581999999997e+25,
+        "radiusMeanKm": 14646.929,
+        "discoveryDate": "2017"
       },
       "color": "#C45C26",
       "meta": {
@@ -89,7 +96,191 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:35:53.307Z",
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2457740.32182,
+        "aAu": 0.04461,
+        "e": 0.045,
+        "iDeg": 88.1,
+        "omDeg": 0,
+        "wDeg": 200,
+        "maDeg": 0,
+        "periodD": 3.56004
+      }
+    },
+    {
+      "id": "k2-138-d",
+      "name": "K2-138 d",
+      "kind": "planet",
+      "systemId": "k2-138",
+      "facts": {
+        "massKg": 4.7299824e+25,
+        "radiusMeanKm": 15226.69,
+        "discoveryDate": "2017"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host K2-138 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — K2-138 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-138",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2457743.15989,
+        "aAu": 0.05893,
+        "e": 0.043,
+        "iDeg": 89,
+        "omDeg": 0,
+        "wDeg": 83,
+        "maDeg": 0,
+        "periodD": 5.40479
+      }
+    },
+    {
+      "id": "k2-138-e",
+      "name": "K2-138 e",
+      "kind": "planet",
+      "systemId": "k2-138",
+      "facts": {
+        "massKg": 7.745943400000001e+25,
+        "radiusMeanKm": 21597.690000000002,
+        "discoveryDate": "2017"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host K2-138 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — K2-138 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-138",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2457740.64558,
+        "aAu": 0.0782,
+        "e": 0.077,
+        "iDeg": 88.6,
+        "omDeg": 0,
+        "wDeg": 180,
+        "maDeg": 0,
+        "periodD": 8.26146
+      }
+    },
+    {
+      "id": "k2-138-f",
+      "name": "K2-138 f",
+      "kind": "planet",
+      "systemId": "k2-138",
+      "facts": {
+        "massKg": 9.734686e+24,
+        "radiusMeanKm": 18501.384,
+        "discoveryDate": "2017"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host K2-138 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — K2-138 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-138",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2457738.70235,
+        "aAu": 0.10447,
+        "e": 0.062,
+        "iDeg": 88.8,
+        "omDeg": 0,
+        "wDeg": 144,
+        "maDeg": 0,
+        "periodD": 12.75758
+      }
+    },
+    {
+      "id": "k2-138-g",
+      "name": "K2-138 g",
+      "kind": "planet",
+      "systemId": "k2-138",
+      "facts": {
+        "massKg": 2.5799904e+25,
+        "radiusMeanKm": 19195.823,
+        "discoveryDate": "2017"
+      },
+      "color": "#C88B3A",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host K2-138 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — K2-138 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-138",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:17:16.771Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
