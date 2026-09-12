@@ -187,15 +187,43 @@ function systemStar(bodies: readonly Body[]): Body | undefined {
   );
 }
 
+/**
+ * Primary / root star for Prop/True sunMesh clearance.
+ * Companions have parentId set; root = systemStar (!parentId). Explore also
+ * uses system.primaryStarId — same body when catalog is consistent.
+ */
 function isSystemPrimaryStar(body: Body, bodies: readonly Body[]): boolean {
+  if (body.kind !== "star") return false;
+  if (body.parentId) return false;
   const star = systemStar(bodies);
   return star != null && star.id === body.id;
 }
 
-/** Catalog radius when positive; else null (missing / unusable). */
+/** Catalog radius when positive; else null (missing / unusable placeholder). */
 function catalogRadiusKm(body: Body): number | null {
   const r = body.facts.radiusMeanKm;
   return r != null && r > 0 && Number.isFinite(r) ? r : null;
+}
+
+/**
+ * Companion star display mesh vs primary Prop/True sunMesh.
+ * Known R → radius ratio capped at primary; missing R → fixed fraction.
+ * Display-only — never invents a catalog radiusMeanKm.
+ */
+function companionStarMesh(
+  body: Body,
+  bodies: readonly Body[],
+  sunMesh: number,
+): number {
+  const km = catalogRadiusKm(body);
+  if (km == null) {
+    return sunMesh * STAR_NO_RADIUS_COMPANION_MESH_FRAC;
+  }
+  const primaryKm = starRadiusKm(bodies);
+  return Math.min(
+    sunMesh,
+    Math.max(1e-6, sunMesh * (km / Math.max(primaryKm, 1))),
+  );
 }
 
 /**
@@ -294,16 +322,7 @@ function proportionalRadius(body: Body, bodies: readonly Body[]): number {
   if (body.kind === "star") {
     // Primary: clearance sunMesh (star-readable), even if catalog R missing.
     if (isSystemPrimaryStar(body, bodies)) return sunMesh;
-    const km = catalogRadiusKm(body);
-    if (km == null) {
-      // Display fallback — not an invented catalog radius.
-      return sunMesh * STAR_NO_RADIUS_COMPANION_MESH_FRAC;
-    }
-    const primaryKm = starRadiusKm(bodies);
-    return Math.min(
-      sunMesh,
-      Math.max(1e-6, sunMesh * (km / Math.max(primaryKm, 1))),
-    );
+    return companionStarMesh(body, bodies, sunMesh);
   }
   const km = body.facts.radiusMeanKm ?? 1;
   // No absolute 0.008 floor — it exceeded sunMesh on TRAPPIST and made
@@ -326,12 +345,8 @@ function trueRadius(body: Body, bodies: readonly Body[]): number {
   if (body.kind === "star") {
     // Primary: star-readable clearance mesh (not km??1 which vanishes).
     if (isSystemPrimaryStar(body, bodies)) return sunMesh;
-    const km = catalogRadiusKm(body);
-    if (km == null) {
-      // Display fallback — keep visible, always smaller than primary.
-      return sunMesh * STAR_NO_RADIUS_COMPANION_MESH_FRAC;
-    }
-    return Math.max(1e-6, km * scale);
+    // Companions stay visible: missing R → fraction; known R → ratio, ≤ primary.
+    return companionStarMesh(body, bodies, sunMesh);
   }
   const km = body.facts.radiusMeanKm ?? 1;
   return Math.max(1e-6, km * scale);
