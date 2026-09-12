@@ -2,10 +2,6 @@
 
 import type { Body, System } from "@/data/schema";
 import { systemOverviewBlurb } from "@/lib/interestBlurb";
-import {
-  VISUAL_BINARY_NOTE,
-  hasVisualBinaryCompanions,
-} from "@/lib/visualBinaryNote";
 
 type Props = {
   system: System;
@@ -48,11 +44,6 @@ export function SystemFacts({
         <p className="text-sm leading-relaxed text-zinc-300">{overview}</p>
       ) : null}
 
-      {bodies && hasVisualBinaryCompanions(bodies) ? (
-        <p className="text-xs leading-relaxed text-zinc-500">
-          {VISUAL_BINARY_NOTE}
-        </p>
-      ) : null}
 
       <dl className="grid gap-2">
         {system.planetCount != null ? (
