@@ -199,7 +199,17 @@ const SystemSchema = z.object({
   compactnessNote: z.string().min(1).optional(),
   hasGas: z.boolean().optional(),
   meta: SystemMetaSchema.optional(),
-});
+})
+  .superRefine((s, ctx) => {
+    const hasRa = s.raDeg != null;
+    const hasDec = s.decDeg != null;
+    if (hasRa === hasDec) return;
+    ctx.addIssue({
+      code: "custom",
+      message: `system ${s.id} raDeg/decDeg must both be present or both omitted`,
+      path: hasRa ? ["decDeg"] : ["raDeg"],
+    });
+  });
 const CatalogSchema = z
   .object({
     version: z.literal(CATALOG_VERSION),
