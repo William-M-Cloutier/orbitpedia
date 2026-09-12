@@ -1054,12 +1054,12 @@ const BodyMesh = memo(function BodyMesh({
   }
 
   if (body.kind === "black_hole") {
-    // Primary BH host: sphere + cooler/dimmer accretion pointLight (no OrbitLine).
+    // Primary BH host: sphere + warm accretion pointLight (no OrbitLine).
     return (
       <group ref={group} name={body.id}>
         <pointLight
-          intensity={1.2}
-          distance={60}
+          intensity={1.65}
+          distance={70}
           color={body.color ?? "#ff6a3d"}
         />
         <mesh

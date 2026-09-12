@@ -6,14 +6,14 @@
     "cygnus-x-1"
   ],
   "primaryStarId": "cygnus-x-1",
-  "blurb": "A stellar-mass black hole with a massive blue companion star \u2014 famous high-mass X-ray binary in Cygnus.",
+  "blurb": "Cygnus X-1 is a high-mass X-ray binary: a stellar-mass black hole pulling wind from a luminous blue companion, about 6,000 light-years away in Cygnus.",
   "highlights": [
-    "Stellar-mass black hole with a massive blue companion",
-    "Mass about 14.8 times the Sun (Chandra-era determination)",
-    "About 6,070 light-years from Earth"
+    "Classic stellar-mass black hole in an X-ray binary",
+    "About 14.8 times the mass of the Sun",
+    "Fed by wind from a massive blue companion star"
   ],
-  "planetCount": 0,
   "distanceLy": 6070,
+  "compactnessNote": "The luminous blue companion will appear when a source-backed orbit is ready.",
   "meta": {
     "confidence": "known",
     "fetchedAt": "2026-09-12T22:38:28.400Z",
@@ -24,7 +24,6 @@
         "fields": [
           "blurb",
           "highlights",
-          "planetCount",
           "distanceLy"
         ]
       }

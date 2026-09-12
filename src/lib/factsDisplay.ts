@@ -109,10 +109,12 @@ export function massFactRow(body: Body): FactRow {
 }
 
 export function radiusFactRow(body: Body): FactRow {
+  const label =
+    body.kind === "black_hole" ? "Event horizon" : "Mean radius";
   return factRow(
     body,
     "radiusMeanKm",
-    "Mean radius",
+    label,
     body.facts.radiusMeanKm,
     formatRadius,
   );

@@ -6,13 +6,12 @@
     "sagittarius-a"
   ],
   "primaryStarId": "sagittarius-a",
-  "blurb": "The supermassive black hole at the center of the Milky Way.",
+  "blurb": "Sagittarius A* sits at the center of our galaxy \u2014 a supermassive black hole about four million times the mass of the Sun, revealed by stellar orbits and the Event Horizon Telescope.",
   "highlights": [
-    "Milky Way\u2019s central supermassive black hole (Sgr A*)",
-    "About four million times the mass of the Sun",
-    "Roughly 26,000 light-years from Earth"
+    "Milky Way\u2019s central supermassive black hole",
+    "About four million solar masses",
+    "Roughly 26,000 light-years toward the constellation Sagittarius"
   ],
-  "planetCount": 0,
   "distanceLy": 26000,
   "meta": {
     "confidence": "known",
@@ -37,5 +36,6 @@
         ]
       }
     ]
-  }
+  },
+  "compactnessNote": "A solitary supermassive host \u2014 the innermost stellar orbits lie far outside the horizon scale shown here."
 }
