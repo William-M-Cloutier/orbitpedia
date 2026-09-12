@@ -26,7 +26,7 @@ const KIND_GROUPS: Array<{
   /** Always render the section header (multi-star ready). */
   always?: boolean;
 }> = [
-  { kind: "star", label: "Star", always: true },
+  { kind: "star", label: "Stars", always: true },
   { kind: "planet", label: "Planets" },
   { kind: "dwarf_planet", label: "Dwarf planets" },
   { kind: "asteroid", label: "Asteroids" },
