@@ -10,14 +10,14 @@
       "hd-191939-g",
       "hd-191939-f"
     ],
-    "blurb": "HD 191939 — NASA Exoplanet Archive planetary system (4 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "HD 191939 (G9 V) — 4 confirmed planets · 174.8 ly",
     "planetCount": 6,
     "distanceLy": 174.8,
     "hostSpectralType": "G9 V",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — HD 191939 overview",
@@ -41,7 +41,6 @@
       "facts": {
         "massKg": 1.6106607e+30,
         "radiusMeanKm": 653958,
-        "discoveryNotes": "Archive host (4 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2020"
       },
       "color": "#FDB813",
@@ -54,12 +53,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -72,8 +70,7 @@
       "facts": {
         "massKg": 5.9722e+25,
         "radiusMeanKm": 21725.11,
-        "discoveryDate": "2020",
-        "discoveryNotes": "NEA composite: HD 191939 b"
+        "discoveryDate": "2020"
       },
       "color": "#C45C26",
       "meta": {
@@ -95,7 +92,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -119,8 +116,7 @@
       "facts": {
         "massKg": 6.7008084e+26,
         "radiusMeanKm": 82823,
-        "discoveryDate": "2020",
-        "discoveryNotes": "NEA composite: HD 191939 e"
+        "discoveryDate": "2020"
       },
       "color": "#D4A574",
       "meta": {
@@ -142,7 +138,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -166,8 +162,7 @@
       "facts": {
         "massKg": 8.06247e+25,
         "radiusMeanKm": 23827.54,
-        "discoveryDate": "2020",
-        "discoveryNotes": "NEA composite: HD 191939 g"
+        "discoveryDate": "2020"
       },
       "color": "#6B93D6",
       "meta": {
@@ -188,7 +183,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -212,8 +207,7 @@
       "facts": {
         "massKg": 5.466628259381953e+27,
         "radiusMeanKm": 84097.2,
-        "discoveryDate": "2020",
-        "discoveryNotes": "NEA composite: HD 191939 f"
+        "discoveryDate": "2020"
       },
       "color": "#C1440E",
       "meta": {
@@ -233,7 +227,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

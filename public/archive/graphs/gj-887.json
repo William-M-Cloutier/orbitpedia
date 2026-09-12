@@ -9,14 +9,14 @@
       "gj-887-b",
       "gj-887-c"
     ],
-    "blurb": "GJ 887 — NASA Exoplanet Archive planetary system (3 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "GJ 887 (M1 V) — 3 confirmed planets · 10.7 ly",
     "planetCount": 4,
     "distanceLy": 10.7,
     "hostSpectralType": "M1 V",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — GJ 887 overview",
@@ -40,7 +40,6 @@
       "facts": {
         "massKg": 9.8429265e+29,
         "radiusMeanKm": 325587.60000000003,
-        "discoveryNotes": "Archive host (3 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2026"
       },
       "color": "#E84A3C",
@@ -53,12 +52,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -71,8 +69,7 @@
       "facts": {
         "massKg": 8.719412e+24,
         "radiusMeanKm": 7135.52,
-        "discoveryDate": "2026",
-        "discoveryNotes": "NEA composite: GJ 887 e"
+        "discoveryDate": "2026"
       },
       "color": "#C45C26",
       "meta": {
@@ -91,7 +88,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -115,8 +112,7 @@
       "facts": {
         "massKg": 2.329158e+25,
         "radiusMeanKm": 11467.800000000001,
-        "discoveryDate": "2026",
-        "discoveryNotes": "NEA composite: GJ 887 b"
+        "discoveryDate": "2026"
       },
       "color": "#D4A574",
       "meta": {
@@ -137,7 +133,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -161,8 +157,7 @@
       "facts": {
         "massKg": 3.88193e+25,
         "radiusMeanKm": 15481.53,
-        "discoveryDate": "2026",
-        "discoveryNotes": "NEA composite: GJ 887 c"
+        "discoveryDate": "2026"
       },
       "color": "#6B93D6",
       "meta": {
@@ -183,7 +178,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

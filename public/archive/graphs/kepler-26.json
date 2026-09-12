@@ -7,14 +7,14 @@
       "kepler-26",
       "kepler-26-e"
     ],
-    "blurb": "Kepler-26 — NASA Exoplanet Archive planetary system (1 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "Kepler-26 (M0 V) — 1 confirmed planet · 1093.6 ly",
     "planetCount": 4,
     "distanceLy": 1093.6,
     "hostSpectralType": "M0 V",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-26 overview",
@@ -38,7 +38,6 @@
       "facts": {
         "massKg": 1.17916271e+30,
         "radiusMeanKm": 397244.69999999995,
-        "discoveryNotes": "Archive host (1 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2014"
       },
       "color": "#FF8C42",
@@ -51,12 +50,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -69,8 +67,7 @@
       "facts": {
         "massKg": 3.8162358e+25,
         "radiusMeanKm": 15354.11,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-26 e"
+        "discoveryDate": "2014"
       },
       "color": "#C45C26",
       "meta": {
@@ -91,7 +88,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

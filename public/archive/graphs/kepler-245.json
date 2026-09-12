@@ -7,13 +7,13 @@
       "kepler-245",
       "kepler-245-b"
     ],
-    "blurb": "Kepler-245 — NASA Exoplanet Archive planetary system (1 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "Kepler-245 — 1 confirmed planet · 2809.9 ly",
     "planetCount": 4,
     "distanceLy": 2809.9,
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-245 overview",
@@ -36,7 +36,6 @@
       "facts": {
         "massKg": 1.70213032e+30,
         "radiusMeanKm": 553081.5,
-        "discoveryNotes": "Archive host (1 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2014"
       },
       "color": "#FF8C42",
@@ -49,12 +48,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -67,8 +65,7 @@
       "facts": {
         "massKg": 8.76599516e+26,
         "radiusMeanKm": 16373.47,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-245 b"
+        "discoveryDate": "2014"
       },
       "color": "#C45C26",
       "meta": {
@@ -89,7 +86,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

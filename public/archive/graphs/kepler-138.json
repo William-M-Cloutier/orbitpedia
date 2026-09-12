@@ -9,14 +9,14 @@
       "kepler-138-c",
       "kepler-138-e"
     ],
-    "blurb": "Kepler-138 — NASA Exoplanet Archive planetary system (3 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "Kepler-138 (M1 V) — 3 confirmed planets · 218.1 ly",
     "planetCount": 4,
     "distanceLy": 218.1,
     "hostSpectralType": "M1 V",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-138 overview",
@@ -40,7 +40,6 @@
       "facts": {
         "massKg": 1.0638314500000001e+30,
         "radiusMeanKm": 372199.5,
-        "discoveryNotes": "Archive host (3 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2014"
       },
       "color": "#FF8C42",
@@ -53,12 +52,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -71,8 +69,7 @@
       "facts": {
         "massKg": 4.1805400000000006e+23,
         "radiusMeanKm": 4077.44,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-138 b"
+        "discoveryDate": "2014"
       },
       "color": "#C45C26",
       "meta": {
@@ -94,7 +91,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -118,8 +115,7 @@
       "facts": {
         "massKg": 1.373606e+25,
         "radiusMeanKm": 9620.210000000001,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-138 c"
+        "discoveryDate": "2014"
       },
       "color": "#D4A574",
       "meta": {
@@ -141,7 +137,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -165,8 +161,7 @@
       "facts": {
         "massKg": 2.568046e+24,
         "radiusMeanKm": 5077.687,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-138 e"
+        "discoveryDate": "2014"
       },
       "color": "#6B93D6",
       "meta": {
@@ -187,7 +182,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

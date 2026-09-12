@@ -9,14 +9,14 @@
       "kepler-247-c",
       "kepler-247-d"
     ],
-    "blurb": "Kepler-247 — NASA Exoplanet Archive planetary system (3 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "Kepler-247 (K) — 3 confirmed planets · 2164.7 ly",
     "planetCount": 4,
     "distanceLy": 2164.7,
     "hostSpectralType": "K",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-247 overview",
@@ -40,7 +40,6 @@
       "facts": {
         "massKg": 1.76377289e+30,
         "radiusMeanKm": 534297.6,
-        "discoveryNotes": "Archive host (3 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2014"
       },
       "color": "#FF8C42",
@@ -53,12 +52,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -71,8 +69,7 @@
       "facts": {
         "massKg": 1.9887426e+25,
         "radiusMeanKm": 10448.439999999999,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-247 b"
+        "discoveryDate": "2014"
       },
       "color": "#C45C26",
       "meta": {
@@ -93,7 +90,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -117,8 +114,7 @@
       "facts": {
         "massKg": 9.376354e+25,
         "radiusMeanKm": 26057.39,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-247 c"
+        "discoveryDate": "2014"
       },
       "color": "#D4A574",
       "meta": {
@@ -139,7 +135,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -163,8 +159,7 @@
       "facts": {
         "massKg": 2.9861000000000003e+26,
         "radiusMeanKm": 28669.5,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-247 d"
+        "discoveryDate": "2014"
       },
       "color": "#6B93D6",
       "meta": {
@@ -185,7 +180,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

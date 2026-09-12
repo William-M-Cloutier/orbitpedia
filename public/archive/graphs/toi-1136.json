@@ -12,13 +12,13 @@
       "toi-1136-f",
       "toi-1136-g"
     ],
-    "blurb": "TOI-1136 — NASA Exoplanet Archive planetary system (6 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "TOI-1136 — 6 confirmed planets · 275.7 ly",
     "planetCount": 6,
     "distanceLy": 275.7,
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — TOI-1136 overview",
@@ -41,7 +41,6 @@
       "facts": {
         "massKg": 2.03221634e+30,
         "radiusMeanKm": 673437.6,
-        "discoveryNotes": "Archive host (6 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2022"
       },
       "color": "#FDB813",
@@ -54,12 +53,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -72,8 +70,7 @@
       "facts": {
         "massKg": 2.09027e+25,
         "radiusMeanKm": 12104.9,
-        "discoveryDate": "2022",
-        "discoveryNotes": "NEA composite: TOI-1136 b"
+        "discoveryDate": "2022"
       },
       "color": "#C45C26",
       "meta": {
@@ -95,7 +92,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -119,8 +116,7 @@
       "facts": {
         "massKg": 3.7744304000000004e+25,
         "radiusMeanKm": 18342.109,
-        "discoveryDate": "2022",
-        "discoveryNotes": "NEA composite: TOI-1136 c"
+        "discoveryDate": "2022"
       },
       "color": "#D4A574",
       "meta": {
@@ -142,7 +138,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -166,8 +162,7 @@
       "facts": {
         "massKg": 4.986787e+25,
         "radiusMeanKm": 29478.617,
-        "discoveryDate": "2022",
-        "discoveryNotes": "NEA composite: TOI-1136 d"
+        "discoveryDate": "2022"
       },
       "color": "#6B93D6",
       "meta": {
@@ -189,7 +184,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -213,8 +208,7 @@
       "facts": {
         "massKg": 3.6251254000000004e+25,
         "radiusMeanKm": 16813.069,
-        "discoveryDate": "2022",
-        "discoveryNotes": "NEA composite: TOI-1136 e"
+        "discoveryDate": "2022"
       },
       "color": "#C1440E",
       "meta": {
@@ -236,7 +230,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -260,8 +254,7 @@
       "facts": {
         "massKg": 5.793034e+25,
         "radiusMeanKm": 23801.51331822,
-        "discoveryDate": "2022",
-        "discoveryNotes": "NEA composite: TOI-1136 f"
+        "discoveryDate": "2022"
       },
       "color": "#C88B3A",
       "meta": {
@@ -283,7 +276,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -307,8 +300,7 @@
       "facts": {
         "massKg": 3.344432e+25,
         "radiusMeanKm": 16118.63,
-        "discoveryDate": "2022",
-        "discoveryNotes": "NEA composite: TOI-1136 g"
+        "discoveryDate": "2022"
       },
       "color": "#7EC8E3",
       "meta": {
@@ -330,7 +322,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

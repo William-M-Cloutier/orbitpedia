@@ -7,13 +7,13 @@
       "kepler-299",
       "kepler-299-c"
     ],
-    "blurb": "Kepler-299 — NASA Exoplanet Archive planetary system (1 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "Kepler-299 — 1 confirmed planet · 3431.9 ly",
     "planetCount": 4,
     "distanceLy": 3431.9,
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-299 overview",
@@ -36,7 +36,6 @@
       "facts": {
         "massKg": 1.99642388e+30,
         "radiusMeanKm": 717962.4,
-        "discoveryNotes": "Archive host (1 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2014"
       },
       "color": "#FDB813",
@@ -49,12 +48,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -67,8 +65,7 @@
       "facts": {
         "massKg": 4.4851222e+25,
         "radiusMeanKm": 16883.149999999998,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-299 c"
+        "discoveryDate": "2014"
       },
       "color": "#C45C26",
       "meta": {
@@ -89,7 +86,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

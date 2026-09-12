@@ -9,13 +9,13 @@
       "kepler-282-c",
       "kepler-282-e"
     ],
-    "blurb": "Kepler-282 — NASA Exoplanet Archive planetary system (3 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "Kepler-282 — 3 confirmed planets · 4362.7 ly",
     "planetCount": 4,
     "distanceLy": 4362.7,
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-282 overview",
@@ -38,7 +38,6 @@
       "facts": {
         "massKg": 1.7100841999999998e+30,
         "radiusMeanKm": 628912.8,
-        "discoveryNotes": "Archive host (3 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2014"
       },
       "color": "#FDB813",
@@ -51,12 +50,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -69,8 +67,7 @@
       "facts": {
         "massKg": 6.031922000000001e+24,
         "radiusMeanKm": 6434.71,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-282 b"
+        "discoveryDate": "2014"
       },
       "color": "#C45C26",
       "meta": {
@@ -91,7 +88,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -115,8 +112,7 @@
       "facts": {
         "massKg": 1.1168014000000001e+25,
         "radiusMeanKm": 7645.2,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-282 c"
+        "discoveryDate": "2014"
       },
       "color": "#D4A574",
       "meta": {
@@ -137,7 +133,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -161,8 +157,7 @@
       "facts": {
         "massKg": 3.3563764000000006e+26,
         "radiusMeanKm": 19750.100000000002,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-282 e"
+        "discoveryDate": "2014"
       },
       "color": "#6B93D6",
       "meta": {
@@ -183,7 +178,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

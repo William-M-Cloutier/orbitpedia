@@ -9,14 +9,14 @@
       "kepler-82-e",
       "kepler-82-f"
     ],
-    "blurb": "Kepler-82 — NASA Exoplanet Archive planetary system (3 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "Kepler-82 (G) — 3 confirmed planets · 2949.5 ly",
     "planetCount": 5,
     "distanceLy": 2949.5,
     "hostSpectralType": "G",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-82 overview",
@@ -40,7 +40,6 @@
       "facts": {
         "massKg": 1.8810926199999998e+30,
         "radiusMeanKm": 657436.5,
-        "discoveryNotes": "Archive host (3 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2014"
       },
       "color": "#FDB813",
@@ -53,12 +52,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -71,8 +69,7 @@
       "facts": {
         "massKg": 5.2859822756e+27,
         "radiusMeanKm": 11276.67,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-82 d"
+        "discoveryDate": "2014"
       },
       "color": "#C45C26",
       "meta": {
@@ -93,7 +90,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -117,8 +114,7 @@
       "facts": {
         "massKg": 1.517058244e+27,
         "radiusMeanKm": 15736.37,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-82 e"
+        "discoveryDate": "2014"
       },
       "color": "#D4A574",
       "meta": {
@@ -139,7 +135,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -163,8 +159,7 @@
       "facts": {
         "massKg": 1.2481898e+26,
         "radiusMeanKm": 30835.64,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-82 f"
+        "discoveryDate": "2014"
       },
       "color": "#6B93D6",
       "meta": {
@@ -185,7 +180,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

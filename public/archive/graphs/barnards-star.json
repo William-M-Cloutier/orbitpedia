@@ -7,14 +7,14 @@
       "barnards-star",
       "barnards-star-d"
     ],
-    "blurb": "Barnard's star — NASA Exoplanet Archive planetary system (1 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "Barnard's star (M3.5-4 V) — 1 confirmed planet · 6 ly",
     "planetCount": 4,
     "distanceLy": 6,
     "hostSpectralType": "M3.5-4 V",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Barnard's star overview",
@@ -38,7 +38,6 @@
       "facts": {
         "massKg": 3.2213214e+29,
         "radiusMeanKm": 128704.5,
-        "discoveryNotes": "Archive host (1 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2025"
       },
       "color": "#E84A3C",
@@ -51,12 +50,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -69,8 +67,7 @@
       "facts": {
         "massKg": 1.5706886e+24,
         "radiusMeanKm": 4421.473999999999,
-        "discoveryDate": "2025",
-        "discoveryNotes": "NEA composite: Barnard d"
+        "discoveryDate": "2025"
       },
       "color": "#C45C26",
       "meta": {
@@ -90,7 +87,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

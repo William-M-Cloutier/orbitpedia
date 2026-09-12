@@ -8,14 +8,14 @@
       "k2-285-b",
       "k2-285-c"
     ],
-    "blurb": "K2-285 — NASA Exoplanet Archive planetary system (2 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "K2-285 (K2 V) — 2 confirmed planets · 505.4 ly",
     "planetCount": 4,
     "distanceLy": 505.4,
     "hostSpectralType": "K2 V",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — K2-285 overview",
@@ -39,7 +39,6 @@
       "facts": {
         "massKg": 1.6504300999999998e+30,
         "radiusMeanKm": 547515.9,
-        "discoveryNotes": "Archive host (2 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2018"
       },
       "color": "#FF8C42",
@@ -52,12 +51,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -70,8 +68,7 @@
       "facts": {
         "massKg": 5.7810896e+25,
         "radiusMeanKm": 16500.89,
-        "discoveryDate": "2018",
-        "discoveryNotes": "NEA composite: K2-285 b"
+        "discoveryDate": "2018"
       },
       "color": "#C45C26",
       "meta": {
@@ -92,7 +89,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -116,8 +113,7 @@
       "facts": {
         "massKg": 9.3644096e+25,
         "radiusMeanKm": 22489.629999999997,
-        "discoveryDate": "2018",
-        "discoveryNotes": "NEA composite: K2-285 c"
+        "discoveryDate": "2018"
       },
       "color": "#D4A574",
       "meta": {
@@ -138,7 +134,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

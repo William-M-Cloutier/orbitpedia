@@ -9,13 +9,13 @@
       "toi-5624-e",
       "toi-5624-f"
     ],
-    "blurb": "TOI-5624 — NASA Exoplanet Archive planetary system (3 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "TOI-5624 — 3 confirmed planets · 332.4 ly",
     "planetCount": 5,
     "distanceLy": 332.4,
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — TOI-5624 overview",
@@ -38,7 +38,6 @@
       "facts": {
         "massKg": 1.70610726e+30,
         "radiusMeanKm": 570474,
-        "discoveryNotes": "Archive host (3 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2026"
       },
       "color": "#FDB813",
@@ -51,12 +50,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -69,8 +67,7 @@
       "facts": {
         "massKg": 5.613868e+25,
         "radiusMeanKm": 14742.494,
-        "discoveryDate": "2026",
-        "discoveryNotes": "NEA composite: TOI-5624 b"
+        "discoveryDate": "2026"
       },
       "color": "#C45C26",
       "meta": {
@@ -92,7 +89,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -116,8 +113,7 @@
       "facts": {
         "massKg": 5.315258e+25,
         "radiusMeanKm": 20686.637,
-        "discoveryDate": "2026",
-        "discoveryNotes": "NEA composite: TOI-5624 e"
+        "discoveryDate": "2026"
       },
       "color": "#D4A574",
       "meta": {
@@ -139,7 +135,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -163,8 +159,7 @@
       "facts": {
         "massKg": 7.76386e+25,
         "radiusMeanKm": 23317.86,
-        "discoveryDate": "2026",
-        "discoveryNotes": "NEA composite: TOI-5624 f"
+        "discoveryDate": "2026"
       },
       "color": "#6B93D6",
       "meta": {
@@ -185,7 +180,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

@@ -11,14 +11,14 @@
       "hd-40307-f",
       "hd-40307-g"
     ],
-    "blurb": "HD 40307 — NASA Exoplanet Archive planetary system (5 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "HD 40307 (K2.5 V) — 5 confirmed planets · 42.2 ly",
     "planetCount": 5,
     "distanceLy": 42.2,
     "hostSpectralType": "K2.5 V",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — HD 40307 overview",
@@ -42,7 +42,6 @@
       "facts": {
         "massKg": 1.5311219e+30,
         "radiusMeanKm": 498597.0588,
-        "discoveryNotes": "Archive host (5 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2009"
       },
       "color": "#FF8C42",
@@ -55,12 +54,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -72,8 +70,7 @@
       "systemId": "hd-40307",
       "facts": {
         "massKg": 7.100922332777599e+27,
-        "discoveryDate": "2009",
-        "discoveryNotes": "NEA composite: HD 40307 b"
+        "discoveryDate": "2009"
       },
       "color": "#C45C26",
       "meta": {
@@ -93,7 +90,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -115,8 +112,7 @@
       "systemId": "hd-40307",
       "facts": {
         "massKg": 1.115913456140795e+28,
-        "discoveryDate": "2009",
-        "discoveryNotes": "NEA composite: HD 40307 c"
+        "discoveryDate": "2009"
       },
       "color": "#D4A574",
       "meta": {
@@ -136,7 +132,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -158,8 +154,7 @@
       "systemId": "hd-40307",
       "facts": {
         "massKg": 1.0602981061414301e+28,
-        "discoveryDate": "2009",
-        "discoveryNotes": "NEA composite: HD 40307 d"
+        "discoveryDate": "2009"
       },
       "color": "#6B93D6",
       "meta": {
@@ -179,7 +174,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -202,8 +197,7 @@
       "facts": {
         "massKg": 3.1055440000000004e+25,
         "radiusMeanKm": 13570.23,
-        "discoveryDate": "2009",
-        "discoveryNotes": "NEA composite: HD 40307 f"
+        "discoveryDate": "2009"
       },
       "color": "#C1440E",
       "meta": {
@@ -223,7 +217,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -246,8 +240,7 @@
       "facts": {
         "massKg": 4.240262e+25,
         "radiusMeanKm": 16309.76,
-        "discoveryDate": "2009",
-        "discoveryNotes": "NEA composite: HD 40307 g"
+        "discoveryDate": "2009"
       },
       "color": "#C88B3A",
       "meta": {
@@ -267,7 +260,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

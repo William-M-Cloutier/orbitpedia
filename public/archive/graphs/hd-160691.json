@@ -7,14 +7,14 @@
       "hd-160691",
       "hd-160691-b"
     ],
-    "blurb": "HD 160691 — NASA Exoplanet Archive planetary system (1 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "HD 160691 (G3 IV-V) — 1 confirmed planet · 50.9 ly",
     "planetCount": 4,
     "distanceLy": 50.9,
     "hostSpectralType": "G3 IV-V",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — HD 160691 overview",
@@ -38,7 +38,6 @@
       "facts": {
         "massKg": 2.2469710999999996e+30,
         "radiusMeanKm": 925281,
-        "discoveryNotes": "Archive host (1 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2000"
       },
       "color": "#FDB813",
@@ -51,12 +50,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -68,8 +66,7 @@
       "systemId": "hd-160691",
       "facts": {
         "massKg": 8.16197969282722e+27,
-        "discoveryDate": "2000",
-        "discoveryNotes": "NEA composite: HD 160691 b"
+        "discoveryDate": "2000"
       },
       "color": "#C45C26",
       "meta": {
@@ -90,7 +87,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

@@ -8,13 +8,13 @@
       "kepler-48-c",
       "kepler-48-f"
     ],
-    "blurb": "Kepler-48 — NASA Exoplanet Archive planetary system (2 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "Kepler-48 — 2 confirmed planets · 1000.4 ly",
     "planetCount": 5,
     "distanceLy": 1000.4,
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-48 overview",
@@ -37,7 +37,6 @@
       "facts": {
         "massKg": 1.7498536e+30,
         "radiusMeanKm": 619173,
-        "discoveryNotes": "Archive host (2 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2012"
       },
       "color": "#FF8C42",
@@ -50,12 +49,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -68,8 +66,7 @@
       "facts": {
         "massKg": 8.7253842e+25,
         "radiusMeanKm": 17265.41,
-        "discoveryDate": "2012",
-        "discoveryNotes": "NEA composite: Kepler-48 c"
+        "discoveryDate": "2012"
       },
       "color": "#C45C26",
       "meta": {
@@ -90,7 +87,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -114,8 +111,7 @@
       "facts": {
         "massKg": 1.78318542908896e+27,
         "radiusMeanKm": 87919.8,
-        "discoveryDate": "2012",
-        "discoveryNotes": "NEA composite: Kepler-48 f"
+        "discoveryDate": "2012"
       },
       "color": "#D4A574",
       "meta": {
@@ -134,7 +130,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

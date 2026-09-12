@@ -8,14 +8,14 @@
       "hd-108236-d",
       "hd-108236-f"
     ],
-    "blurb": "HD 108236 — NASA Exoplanet Archive planetary system (2 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "HD 108236 (G3 V) — 2 confirmed planets · 210.7 ly",
     "planetCount": 5,
     "distanceLy": 210.7,
     "hostSpectralType": "G3 V",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — HD 108236 overview",
@@ -39,7 +39,6 @@
       "facts": {
         "massKg": 1.72798043e+30,
         "radiusMeanKm": 610128.9,
-        "discoveryNotes": "Archive host (2 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2021"
       },
       "color": "#FDB813",
@@ -52,12 +51,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -70,8 +68,7 @@
       "facts": {
         "massKg": 4.168595600000001e+25,
         "radiusMeanKm": 16175.969000000001,
-        "discoveryDate": "2021",
-        "discoveryNotes": "NEA composite: TOI-1233.01"
+        "discoveryDate": "2021"
       },
       "color": "#C45C26",
       "meta": {
@@ -93,7 +90,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -117,8 +114,7 @@
       "facts": {
         "massKg": 2.8188784e+25,
         "radiusMeanKm": 12850.306999999999,
-        "discoveryDate": "2021",
-        "discoveryNotes": "NEA composite: HD 108236 f"
+        "discoveryDate": "2021"
       },
       "color": "#D4A574",
       "meta": {
@@ -140,7 +136,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

@@ -7,14 +7,14 @@
       "hd-215152",
       "hd-215152-e"
     ],
-    "blurb": "HD 215152 — NASA Exoplanet Archive planetary system (1 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "HD 215152 (K3 V) — 1 confirmed planet · 70.4 ly",
     "planetCount": 4,
     "distanceLy": 70.4,
     "hostSpectralType": "K3 V",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — HD 215152 overview",
@@ -38,7 +38,6 @@
       "facts": {
         "massKg": 1.5311219e+30,
         "radiusMeanKm": 507861,
-        "discoveryNotes": "Archive host (1 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2018"
       },
       "color": "#FF8C42",
@@ -51,12 +50,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -68,8 +66,7 @@
       "systemId": "hd-215152",
       "facts": {
         "massKg": 5.825375738885976e+27,
-        "discoveryDate": "2018",
-        "discoveryNotes": "NEA composite: HD 215152 e"
+        "discoveryDate": "2018"
       },
       "color": "#C45C26",
       "meta": {
@@ -88,7 +85,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

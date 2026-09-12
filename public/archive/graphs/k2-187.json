@@ -7,13 +7,13 @@
       "k2-187",
       "k2-187-d"
     ],
-    "blurb": "K2-187 — NASA Exoplanet Archive planetary system (1 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "K2-187 — 1 confirmed planet · 1079.3 ly",
     "planetCount": 4,
     "distanceLy": 1079.3,
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — K2-187 overview",
@@ -36,7 +36,6 @@
       "facts": {
         "massKg": 1.92284850153e+30,
         "radiusMeanKm": 577431,
-        "discoveryNotes": "Archive host (1 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2018"
       },
       "color": "#FDB813",
@@ -49,12 +48,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -67,8 +65,7 @@
       "facts": {
         "massKg": 3.792347e+25,
         "radiusMeanKm": 15290.4,
-        "discoveryDate": "2018",
-        "discoveryNotes": "NEA composite: K2-187 d"
+        "discoveryDate": "2018"
       },
       "color": "#C45C26",
       "meta": {
@@ -88,7 +85,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

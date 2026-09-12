@@ -10,14 +10,14 @@
       "kepler-167-d",
       "kepler-167-e"
     ],
-    "blurb": "Kepler-167 — NASA Exoplanet Archive planetary system (4 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "Kepler-167 (K4) — 4 confirmed planets · 1115.2 ly",
     "planetCount": 4,
     "distanceLy": 1115.2,
     "hostSpectralType": "K4",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-167 overview",
@@ -41,7 +41,6 @@
       "facts": {
         "massKg": 1.54504119e+30,
         "radiusMeanKm": 521079.3,
-        "discoveryNotes": "Archive host (4 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2014"
       },
       "color": "#FF8C42",
@@ -54,12 +53,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -72,8 +70,7 @@
       "facts": {
         "massKg": 2.149992e+25,
         "radiusMeanKm": 10945.378,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-167 b"
+        "discoveryDate": "2014"
       },
       "color": "#C45C26",
       "meta": {
@@ -94,7 +91,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -118,8 +115,7 @@
       "facts": {
         "massKg": 2.0544368e+25,
         "radiusMeanKm": 10665.054,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-167 c"
+        "discoveryDate": "2014"
       },
       "color": "#D4A574",
       "meta": {
@@ -140,7 +136,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -164,8 +160,7 @@
       "facts": {
         "massKg": 1.2302732e+25,
         "radiusMeanKm": 7887.298,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-167 d"
+        "discoveryDate": "2014"
       },
       "color": "#6B93D6",
       "meta": {
@@ -186,7 +181,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -210,8 +205,7 @@
       "facts": {
         "massKg": 1.917116160408254e+27,
         "radiusMeanKm": 64729.36,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-167 e"
+        "discoveryDate": "2014"
       },
       "color": "#C1440E",
       "meta": {
@@ -233,7 +227,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

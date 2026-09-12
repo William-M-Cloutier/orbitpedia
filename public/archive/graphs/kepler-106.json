@@ -9,13 +9,13 @@
       "kepler-106-d",
       "kepler-106-e"
     ],
-    "blurb": "Kepler-106 — NASA Exoplanet Archive planetary system (3 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "Kepler-106 — 3 confirmed planets · 1449.2 ly",
     "planetCount": 4,
     "distanceLy": 1449.2,
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-106 overview",
@@ -38,7 +38,6 @@
       "facts": {
         "massKg": 1.98847e+30,
         "radiusMeanKm": 723528,
-        "discoveryNotes": "Archive host (3 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2014"
       },
       "color": "#FDB813",
@@ -51,12 +50,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -69,8 +67,7 @@
       "facts": {
         "massKg": 3.165266e+25,
         "radiusMeanKm": 5224.219999999999,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-106 b"
+        "discoveryDate": "2014"
       },
       "color": "#C45C26",
       "meta": {
@@ -91,7 +88,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -115,8 +112,7 @@
       "facts": {
         "massKg": 4.837482e+25,
         "radiusMeanKm": 6052.45,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-106 d"
+        "discoveryDate": "2014"
       },
       "color": "#D4A574",
       "meta": {
@@ -137,7 +133,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -161,8 +157,7 @@
       "facts": {
         "massKg": 6.6709474e+25,
         "radiusMeanKm": 16309.76,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-106 e"
+        "discoveryDate": "2014"
       },
       "color": "#6B93D6",
       "meta": {
@@ -183,7 +178,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

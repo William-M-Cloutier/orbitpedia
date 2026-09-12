@@ -8,14 +8,14 @@
       "kepler-49-b",
       "kepler-49-e"
     ],
-    "blurb": "Kepler-49 — NASA Exoplanet Archive planetary system (2 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "Kepler-49 (M1 V) — 2 confirmed planets · 1015.1 ly",
     "planetCount": 4,
     "distanceLy": 1015.1,
     "hostSpectralType": "M1 V",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-49 overview",
@@ -39,7 +39,6 @@
       "facts": {
         "massKg": 1.2070012899999999e+30,
         "radiusMeanKm": 429942.6,
-        "discoveryNotes": "Archive host (2 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2012"
       },
       "color": "#FF8C42",
@@ -52,12 +51,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -70,8 +68,7 @@
       "facts": {
         "massKg": 5.8348394e+25,
         "radiusMeanKm": 16430.809,
-        "discoveryDate": "2012",
-        "discoveryNotes": "NEA composite: Kepler-49 b"
+        "discoveryDate": "2012"
       },
       "color": "#C45C26",
       "meta": {
@@ -92,7 +89,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -116,8 +113,7 @@
       "facts": {
         "massKg": 6.20003943e+24,
         "radiusMeanKm": 9938.76,
-        "discoveryDate": "2012",
-        "discoveryNotes": "NEA composite: Kepler-49 e"
+        "discoveryDate": "2012"
       },
       "color": "#D4A574",
       "meta": {
@@ -138,7 +134,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

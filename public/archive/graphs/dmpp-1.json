@@ -8,14 +8,14 @@
       "dmpp-1-e",
       "dmpp-1-c"
     ],
-    "blurb": "DMPP-1 — NASA Exoplanet Archive planetary system (2 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "DMPP-1 (F8 V) — 2 confirmed planets · 204 ly",
     "planetCount": 4,
     "distanceLy": 204,
     "hostSpectralType": "F8 V",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — DMPP-1 overview",
@@ -39,7 +39,6 @@
       "facts": {
         "massKg": 2.4060486999999998e+30,
         "radiusMeanKm": 876582,
-        "discoveryNotes": "Archive host (2 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2019"
       },
       "color": "#F8F7FF",
@@ -52,12 +51,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -70,8 +68,7 @@
       "facts": {
         "massKg": 2.4665186e+25,
         "radiusMeanKm": 11850.060000000001,
-        "discoveryDate": "2019",
-        "discoveryNotes": "NEA composite: DMPP-1 e"
+        "discoveryDate": "2019"
       },
       "color": "#C45C26",
       "meta": {
@@ -90,7 +87,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -113,8 +110,7 @@
       "facts": {
         "massKg": 6.5335868e+25,
         "radiusMeanKm": 21088.010000000002,
-        "discoveryDate": "2019",
-        "discoveryNotes": "NEA composite: DMPP-1 c"
+        "discoveryDate": "2019"
       },
       "color": "#D4A574",
       "meta": {
@@ -134,7 +130,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

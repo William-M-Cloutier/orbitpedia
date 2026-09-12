@@ -8,14 +8,14 @@
       "hd-134606-b",
       "hd-134606-c"
     ],
-    "blurb": "HD 134606 — NASA Exoplanet Archive planetary system (2 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "HD 134606 (G5IV) — 2 confirmed planets · 87.4 ly",
     "planetCount": 5,
     "distanceLy": 87.4,
     "hostSpectralType": "G5IV",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — HD 134606 overview",
@@ -39,7 +39,6 @@
       "facts": {
         "massKg": 2.07993962e+30,
         "radiusMeanKm": 805620.6,
-        "discoveryNotes": "Archive host (2 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2024"
       },
       "color": "#FDB813",
@@ -52,12 +51,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -70,8 +68,7 @@
       "facts": {
         "massKg": 5.4287298e+25,
         "radiusMeanKm": 18921.870000000003,
-        "discoveryDate": "2024",
-        "discoveryNotes": "NEA composite: HD 134606 b"
+        "discoveryDate": "2024"
       },
       "color": "#C45C26",
       "meta": {
@@ -91,7 +88,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -114,8 +111,7 @@
       "facts": {
         "massKg": 6.754558200000001e+25,
         "radiusMeanKm": 21470.27,
-        "discoveryDate": "2024",
-        "discoveryNotes": "NEA composite: HD 134606 c"
+        "discoveryDate": "2024"
       },
       "color": "#D4A574",
       "meta": {
@@ -135,7 +131,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

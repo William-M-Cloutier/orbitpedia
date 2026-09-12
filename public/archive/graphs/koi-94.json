@@ -10,13 +10,13 @@
       "koi-94-d",
       "koi-94-e"
     ],
-    "blurb": "KOI-94 — NASA Exoplanet Archive planetary system (4 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "KOI-94 — 4 confirmed planets · 1555.9 ly",
     "planetCount": 4,
     "distanceLy": 1555.9,
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — KOI-94 overview",
@@ -39,7 +39,6 @@
       "facts": {
         "massKg": 2.53927619e+30,
         "radiusMeanKm": 1057464,
-        "discoveryNotes": "Archive host (4 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2013"
       },
       "color": "#F8F7FF",
@@ -52,12 +51,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -70,8 +68,7 @@
       "facts": {
         "massKg": 6.27081e+25,
         "radiusMeanKm": 10894.41,
-        "discoveryDate": "2013",
-        "discoveryNotes": "NEA composite: KOI-94 b"
+        "discoveryDate": "2013"
       },
       "color": "#C45C26",
       "meta": {
@@ -92,7 +89,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -116,8 +113,7 @@
       "facts": {
         "massKg": 9.316632e+25,
         "radiusMeanKm": 27522.72,
-        "discoveryDate": "2013",
-        "discoveryNotes": "NEA composite: KOI-94 c"
+        "discoveryDate": "2013"
       },
       "color": "#D4A574",
       "meta": {
@@ -138,7 +134,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -162,8 +158,7 @@
       "facts": {
         "massKg": 6.330532e+26,
         "radiusMeanKm": 71801.17,
-        "discoveryDate": "2013",
-        "discoveryNotes": "NEA composite: KOI-94 d"
+        "discoveryDate": "2013"
       },
       "color": "#6B93D6",
       "meta": {
@@ -184,7 +179,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -208,8 +203,7 @@
       "facts": {
         "massKg": 2.09027e+26,
         "radiusMeanKm": 41793.759999999995,
-        "discoveryDate": "2013",
-        "discoveryNotes": "NEA composite: KOI-94 e"
+        "discoveryDate": "2013"
       },
       "color": "#C1440E",
       "meta": {
@@ -230,7 +224,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

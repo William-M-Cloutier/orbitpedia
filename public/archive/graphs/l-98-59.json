@@ -11,14 +11,14 @@
       "l-98-59-e",
       "l-98-59-f"
     ],
-    "blurb": "L 98-59 — NASA Exoplanet Archive planetary system (5 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "L 98-59 (M3 V) — 5 confirmed planets · 34.6 ly",
     "planetCount": 5,
     "distanceLy": 34.6,
     "hostSpectralType": "M3 V",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — L 98-59 overview",
@@ -42,7 +42,6 @@
       "facts": {
         "massKg": 5.81229781e+29,
         "radiusMeanKm": 219493.35,
-        "discoveryNotes": "Archive host (5 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2019"
       },
       "color": "#E84A3C",
@@ -55,12 +54,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -73,8 +71,7 @@
       "facts": {
         "massKg": 2.747212e+24,
         "radiusMeanKm": 5332.527,
-        "discoveryDate": "2019",
-        "discoveryNotes": "NEA composite: L 98-59 b"
+        "discoveryDate": "2019"
       },
       "color": "#C45C26",
       "meta": {
@@ -96,7 +93,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -120,8 +117,7 @@
       "facts": {
         "massKg": 1.19444e+25,
         "radiusMeanKm": 8467.059,
-        "discoveryDate": "2019",
-        "discoveryNotes": "NEA composite: L 98-59 c"
+        "discoveryDate": "2019"
       },
       "color": "#D4A574",
       "meta": {
@@ -143,7 +139,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -167,8 +163,7 @@
       "facts": {
         "massKg": 9.794408e+24,
         "radiusMeanKm": 10365.617,
-        "discoveryDate": "2019",
-        "discoveryNotes": "NEA composite: L 98-59 d"
+        "discoveryDate": "2019"
       },
       "color": "#6B93D6",
       "meta": {
@@ -190,7 +185,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -214,8 +209,7 @@
       "facts": {
         "massKg": 1.6841604e+25,
         "radiusMeanKm": 9492.789999999999,
-        "discoveryDate": "2019",
-        "discoveryNotes": "NEA composite: L 98-59 e"
+        "discoveryDate": "2019"
       },
       "color": "#C1440E",
       "meta": {
@@ -237,7 +231,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -261,8 +255,7 @@
       "facts": {
         "massKg": 1.672216e+25,
         "radiusMeanKm": 9429.08,
-        "discoveryDate": "2019",
-        "discoveryNotes": "NEA composite: L 98-59 f"
+        "discoveryDate": "2019"
       },
       "color": "#C88B3A",
       "meta": {
@@ -284,7 +277,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

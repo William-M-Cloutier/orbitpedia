@@ -8,13 +8,13 @@
       "kepler-341-b",
       "kepler-341-c"
     ],
-    "blurb": "Kepler-341 — NASA Exoplanet Archive planetary system (2 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "Kepler-341 — 2 confirmed planets · 3415 ly",
     "planetCount": 4,
     "distanceLy": 3415,
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-341 overview",
@@ -37,7 +37,6 @@
       "facts": {
         "massKg": 1.9407467199999998e+30,
         "radiusMeanKm": 712396.8,
-        "discoveryNotes": "Archive host (2 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2014"
       },
       "color": "#F8F7FF",
@@ -50,12 +49,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -68,8 +66,7 @@
       "facts": {
         "massKg": 1.0511072000000001e+25,
         "radiusMeanKm": 7517.78,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-341 b"
+        "discoveryDate": "2014"
       },
       "color": "#C45C26",
       "meta": {
@@ -90,7 +87,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -114,8 +111,7 @@
       "facts": {
         "massKg": 2.1081866e+25,
         "radiusMeanKm": 10830.699999999999,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-341 c"
+        "discoveryDate": "2014"
       },
       "color": "#D4A574",
       "meta": {
@@ -136,7 +132,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

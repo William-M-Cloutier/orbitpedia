@@ -8,13 +8,13 @@
       "kepler-20-b",
       "kepler-20-d"
     ],
-    "blurb": "Kepler-20 — NASA Exoplanet Archive planetary system (2 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "Kepler-20 — 2 confirmed planets · 921.6 ly",
     "planetCount": 6,
     "distanceLy": 921.6,
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-20 overview",
@@ -37,7 +37,6 @@
       "facts": {
         "massKg": 1.8472886300000002e+30,
         "radiusMeanKm": 637539.48,
-        "discoveryNotes": "Archive host (2 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2011"
       },
       "color": "#FDB813",
@@ -50,12 +49,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -68,8 +66,7 @@
       "facts": {
         "massKg": 5.793034e+25,
         "radiusMeanKm": 11295.783,
-        "discoveryDate": "2011",
-        "discoveryNotes": "NEA composite: Kepler-20 b"
+        "discoveryDate": "2011"
       },
       "color": "#C45C26",
       "meta": {
@@ -90,7 +87,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -114,8 +111,7 @@
       "facts": {
         "massKg": 8.002748e+25,
         "radiusMeanKm": 16602.826,
-        "discoveryDate": "2011",
-        "discoveryNotes": "NEA composite: Kepler-20 d"
+        "discoveryDate": "2011"
       },
       "color": "#D4A574",
       "meta": {
@@ -136,7 +132,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

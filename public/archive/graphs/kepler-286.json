@@ -9,13 +9,13 @@
       "kepler-286-d",
       "kepler-286-e"
     ],
-    "blurb": "Kepler-286 — NASA Exoplanet Archive planetary system (3 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "Kepler-286 — 3 confirmed planets · 4001.4 ly",
     "planetCount": 4,
     "distanceLy": 4001.4,
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-286 overview",
@@ -38,7 +38,6 @@
       "facts": {
         "massKg": 1.6504300999999998e+30,
         "radiusMeanKm": 600389.1,
-        "discoveryNotes": "Archive host (3 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2014"
       },
       "color": "#FDB813",
@@ -51,12 +50,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -69,8 +67,7 @@
       "facts": {
         "massKg": 1.4631890000000002e+25,
         "radiusMeanKm": 8728.27,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-286 c"
+        "discoveryDate": "2014"
       },
       "color": "#C45C26",
       "meta": {
@@ -91,7 +88,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -115,8 +112,7 @@
       "facts": {
         "massKg": 1.3915226000000001e+25,
         "radiusMeanKm": 8473.43,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-286 d"
+        "discoveryDate": "2014"
       },
       "color": "#D4A574",
       "meta": {
@@ -137,7 +133,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -161,8 +157,7 @@
       "facts": {
         "massKg": 2.2574916e+25,
         "radiusMeanKm": 11276.67,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-286 e"
+        "discoveryDate": "2014"
       },
       "color": "#6B93D6",
       "meta": {
@@ -183,7 +178,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

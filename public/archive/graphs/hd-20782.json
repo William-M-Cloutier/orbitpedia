@@ -7,14 +7,14 @@
       "hd-20782",
       "hd-20782-b"
     ],
-    "blurb": "HD 20782 — NASA Exoplanet Archive planetary system (1 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "HD 20782 (G1.5 V) — 1 confirmed planet · 117.4 ly",
     "planetCount": 5,
     "distanceLy": 117.4,
     "hostSpectralType": "G1.5 V",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — HD 20782 overview",
@@ -38,7 +38,6 @@
       "facts": {
         "massKg": 2.0680088000000002e+30,
         "radiusMeanKm": 783921.7170000001,
-        "discoveryNotes": "Archive host (1 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2006"
       },
       "color": "#FDB813",
@@ -51,12 +50,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -69,8 +67,7 @@
       "facts": {
         "massKg": 2.823835326e+27,
         "radiusMeanKm": 86645.59999999999,
-        "discoveryDate": "2006",
-        "discoveryNotes": "NEA composite: HD 20782 b"
+        "discoveryDate": "2006"
       },
       "color": "#C45C26",
       "meta": {
@@ -90,7 +87,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

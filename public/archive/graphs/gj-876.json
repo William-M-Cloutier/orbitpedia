@@ -7,14 +7,14 @@
       "gj-876",
       "gj-876-c"
     ],
-    "blurb": "GJ 876 — NASA Exoplanet Archive planetary system (1 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "GJ 876 (M2.5V) — 1 confirmed planet · 15.2 ly",
     "planetCount": 4,
     "distanceLy": 15.2,
     "hostSpectralType": "M2.5V",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — GJ 876 overview",
@@ -38,7 +38,6 @@
       "facts": {
         "massKg": 6.363104e+29,
         "radiusMeanKm": 208710,
-        "discoveryNotes": "Archive host (1 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2000"
       },
       "color": "#E84A3C",
@@ -51,12 +50,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -69,8 +67,7 @@
       "facts": {
         "massKg": 1.35559742812e+27,
         "radiusMeanKm": 89194,
-        "discoveryDate": "2000",
-        "discoveryNotes": "NEA composite: GJ 876 c"
+        "discoveryDate": "2000"
       },
       "color": "#C45C26",
       "meta": {
@@ -92,7 +89,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

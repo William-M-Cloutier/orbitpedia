@@ -9,13 +9,13 @@
       "kepler-139-b",
       "kepler-139-c"
     ],
-    "blurb": "Kepler-139 — NASA Exoplanet Archive planetary system (3 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "Kepler-139 — 3 confirmed planets · 1275.4 ly",
     "planetCount": 5,
     "distanceLy": 1275.4,
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-139 overview",
@@ -38,7 +38,6 @@
       "facts": {
         "massKg": 2.14357066e+30,
         "radiusMeanKm": 727006.5,
-        "discoveryNotes": "Archive host (3 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2023"
       },
       "color": "#FDB813",
@@ -51,12 +50,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -69,8 +67,7 @@
       "facts": {
         "massKg": 1.19444e+25,
         "radiusMeanKm": 10798.845000000001,
-        "discoveryDate": "2023",
-        "discoveryNotes": "NEA composite: Kepler-139 d"
+        "discoveryDate": "2023"
       },
       "color": "#C45C26",
       "meta": {
@@ -91,7 +88,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -115,8 +112,7 @@
       "facts": {
         "massKg": 4.18054e+25,
         "radiusMeanKm": 18730.739999999998,
-        "discoveryDate": "2023",
-        "discoveryNotes": "NEA composite: Kepler-139 b"
+        "discoveryDate": "2023"
       },
       "color": "#D4A574",
       "meta": {
@@ -137,7 +133,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -161,8 +157,7 @@
       "facts": {
         "massKg": 7.76386e+25,
         "radiusMeanKm": 21533.98,
-        "discoveryDate": "2023",
-        "discoveryNotes": "NEA composite: Kepler-139 c"
+        "discoveryDate": "2023"
       },
       "color": "#6B93D6",
       "meta": {
@@ -183,7 +178,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

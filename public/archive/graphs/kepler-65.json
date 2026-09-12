@@ -9,13 +9,13 @@
       "kepler-65-c",
       "kepler-65-d"
     ],
-    "blurb": "Kepler-65 — NASA Exoplanet Archive planetary system (3 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "Kepler-65 — 3 confirmed planets · 990.6 ly",
     "planetCount": 4,
     "distanceLy": 990.6,
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-65 overview",
@@ -38,7 +38,6 @@
       "facts": {
         "massKg": 2.4855875e+30,
         "radiusMeanKm": 980937,
-        "discoveryNotes": "Archive host (3 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2012"
       },
       "color": "#F8F7FF",
@@ -51,12 +50,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -69,8 +67,7 @@
       "facts": {
         "massKg": 1.433328e+25,
         "radiusMeanKm": 9046.82,
-        "discoveryDate": "2012",
-        "discoveryNotes": "NEA composite: Kepler-65 b"
+        "discoveryDate": "2012"
       },
       "color": "#C45C26",
       "meta": {
@@ -91,7 +88,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -115,8 +112,7 @@
       "facts": {
         "massKg": 3.2249880000000004e+25,
         "radiusMeanKm": 16437.18,
-        "discoveryDate": "2012",
-        "discoveryNotes": "NEA composite: Kepler-65 c"
+        "discoveryDate": "2012"
       },
       "color": "#D4A574",
       "meta": {
@@ -137,7 +133,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -161,8 +157,7 @@
       "facts": {
         "massKg": 2.4724908e+25,
         "radiusMeanKm": 9683.92,
-        "discoveryDate": "2012",
-        "discoveryNotes": "NEA composite: Kepler-65 d"
+        "discoveryDate": "2012"
       },
       "color": "#6B93D6",
       "meta": {
@@ -183,7 +178,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

@@ -8,14 +8,14 @@
       "hd-219134-g",
       "hd-219134-h"
     ],
-    "blurb": "HD 219134 — NASA Exoplanet Archive planetary system (2 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "HD 219134 (K3 V) — 2 confirmed planets · 21.3 ly",
     "planetCount": 6,
     "distanceLy": 21.3,
     "hostSpectralType": "K3 V",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — HD 219134 overview",
@@ -39,7 +39,6 @@
       "facts": {
         "massKg": 1.57884518e+30,
         "radiusMeanKm": 535689,
-        "discoveryNotes": "Archive host (2 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2015"
       },
       "color": "#FF8C42",
@@ -52,12 +51,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -70,8 +68,7 @@
       "facts": {
         "massKg": 6.4536907084e+25,
         "radiusMeanKm": 20896.879999999997,
-        "discoveryDate": "2015",
-        "discoveryNotes": "NEA composite: HD 219134 g"
+        "discoveryDate": "2015"
       },
       "color": "#C45C26",
       "meta": {
@@ -91,7 +88,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -114,8 +111,7 @@
       "facts": {
         "massKg": 6.4536907084e+26,
         "radiusMeanKm": 80911.7,
-        "discoveryDate": "2015",
-        "discoveryNotes": "NEA composite: HD 219134 h"
+        "discoveryDate": "2015"
       },
       "color": "#D4A574",
       "meta": {
@@ -136,7 +132,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

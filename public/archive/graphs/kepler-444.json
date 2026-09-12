@@ -8,14 +8,14 @@
       "kepler-444-c",
       "kepler-444-f"
     ],
-    "blurb": "Kepler-444 — NASA Exoplanet Archive planetary system (2 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "Kepler-444 (K) — 2 confirmed planets · 118.8 ly",
     "planetCount": 5,
     "distanceLy": 118.8,
     "hostSpectralType": "K",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-444 overview",
@@ -39,7 +39,6 @@
       "facts": {
         "massKg": 1.50726026e+30,
         "radiusMeanKm": 523166.4,
-        "discoveryNotes": "Archive host (2 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2015"
       },
       "color": "#FF8C42",
@@ -52,12 +51,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -70,8 +68,7 @@
       "facts": {
         "massKg": 4.7359546e+23,
         "radiusMeanKm": 3166.387,
-        "discoveryDate": "2015",
-        "discoveryNotes": "NEA composite: Kepler-444 c"
+        "discoveryDate": "2015"
       },
       "color": "#C45C26",
       "meta": {
@@ -92,7 +89,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -116,8 +113,7 @@
       "facts": {
         "massKg": 1.9827704e+24,
         "radiusMeanKm": 4720.911,
-        "discoveryDate": "2015",
-        "discoveryNotes": "NEA composite: Kepler-444 f"
+        "discoveryDate": "2015"
       },
       "color": "#D4A574",
       "meta": {
@@ -138,7 +134,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

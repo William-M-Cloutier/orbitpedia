@@ -12,14 +12,14 @@
       "hd-110067-f",
       "hd-110067-g"
     ],
-    "blurb": "HD 110067 — NASA Exoplanet Archive planetary system (6 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "HD 110067 (K0.0 V) — 6 confirmed planets · 104.9 ly",
     "planetCount": 6,
     "distanceLy": 104.9,
     "hostSpectralType": "K0.0 V",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — HD 110067 overview",
@@ -43,7 +43,6 @@
       "facts": {
         "massKg": 1.58679906e+30,
         "radiusMeanKm": 548211.6,
-        "discoveryNotes": "Archive host (6 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2023"
       },
       "color": "#FDB813",
@@ -56,12 +55,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -74,8 +72,7 @@
       "facts": {
         "massKg": 3.3981818000000005e+25,
         "radiusMeanKm": 14016.2,
-        "discoveryDate": "2023",
-        "discoveryNotes": "NEA composite: HD 110067 b"
+        "discoveryDate": "2023"
       },
       "color": "#C45C26",
       "meta": {
@@ -95,7 +92,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -119,8 +116,7 @@
       "facts": {
         "massKg": 3.762486e+25,
         "radiusMeanKm": 15213.947999999999,
-        "discoveryDate": "2023",
-        "discoveryNotes": "NEA composite: HD 110067 c"
+        "discoveryDate": "2023"
       },
       "color": "#D4A574",
       "meta": {
@@ -140,7 +136,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -164,8 +160,7 @@
       "facts": {
         "massKg": 5.0883144e+25,
         "radiusMeanKm": 18170.092,
-        "discoveryDate": "2023",
-        "discoveryNotes": "NEA composite: HD 110067 d"
+        "discoveryDate": "2023"
       },
       "color": "#6B93D6",
       "meta": {
@@ -185,7 +180,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -209,8 +204,7 @@
       "facts": {
         "massKg": 2.329158e+25,
         "radiusMeanKm": 12359.74,
-        "discoveryDate": "2023",
-        "discoveryNotes": "NEA composite: HD 110067 e"
+        "discoveryDate": "2023"
       },
       "color": "#C1440E",
       "meta": {
@@ -230,7 +224,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -254,8 +248,7 @@
       "facts": {
         "massKg": 3.0099888e+25,
         "radiusMeanKm": 16570.971,
-        "discoveryDate": "2023",
-        "discoveryNotes": "NEA composite: HD 110067 f"
+        "discoveryDate": "2023"
       },
       "color": "#C88B3A",
       "meta": {
@@ -275,7 +268,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -299,8 +292,7 @@
       "facts": {
         "massKg": 5.016648e+25,
         "radiusMeanKm": 16609.197,
-        "discoveryDate": "2023",
-        "discoveryNotes": "NEA composite: HD 110067 g"
+        "discoveryDate": "2023"
       },
       "color": "#7EC8E3",
       "meta": {
@@ -320,7 +312,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

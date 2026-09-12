@@ -9,13 +9,13 @@
       "kepler-122-e",
       "kepler-122-f"
     ],
-    "blurb": "Kepler-122 — NASA Exoplanet Archive planetary system (3 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "Kepler-122 — 3 confirmed planets · 3351.1 ly",
     "planetCount": 5,
     "distanceLy": 3351.1,
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-122 overview",
@@ -38,7 +38,6 @@
       "facts": {
         "massKg": 1.95267754e+30,
         "radiusMeanKm": 845971.2,
-        "discoveryNotes": "Archive host (3 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2014"
       },
       "color": "#F8F7FF",
@@ -51,12 +50,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -69,8 +67,7 @@
       "facts": {
         "massKg": 3.6310976000000003e+25,
         "radiusMeanKm": 14908.14,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-122 b"
+        "discoveryDate": "2014"
       },
       "color": "#C45C26",
       "meta": {
@@ -91,7 +88,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -115,8 +112,7 @@
       "facts": {
         "massKg": 1.6542994e+26,
         "radiusMeanKm": 16564.600000000002,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-122 e"
+        "discoveryDate": "2014"
       },
       "color": "#D4A574",
       "meta": {
@@ -137,7 +133,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -161,8 +157,7 @@
       "facts": {
         "massKg": 2.149992e+26,
         "radiusMeanKm": 11149.25,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-122 f"
+        "discoveryDate": "2014"
       },
       "color": "#6B93D6",
       "meta": {
@@ -183,7 +178,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

@@ -10,13 +10,13 @@
       "kepler-37-d",
       "kepler-37-e"
     ],
-    "blurb": "Kepler-37 — NASA Exoplanet Archive planetary system (4 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "Kepler-37 — 4 confirmed planets · 208.5 ly",
     "planetCount": 4,
     "distanceLy": 208.5,
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-37 overview",
@@ -39,7 +39,6 @@
       "facts": {
         "massKg": 1.5708913000000002e+30,
         "radiusMeanKm": 548907.3,
-        "discoveryNotes": "Archive host (4 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2013"
       },
       "color": "#FDB813",
@@ -52,12 +51,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -70,8 +68,7 @@
       "facts": {
         "massKg": 4.7180380000000005e+24,
         "radiusMeanKm": 1973.7358000000002,
-        "discoveryDate": "2013",
-        "discoveryNotes": "NEA composite: Kepler-37 b"
+        "discoveryDate": "2013"
       },
       "color": "#C45C26",
       "meta": {
@@ -92,7 +89,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -116,8 +113,7 @@
       "facts": {
         "massKg": 7.763860000000001e+24,
         "radiusMeanKm": 4810.1050000000005,
-        "discoveryDate": "2013",
-        "discoveryNotes": "NEA composite: Kepler-37 c"
+        "discoveryDate": "2013"
       },
       "color": "#D4A574",
       "meta": {
@@ -138,7 +134,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -162,8 +158,7 @@
       "facts": {
         "massKg": 1.19444e+25,
         "radiusMeanKm": 12933.13,
-        "discoveryDate": "2013",
-        "discoveryNotes": "NEA composite: Kepler-37 d"
+        "discoveryDate": "2013"
       },
       "color": "#6B93D6",
       "meta": {
@@ -184,7 +179,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -208,8 +203,7 @@
       "facts": {
         "massKg": 4.837482e+25,
         "radiusMeanKm": 2357.27,
-        "discoveryDate": "2013",
-        "discoveryNotes": "NEA composite: Kepler-37 e"
+        "discoveryDate": "2013"
       },
       "color": "#C1440E",
       "meta": {
@@ -230,7 +224,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

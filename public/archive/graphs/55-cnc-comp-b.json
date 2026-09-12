@@ -8,14 +8,14 @@
       "55-cnc-comp-b-b",
       "55-cnc-comp-b-c"
     ],
-    "blurb": "55 Cnc B — NASA Exoplanet Archive planetary system (2 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "55 Cnc B (M4.5 V) — 2 confirmed planets · 40.7 ly",
     "planetCount": 7,
     "distanceLy": 40.7,
     "hostSpectralType": "M4.5 V",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — 55 Cnc B overview",
@@ -39,7 +39,6 @@
       "facts": {
         "massKg": 5.1700220000000004e+29,
         "radiusMeanKm": 190621.80000000002,
-        "discoveryNotes": "Archive host (2 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2025"
       },
       "color": "#E84A3C",
@@ -52,12 +51,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -70,8 +68,7 @@
       "facts": {
         "massKg": 2.09027e+25,
         "radiusMeanKm": 10766.99,
-        "discoveryDate": "2025",
-        "discoveryNotes": "NEA composite: 55 Cnc B b"
+        "discoveryDate": "2025"
       },
       "color": "#C45C26",
       "meta": {
@@ -91,7 +88,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -115,8 +112,7 @@
       "facts": {
         "massKg": 3.165266e+25,
         "radiusMeanKm": 13761.36,
-        "discoveryDate": "2025",
-        "discoveryNotes": "NEA composite: 55 Cnc B c"
+        "discoveryDate": "2025"
       },
       "color": "#D4A574",
       "meta": {
@@ -136,7 +132,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

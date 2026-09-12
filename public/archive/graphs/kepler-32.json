@@ -10,14 +10,14 @@
       "kepler-32-b",
       "kepler-32-d"
     ],
-    "blurb": "Kepler-32 — NASA Exoplanet Archive planetary system (4 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "Kepler-32 (M1 V) — 4 confirmed planets · 1056.2 ly",
     "planetCount": 5,
     "distanceLy": 1056.2,
     "hostSpectralType": "M1 V",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-32 overview",
@@ -41,7 +41,6 @@
       "facts": {
         "massKg": 1.1533126e+30,
         "radiusMeanKm": 368721,
-        "discoveryNotes": "Archive host (4 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2012"
       },
       "color": "#FF8C42",
@@ -54,12 +53,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -72,8 +70,7 @@
       "facts": {
         "massKg": 1.1120893342e+28,
         "radiusMeanKm": 5224.219999999999,
-        "discoveryDate": "2012",
-        "discoveryNotes": "NEA composite: Kepler-32 f"
+        "discoveryDate": "2012"
       },
       "color": "#C45C26",
       "meta": {
@@ -94,7 +91,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -118,8 +115,7 @@
       "facts": {
         "massKg": 2.4377385682e+25,
         "radiusMeanKm": 9556.5,
-        "discoveryDate": "2012",
-        "discoveryNotes": "NEA composite: Kepler-32 e"
+        "discoveryDate": "2012"
       },
       "color": "#D4A574",
       "meta": {
@@ -140,7 +136,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -164,8 +160,7 @@
       "facts": {
         "massKg": 7.781776600000001e+27,
         "radiusMeanKm": 14016.2,
-        "discoveryDate": "2012",
-        "discoveryNotes": "NEA composite: Kepler-32 b"
+        "discoveryDate": "2012"
       },
       "color": "#6B93D6",
       "meta": {
@@ -186,7 +181,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -210,8 +205,7 @@
       "facts": {
         "massKg": 2.3834393258000002e+26,
         "radiusMeanKm": 17201.7,
-        "discoveryDate": "2012",
-        "discoveryNotes": "NEA composite: Kepler-32 d"
+        "discoveryDate": "2012"
       },
       "color": "#C1440E",
       "meta": {
@@ -232,7 +226,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

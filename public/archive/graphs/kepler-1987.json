@@ -7,13 +7,13 @@
       "kepler-1987",
       "kepler-1987-d"
     ],
-    "blurb": "Kepler-1987 — NASA Exoplanet Archive planetary system (1 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "Kepler-1987 — 1 confirmed planet · 1942.9 ly",
     "planetCount": 4,
     "distanceLy": 1942.9,
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-1987 overview",
@@ -36,7 +36,6 @@
       "facts": {
         "massKg": 1.58878753e+30,
         "radiusMeanKm": 496729.8,
-        "discoveryNotes": "Archive host (1 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2023"
       },
       "color": "#FF8C42",
@@ -49,12 +48,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -67,8 +65,7 @@
       "facts": {
         "massKg": 4.5149832e+25,
         "radiusMeanKm": 16946.86,
-        "discoveryDate": "2023",
-        "discoveryNotes": "NEA composite: Kepler-1987 d"
+        "discoveryDate": "2023"
       },
       "color": "#C45C26",
       "meta": {
@@ -89,7 +86,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

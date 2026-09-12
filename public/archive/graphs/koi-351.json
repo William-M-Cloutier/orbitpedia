@@ -11,13 +11,13 @@
       "koi-351-f",
       "koi-351-h"
     ],
-    "blurb": "KOI-351 — NASA Exoplanet Archive planetary system (5 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "KOI-351 — 5 confirmed planets · 2766.6 ly",
     "planetCount": 8,
     "distanceLy": 2766.6,
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — KOI-351 overview",
@@ -40,7 +40,6 @@
       "facts": {
         "massKg": 2.386164e+30,
         "radiusMeanKm": 834840,
-        "discoveryNotes": "Archive host (5 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2013"
       },
       "color": "#F8F7FF",
@@ -53,12 +52,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -71,8 +69,7 @@
       "facts": {
         "massKg": 1.3556894000000001e+25,
         "radiusMeanKm": 8346.01,
-        "discoveryDate": "2013",
-        "discoveryNotes": "NEA composite: KOI-351 b"
+        "discoveryDate": "2013"
       },
       "color": "#C45C26",
       "meta": {
@@ -93,7 +90,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -117,8 +114,7 @@
       "facts": {
         "massKg": 1.0809682e+25,
         "radiusMeanKm": 7581.49,
-        "discoveryDate": "2013",
-        "discoveryNotes": "NEA composite: KOI-351 c"
+        "discoveryDate": "2013"
       },
       "color": "#D4A574",
       "meta": {
@@ -139,7 +135,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -163,8 +159,7 @@
       "facts": {
         "massKg": 4.5149832e+25,
         "radiusMeanKm": 16946.86,
-        "discoveryDate": "2013",
-        "discoveryNotes": "NEA composite: KOI-351 e"
+        "discoveryDate": "2013"
       },
       "color": "#6B93D6",
       "meta": {
@@ -185,7 +180,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -209,8 +204,7 @@
       "facts": {
         "massKg": 5.165953e+25,
         "radiusMeanKm": 18348.48,
-        "discoveryDate": "2013",
-        "discoveryNotes": "NEA composite: KOI-351 f"
+        "discoveryDate": "2013"
       },
       "color": "#C1440E",
       "meta": {
@@ -231,7 +225,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -255,8 +249,7 @@
       "facts": {
         "massKg": 1.2123566e+27,
         "radiusMeanKm": 71686.492,
-        "discoveryDate": "2013",
-        "discoveryNotes": "NEA composite: KOI-351 h"
+        "discoveryDate": "2013"
       },
       "color": "#C88B3A",
       "meta": {
@@ -278,7 +271,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

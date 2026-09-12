@@ -8,14 +8,14 @@
       "hd-141399-d",
       "hd-141399-e"
     ],
-    "blurb": "HD 141399 — NASA Exoplanet Archive planetary system (2 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "HD 141399 (K0) — 2 confirmed planets · 120.7 ly",
     "planetCount": 4,
     "distanceLy": 120.7,
     "hostSpectralType": "K0",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — HD 141399 overview",
@@ -39,7 +39,6 @@
       "facts": {
         "massKg": 2.1276629000000002e+30,
         "radiusMeanKm": 965100.0852,
-        "discoveryNotes": "Archive host (2 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2014"
       },
       "color": "#FDB813",
@@ -52,12 +51,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -70,8 +68,7 @@
       "facts": {
         "massKg": 2.23981030468e+27,
         "radiusMeanKm": 87282.7,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: HD 141399 d"
+        "discoveryDate": "2014"
       },
       "color": "#C45C26",
       "meta": {
@@ -92,7 +89,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -116,8 +113,7 @@
       "facts": {
         "massKg": 1.25277525516e+27,
         "radiusMeanKm": 89831.09999999999,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: HD 141399 e"
+        "discoveryDate": "2014"
       },
       "color": "#D4A574",
       "meta": {
@@ -138,7 +134,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

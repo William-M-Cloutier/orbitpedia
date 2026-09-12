@@ -7,13 +7,13 @@
       "k2-72",
       "k2-72-b"
     ],
-    "blurb": "K2-72 — NASA Exoplanet Archive planetary system (1 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "K2-72 — 1 confirmed planet · 216.7 ly",
     "planetCount": 4,
     "distanceLy": 216.7,
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — K2-72 overview",
@@ -36,7 +36,6 @@
       "facts": {
         "massKg": 5.3960116155e+29,
         "radiusMeanKm": 230269.04729999998,
-        "discoveryNotes": "Archive host (1 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2016"
       },
       "color": "#E84A3C",
@@ -49,12 +48,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -67,8 +65,7 @@
       "facts": {
         "massKg": 7.644416e+24,
         "radiusMeanKm": 6880.68,
-        "discoveryDate": "2016",
-        "discoveryNotes": "NEA composite: K2-72 b"
+        "discoveryDate": "2016"
       },
       "color": "#C45C26",
       "meta": {
@@ -90,7 +87,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

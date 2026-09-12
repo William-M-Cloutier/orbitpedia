@@ -10,14 +10,14 @@
       "kepler-186-d",
       "kepler-186-e"
     ],
-    "blurb": "Kepler-186 — NASA Exoplanet Archive planetary system (4 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "Kepler-186 (M1) — 4 confirmed planets · 579.2 ly",
     "planetCount": 5,
     "distanceLy": 579.2,
     "hostSpectralType": "M1",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-186 overview",
@@ -41,7 +41,6 @@
       "facts": {
         "massKg": 9.5048866e+29,
         "radiusMeanKm": 328370.39999999997,
-        "discoveryNotes": "Archive host (4 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2014"
       },
       "color": "#FF8C42",
@@ -54,12 +53,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -72,8 +70,7 @@
       "facts": {
         "massKg": 7.405528000000001e+24,
         "radiusMeanKm": 6816.97,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-186 b"
+        "discoveryDate": "2014"
       },
       "color": "#C45C26",
       "meta": {
@@ -94,7 +91,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -118,8 +115,7 @@
       "facts": {
         "massKg": 1.254162e+25,
         "radiusMeanKm": 7963.75,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-186 c"
+        "discoveryDate": "2014"
       },
       "color": "#D4A574",
       "meta": {
@@ -140,7 +136,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -164,8 +160,7 @@
       "facts": {
         "massKg": 1.5169388000000002e+25,
         "radiusMeanKm": 8919.4,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-186 d"
+        "discoveryDate": "2014"
       },
       "color": "#6B93D6",
       "meta": {
@@ -186,7 +181,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -210,8 +205,7 @@
       "facts": {
         "massKg": 1.284023e+25,
         "radiusMeanKm": 8091.17,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-186 e"
+        "discoveryDate": "2014"
       },
       "color": "#C1440E",
       "meta": {
@@ -232,7 +226,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

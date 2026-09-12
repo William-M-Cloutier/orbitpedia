@@ -7,13 +7,13 @@
       "kepler-221",
       "kepler-221-d"
     ],
-    "blurb": "Kepler-221 — NASA Exoplanet Archive planetary system (1 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "Kepler-221 — 1 confirmed planet · 1256.5 ly",
     "planetCount": 4,
     "distanceLy": 1256.5,
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-221 overview",
@@ -36,7 +36,6 @@
       "facts": {
         "massKg": 1.69815338e+30,
         "radiusMeanKm": 571169.7,
-        "discoveryNotes": "Archive host (1 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2014"
       },
       "color": "#FDB813",
@@ -49,12 +48,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -67,8 +65,7 @@
       "facts": {
         "massKg": 2.1559642e+25,
         "radiusMeanKm": 17392.829999999998,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-221 d"
+        "discoveryDate": "2014"
       },
       "color": "#C45C26",
       "meta": {
@@ -89,7 +86,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

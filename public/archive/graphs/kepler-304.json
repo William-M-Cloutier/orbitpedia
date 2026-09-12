@@ -8,13 +8,13 @@
       "kepler-304-e",
       "kepler-304-c"
     ],
-    "blurb": "Kepler-304 — NASA Exoplanet Archive planetary system (2 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "Kepler-304 — 2 confirmed planets · 1417.7 ly",
     "planetCount": 4,
     "distanceLy": 1417.7,
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-304 overview",
@@ -37,7 +37,6 @@
       "facts": {
         "massKg": 1.590776e+30,
         "radiusMeanKm": 507861,
-        "discoveryNotes": "Archive host (2 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2016"
       },
       "color": "#FF8C42",
@@ -50,12 +49,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -68,8 +66,7 @@
       "facts": {
         "massKg": 1.1168014000000001e+25,
         "radiusMeanKm": 7645.2,
-        "discoveryDate": "2016",
-        "discoveryNotes": "NEA composite: Kepler-304 e"
+        "discoveryDate": "2016"
       },
       "color": "#C45C26",
       "meta": {
@@ -90,7 +87,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -114,8 +111,7 @@
       "facts": {
         "massKg": 3.195127e+25,
         "radiusMeanKm": 13825.07,
-        "discoveryDate": "2016",
-        "discoveryNotes": "NEA composite: Kepler-304 c"
+        "discoveryDate": "2016"
       },
       "color": "#D4A574",
       "meta": {
@@ -136,7 +132,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

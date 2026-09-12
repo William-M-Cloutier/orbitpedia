@@ -7,14 +7,14 @@
       "hd-20794",
       "hd-20794-f"
     ],
-    "blurb": "HD 20794 — NASA Exoplanet Archive planetary system (1 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "HD 20794 (G6 V) — 1 confirmed planet · 19.6 ly",
     "planetCount": 4,
     "distanceLy": 19.6,
     "hostSpectralType": "G6 V",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — HD 20794 overview",
@@ -38,7 +38,6 @@
       "facts": {
         "massKg": 1.5708913000000002e+30,
         "radiusMeanKm": 647001,
-        "discoveryNotes": "Archive host (1 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2025"
       },
       "color": "#FDB813",
@@ -51,12 +50,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -69,8 +67,7 @@
       "facts": {
         "massKg": 3.4758204000000005e+25,
         "radiusMeanKm": 14525.88,
-        "discoveryDate": "2025",
-        "discoveryNotes": "NEA composite: HD 20794 f"
+        "discoveryDate": "2025"
       },
       "color": "#C45C26",
       "meta": {
@@ -90,7 +87,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

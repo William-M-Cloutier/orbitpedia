@@ -7,14 +7,14 @@
       "k2-138",
       "k2-138-g"
     ],
-    "blurb": "K2-138 — NASA Exoplanet Archive planetary system (1 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "K2-138 (G8 V) — 1 confirmed planet · 660.7 ly",
     "planetCount": 6,
     "distanceLy": 660.7,
     "hostSpectralType": "G8 V",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — K2-138 overview",
@@ -38,7 +38,6 @@
       "facts": {
         "massKg": 1.85921945e+30,
         "radiusMeanKm": 600389.1,
-        "discoveryNotes": "Archive host (1 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2021"
       },
       "color": "#FDB813",
@@ -51,12 +50,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -69,8 +67,7 @@
       "facts": {
         "massKg": 2.5799904e+25,
         "radiusMeanKm": 19195.823,
-        "discoveryDate": "2021",
-        "discoveryNotes": "NEA composite: K2-138 g"
+        "discoveryDate": "2021"
       },
       "color": "#C45C26",
       "meta": {
@@ -92,7 +89,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

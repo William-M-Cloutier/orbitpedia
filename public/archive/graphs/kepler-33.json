@@ -11,13 +11,13 @@
       "kepler-33-e",
       "kepler-33-f"
     ],
-    "blurb": "Kepler-33 — NASA Exoplanet Archive planetary system (5 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "Kepler-33 — 5 confirmed planets · 3943.7 ly",
     "planetCount": 5,
     "distanceLy": 3943.7,
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-33 overview",
@@ -40,7 +40,6 @@
       "facts": {
         "massKg": 2.56711477e+30,
         "radiusMeanKm": 1266174,
-        "discoveryNotes": "Archive host (5 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2011"
       },
       "color": "#FDB813",
@@ -53,12 +52,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -71,8 +69,7 @@
       "facts": {
         "massKg": 2.1977696e+25,
         "radiusMeanKm": 11085.539999999999,
-        "discoveryDate": "2011",
-        "discoveryNotes": "NEA composite: Kepler-33 b"
+        "discoveryDate": "2011"
       },
       "color": "#C45C26",
       "meta": {
@@ -93,7 +90,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -117,8 +114,7 @@
       "facts": {
         "massKg": 2.329158e+24,
         "radiusMeanKm": 20387.2,
-        "discoveryDate": "2011",
-        "discoveryNotes": "NEA composite: Kepler-33 c"
+        "discoveryDate": "2011"
       },
       "color": "#D4A574",
       "meta": {
@@ -139,7 +135,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -163,8 +159,7 @@
       "facts": {
         "massKg": 2.3351302000000004e+25,
         "radiusMeanKm": 34084.85,
-        "discoveryDate": "2011",
-        "discoveryNotes": "NEA composite: Kepler-33 d"
+        "discoveryDate": "2011"
       },
       "color": "#6B93D6",
       "meta": {
@@ -185,7 +180,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -209,8 +204,7 @@
       "facts": {
         "massKg": 3.3265154000000005e+25,
         "radiusMeanKm": 25611.42,
-        "discoveryDate": "2011",
-        "discoveryNotes": "NEA composite: Kepler-33 e"
+        "discoveryDate": "2011"
       },
       "color": "#C1440E",
       "meta": {
@@ -231,7 +225,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -255,8 +249,7 @@
       "facts": {
         "massKg": 5.733312e+25,
         "radiusMeanKm": 28414.66,
-        "discoveryDate": "2011",
-        "discoveryNotes": "NEA composite: Kepler-33 f"
+        "discoveryDate": "2011"
       },
       "color": "#C88B3A",
       "meta": {
@@ -277,7 +270,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

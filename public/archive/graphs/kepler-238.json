@@ -11,13 +11,13 @@
       "kepler-238-e",
       "kepler-238-f"
     ],
-    "blurb": "Kepler-238 — NASA Exoplanet Archive planetary system (5 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "Kepler-238 — 5 confirmed planets · 5866.7 ly",
     "planetCount": 5,
     "distanceLy": 5866.7,
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-238 overview",
@@ -40,7 +40,6 @@
       "facts": {
         "massKg": 2.4438296300000003e+30,
         "radiusMeanKm": 994851,
-        "discoveryNotes": "Archive host (5 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2014"
       },
       "color": "#FDB813",
@@ -53,12 +52,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -71,8 +69,7 @@
       "facts": {
         "massKg": 1.9738240444000001e+28,
         "radiusMeanKm": 11021.83,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-238 b"
+        "discoveryDate": "2014"
       },
       "color": "#C45C26",
       "meta": {
@@ -93,7 +90,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -117,8 +114,7 @@
       "facts": {
         "massKg": 9.108918884e+26,
         "radiusMeanKm": 15226.69,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-238 c"
+        "discoveryDate": "2014"
       },
       "color": "#D4A574",
       "meta": {
@@ -139,7 +135,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -163,8 +159,7 @@
       "facts": {
         "massKg": 1.3795782000000001e+26,
         "radiusMeanKm": 19558.969999999998,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-238 d"
+        "discoveryDate": "2014"
       },
       "color": "#6B93D6",
       "meta": {
@@ -185,7 +180,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -209,8 +204,7 @@
       "facts": {
         "massKg": 1.0134823399999999e+27,
         "radiusMeanKm": 35677.6,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-238 e"
+        "discoveryDate": "2014"
       },
       "color": "#C1440E",
       "meta": {
@@ -231,7 +225,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -255,8 +249,7 @@
       "facts": {
         "massKg": 8.06247e+25,
         "radiusMeanKm": 12742,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-238 f"
+        "discoveryDate": "2014"
       },
       "color": "#C88B3A",
       "meta": {
@@ -277,7 +270,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

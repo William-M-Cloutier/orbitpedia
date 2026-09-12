@@ -10,14 +10,14 @@
       "kepler-62-d",
       "kepler-62-f"
     ],
-    "blurb": "Kepler-62 — NASA Exoplanet Archive planetary system (4 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "Kepler-62 (K2 V) — 4 confirmed planets · 981.3 ly",
     "planetCount": 5,
     "distanceLy": 981.3,
     "hostSpectralType": "K2 V",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-62 overview",
@@ -41,7 +41,6 @@
       "facts": {
         "massKg": 1.3720443e+30,
         "radiusMeanKm": 445248,
-        "discoveryNotes": "Archive host (4 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2013"
       },
       "color": "#FF8C42",
@@ -54,12 +53,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -72,8 +70,7 @@
       "facts": {
         "massKg": 5.37498e+25,
         "radiusMeanKm": 8346.01,
-        "discoveryDate": "2013",
-        "discoveryNotes": "NEA composite: Kepler-62 b"
+        "discoveryDate": "2013"
       },
       "color": "#C45C26",
       "meta": {
@@ -94,7 +91,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -118,8 +115,7 @@
       "facts": {
         "massKg": 2.38888e+25,
         "radiusMeanKm": 3440.34,
-        "discoveryDate": "2013",
-        "discoveryNotes": "NEA composite: Kepler-62 c"
+        "discoveryDate": "2013"
       },
       "color": "#D4A574",
       "meta": {
@@ -140,7 +136,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -164,8 +160,7 @@
       "facts": {
         "massKg": 8.36108e+25,
         "radiusMeanKm": 12423.449999999999,
-        "discoveryDate": "2013",
-        "discoveryNotes": "NEA composite: Kepler-62 d"
+        "discoveryDate": "2013"
       },
       "color": "#6B93D6",
       "meta": {
@@ -186,7 +181,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -210,8 +205,7 @@
       "facts": {
         "massKg": 2.09027e+26,
         "radiusMeanKm": 8983.109999999999,
-        "discoveryDate": "2013",
-        "discoveryNotes": "NEA composite: Kepler-62 f"
+        "discoveryDate": "2013"
       },
       "color": "#C1440E",
       "meta": {
@@ -232,7 +226,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

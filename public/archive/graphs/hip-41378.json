@@ -11,14 +11,14 @@
       "hip-41378-d",
       "hip-41378-f"
     ],
-    "blurb": "HIP 41378 — NASA Exoplanet Archive planetary system (5 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "HIP 41378 (F6) — 5 confirmed planets · 346.7 ly",
     "planetCount": 6,
     "distanceLy": 346.7,
     "hostSpectralType": "F6",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:31:36.839Z",
+      "fetchedAt": "2026-09-12T07:35:53.307Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — HIP 41378 overview",
@@ -42,7 +42,6 @@
       "facts": {
         "massKg": 2.4259334e+30,
         "radiusMeanKm": 904410,
-        "discoveryNotes": "Archive host (5 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2016"
       },
       "color": "#F8F7FF",
@@ -55,12 +54,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryNotes",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -73,8 +71,7 @@
       "facts": {
         "massKg": 4.120818e+25,
         "radiusMeanKm": 16819.440000000002,
-        "discoveryDate": "2016",
-        "discoveryNotes": "NEA composite: HIP 41378 b"
+        "discoveryDate": "2016"
       },
       "color": "#C45C26",
       "meta": {
@@ -96,7 +93,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -120,8 +117,7 @@
       "facts": {
         "massKg": 3.5654034e+25,
         "radiusMeanKm": 17456.54,
-        "discoveryDate": "2016",
-        "discoveryNotes": "NEA composite: HIP 41378 c"
+        "discoveryDate": "2016"
       },
       "color": "#D4A574",
       "meta": {
@@ -143,7 +139,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -167,8 +163,7 @@
       "facts": {
         "massKg": 4.5508164e+25,
         "radiusMeanKm": 33065.490000000005,
-        "discoveryDate": "2016",
-        "discoveryNotes": "NEA composite: HIP 41378 e"
+        "discoveryDate": "2016"
       },
       "color": "#6B93D6",
       "meta": {
@@ -189,7 +184,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -213,8 +208,7 @@
       "facts": {
         "massKg": 3.899846600000001e+25,
         "radiusMeanKm": 23254.149999999998,
-        "discoveryDate": "2016",
-        "discoveryNotes": "NEA composite: HIP 41378 d"
+        "discoveryDate": "2016"
       },
       "color": "#C1440E",
       "meta": {
@@ -235,7 +229,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -259,8 +253,7 @@
       "facts": {
         "massKg": 1.4930500000000001e+26,
         "radiusMeanKm": 60333.37,
-        "discoveryDate": "2016",
-        "discoveryNotes": "NEA composite: HIP 41378 f"
+        "discoveryDate": "2016"
       },
       "color": "#C88B3A",
       "meta": {
@@ -281,7 +274,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:31:36.839Z",
+        "fetchedAt": "2026-09-12T07:35:53.307Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
