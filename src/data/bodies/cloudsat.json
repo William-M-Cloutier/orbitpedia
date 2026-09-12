@@ -1,39 +1,37 @@
 {
-  "id": "noaa-20",
-  "name": "NOAA-20",
+  "id": "cloudsat",
+  "name": "CloudSat",
   "kind": "satellite",
   "systemId": "earth-sats",
   "parentId": "earth-sats-earth",
   "aliases": [
-    "JPSS-1",
-    "NOAA 20",
-    "NOAA 20 (JPSS-1)",
-    "2017-073A"
+    "CLOUDSAT",
+    "2006-016A"
   ],
   "facts": {
-    "owner": "NOAA / NASA",
-    "launchDate": "2017-11-18",
-    "discoveryNotes": "NOAA/NASA Joint Polar Satellite System-1 (JPSS-1)."
+    "owner": "NASA / CSA",
+    "launchDate": "2006-04-28",
+    "discoveryNotes": "NASA cloud-profiling radar satellite."
   },
   "orbit": {
-    "epochJd": 2461295.7630369095,
-    "aAu": 0.00004816308525172077,
-    "aKm": 7205.095,
-    "e": 0.00016029,
-    "iDeg": 98.7811,
-    "omDeg": 193.965,
-    "wDeg": 52.9174,
-    "maDeg": 307.2148,
-    "periodD": 0.07044607779436735,
-    "qAu": 0.000048155365190785776,
-    "qKm": 7203.94009532245,
+    "epochJd": 2461295.754031759,
+    "aAu": 0.00004670462866420999,
+    "aKm": 6986.913,
+    "e": 0.00062729,
+    "iDeg": 98.3858,
+    "omDeg": 297.3471,
+    "wDeg": 58.9298,
+    "maDeg": 301.2531,
+    "periodD": 0.06727059647413774,
+    "qAu": 0.00004667533131769522,
+    "qKm": 6982.5301793442295,
     "frame": "geocentric"
   },
-  "color": "#4D96FF",
-  "noradCatId": 43013,
+  "color": "#D7BDE2",
+  "noradCatId": 29107,
   "meta": {
-    "provenance": "Celestrak GP OMM JSON fetched 2026-09-12T22:34:00Z: https://celestrak.org/NORAD/elements/gp.php?CATNR=43013&FORMAT=JSON-PRETTY",
-    "source": "Celestrak GP (OMM) NORAD 43013",
+    "provenance": "Celestrak GP OMM JSON fetched 2026-09-12T23:10:00Z: https://celestrak.org/NORAD/elements/gp.php?CATNR=29107&FORMAT=JSON",
+    "source": "Celestrak GP (OMM) NORAD 29107",
     "confidence": "known",
     "sources": [
       {
@@ -55,8 +53,8 @@
         ]
       },
       {
-        "name": "Celestrak satcat CATNR=43013",
-        "url": "https://celestrak.org/satcat/records.php?CATNR=43013",
+        "name": "Celestrak satcat CATNR=29107",
+        "url": "https://celestrak.org/satcat/records.php?CATNR=29107",
         "fields": [
           "facts.owner",
           "facts.launchDate",
@@ -72,7 +70,7 @@
         ]
       }
     ],
-    "fetchedAt": "2026-09-12T22:34:00Z",
+    "fetchedAt": "2026-09-12T23:10:00Z",
     "unitsVersion": 1
   }
 }
