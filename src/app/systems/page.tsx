@@ -63,7 +63,7 @@ const NODE_R_FAV = 13;
 type SpectralChip = "M" | "K" | "G" | "FA" | "Other";
 const SPECTRAL_CHIPS: { id: SpectralChip; label: string }[] = [
   { id: "M", label: "M dwarf" },
-  { id: "K", label: "K" },
+  { id: "K", label: "K (orange dwarf)" },
   { id: "G", label: "G (Sun-like)" },
   { id: "FA", label: "F / A (hotter)" },
   { id: "Other", label: "Other / unknown" },
