@@ -24,6 +24,11 @@ import {
   listChildren,
 } from "@/data/catalog";
 import type { Body, BodyKind } from "@/data/schema";
+import {
+  ProbeDistanceChart,
+  ProbeDistanceCompareChart,
+} from "@/viz/ProbeDistanceCharts";
+import { probeEarthDistanceSeries } from "@/lib/probeDistance";
 import { periodFromA } from "@/lib/kepler";
 import {
   AU_KM,
@@ -1673,6 +1678,20 @@ function BodyFocusCharts({
     );
   }
 
+  if (focus.kind === "probe") {
+    const hasDist = probeEarthDistanceSeries(focus).length >= 2;
+    return (
+      <div className="space-y-6">
+        <ProbeDistanceChart body={focus} />
+        {!hasDist ? (
+          <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4 text-sm text-zinc-500">
+            No distance samples from Earth for this probe yet
+          </div>
+        ) : null}
+      </div>
+    );
+  }
+
   if (focus.kind === "asteroid") {
     const vs = earth;
     return (
@@ -1783,7 +1802,16 @@ export function CatalogCharts({ systemId, focusId }: ChartsProps) {
 
   const hasMultiMoonParents = moonParentOptions(bodies).length > 0;
 
-  if (!planetSection && !asteroidSection && !hasMultiMoonParents) {
+  const probes = filterKinds(bodies, ["probe"]);
+  const hasProbeDist =
+    probes.filter((b) => probeEarthDistanceSeries(b).length >= 2).length >= 2;
+
+  if (
+    !planetSection &&
+    !asteroidSection &&
+    !hasMultiMoonParents &&
+    !hasProbeDist
+  ) {
     return (
       <div className="rounded-xl border border-white/10 bg-white/[0.03] p-6 text-sm text-zinc-500">
         No chartable bodies in this system
@@ -1801,6 +1829,12 @@ export function CatalogCharts({ systemId, focusId }: ChartsProps) {
       ) : null}
       {asteroidSection ? (
         <SectionCharts section={asteroidSection} host={host} />
+      ) : null}
+      {hasProbeDist ? (
+        <section className="space-y-3">
+          <h3 className="text-base font-semibold text-zinc-200">Probes</h3>
+          <ProbeDistanceCompareChart bodies={probes} />
+        </section>
       ) : null}
     </div>
   );
@@ -1905,6 +1939,10 @@ function CompareSizeStrip({ bodies }: { bodies: Body[] }) {
 export function CompareSelectionCharts({ bodies }: { bodies: Body[] }) {
   if (bodies.length === 0) return null;
 
+  const probeDist = (
+    <ProbeDistanceCompareChart bodies={bodies} />
+  );
+
   const mrCount = bodies.filter(
     (b) =>
       b.kind !== "star" &&
@@ -1923,10 +1961,17 @@ export function CompareSelectionCharts({ bodies }: { bodies: Body[] }) {
     (b) =>
       b.facts.radiusMeanKm != null && (b.facts.radiusMeanKm as number) > 0,
   );
-  if (!hasSize && !showMR && !showOrbit && !showOrbitWhy) return null;
+  const probesWithDist = bodies.filter(
+    (b) => b.kind === "probe" && probeEarthDistanceSeries(b).length >= 2,
+  ).length;
+  const showProbeDist = probesWithDist >= 2;
+
+  if (!hasSize && !showMR && !showOrbit && !showOrbitWhy && !showProbeDist)
+    return null;
 
   return (
     <div className="mt-4 space-y-3">
+      {showProbeDist ? probeDist : null}
       {hasSize ? <CompareSizeStrip bodies={bodies} /> : null}
       {showMR ? (
         <div className="w-full">
