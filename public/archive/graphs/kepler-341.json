@@ -1,0 +1,156 @@
+{
+  "system": {
+    "id": "kepler-341",
+    "name": "Kepler-341",
+    "home": false,
+    "memberIds": [
+      "kepler-341",
+      "kepler-341-b",
+      "kepler-341-c"
+    ],
+    "blurb": "Kepler-341 — NASA Exoplanet Archive planetary system (2 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 4,
+    "distanceLy": 3415,
+    "hasGas": false,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T07:30:33.227Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — Kepler-341 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-341",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "kepler-341",
+      "name": "Kepler-341",
+      "kind": "star",
+      "systemId": "kepler-341",
+      "facts": {
+        "massKg": 1.9407467199999998e+30,
+        "radiusMeanKm": 712396.8,
+        "discoveryNotes": "Archive host (2 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2014"
+      },
+      "color": "#F8F7FF",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-341 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-341",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "kepler-341-b",
+      "name": "Kepler-341 b",
+      "kind": "planet",
+      "systemId": "kepler-341",
+      "facts": {
+        "massKg": 1.0511072000000001e+25,
+        "radiusMeanKm": 7517.78,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-341 b"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-341 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-341 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-341",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454965.7352,
+        "aAu": 0.06,
+        "e": 0,
+        "iDeg": 89.71,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 5.195528
+      }
+    },
+    {
+      "id": "kepler-341-c",
+      "name": "Kepler-341 c",
+      "kind": "planet",
+      "systemId": "kepler-341",
+      "facts": {
+        "massKg": 2.1081866e+25,
+        "radiusMeanKm": 10830.699999999999,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-341 c"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-341 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-341 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-341",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454968.31534,
+        "aAu": 0.08,
+        "e": 0,
+        "iDeg": 89.82,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 8.01041
+      }
+    }
+  ]
+}

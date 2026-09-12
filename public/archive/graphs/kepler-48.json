@@ -5,18 +5,16 @@
     "home": false,
     "memberIds": [
       "kepler-48",
-      "kepler-48-b",
       "kepler-48-c",
-      "kepler-48-d",
-      "kepler-48-e",
       "kepler-48-f"
     ],
-    "blurb": "Kepler-48 — NASA Exoplanet Archive planetary system (5 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "Kepler-48 — NASA Exoplanet Archive planetary system (2 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
     "planetCount": 5,
     "distanceLy": 1000.4,
+    "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "fetchedAt": "2026-09-12T07:30:33.227Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-48 overview",
@@ -39,7 +37,7 @@
       "facts": {
         "massKg": 1.7498536e+30,
         "radiusMeanKm": 619173,
-        "discoveryNotes": "Archive host (5 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryNotes": "Archive host (2 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2012"
       },
       "color": "#FF8C42",
@@ -57,21 +55,21 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "known",
         "unitsVersion": 1
       }
     },
     {
-      "id": "kepler-48-b",
-      "name": "Kepler-48 b",
+      "id": "kepler-48-c",
+      "name": "Kepler-48 c",
       "kind": "planet",
       "systemId": "kepler-48",
       "facts": {
-        "massKg": 2.3530468000000003e+25,
-        "radiusMeanKm": 11977.48,
+        "massKg": 8.7253842e+25,
+        "radiusMeanKm": 17265.41,
         "discoveryDate": "2012",
-        "discoveryNotes": "NEA composite: Kepler-48 b"
+        "discoveryNotes": "NEA composite: Kepler-48 c"
       },
       "color": "#C45C26",
       "meta": {
@@ -92,53 +90,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "epochJd": 2454957.06113,
-        "aAu": 0.05394,
-        "e": 0,
-        "iDeg": 89.91,
-        "omDeg": 0,
-        "wDeg": 0,
-        "maDeg": 0,
-        "periodD": 4.778
-      }
-    },
-    {
-      "id": "kepler-48-c",
-      "name": "Kepler-48 c",
-      "kind": "planet",
-      "systemId": "kepler-48",
-      "facts": {
-        "massKg": 8.7253842e+25,
-        "radiusMeanKm": 17265.41,
-        "discoveryDate": "2012",
-        "discoveryNotes": "NEA composite: Kepler-48 c"
-      },
-      "color": "#D4A574",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-48 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — Kepler-48 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-48",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.e",
-              "orbit.iDeg",
-              "orbit.epochJd",
-              "facts.massKg",
-              "facts.radiusMeanKm",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -155,95 +107,6 @@
       }
     },
     {
-      "id": "kepler-48-d",
-      "name": "Kepler-48 d",
-      "kind": "planet",
-      "systemId": "kepler-48",
-      "facts": {
-        "massKg": 4.7359546e+25,
-        "radiusMeanKm": 12996.84,
-        "discoveryDate": "2012",
-        "discoveryNotes": "NEA composite: Kepler-48 d"
-      },
-      "color": "#6B93D6",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-48 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — Kepler-48 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-48",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.e",
-              "orbit.iDeg",
-              "orbit.epochJd",
-              "facts.massKg",
-              "facts.radiusMeanKm",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "epochJd": 2454979.06554,
-        "aAu": 0.23302,
-        "e": 0,
-        "iDeg": 89.99,
-        "omDeg": 0,
-        "wDeg": 0,
-        "maDeg": 0,
-        "periodD": 42.8961
-      }
-    },
-    {
-      "id": "kepler-48-e",
-      "name": "Kepler-48 e",
-      "kind": "planet",
-      "systemId": "kepler-48",
-      "facts": {
-        "massKg": 3.9237354e+27,
-        "radiusMeanKm": 85371.40000000001,
-        "discoveryDate": "2012",
-        "discoveryNotes": "NEA composite: Kepler-48 e"
-      },
-      "color": "#C1440E",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-48 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg, wDeg).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — Kepler-48 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-48",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.e",
-              "facts.massKg",
-              "facts.radiusMeanKm",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "aAu": 1.898274748,
-        "e": 0.003142,
-        "iDeg": 90,
-        "omDeg": 0,
-        "wDeg": 0,
-        "maDeg": 0,
-        "periodD": 982
-      }
-    },
-    {
       "id": "kepler-48-f",
       "name": "Kepler-48 f",
       "kind": "planet",
@@ -254,7 +117,7 @@
         "discoveryDate": "2012",
         "discoveryNotes": "NEA composite: Kepler-48 f"
       },
-      "color": "#C88B3A",
+      "color": "#D4A574",
       "meta": {
         "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-48 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg, wDeg).",
         "sources": [
@@ -271,7 +134,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

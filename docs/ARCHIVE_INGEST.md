@@ -74,7 +74,7 @@ Thin index `systems.index.json`:
   "fetchedAt": "<ISO>",
   "source": "NASA Exoplanet Archive pscomppars",
   "systems": [
-    { "id", "name", "planetCount", "distanceLy?", "hostSpectralType?", "overviewUrl" }
+    { "id", "name", "planetCount", "distanceLy?", "hostSpectralType?", "hasGas", "overviewUrl" }
   ]
 }
 ```
@@ -147,6 +147,19 @@ Systems map shows archive **index stubs**; graph loads on Explore open.
   **not** `public/archive/graphs/`. Sample/`--limit 100` stays the committed smoke plane.
 - Index: single `systems.index.json` OK until ~5k; paginate/shard only if needed.
 
+
+
+## hasGas filter (index + system chunk)
+
+Archive index rows and system chunks include boolean **`hasGas`**:
+
+- `true` if **any** planet in the ingest slice has archive `pl_bmasse` ≳ **50 M⊕**
+  **or** `pl_rade` ≳ **4 R⊕** (either threshold is enough).
+- `false` if no planet meets those thresholds (including when mass/radius are missing
+  — we do **not** invent gas giants from incomplete rows).
+
+Re-run smoke (`--limit 100`) after changing thresholds. Full pack requires
+re-ingest into `public/archive/bulk/` (`--all`); committed smoke alone is not enough.
 
 ## TAP row window (important)
 

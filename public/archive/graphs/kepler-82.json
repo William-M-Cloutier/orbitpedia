@@ -7,17 +7,16 @@
       "kepler-82",
       "kepler-82-d",
       "kepler-82-e",
-      "kepler-82-b",
-      "kepler-82-c",
       "kepler-82-f"
     ],
-    "blurb": "Kepler-82 — NASA Exoplanet Archive planetary system (5 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "Kepler-82 — NASA Exoplanet Archive planetary system (3 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
     "planetCount": 5,
     "distanceLy": 2949.5,
     "hostSpectralType": "G",
+    "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "fetchedAt": "2026-09-12T07:30:33.227Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-82 overview",
@@ -41,7 +40,7 @@
       "facts": {
         "massKg": 1.8810926199999998e+30,
         "radiusMeanKm": 657436.5,
-        "discoveryNotes": "Archive host (5 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryNotes": "Archive host (3 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2014"
       },
       "color": "#FDB813",
@@ -59,7 +58,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -94,7 +93,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -140,7 +139,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -157,15 +156,15 @@
       }
     },
     {
-      "id": "kepler-82-b",
-      "name": "Kepler-82 b",
+      "id": "kepler-82-f",
+      "name": "Kepler-82 f",
       "kind": "planet",
       "systemId": "kepler-82",
       "facts": {
-        "massKg": 7.256223000000001e+25,
-        "radiusMeanKm": 25929.97,
+        "massKg": 1.2481898e+26,
+        "radiusMeanKm": 30835.64,
         "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-82 b"
+        "discoveryNotes": "NEA composite: Kepler-82 f"
       },
       "color": "#6B93D6",
       "meta": {
@@ -180,107 +179,13 @@
               "orbit.e",
               "orbit.iDeg",
               "orbit.wDeg",
-              "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "epochJd": 2455027.12074,
-        "aAu": 0.1683,
-        "e": 0.0033,
-        "iDeg": 89.052,
-        "omDeg": 0,
-        "wDeg": 236,
-        "maDeg": 0,
-        "periodD": 26.44
-      }
-    },
-    {
-      "id": "kepler-82-c",
-      "name": "Kepler-82 c",
-      "kind": "planet",
-      "systemId": "kepler-82",
-      "facts": {
-        "massKg": 8.301358e+25,
-        "radiusMeanKm": 34021.14,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-82 c"
-      },
-      "color": "#C1440E",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-82 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — Kepler-82 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-82",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.e",
-              "orbit.iDeg",
-              "orbit.wDeg",
-              "orbit.epochJd",
-              "facts.massKg",
-              "facts.radiusMeanKm",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "epochJd": 2455007.05501,
-        "aAu": 0.2626,
-        "e": 0.007,
-        "iDeg": 90.15,
-        "omDeg": 0,
-        "wDeg": 162,
-        "maDeg": 0,
-        "periodD": 51.54
-      }
-    },
-    {
-      "id": "kepler-82-f",
-      "name": "Kepler-82 f",
-      "kind": "planet",
-      "systemId": "kepler-82",
-      "facts": {
-        "massKg": 1.2481898e+26,
-        "radiusMeanKm": 30835.64,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-82 f"
-      },
-      "color": "#C88B3A",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-82 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — Kepler-82 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-82",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.e",
-              "orbit.iDeg",
-              "orbit.wDeg",
-              "facts.massKg",
-              "facts.radiusMeanKm",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

@@ -5,17 +5,15 @@
     "home": false,
     "memberIds": [
       "kepler-299",
-      "kepler-299-b",
-      "kepler-299-c",
-      "kepler-299-d",
-      "kepler-299-e"
+      "kepler-299-c"
     ],
-    "blurb": "Kepler-299 — NASA Exoplanet Archive planetary system (4 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "Kepler-299 — NASA Exoplanet Archive planetary system (1 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
     "planetCount": 4,
     "distanceLy": 3431.9,
+    "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "fetchedAt": "2026-09-12T07:30:33.227Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-299 overview",
@@ -38,7 +36,7 @@
       "facts": {
         "massKg": 1.99642388e+30,
         "radiusMeanKm": 717962.4,
-        "discoveryNotes": "Archive host (4 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryNotes": "Archive host (1 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2014"
       },
       "color": "#FDB813",
@@ -56,21 +54,21 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "known",
         "unitsVersion": 1
       }
     },
     {
-      "id": "kepler-299-b",
-      "name": "Kepler-299 b",
+      "id": "kepler-299-c",
+      "name": "Kepler-299 c",
       "kind": "planet",
       "systemId": "kepler-299",
       "facts": {
-        "massKg": 1.373606e+25,
-        "radiusMeanKm": 8409.720000000001,
+        "massKg": 4.4851222e+25,
+        "radiusMeanKm": 16883.149999999998,
         "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-299 b"
+        "discoveryNotes": "NEA composite: Kepler-299 c"
       },
       "color": "#C45C26",
       "meta": {
@@ -91,53 +89,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "epochJd": 2454966.82858,
-        "aAu": 0.04,
-        "e": 0,
-        "iDeg": 89.72,
-        "omDeg": 0,
-        "wDeg": 0,
-        "maDeg": 0,
-        "periodD": 2.927128
-      }
-    },
-    {
-      "id": "kepler-299-c",
-      "name": "Kepler-299 c",
-      "kind": "planet",
-      "systemId": "kepler-299",
-      "facts": {
-        "massKg": 4.4851222e+25,
-        "radiusMeanKm": 16883.149999999998,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-299 c"
-      },
-      "color": "#D4A574",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-299 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — Kepler-299 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-299",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.e",
-              "orbit.iDeg",
-              "orbit.epochJd",
-              "facts.massKg",
-              "facts.radiusMeanKm",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -151,98 +103,6 @@
         "wDeg": 0,
         "maDeg": 0,
         "periodD": 6.885875
-      }
-    },
-    {
-      "id": "kepler-299-d",
-      "name": "Kepler-299 d",
-      "kind": "planet",
-      "systemId": "kepler-299",
-      "facts": {
-        "massKg": 2.4605464e+25,
-        "radiusMeanKm": 11850.060000000001,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-299 d"
-      },
-      "color": "#6B93D6",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-299 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — Kepler-299 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-299",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.e",
-              "orbit.iDeg",
-              "orbit.epochJd",
-              "facts.massKg",
-              "facts.radiusMeanKm",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "epochJd": 2454977.58557,
-        "aAu": 0.118,
-        "e": 0,
-        "iDeg": 89.2,
-        "omDeg": 0,
-        "wDeg": 0,
-        "maDeg": 0,
-        "periodD": 15.054786
-      }
-    },
-    {
-      "id": "kepler-299-e",
-      "name": "Kepler-299 e",
-      "kind": "planet",
-      "systemId": "kepler-299",
-      "facts": {
-        "massKg": 2.4844352000000003e+25,
-        "radiusMeanKm": 11913.77,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-299 e"
-      },
-      "color": "#C1440E",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-299 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — Kepler-299 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-299",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.e",
-              "orbit.iDeg",
-              "orbit.epochJd",
-              "facts.massKg",
-              "facts.radiusMeanKm",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "epochJd": 2454976.30747,
-        "aAu": 0.22,
-        "e": 0,
-        "iDeg": 89.85,
-        "omDeg": 0,
-        "wDeg": 0,
-        "maDeg": 0,
-        "periodD": 38.285489
       }
     }
   ]

@@ -5,18 +5,15 @@
     "home": false,
     "memberIds": [
       "kepler-102",
-      "kepler-102-b",
-      "kepler-102-c",
-      "kepler-102-d",
-      "kepler-102-e",
-      "kepler-102-f"
+      "kepler-102-b"
     ],
-    "blurb": "Kepler-102 — NASA Exoplanet Archive planetary system (5 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "Kepler-102 — NASA Exoplanet Archive planetary system (1 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
     "planetCount": 5,
     "distanceLy": 351.6,
+    "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "fetchedAt": "2026-09-12T07:30:33.227Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-102 overview",
@@ -39,7 +36,7 @@
       "facts": {
         "massKg": 1.59674141e+30,
         "radiusMeanKm": 503686.8,
-        "discoveryNotes": "Archive host (5 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryNotes": "Archive host (1 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2014"
       },
       "color": "#FF8C42",
@@ -57,7 +54,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -92,7 +89,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -106,190 +103,6 @@
         "wDeg": 0,
         "maDeg": 0,
         "periodD": 5.286965
-      }
-    },
-    {
-      "id": "kepler-102-c",
-      "name": "Kepler-102 c",
-      "kind": "planet",
-      "systemId": "kepler-102",
-      "facts": {
-        "massKg": 1.015274e+25,
-        "radiusMeanKm": 3612.3569999999995,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-102 c"
-      },
-      "color": "#D4A574",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-102 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — Kepler-102 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-102",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.e",
-              "orbit.iDeg",
-              "orbit.epochJd",
-              "facts.massKg",
-              "facts.radiusMeanKm",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "epochJd": 2454972.9746,
-        "aAu": 0.06702,
-        "e": 0.094,
-        "iDeg": 89.82,
-        "omDeg": 0,
-        "wDeg": 0,
-        "maDeg": 0,
-        "periodD": 7.071392
-      }
-    },
-    {
-      "id": "kepler-102-d",
-      "name": "Kepler-102 d",
-      "kind": "planet",
-      "systemId": "kepler-102",
-      "facts": {
-        "massKg": 1.7916600000000002e+25,
-        "radiusMeanKm": 7352.133999999999,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-102 d"
-      },
-      "color": "#6B93D6",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-102 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — Kepler-102 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-102",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.e",
-              "orbit.iDeg",
-              "orbit.epochJd",
-              "facts.massKg",
-              "facts.radiusMeanKm",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "epochJd": 2454967.09128,
-        "aAu": 0.08618,
-        "e": 0.092,
-        "iDeg": 89.49,
-        "omDeg": 0,
-        "wDeg": 0,
-        "maDeg": 0,
-        "periodD": 10.311767
-      }
-    },
-    {
-      "id": "kepler-102-e",
-      "name": "Kepler-102 e",
-      "kind": "planet",
-      "systemId": "kepler-102",
-      "facts": {
-        "massKg": 2.806934e+25,
-        "radiusMeanKm": 13825.07,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-102 e"
-      },
-      "color": "#C1440E",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-102 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — Kepler-102 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-102",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.e",
-              "orbit.iDeg",
-              "orbit.epochJd",
-              "facts.massKg",
-              "facts.radiusMeanKm",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "epochJd": 2454967.7537,
-        "aAu": 0.1162,
-        "e": 0.089,
-        "iDeg": 89.488,
-        "omDeg": 0,
-        "wDeg": 0,
-        "maDeg": 0,
-        "periodD": 16.1456994
-      }
-    },
-    {
-      "id": "kepler-102-f",
-      "name": "Kepler-102 f",
-      "kind": "planet",
-      "systemId": "kepler-102",
-      "facts": {
-        "massKg": 2.568046e+25,
-        "radiusMeanKm": 5485.431,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-102 f"
-      },
-      "color": "#C88B3A",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-102 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — Kepler-102 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-102",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.e",
-              "orbit.iDeg",
-              "orbit.epochJd",
-              "facts.massKg",
-              "facts.radiusMeanKm",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "epochJd": 2454978.0276,
-        "aAu": 0.1656,
-        "e": 0.1,
-        "iDeg": 89.32,
-        "omDeg": 0,
-        "wDeg": 0,
-        "maDeg": 0,
-        "periodD": 27.453592
       }
     }
   ]

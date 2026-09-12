@@ -5,18 +5,16 @@
     "home": false,
     "memberIds": [
       "barnards-star",
-      "barnards-star-d",
-      "barnards-star-b",
-      "barnards-star-c",
-      "barnards-star-e"
+      "barnards-star-d"
     ],
-    "blurb": "Barnard's star — NASA Exoplanet Archive planetary system (4 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "Barnard's star — NASA Exoplanet Archive planetary system (1 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
     "planetCount": 4,
     "distanceLy": 6,
     "hostSpectralType": "M3.5-4 V",
+    "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "fetchedAt": "2026-09-12T07:30:33.227Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Barnard's star overview",
@@ -40,7 +38,7 @@
       "facts": {
         "massKg": 3.2213214e+29,
         "radiusMeanKm": 128704.5,
-        "discoveryNotes": "Archive host (4 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryNotes": "Archive host (1 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2025"
       },
       "color": "#E84A3C",
@@ -58,7 +56,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -92,7 +90,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -105,140 +103,6 @@
         "wDeg": -51.8,
         "maDeg": 0,
         "periodD": 2.3402
-      }
-    },
-    {
-      "id": "barnards-star-b",
-      "name": "Barnard b",
-      "kind": "planet",
-      "systemId": "barnards-star",
-      "facts": {
-        "massKg": 1.7856878e+24,
-        "radiusMeanKm": 4587.12,
-        "discoveryDate": "2025",
-        "discoveryNotes": "NEA composite: Barnard b"
-      },
-      "color": "#D4A574",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Barnard's star (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — Barnard's star overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Barnard's%20star",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.e",
-              "orbit.wDeg",
-              "orbit.epochJd",
-              "facts.massKg",
-              "facts.radiusMeanKm",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "epochJd": 2460139.204,
-        "aAu": 0.0229,
-        "e": 0.03,
-        "iDeg": 90,
-        "omDeg": 0,
-        "wDeg": 3.8,
-        "maDeg": 0,
-        "periodD": 3.1542
-      }
-    },
-    {
-      "id": "barnards-star-c",
-      "name": "Barnard c",
-      "kind": "planet",
-      "systemId": "barnards-star",
-      "facts": {
-        "massKg": 2.0006870000000001e+24,
-        "radiusMeanKm": 4733.653,
-        "discoveryDate": "2025",
-        "discoveryNotes": "NEA composite: Barnard c"
-      },
-      "color": "#6B93D6",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Barnard's star (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — Barnard's star overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Barnard's%20star",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.e",
-              "orbit.wDeg",
-              "facts.massKg",
-              "facts.radiusMeanKm",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "aAu": 0.0274,
-        "e": 0.08,
-        "iDeg": 90,
-        "omDeg": 0,
-        "wDeg": 90.8,
-        "maDeg": 0,
-        "periodD": 4.1244
-      }
-    },
-    {
-      "id": "barnards-star-e",
-      "name": "Barnard e",
-      "kind": "planet",
-      "systemId": "barnards-star",
-      "facts": {
-        "massKg": 1.1526346e+24,
-        "radiusMeanKm": 4058.327,
-        "discoveryDate": "2025",
-        "discoveryNotes": "NEA composite: Barnard e"
-      },
-      "color": "#C1440E",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Barnard's star (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — Barnard's star overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Barnard's%20star",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.e",
-              "orbit.wDeg",
-              "facts.massKg",
-              "facts.radiusMeanKm",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "aAu": 0.0381,
-        "e": 0.04,
-        "iDeg": 90,
-        "omDeg": 0,
-        "wDeg": -27.5,
-        "maDeg": 0,
-        "periodD": 6.7392
       }
     }
   ]

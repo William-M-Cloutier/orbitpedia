@@ -73,6 +73,16 @@ const R_SUN_KM = 695_700;
 const M_EARTH_KG = 5.9722e24;
 const R_EARTH_KM = 6_371.0;
 
+/** hasGas filter (honest archive thresholds — either is enough). */
+const GAS_MASS_MEARTH = 50; // ≳ Neptune/Saturn class by mass
+const GAS_RADIUS_REARTH = 4; // inflated / giant by radius
+
+function planetLooksGas(mEarth, rEarth) {
+  if (mEarth != null && mEarth >= GAS_MASS_MEARTH) return true;
+  if (rEarth != null && rEarth >= GAS_RADIUS_REARTH) return true;
+  return false;
+}
+
 const COLUMNS = [
   "hostname",
   "pl_name",
@@ -308,6 +318,7 @@ function buildSystem(hostname, planetRows, fetchedAt) {
   const planets = [];
   const memberIds = [starId];
   let pi = 0;
+  let hasGas = false;
   for (const row of planetRows) {
     const aAu = num(row.pl_orbsmax);
     if (aAu == null || aAu <= 0) continue;
@@ -446,6 +457,7 @@ function buildSystem(hostname, planetRows, fetchedAt) {
     planetCount: syPnum ?? planets.length,
     distanceLy,
     hostSpectralType,
+    hasGas,
     meta: {
       confidence: "known",
       fetchedAt,
@@ -474,6 +486,7 @@ function buildSystem(hostname, planetRows, fetchedAt) {
       planetCount: syPnum ?? planets.length,
       distanceLy,
       hostSpectralType,
+      hasGas,
       overviewUrl: ov,
     }),
   };

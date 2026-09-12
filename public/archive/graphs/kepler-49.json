@@ -1,0 +1,158 @@
+{
+  "system": {
+    "id": "kepler-49",
+    "name": "Kepler-49",
+    "home": false,
+    "memberIds": [
+      "kepler-49",
+      "kepler-49-b",
+      "kepler-49-e"
+    ],
+    "blurb": "Kepler-49 — NASA Exoplanet Archive planetary system (2 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 4,
+    "distanceLy": 1015.1,
+    "hostSpectralType": "M1 V",
+    "hasGas": false,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T07:30:33.227Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — Kepler-49 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-49",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy",
+            "hostSpectralType"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "kepler-49",
+      "name": "Kepler-49",
+      "kind": "star",
+      "systemId": "kepler-49",
+      "facts": {
+        "massKg": 1.2070012899999999e+30,
+        "radiusMeanKm": 429942.6,
+        "discoveryNotes": "Archive host (2 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2012"
+      },
+      "color": "#FF8C42",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-49 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-49",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "kepler-49-b",
+      "name": "Kepler-49 b",
+      "kind": "planet",
+      "systemId": "kepler-49",
+      "facts": {
+        "massKg": 5.8348394e+25,
+        "radiusMeanKm": 16430.809,
+        "discoveryDate": "2012",
+        "discoveryNotes": "NEA composite: Kepler-49 b"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-49 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-49 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-49",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455003.286726,
+        "aAu": 0.05929,
+        "e": 0,
+        "iDeg": 89.9,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 7.2
+      }
+    },
+    {
+      "id": "kepler-49-e",
+      "name": "Kepler-49 e",
+      "kind": "planet",
+      "systemId": "kepler-49",
+      "facts": {
+        "massKg": 6.20003943e+24,
+        "radiusMeanKm": 9938.76,
+        "discoveryDate": "2012",
+        "discoveryNotes": "NEA composite: Kepler-49 e"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-49 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-49 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-49",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454974.26415,
+        "aAu": 0.116,
+        "e": 0,
+        "iDeg": 89.99,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 18.596108
+      }
+    }
+  ]
+}

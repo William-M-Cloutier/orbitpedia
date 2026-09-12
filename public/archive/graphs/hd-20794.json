@@ -5,18 +5,16 @@
     "home": false,
     "memberIds": [
       "hd-20794",
-      "hd-20794-b",
-      "hd-20794-d",
-      "hd-20794-e",
       "hd-20794-f"
     ],
-    "blurb": "HD 20794 — NASA Exoplanet Archive planetary system (4 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "HD 20794 — NASA Exoplanet Archive planetary system (1 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
     "planetCount": 4,
     "distanceLy": 19.6,
     "hostSpectralType": "G6 V",
+    "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "fetchedAt": "2026-09-12T07:30:33.227Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — HD 20794 overview",
@@ -40,8 +38,8 @@
       "facts": {
         "massKg": 1.5708913000000002e+30,
         "radiusMeanKm": 647001,
-        "discoveryNotes": "Archive host (4 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
-        "discoveryDate": "2011"
+        "discoveryNotes": "Archive host (1 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2025"
       },
       "color": "#FDB813",
       "meta": {
@@ -58,147 +56,9 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "known",
         "unitsVersion": 1
-      }
-    },
-    {
-      "id": "hd-20794-b",
-      "name": "HD 20794 b",
-      "kind": "planet",
-      "systemId": "hd-20794",
-      "facts": {
-        "massKg": 1.6124940000000002e+25,
-        "radiusMeanKm": 9237.949999999999,
-        "discoveryDate": "2011",
-        "discoveryNotes": "NEA composite: HD 20794 b"
-      },
-      "color": "#C45C26",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 20794 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — HD 20794 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2020794",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.e",
-              "orbit.iDeg",
-              "orbit.wDeg",
-              "orbit.epochJd",
-              "facts.massKg",
-              "facts.radiusMeanKm",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "epochJd": 2460383.26,
-        "aAu": 0.1257,
-        "e": 0.064,
-        "iDeg": 90,
-        "omDeg": 0,
-        "wDeg": 25,
-        "maDeg": 0,
-        "periodD": 18.314
-      }
-    },
-    {
-      "id": "hd-20794-d",
-      "name": "HD 20794 d",
-      "kind": "planet",
-      "systemId": "hd-20794",
-      "facts": {
-        "massKg": 2.866656e+25,
-        "radiusMeanKm": 12996.84,
-        "discoveryDate": "2011",
-        "discoveryNotes": "NEA composite: HD 20794 d"
-      },
-      "color": "#D4A574",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 20794 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — HD 20794 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2020794",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.e",
-              "orbit.iDeg",
-              "orbit.wDeg",
-              "orbit.epochJd",
-              "facts.massKg",
-              "facts.radiusMeanKm",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "epochJd": 2460356.2,
-        "aAu": 0.3625,
-        "e": 0.077,
-        "iDeg": 90,
-        "omDeg": 0,
-        "wDeg": 54,
-        "maDeg": 0,
-        "periodD": 89.68
-      }
-    },
-    {
-      "id": "hd-20794-e",
-      "name": "HD 20794 e",
-      "kind": "planet",
-      "systemId": "hd-20794",
-      "facts": {
-        "massKg": 2.8487393999999997e+25,
-        "radiusMeanKm": 12933.13,
-        "discoveryDate": "2011",
-        "discoveryNotes": "NEA composite: HD 20794 e"
-      },
-      "color": "#6B93D6",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 20794 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — HD 20794 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2020794",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.e",
-              "orbit.wDeg",
-              "facts.massKg",
-              "facts.radiusMeanKm",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "aAu": 0.509,
-        "e": 0.29,
-        "iDeg": 90,
-        "omDeg": 0,
-        "wDeg": 268.14,
-        "maDeg": 0,
-        "periodD": 147.02
       }
     },
     {
@@ -209,10 +69,10 @@
       "facts": {
         "massKg": 3.4758204000000005e+25,
         "radiusMeanKm": 14525.88,
-        "discoveryDate": "2011",
+        "discoveryDate": "2025",
         "discoveryNotes": "NEA composite: HD 20794 f"
       },
-      "color": "#C1440E",
+      "color": "#C45C26",
       "meta": {
         "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 20794 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg, wDeg).",
         "sources": [
@@ -230,7 +90,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

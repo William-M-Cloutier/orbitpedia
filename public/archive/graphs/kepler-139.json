@@ -7,15 +7,15 @@
       "kepler-139",
       "kepler-139-d",
       "kepler-139-b",
-      "kepler-139-c",
-      "kepler-139-e"
+      "kepler-139-c"
     ],
-    "blurb": "Kepler-139 — NASA Exoplanet Archive planetary system (4 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "Kepler-139 — NASA Exoplanet Archive planetary system (3 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
     "planetCount": 5,
     "distanceLy": 1275.4,
+    "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "fetchedAt": "2026-09-12T07:30:33.227Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-139 overview",
@@ -38,7 +38,7 @@
       "facts": {
         "massKg": 2.14357066e+30,
         "radiusMeanKm": 727006.5,
-        "discoveryNotes": "Archive host (4 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryNotes": "Archive host (3 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2023"
       },
       "color": "#FDB813",
@@ -56,7 +56,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -91,7 +91,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -137,7 +137,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -183,7 +183,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -197,49 +197,6 @@
         "wDeg": 0,
         "maDeg": 0,
         "periodD": 157.072878
-      }
-    },
-    {
-      "id": "kepler-139-e",
-      "name": "Kepler-139 e",
-      "kind": "planet",
-      "systemId": "kepler-139",
-      "facts": {
-        "massKg": 2.2574916000000002e+27,
-        "radiusMeanKm": 87282.7,
-        "discoveryDate": "2023",
-        "discoveryNotes": "NEA composite: Kepler-139 e"
-      },
-      "color": "#C1440E",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-139 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg, wDeg).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — Kepler-139 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-139",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.e",
-              "facts.massKg",
-              "facts.radiusMeanKm",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "aAu": 3.23579639,
-        "e": 0.013121,
-        "iDeg": 90,
-        "omDeg": 0,
-        "wDeg": 0,
-        "maDeg": 0,
-        "periodD": 2047.635373
       }
     }
   ]

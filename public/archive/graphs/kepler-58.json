@@ -1,0 +1,156 @@
+{
+  "system": {
+    "id": "kepler-58",
+    "name": "Kepler-58",
+    "home": false,
+    "memberIds": [
+      "kepler-58",
+      "kepler-58-b",
+      "kepler-58-d"
+    ],
+    "blurb": "Kepler-58 — NASA Exoplanet Archive planetary system (2 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 4,
+    "distanceLy": 3161.3,
+    "hasGas": false,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T07:30:33.227Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — Kepler-58 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-58",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "kepler-58",
+      "name": "Kepler-58",
+      "kind": "star",
+      "systemId": "kepler-58",
+      "facts": {
+        "massKg": 1.8890465e+30,
+        "radiusMeanKm": 716571,
+        "discoveryNotes": "Archive host (2 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2012"
+      },
+      "color": "#FDB813",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-58 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-58",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "kepler-58-b",
+      "name": "Kepler-58 b",
+      "kind": "planet",
+      "systemId": "kepler-58",
+      "facts": {
+        "massKg": 2.1201310000000002e+26,
+        "radiusMeanKm": 17711.379999999997,
+        "discoveryDate": "2012",
+        "discoveryNotes": "NEA composite: Kepler-58 b"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-58 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-58 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-58",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454969.87048,
+        "aAu": 0.09291,
+        "e": 0.04,
+        "iDeg": 88.76,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 10.2184954
+      }
+    },
+    {
+      "id": "kepler-58-d",
+      "name": "Kepler-58 d",
+      "kind": "planet",
+      "systemId": "kepler-58",
+      "facts": {
+        "massKg": 1.4652374646e+27,
+        "radiusMeanKm": 18730.739999999998,
+        "discoveryDate": "2012",
+        "discoveryNotes": "NEA composite: Kepler-58 d"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-58 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-58 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-58",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454965.71799,
+        "aAu": 0.236,
+        "e": 0,
+        "iDeg": 88.44,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 40.101371
+      }
+    }
+  ]
+}

@@ -1,0 +1,250 @@
+{
+  "system": {
+    "id": "kepler-37",
+    "name": "Kepler-37",
+    "home": false,
+    "memberIds": [
+      "kepler-37",
+      "kepler-37-b",
+      "kepler-37-c",
+      "kepler-37-d",
+      "kepler-37-e"
+    ],
+    "blurb": "Kepler-37 — NASA Exoplanet Archive planetary system (4 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 4,
+    "distanceLy": 208.5,
+    "hasGas": false,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T07:30:33.227Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — Kepler-37 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-37",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "kepler-37",
+      "name": "Kepler-37",
+      "kind": "star",
+      "systemId": "kepler-37",
+      "facts": {
+        "massKg": 1.5708913000000002e+30,
+        "radiusMeanKm": 548907.3,
+        "discoveryNotes": "Archive host (4 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2013"
+      },
+      "color": "#FDB813",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-37 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-37",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "kepler-37-b",
+      "name": "Kepler-37 b",
+      "kind": "planet",
+      "systemId": "kepler-37",
+      "facts": {
+        "massKg": 4.7180380000000005e+24,
+        "radiusMeanKm": 1973.7358000000002,
+        "discoveryDate": "2013",
+        "discoveryNotes": "NEA composite: Kepler-37 b"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-37 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-37 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-37",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455017.0473,
+        "aAu": 0.1019,
+        "e": 0.098,
+        "iDeg": 88.63,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 13.36702
+      }
+    },
+    {
+      "id": "kepler-37-c",
+      "name": "Kepler-37 c",
+      "kind": "planet",
+      "systemId": "kepler-37",
+      "facts": {
+        "massKg": 7.763860000000001e+24,
+        "radiusMeanKm": 4810.1050000000005,
+        "discoveryDate": "2013",
+        "discoveryNotes": "NEA composite: Kepler-37 c"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-37 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-37 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-37",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455024.83997,
+        "aAu": 0.139,
+        "e": 0.099,
+        "iDeg": 89.07,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 21.301848
+      }
+    },
+    {
+      "id": "kepler-37-d",
+      "name": "Kepler-37 d",
+      "kind": "planet",
+      "systemId": "kepler-37",
+      "facts": {
+        "massKg": 1.19444e+25,
+        "radiusMeanKm": 12933.13,
+        "discoveryDate": "2013",
+        "discoveryNotes": "NEA composite: Kepler-37 d"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-37 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-37 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-37",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455008.24982,
+        "aAu": 0.2109,
+        "e": 0.1,
+        "iDeg": 89.335,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 39.7922622
+      }
+    },
+    {
+      "id": "kepler-37-e",
+      "name": "Kepler-37 e",
+      "kind": "planet",
+      "systemId": "kepler-37",
+      "facts": {
+        "massKg": 4.837482e+25,
+        "radiusMeanKm": 2357.27,
+        "discoveryDate": "2013",
+        "discoveryNotes": "NEA composite: Kepler-37 e"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-37 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-37 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-37",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455028.73,
+        "aAu": 0.25,
+        "e": 0,
+        "iDeg": 89.95,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 51.196
+      }
+    }
+  ]
+}

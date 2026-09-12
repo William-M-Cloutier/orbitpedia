@@ -5,18 +5,15 @@
     "home": false,
     "memberIds": [
       "kepler-154",
-      "kepler-154-e",
-      "kepler-154-f",
-      "kepler-154-d",
-      "kepler-154-b",
-      "kepler-154-c"
+      "kepler-154-b"
     ],
-    "blurb": "Kepler-154 — NASA Exoplanet Archive planetary system (5 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "Kepler-154 — NASA Exoplanet Archive planetary system (1 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
     "planetCount": 5,
     "distanceLy": 2985,
+    "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "fetchedAt": "2026-09-12T07:30:33.227Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-154 overview",
@@ -37,10 +34,10 @@
       "kind": "star",
       "systemId": "kepler-154",
       "facts": {
-        "massKg": 1.9487006e+30,
-        "radiusMeanKm": 681786,
-        "discoveryNotes": "Archive host (5 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
-        "discoveryDate": "2016"
+        "massKg": 1.85524251e+30,
+        "radiusMeanKm": 696395.7,
+        "discoveryNotes": "Archive host (1 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2014"
       },
       "color": "#FDB813",
       "meta": {
@@ -57,21 +54,21 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "known",
         "unitsVersion": 1
       }
     },
     {
-      "id": "kepler-154-e",
-      "name": "Kepler-154 e",
+      "id": "kepler-154-b",
+      "name": "Kepler-154 b",
       "kind": "planet",
       "systemId": "kepler-154",
       "facts": {
-        "massKg": 1.7080492e+25,
-        "radiusMeanKm": 9556.5,
-        "discoveryDate": "2016",
-        "discoveryNotes": "NEA composite: Kepler-154 e"
+        "massKg": 3.4220706000000003e+25,
+        "radiusMeanKm": 14398.46,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-154 b"
       },
       "color": "#C45C26",
       "meta": {
@@ -92,145 +89,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "epochJd": 2454967.65123,
-        "aAu": 0.04766,
-        "e": 0,
-        "iDeg": 87.81,
-        "omDeg": 0,
-        "wDeg": 0,
-        "maDeg": 0,
-        "periodD": 3.93276465
-      }
-    },
-    {
-      "id": "kepler-154-f",
-      "name": "Kepler-154 f",
-      "kind": "planet",
-      "systemId": "kepler-154",
-      "facts": {
-        "massKg": 1.7080492e+25,
-        "radiusMeanKm": 9556.5,
-        "discoveryDate": "2016",
-        "discoveryNotes": "NEA composite: Kepler-154 f"
-      },
-      "color": "#D4A574",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-154 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — Kepler-154 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-154",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.e",
-              "orbit.iDeg",
-              "orbit.epochJd",
-              "facts.massKg",
-              "facts.radiusMeanKm",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "epochJd": 2454969.87656,
-        "aAu": 0.08832,
-        "e": 0,
-        "iDeg": 89.47,
-        "omDeg": 0,
-        "wDeg": 0,
-        "maDeg": 0,
-        "periodD": 9.91935684
-      }
-    },
-    {
-      "id": "kepler-154-d",
-      "name": "Kepler-154 d",
-      "kind": "planet",
-      "systemId": "kepler-154",
-      "facts": {
-        "massKg": 8.420802e+25,
-        "radiusMeanKm": 24464.64,
-        "discoveryDate": "2016",
-        "discoveryNotes": "NEA composite: Kepler-154 d"
-      },
-      "color": "#6B93D6",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-154 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — Kepler-154 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-154",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.e",
-              "orbit.iDeg",
-              "orbit.epochJd",
-              "facts.massKg",
-              "facts.radiusMeanKm",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "epochJd": 2455011.94612,
-        "aAu": 0.14354,
-        "e": 0,
-        "iDeg": 88.38,
-        "omDeg": 0,
-        "wDeg": 0,
-        "maDeg": 0,
-        "periodD": 20.54981883
-      }
-    },
-    {
-      "id": "kepler-154-b",
-      "name": "Kepler-154 b",
-      "kind": "planet",
-      "systemId": "kepler-154",
-      "facts": {
-        "massKg": 3.4220706000000003e+25,
-        "radiusMeanKm": 14398.46,
-        "discoveryDate": "2016",
-        "discoveryNotes": "NEA composite: Kepler-154 b"
-      },
-      "color": "#C1440E",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-154 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — Kepler-154 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-154",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.e",
-              "orbit.iDeg",
-              "orbit.epochJd",
-              "facts.massKg",
-              "facts.radiusMeanKm",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -244,52 +103,6 @@
         "wDeg": 0,
         "maDeg": 0,
         "periodD": 33.040532
-      }
-    },
-    {
-      "id": "kepler-154-c",
-      "name": "Kepler-154 c",
-      "kind": "planet",
-      "systemId": "kepler-154",
-      "facts": {
-        "massKg": 5.3809522e+25,
-        "radiusMeanKm": 18794.45,
-        "discoveryDate": "2016",
-        "discoveryNotes": "NEA composite: Kepler-154 c"
-      },
-      "color": "#C88B3A",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-154 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — Kepler-154 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-154",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.e",
-              "orbit.iDeg",
-              "orbit.epochJd",
-              "facts.massKg",
-              "facts.radiusMeanKm",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "epochJd": 2455012.09423,
-        "aAu": 0.303,
-        "e": 0,
-        "iDeg": 89.13,
-        "omDeg": 0,
-        "wDeg": 0,
-        "maDeg": 0,
-        "periodD": 62.303276
       }
     }
   ]

@@ -6,17 +6,16 @@
     "memberIds": [
       "gj-676-comp-a",
       "gj-676-comp-a-d",
-      "gj-676-comp-a-e",
-      "gj-676-comp-a-b",
-      "gj-676-comp-a-c"
+      "gj-676-comp-a-e"
     ],
-    "blurb": "GJ 676 A — NASA Exoplanet Archive planetary system (4 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "GJ 676 A — NASA Exoplanet Archive planetary system (2 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
     "planetCount": 4,
     "distanceLy": 52.3,
     "hostSpectralType": "M0",
+    "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "fetchedAt": "2026-09-12T07:30:33.227Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — GJ 676 A overview",
@@ -40,7 +39,7 @@
       "facts": {
         "massKg": 1.24478222e+30,
         "radiusMeanKm": 480032.99999999994,
-        "discoveryNotes": "Archive host (4 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryNotes": "Archive host (2 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2012"
       },
       "color": "#FF8C42",
@@ -58,7 +57,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -92,7 +91,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -136,7 +135,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -149,96 +148,6 @@
         "wDeg": 117.523,
         "maDeg": 0,
         "periodD": 35.47358
-      }
-    },
-    {
-      "id": "gj-676-comp-a-b",
-      "name": "GJ 676 A b",
-      "kind": "planet",
-      "systemId": "gj-676-comp-a",
-      "facts": {
-        "massKg": 1.0993996832733148e+28,
-        "radiusMeanKm": 81548.8,
-        "discoveryDate": "2012",
-        "discoveryNotes": "NEA composite: GJ 676 A b"
-      },
-      "color": "#6B93D6",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host GJ 676 A (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — GJ 676 A overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20676%20A",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.e",
-              "orbit.iDeg",
-              "orbit.wDeg",
-              "facts.massKg",
-              "facts.radiusMeanKm",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "aAu": 1.735,
-        "e": 0.319,
-        "iDeg": 48.919,
-        "omDeg": 0,
-        "wDeg": 87.073,
-        "maDeg": 0,
-        "periodD": 1051.44521
-      }
-    },
-    {
-      "id": "gj-676-comp-a-c",
-      "name": "GJ 676 A c",
-      "kind": "planet",
-      "systemId": "gj-676-comp-a",
-      "facts": {
-        "massKg": 2.560963488733073e+28,
-        "radiusMeanKm": 78363.3,
-        "discoveryDate": "2012",
-        "discoveryNotes": "NEA composite: GJ 676 A c"
-      },
-      "color": "#C1440E",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host GJ 676 A (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — GJ 676 A overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20676%20A",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.e",
-              "orbit.iDeg",
-              "orbit.wDeg",
-              "facts.massKg",
-              "facts.radiusMeanKm",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "aAu": 9.726,
-        "e": 0.295,
-        "iDeg": 33.69,
-        "omDeg": 0,
-        "wDeg": 263.949,
-        "maDeg": 0,
-        "periodD": 13921.42302
       }
     }
   ]

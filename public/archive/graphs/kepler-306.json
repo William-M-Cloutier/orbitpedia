@@ -7,15 +7,15 @@
       "kepler-306",
       "kepler-306-b",
       "kepler-306-c",
-      "kepler-306-d",
       "kepler-306-e"
     ],
-    "blurb": "Kepler-306 — NASA Exoplanet Archive planetary system (4 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "Kepler-306 — NASA Exoplanet Archive planetary system (3 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
     "planetCount": 4,
     "distanceLy": 2529.9,
+    "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "fetchedAt": "2026-09-12T07:30:33.227Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-306 overview",
@@ -38,7 +38,7 @@
       "facts": {
         "massKg": 1.4913525e+30,
         "radiusMeanKm": 500208.3,
-        "discoveryNotes": "Archive host (4 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryNotes": "Archive host (3 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2014"
       },
       "color": "#FF8C42",
@@ -56,7 +56,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -91,7 +91,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -137,7 +137,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -154,15 +154,15 @@
       }
     },
     {
-      "id": "kepler-306-d",
-      "name": "Kepler-306 d",
+      "id": "kepler-306-e",
+      "name": "Kepler-306 e",
       "kind": "planet",
       "systemId": "kepler-306",
       "facts": {
-        "massKg": 3.9774852e+25,
-        "radiusMeanKm": 15736.37,
+        "massKg": 3.4459594e+25,
+        "radiusMeanKm": 14462.17,
         "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-306 d"
+        "discoveryNotes": "NEA composite: Kepler-306 e"
       },
       "color": "#6B93D6",
       "meta": {
@@ -183,53 +183,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "epochJd": 2455193.50885,
-        "aAu": 0.12,
-        "e": 0,
-        "iDeg": 88,
-        "omDeg": 0,
-        "wDeg": 0,
-        "maDeg": 0,
-        "periodD": 17.326644
-      }
-    },
-    {
-      "id": "kepler-306-e",
-      "name": "Kepler-306 e",
-      "kind": "planet",
-      "systemId": "kepler-306",
-      "facts": {
-        "massKg": 3.4459594e+25,
-        "radiusMeanKm": 14462.17,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-306 e"
-      },
-      "color": "#C1440E",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-306 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — Kepler-306 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-306",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.e",
-              "orbit.iDeg",
-              "orbit.epochJd",
-              "facts.massKg",
-              "facts.radiusMeanKm",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

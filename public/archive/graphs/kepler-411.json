@@ -1,0 +1,254 @@
+{
+  "system": {
+    "id": "kepler-411",
+    "name": "Kepler-411",
+    "home": false,
+    "memberIds": [
+      "kepler-411",
+      "kepler-411-b",
+      "kepler-411-c",
+      "kepler-411-e",
+      "kepler-411-d"
+    ],
+    "blurb": "Kepler-411 — NASA Exoplanet Archive planetary system (4 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 4,
+    "distanceLy": 501.2,
+    "hostSpectralType": "K2 V",
+    "hasGas": false,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T07:30:33.227Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — Kepler-411 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-411",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy",
+            "hostSpectralType"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "kepler-411",
+      "name": "Kepler-411",
+      "kind": "star",
+      "systemId": "kepler-411",
+      "facts": {
+        "massKg": 1.7299689e+30,
+        "radiusMeanKm": 570474,
+        "discoveryNotes": "Archive host (4 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2013"
+      },
+      "color": "#FF8C42",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-411 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-411",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "kepler-411-b",
+      "name": "Kepler-411 b",
+      "kind": "planet",
+      "systemId": "kepler-411",
+      "facts": {
+        "massKg": 1.5288832000000001e+26,
+        "radiusMeanKm": 15296.770999999999,
+        "discoveryDate": "2013",
+        "discoveryNotes": "NEA composite: Kepler-411 b"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-411 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-411 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-411",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455135.3874,
+        "aAu": 0.0375,
+        "e": 0.146,
+        "iDeg": 87.4,
+        "omDeg": 0,
+        "wDeg": 41.5,
+        "maDeg": 0,
+        "periodD": 3.005156
+      }
+    },
+    {
+      "id": "kepler-411-c",
+      "name": "Kepler-411 c",
+      "kind": "planet",
+      "systemId": "kepler-411",
+      "facts": {
+        "massKg": 1.5766608e+26,
+        "radiusMeanKm": 28166.191000000003,
+        "discoveryDate": "2013",
+        "discoveryNotes": "NEA composite: Kepler-411 c"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-411 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-411 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-411",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454968.2224,
+        "aAu": 0.0739,
+        "e": 0.108,
+        "iDeg": 88.61,
+        "omDeg": 0,
+        "wDeg": 103,
+        "maDeg": 0,
+        "periodD": 7.834435
+      }
+    },
+    {
+      "id": "kepler-411-e",
+      "name": "Kepler-411 e",
+      "kind": "planet",
+      "systemId": "kepler-411",
+      "facts": {
+        "massKg": 6.449976000000001e+25,
+        "radiusMeanKm": 20896.879999999997,
+        "discoveryDate": "2013",
+        "discoveryNotes": "NEA composite: Kepler-411 e"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-411 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-411 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-411",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.186,
+        "e": 0.016,
+        "iDeg": 88.04,
+        "omDeg": 0,
+        "wDeg": -103.3,
+        "maDeg": 0,
+        "periodD": 31.509728
+      }
+    },
+    {
+      "id": "kepler-411-d",
+      "name": "Kepler-411 d",
+      "kind": "planet",
+      "systemId": "kepler-411",
+      "facts": {
+        "massKg": 9.077744e+25,
+        "radiusMeanKm": 21145.349,
+        "discoveryDate": "2013",
+        "discoveryNotes": "NEA composite: Kepler-411 d"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-411 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-411 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-411",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454984.8484,
+        "aAu": 0.279,
+        "e": 0.128,
+        "iDeg": 89.43,
+        "omDeg": 0,
+        "wDeg": 30.5,
+        "maDeg": 0,
+        "periodD": 58.02035
+      }
+    }
+  ]
+}

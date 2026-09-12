@@ -1,0 +1,203 @@
+{
+  "system": {
+    "id": "kepler-65",
+    "name": "Kepler-65",
+    "home": false,
+    "memberIds": [
+      "kepler-65",
+      "kepler-65-b",
+      "kepler-65-c",
+      "kepler-65-d"
+    ],
+    "blurb": "Kepler-65 — NASA Exoplanet Archive planetary system (3 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 4,
+    "distanceLy": 990.6,
+    "hasGas": false,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T07:30:33.227Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — Kepler-65 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-65",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "kepler-65",
+      "name": "Kepler-65",
+      "kind": "star",
+      "systemId": "kepler-65",
+      "facts": {
+        "massKg": 2.4855875e+30,
+        "radiusMeanKm": 980937,
+        "discoveryNotes": "Archive host (3 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2012"
+      },
+      "color": "#F8F7FF",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-65 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-65",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "kepler-65-b",
+      "name": "Kepler-65 b",
+      "kind": "planet",
+      "systemId": "kepler-65",
+      "facts": {
+        "massKg": 1.433328e+25,
+        "radiusMeanKm": 9046.82,
+        "discoveryDate": "2012",
+        "discoveryNotes": "NEA composite: Kepler-65 b"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-65 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-65 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-65",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454966.499,
+        "aAu": 0.035,
+        "e": 0.028,
+        "iDeg": 92.2,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 2.15491
+      }
+    },
+    {
+      "id": "kepler-65-c",
+      "name": "Kepler-65 c",
+      "kind": "planet",
+      "systemId": "kepler-65",
+      "facts": {
+        "massKg": 3.2249880000000004e+25,
+        "radiusMeanKm": 16437.18,
+        "discoveryDate": "2012",
+        "discoveryNotes": "NEA composite: Kepler-65 c"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-65 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-65 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-65",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454965.0391,
+        "aAu": 0.068,
+        "e": 0.02,
+        "iDeg": 92.33,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 5.859944
+      }
+    },
+    {
+      "id": "kepler-65-d",
+      "name": "Kepler-65 d",
+      "kind": "planet",
+      "systemId": "kepler-65",
+      "facts": {
+        "massKg": 2.4724908e+25,
+        "radiusMeanKm": 9683.92,
+        "discoveryDate": "2012",
+        "discoveryNotes": "NEA composite: Kepler-65 d"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-65 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-65 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-65",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454970.9905,
+        "aAu": 0.084,
+        "e": 0.014,
+        "iDeg": 92.35,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 8.13123
+      }
+    }
+  ]
+}

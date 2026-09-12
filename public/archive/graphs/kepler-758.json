@@ -1,0 +1,109 @@
+{
+  "system": {
+    "id": "kepler-758",
+    "name": "Kepler-758",
+    "home": false,
+    "memberIds": [
+      "kepler-758",
+      "kepler-758-d"
+    ],
+    "blurb": "Kepler-758 — NASA Exoplanet Archive planetary system (1 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 4,
+    "distanceLy": 4899.9,
+    "hasGas": false,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T07:30:33.227Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — Kepler-758 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-758",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "kepler-758",
+      "name": "Kepler-758",
+      "kind": "star",
+      "systemId": "kepler-758",
+      "facts": {
+        "massKg": 2.3066252e+30,
+        "radiusMeanKm": 987894,
+        "discoveryNotes": "Archive host (1 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2016"
+      },
+      "color": "#F8F7FF",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-758 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-758",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "kepler-758-d",
+      "name": "Kepler-758 d",
+      "kind": "planet",
+      "systemId": "kepler-758",
+      "facts": {
+        "massKg": 3.0697107999999997e+25,
+        "radiusMeanKm": 13506.52,
+        "discoveryDate": "2016",
+        "discoveryNotes": "NEA composite: Kepler-758 d"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-758 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-758 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-758",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454980.4533,
+        "aAu": 0.1527,
+        "e": 0,
+        "iDeg": 80.73,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 20.4966197
+      }
+    }
+  ]
+}

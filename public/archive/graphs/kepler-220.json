@@ -5,17 +5,15 @@
     "home": false,
     "memberIds": [
       "kepler-220",
-      "kepler-220-b",
-      "kepler-220-c",
-      "kepler-220-d",
       "kepler-220-e"
     ],
-    "blurb": "Kepler-220 — NASA Exoplanet Archive planetary system (4 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "Kepler-220 — NASA Exoplanet Archive planetary system (1 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
     "planetCount": 4,
     "distanceLy": 558.1,
+    "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "fetchedAt": "2026-09-12T07:30:33.227Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-220 overview",
@@ -38,7 +36,7 @@
       "facts": {
         "massKg": 1.44959463e+30,
         "radiusMeanKm": 463336.2,
-        "discoveryNotes": "Archive host (4 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryNotes": "Archive host (1 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2014"
       },
       "color": "#FF8C42",
@@ -56,21 +54,21 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "known",
         "unitsVersion": 1
       }
     },
     {
-      "id": "kepler-220-b",
-      "name": "Kepler-220 b",
+      "id": "kepler-220-e",
+      "name": "Kepler-220 e",
       "kind": "planet",
       "systemId": "kepler-220",
       "facts": {
-        "massKg": 2.7292954e+24,
-        "radiusMeanKm": 5160.51,
+        "massKg": 1.3915226000000001e+25,
+        "radiusMeanKm": 8473.43,
         "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-220 b"
+        "discoveryNotes": "NEA composite: Kepler-220 e"
       },
       "color": "#C45C26",
       "meta": {
@@ -91,145 +89,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "epochJd": 2454966.78646,
-        "aAu": 0.046,
-        "e": 0,
-        "iDeg": 87.37,
-        "omDeg": 0,
-        "wDeg": 0,
-        "maDeg": 0,
-        "periodD": 4.159807
-      }
-    },
-    {
-      "id": "kepler-220-c",
-      "name": "Kepler-220 c",
-      "kind": "planet",
-      "systemId": "kepler-220",
-      "facts": {
-        "massKg": 1.8454098e+25,
-        "radiusMeanKm": 10002.470000000001,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-220 c"
-      },
-      "color": "#D4A574",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-220 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — Kepler-220 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-220",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.e",
-              "orbit.iDeg",
-              "orbit.epochJd",
-              "facts.massKg",
-              "facts.radiusMeanKm",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "epochJd": 2455004.01425,
-        "aAu": 0.076,
-        "e": 0,
-        "iDeg": 88.12,
-        "omDeg": 0,
-        "wDeg": 0,
-        "maDeg": 0,
-        "periodD": 9.034199
-      }
-    },
-    {
-      "id": "kepler-220-d",
-      "name": "Kepler-220 d",
-      "kind": "planet",
-      "systemId": "kepler-220",
-      "facts": {
-        "massKg": 5.3988688e+24,
-        "radiusMeanKm": 6243.58,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-220 d"
-      },
-      "color": "#6B93D6",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-220 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — Kepler-220 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-220",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.e",
-              "orbit.iDeg",
-              "orbit.epochJd",
-              "facts.massKg",
-              "facts.radiusMeanKm",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "epochJd": 2454979.91883,
-        "aAu": 0.163,
-        "e": 0,
-        "iDeg": 89.34,
-        "omDeg": 0,
-        "wDeg": 0,
-        "maDeg": 0,
-        "periodD": 28.122397
-      }
-    },
-    {
-      "id": "kepler-220-e",
-      "name": "Kepler-220 e",
-      "kind": "planet",
-      "systemId": "kepler-220",
-      "facts": {
-        "massKg": 1.3915226000000001e+25,
-        "radiusMeanKm": 8473.43,
-        "discoveryDate": "2014",
-        "discoveryNotes": "NEA composite: Kepler-220 e"
-      },
-      "color": "#C1440E",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-220 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — Kepler-220 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-220",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.e",
-              "orbit.iDeg",
-              "orbit.epochJd",
-              "facts.massKg",
-              "facts.radiusMeanKm",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

@@ -5,19 +5,17 @@
     "home": false,
     "memberIds": [
       "kepler-444",
-      "kepler-444-b",
       "kepler-444-c",
-      "kepler-444-d",
-      "kepler-444-e",
       "kepler-444-f"
     ],
-    "blurb": "Kepler-444 — NASA Exoplanet Archive planetary system (5 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "Kepler-444 — NASA Exoplanet Archive planetary system (2 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
     "planetCount": 5,
     "distanceLy": 118.8,
     "hostSpectralType": "K",
+    "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "fetchedAt": "2026-09-12T07:30:33.227Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-444 overview",
@@ -41,7 +39,7 @@
       "facts": {
         "massKg": 1.50726026e+30,
         "radiusMeanKm": 523166.4,
-        "discoveryNotes": "Archive host (5 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryNotes": "Archive host (2 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2015"
       },
       "color": "#FF8C42",
@@ -59,21 +57,21 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "known",
         "unitsVersion": 1
       }
     },
     {
-      "id": "kepler-444-b",
-      "name": "Kepler-444 b",
+      "id": "kepler-444-c",
+      "name": "Kepler-444 c",
       "kind": "planet",
       "systemId": "kepler-444",
       "facts": {
-        "massKg": 2.2336028e+23,
-        "radiusMeanKm": 2567.5130000000004,
+        "massKg": 4.7359546e+23,
+        "radiusMeanKm": 3166.387,
         "discoveryDate": "2015",
-        "discoveryNotes": "NEA composite: Kepler-444 b"
+        "discoveryNotes": "NEA composite: Kepler-444 c"
       },
       "color": "#C45C26",
       "meta": {
@@ -94,32 +92,32 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
       "orbit": {
         "frame": "heliocentric",
-        "epochJd": 2454966.2599,
-        "aAu": 0.04178,
-        "e": 0.16,
-        "iDeg": 88,
+        "epochJd": 2454964.522,
+        "aAu": 0.04881,
+        "e": 0.31,
+        "iDeg": 88.2,
         "omDeg": 0,
         "wDeg": 0,
         "maDeg": 0,
-        "periodD": 3.6001053
+        "periodD": 4.5458841
       }
     },
     {
-      "id": "kepler-444-c",
-      "name": "Kepler-444 c",
+      "id": "kepler-444-f",
+      "name": "Kepler-444 f",
       "kind": "planet",
       "systemId": "kepler-444",
       "facts": {
-        "massKg": 4.7359546e+23,
-        "radiusMeanKm": 3166.387,
+        "massKg": 1.9827704e+24,
+        "radiusMeanKm": 4720.911,
         "discoveryDate": "2015",
-        "discoveryNotes": "NEA composite: Kepler-444 c"
+        "discoveryNotes": "NEA composite: Kepler-444 f"
       },
       "color": "#D4A574",
       "meta": {
@@ -140,145 +138,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "epochJd": 2454964.522,
-        "aAu": 0.04881,
-        "e": 0.31,
-        "iDeg": 88.2,
-        "omDeg": 0,
-        "wDeg": 0,
-        "maDeg": 0,
-        "periodD": 4.5458841
-      }
-    },
-    {
-      "id": "kepler-444-d",
-      "name": "Kepler-444 d",
-      "kind": "planet",
-      "systemId": "kepler-444",
-      "facts": {
-        "massKg": 1.1944400000000001e+24,
-        "radiusMeanKm": 3376.63,
-        "discoveryDate": "2015",
-        "discoveryNotes": "NEA composite: Kepler-444 d"
-      },
-      "color": "#6B93D6",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-444 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — Kepler-444 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-444",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.e",
-              "orbit.iDeg",
-              "orbit.epochJd",
-              "facts.massKg",
-              "facts.radiusMeanKm",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "epochJd": 2454967.7869,
-        "aAu": 0.06,
-        "e": 0.18,
-        "iDeg": 88.16,
-        "omDeg": 0,
-        "wDeg": 0,
-        "maDeg": 0,
-        "periodD": 6.189392
-      }
-    },
-    {
-      "id": "kepler-444-e",
-      "name": "Kepler-444 e",
-      "kind": "planet",
-      "systemId": "kepler-444",
-      "facts": {
-        "massKg": 5.9722000000000005e+23,
-        "radiusMeanKm": 3478.5660000000003,
-        "discoveryDate": "2015",
-        "discoveryNotes": "NEA composite: Kepler-444 e"
-      },
-      "color": "#C1440E",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-444 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — Kepler-444 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-444",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.e",
-              "orbit.iDeg",
-              "orbit.epochJd",
-              "facts.massKg",
-              "facts.radiusMeanKm",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "epochJd": 2454968.0927,
-        "aAu": 0.0696,
-        "e": 0.1,
-        "iDeg": 89.13,
-        "omDeg": 0,
-        "wDeg": 0,
-        "maDeg": 0,
-        "periodD": 7.743493
-      }
-    },
-    {
-      "id": "kepler-444-f",
-      "name": "Kepler-444 f",
-      "kind": "planet",
-      "systemId": "kepler-444",
-      "facts": {
-        "massKg": 1.9827704e+24,
-        "radiusMeanKm": 4720.911,
-        "discoveryDate": "2015",
-        "discoveryNotes": "NEA composite: Kepler-444 f"
-      },
-      "color": "#C88B3A",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-444 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — Kepler-444 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-444",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.e",
-              "orbit.iDeg",
-              "orbit.epochJd",
-              "facts.massKg",
-              "facts.radiusMeanKm",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

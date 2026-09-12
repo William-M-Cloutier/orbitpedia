@@ -8,16 +8,16 @@
       "gj-667-comp-c-b",
       "gj-667-comp-c-c",
       "gj-667-comp-c-f",
-      "gj-667-comp-c-e",
-      "gj-667-comp-c-g"
+      "gj-667-comp-c-e"
     ],
-    "blurb": "GJ 667 C — NASA Exoplanet Archive planetary system (5 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "GJ 667 C — NASA Exoplanet Archive planetary system (4 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
     "planetCount": 5,
     "distanceLy": 23.6,
     "hostSpectralType": "M1.5 V",
+    "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "fetchedAt": "2026-09-12T07:30:33.227Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — GJ 667 C overview",
@@ -40,7 +40,7 @@
       "systemId": "gj-667-comp-c",
       "facts": {
         "massKg": 6.561951e+29,
-        "discoveryNotes": "Archive host (5 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryNotes": "Archive host (4 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2012"
       },
       "color": "#E84A3C",
@@ -57,7 +57,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -91,7 +91,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -135,7 +135,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -179,7 +179,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -223,7 +223,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -236,50 +236,6 @@
         "wDeg": 28.6,
         "maDeg": 0,
         "periodD": 62.24
-      }
-    },
-    {
-      "id": "gj-667-comp-c-g",
-      "name": "GJ 667 C g",
-      "kind": "planet",
-      "systemId": "gj-667-comp-c",
-      "facts": {
-        "massKg": 2.747212e+25,
-        "radiusMeanKm": 12678.289999999999,
-        "discoveryDate": "2012",
-        "discoveryNotes": "NEA composite: GJ 667 C g"
-      },
-      "color": "#C88B3A",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host GJ 667 C (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — GJ 667 C overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20667%20C",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.e",
-              "orbit.wDeg",
-              "facts.massKg",
-              "facts.radiusMeanKm",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "aAu": 0.549,
-        "e": 0.08,
-        "iDeg": 90,
-        "omDeg": 0,
-        "wDeg": 51.6,
-        "maDeg": 0,
-        "periodD": 256.2
       }
     }
   ]

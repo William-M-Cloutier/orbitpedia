@@ -6,16 +6,15 @@
     "memberIds": [
       "kepler-304",
       "kepler-304-e",
-      "kepler-304-b",
-      "kepler-304-c",
-      "kepler-304-d"
+      "kepler-304-c"
     ],
-    "blurb": "Kepler-304 — NASA Exoplanet Archive planetary system (4 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "Kepler-304 — NASA Exoplanet Archive planetary system (2 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
     "planetCount": 4,
     "distanceLy": 1417.7,
+    "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "fetchedAt": "2026-09-12T07:30:33.227Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-304 overview",
@@ -38,7 +37,7 @@
       "facts": {
         "massKg": 1.590776e+30,
         "radiusMeanKm": 507861,
-        "discoveryNotes": "Archive host (4 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryNotes": "Archive host (2 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2016"
       },
       "color": "#FF8C42",
@@ -56,7 +55,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -91,7 +90,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -108,15 +107,15 @@
       }
     },
     {
-      "id": "kepler-304-b",
-      "name": "Kepler-304 b",
+      "id": "kepler-304-c",
+      "name": "Kepler-304 c",
       "kind": "planet",
       "systemId": "kepler-304",
       "facts": {
-        "massKg": 5.106231000000001e+25,
-        "radiusMeanKm": 18221.059999999998,
+        "massKg": 3.195127e+25,
+        "radiusMeanKm": 13825.07,
         "discoveryDate": "2016",
-        "discoveryNotes": "NEA composite: Kepler-304 b"
+        "discoveryNotes": "NEA composite: Kepler-304 c"
       },
       "color": "#D4A574",
       "meta": {
@@ -137,53 +136,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "epochJd": 2454966.96482,
-        "aAu": 0.039,
-        "e": 0,
-        "iDeg": 88.89,
-        "omDeg": 0,
-        "wDeg": 0,
-        "maDeg": 0,
-        "periodD": 3.295709
-      }
-    },
-    {
-      "id": "kepler-304-c",
-      "name": "Kepler-304 c",
-      "kind": "planet",
-      "systemId": "kepler-304",
-      "facts": {
-        "massKg": 3.195127e+25,
-        "radiusMeanKm": 13825.07,
-        "discoveryDate": "2016",
-        "discoveryNotes": "NEA composite: Kepler-304 c"
-      },
-      "color": "#6B93D6",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-304 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — Kepler-304 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-304",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.e",
-              "orbit.iDeg",
-              "orbit.epochJd",
-              "facts.massKg",
-              "facts.radiusMeanKm",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -197,52 +150,6 @@
         "wDeg": 0,
         "maDeg": 0,
         "periodD": 5.315946
-      }
-    },
-    {
-      "id": "kepler-304-d",
-      "name": "Kepler-304 d",
-      "kind": "planet",
-      "systemId": "kepler-304",
-      "facts": {
-        "massKg": 4.77776e+25,
-        "radiusMeanKm": 17520.25,
-        "discoveryDate": "2016",
-        "discoveryNotes": "NEA composite: Kepler-304 d"
-      },
-      "color": "#C1440E",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-304 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — Kepler-304 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-304",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.e",
-              "orbit.iDeg",
-              "orbit.epochJd",
-              "facts.massKg",
-              "facts.radiusMeanKm",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "epochJd": 2454967.85589,
-        "aAu": 0.08,
-        "e": 0,
-        "iDeg": 89.67,
-        "omDeg": 0,
-        "wDeg": 0,
-        "maDeg": 0,
-        "periodD": 9.653471
       }
     }
   ]

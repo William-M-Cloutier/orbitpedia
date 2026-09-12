@@ -5,17 +5,15 @@
     "home": false,
     "memberIds": [
       "k2-187",
-      "k2-187-b",
-      "k2-187-c",
-      "k2-187-d",
-      "k2-187-e"
+      "k2-187-d"
     ],
-    "blurb": "K2-187 — NASA Exoplanet Archive planetary system (4 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "K2-187 — NASA Exoplanet Archive planetary system (1 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
     "planetCount": 4,
     "distanceLy": 1079.3,
+    "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "fetchedAt": "2026-09-12T07:30:33.227Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — K2-187 overview",
@@ -38,7 +36,7 @@
       "facts": {
         "massKg": 1.92284850153e+30,
         "radiusMeanKm": 577431,
-        "discoveryNotes": "Archive host (4 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryNotes": "Archive host (1 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2018"
       },
       "color": "#FDB813",
@@ -56,21 +54,21 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "known",
         "unitsVersion": 1
       }
     },
     {
-      "id": "k2-187-b",
-      "name": "K2-187 b",
+      "id": "k2-187-d",
+      "name": "K2-187 d",
       "kind": "planet",
       "systemId": "k2-187",
       "facts": {
-        "massKg": 1.1168014000000001e+25,
-        "radiusMeanKm": 7645.2,
+        "massKg": 3.792347e+25,
+        "radiusMeanKm": 15290.4,
         "discoveryDate": "2018",
-        "discoveryNotes": "NEA composite: K2-187 b"
+        "discoveryNotes": "NEA composite: K2-187 d"
       },
       "color": "#C45C26",
       "meta": {
@@ -90,97 +88,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "epochJd": 2457184.43637,
-        "aAu": 0.0164,
-        "e": 0,
-        "iDeg": 89.7,
-        "omDeg": 0,
-        "wDeg": 0,
-        "maDeg": 0,
-        "periodD": 0.77401
-      }
-    },
-    {
-      "id": "k2-187-c",
-      "name": "K2-187 c",
-      "kind": "planet",
-      "systemId": "k2-187",
-      "facts": {
-        "massKg": 1.5169388000000002e+25,
-        "radiusMeanKm": 8919.4,
-        "discoveryDate": "2018",
-        "discoveryNotes": "NEA composite: K2-187 c"
-      },
-      "color": "#D4A574",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host K2-187 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: e, wDeg).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — K2-187 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-187",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.iDeg",
-              "orbit.epochJd",
-              "facts.massKg",
-              "facts.radiusMeanKm",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "epochJd": 2457144.63842,
-        "aAu": 0.0392,
-        "e": 0,
-        "iDeg": 90.4,
-        "omDeg": 0,
-        "wDeg": 0,
-        "maDeg": 0,
-        "periodD": 2.871512
-      }
-    },
-    {
-      "id": "k2-187-d",
-      "name": "K2-187 d",
-      "kind": "planet",
-      "systemId": "k2-187",
-      "facts": {
-        "massKg": 3.792347e+25,
-        "radiusMeanKm": 15290.4,
-        "discoveryDate": "2018",
-        "discoveryNotes": "NEA composite: K2-187 d"
-      },
-      "color": "#6B93D6",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host K2-187 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: e, wDeg).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — K2-187 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-187",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.iDeg",
-              "orbit.epochJd",
-              "facts.massKg",
-              "facts.radiusMeanKm",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "fetchedAt": "2026-09-12T07:30:33.227Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -194,51 +102,6 @@
         "wDeg": 0,
         "maDeg": 0,
         "periodD": 7.149584
-      }
-    },
-    {
-      "id": "k2-187-e",
-      "name": "K2-187 e",
-      "kind": "planet",
-      "systemId": "k2-187",
-      "facts": {
-        "massKg": 2.5501293999999997e+25,
-        "radiusMeanKm": 12104.9,
-        "discoveryDate": "2018",
-        "discoveryNotes": "NEA composite: K2-187 e"
-      },
-      "color": "#C1440E",
-      "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host K2-187 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: e, wDeg).",
-        "sources": [
-          {
-            "name": "NASA Exoplanet Archive — K2-187 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-187",
-            "fields": [
-              "orbit.aAu",
-              "orbit.periodD",
-              "orbit.iDeg",
-              "orbit.epochJd",
-              "facts.massKg",
-              "facts.radiusMeanKm",
-              "facts.discoveryDate"
-            ]
-          }
-        ],
-        "fetchedAt": "2026-09-12T04:17:28.837Z",
-        "confidence": "assumed",
-        "unitsVersion": 1
-      },
-      "orbit": {
-        "frame": "heliocentric",
-        "epochJd": 2457155.08495,
-        "aAu": 0.1106,
-        "e": 0,
-        "iDeg": 90.1,
-        "omDeg": 0,
-        "wDeg": 0,
-        "maDeg": 0,
-        "periodD": 13.606629
       }
     }
   ]
