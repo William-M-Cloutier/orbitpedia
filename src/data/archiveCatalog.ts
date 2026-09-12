@@ -6,7 +6,8 @@
  *
  * Base resolution (once per session):
  *   NEXT_PUBLIC_ARCHIVE_BASE → else /archive/bulk if present → else /archive (smoke).
- * Bulk is gitignored; never import archive JSON into the client bundle.
+ * Bulk is gitignored. The committed smoke index is also bundled as a fallback so
+ * listSystemsAsync still yields ~100 systems when HTTP fetch fails.
  */
 import {
   BodySchema,
@@ -27,6 +28,8 @@ import {
   clearSystemGraphSession,
   rememberSystemGraph,
 } from "./systemGraphSession";
+/** Committed smoke plane — bundled fallback when /archive fetch fails. */
+import bundledSmokeIndexJson from "../../public/archive/systems.index.json";
 
 export type ArchiveSystemSummary = {
   id: string;
@@ -139,17 +142,33 @@ export function clearArchiveCaches(): void {
   clearSystemGraphSession();
 }
 
+/** Validate + clone the committed smoke index for in-memory use. */
+function bundledSmokeArchiveIndex(): ArchiveIndex {
+  const raw = bundledSmokeIndexJson as ArchiveIndex;
+  if (!raw || !Array.isArray(raw.systems)) {
+    return { version: 1, systems: [] };
+  }
+  return {
+    version: raw.version ?? 1,
+    fetchedAt: raw.fetchedAt,
+    source: raw.source,
+    systems: [...raw.systems],
+  };
+}
+
 export async function loadArchiveIndex(): Promise<ArchiveIndex> {
   if (indexCache) return indexCache;
   const base = await resolveArchiveBase();
   // resolveArchiveBase may have already filled indexCache when probing bulk
   if (indexCache) return indexCache;
   const data = await fetchArchiveIndex(base);
-  if (!data) {
-    throw new Error(`archive index missing/unreadable at ${indexUrl(base)}`);
+  if (data) {
+    indexCache = data;
+    return data;
   }
-  indexCache = data;
-  return data;
+  // HTTP failed — still serve the committed smoke plane (never curated-only).
+  indexCache = bundledSmokeArchiveIndex();
+  return indexCache;
 }
 
 export async function listArchiveSystems(): Promise<ArchiveSystemSummary[]> {
@@ -235,8 +254,9 @@ export async function listSystemsAsync(): Promise<
   try {
     archive = await listArchiveSystems();
   } catch {
-    // Index optional until first ingest; curated-only is fine.
-    return curated;
+    // loadArchiveIndex prefers HTTP then bundled smoke; if both somehow fail,
+    // still try the bundled smoke directly so the map is not curated-only.
+    archive = bundledSmokeArchiveIndex().systems;
   }
   const extra = archive.filter((s) => !curatedIds.has(s.id));
   return [...curated, ...extra];

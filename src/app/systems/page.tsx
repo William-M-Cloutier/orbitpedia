@@ -35,7 +35,12 @@ import {
   starColorFromSpectralType,
 } from "@/lib/starColor";
 import { systemHasGasGiant } from "@/lib/hasGas";
-import { placeSystemSky, SOL_GAL } from "@/lib/skyLayout";
+import {
+  MIN_VISUAL_GAP,
+  placeSystemSky,
+  separateSkyNodes,
+  SOL_GAL,
+} from "@/lib/skyLayout";
 import {
   MilkyWayBackdrop,
   type MwLook,
@@ -62,8 +67,6 @@ const ZOOM_MIN = 0.008;
 const ZOOM_MAX = 6;
 const PAN_SPEED = 520;
 const PAN_SHIFT = 2.6;
-/** Skip pairwise separation above this count (use coarse grid instead). */
-const SEPARATE_N_MAX = 80;
 /** Undirected k-NN edges: propose K nearest, hard-cap degree. */
 const KNN_K = 2;
 const DEGREE_CAP = 3;
@@ -320,74 +323,7 @@ function buildNodesFromList(
   });
 }
 
-/** Coarse grid placement — O(n) — used when N is large. */
-function gridSeparate(
-  pts: Array<{ x: number; y: number; r: number }>,
-  cell: number,
-): void {
-  const bins = new Map<string, number[]>();
-  const key = (x: number, y: number) =>
-    `${Math.floor(x / cell)}:${Math.floor(y / cell)}`;
-  for (let i = 0; i < pts.length; i++) {
-    const p = pts[i]!;
-    const k = key(p.x, p.y);
-    const list = bins.get(k);
-    if (list) list.push(i);
-    else bins.set(k, [i]);
-  }
-  for (const idxs of bins.values()) {
-    if (idxs.length < 2) continue;
-    for (let a = 0; a < idxs.length; a++) {
-      for (let b = a + 1; b < idxs.length; b++) {
-        const pa = pts[idxs[a]!]!;
-        const pb = pts[idxs[b]!]!;
-        const dx = pb.x - pa.x;
-        const dy = pb.y - pa.y;
-        const dist = Math.hypot(dx, dy) || 0.01;
-        const need = pa.r + pb.r + 8;
-        if (dist >= need) continue;
-        const push = (need - dist) / 2;
-        const ux = dx / dist;
-        const uy = dy / dist;
-        pa.x -= ux * push;
-        pa.y -= uy * push;
-        pb.x += ux * push;
-        pb.y += uy * push;
-      }
-    }
-  }
-}
 
-/** Push overlapping discs apart — O(n²), small N only. */
-function separateNodes(
-  pts: Array<{ x: number; y: number; r: number }>,
-  pad: number,
-  iters = 48,
-): void {
-  for (let iter = 0; iter < iters; iter++) {
-    let moved = false;
-    for (let i = 0; i < pts.length; i++) {
-      for (let j = i + 1; j < pts.length; j++) {
-        const a = pts[i]!;
-        const b = pts[j]!;
-        const dx = b.x - a.x;
-        const dy = b.y - a.y;
-        const dist = Math.hypot(dx, dy) || 0.01;
-        const need = a.r + b.r + pad;
-        if (dist >= need) continue;
-        const push = (need - dist) / 2;
-        const ux = dx / dist;
-        const uy = dy / dist;
-        a.x -= ux * push;
-        a.y -= uy * push;
-        b.x += ux * push;
-        b.y += uy * push;
-        moved = true;
-      }
-    }
-    if (!moved) break;
-  }
-}
 
 function layoutNodes(
   nodes: SystemNode[],
@@ -416,20 +352,38 @@ function layoutNodes(
       spacing,
       unknownOrder.get(n.id) ?? 0,
     );
-    return { ...n, x: placed.x, y: placed.y, r: NODE_R, unknownSky: placed.unknownSky };
+    if (n.home) {
+      return {
+        ...n,
+        x: SOL_GAL.x,
+        y: SOL_GAL.y,
+        r: NODE_R,
+        unknownSky: false,
+      };
+    }
+    return {
+      ...n,
+      x: placed.x,
+      y: placed.y,
+      r: NODE_R,
+      unknownSky: placed.unknownSky,
+    };
   });
 
-  // Separate only the local sky clump (and gutter) — never a sunflower first.
+  // Local clump + gutter only — distant hosts (galactic center, far archive)
+  // stay at true sky positions. Same min gap for Schematic and Proportional.
   const local = pts.filter(
     (p) =>
       p.unknownSky ||
       p.home ||
       Math.hypot(p.x - SOL_GAL.x, p.y - SOL_GAL.y) < 2500,
   );
-  if (local.length <= SEPARATE_N_MAX) {
-    separateNodes(local, spacing === "schematic" ? 28 : 22);
-  } else {
-    gridSeparate(local, Math.min(MIN_SEP, 96));
+  separateSkyNodes(local, MIN_VISUAL_GAP, SOL_GAL.x, SOL_GAL.y);
+  for (const p of pts) {
+    if (p.home) {
+      p.x = SOL_GAL.x;
+      p.y = SOL_GAL.y;
+    }
   }
 
   return pts;
