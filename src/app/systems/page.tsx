@@ -14,6 +14,7 @@ import {
   getBodiesForSystem,
   getHomeSystem,
   getSystem,
+  isFixtureSystemId,
   listSystems,
 } from "@/data/catalog";
 import { hasUsableOrbit } from "@/data/schema";
@@ -28,7 +29,7 @@ const SPACING_MODES: { id: MapSpacing; label: string }[] = [
 ];
 
 const WORLD_W = 960;
-const WORLD_H = 420;
+const WORLD_H = 560;
 const ZOOM_MIN = 0.45;
 const ZOOM_MAX = 4;
 const PAN_SPEED = 380; // world units / sec at zoom 1
@@ -45,24 +46,68 @@ type SystemNode = {
 };
 
 function buildNodes(): SystemNode[] {
-  return listSystems().map((s) => {
-    const bodies = getBodiesForSystem(s.id);
-    const star = bodies.find((b) => b.kind === "star");
-    let outerAAu = 0;
-    for (const b of bodies) {
-      if (!hasUsableOrbit(b) || b.orbit?.frame === "parent") continue;
-      if (b.orbit.aAu > outerAAu) outerAAu = b.orbit.aAu;
+  return listSystems()
+    .filter((s) => !isFixtureSystemId(s.id))
+    .map((s) => {
+      const bodies = getBodiesForSystem(s.id);
+      const star = bodies.find((b) => b.kind === "star");
+      let outerAAu = 0;
+      for (const b of bodies) {
+        if (!hasUsableOrbit(b) || b.orbit?.frame === "parent") continue;
+        if (b.orbit.aAu > outerAAu) outerAAu = b.orbit.aAu;
+      }
+      return {
+        id: s.id,
+        name: s.name,
+        home: s.home === true,
+        memberCount: bodies.length,
+        planetCount: bodies.filter((b) => b.kind === "planet").length,
+        outerAAu: outerAAu > 0 ? outerAAu : 1,
+        starColor: star?.color ?? "#FDB813",
+      };
+    });
+}
+
+/** Label + ring clearance below node center. */
+function nodeFootprint(r: number): number {
+  return r + 44;
+}
+
+function radiusFor(n: SystemNode, spacing: MapSpacing): number {
+  if (spacing === "schematic") return n.home ? 28 : 22;
+  return n.home ? 28 : 20 + Math.min(10, Math.sqrt(n.outerAAu) * 2);
+}
+
+/** Push overlapping discs apart (includes label footprint on Y). */
+function separateNodes(
+  pts: Array<{ x: number; y: number; r: number }>,
+  pad: number,
+  iters = 48,
+): void {
+  for (let iter = 0; iter < iters; iter++) {
+    let moved = false;
+    for (let i = 0; i < pts.length; i++) {
+      for (let j = i + 1; j < pts.length; j++) {
+        const a = pts[i]!;
+        const b = pts[j]!;
+        const dx = b.x - a.x;
+        const dy = b.y - a.y;
+        const dist = Math.hypot(dx, dy) || 0.01;
+        // Radii + pad + label band so discs/labels do not collide.
+        const need = a.r + b.r + pad + 36;
+        if (dist >= need) continue;
+        const push = (need - dist) / 2;
+        const ux = dx / dist;
+        const uy = dy / dist;
+        a.x -= ux * push;
+        a.y -= uy * push;
+        b.x += ux * push;
+        b.y += uy * push;
+        moved = true;
+      }
     }
-    return {
-      id: s.id,
-      name: s.name,
-      home: s.home === true,
-      memberCount: bodies.length,
-      planetCount: bodies.filter((b) => b.kind === "planet").length,
-      outerAAu: outerAAu > 0 ? outerAAu : 1,
-      starColor: star?.color ?? "#FDB813",
-    };
-  });
+    if (!moved) break;
+  }
 }
 
 function layoutNodes(
@@ -72,34 +117,70 @@ function layoutNodes(
   height: number,
 ): Array<SystemNode & { x: number; y: number; r: number }> {
   if (nodes.length === 0) return [];
-  const padX = 80;
-  const usable = Math.max(120, width - padX * 2);
-  const y = height * 0.48;
+  const padX = 90;
+  const padY = 70;
+  const usableW = Math.max(120, width - padX * 2);
+  const usableH = Math.max(120, height - padY * 2);
+  const midY = height * 0.42;
 
   if (spacing === "schematic" || nodes.length === 1) {
-    const step = nodes.length > 1 ? usable / (nodes.length - 1) : 0;
+    const step = nodes.length > 1 ? usableW / (nodes.length - 1) : 0;
     return nodes.map((n, i) => ({
       ...n,
-      x: padX + (nodes.length === 1 ? usable / 2 : i * step),
-      y,
-      r: n.home ? 28 : 22,
+      x: padX + (nodes.length === 1 ? usableW / 2 : i * step),
+      y: midY,
+      r: radiusFor(n, spacing),
     }));
   }
 
-  const weights = nodes.map((n) => Math.max(0.15, Math.sqrt(n.outerAAu)));
-  const sum = weights.reduce((a, b) => a + b, 0);
-  let acc = 0;
-  return nodes.map((n, i) => {
-    const w = weights[i]!;
-    const x = padX + ((acc + w / 2) / sum) * usable;
-    acc += w;
+  // Proportional: 2D scatter (size ~ outer extent), then resolve collisions.
+  // Not sky positions — just a readable non-colliding graph that scales.
+  const sorted = [...nodes].sort((a, b) => {
+    if (a.home !== b.home) return a.home ? -1 : 1;
+    return b.outerAAu - a.outerAAu;
+  });
+  const GOLDEN = Math.PI * (3 - Math.sqrt(5));
+  const pts = sorted.map((n, i) => {
+    const r = radiusFor(n, spacing);
+    if (n.home || sorted.length === 1) {
+      return { ...n, x: width / 2, y: midY, r };
+    }
+    const k = i; // home is 0
+    const ring = 0.22 + 0.55 * Math.sqrt(k / Math.max(sorted.length - 1, 1));
+    const ang = k * GOLDEN;
+    // Bias spread by relative system size so larger systems sit farther out a bit.
+    const sizeBias = 0.85 + 0.3 * Math.min(1, Math.sqrt(n.outerAAu) / 3);
     return {
       ...n,
-      x,
-      y,
-      r: n.home ? 28 : 20 + Math.min(10, Math.sqrt(n.outerAAu) * 2),
+      x: width / 2 + Math.cos(ang) * usableW * 0.42 * ring * sizeBias,
+      y: midY + Math.sin(ang) * usableH * 0.42 * ring,
+      r,
     };
   });
+
+  separateNodes(pts, 16);
+
+  // Fit into padded bounds without changing relative layout much.
+  let minX = Infinity,
+    maxX = -Infinity,
+    minY = Infinity,
+    maxY = -Infinity;
+  for (const p of pts) {
+    minX = Math.min(minX, p.x - p.r);
+    maxX = Math.max(maxX, p.x + p.r);
+    minY = Math.min(minY, p.y - p.r);
+    maxY = Math.max(maxY, p.y + nodeFootprint(p.r));
+  }
+  const spanX = Math.max(maxX - minX, 1);
+  const spanY = Math.max(maxY - minY, 1);
+  const scale = Math.min(usableW / spanX, usableH / spanY, 1.15);
+  const cx = (minX + maxX) / 2;
+  const cy = (minY + maxY) / 2;
+  return pts.map((p) => ({
+    ...p,
+    x: width / 2 + (p.x - cx) * scale,
+    y: height / 2 + (p.y - cy) * scale * 0.92,
+  }));
 }
 
 type Cam = { x: number; y: number; zoom: number };
@@ -301,9 +382,10 @@ function SystemMapView() {
           <div>
             <h1 className="text-lg font-medium text-zinc-100">System map</h1>
             <p className="mt-0.5 max-w-2xl text-sm text-zinc-500">
-              Click a system for facts (centers view). Drag or WASD to pan,
-              Shift faster, scroll to zoom. Double-click or Open Explore to
-              enter.
+              Click a system for facts (centers view). Proportional uses a
+              2D non-colliding layout (not sky positions). Drag or WASD to
+              pan, Shift faster, scroll to zoom. Double-click or Open Explore
+              to enter.
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -385,19 +467,29 @@ function SystemMapView() {
               fill="url(#mapGlow)"
             />
 
-            <line
-              x1={60}
-              y1={WORLD_H * 0.48}
-              x2={WORLD_W - 60}
-              y2={WORLD_H * 0.48}
-              stroke="rgba(255,255,255,0.08)"
-              strokeWidth={1}
-              strokeDasharray="4 6"
-            />
+            {spacing === "schematic" ? (
+              <line
+                x1={60}
+                y1={WORLD_H * 0.42}
+                x2={WORLD_W - 60}
+                y2={WORLD_H * 0.42}
+                stroke="rgba(255,255,255,0.08)"
+                strokeWidth={1}
+                strokeDasharray="4 6"
+              />
+            ) : null}
 
-            {laid.slice(0, -1).map((a, i) => {
-              const b = laid[i + 1]!;
-              return (
+            {(() => {
+              const home = laid.find((n) => n.home) ?? laid[0];
+              if (!home) return null;
+              // Schematic: chain along the row. Proportional: star from home.
+              const edges =
+                spacing === "schematic"
+                  ? laid.slice(0, -1).map((a, i) => [a, laid[i + 1]!] as const)
+                  : laid
+                      .filter((n) => n.id !== home.id)
+                      .map((n) => [home, n] as const);
+              return edges.map(([a, b]) => (
                 <line
                   key={`e-${a.id}-${b.id}`}
                   x1={a.x}
@@ -407,8 +499,8 @@ function SystemMapView() {
                   stroke="rgba(125,180,255,0.25)"
                   strokeWidth={1.5}
                 />
-              );
-            })}
+              ));
+            })()}
 
             {laid.map((n) => (
               <g

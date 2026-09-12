@@ -7,9 +7,9 @@ Search, discover, and explore Solar System bodies — facts, orbits, and graphs.
 ## Modes
 
 - **Explore** (`/?system=&focus=`) — lightweight 3D orbits (React Three Fiber) for one system graph; select a body to highlight, camera-follow, and open the Facts panel. `/explore` redirects here. Sizes are schematic tiers, not true scale. Home returns to the Solar System.
-- **Systems** (`/systems`) — map of catalog systems as nodes (Schematic / Proportional spacing only — not true inter-system distances). Click a system to open Explore.
+- **Systems** (`/systems`) — map of catalog systems (Schematic row / Proportional 2D non-colliding layout — not true sky positions). Click a system to open Explore.
 - **Discover** (`/discover`) — cards and compare up to 4 bodies
-- **Search** (`/search`) — body index; top-bar typeahead works from every mode
+- **Search** (`/search` / `?q=`) — systems + bodies; top-bar typeahead works from every mode
 - **Body detail** (`/body/[id]`) — overview, key facts, orbit elements, graphs
 
 ## Stack
