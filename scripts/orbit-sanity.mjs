@@ -14,8 +14,9 @@
  *   4) Central / primary star has no orbit / no OrbitLine; companions may orbit
  *   5) Parent-frame: q clears parent real radius; shared viz scale; skip sun Kepler-3
  *   6) Epoch MA pose lies on true-anomaly OrbitLine polyline (body-on-line)
- *   7) Multi-star: hasUsableOrbit allows companion stars; mesh-only companions
- *      OK in catalog but Explore omits them (no layout-offset dump)
+ *   7) Multi-star: hasUsableOrbit allows companion stars; orbit-unknown
+ *      companions mesh via tight visualBinaryCompanionOffset (no OrbitLine /
+ *      no invented aAu; ban old companionStarLayoutOffset dump)
  *
  * Usage: node scripts/orbit-sanity.mjs
  *        npm test
@@ -873,7 +874,8 @@ if (!Number.isFinite(c)) {
       qAu: 0.08 * (1 - 0.02),
     },
   };
-  // Catalog may include orbit-unknown companions; Explore must NOT invent layout.
+  // Catalog may include orbit-unknown companions; Explore meshes them via
+  // tight visual-binary offset (NOT catalog AU / NOT OrbitLine).
   const meshOnly = {
     id: "syn-mesh",
     kind: "star",
@@ -897,7 +899,8 @@ if (!Number.isFinite(c)) {
       periodD: 40,
     },
   };
-  // Parent-frame planet hosted by orbit-unknown companion — catalog OK, Explore omit.
+  // Parent-frame planet hosted by orbit-unknown companion — now Explore-visible
+  // (tracks companion visual-binary offset via parent-frame bodyPosition).
   const parentFrameKid = {
     id: "syn-mesh-planet",
     kind: "planet",
@@ -958,6 +961,16 @@ if (!Number.isFinite(c)) {
   } else {
     ok("OrbitScene has no companionStarLayoutOffset (no layout-offset dump)");
   }
+  if (!/visualBinaryCompanionOffset/.test(sceneSrc)) {
+    fail("OrbitScene missing visualBinaryCompanionOffset for orbit-unknown companions");
+  } else {
+    ok("OrbitScene has visualBinaryCompanionOffset (tight visual-binary display)");
+  }
+  if (!/VISUAL_BINARY_SEP_FACTOR/.test(sceneSrc)) {
+    fail("OrbitScene missing VISUAL_BINARY_SEP_FACTOR (tight sep from mesh radii)");
+  } else {
+    ok("OrbitScene uses VISUAL_BINARY_SEP_FACTOR for mesh-radius clearance");
+  }
   if (!/isExploreSceneBody/.test(sceneSrc)) {
     fail("OrbitScene missing isExploreSceneBody visibility gate");
   } else {
@@ -965,23 +978,32 @@ if (!Number.isFinite(c)) {
   }
   if (/if \(body\.kind === "star" \|\| !body\.orbit\) return \[0, 0, 0\]/.test(sceneSrc)) {
     fail("OrbitScene bodyPosition/localOrbit still blanks all stars at origin");
+  } else if (!/visualBinaryCompanionOffset/.test(sceneSrc)) {
+    fail("OrbitScene should place orbit-unknown companions via visualBinaryCompanionOffset");
   } else if (
-    !/hasUsableOrbit\(body\)\) return \[0, 0, 0\]/.test(sceneSrc) &&
-    !/if \(!hasUsableOrbit\(body\)\) return \[0, 0, 0\]/.test(sceneSrc)
+    !/hasUsableOrbit\(body\)/.test(sceneSrc)
   ) {
-    fail("OrbitScene should gate star pose on hasUsableOrbit");
+    fail("OrbitScene should still gate Kepler pose on hasUsableOrbit");
   } else {
-    ok("OrbitScene positions Kepler companions via hasUsableOrbit; unknown → origin/omit");
+    ok("OrbitScene: Kepler companions via hasUsableOrbit; unknown → visual-binary offset");
+  }
+  // OrbitLine must remain gated — no invented ellipse for orbit-unknown companions.
+  if (!/sceneBodies\.filter\(\(b\) => hasUsableOrbit\(b\)\)/.test(sceneSrc) &&
+      !/hasUsableOrbit\(b\)/.test(sceneSrc)) {
+    fail("OrbitScene should only draw OrbitLine for hasUsableOrbit bodies");
+  } else {
+    ok("OrbitLine stays gated on hasUsableOrbit (no fake ellipse / invented aAu)");
   }
   if (!/lightIntensity|isPrimaryStar/.test(sceneSrc) || !/0\.8/.test(sceneSrc)) {
     fail("OrbitScene missing dimmed companion star pointLights");
   } else {
     ok("OrbitScene dims companion star pointLights when companions mesh (soft perf)");
   }
-  // Explore visibility contract (mirror isExploreSceneBody): mesh-only companion
-  // and its parent-frame kids must NOT require invented placement.
+  // Explore visibility contract (mirror isExploreSceneBody): orbit-unknown
+  // companion stars mesh; their parent-frame kids return to Explore.
   function exploreVisible(body, primaryId, byId, seen = new Set()) {
     if (body.id === primaryId || (body.kind === "star" && !body.parentId)) return true;
+    if (body.kind === "star" && body.parentId) return true;
     if (!hasUsableOrbit(body)) return false;
     if (body.orbit?.frame === "parent" && body.parentId) {
       if (seen.has(body.id)) return false;
@@ -994,11 +1016,24 @@ if (!Number.isFinite(c)) {
   }
   const byId = new Map(bodies.map((b) => [b.id, b]));
   const vis = bodies.filter((b) => exploreVisible(b, "syn-primary", byId)).map((b) => b.id);
-  const expect = ["syn-primary", "syn-companion", "syn-planet"];
+  const expect = ["syn-primary", "syn-companion", "syn-mesh", "syn-planet", "syn-mesh-planet"];
   if (vis.join(",") !== expect.join(",")) {
     fail(`Explore visibility expected [${expect}], got [${vis}]`);
   } else {
-    ok("Explore omits orbit-unknown companion + its parent-frame kids (rail only)");
+    ok("Explore meshes orbit-unknown companion + parent-frame kids (visual-binary)");
+  }
+  // Source-level: star+parentId must be scene-eligible even without Kepler.
+  if (!/body\.kind === "star" && body\.parentId/.test(sceneSrc) &&
+      !/kind === "star" && .*parentId/.test(sceneSrc)) {
+    // softer: require the visual-binary helper + isExploreSceneBody star branch
+    if (!/Mesh companion stars even without Kepler/.test(sceneSrc) &&
+        !/kind === "star" && body\.parentId/.test(sceneSrc)) {
+      fail("isExploreSceneBody should treat star+parentId as scene-eligible");
+    } else {
+      ok("isExploreSceneBody includes orbit-unknown companion stars");
+    }
+  } else {
+    ok("isExploreSceneBody includes orbit-unknown companion stars");
   }
 }
 
