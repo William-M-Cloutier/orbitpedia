@@ -60,13 +60,13 @@ export function ArchiveBodyClient({ bodyId }: Props) {
         <div className="mx-auto max-w-lg space-y-3 p-6">
           <h1 className="text-xl font-medium text-zinc-100">Body not found</h1>
           <p className="text-sm text-zinc-500">
-            No curated or archive card for{" "}
+            Nothing matches{" "}
             <code className="text-zinc-300">{bodyId}</code>
             {systemHint ? (
               <>
                 {" "}
-                (system hint:{" "}
-                <code className="text-zinc-300">{systemHint}</code>)
+                in system{" "}
+                <code className="text-zinc-300">{systemHint}</code>
               </>
             ) : null}
             .

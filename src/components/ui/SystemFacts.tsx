@@ -33,9 +33,7 @@ export function SystemFacts({ system, compact = false, className = "" }: Props) 
 
       {system.blurb ? (
         <p className="text-sm leading-relaxed text-zinc-300">{system.blurb}</p>
-      ) : (
-        <p className="text-sm text-zinc-500">No system blurb yet.</p>
-      )}
+      ) : null}
 
       <dl className="grid gap-2">
         {system.planetCount != null ? (

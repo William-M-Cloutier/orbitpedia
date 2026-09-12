@@ -49,11 +49,14 @@ export function BodyDetailView({ body }: { body: Body }) {
           <h2 className="mb-3 text-sm font-medium uppercase tracking-wider text-zinc-500">
             Overview
           </h2>
-          <p className="text-zinc-300">
-            {body.facts.discoveryNotes ??
-              `${body.name} is a ${KIND_LABEL[body.kind].toLowerCase()} in the Orbitpedia catalog.`}
-          </p>
-          <p className="mt-2 text-xs text-zinc-600">
+          {body.facts.discoveryNotes ? (
+            <p className="text-zinc-300">{body.facts.discoveryNotes}</p>
+          ) : null}
+          <p
+            className={`text-xs text-zinc-600${
+              body.facts.discoveryNotes ? " mt-2" : ""
+            }`}
+          >
             Source: {bodyProvenance(body)}
           </p>
         </section>
@@ -130,7 +133,7 @@ export function BodyDetailView({ body }: { body: Body }) {
 
         <section>
           <h2 className="mb-4 text-lg font-medium text-zinc-200">
-            Catalog graphs
+            Charts
           </h2>
           <CatalogChartsLazy systemId={body.systemId} focusId={body.id} />
         </section>
