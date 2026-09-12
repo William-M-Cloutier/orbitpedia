@@ -59,6 +59,50 @@ const LABEL_CAP = 220;
 const NODE_R = 10;
 const NODE_R_FAV = 13;
 
+/** Spectral chip groups — first Harvard letter; Other = missing/weird. */
+type SpectralChip = "M" | "K" | "G" | "FA" | "Other";
+const SPECTRAL_CHIPS: { id: SpectralChip; label: string }[] = [
+  { id: "M", label: "M" },
+  { id: "K", label: "K" },
+  { id: "G", label: "G" },
+  { id: "FA", label: "F+A" },
+  { id: "Other", label: "Other" },
+];
+
+/** Exclusive planet-count bins (soft ranges). */
+type PlanetBin = "2" | "3-4" | "5+";
+const PLANET_CHIPS: { id: PlanetBin; label: string }[] = [
+  { id: "2", label: "2" },
+  { id: "3-4", label: "3–4" },
+  { id: "5+", label: "5+" },
+];
+
+function spectralChipFromType(
+  spectralType: string | undefined | null,
+): SpectralChip {
+  if (!spectralType) return "Other";
+  const letter = spectralType.trim().charAt(0).toUpperCase();
+  if (letter === "M") return "M";
+  if (letter === "K") return "K";
+  if (letter === "G") return "G";
+  if (letter === "F" || letter === "A") return "FA";
+  return "Other";
+}
+
+function planetBinForCount(count: number): PlanetBin | null {
+  if (count === 2) return "2";
+  if (count === 3 || count === 4) return "3-4";
+  if (count >= 5) return "5+";
+  return null;
+}
+
+function toggleInSet<T>(prev: Set<T>, id: T): Set<T> {
+  const next = new Set(prev);
+  if (next.has(id)) next.delete(id);
+  else next.add(id);
+  return next;
+}
+
 type SystemNode = {
   id: string;
   name: string;
@@ -67,6 +111,8 @@ type SystemNode = {
   planetCount: number;
   outerAAu: number;
   starColor: string;
+  hostSpectralType?: string;
+  spectralChip: SpectralChip;
 };
 
 function buildNodesFromList(
@@ -82,6 +128,9 @@ function buildNodesFromList(
         if (!hasUsableOrbit(b) || b.orbit?.frame === "parent") continue;
         if (b.orbit.aAu > outerAAu) outerAAu = b.orbit.aAu;
       }
+      const hostSpectralType =
+        curated.hostSpectralType ??
+        ("hostSpectralType" in s ? s.hostSpectralType : undefined);
       return {
         id: curated.id,
         name: curated.name,
@@ -92,9 +141,13 @@ function buildNodesFromList(
           bodies.filter((b) => b.kind === "planet").length,
         outerAAu: outerAAu > 0 ? outerAAu : 1,
         starColor: star?.color ?? "#FDB813",
+        hostSpectralType,
+        spectralChip: spectralChipFromType(hostSpectralType),
       };
     }
     const planets = s.planetCount ?? 0;
+    const hostSpectralType =
+      "hostSpectralType" in s ? s.hostSpectralType : undefined;
     return {
       id: s.id,
       name: s.name,
@@ -102,9 +155,9 @@ function buildNodesFromList(
       memberCount: planets + 1,
       planetCount: planets,
       outerAAu: 1,
-      starColor: starColorFromSpectralType(
-        "hostSpectralType" in s ? s.hostSpectralType : undefined,
-      ),
+      starColor: starColorFromSpectralType(hostSpectralType),
+      hostSpectralType,
+      spectralChip: spectralChipFromType(hostSpectralType),
     };
   });
 }
@@ -336,6 +389,21 @@ function SystemMapView() {
   );
   const [favoritesHydrated, setFavoritesHydrated] = useState(false);
   const [favoritesOnly, setFavoritesOnly] = useState(false);
+  const [spectralFilters, setSpectralFilters] = useState<Set<SpectralChip>>(
+    () => new Set(),
+  );
+  const [planetFilters, setPlanetFilters] = useState<Set<PlanetBin>>(
+    () => new Set(),
+  );
+
+  const clearMapFilters = useCallback(() => {
+    setSpectralFilters(new Set());
+    setPlanetFilters(new Set());
+    setFavoritesOnly(false);
+  }, []);
+
+  const filtersActive =
+    favoritesOnly || spectralFilters.size > 0 || planetFilters.size > 0;
 
   useEffect(() => {
     setFavoriteIds(loadFavoriteSystemIds(homeId));
@@ -418,9 +486,23 @@ function SystemMapView() {
   }, [selectedId, nodes]);
 
   const mapNodes = useMemo(() => {
-    if (!favoritesOnly) return nodes;
-    return nodes.filter((n) => favoriteIds.has(n.id));
-  }, [nodes, favoritesOnly, favoriteIds]);
+    return nodes.filter((n) => {
+      if (favoritesOnly && !favoriteIds.has(n.id)) return false;
+      // OR within spectral group; empty = all
+      if (
+        spectralFilters.size > 0 &&
+        !spectralFilters.has(n.spectralChip)
+      ) {
+        return false;
+      }
+      // OR within planet bins (exclusive bins); empty = all
+      if (planetFilters.size > 0) {
+        const bin = planetBinForCount(n.planetCount);
+        if (!bin || !planetFilters.has(bin)) return false;
+      }
+      return true;
+    });
+  }, [nodes, favoritesOnly, favoriteIds, spectralFilters, planetFilters]);
 
   const laid = useMemo(
     () => layoutNodes(mapNodes, spacing),
@@ -702,54 +784,114 @@ function SystemMapView() {
               Explore to enter.
             </p>
           </div>
-          <div className="flex flex-wrap items-center gap-2">
-            <div className="rounded-lg border border-white/10 bg-zinc-950/80 px-3 py-2 text-xs text-zinc-300">
-              <div className="mb-1.5 font-medium uppercase tracking-wide text-zinc-500">
-                Spacing
-              </div>
-              <div className="flex gap-1">
-                {SPACING_MODES.map((m) => (
+          <div className="flex flex-col items-stretch gap-2 sm:items-end">
+            <div className="flex flex-wrap items-center justify-end gap-1.5">
+              {SPACING_MODES.map((m) => (
+                <button
+                  key={m.id}
+                  type="button"
+                  onClick={() => setSpacing(m.id)}
+                  className={
+                    spacing === m.id
+                      ? "rounded-full bg-sky-600 px-2.5 py-1 text-[11px] font-medium text-white"
+                      : "rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] text-zinc-400 hover:bg-white/10 hover:text-zinc-200"
+                  }
+                >
+                  {m.label}
+                </button>
+              ))}
+              <button
+                type="button"
+                onClick={resetView}
+                className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] text-zinc-300 hover:bg-white/10"
+              >
+                Reset
+              </button>
+              <button
+                type="button"
+                onClick={() => router.push("/")}
+                className="rounded-full border border-sky-500/30 bg-sky-500/15 px-2.5 py-1 text-[11px] text-sky-200 hover:bg-sky-500/25"
+              >
+                Home
+              </button>
+            </div>
+            <div
+              className="flex flex-wrap items-center justify-end gap-1"
+              role="group"
+              aria-label="Map filters"
+            >
+              {SPECTRAL_CHIPS.map((c) => {
+                const on = spectralFilters.has(c.id);
+                return (
                   <button
-                    key={m.id}
+                    key={c.id}
                     type="button"
-                    onClick={() => setSpacing(m.id)}
+                    aria-pressed={on}
+                    onClick={() =>
+                      setSpectralFilters((prev) => toggleInSet(prev, c.id))
+                    }
                     className={
-                      spacing === m.id
-                        ? "rounded-md bg-sky-600 px-2 py-1 font-medium text-white"
-                        : "rounded-md bg-white/5 px-2 py-1 text-zinc-400 hover:bg-white/10 hover:text-zinc-200"
+                      on
+                        ? "rounded-full bg-sky-600/90 px-2 py-0.5 text-[11px] font-medium text-white"
+                        : "rounded-full border border-white/10 bg-white/[0.04] px-2 py-0.5 text-[11px] text-zinc-400 hover:border-sky-500/30 hover:text-zinc-200"
                     }
                   >
-                    {m.label}
+                    {c.label}
                   </button>
-                ))}
-              </div>
+                );
+              })}
+              <span className="mx-0.5 h-3 w-px bg-white/10" aria-hidden />
+              {PLANET_CHIPS.map((c) => {
+                const on = planetFilters.has(c.id);
+                return (
+                  <button
+                    key={c.id}
+                    type="button"
+                    aria-pressed={on}
+                    title={`${c.label} planets`}
+                    onClick={() =>
+                      setPlanetFilters((prev) => toggleInSet(prev, c.id))
+                    }
+                    className={
+                      on
+                        ? "rounded-full bg-sky-600/90 px-2 py-0.5 text-[11px] font-medium text-white"
+                        : "rounded-full border border-white/10 bg-white/[0.04] px-2 py-0.5 text-[11px] text-zinc-400 hover:border-sky-500/30 hover:text-zinc-200"
+                    }
+                  >
+                    {c.label}
+                  </button>
+                );
+              })}
+              <span className="mx-0.5 h-3 w-px bg-white/10" aria-hidden />
+              <button
+                type="button"
+                onClick={() => setFavoritesOnly((v) => !v)}
+                aria-pressed={favoritesOnly}
+                className={
+                  favoritesOnly
+                    ? "rounded-full border border-amber-400/40 bg-amber-500/20 px-2 py-0.5 text-[11px] font-medium text-amber-100"
+                    : "rounded-full border border-white/10 bg-white/[0.04] px-2 py-0.5 text-[11px] text-zinc-400 hover:border-amber-400/30 hover:text-zinc-200"
+                }
+              >
+                ★ Fav
+              </button>
+              {filtersActive ? (
+                <button
+                  type="button"
+                  onClick={clearMapFilters}
+                  className="rounded-full px-2 py-0.5 text-[11px] text-zinc-500 hover:text-zinc-300"
+                >
+                  Clear
+                </button>
+              ) : null}
+              <span className="ml-1 text-[11px] tabular-nums text-zinc-500">
+                {mapNodes.length}
+                {mapNodes.length !== nodes.length
+                  ? ` / ${nodes.length}`
+                  : ""}{" "}
+                systems
+              </span>
             </div>
-            <button
-              type="button"
-              onClick={() => setFavoritesOnly((v) => !v)}
-              aria-pressed={favoritesOnly}
-              className={
-                favoritesOnly
-                  ? "rounded-md border border-amber-400/40 bg-amber-500/20 px-3 py-2 text-xs font-medium text-amber-100"
-                  : "rounded-md border border-white/10 bg-white/5 px-3 py-2 text-xs text-zinc-300 hover:bg-white/10"
-              }
-            >
-              Favorites only
-            </button>
-            <button
-              type="button"
-              onClick={resetView}
-              className="rounded-md border border-white/10 bg-white/5 px-3 py-2 text-xs text-zinc-300 hover:bg-white/10"
-            >
-              Reset view
-            </button>
-            <button
-              type="button"
-              onClick={() => router.push("/")}
-              className="rounded-md border border-sky-500/30 bg-sky-500/15 px-3 py-2 text-xs text-sky-200 hover:bg-sky-500/25"
-            >
-              Home (Solar)
-            </button>
           </div>
         </div>
 
@@ -766,6 +908,22 @@ function SystemMapView() {
           role="application"
           aria-label="System map"
         >
+          {mapNodes.length === 0 ? (
+            <div className="pointer-events-auto absolute inset-0 z-20 flex flex-col items-center justify-center gap-3 bg-[#060a14]/92 px-6 text-center">
+              <p className="text-sm text-zinc-300">No systems match</p>
+              <p className="max-w-sm text-xs text-zinc-500">
+                Filters combine with AND across spectral type, planet count, and
+                favorites. Within a chip group, selection is OR.
+              </p>
+              <button
+                type="button"
+                onClick={clearMapFilters}
+                className="rounded-full border border-sky-500/30 bg-sky-500/15 px-3 py-1.5 text-xs text-sky-200 hover:bg-sky-500/25"
+              >
+                Clear filters
+              </button>
+            </div>
+          ) : null}
           <svg
             ref={svgRef}
             viewBox={viewBoxFor(cam)}
@@ -957,18 +1115,17 @@ function SystemMapView() {
           ) : null}
 
           <p className="pointer-events-none absolute bottom-2 left-3 text-[10px] text-zinc-600">
-            {favoritesOnly
-              ? `${mapNodes.length} favorites`
-              : `${nodes.length} systems`}{" "}
-            · {visible.length} in view · {favoriteIds.size} ★
+            {mapNodes.length}
+            {mapNodes.length !== nodes.length ? ` / ${nodes.length}` : ""}{" "}
+            systems · {visible.length} in view · {favoriteIds.size} ★
           </p>
         </div>
 
         <p className="mt-2 text-xs text-zinc-600">
-          Drag or WASD to pan · Shift faster · scroll wheel zoom · Reset view
-          recenters on Sol. Star a system in the facts panel · Favorites only
-          filters the map. Click empty space to dismiss facts. Enter opens
-          selected system.
+          Drag or WASD to pan · Shift faster · scroll wheel zoom · Reset
+          recenters on Sol. Spectral / planet chips OR within a group, AND
+          across groups (+ ★ Fav). Click empty space to dismiss facts. Enter
+          opens selected system.
         </p>
       </div>
     </AppShell>
