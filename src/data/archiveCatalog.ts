@@ -30,8 +30,8 @@ import {
   clearSystemGraphSession,
   rememberSystemGraph,
 } from "./systemGraphSession";
-/** Committed smoke plane — bundled fallback when /archive fetch fails. */
-import bundledSmokeIndexJson from "../../public/archive/systems.index.json";
+/** Small sync first-paint plane — bundled. Full sky index is fetched from /archive/systems.index.json. */
+import bundledSmokeIndexJson from "../../public/archive/systems.index.smoke.json";
 
 export type ArchiveSystemSummary = {
   id: string;
@@ -70,6 +70,7 @@ export type ArchiveSystemGraphFile = {
 };
 
 /** Smoke plane (committed). Bulk plane is gitignored local/dev. */
+/** HTTP archive root: committed full sky-complete index (+ smoke graphs). */
 const SMOKE_ARCHIVE_BASE = "/archive";
 const BULK_ARCHIVE_BASE = "/archive/bulk";
 

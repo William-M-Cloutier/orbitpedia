@@ -276,3 +276,17 @@ node scripts/backfill-archive-sky-coords.mjs --bulk
 Map-side selection (`archiveCoordCoverage` in `archiveCatalog`, PR #29) adopts bulk
 only when coverage is sufficient. Prefer smoke until the dump has raDeg/decDeg.
 
+## Committed full sky index
+
+- `public/archive/systems.index.json` — full NEA host index (~4.7k) with `raDeg`/`decDeg` (map adopts via HTTP).
+- `public/archive/systems.index.smoke.json` — small ~100-row plane **bundled** for sync first paint only.
+- `public/archive/graphs/` — smoke sample graphs (lazy). Full graphs remain in gitignored `public/archive/bulk/graphs/` for local `--all`.
+
+Refresh full index after bulk sky backfill:
+
+```bash
+node scripts/backfill-archive-sky-coords.mjs --bulk
+cp public/archive/bulk/systems.index.json public/archive/systems.index.json
+# keep systems.index.smoke.json as the bundled first-paint slice
+```
+
