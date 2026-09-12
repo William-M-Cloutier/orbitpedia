@@ -12,14 +12,14 @@
     "densityGcm3": 5.5134,
     "rotationPeriodD": 0.99726968,
     "albedo": 0.367,
-    "discoveryNotes": "Central body for Earth-orbiting satellites Explore mode (same physical Earth as Sol; separate card so solar membership stays intact)."
+    "discoveryNotes": "Only known world with surface liquid water and life; our home planet."
   },
   "color": "#6B93D6",
   "appearance": {
     "textureId": "earth-marquee"
   },
   "meta": {
-    "source": "JPL SSD Planetary Physical Parameters (Earth central for earth-sats)",
+    "source": "JPL SSD Planetary Physical Parameters",
     "confidence": "known",
     "fetchedAt": "2026-09-12T22:34:00Z",
     "unitsVersion": 1,

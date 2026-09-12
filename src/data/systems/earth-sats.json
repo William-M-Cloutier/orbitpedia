@@ -9,14 +9,14 @@
     "terra",
     "noaa-20"
   ],
-  "blurb": "Curated low-Earth and polar satellites around Earth \u2014 ISS, Hubble, CSS Tianhe, Terra, and NOAA-20 from Celestrak GP elements (educational Earth-centered Explore).",
+  "blurb": "Low-Earth and polar-orbiting satellites around Earth \u2014 the International Space Station, Hubble Space Telescope, China's Tiangong (Tianhe core), NASA's Terra, and NOAA-20.",
   "highlights": [
-    "Five real GP/OMM orbits from Celestrak (2026-09-12 fetch)",
-    "Earth at origin; geocentric frame (not a fake exoplanet system)",
-    "Schematic altitude amplification in Explore \u2014 Facts keep real km"
+    "Crewed laboratory and visiting craft in low Earth orbit (ISS)",
+    "Hubble Space Telescope and Tiangong space station",
+    "Earth-observing missions Terra and NOAA-20 (JPSS-1)"
   ],
   "planetCount": 0,
-  "compactnessNote": "LEO altitudes are tiny vs Earth radius; Explore amplifies radial altitude for readability while Earth sphere stays readable.",
+  "compactnessNote": "These spacecraft fly a few hundred to about 800 km above Earth's surface, far closer than the Moon.",
   "meta": {
     "confidence": "known",
     "fetchedAt": "2026-09-12T22:34:00Z",
@@ -25,8 +25,6 @@
         "name": "Celestrak NORAD GP elements",
         "url": "https://celestrak.org/NORAD/elements/",
         "fields": [
-          "blurb",
-          "highlights",
           "memberIds"
         ]
       }
