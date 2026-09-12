@@ -13,7 +13,7 @@
     "densityGcm3": 1.088,
     "albedo": 0.6,
     "rotationPeriodD": 79.39837044190301,
-    "discoveryNotes": "Discovered by Giovanni Cassini (1671)",
+    "discoveryNotes": "Discovered by Giovanni Cassini (1671); striking two-tone leading/trailing hemispheres.",
     "discoveryDate": "1671"
   },
   "orbit": {
@@ -47,7 +47,8 @@
           "orbit.periodD",
           "orbit.qAu",
           "orbit.frame",
-          "horizonId"
+          "horizonId",
+          "facts.discoveryNotes"
         ]
       },
       {
@@ -62,7 +63,7 @@
         ]
       },
       {
-        "name": "NASA SSE — Iapetus",
+        "name": "NASA SSE \u2014 Iapetus",
         "url": "https://science.nasa.gov/saturn/moons/iapetus/",
         "fields": [
           "facts.discoveryDate"

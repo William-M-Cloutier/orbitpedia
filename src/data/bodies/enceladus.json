@@ -13,7 +13,7 @@
     "densityGcm3": 1.606,
     "albedo": 1.04,
     "rotationPeriodD": 1.374616095618862,
-    "discoveryNotes": "Discovered by William Herschel (1789)",
+    "discoveryNotes": "Discovered by William Herschel (1789); south-polar plumes feed a subsurface ocean.",
     "discoveryDate": "1789"
   },
   "orbit": {
@@ -50,7 +50,8 @@
           "orbit.periodD",
           "orbit.qAu",
           "orbit.frame",
-          "horizonId"
+          "horizonId",
+          "facts.discoveryNotes"
         ]
       },
       {
@@ -65,7 +66,7 @@
         ]
       },
       {
-        "name": "NASA SSE — Enceladus",
+        "name": "NASA SSE \u2014 Enceladus",
         "url": "https://science.nasa.gov/saturn/moons/enceladus/",
         "fields": [
           "facts.discoveryDate"

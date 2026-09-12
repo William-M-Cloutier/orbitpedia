@@ -13,7 +13,7 @@
     "densityGcm3": 1.66,
     "albedo": 0.24,
     "rotationPeriodD": 13.46752377940373,
-    "discoveryNotes": "Discovered by William Herschel (1787)",
+    "discoveryNotes": "Discovered by William Herschel (1787); outermost of Uranus\u2019s five major moons.",
     "discoveryDate": "1787"
   },
   "orbit": {
@@ -47,7 +47,8 @@
           "orbit.periodD",
           "orbit.qAu",
           "orbit.frame",
-          "horizonId"
+          "horizonId",
+          "facts.discoveryNotes"
         ]
       },
       {
@@ -62,7 +63,7 @@
         ]
       },
       {
-        "name": "NASA SSE — Oberon",
+        "name": "NASA SSE \u2014 Oberon",
         "url": "https://science.nasa.gov/uranus/moons/oberon/",
         "fields": [
           "facts.discoveryDate"

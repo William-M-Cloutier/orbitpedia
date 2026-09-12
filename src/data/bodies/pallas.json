@@ -7,7 +7,7 @@
     "2 Pallas"
   ],
   "facts": {
-    "discoveryNotes": "Discovered 1802 by Heinrich Olbers",
+    "discoveryNotes": "Discovered 1802 by Heinrich Olbers; among the largest main-belt asteroids.",
     "radiusMeanKm": 256.5,
     "densityGcm3": 2.89,
     "albedo": 0.155,
@@ -38,7 +38,8 @@
           "facts.albedo",
           "facts.rotationPeriodD",
           "sbdbDes",
-          "facts.discoveryDate"
+          "facts.discoveryDate",
+          "facts.discoveryNotes"
         ]
       },
       {

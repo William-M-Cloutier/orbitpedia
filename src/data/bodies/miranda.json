@@ -13,7 +13,7 @@
     "densityGcm3": 1.18,
     "albedo": 0.27,
     "rotationPeriodD": 1.414004013381316,
-    "discoveryNotes": "Discovered by Gerard Kuiper (1948)",
+    "discoveryNotes": "Discovered by Gerard Kuiper (1948); extreme topography among Uranus\u2019s moons.",
     "discoveryDate": "1948"
   },
   "orbit": {
@@ -47,7 +47,8 @@
           "orbit.periodD",
           "orbit.qAu",
           "orbit.frame",
-          "horizonId"
+          "horizonId",
+          "facts.discoveryNotes"
         ]
       },
       {
@@ -62,7 +63,7 @@
         ]
       },
       {
-        "name": "NASA SSE — Miranda",
+        "name": "NASA SSE \u2014 Miranda",
         "url": "https://science.nasa.gov/uranus/moons/miranda/",
         "fields": [
           "facts.discoveryDate"

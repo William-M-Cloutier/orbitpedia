@@ -6,7 +6,7 @@
   "facts": {
     "massKg": 1.30246e+22,
     "radiusMeanKm": 1188.3,
-    "discoveryNotes": "Discovered 1930 by Clyde Tombaugh; reclassified dwarf planet 2006",
+    "discoveryNotes": "Discovered 1930 by Clyde Tombaugh; reclassified as a dwarf planet in 2006.",
     "densityGcm3": 1.853,
     "rotationPeriodD": -6.3872,
     "albedo": 0.3,
@@ -33,7 +33,8 @@
           "orbit.maDeg",
           "orbit.periodD",
           "horizonId",
-          "facts.discoveryDate"
+          "facts.discoveryDate",
+          "facts.discoveryNotes"
         ]
       },
       {

@@ -13,7 +13,7 @@
     "densityGcm3": 3.528,
     "albedo": 0.63,
     "rotationPeriodD": 1.771395757437516,
-    "discoveryNotes": "Discovered by Galileo Galilei (1610)",
+    "discoveryNotes": "Discovered by Galileo Galilei (1610); most volcanically active body in the solar system.",
     "discoveryDate": "1610"
   },
   "orbit": {
@@ -50,7 +50,8 @@
           "orbit.periodD",
           "orbit.qAu",
           "orbit.frame",
-          "horizonId"
+          "horizonId",
+          "facts.discoveryNotes"
         ]
       },
       {
@@ -65,7 +66,7 @@
         ]
       },
       {
-        "name": "NASA SSE — Io",
+        "name": "NASA SSE \u2014 Io",
         "url": "https://science.nasa.gov/jupiter/moons/io/",
         "fields": [
           "facts.discoveryDate"

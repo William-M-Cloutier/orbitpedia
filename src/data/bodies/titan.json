@@ -12,7 +12,7 @@
     "massKg": 1.3455299999999999e+23,
     "densityGcm3": 1.88,
     "albedo": 0.2,
-    "discoveryNotes": "Discovered by Christiaan Huygens (1655)",
+    "discoveryNotes": "Discovered by Christiaan Huygens (1655); thick N\u2082 atmosphere and hydrocarbon lakes.",
     "discoveryDate": "1655"
   },
   "orbit": {
@@ -49,7 +49,8 @@
           "orbit.periodD",
           "orbit.qAu",
           "orbit.frame",
-          "horizonId"
+          "horizonId",
+          "facts.discoveryNotes"
         ]
       },
       {
@@ -63,7 +64,7 @@
         ]
       },
       {
-        "name": "NASA SSE — Titan",
+        "name": "NASA SSE \u2014 Titan",
         "url": "https://science.nasa.gov/saturn/moons/titan/",
         "fields": [
           "facts.discoveryDate"

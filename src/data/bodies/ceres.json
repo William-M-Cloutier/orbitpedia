@@ -7,7 +7,7 @@
     "1 Ceres"
   ],
   "facts": {
-    "discoveryNotes": "Discovered 1801 by Giuseppe Piazzi; also classified as dwarf planet",
+    "discoveryNotes": "Discovered 1801 by Giuseppe Piazzi; largest object in the main asteroid belt (also a dwarf planet).",
     "radiusMeanKm": 469.7,
     "densityGcm3": 2.162,
     "albedo": 0.09,
@@ -41,7 +41,8 @@
           "facts.albedo",
           "facts.rotationPeriodD",
           "sbdbDes",
-          "facts.discoveryDate"
+          "facts.discoveryDate",
+          "facts.discoveryNotes"
         ]
       },
       {

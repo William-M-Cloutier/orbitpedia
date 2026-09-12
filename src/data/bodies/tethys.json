@@ -13,7 +13,7 @@
     "densityGcm3": 0.956,
     "albedo": 0.8,
     "rotationPeriodD": 1.89172053804673,
-    "discoveryNotes": "Discovered by Giovanni Cassini (1684)",
+    "discoveryNotes": "Discovered by Giovanni Cassini (1684); icy mid-sized Saturnian moon with a huge rift canyon.",
     "discoveryDate": "1684"
   },
   "orbit": {
@@ -47,7 +47,8 @@
           "orbit.periodD",
           "orbit.qAu",
           "orbit.frame",
-          "horizonId"
+          "horizonId",
+          "facts.discoveryNotes"
         ]
       },
       {
@@ -62,7 +63,7 @@
         ]
       },
       {
-        "name": "NASA SSE — Tethys",
+        "name": "NASA SSE \u2014 Tethys",
         "url": "https://science.nasa.gov/saturn/moons/tethys/",
         "fields": [
           "facts.discoveryDate"

@@ -6,7 +6,7 @@
   "facts": {
     "massKg": 5.68317e+26,
     "radiusMeanKm": 58232,
-    "discoveryNotes": "Known since antiquity",
+    "discoveryNotes": "Known since antiquity; prominent ring system and the lowest mean density among the planets.",
     "densityGcm3": 0.6871,
     "rotationPeriodD": 0.44401,
     "albedo": 0.47
@@ -31,7 +31,8 @@
           "orbit.wDeg",
           "orbit.maDeg",
           "orbit.periodD",
-          "horizonId"
+          "horizonId",
+          "facts.discoveryNotes"
         ]
       },
       {

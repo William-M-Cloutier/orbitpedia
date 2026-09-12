@@ -6,7 +6,7 @@
   "facts": {
     "massKg": 1.024092e+26,
     "radiusMeanKm": 24622,
-    "discoveryNotes": "Discovered 1846 by Galle (Adams/Le Verrier prediction)",
+    "discoveryNotes": "Discovered 1846 by Galle (Adams/Le Verrier prediction); ice giant with very strong winds.",
     "densityGcm3": 1.638,
     "rotationPeriodD": 0.67125,
     "albedo": 0.41,
@@ -33,7 +33,8 @@
           "orbit.maDeg",
           "orbit.periodD",
           "horizonId",
-          "facts.discoveryDate"
+          "facts.discoveryDate",
+          "facts.discoveryNotes"
         ]
       },
       {

@@ -6,7 +6,7 @@
   "facts": {
     "massKg": 6.41691e+23,
     "radiusMeanKm": 3389.5,
-    "discoveryNotes": "Known since antiquity",
+    "discoveryNotes": "Known since antiquity; polar ice and the solar system\u2019s largest volcanoes (e.g. Olympus Mons).",
     "densityGcm3": 3.934,
     "rotationPeriodD": 1.02595676,
     "albedo": 0.15
@@ -31,7 +31,8 @@
           "orbit.wDeg",
           "orbit.maDeg",
           "orbit.periodD",
-          "horizonId"
+          "horizonId",
+          "facts.discoveryNotes"
         ]
       },
       {

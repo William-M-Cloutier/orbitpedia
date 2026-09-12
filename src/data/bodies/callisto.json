@@ -13,7 +13,7 @@
     "densityGcm3": 1.834,
     "albedo": 0.17,
     "rotationPeriodD": 16.69112168919004,
-    "discoveryNotes": "Discovered by Galileo Galilei (1610)",
+    "discoveryNotes": "Discovered by Galileo Galilei (1610); heavily cratered outer Galilean moon.",
     "discoveryDate": "1610"
   },
   "orbit": {
@@ -50,7 +50,8 @@
           "orbit.periodD",
           "orbit.qAu",
           "orbit.frame",
-          "horizonId"
+          "horizonId",
+          "facts.discoveryNotes"
         ]
       },
       {
@@ -65,7 +66,7 @@
         ]
       },
       {
-        "name": "NASA SSE — Callisto",
+        "name": "NASA SSE \u2014 Callisto",
         "url": "https://science.nasa.gov/jupiter/moons/callisto/",
         "fields": [
           "facts.discoveryDate"

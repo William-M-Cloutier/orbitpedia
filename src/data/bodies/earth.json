@@ -9,7 +9,7 @@
   "facts": {
     "massKg": 5.97217e+24,
     "radiusMeanKm": 6371.0084,
-    "discoveryNotes": "Home world",
+    "discoveryNotes": "Only known world with surface liquid water and life; our home planet.",
     "densityGcm3": 5.5134,
     "rotationPeriodD": 0.99726968,
     "albedo": 0.367
@@ -34,7 +34,8 @@
           "orbit.wDeg",
           "orbit.maDeg",
           "orbit.periodD",
-          "horizonId"
+          "horizonId",
+          "facts.discoveryNotes"
         ]
       },
       {

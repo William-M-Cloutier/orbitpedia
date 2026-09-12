@@ -7,7 +7,7 @@
     "4 Vesta"
   ],
   "facts": {
-    "discoveryNotes": "Discovered 1807 by Heinrich Olbers",
+    "discoveryNotes": "Discovered 1807 by Heinrich Olbers; second-most massive main-belt asteroid.",
     "radiusMeanKm": 261.385,
     "densityGcm3": 3.46,
     "albedo": 0.4228,
@@ -38,7 +38,8 @@
           "facts.albedo",
           "facts.rotationPeriodD",
           "sbdbDes",
-          "facts.discoveryDate"
+          "facts.discoveryDate",
+          "facts.discoveryNotes"
         ]
       },
       {

@@ -6,7 +6,7 @@
   "facts": {
     "massKg": 3.3010299999999994e+23,
     "radiusMeanKm": 2439.4,
-    "discoveryNotes": "Known since antiquity",
+    "discoveryNotes": "Known since antiquity; innermost planet with extreme day\u2013night temperature swings.",
     "densityGcm3": 5.4289,
     "rotationPeriodD": 58.6462,
     "albedo": 0.106
@@ -31,7 +31,8 @@
           "orbit.wDeg",
           "orbit.maDeg",
           "orbit.periodD",
-          "horizonId"
+          "horizonId",
+          "facts.discoveryNotes"
         ]
       },
       {

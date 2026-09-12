@@ -13,7 +13,7 @@
     "densityGcm3": 3.3437,
     "rotationPeriodD": 27.321661,
     "albedo": 0.12,
-    "discoveryNotes": "Known since antiquity"
+    "discoveryNotes": "Known since antiquity; tidally locked and the main driver of Earth\u2019s ocean tides."
   },
   "orbit": {
     "frame": "parent",
@@ -49,7 +49,8 @@
           "orbit.periodD",
           "orbit.qAu",
           "orbit.frame",
-          "horizonId"
+          "horizonId",
+          "facts.discoveryNotes"
         ]
       },
       {

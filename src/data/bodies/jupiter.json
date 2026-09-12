@@ -6,7 +6,7 @@
   "facts": {
     "massKg": 1.898125e+27,
     "radiusMeanKm": 69911,
-    "discoveryNotes": "Known since antiquity",
+    "discoveryNotes": "Known since antiquity; most massive planet, with the long-lived Great Red Spot storm.",
     "densityGcm3": 1.3262,
     "rotationPeriodD": 0.41354,
     "albedo": 0.52
@@ -31,7 +31,8 @@
           "orbit.wDeg",
           "orbit.maDeg",
           "orbit.periodD",
-          "horizonId"
+          "horizonId",
+          "facts.discoveryNotes"
         ]
       },
       {

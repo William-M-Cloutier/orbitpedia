@@ -6,7 +6,7 @@
   "facts": {
     "massKg": 4.867309999999999e+24,
     "radiusMeanKm": 6051.8,
-    "discoveryNotes": "Known since antiquity",
+    "discoveryNotes": "Known since antiquity; densest atmosphere of the terrestrial planets and a runaway greenhouse.",
     "densityGcm3": 5.243,
     "rotationPeriodD": -243.018,
     "albedo": 0.65
@@ -31,7 +31,8 @@
           "orbit.wDeg",
           "orbit.maDeg",
           "orbit.periodD",
-          "horizonId"
+          "horizonId",
+          "facts.discoveryNotes"
         ]
       },
       {

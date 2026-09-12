@@ -13,7 +13,7 @@
     "densityGcm3": 1.469,
     "albedo": 0.6,
     "rotationPeriodD": 2.740345816432255,
-    "discoveryNotes": "Discovered by Giovanni Cassini (1684)",
+    "discoveryNotes": "Discovered by Giovanni Cassini (1684); icy mid-sized Saturnian moon.",
     "discoveryDate": "1684"
   },
   "orbit": {
@@ -47,7 +47,8 @@
           "orbit.periodD",
           "orbit.qAu",
           "orbit.frame",
-          "horizonId"
+          "horizonId",
+          "facts.discoveryNotes"
         ]
       },
       {
@@ -62,7 +63,7 @@
         ]
       },
       {
-        "name": "NASA SSE — Dione",
+        "name": "NASA SSE \u2014 Dione",
         "url": "https://science.nasa.gov/saturn/moons/dione/",
         "fields": [
           "facts.discoveryDate"

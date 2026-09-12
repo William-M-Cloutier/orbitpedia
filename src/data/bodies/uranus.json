@@ -6,7 +6,7 @@
   "facts": {
     "massKg": 8.68099e+25,
     "radiusMeanKm": 25362,
-    "discoveryNotes": "Discovered 1781 by William Herschel",
+    "discoveryNotes": "Discovered 1781 by William Herschel; ice giant with an extreme axial tilt (~98\u00b0).",
     "densityGcm3": 1.27,
     "rotationPeriodD": -0.71833,
     "albedo": 0.51,
@@ -33,7 +33,8 @@
           "orbit.maDeg",
           "orbit.periodD",
           "horizonId",
-          "facts.discoveryDate"
+          "facts.discoveryDate",
+          "facts.discoveryNotes"
         ]
       },
       {

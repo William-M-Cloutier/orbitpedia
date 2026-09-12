@@ -7,7 +7,7 @@
     "10 Hygiea"
   ],
   "facts": {
-    "discoveryNotes": "Discovered 1849 by Annibale de Gasparis",
+    "discoveryNotes": "Discovered 1849 by Annibale de Gasparis; one of the four largest main-belt asteroids.",
     "radiusMeanKm": 203.56,
     "albedo": 0.0717,
     "rotationPeriodD": 0.5761666666666666,
@@ -36,7 +36,8 @@
           "facts.albedo",
           "facts.rotationPeriodD",
           "sbdbDes",
-          "facts.discoveryDate"
+          "facts.discoveryDate",
+          "facts.discoveryNotes"
         ]
       },
       {
