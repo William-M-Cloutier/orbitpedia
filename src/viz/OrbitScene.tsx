@@ -339,11 +339,18 @@ function localOrbitPosition(
  * Kepler; bulk: 0/425 multi-star graphs have companion orbit.aAu.
  * Prefer real Kepler via hasUsableOrbit when archive has elements.
  *
- * Separation (AU → scene distance; orbitDistanceScale is 1 today, same as
- * Kepler XYZ): use facts.projectedSepAu when finite and > 0 (Gaia /
- * projected sep); else schematic (rPrimary + rSelf) * VISUAL_BINARY_SEP_FACTOR
- * with MIN_SEP floor. Projected sep gets a soft clearance max so the mesh
- * still clears primary+self+margin (display-only; never rewrite catalog).
+ * Separation (scene AU; orbitDistanceScale is 1 today, same as Kepler XYZ):
+ * - No facts.projectedSepAu → schematic (rPrimary + rSelf) *
+ *   VISUAL_BINARY_SEP_FACTOR with MIN_SEP floor.
+ * - Finite projectedSepAu > 0 → **display-scaled** sep (NOT raw catalog AU):
+ *   floor = max(schematic, outerPrimaryOrbitA * 1.2) when a primary-frame
+ *   usable orbit exists; compress = log1p(projected) * PROJECTED_SEP_LOG_SCALE
+ *   (~1000 au → ~20 scene-AU); cap = PROJECTED_SEP_DISPLAY_CAP_AU (~36,
+ *   under Explore maxDistance 80). Final =
+ *   min(cap, max(floor, compress)), then max(..., rPrimary+rSelf+clearance).
+ *   Display-only compression of Gaia/projected sep — catalog AU unchanged;
+ *   Facts / Sky still show the true value. log1p is monotonic so multi-
+ *   companion relative order is preserved.
  * Locked sizeTiers / visualRadius contract (incl. companion Prop/True) is
  * respected as-is. Never draw OrbitLine unless hasUsableOrbit.
  *
@@ -357,6 +364,19 @@ const VISUAL_BINARY_SEP_FACTOR = 1.3;
 const VISUAL_BINARY_MIN_SEP = 0.04;
 /** Soft clearance margin (AU) so projected-sep meshes do not bury in primary. */
 const VISUAL_BINARY_CLEARANCE_MARGIN = 0.005;
+/**
+ * Display-only log compress for Gaia/projected sep → scene AU.
+ * log1p(1000) * 3 ≈ 20.7 — wide companions stay inside maxDistance 80.
+ * Catalog / Facts projectedSepAu unchanged.
+ */
+const PROJECTED_SEP_LOG_SCALE = 3.0;
+/**
+ * Hard cap on companion display sep (scene AU). Comfortably under Explore
+ * OrbitControls maxDistance 80 so meshes stay in the camera box.
+ */
+const PROJECTED_SEP_DISPLAY_CAP_AU = 36;
+/** Place companion outside outermost primary-frame planet orbit when known. */
+const PROJECTED_SEP_ORBIT_FLOOR_FACTOR = 1.2;
 
 function visualBinaryCompanionOffset(
   body: Body,
@@ -389,16 +409,38 @@ function visualBinaryCompanionOffset(
     VISUAL_BINARY_MIN_SEP,
   );
   const projected = body.facts?.projectedSepAu;
-  // Gaia/projected sep when known; else mesh-radii schematic.
-  const sep =
+  // Gaia/projected sep → display-scaled scene AU; else mesh-radii schematic.
+  // Catalog / Facts keep the true projectedSepAu — this is viz-only.
+  let sep = schematicSep;
+  if (
     typeof projected === "number" &&
     Number.isFinite(projected) &&
     projected > 0
-      ? Math.max(
-          projected,
-          rPrimary + rSelf + VISUAL_BINARY_CLEARANCE_MARGIN,
-        )
-      : schematicSep;
+  ) {
+    let outerPrimaryOrbitA = 0;
+    for (const b of systemBodies) {
+      if (!hasUsableOrbit(b) || b.orbit?.frame === "parent") continue;
+      const a = b.orbit!.aAu;
+      if (Number.isFinite(a) && a > outerPrimaryOrbitA) outerPrimaryOrbitA = a;
+    }
+    const floor =
+      outerPrimaryOrbitA > 0
+        ? Math.max(
+            schematicSep,
+            outerPrimaryOrbitA * PROJECTED_SEP_ORBIT_FLOOR_FACTOR,
+          )
+        : schematicSep;
+    // log1p compress: ~1000 au → ~20 scene-AU; monotonic → relative order OK.
+    const compressed = Math.log1p(projected) * PROJECTED_SEP_LOG_SCALE;
+    sep = Math.min(
+      PROJECTED_SEP_DISPLAY_CAP_AU,
+      Math.max(floor, compressed),
+    );
+    sep = Math.max(
+      sep,
+      rPrimary + rSelf + VISUAL_BINARY_CLEARANCE_MARGIN,
+    );
+  }
   // Even spread in the face-on orbital plane (start at 0 → +X). Horizontal ring.
   const ang = (2 * Math.PI * idx) / n;
   const x = sep * Math.cos(ang);

@@ -16,8 +16,9 @@
  *   6) Epoch MA pose lies on true-anomaly OrbitLine polyline (body-on-line)
  *   7) Multi-star: hasUsableOrbit allows companion stars; orbit-unknown
  *      companions mesh via visualBinaryCompanionOffset — prefer
- *      facts.projectedSepAu when set, else mesh-radii schematic (no OrbitLine /
- *      no invented aAu; ban old companionStarLayoutOffset dump)
+ *      display-scaled facts.projectedSepAu when set (log1p + cap; catalog AU
+ *      unchanged), else mesh-radii schematic (no OrbitLine / no invented aAu;
+ *      ban old companionStarLayoutOffset dump)
  *
  * Usage: node scripts/orbit-sanity.mjs
  *        npm test
@@ -992,6 +993,77 @@ if (!Number.isFinite(c)) {
     fail("OrbitScene should soft-clear projectedSepAu vs primary+self+margin");
   } else {
     ok("OrbitScene soft-clears projectedSepAu against primary+self+margin");
+  }
+  // Display-only compression: raw Gaia-class seps must NOT be used verbatim.
+  if (!/Math\.log1p\(projected\)/.test(sceneSrc) && !/log1p\(projected\)/.test(sceneSrc)) {
+    fail("OrbitScene should compress projectedSepAu with log1p (display scale)");
+  } else if (
+    !/PROJECTED_SEP_LOG_SCALE/.test(sceneSrc) ||
+    !/PROJECTED_SEP_DISPLAY_CAP_AU/.test(sceneSrc)
+  ) {
+    fail("OrbitScene missing PROJECTED_SEP_LOG_SCALE / PROJECTED_SEP_DISPLAY_CAP_AU");
+  } else if (
+    // Ban raw projected as scene distance: `Math.max(projected, …)` without log.
+    /Math\.max\(\s*projected\s*,/.test(sceneSrc) &&
+    !/log1p\(projected\)/.test(sceneSrc)
+  ) {
+    fail("OrbitScene must not use raw projectedSepAu as scene distance");
+  } else {
+    ok("OrbitScene display-scales projectedSepAu (log1p + cap; not raw AU)");
+  }
+  // Comments: display-only; catalog / Facts keep true AU.
+  if (
+    !/display-only|Display-only|catalog AU unchanged|Facts.*true/i.test(sceneSrc)
+  ) {
+    fail("OrbitScene should document display-only compression; Facts show true AU");
+  } else {
+    ok("OrbitScene documents display-only sep compression (Facts show true AU)");
+  }
+  // Synthetic: projected=1067.5 → display sep ≤ CAP and ≥ schematic floor.
+  {
+    const PROJECTED_SEP_LOG_SCALE = 3.0;
+    const PROJECTED_SEP_DISPLAY_CAP_AU = 36;
+    const PROJECTED_SEP_ORBIT_FLOOR_FACTOR = 1.2;
+    const VISUAL_BINARY_SEP_FACTOR = 1.3;
+    const VISUAL_BINARY_MIN_SEP = 0.04;
+    const VISUAL_BINARY_CLEARANCE_MARGIN = 0.005;
+    const projected = 1067.5; // 55 Cnc B class
+    const rPrimary = 0.02;
+    const rSelf = 0.01;
+    const schematicSep = Math.max(
+      (rPrimary + rSelf) * VISUAL_BINARY_SEP_FACTOR,
+      VISUAL_BINARY_MIN_SEP,
+    );
+    const outerPrimaryOrbitA = 5.0; // e.g. outer planet aAu
+    const floor = Math.max(
+      schematicSep,
+      outerPrimaryOrbitA * PROJECTED_SEP_ORBIT_FLOOR_FACTOR,
+    );
+    const compressed = Math.log1p(projected) * PROJECTED_SEP_LOG_SCALE;
+    let sep = Math.min(
+      PROJECTED_SEP_DISPLAY_CAP_AU,
+      Math.max(floor, compressed),
+    );
+    sep = Math.max(sep, rPrimary + rSelf + VISUAL_BINARY_CLEARANCE_MARGIN);
+    // Raw 1067 must not appear as scene distance.
+    if (sep === projected || sep > PROJECTED_SEP_DISPLAY_CAP_AU) {
+      fail(
+        `synthetic 1067.5 au must not be used raw as scene sep (got ${sep})`,
+      );
+    } else if (!(sep <= PROJECTED_SEP_DISPLAY_CAP_AU && sep >= floor)) {
+      fail(
+        `synthetic 1067.5 display sep should be in [floor=${floor}, CAP=${PROJECTED_SEP_DISPLAY_CAP_AU}], got ${sep}`,
+      );
+    } else if (
+      !/log1p\(projected\)/.test(sceneSrc) ||
+      !/PROJECTED_SEP_DISPLAY_CAP_AU/.test(sceneSrc)
+    ) {
+      fail("source missing log1p / display cap for projected sep");
+    } else {
+      ok(
+        `synthetic projected=1067.5 → display sep=${sep.toFixed(3)} in [floor, CAP] (not raw)`,
+      );
+    }
   }
   // Synthetic: companion with facts.projectedSepAu → source prefers that sep.
   {
