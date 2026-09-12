@@ -38,11 +38,13 @@ const BodyKindSchema = z.enum([
 function isPrimaryHostKind(kind) {
   return kind === "star" || kind === "black_hole";
 }
-const MissionSchema = z.object({
-  launchDate: z.string().min(1),
-  status: z.string().min(1),
-  targets: z.array(z.string().min(1)).optional(),
-});
+const MissionSchema = z
+  .object({
+    launchDate: z.string().min(1).optional(),
+    status: z.string().min(1).optional(),
+    targets: z.array(z.string().min(1)).optional(),
+  })
+  .strict();
 const OrbitFrameSchema = z.enum([
   "heliocentric",
   "barycentric",
@@ -406,10 +408,10 @@ function collectWeakFieldFlags(body, centralId) {
     if (!body.orbit.frame) flags.push("orbit.frame missing");
   }
   if (body.kind === "star" && !body.horizonId) flags.push("horizonId missing (star)");
-  if (body.facts.radiusMeanKm == null && body.kind !== "satellite") {
+  if (body.facts.radiusMeanKm == null && body.kind !== "satellite" && body.kind !== "probe") {
     flags.push("facts.radiusMeanKm missing");
   }
-  if (body.facts.densityGcm3 == null && body.kind !== "star" && body.kind !== "satellite") {
+  if (body.facts.densityGcm3 == null && body.kind !== "star" && body.kind !== "satellite" && body.kind !== "probe") {
     flags.push("facts.densityGcm3 missing");
   }
   if (
@@ -537,8 +539,7 @@ for (const system of systemsToCheck) {
     if (b.id === central.id) continue;
     if (!b.orbit) {
       // Companion stars may be mesh-only until elements land (no invented orbits).
-      // Probes on hyperbolic escape omit Kepler (OrbitSchema e≤1); Viz owns path.
-      if (b.kind === "star" || b.kind === "probe") continue;
+      if (b.kind === "star") continue;
       hardErrors.push(`${b.id}: missing orbit while not central body`);
       continue;
     }

@@ -14,7 +14,7 @@ export const BodyKindSchema = z.enum([
   "satellite",
   /** Central compact host (omit orbit like a primary star). */
   "black_hole",
-  /** Spacecraft / probe (omit Kepler when hyperbolic escape; use horizonId). */
+  /** Spacecraft / probe (omit hyperbolic Kepler this slice; Viz owns path). */
   "probe",
 ]);
 
@@ -133,19 +133,6 @@ export const BodyMetaSchema = z
   });
 
 
-/**
- * Optional spacecraft mission block (probes). Additive — omit for natural bodies.
- * Never invent launch dates or targets.
- */
-export const MissionSchema = z.object({
-  /** ISO date (YYYY-MM-DD) or full ISO timestamp when known. */
-  launchDate: z.string().min(1),
-  /** Short status label, e.g. active / complete / hibernating. */
-  status: z.string().min(1),
-  /** Flyby / science targets (human names). */
-  targets: z.array(z.string().min(1)).optional(),
-});
-
 export const AppearanceSchema = z
   .object({
     /** Registry key for a future texture pack — never a URL, path, or bytes. */
@@ -161,6 +148,17 @@ export const SatelliteBlockSchema = z
   .object({
     /** Two-line element set lines (without name line) for provenance. */
     tle: z.tuple([z.string().min(1), z.string().min(1)]).optional(),
+  })
+  .strict();
+
+export const MissionSchema = z
+  .object({
+    /** ISO date (YYYY-MM-DD) or year (YYYY). */
+    launchDate: z.string().min(1).optional(),
+    /** Free-text status e.g. en_route | heliopause | flyby_complete. */
+    status: z.string().min(1).optional(),
+    /** Body ids or human target names (Jupiter, Pluto, …). */
+    targets: z.array(z.string().min(1)).optional(),
   })
   .strict();
 
@@ -185,7 +183,7 @@ export const BodySchema = z
     satellite: SatelliteBlockSchema.optional(),
     /** Optional render hint — textureId is a registry key only (no URLs/bytes). */
     appearance: AppearanceSchema.optional(),
-    /** Spacecraft mission facts (kind probe). */
+    /** Probe/spacecraft mission metadata (not SI facts). */
     mission: MissionSchema.optional(),
     meta: BodyMetaSchema,
   })
@@ -367,13 +365,13 @@ export const CatalogSchema = z
   });
 
 export type BodyKind = z.infer<typeof BodyKindSchema>;
-export type Mission = z.infer<typeof MissionSchema>;
 export type OrbitFrame = z.infer<typeof OrbitFrameSchema>;
 export type Confidence = z.infer<typeof ConfidenceSchema>;
 export type Orbit = z.infer<typeof OrbitSchema>;
 export type Facts = z.infer<typeof FactsSchema>;
 export type Appearance = z.infer<typeof AppearanceSchema>;
 export type SatelliteBlock = z.infer<typeof SatelliteBlockSchema>;
+export type Mission = z.infer<typeof MissionSchema>;
 export type BodyMeta = z.infer<typeof BodyMetaSchema>;
 export type Body = z.infer<typeof BodySchema>;
 export type SystemMeta = z.infer<typeof SystemMetaSchema>;

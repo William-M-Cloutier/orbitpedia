@@ -127,6 +127,7 @@ function schematicRadiusNonMoon(body: Body): number {
     asteroid: 0.05,
     /** Procedural sat marker — not a sphere radius from catalog. */
     satellite: 0.018,
+    probe: 0.04,
   };
   return tiers[body.kind as Exclude<BodyKind, "moon">] ?? 0.05;
 }
