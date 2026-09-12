@@ -235,7 +235,7 @@ export function SearchClient() {
             Search
           </h1>
           <p className="mt-2 max-w-2xl text-zinc-400">
-            Find a system or body, then open Explore. Compare and charts live on{" "}
+            Find a system or body. Compare on{" "}
             <Link href="/discover" className="text-sky-400 hover:underline">
               Discover
             </Link>

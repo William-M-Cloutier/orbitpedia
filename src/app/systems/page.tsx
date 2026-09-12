@@ -513,7 +513,8 @@ function SystemMapView() {
         memberIds: [],
         planetCount: n.planetCount,
         home: false,
-        blurb: "Archive system (sparse). Open Explore to load the full graph.",
+        hostSpectralType: n.hostSpectralType,
+        hasGas: n.hasGas,
       });
     } else {
       setSelectedSystem(null);
@@ -832,11 +833,9 @@ function SystemMapView() {
         <div className="mb-3 flex flex-wrap items-end justify-between gap-3">
           <div>
             <h1 className="text-lg font-medium text-zinc-100">System map</h1>
-            <p className="mt-0.5 max-w-2xl text-sm text-zinc-500">
-              All systems on one map — pan and zoom to explore. Names show for
-              systems in view. Favorites (star) stay slightly larger. Drag or
-              WASD to pan, Shift faster, scroll to zoom. Double-click or Open
-              Explore to enter.
+            <p className="mt-0.5 max-w-xl text-sm text-zinc-500">
+              Pan and zoom to explore. Drag or WASD (Shift faster); scroll to
+              zoom.
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
@@ -1044,8 +1043,7 @@ function SystemMapView() {
             <div className="pointer-events-auto absolute inset-0 z-20 flex flex-col items-center justify-center gap-3 bg-[#060a14]/92 px-6 text-center">
               <p className="text-sm text-zinc-300">No systems match</p>
               <p className="max-w-sm text-xs text-zinc-500">
-                Filters combine with AND across spectral type, planet count, gas
-                giant, and favorites. Within a chip group, selection is OR.
+                Nothing matches the current filters.
               </p>
               <button
                 type="button"
@@ -1254,10 +1252,8 @@ function SystemMapView() {
         </div>
 
         <p className="mt-2 text-xs text-zinc-600">
-          Drag or WASD to pan · Shift faster · scroll wheel zoom · Reset
-          recenters on Sol. Filters (spectral / planet / gas) OR within a
-          group, AND across groups (+ ★ Fav). Click empty space to dismiss
-          facts. Enter opens selected system.
+          Drag or WASD to pan · Shift faster · scroll to zoom · Reset recenters
+          on Sol · Enter opens the selected system
         </p>
       </div>
     </AppShell>

@@ -296,7 +296,7 @@ function DiscoverInner() {
 
         <section>
           <h2 className="mb-4 text-lg font-medium text-zinc-200">
-            Graphs · {system?.name ?? systemId}
+            Charts · {system?.name ?? systemId}
           </h2>
           <CatalogCharts systemId={systemId} />
         </section>
