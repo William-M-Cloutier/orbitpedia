@@ -8,8 +8,9 @@
     "start": "next start",
     "lint": "eslint",
     "validate:catalog": "node scripts/generate-catalog-index.mjs && node scripts/validate-catalog.mjs",
-    "test": "node scripts/orbit-sanity.mjs",
+    "test": "node scripts/orbit-sanity.mjs && node scripts/check-ui-copy.mjs",
     "orbit-sanity": "node scripts/orbit-sanity.mjs",
+    "check:ui-copy": "node scripts/check-ui-copy.mjs",
     "generate:catalog": "node scripts/generate-catalog-index.mjs",
     "ingest:nea-sample": "node scripts/ingest-exoplanet-archive.mjs --limit 100"
   },

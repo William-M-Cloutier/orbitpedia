@@ -158,6 +158,7 @@ Archive Facts / System blurbs are **factual-or-omit**:
   `sample ingest`, `hand-enriched`, lazy-load wiring notes, etc.).
 - Star `discoveryNotes` omitted unless a real archive note exists; prefer `discoveryDate`.
 - System `blurb` = hostname + optional spectral type + confirmed planet count + distance when known.
+- Facts/UI = human astronomy; thresholds/field names only in code comments + docs.
 
 ## hasGas filter (index + system chunk)
 
