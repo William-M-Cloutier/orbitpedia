@@ -27,10 +27,10 @@ function softEmissiveHex(hex: string): string {
   return `#${c.getHexString()}`;
 }
 
-/** Soft accretion glow when a black hole is focused (still ≤ soft-select band). */
-const BH_FOCUS_EMISSIVE_INTENSITY = 0.3;
-/** Dim disk glow so unfocused BH hosts stay readable. */
-const BH_IDLE_EMISSIVE_INTENSITY = 0.1;
+/** Stronger accretion glow when a black hole is focused. */
+const BH_FOCUS_EMISSIVE_INTENSITY = 0.4;
+/** Dim disk glow so unfocused BH hosts stay readable (not invisible). */
+const BH_IDLE_EMISSIVE_INTENSITY = 0.09;
 
 function buildProceduralMaterial(
   family: SurfaceFamily,
@@ -48,14 +48,14 @@ function buildProceduralMaterial(
     });
   }
   if (family === "black_hole") {
-    // Dark MeshStandard + accretion map×catalog tint. Readable unfocused
-    // (warm disk band, not invisible); stronger glow when focused.
+    // Darker MeshStandard + thin bright accretion map×catalog tint.
+    // Readable unfocused (band, not invisible); stronger emissive when focused.
     // Procedural only — never requires textureId / registry maps.
     return new THREE.MeshStandardMaterial({
       color: colorHex,
       map,
-      roughness: 0.72,
-      metalness: 0.18,
+      roughness: 0.88,
+      metalness: 0.1,
       emissive: softEmissiveHex(emissiveHex),
       emissiveIntensity: focused
         ? BH_FOCUS_EMISSIVE_INTENSITY
