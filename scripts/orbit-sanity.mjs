@@ -1861,7 +1861,7 @@ if (!Number.isFinite(c)) {
 
 
 
-// Probe markers (marker-only Explore; no invented path.waypoints).
+// Probe craft mesh + optional path.waypoints Line; marker-only still OK.
 {
   const sceneSrc = fs.readFileSync(path.join(ROOT, "src/viz/OrbitScene.tsx"), "utf8");
   const fitSrc = fs.readFileSync(path.join(ROOT, "src/viz/schematicFit.ts"), "utf8");
@@ -1879,11 +1879,13 @@ if (!Number.isFinite(c)) {
     ok("isExploreSceneBody includes probes (kind===probe always mesh)");
   }
 
-  // Marker layout helper — no invented path.waypoints / Horizons samples.
+  // Marker layout helper — fail-open when no waypoints; never invent samples.
   if (!/function probeMarkerOffset/.test(sceneSrc)) {
     fail("OrbitScene missing probeMarkerOffset marker layout helper");
   } else if (!/probeMarkerDisplaySep/.test(fitSrc) || !/probeMarkerDisplaySep/.test(sceneSrc)) {
     fail("probeMarkerDisplaySep helper missing (schematicFit + OrbitScene)");
+  } else if (!/hasProbePathWaypoints/.test(fitSrc) || !/hasProbePathWaypoints/.test(sceneSrc)) {
+    fail("hasProbePathWaypoints helper missing (schematicFit + OrbitScene)");
   } else if (/path\.waypoints\s*=/.test(sceneSrc) || /waypoints:\s*\[/.test(sceneSrc)) {
     fail("OrbitScene must not invent path.waypoints for probes");
   } else if (!/NOT an ephemeris/.test(sceneSrc) && !/NOT an ephemeris/.test(fitSrc)) {
@@ -1892,11 +1894,32 @@ if (!Number.isFinite(c)) {
     ok("probe marker layout helper present; no invented path.waypoints");
   }
 
-  // Distinct mesh (not planet sphere) + OrbitLine still gated.
-  if (!/octahedronGeometry/.test(sceneSrc)) {
-    fail("BodyMesh should use distinct octahedronGeometry for probes");
+  // Procedural ProbeBodyMesh (bus + HGA + boom) wired from BodyMesh kind===probe.
+  if (!/const ProbeBodyMesh/.test(sceneSrc) || !/ProbeBodyMesh/.test(sceneSrc)) {
+    fail("OrbitScene missing ProbeBodyMesh craft component");
+  } else if (!/kind === "probe"/.test(sceneSrc) || !/<ProbeBodyMesh/.test(sceneSrc)) {
+    fail("BodyMesh should wire kind===probe to ProbeBodyMesh");
+  } else if (!/getSatSharedMaterial/.test(sceneSrc) && !/getProbeSharedMaterial/.test(sceneSrc)) {
+    fail("ProbeBodyMesh should use shared materials (getSatSharedMaterial / getProbeSharedMaterial)");
+  } else if (!/frustumCulled/.test(sceneSrc)) {
+    fail("ProbeBodyMesh meshes should set frustumCulled");
+  } else if (!/boxGeometry/.test(sceneSrc)) {
+    fail("ProbeBodyMesh should use procedural boxGeometry bus (not planet sphere only)");
   } else {
-    ok("BodyMesh probe look uses octahedronGeometry (not planet sphere)");
+    ok("BodyMesh wires ProbeBodyMesh craft (shared materials + frustumCulled)");
+  }
+
+  // path.waypoints → drei Line polyline; craft at last waypoint; marker-only OK.
+  if (!/const ProbePathLine/.test(sceneSrc) || !/<ProbePathLine/.test(sceneSrc)) {
+    fail("OrbitScene missing ProbePathLine sibling for path.waypoints");
+  } else if (!/path\?\.waypoints/.test(sceneSrc) && !/hasProbePathWaypoints/.test(sceneSrc)) {
+    fail("OrbitScene should read body.path.waypoints (never invent)");
+  } else if (!/<Line/.test(sceneSrc)) {
+    fail("ProbePathLine should draw drei Line through waypoints");
+  } else if (!/eclipticToSceneFaceOn/.test(sceneSrc)) {
+    fail("ProbePathLine / waypoint pose should transform ecliptic→scene with faceOn");
+  } else {
+    ok("path.waypoints ProbePathLine + last-waypoint craft pose wired; marker-only fail-open OK");
   }
 
   // Schematic tier 0.04 kept; Prop/True readable floor.
@@ -1908,7 +1931,7 @@ if (!Number.isFinite(c)) {
     ok("sizeTiers: probe schematic 0.04 + Prop/True readable floor");
   }
 
-  // Solar catalog: 3 probes (voyager-1/2, new-horizons).
+  // Solar catalog: 3 probes (voyager-1/2, new-horizons) — marker-only OK (no invented waypoints).
   const solarPath = path.join(ROOT, "src/data/systems/solar.json");
   const solar = JSON.parse(fs.readFileSync(solarPath, "utf8"));
   const memberIds = solar.memberIds || [];
@@ -1930,7 +1953,7 @@ if (!Number.isFinite(c)) {
       else if (card.path?.waypoints) fail(`${id} must not invent path.waypoints`);
       else probeCount++;
     }
-    if (probeCount === 3) ok("solar catalog has 3 probes (voyager-1/2, new-horizons)");
+    if (probeCount === 3) ok("solar catalog has 3 probes (voyager-1/2, new-horizons; marker-only OK)");
   }
 }
 
