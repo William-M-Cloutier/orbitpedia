@@ -232,14 +232,15 @@ export { hasUsableOrbit };
 
 /** Explore deep-link for a body (includes ?system= for non-home). */
 export function exploreHref(bodyId: string, systemId?: string): string {
-  const body = bodyById.get(bodyId);
+  const body = bodyById.get(bodyId) ?? peekSessionBody(bodyId);
   const sid = systemId ?? body?.systemId;
   const homeId = getHomeSystem().id;
   const params = new URLSearchParams();
-  if (sid && sid !== homeId && systemById.has(sid)) {
+  // Archive systems are not in curated systemById — still deep-link ?system=
+  if (sid && sid !== homeId) {
     params.set("system", sid);
   }
-  if (body) params.set("focus", bodyId);
+  if (bodyId) params.set("focus", bodyId);
   const qs = params.toString();
   return qs ? `/?${qs}` : "/";
 }
@@ -247,8 +248,16 @@ export function exploreHref(bodyId: string, systemId?: string): string {
 /** Explore deep-link for a system (no focus). Home → `/`. */
 export function exploreSystemHref(systemId: string): string {
   const homeId = getHomeSystem().id;
-  if (!systemById.has(systemId) || systemId === homeId) return "/";
+  if (systemId === homeId) return "/";
   return `/?system=${encodeURIComponent(systemId)}`;
+}
+
+/** Body detail deep-link; includes ?system= so archive ids resolve. */
+export function bodyHref(bodyId: string, systemId?: string): string {
+  const body = bodyById.get(bodyId) ?? peekSessionBody(bodyId);
+  const sid = systemId ?? body?.systemId;
+  if (sid) return `/body/${encodeURIComponent(bodyId)}?system=${encodeURIComponent(sid)}`;
+  return `/body/${encodeURIComponent(bodyId)}`;
 }
 
 export const KIND_LABEL: Record<BodyKind, string> = {

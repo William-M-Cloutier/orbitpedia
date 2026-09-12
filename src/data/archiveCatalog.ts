@@ -227,3 +227,61 @@ export async function listSystemsAsync(): Promise<
 export function isArchiveOnlySystemId(systemId: string): boolean {
   return !getSystem(systemId);
 }
+
+/**
+ * Infer likely archive systemId from a body id (`hd-215152-b` → `hd-215152`).
+ * Archive ingest uses `${systemId}-${pl_letter}`.
+ */
+export function inferSystemIdFromBodyId(bodyId: string): string | undefined {
+  const i = bodyId.lastIndexOf("-");
+  if (i <= 0) return undefined;
+  const suffix = bodyId.slice(i + 1);
+  // pl_letter is typically a short letter (b, c, …) or rare multi-char
+  if (!/^[a-z0-9]{1,4}$/i.test(suffix)) return undefined;
+  return bodyId.slice(0, i);
+}
+
+/**
+ * Resolve an archive (or curated-via-async) body by id. Primes session graph.
+ * Prefer systemIdHint from `?system=` / Details link when available.
+ */
+export async function getBodyAsync(
+  bodyId: string,
+  systemIdHint?: string,
+): Promise<Body | undefined> {
+  const tried = new Set<string>();
+  const trySystem = async (sid: string): Promise<Body | undefined> => {
+    if (!sid || tried.has(sid)) return undefined;
+    tried.add(sid);
+    try {
+      const g = await getSystemGraphAsync(sid);
+      return g.bodies.find((b) => b.id === bodyId);
+    } catch {
+      return undefined;
+    }
+  };
+
+  if (systemIdHint) {
+    const hit = await trySystem(systemIdHint);
+    if (hit) return hit;
+  }
+  const inferred = inferSystemIdFromBodyId(bodyId);
+  if (inferred) {
+    const hit = await trySystem(inferred);
+    if (hit) return hit;
+  }
+
+  // Prefix scan of archive index (lean — one index fetch, few graph fetches).
+  try {
+    const archive = await listArchiveSystems();
+    for (const s of archive) {
+      if (bodyId === s.id || bodyId.startsWith(`${s.id}-`)) {
+        const hit = await trySystem(s.id);
+        if (hit) return hit;
+      }
+    }
+  } catch {
+    /* index optional */
+  }
+  return undefined;
+}

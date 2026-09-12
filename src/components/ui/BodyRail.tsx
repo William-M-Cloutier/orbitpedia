@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCallback, useMemo, useState } from "react";
 import {
+  bodyHref,
   getBodiesForSystem,
   getHomeSystem,
   KIND_LABEL,
@@ -288,7 +289,7 @@ export function BodyRail({
           </>
         ) : (
           <>
-            <Link href={`/body/${b.id}`} className={rowClass}>
+            <Link href={bodyHref(b.id, b.systemId)} className={rowClass}>
               {label}
             </Link>
             {twisty}

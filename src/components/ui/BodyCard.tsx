@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Body } from "@/data/schema";
-import { KIND_LABEL } from "@/data/catalog";
+import { bodyHref, KIND_LABEL } from "@/data/catalog";
 import { formatAu, formatMass, formatRadius } from "@/lib/units";
 
 type Props = {
@@ -66,7 +66,7 @@ export function BodyCard({ body, selected, onSelect }: Props) {
         )}
       </dl>
       <Link
-        href={`/body/${body.id}`}
+        href={bodyHref(body.id, body.systemId)}
         className="mt-3 inline-block text-sm text-sky-400 hover:text-sky-300"
       >
         Details →

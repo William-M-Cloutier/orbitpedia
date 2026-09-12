@@ -1,159 +1,40 @@
-import Link from "next/link";
-import { notFound } from "next/navigation";
-import { AppShell } from "@/components/ui/AppShell";
-import { BodyRail } from "@/components/ui/BodyRail";
-import { bodies, exploreHref, getBody, getHomeSystem, KIND_LABEL } from "@/data/catalog";
-import { bodyProvenance } from "@/data/schema";
-import { keyFactRows } from "@/lib/factsDisplay";
-import { periodFromA } from "@/lib/kepler";
-import { formatAu, formatPeriodDays } from "@/lib/units";
-import { CatalogChartsLazy } from "@/viz/CatalogChartsLazy";
+import { Suspense } from "react";
+import { bodies, getBody } from "@/data/catalog";
+import { BodyDetailView } from "@/components/ui/BodyDetailView";
+import { ArchiveBodyClient } from "./ArchiveBodyClient";
 
 type Props = { params: Promise<{ id: string }> };
 
+/** Curated bodies only — archive ids resolve dynamically via client bridge. */
 export function generateStaticParams() {
   return bodies.map((b) => ({ id: b.id }));
 }
+
+export const dynamicParams = true;
 
 export async function generateMetadata({ params }: Props) {
   const { id } = await params;
   const body = getBody(id);
   return {
-    title: body ? `${body.name} · Orbitpedia` : "Body · Orbitpedia",
+    title: body ? `${body.name} · Orbitpedia` : `${id} · Orbitpedia`,
   };
 }
 
 export default async function BodyPage({ params }: Props) {
   const { id } = await params;
-  const body = getBody(id);
-  if (!body) notFound();
+  const curated = getBody(id);
+  if (curated) {
+    return <BodyDetailView body={curated} />;
+  }
 
-  const period =
-    body.orbit?.periodD ??
-    (body.orbit ? periodFromA(body.orbit.aAu) : undefined);
-
+  // Archive / unknown at build time — never 404; lazy resolve on client.
   return (
-    <AppShell rail={<BodyRail activeId={body.id} systemId={body.systemId} />}>
-      <div className="mx-auto max-w-4xl space-y-8 p-6">
-        <div className="flex flex-wrap items-start justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <span
-              className="h-4 w-4 rounded-full"
-              style={{ background: body.color ?? "#888" }}
-            />
-            <div>
-              <h1 className="text-3xl font-semibold tracking-tight text-zinc-50">
-                {body.name}
-              </h1>
-              <p className="text-sm text-zinc-500">
-                {KIND_LABEL[body.kind]}
-                {body.systemId !== getHomeSystem().id
-                  ? ` · ${body.systemId}`
-                  : ""}
-                {body.aliases?.length
-                  ? ` · also ${body.aliases.join(", ")}`
-                  : ""}
-              </p>
-            </div>
-          </div>
-          <Link
-            href={exploreHref(body.id, body.systemId)}
-            className="rounded-lg bg-sky-500/20 px-4 py-2 text-sm text-sky-200 hover:bg-sky-500/30"
-          >
-            Open in Explore →
-          </Link>
-        </div>
-
-        <section className="rounded-xl border border-white/10 bg-white/[0.03] p-5">
-          <h2 className="mb-3 text-sm font-medium uppercase tracking-wider text-zinc-500">
-            Overview
-          </h2>
-          <p className="text-zinc-300">
-            {body.facts.discoveryNotes ??
-              `${body.name} is a ${KIND_LABEL[body.kind].toLowerCase()} in the Orbitpedia Phase 1 catalog.`}
-          </p>
-          <p className="mt-2 text-xs text-zinc-600">
-            Source: {bodyProvenance(body)}
-          </p>
-        </section>
-
-        <section>
-          <h2 className="mb-3 text-lg font-medium text-zinc-200">Key facts</h2>
-          <dl className="grid gap-3 sm:grid-cols-2">
-            {keyFactRows(body).map((row) => (
-              <div
-                key={row.key}
-                className="rounded-lg border border-white/10 bg-white/[0.02] px-4 py-3"
-              >
-                <dt className="text-xs text-zinc-500">{row.label}</dt>
-                <dd
-                  className={
-                    row.unknown
-                      ? "mt-0.5 text-zinc-500"
-                      : "mt-0.5 text-zinc-100"
-                  }
-                  title={row.approximate ? "Approximate" : undefined}
-                >
-                  {row.value}
-                  {row.unknown && row.reason ? (
-                    <span className="mt-0.5 block text-[11px] text-zinc-600">
-                      {row.reason}
-                    </span>
-                  ) : null}
-                </dd>
-              </div>
-            ))}
-          </dl>
-        </section>
-
-        {body.orbit && (
-          <section>
-            <h2 className="mb-3 text-lg font-medium text-zinc-200">Orbit</h2>
-            <dl className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {(
-                [
-                  ["Semi-major axis a", formatAu(body.orbit.aAu)],
-                  ["Eccentricity e", body.orbit.e.toPrecision(4)],
-                  ["Inclination i", `${body.orbit.iDeg.toPrecision(4)}°`],
-                  ["Ω (longitude of node)", `${body.orbit.omDeg.toPrecision(4)}°`],
-                  ["ω (argument of periapsis)", `${body.orbit.wDeg.toPrecision(4)}°`],
-                  ["Mean anomaly M", `${body.orbit.maDeg.toPrecision(4)}°`],
-                  [
-                    "Period",
-                    period != null ? formatPeriodDays(period) : null,
-                  ],
-                  [
-                    "Epoch (JD)",
-                    body.orbit.epochJd != null
-                      ? String(body.orbit.epochJd)
-                      : null,
-                  ],
-                  ["Frame", body.orbit.frame],
-                ] as Array<[string, string | null]>
-              )
-                .filter(([, v]) => v != null)
-                .map(([k, v]) => (
-                  <div
-                    key={k}
-                    className="rounded-lg border border-white/10 bg-white/[0.02] px-4 py-3"
-                  >
-                    <dt className="text-xs text-zinc-500">{k}</dt>
-                    <dd className="mt-0.5 font-mono text-sm text-zinc-100">
-                      {v}
-                    </dd>
-                  </div>
-                ))}
-            </dl>
-          </section>
-        )}
-
-        <section>
-          <h2 className="mb-4 text-lg font-medium text-zinc-200">
-            Catalog graphs
-          </h2>
-          <CatalogChartsLazy systemId={body.systemId} focusId={body.id} />
-        </section>
-      </div>
-    </AppShell>
+    <Suspense
+      fallback={
+        <div className="p-6 text-sm text-zinc-500">Loading body…</div>
+      }
+    >
+      <ArchiveBodyClient bodyId={id} />
+    </Suspense>
   );
 }

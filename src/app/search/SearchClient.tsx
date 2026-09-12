@@ -13,6 +13,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { AppShell } from "@/components/ui/AppShell";
 import { BodyRail } from "@/components/ui/BodyRail";
 import {
+  bodyHref,
   exploreHref,
   exploreSystemHref,
   getHomeSystem,
@@ -389,7 +390,7 @@ export function SearchClient() {
                           </span>
                         </button>
                         <Link
-                          href={`/body/${b.id}`}
+                          href={bodyHref(b.id, b.systemId)}
                           className="shrink-0 text-xs text-zinc-500 hover:text-sky-400"
                           onClick={(e) => e.stopPropagation()}
                         >

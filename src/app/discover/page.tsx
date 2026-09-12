@@ -3,10 +3,12 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense } from "react";
+import Link from "next/link";
 import { AppShell } from "@/components/ui/AppShell";
 import { BodyRail } from "@/components/ui/BodyRail";
 import { BodyCard } from "@/components/ui/BodyCard";
 import {
+  exploreSystemHref,
   getBodiesForSystem,
   getBody,
   getHomeSystem,
@@ -40,6 +42,7 @@ function DiscoverInner() {
     Array<System | ArchiveSystemSummary>
   >([]);
   const [graphReady, setGraphReady] = useState(false);
+  const [pickerOpen, setPickerOpen] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -98,6 +101,7 @@ function DiscoverInner() {
       if (id !== homeId) params.set("system", id);
       const qs = params.toString();
       router.replace(qs ? `/discover?${qs}` : "/discover", { scroll: false });
+      setPickerOpen(false);
     },
     [router, homeId],
   );
@@ -117,6 +121,25 @@ function DiscoverInner() {
 
   const system = graphReady ? getSystem(systemId) : undefined;
 
+  /** Selected first, home/Sol second (unless selected is home), then rest. */
+  const orderedSystems = useMemo(() => {
+    const selectedSys = systems.find((s) => s.id === systemId);
+    const homeSys = systems.find((s) => s.id === homeId);
+    const rest = systems.filter(
+      (s) => s.id !== systemId && s.id !== homeId,
+    );
+    const out: Array<System | ArchiveSystemSummary> = [];
+    if (selectedSys) out.push(selectedSys);
+    if (homeSys && homeSys.id !== systemId) out.push(homeSys);
+    out.push(...rest);
+    return out;
+  }, [systems, systemId, homeId]);
+
+  const selectedLabel =
+    system?.name ??
+    systems.find((s) => s.id === systemId)?.name ??
+    systemId;
+
   return (
     <AppShell
       rail={
@@ -130,27 +153,66 @@ function DiscoverInner() {
     >
       <div className="mx-auto max-w-6xl space-y-8 p-6">
         <section>
-          <h1 className="text-2xl font-semibold text-zinc-50">Discover</h1>
-          <p className="mt-2 text-zinc-400">
-            Browse cards and compare up to {MAX_COMPARE} bodies side by side
-            within one system.
-          </p>
-          <div className="mt-4 flex flex-wrap gap-2">
-            {systems.map((s) => (
-              <button
-                key={s.id}
-                type="button"
-                onClick={() => setSystem(s.id)}
-                className={`rounded-lg px-3 py-1.5 text-sm ${
-                  s.id === systemId
-                    ? "bg-sky-500/25 text-sky-100"
-                    : "bg-white/5 text-zinc-400 hover:bg-white/10 hover:text-zinc-200"
-                }`}
-              >
-                {s.name}
-              </button>
-            ))}
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <h1 className="text-2xl font-semibold text-zinc-50">Discover</h1>
+              <p className="mt-2 text-zinc-400">
+                Browse cards and compare up to {MAX_COMPARE} bodies side by side
+                within one system.
+              </p>
+            </div>
+            <Link
+              href={exploreSystemHref(systemId)}
+              className="rounded-lg bg-sky-500/20 px-4 py-2 text-sm font-medium text-sky-100 hover:bg-sky-500/30"
+            >
+              Visit system →
+            </Link>
           </div>
+
+          <div className="mt-4">
+            <button
+              type="button"
+              onClick={() => setPickerOpen((o) => !o)}
+              className="flex w-full max-w-xl items-center justify-between gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-left text-sm hover:bg-white/[0.07]"
+              aria-expanded={pickerOpen}
+            >
+              <span>
+                <span className="text-[11px] font-medium uppercase tracking-wider text-zinc-500">
+                  Selected system
+                </span>
+                <span className="mt-0.5 block font-medium text-zinc-100">
+                  {selectedLabel}
+                </span>
+              </span>
+              <span className="text-zinc-500" aria-hidden>
+                {pickerOpen ? "▾" : "▸"}
+              </span>
+            </button>
+            {pickerOpen ? (
+              <div className="mt-2 max-h-64 max-w-xl overflow-y-auto rounded-lg border border-white/10 bg-zinc-950/90 p-2">
+                <div className="flex flex-wrap gap-2">
+                  {orderedSystems.map((s) => (
+                    <button
+                      key={s.id}
+                      type="button"
+                      onClick={() => setSystem(s.id)}
+                      className={`rounded-lg px-3 py-1.5 text-sm ${
+                        s.id === systemId
+                          ? "bg-sky-500/25 text-sky-100"
+                          : s.id === homeId
+                            ? "bg-amber-500/15 text-amber-100 hover:bg-amber-500/25"
+                            : "bg-white/5 text-zinc-400 hover:bg-white/10 hover:text-zinc-200"
+                      }`}
+                    >
+                      {s.name}
+                      {s.id === homeId ? " · home" : ""}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+          </div>
+
           {system?.blurb ? (
             <p className="mt-3 max-w-2xl text-sm text-zinc-500">{system.blurb}</p>
           ) : null}
