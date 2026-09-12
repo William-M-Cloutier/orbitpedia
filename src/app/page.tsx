@@ -92,6 +92,8 @@ function ExploreHome() {
   const [sizeMode, setSizeMode] = useState<SizeMode>(DEFAULT_SIZE_MODE);
   /** Session-only — never written to catalog JSON. Cleared on system switch. */
   const [hiddenIds, setHiddenIds] = useState<Set<string>>(() => new Set());
+  const [hideProbePaths, setHideProbePaths] = useState(false);
+  const [hideProbes, setHideProbes] = useState(false);
   const focus = focusId ? getBody(focusId) : undefined;
   const selectedPoi = selectedPoiId ? getPoi(selectedPoiId) : undefined;
   const simDaysPerSec = useMemo(
@@ -105,6 +107,8 @@ function ExploreHome() {
   // Drop session hide set when leaving a system (no leftover filters).
   useEffect(() => {
     setHiddenIds(new Set());
+    setHideProbePaths(false);
+    setHideProbes(false);
   }, [systemId]);
 
   // Earth sats: 1 day / 60s wall (not Sol Default). Slow remains a user option.
@@ -227,6 +231,10 @@ function ExploreHome() {
           onFocus={onRailFocus}
           hiddenIds={hiddenIds}
           onToggleHidden={onToggleHidden}
+          hideProbePaths={hideProbePaths}
+          onHideProbePathsChange={isHome ? setHideProbePaths : undefined}
+          hideProbes={hideProbes}
+          onHideProbesChange={isHome ? setHideProbes : undefined}
         />
       }
     >
@@ -278,6 +286,8 @@ function ExploreHome() {
                 simDaysPerSec={simDaysPerSec}
                 sizeMode={sizeMode}
                 hiddenIds={hiddenIds}
+                hideProbePaths={isHome ? hideProbePaths : false}
+                hideProbes={isHome ? hideProbes : false}
               />
               <div className="pointer-events-none absolute left-3 top-3 z-10 flex flex-col gap-2 items-start">
                 {!isEarthSats ? (

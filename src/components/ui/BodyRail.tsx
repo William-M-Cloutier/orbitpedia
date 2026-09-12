@@ -52,6 +52,12 @@ type Props = {
   onToggleHidden?: (id: string) => void;
   /** Limit rail to one system graph (default: home). */
   systemId?: string;
+  /** Sol Explore: hide all probe path polylines (default false = visible). */
+  hideProbePaths?: boolean;
+  onHideProbePathsChange?: (hide: boolean) => void;
+  /** Sol Explore: hide all probe craft meshes (default false = visible). */
+  hideProbes?: boolean;
+  onHideProbesChange?: (hide: boolean) => void;
 };
 
 type RailRow = { body: Body; depth: number; childCount: number };
@@ -124,6 +130,10 @@ export function BodyRail({
   hiddenIds,
   onToggleHidden,
   systemId,
+  hideProbePaths = false,
+  onHideProbePathsChange,
+  hideProbes = false,
+  onHideProbesChange,
 }: Props) {
   const [filter, setFilter] = useState<(typeof FILTERS)[number]>("all");
   const [open, setOpen] = useState(true);
@@ -419,22 +429,69 @@ export function BodyRail({
           <div className="space-y-2">
             {groupedSections.map((g) => {
               const closed = groupCollapsed.has(g.kind);
+              const showProbeToggles =
+                g.kind === "probe" &&
+                (onHideProbePathsChange != null || onHideProbesChange != null);
               return (
                 <div key={g.kind}>
-                  <button
-                    type="button"
-                    onClick={() => toggleGroup(g.kind)}
-                    className="mb-0.5 flex w-full items-center gap-1 rounded px-1.5 py-1 text-left text-[11px] font-medium uppercase tracking-wider text-zinc-500 hover:bg-white/5 hover:text-zinc-300"
-                    aria-expanded={!closed}
-                  >
-                    <span className="font-mono text-zinc-600" aria-hidden>
-                      {closed ? "▸" : "▾"}
-                    </span>
-                    <span>{g.label}</span>
-                    <span className="ml-auto tabular-nums text-zinc-600">
-                      {g.rows.filter((r) => r.depth === 0).length}
-                    </span>
-                  </button>
+                  <div className="mb-0.5 flex items-center gap-0.5">
+                    <button
+                      type="button"
+                      onClick={() => toggleGroup(g.kind)}
+                      className="flex min-w-0 flex-1 items-center gap-1 rounded px-1.5 py-1 text-left text-[11px] font-medium uppercase tracking-wider text-zinc-500 hover:bg-white/5 hover:text-zinc-300"
+                      aria-expanded={!closed}
+                    >
+                      <span className="font-mono text-zinc-600" aria-hidden>
+                        {closed ? "▸" : "▾"}
+                      </span>
+                      <span>{g.label}</span>
+                      <span className="ml-auto tabular-nums text-zinc-600">
+                        {g.rows.filter((r) => r.depth === 0).length}
+                      </span>
+                    </button>
+                  </div>
+                  {showProbeToggles ? (
+                    <div className="mb-1 flex flex-wrap gap-1 px-1">
+                      {onHideProbePathsChange ? (
+                        <button
+                          type="button"
+                          onClick={() =>
+                            onHideProbePathsChange(!hideProbePaths)
+                          }
+                          className={`rounded px-1.5 py-0.5 text-[10px] ${
+                            hideProbePaths
+                              ? "bg-amber-500/15 text-amber-200/90"
+                              : "bg-white/5 text-zinc-500 hover:text-zinc-300"
+                          }`}
+                          aria-pressed={hideProbePaths}
+                          title={
+                            hideProbePaths
+                              ? "Show probe paths"
+                              : "Hide probe paths"
+                          }
+                        >
+                          {hideProbePaths ? "Paths hidden" : "Hide paths"}
+                        </button>
+                      ) : null}
+                      {onHideProbesChange ? (
+                        <button
+                          type="button"
+                          onClick={() => onHideProbesChange(!hideProbes)}
+                          className={`rounded px-1.5 py-0.5 text-[10px] ${
+                            hideProbes
+                              ? "bg-amber-500/15 text-amber-200/90"
+                              : "bg-white/5 text-zinc-500 hover:text-zinc-300"
+                          }`}
+                          aria-pressed={hideProbes}
+                          title={
+                            hideProbes ? "Show probes" : "Hide probes"
+                          }
+                        >
+                          {hideProbes ? "Probes hidden" : "Hide probes"}
+                        </button>
+                      ) : null}
+                    </div>
+                  ) : null}
                   {!closed ? (
                     g.rows.length > 0 ? (
                       <ul>{g.rows.map((row) => renderRow(row))}</ul>
