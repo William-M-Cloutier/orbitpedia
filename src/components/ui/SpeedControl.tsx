@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 /** 1 simulated Earth day per 24h wall-clock (fun; not default). */
 export const REALISM_DAYS_PER_SEC = 1 / 86_400;
@@ -28,11 +28,27 @@ export const SPEED_PRESETS: SpeedPreset[] = [
   { id: "warp", label: "Warp", multiple: 2_592_000 }, // 30 day / s
 ];
 
+/**
+ * Earth-sats Explore only — LEO-friendly table.
+ * Default = 1 simulated day / 60s wall (1440× realism).
+ */
+export const EARTH_SATS_SPEED_PRESETS: SpeedPreset[] = [
+  { id: "realism", label: "Realism", multiple: 1 },
+  { id: "slow", label: "Slow", multiple: 288 }, // 1 day / 5 min
+  { id: "default", label: "Default", multiple: 1_440 }, // 1 day / 60s
+  { id: "fast", label: "Fast", multiple: 4_320 }, // 1 day / 20s
+  { id: "warp", label: "Warp", multiple: 8_640 }, // 1 day / 10s
+];
+
 export const DEFAULT_SPEED_PRESET = SPEED_PRESETS.find((p) => p.id === "default")!;
 export const SLOW_SPEED_PRESET = SPEED_PRESETS.find((p) => p.id === "slow")!;
 
-/** Earth sats Explore default: 1 simulated day per 60s wall (same rate as Slow). */
-export const EARTH_SATS_SPEED_MULTIPLE = SLOW_SPEED_PRESET.multiple;
+export const EARTH_SATS_DEFAULT_SPEED_PRESET = EARTH_SATS_SPEED_PRESETS.find(
+  (p) => p.id === "default",
+)!;
+
+/** Earth sats Explore default: 1 simulated day per 60s wall. */
+export const EARTH_SATS_SPEED_MULTIPLE = EARTH_SATS_DEFAULT_SPEED_PRESET.multiple;
 
 export function multipleToDaysPerSec(multiple: number): number {
   return multiple * REALISM_DAYS_PER_SEC;
@@ -64,26 +80,27 @@ function formatSpeed(daysPerSec: number): string {
   return `${Math.round(daysPerSec)} d/s`;
 }
 
-const LOG_MIN = Math.log10(1);
-const LOG_MAX = Math.log10(SPEED_PRESETS[SPEED_PRESETS.length - 1].multiple);
-
-function multipleToSlider(multiple: number): number {
-  const m = Math.min(
-    Math.max(multiple, 1),
-    SPEED_PRESETS[SPEED_PRESETS.length - 1].multiple,
-  );
+function multipleToSlider(multiple: number, maxMultiple: number): number {
+  const LOG_MIN = Math.log10(1);
+  const LOG_MAX = Math.log10(maxMultiple);
+  const m = Math.min(Math.max(multiple, 1), maxMultiple);
   return (Math.log10(m) - LOG_MIN) / (LOG_MAX - LOG_MIN);
 }
 
-function sliderToMultiple(t: number): number {
+function sliderToMultiple(t: number, maxMultiple: number): number {
+  const LOG_MIN = Math.log10(1);
+  const LOG_MAX = Math.log10(maxMultiple);
   const log = LOG_MIN + Math.min(1, Math.max(0, t)) * (LOG_MAX - LOG_MIN);
   return 10 ** log;
 }
 
-function nearestPreset(multiple: number): SpeedPresetId | null {
+function nearestPreset(
+  multiple: number,
+  presets: SpeedPreset[],
+): SpeedPresetId | null {
   let best: SpeedPreset | null = null;
   let bestErr = Infinity;
-  for (const p of SPEED_PRESETS) {
+  for (const p of presets) {
     const err = Math.abs(Math.log(multiple) - Math.log(p.multiple));
     if (err < bestErr) {
       bestErr = err;
@@ -99,37 +116,41 @@ type Props = {
   onMultipleChange: (multiple: number) => void;
   /**
    * When false, preset chips only light after a chip click (not nearest-match).
-   * Used for earth-sats 1d/60s default so Slow is not auto-selected.
    */
   highlightNearestPreset?: boolean;
+  /** Chip / slider table. Defaults to Sol Explore SPEED_PRESETS. */
+  presets?: SpeedPreset[];
 };
 
 export function SpeedControl({
   multiple,
   onMultipleChange,
   highlightNearestPreset = true,
+  presets = SPEED_PRESETS,
 }: Props) {
+  const maxMultiple = presets[presets.length - 1]?.multiple ?? SPEED_PRESETS[SPEED_PRESETS.length - 1].multiple;
   const daysPerSec = multipleToDaysPerSec(multiple);
-  const nearest = nearestPreset(multiple);
+  const nearest = useMemo(
+    () => nearestPreset(multiple, presets),
+    [multiple, presets],
+  );
   const [clickedPreset, setClickedPreset] = useState<SpeedPresetId | null>(
     null,
   );
 
   useEffect(() => {
     if (!clickedPreset) return;
-    const p = SPEED_PRESETS.find((x) => x.id === clickedPreset);
+    const p = presets.find((x) => x.id === clickedPreset);
     if (!p) {
       setClickedPreset(null);
       return;
     }
     const err = Math.abs(Math.log(multiple) - Math.log(p.multiple));
     if (err >= 0.08) setClickedPreset(null);
-  }, [multiple, clickedPreset]);
+  }, [multiple, clickedPreset, presets]);
 
-  const active = highlightNearestPreset
-    ? nearest
-    : clickedPreset;
-  const slider = multipleToSlider(multiple);
+  const active = highlightNearestPreset ? nearest : clickedPreset;
+  const slider = multipleToSlider(multiple, maxMultiple);
 
   return (
     <div className="pointer-events-auto flex max-w-md flex-col gap-1.5 rounded-lg border border-white/10 bg-[#080d18]/90 px-3 py-2 backdrop-blur">
@@ -146,7 +167,7 @@ export function SpeedControl({
       </div>
 
       <div className="flex flex-wrap gap-1">
-        {SPEED_PRESETS.map((p) => {
+        {presets.map((p) => {
           const isOn = active === p.id;
           return (
             <button
@@ -182,9 +203,9 @@ export function SpeedControl({
         step={0.001}
         value={slider}
         onChange={(e) => {
-          const next = sliderToMultiple(Number(e.target.value));
+          const next = sliderToMultiple(Number(e.target.value), maxMultiple);
           if (!highlightNearestPreset) {
-            setClickedPreset(nearestPreset(next));
+            setClickedPreset(nearestPreset(next, presets));
           }
           onMultipleChange(next);
         }}
