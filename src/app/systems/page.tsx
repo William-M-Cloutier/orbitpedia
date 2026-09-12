@@ -158,6 +158,9 @@ type SystemNode = {
   spectralChip: SpectralChip;
   /** true = known gas; false = known none; undefined = missing index flag */
   hasGas?: boolean;
+  /** Index mid-dot overview (archive stubs before graph load). */
+  blurb?: string;
+  distanceLy?: number;
 };
 
 function buildNodesFromList(
@@ -228,6 +231,8 @@ function buildNodesFromList(
         hostSpectralType,
         spectralChip: spectralChipFromType(hostSpectralType),
         hasGas,
+        blurb: curated.blurb,
+        distanceLy: curated.distanceLy,
       };
     }
     const planets = s.planetCount ?? 0;
@@ -247,6 +252,14 @@ function buildNodesFromList(
     for (let i = 0; i < starCount - 1; i++) {
       starColors.push(starColorForMapSegment(companionTypes[i]));
     }
+    const blurb =
+      "blurb" in s && typeof s.blurb === "string" && s.blurb.trim()
+        ? s.blurb.trim()
+        : undefined;
+    const distanceLy =
+      "distanceLy" in s && typeof s.distanceLy === "number"
+        ? s.distanceLy
+        : undefined;
     return {
       id: s.id,
       name: s.name,
@@ -260,6 +273,8 @@ function buildNodesFromList(
       hostSpectralType,
       spectralChip: spectralChipFromType(hostSpectralType),
       hasGas,
+      blurb,
+      distanceLy,
     };
   });
 }
@@ -609,6 +624,8 @@ function SystemMapView() {
         home: false,
         hostSpectralType: n.hostSpectralType,
         hasGas: n.hasGas,
+        blurb: n.blurb,
+        distanceLy: n.distanceLy,
       });
     } else {
       setSelectedSystem(null);

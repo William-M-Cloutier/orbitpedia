@@ -5,7 +5,6 @@ import Link from "next/link";
 import { KIND_LABEL, getBodiesForSystem } from "@/data/catalog";
 import {
   bodyProvenance,
-  hasUsableOrbit,
   type Body,
   type System,
 } from "@/data/schema";
@@ -16,7 +15,11 @@ import {
   type FactRow,
 } from "@/lib/factsDisplay";
 import { overviewBlurb } from "@/lib/interestBlurb";
-import { VISUAL_BINARY_NOTE } from "@/lib/visualBinaryNote";
+import {
+  VISUAL_BINARY_NOTE,
+  isVisualBinaryCompanion,
+  projectedSepDisplay,
+} from "@/lib/visualBinaryNote";
 import { periodFromA } from "@/lib/kepler";
 import { formatAu, formatPeriodDays } from "@/lib/units";
 
@@ -172,6 +175,8 @@ export function FactsPanel({ body, system, onClear }: Props) {
     body.orbit?.periodD ??
     (body.orbit ? periodFromA(body.orbit.aAu) : undefined);
   const overview = overviewBlurb(body, system);
+  const sepLabel = projectedSepDisplay(body);
+  const visualBinary = isVisualBinaryCompanion(body);
   const discovered = discoveryDisplay(body);
   const quickRows = quickPhysFactRows(body);
   const fullRows = keyFactRows(body);
@@ -229,9 +234,12 @@ export function FactsPanel({ body, system, onClear }: Props) {
             {overview && (
               <p className="text-sm leading-relaxed text-zinc-400">{overview}</p>
             )}
-            {body.kind === "star" &&
-            body.parentId &&
-            !hasUsableOrbit(body) ? (
+            {sepLabel ? (
+              <p className="text-sm text-zinc-400">
+                Projected separation {sepLabel}
+              </p>
+            ) : null}
+            {visualBinary ? (
               <p className="text-xs leading-relaxed text-zinc-400">
                 {VISUAL_BINARY_NOTE}
               </p>
@@ -260,11 +268,18 @@ export function FactsPanel({ body, system, onClear }: Props) {
               {overview ? (
                 <p className="text-sm text-zinc-300">{overview}</p>
               ) : null}
-              {body.kind === "star" &&
-              body.parentId &&
-              !hasUsableOrbit(body) ? (
+              {sepLabel ? (
                 <p
-                  className={`text-xs leading-relaxed text-zinc-400${overview ? " mt-2" : ""}`}
+                  className={`text-sm text-zinc-400${overview ? " mt-2" : ""}`}
+                >
+                  Projected separation {sepLabel}
+                </p>
+              ) : null}
+              {visualBinary ? (
+                <p
+                  className={`text-xs leading-relaxed text-zinc-400${
+                    overview || sepLabel ? " mt-2" : ""
+                  }`}
                 >
                   {VISUAL_BINARY_NOTE}
                 </p>
