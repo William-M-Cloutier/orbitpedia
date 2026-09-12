@@ -9,7 +9,7 @@
   "facts": {
     "massKg": 1.98841e+30,
     "radiusMeanKm": 695700,
-    "discoveryNotes": "Central star of the Solar System — planet orbits span ~0.4–30+ au; compare with ultra-compact systems like TRAPPIST-1 on the Systems map.",
+    "discoveryNotes": "Central star of the Solar System; planet orbits span roughly 0.4\u201330+ au.",
     "densityGcm3": 1.408,
     "rotationPeriodD": 25.38
   },
@@ -29,7 +29,8 @@
           "facts.radiusMeanKm",
           "facts.densityGcm3",
           "facts.rotationPeriodD",
-          "horizonId"
+          "horizonId",
+          "facts.discoveryNotes"
         ]
       }
     ],
