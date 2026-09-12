@@ -233,12 +233,9 @@ export function schematicOrbitFitScale(
   if (!(c > 0) || !Number.isFinite(c)) return 1;
   c = Math.min(1, Math.max(SCHEMATIC_FIT_MIN, c));
 
-  // If compress cannot pull idle below the legacy cap, leave orbits alone
-  // (avoids breaking helio clearance on inflated compact-hot hosts like
-  // close-in multi-planet systems whose display extent stays ≫ LEGACY/PAD).
-  const distAfter = idleCameraDistance(extent0 * c);
-  if (distAfter >= dist0 - 1e-9) return 1;
-
+  // Always apply clamped compress when fill is under STAR_IDLE_FILL_MIN.
+  // Even if idle stays at the legacy cap (inflated compact-hot hosts),
+  // shrinking display orbits/companion seps still improves star/orbit ratio.
   return c;
 }
 

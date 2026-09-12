@@ -1260,7 +1260,6 @@ if (!Number.isFinite(c)) {
       c = targetDist / (extent0 * IDLE_EXTENT_PAD);
     }
     c = Math.min(1, Math.max(SCHEMATIC_FIT_MIN, c));
-    if (idle(extent0 * c) >= dist0 - 1e-9) return 1;
     return c;
   }
   // Home gate is caller-side; Sol-scale extent must still be allowed c=1 by caller.
@@ -1287,13 +1286,14 @@ if (!Number.isFinite(c)) {
   } else {
     ok("compact synthetic schematic fitScale=1 (already readable)");
   }
-  // Compress that cannot pull idle below legacy → c=1 (preserve clearance hosts).
+  // Inflated-extent compact-hot host (55 Cnc-class): idle stays at LEGACY,
+  // but mild orbit compress still improves star/orbit ratio at fixed camera.
   const hugeExtent = 134;
   const hugeC = fitScaleOf(hugeExtent);
-  if (hugeC !== 1) {
-    fail(`huge-extent synthetic fitScale should be 1 (no idle improvement), got ${hugeC}`);
+  if (!(hugeC < 1) || Math.abs(hugeC - SCHEMATIC_FIT_MIN) > 1e-9) {
+    fail(`huge-extent synthetic fitScale expected ${SCHEMATIC_FIT_MIN}, got ${hugeC}`);
   } else {
-    ok("huge-extent synthetic fitScale=1 (compress would not pull idle)");
+    ok(`huge-extent synthetic fitScale=${hugeC} (SCHEMATIC_FIT_MIN; idle may stay legacy)`);
   }
   // Catalog aAu must not be mutated by fit helpers (source contract).
   if (/aAu\s*=/.test(fitSrc) && /body\.orbit\.aAu\s*=/.test(fitSrc)) {
