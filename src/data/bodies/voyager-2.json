@@ -8,7 +8,7 @@
     "Voyager II"
   ],
   "facts": {
-    "discoveryNotes": "NASA Voyager Interstellar Mission spacecraft. Only spacecraft to visit Uranus and Neptune. Entered interstellar space in 2018. Heliocentric escape trajectory \u2014 Kepler orbit omitted (hyperbolic; use Horizons for ephemeris).",
+    "discoveryNotes": "NASA Voyager Interstellar Mission spacecraft. Only spacecraft to visit Uranus and Neptune. Entered interstellar space in 2018.",
     "discoveryDate": "1977"
   },
   "color": "#A8B8C8",

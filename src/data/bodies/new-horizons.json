@@ -8,7 +8,7 @@
     "NewHorizons"
   ],
   "facts": {
-    "discoveryNotes": "NASA New Frontiers Pluto/Kuiper Belt flyby spacecraft. Pluto\u2013Charon flyby 2015-07-14; Arrokoth flyby 2019-01-01. Heliocentric escape trajectory \u2014 Kepler orbit omitted (hyperbolic; use Horizons for ephemeris).",
+    "discoveryNotes": "NASA New Frontiers Pluto/Kuiper Belt flyby spacecraft. Pluto\u2013Charon flyby 2015-07-14; Arrokoth flyby 2019-01-01.",
     "discoveryDate": "2006"
   },
   "color": "#E8D5A3",

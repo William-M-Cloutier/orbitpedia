@@ -8,7 +8,7 @@
     "Voyager I"
   ],
   "facts": {
-    "discoveryNotes": "NASA Voyager Interstellar Mission spacecraft. Entered interstellar space in 2012. Heliocentric escape trajectory \u2014 Kepler orbit omitted (hyperbolic; use Horizons for ephemeris).",
+    "discoveryNotes": "NASA Voyager Interstellar Mission spacecraft. Entered interstellar space in 2012.",
     "discoveryDate": "1977"
   },
   "color": "#C0C0C0",
