@@ -57,6 +57,8 @@ export const SCHEMATIC_FIT_FOV_Y_DEG = 45;
 export const VISUAL_BINARY_SEP_FACTOR = 1.3;
 export const VISUAL_BINARY_MIN_SEP = 0.04;
 export const VISUAL_BINARY_CLEARANCE_MARGIN = 0.005;
+/** Viz-only ecliptic-z lift so companions sit off the face-on planet ring plane. */
+export const COMPANION_OUT_OF_PLANE_FRAC = 0.5;
 export const PROJECTED_SEP_LOG_SCALE = 3.0;
 export const PROJECTED_SEP_DISPLAY_CAP_AU = 36;
 export const PROJECTED_SEP_ORBIT_FLOOR_FACTOR = 1.2;
@@ -155,6 +157,43 @@ export function visualBinaryKidsClearanceSep(
   return maxApo + rPrimary + maxChildVis + margin;
 }
 
+
+/**
+ * Viz-only floor so orbit-unknown companions sit outside the outermost
+ * primary-frame planet display apoapsis (hot-Jupiter + mesh-only companions).
+ * Uses effective helioScale (clearance-floored × fit) so display rings and
+ * companion sep share the same radial scale. Catalog aAu unchanged.
+ */
+export function visualBinaryHelioPlanetClearanceSep(
+  companion: Body,
+  sizeMode: SizeMode,
+  systemBodies: readonly Body[],
+  helioScale: number,
+): number {
+  if (companion.kind !== "star" || !companion.parentId || hasUsableOrbit(companion)) {
+    return 0;
+  }
+  const hs = helioScale > 0 && Number.isFinite(helioScale) ? helioScale : 1;
+  let outerApoDisplay = 0;
+  let maxPlanetVis = 0;
+  for (const b of systemBodies) {
+    if (!hasUsableOrbit(b) || b.orbit?.frame === "parent") continue;
+    const o = b.orbit!;
+    const apo = o.aAu * (1 + o.e) * hs;
+    if (Number.isFinite(apo) && apo > outerApoDisplay) outerApoDisplay = apo;
+    const vis = visualRadius(b, sizeMode, systemBodies);
+    if (Number.isFinite(vis) && vis > maxPlanetVis) maxPlanetVis = vis;
+  }
+  if (!(outerApoDisplay > 0)) return 0;
+  const rSelf = visualRadius(companion, sizeMode, systemBodies);
+  const margin = Math.min(
+    PERIHELION_CLEARANCE_MARGIN_AU,
+    Math.max(VISUAL_BINARY_CLEARANCE_MARGIN, maxPlanetVis),
+  );
+  // companionSep >= outer planet display apo + companion mesh + planet mesh + margin
+  return outerApoDisplay + rSelf + maxPlanetVis + margin;
+}
+
 /**
  * Viz-only display separation (scene AU) for one orbit-unknown companion.
  * Same formula as Explore visual-binary placement — catalog projectedSepAu
@@ -237,10 +276,21 @@ export function schematicFramingExtent(
   helioScale: number,
   sizeMode: SizeMode = "schematic",
 ): number {
-  return Math.max(
+  let max = Math.max(
     systemSceneExtent(bodies, helioScale),
     maxCompanionDisplaySep(bodies, sizeMode),
   );
+  for (const b of bodies) {
+    if (b.kind !== "star" || !b.parentId || hasUsableOrbit(b)) continue;
+    const clear = visualBinaryHelioPlanetClearanceSep(
+      b,
+      sizeMode,
+      bodies,
+      helioScale,
+    );
+    if (clear > max) max = clear;
+  }
+  return max;
 }
 
 function tanHalfFovY(fovYDeg: number): number {

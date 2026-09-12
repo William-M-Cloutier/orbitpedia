@@ -51,7 +51,9 @@ import {
   schematicIdleCameraDistance,
   visualBinaryDisplaySep,
   visualBinaryKidsClearanceSep,
+  visualBinaryHelioPlanetClearanceSep,
   VISUAL_BINARY_CLEARANCE_MARGIN,
+  COMPANION_OUT_OF_PLANE_FRAC,
 } from "./schematicFit";
 import { getBodyAppearanceMaterial, useRegistryTexture } from "./appearance";
 
@@ -334,13 +336,18 @@ function localOrbitPosition(
  *   companion relative order is preserved.
  * Schematic fitScale may shrink baseSep; placement then re-floors at
  * rPrimary+rSelf+VISUAL_BINARY_CLEARANCE_MARGIN so companions stay clear.
- * Locked sizeTiers / visualRadius contract (incl. companion Prop/True) is
- * respected as-is. Never draw OrbitLine unless hasUsableOrbit.
+ * Also floors at outermost primary-frame planet display apo × helioScale
+ * (+ companion/planet mesh + margin) so mesh-only companions do not sit on
+ * hot-Jupiter rings. Locked sizeTiers / visualRadius contract (incl.
+ * companion Prop/True) is respected as-is. Never draw OrbitLine unless
+ * hasUsableOrbit.
  *
- * Coords are already in the face-on ecliptic plane — map with eclipticToScene
- * only. Do NOT re-apply faceOn: that rotation is for catalog orbital positions;
- * applying it to ecliptic-XY offsets tips them out of the horizontal plane
- * (tipped Z → scene Y → vertical stacking).
+ * In-plane (x,y) from even angles in the face-on ecliptic — map with
+ * eclipticToScene only. Do NOT re-apply faceOn: that rotation is for catalog
+ * orbital positions; applying it to ecliptic-XY offsets tips them into
+ * vertical in-plane stacking. A small ecliptic-z lift (viz-only; not a
+ * catalog inclination) raises companions off the mean orbital plane so they
+ * are not coplanar with planet rings.
  */
 // Visual-binary sep constants live in schematicFit (shared with fit extent).
 
@@ -349,6 +356,7 @@ function visualBinaryCompanionOffset(
   sizeMode: SizeMode,
   systemBodies: readonly Body[],
   fitScale: number = 1,
+  helioScale: number = 1,
 ): [number, number, number] {
   if (body.kind !== "star" || !body.parentId || hasUsableOrbit(body)) {
     return [0, 0, 0];
@@ -378,17 +386,27 @@ function visualBinaryCompanionOffset(
   const rSelf = visualRadius(body, sizeMode, systemBodies);
   // Parent-frame kids (e.g. 55 Cnc B b/c): bump sep so apo cannot enter primary.
   const kidsFloor = visualBinaryKidsClearanceSep(body, sizeMode, systemBodies);
+  // Effective helioScale already includes fit — do not multiply this floor by fs.
+  const planetFloor = visualBinaryHelioPlanetClearanceSep(
+    body,
+    sizeMode,
+    systemBodies,
+    helioScale,
+  );
   const sep = Math.max(
     baseSep * fs,
     rPrimary + rSelf + VISUAL_BINARY_CLEARANCE_MARGIN,
     kidsFloor,
+    planetFloor,
   );
-  // Even spread in the face-on orbital plane (start at 0 → +X). Horizontal ring.
+  // Even spread in the face-on orbital plane (start at 0 → +X).
   const ang = (2 * Math.PI * idx) / n;
   const x = sep * Math.cos(ang);
   const y = sep * Math.sin(ang);
-  // ecliptic XY → scene XZ only (scene Y = 0). No faceOn re-application.
-  return eclipticToScene(x, y, 0);
+  // Viz-only lift off the mean orbital plane; not a catalog inclination.
+  const z = (rPrimary + rSelf) * COMPANION_OUT_OF_PLANE_FRAC;
+  // ecliptic XY + small z → scene XZ / Y. No faceOn re-application.
+  return eclipticToScene(x, y, z);
 }
 
 /**
@@ -447,7 +465,13 @@ function bodyPosition(
   // visual-binary offset; everything else stays at origin (no invented orbit).
   if (!hasUsableOrbit(body)) {
     if (body.kind === "star" && body.parentId && systemBodies) {
-      return visualBinaryCompanionOffset(body, sizeMode, systemBodies, fitScale);
+      return visualBinaryCompanionOffset(
+        body,
+        sizeMode,
+        systemBodies,
+        fitScale,
+        helioScale,
+      );
     }
     return [0, 0, 0];
   }
@@ -977,11 +1001,22 @@ function IdleCameraBootstrap({ focusId }: { focusId?: string | null }) {
     applied.current = true;
     if (focusId) return; // FollowCamera focus snap owns pose
 
-    // Planet apo×helio (already fit-scaled) + companion display seps × fitScale.
-    const extent = Math.max(
+    // Planet apo×helio (already fit-scaled) + companion display seps × fitScale
+    // + helio-planet clearance (already in effective helioScale units).
+    let extent = Math.max(
       systemSceneExtent(systemBodies, helioScale),
       maxCompanionDisplaySep(systemBodies, sizeMode) * fitScale,
     );
+    for (const b of systemBodies) {
+      if (b.kind !== "star" || !b.parentId || hasUsableOrbit(b)) continue;
+      const clear = visualBinaryHelioPlanetClearanceSep(
+        b,
+        sizeMode,
+        systemBodies,
+        helioScale,
+      );
+      if (clear > extent) extent = clear;
+    }
     const star =
       systemBodies.find((b) => b.kind === "star" && !b.parentId) ??
       systemBodies.find((b) => b.kind === "star");

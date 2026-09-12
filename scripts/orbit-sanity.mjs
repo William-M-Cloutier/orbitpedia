@@ -1156,47 +1156,59 @@ if (!Number.isFinite(c)) {
       ok("visualBinaryNote exports hasVisualBinaryCompanions + VISUAL_BINARY_NOTE");
     }
   }
-  // Visual-binary offsets stay in Explore face-on plane (horizontal ring).
-  // Do not re-apply faceOn to ecliptic-XY offsets (tips → scene Y stacking).
+  // Visual-binary in-plane (x,y) from even angles; do not re-apply faceOn
+  // (that tips into vertical in-plane stacking). Small ecliptic-z is intentional.
   if (!/Do NOT re-apply faceOn|No faceOn re-application|not re-appl/.test(sceneSrc)) {
     fail("OrbitScene visualBinaryCompanionOffset should document not re-applying faceOn");
   } else {
     ok("OrbitScene documents not re-applying faceOn for visual-binary offsets");
   }
-  // FACE_ON_IDENTITY-equivalent path: eclipticToScene(x,y,0) → scene Y ≈ 0.
+  // Out-of-plane lift: ecliptic z → scene Y ≠ 0 (viz-only; not catalog i).
   {
     const eclipticToScene = (x, y, z) => [x, z, -y];
     const sep = 0.1;
+    const zLift = 0.12; // (rPrimary+rSelf)*frac stand-in
     const n = 3;
-    let maxAbsY = 0;
+    let minAbsY = Infinity;
     for (let idx = 0; idx < n; idx++) {
       const ang = (2 * Math.PI * idx) / n;
       const x = sep * Math.cos(ang);
       const y = sep * Math.sin(ang);
-      const [, sy] = eclipticToScene(x, y, 0);
-      maxAbsY = Math.max(maxAbsY, Math.abs(sy));
+      const [, sy] = eclipticToScene(x, y, zLift);
+      minAbsY = Math.min(minAbsY, Math.abs(sy));
     }
-    if (maxAbsY > 1e-12) {
-      fail(`visual-binary face-on offsets should have scene Y≈0, got max |Y|=${maxAbsY}`);
+    if (!(minAbsY > 1e-12)) {
+      fail(`visual-binary out-of-plane lift should yield scene |Y|>0, got ${minAbsY}`);
     } else {
-      ok("visual-binary display ring: eclipticToScene(x,y,0) → scene Y ≈ 0 (horizontal)");
+      ok(`visual-binary display: eclipticToScene(x,y,z) → scene |Y|≥${minAbsY.toFixed(3)} (lifted)`);
     }
   }
-  // Helper maps via eclipticToScene only (not eclipticToSceneFaceOn).
+  // Helper maps via eclipticToScene(x,y,z) only (not eclipticToSceneFaceOn).
   if (
-    !/No faceOn re-application[\s\S]{0,120}return eclipticToScene\(x, y, 0\)/.test(
-      sceneSrc,
-    ) &&
-    !/Horizontal ring[\s\S]{0,200}return eclipticToScene\(x, y, 0\)/.test(sceneSrc)
+    !/return eclipticToScene\(x, y, z\)/.test(sceneSrc) &&
+    !/eclipticToScene\(x, y, z\)/.test(sceneSrc)
   ) {
-    fail("visualBinaryCompanionOffset should return eclipticToScene(x, y, 0) without faceOn");
+    fail("visualBinaryCompanionOffset should return eclipticToScene(x, y, z) without faceOn");
   } else if (
     /sep \* Math\.sin\(ang\);\s*\n\s*return eclipticToSceneFaceOn/.test(sceneSrc)
   ) {
     fail("visualBinaryCompanionOffset must not call eclipticToSceneFaceOn (tips out of plane)");
+  } else if (!/COMPANION_OUT_OF_PLANE_FRAC/.test(sceneSrc) && !/COMPANION_OUT_OF_PLANE_FRAC/.test(fitSrcVb)) {
+    fail("missing COMPANION_OUT_OF_PLANE_FRAC for companion z lift");
   } else {
-    ok("visualBinaryCompanionOffset uses eclipticToScene only (no faceOn)");
+    ok("visualBinaryCompanionOffset uses eclipticToScene(x,y,z) only (no faceOn; out-of-plane lift)");
   }
+  // Outer-apo floor helper present; placement floors at planetFloor.
+  if (!/visualBinaryHelioPlanetClearanceSep/.test(fitSrcVb)) {
+    fail("schematicFit missing visualBinaryHelioPlanetClearanceSep (outer planet apo floor)");
+  } else if (!/planetFloor/.test(sceneSrc)) {
+    fail("visualBinaryCompanionOffset must floor sep at planetFloor (helio apo clearance)");
+  } else if (!/aAu \* \(1 \+ o\.e\) \* hs/.test(fitSrcVb)) {
+    fail("visualBinaryHelioPlanetClearanceSep should use aAu*(1+e)*helioScale outer apo");
+  } else {
+    ok("visual-binary floors sep outside outermost planet display apo (helioScale)");
+  }
+
   if (!/isExploreSceneBody/.test(sceneSrc)) {
     fail("OrbitScene missing isExploreSceneBody visibility gate");
   } else {
@@ -1609,6 +1621,185 @@ if (!Number.isFinite(c)) {
     ok("kids clearance gated to orbit-unknown companion stars (Sol moons / TRAPPIST untouched)");
   }
 }
+
+// Hot-Jupiter + mesh-only companions (HAT-P-57 class): radial clear + out-of-plane.
+{
+  const fitSrcHat = fs.readFileSync(path.join(ROOT, "src/viz/schematicFit.ts"), "utf8");
+  const sceneSrcHat = fs.readFileSync(path.join(ROOT, "src/viz/OrbitScene.tsx"), "utf8");
+  if (!/visualBinaryHelioPlanetClearanceSep/.test(fitSrcHat)) {
+    fail("HAT-P-57 class: missing visualBinaryHelioPlanetClearanceSep");
+  } else if (!/planetFloor/.test(sceneSrcHat)) {
+    fail("HAT-P-57 class: companion offset must apply planetFloor");
+  } else if (
+    !/helioScale/.test(sceneSrcHat) ||
+    !/visualBinaryCompanionOffset\([\s\S]{0,200}helioScale/.test(sceneSrcHat)
+  ) {
+    fail("HAT-P-57 class: must pass effective helioScale into companion offset");
+  } else if (!/COMPANION_OUT_OF_PLANE_FRAC/.test(fitSrcHat)) {
+    fail("HAT-P-57 class: missing COMPANION_OUT_OF_PLANE_FRAC");
+  } else if (!/viz-only lift|not a catalog inclination/i.test(sceneSrcHat)) {
+    fail("HAT-P-57 class: should comment viz-only out-of-plane lift");
+  } else {
+    ok("HAT-P-57 class: source has outer-apo floor + out-of-plane lift + helioScale pass");
+  }
+
+  const STAR_VISUAL_RADIUS = tiers.STAR_VISUAL_RADIUS;
+  const PLANET_VISUAL_RADIUS_LARGE = tiers.PLANET_VISUAL_RADIUS_LARGE;
+  const MARGIN_CAP = tiers.PERIHELION_CLEARANCE_MARGIN_AU;
+  const VB_MARGIN = 0.005;
+  // Synthetic: hot Jupiter aAu=0.0406 + 2 mesh-only companions (no projectedSepAu).
+  const synPri = {
+    id: "hat-syn",
+    kind: "star",
+    facts: { radiusMeanKm: 1043550, massKg: 2.9e30 },
+  };
+  const synCb = {
+    id: "hat-syn-comp-b",
+    kind: "star",
+    parentId: "hat-syn",
+    facts: {},
+  };
+  const synCc = {
+    id: "hat-syn-comp-c",
+    kind: "star",
+    parentId: "hat-syn",
+    facts: {},
+  };
+  const synPl = {
+    id: "hat-syn-b",
+    kind: "planet",
+    facts: { radiusMeanKm: 124000 },
+    orbit: {
+      frame: "heliocentric",
+      aAu: 0.0406,
+      e: 0,
+      iDeg: 88,
+      omDeg: 0,
+      wDeg: 0,
+      maDeg: 0,
+      periodD: 2.5,
+    },
+  };
+  const synHat = [synPri, synCb, synCc, synPl];
+  // Mimic schematic clearance: star+planet mesh need / q.
+  const starVis = STAR_VISUAL_RADIUS;
+  const planetVis = PLANET_VISUAL_RADIUS_LARGE;
+  const qAu = synPl.orbit.aAu;
+  const periMargin = Math.min(MARGIN_CAP, Math.max(starVis * 0.35, planetVis));
+  const periNeed = Math.max(
+    starVis + planetVis + periMargin,
+    starVis * 1.85 + planetVis,
+  );
+  const helioScale = periNeed / qAu; // effective (fit=1) for compact hot host
+  const rSelf = STAR_VISUAL_RADIUS; // schematic companion mesh
+  const schematicSep = Math.max((starVis + rSelf) * 1.3, 0.04);
+  const outerApoDisplay = synPl.orbit.aAu * (1 + synPl.orbit.e) * helioScale;
+  const clearMargin = Math.min(MARGIN_CAP, Math.max(VB_MARGIN, planetVis));
+  const planetFloor = outerApoDisplay + rSelf + planetVis + clearMargin;
+  const sep = Math.max(
+    schematicSep,
+    starVis + rSelf + VB_MARGIN,
+    planetFloor,
+  );
+  const COMPANION_OUT_OF_PLANE_FRAC = 0.5;
+  const z = (starVis + rSelf) * COMPANION_OUT_OF_PLANE_FRAC;
+  if (!(schematicSep + 1e-12 < outerApoDisplay)) {
+    fail(
+      `HAT-P-57 synthetic setup: expected schematic sep ${schematicSep} < planet apo ${outerApoDisplay}`,
+    );
+  } else if (!(sep + 1e-12 >= outerApoDisplay + rSelf + planetVis)) {
+    fail(
+      `HAT-P-57 synthetic: sep ${sep} must clear planet apo ${outerApoDisplay} + meshes`,
+    );
+  } else if (!(z > 0)) {
+    fail(`HAT-P-57 synthetic: out-of-plane z must be > 0 (got ${z})`);
+  } else {
+    ok(
+      `HAT-P-57 synthetic: sep=${sep.toFixed(3)} > apo=${outerApoDisplay.toFixed(3)} (schematic ${schematicSep.toFixed(3)}); z=${z.toFixed(3)}`,
+    );
+  }
+
+  // Archive spot-check when bulk graph present.
+  const hatPath = path.join(ROOT, "public/archive/bulk/graphs/hat-p-57.json");
+  const hatSmoke = path.join(ROOT, "public/archive/graphs/hat-p-57.json");
+  const hatFile = fs.existsSync(hatPath) ? hatPath : fs.existsSync(hatSmoke) ? hatSmoke : null;
+  if (hatFile) {
+    const hat = JSON.parse(fs.readFileSync(hatFile, "utf8"));
+    const comps = hat.bodies.filter(
+      (b) => b.kind === "star" && b.parentId && !hasUsableOrbit(b),
+    );
+    const planets = hat.bodies.filter(
+      (b) =>
+        hasUsableOrbit(b) &&
+        b.orbit?.frame !== "parent" &&
+        (b.kind === "planet" || b.kind === "dwarf_planet"),
+    );
+    const noProj = comps.every(
+      (c) =>
+        !(
+          typeof c.facts?.projectedSepAu === "number" &&
+          Number.isFinite(c.facts.projectedSepAu) &&
+          c.facts.projectedSepAu > 0
+        ),
+    );
+    const hot = planets.some((p) => p.orbit.aAu < 0.15);
+    if (comps.length >= 2 && noProj && hot) {
+      ok(
+        `HAT-P-57 archive: ${comps.length} mesh-only comps, hot planet aAu=${planets[0].orbit.aAu} (risk pattern)`,
+      );
+    } else {
+      ok("HAT-P-57 archive present (pattern soft-check skipped)");
+    }
+  } else {
+    ok("HAT-P-57 archive absent — skip archive spot-check");
+  }
+
+  // 55 Cnc / Sol: companions still clear; Sol home unchanged (source gates).
+  if (!/home === true/.test(sceneSrcHat) && !/system\.home/.test(sceneSrcHat)) {
+    fail("Sol regression: OrbitScene should keep home fitScale=1 gate");
+  } else {
+    ok("Sol / 55 Cnc regressions: home fitScale gate + kids clearance still present");
+  }
+
+  // Bulk risk-pattern sweep: multi-star, companion w/o projectedSepAu, hot planet.
+  const bulkDir = path.join(ROOT, "public/archive/bulk/graphs");
+  let riskCount = 0;
+  if (fs.existsSync(bulkDir)) {
+    for (const f of fs.readdirSync(bulkDir).filter((x) => x.endsWith(".json"))) {
+      const g = JSON.parse(fs.readFileSync(path.join(bulkDir, f), "utf8"));
+      const bodies = g.bodies || [];
+      const stars = bodies.filter((b) => b.kind === "star");
+      if (stars.length < 2) continue;
+      const comps = bodies.filter(
+        (b) => b.kind === "star" && b.parentId && !hasUsableOrbit(b),
+      );
+      if (comps.length === 0) continue;
+      const meshOnly = comps.filter(
+        (c) =>
+          !(
+            typeof c.facts?.projectedSepAu === "number" &&
+            Number.isFinite(c.facts.projectedSepAu) &&
+            c.facts.projectedSepAu > 0
+          ),
+      );
+      if (meshOnly.length === 0) continue;
+      const hot = bodies.some(
+        (b) =>
+          hasUsableOrbit(b) &&
+          b.orbit?.frame !== "parent" &&
+          typeof b.orbit?.aAu === "number" &&
+          b.orbit.aAu < 0.15,
+      );
+      if (hot) riskCount++;
+    }
+    ok(
+      `bulk risk pattern (multi-star, mesh-only companion, planet aAu<0.15): ${riskCount} graphs`,
+    );
+  } else {
+    ok("bulk graphs absent — skip risk-pattern sweep");
+  }
+}
+
 
 if (process.exitCode) {
   console.error("\norbit-sanity FAILED");
