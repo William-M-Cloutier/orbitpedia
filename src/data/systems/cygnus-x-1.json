@@ -1,38 +1,32 @@
 {
   "id": "cygnus-x-1",
   "name": "Cygnus X-1",
-  "kind": "black_hole",
-  "systemId": "cygnus-x-1",
-  "aliases": [
-    "Cyg X-1",
-    "Cygnus X-1 black hole"
+  "home": false,
+  "memberIds": [
+    "cygnus-x-1"
   ],
-  "facts": {
-    "massKg": 2.94285568e+31,
-    "radiusMeanKm": 43.7044,
-    "approximateFields": [
-      "radiusMeanKm"
-    ],
-    "discoveryNotes": "One of the first black holes confirmed in our galaxy \u2014 a stellar-mass hole fed by a massive blue companion, shining brightly in X-rays. Size shown is the event horizon scale from its measured mass.",
-    "discoveryDate": "1971"
-  },
-  "color": "#c45cff",
+  "primaryStarId": "cygnus-x-1",
+  "blurb": "Cygnus X-1 is a high-mass X-ray binary: a stellar-mass black hole pulling wind from a luminous blue companion, about 6,000 light-years away in Cygnus.",
+  "highlights": [
+    "Classic stellar-mass black hole in an X-ray binary",
+    "About 14.8 times the mass of the Sun",
+    "Fed by wind from a massive blue companion star"
+  ],
+  "distanceLy": 6070,
+  "compactnessNote": "The luminous blue companion will appear when a source-backed orbit is ready.",
   "meta": {
-    "source": "Chandra Photo Album Cygnus X-1 (2011) \u2014 mass 14.8 Msun, distance ~6070 ly; Rs from mass",
     "confidence": "known",
+    "fetchedAt": "2026-09-12T22:38:28.400Z",
     "sources": [
       {
         "name": "Chandra \u2014 Cygnus X-1",
         "url": "https://chandra.harvard.edu/photo/2011/cygx1/",
         "fields": [
-          "facts.massKg",
-          "facts.discoveryNotes",
-          "facts.discoveryDate",
-          "facts.radiusMeanKm"
+          "blurb",
+          "highlights",
+          "distanceLy"
         ]
       }
-    ],
-    "fetchedAt": "2026-09-12T22:38:28.400Z",
-    "unitsVersion": 1
+    ]
   }
 }
