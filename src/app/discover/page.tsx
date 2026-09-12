@@ -30,7 +30,8 @@ import {
   formatRadius,
 } from "@/lib/units";
 import { periodFromA } from "@/lib/kepler";
-import { CatalogCharts } from "@/viz/charts";
+import { CatalogCharts, CompareSelectionCharts } from "@/viz/charts";
+import type { Body } from "@/data/schema";
 
 const MAX_COMPARE = 4;
 
@@ -115,7 +116,10 @@ function DiscoverInner() {
   }, []);
 
   const compared = useMemo(
-    () => selected.map((id) => getBody(id)).filter(Boolean),
+    () =>
+      selected
+        .map((id) => getBody(id))
+        .filter((b): b is Body => b != null),
     [selected],
   );
 
@@ -240,8 +244,8 @@ function DiscoverInner() {
                   <tr>
                     <th className="px-3 py-2 font-medium">Property</th>
                     {compared.map((b) => (
-                      <th key={b!.id} className="px-3 py-2 font-medium text-zinc-200">
-                        {b!.name}
+                      <th key={b.id} className="px-3 py-2 font-medium text-zinc-200">
+                        {b.name}
                       </th>
                     ))}
                   </tr>
@@ -277,13 +281,13 @@ function DiscoverInner() {
                           return formatPeriodDays(p);
                         },
                       ],
-                    ] as Array<[string, (b: NonNullable<(typeof compared)[0]>) => string]>
+                    ] as Array<[string, (b: Body) => string]>
                   ).map(([label, fn]) => (
                     <tr key={label}>
                       <td className="px-3 py-2 text-zinc-500">{label}</td>
                       {compared.map((b) => (
-                        <td key={b!.id} className="px-3 py-2 text-zinc-200">
-                          {fn(b!)}
+                        <td key={b.id} className="px-3 py-2 text-zinc-200">
+                          {fn(b)}
                         </td>
                       ))}
                     </tr>
@@ -291,6 +295,7 @@ function DiscoverInner() {
                 </tbody>
               </table>
             </div>
+            <CompareSelectionCharts bodies={compared} />
           </section>
         )}
 
