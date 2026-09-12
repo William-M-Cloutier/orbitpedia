@@ -2,11 +2,15 @@
 /**
  * Orbitpedia NEA archive ingest — bounded sample → public/archive plane.
  *
- * Writes:
+ * Writes (smoke, --limit ≤ 100):
  *   public/archive/systems.index.json
  *   public/archive/graphs/<systemId>.json  ({ system, bodies })
  *
+ * Writes (--all or --limit > 100, or ARCHIVE_OUT=...):
+ *   public/archive/bulk/...  (gitignored) or $ARCHIVE_OUT
+ *
  * Does NOT touch curated src/data/systems|bodies or catalog.generated.ts.
+ * Never fat-commit --all into public/archive/graphs/.
  * Public HTTP only (NEA TAP); meta.sources cite overview pages only.
  *
  * Usage (repo root):
@@ -23,9 +27,32 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
-const ARCHIVE_DIR = join(ROOT, "public", "archive");
-const GRAPHS_DIR = join(ARCHIVE_DIR, "graphs");
-const INDEX_PATH = join(ARCHIVE_DIR, "systems.index.json");
+/** Committed smoke plane (git). */
+const SMOKE_ARCHIVE_DIR = join(ROOT, "public", "archive");
+/** Gitignored bulk / --all plane (or override with ARCHIVE_OUT). */
+const BULK_ARCHIVE_DIR = join(ROOT, "public", "archive", "bulk");
+/** Limits at or below this write the committed smoke plane (unless --all / ARCHIVE_OUT). */
+const SMOKE_LIMIT_MAX = 100;
+
+function resolveArchiveDirs(opts) {
+  if (process.env.ARCHIVE_OUT) {
+    const dir = process.env.ARCHIVE_OUT;
+    return {
+      archiveDir: dir,
+      graphsDir: join(dir, "graphs"),
+      indexPath: join(dir, "systems.index.json"),
+      plane: "ARCHIVE_OUT",
+    };
+  }
+  const bulk = opts.all || opts.limit > SMOKE_LIMIT_MAX;
+  const dir = bulk ? BULK_ARCHIVE_DIR : SMOKE_ARCHIVE_DIR;
+  return {
+    archiveDir: dir,
+    graphsDir: join(dir, "graphs"),
+    indexPath: join(dir, "systems.index.json"),
+    plane: bulk ? "bulk" : "smoke",
+  };
+}
 
 const TAP = "https://exoplanetarchive.ipac.caltech.edu/TAP/sync";
 const OVERVIEW = "https://exoplanetarchive.ipac.caltech.edu/overview";
@@ -96,7 +123,7 @@ function parseArgs(argv) {
     } else if (a === "--help" || a === "-h") {
       console.log(`Usage: node scripts/ingest-exoplanet-archive.mjs [options]
   --limit N               Max systems to write (default 100; ignored with --all)
-  --all                   No system cap — full multi-planet dump (artifact path; do not fat-commit)
+  --all                   No system cap — writes gitignored public/archive/bulk/ (or ARCHIVE_OUT)
   --min-planets N         sy_pnum threshold when scanning (default 2 = multi-planet)
   --include-single-planet Set min-planets to 1 (single-planet hosts; off by default)
   --hosts a,b             Named host list (skips limit scan)
@@ -461,13 +488,17 @@ function groupByHost(rows) {
 
 async function main() {
   const opts = parseArgs(process.argv.slice(2));
+  const dirs = resolveArchiveDirs(opts);
+  const GRAPHS_DIR = dirs.graphsDir;
+  const INDEX_PATH = dirs.indexPath;
   const fetchedAt = new Date().toISOString();
+  console.log(`Archive plane: ${dirs.plane} → ${dirs.archiveDir}`);
 
   console.log(
     opts.hosts
       ? `NEA archive ingest — hosts: ${opts.hosts.join(", ")}`
       : opts.all
-        ? `NEA archive ingest — ALL systems (sy_pnum >= ${opts.minPlanets}) [artifact path]`
+        ? `NEA archive ingest — ALL systems (sy_pnum >= ${opts.minPlanets}) → bulk/ARCHIVE_OUT plane`
         : `NEA archive ingest — limit ${opts.limit} systems (sy_pnum >= ${opts.minPlanets})`,
   );
 

@@ -33,9 +33,16 @@ bundle. `generate:catalog` must stay curated-only.
 | `--limit` | **100** | Bounded smoke / sample (git-friendly) |
 | `--all` | off | No system cap — **full multi-planet dump** |
 
-**Hold `--all` in git.** Full dump (~thousands of multi-planet hosts) is a
-**CI/release artifact or local cache**, not a fat main-branch commit. Keep a
-small sample in `public/archive/` for smoke (e.g. `--limit 100` on `843338a`).
+**Never commit `--all` into `public/archive/graphs/`.**
+
+| Plane | When | Path |
+|-------|------|------|
+| **Smoke (git)** | `--limit` ≤ 100 (default) | `public/archive/` |
+| **Bulk (gitignored)** | `--all` or `--limit` > 100 | `public/archive/bulk/` |
+| **Override** | `ARCHIVE_OUT=/path` | that directory (`systems.index.json` + `graphs/`) |
+
+Full dump = CI/release artifact or local cache under the bulk plane — not a fat
+main-branch commit. Committed smoke stays small (e.g. `--limit 100` on `843338a`).
 
 ## What we write (hosts + planets + stars only)
 
@@ -100,9 +107,14 @@ node scripts/ingest-exoplanet-archive.mjs --hosts "KOI-351,AU Mic"
 # Single-planet hosts (explicit opt-in)
 node scripts/ingest-exoplanet-archive.mjs --include-single-planet --limit 50
 
-# Full multi-planet dump — ARTIFACT PATH (do not fat-commit to main)
-# Write to a release/CI output dir or local cache, then host outside fat git.
+# Full multi-planet dump → gitignored public/archive/bulk/ (hold until Guard says go)
 node scripts/ingest-exoplanet-archive.mjs --all --min-planets 2
+
+# Or explicit output dir (CI artifact)
+ARCHIVE_OUT=/tmp/orbitpedia-nea-bulk node scripts/ingest-exoplanet-archive.mjs --all --min-planets 2
+
+# Large limit also goes to bulk (not the committed smoke plane)
+node scripts/ingest-exoplanet-archive.mjs --limit 500 --min-planets 2
 ```
 
 After ingest, curated gates must still pass unchanged:
@@ -131,8 +143,8 @@ Systems map shows archive **index stubs**; graph loads on Explore open.
 - Multi-planet (`sy_pnum >= 2`) set is the v1 dump target; singles later via
   `--include-single-planet`.
 - On-disk: one JSON graph per system; index stays small.
-- **Full `--all`:** produce as CI/release artifact or local cache — **not**
-  thousands of graphs committed to main long-term. Sample stays in git for smoke.
+- **Full `--all`:** writes `public/archive/bulk/` (gitignored) or `ARCHIVE_OUT` —
+  **not** `public/archive/graphs/`. Sample/`--limit 100` stays the committed smoke plane.
 - Index: single `systems.index.json` OK until ~5k; paginate/shard only if needed.
 
 ## Checklist when expanding the dump
@@ -142,4 +154,4 @@ Systems map shows archive **index stubs**; graph loads on Explore open.
 3. `generate:catalog` + `validate:catalog` + `npm test` still green (curated).
 4. Smoke: ≥1 archive chunk + index row; `getSystemGraphAsync` resolves it.
 5. Do **not** add archive graphs to `catalog.generated.ts`.
-6. Before `--all`: Guard sign-off on `public/archive` weight + artifact hosting plan.
+6. Before `--all`: Guard sign-off; run into `public/archive/bulk/` or `ARCHIVE_OUT` only.

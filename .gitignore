@@ -44,3 +44,6 @@ next-env.d.ts
 scripts/phys_par.html
 scripts/bodies.json
 scripts/ingest-omitted.json
+
+# NEA full/bulk archive dumps (not the committed smoke sample)
+public/archive/bulk/
