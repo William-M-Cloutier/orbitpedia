@@ -539,7 +539,8 @@ for (const system of systemsToCheck) {
     if (b.id === central.id) continue;
     if (!b.orbit) {
       // Companion stars may be mesh-only until elements land (no invented orbits).
-      if (b.kind === "star") continue;
+      // Probes on hyperbolic escape omit Kepler (OrbitSchema e≤1); Viz owns path.
+      if (b.kind === "star" || b.kind === "probe") continue;
       hardErrors.push(`${b.id}: missing orbit while not central body`);
       continue;
     }
