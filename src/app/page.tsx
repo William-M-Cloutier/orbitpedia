@@ -232,12 +232,14 @@ function ExploreHome() {
           onFocus={onRailFocus}
           hiddenIds={hiddenIds}
           onToggleHidden={onToggleHidden}
-          {...({
-            hideProbePaths,
-            hideProbeMeshes,
-            onHideProbePathsChange: setHideProbePaths,
-            onHideProbeMeshesChange: setHideProbeMeshes,
-          } as object)}
+          hideProbePaths={hideProbePaths}
+          hideProbeMeshes={hideProbeMeshes}
+          onHideProbePathsChange={
+            isHome ? setHideProbePaths : undefined
+          }
+          onHideProbeMeshesChange={
+            isHome ? setHideProbeMeshes : undefined
+          }
         />
       }
     >
