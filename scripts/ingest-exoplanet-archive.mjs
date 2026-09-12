@@ -10,7 +10,9 @@
  * Public HTTP only (NEA TAP); meta.sources cite overview pages only.
  *
  * Usage (repo root):
- *   node scripts/ingest-exoplanet-archive.mjs [--limit 100] [--min-planets 3]
+ *   node scripts/ingest-exoplanet-archive.mjs [--limit 100] [--min-planets 2]
+ *   node scripts/ingest-exoplanet-archive.mjs --all --min-planets 2
+ *   node scripts/ingest-exoplanet-archive.mjs --include-single-planet --limit 50
  *   node scripts/ingest-exoplanet-archive.mjs --hosts "KOI-351,AU Mic"
  *   node scripts/ingest-exoplanet-archive.mjs --dry-run
  *   node scripts/ingest-exoplanet-archive.mjs --force-ids kepler-90
@@ -65,7 +67,9 @@ const COLUMNS = [
 function parseArgs(argv) {
   const out = {
     limit: 100,
-    minPlanets: 3,
+    minPlanets: 2, // dump v1 default: multi-planet hosts (sy_pnum >= 2)
+    all: false,
+    includeSinglePlanet: false,
     hosts: null,
     dryRun: false,
     forceIds: new Set(),
@@ -73,8 +77,10 @@ function parseArgs(argv) {
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === "--limit") out.limit = Math.max(1, Number(argv[++i]) || 100);
+    else if (a === "--all") out.all = true;
+    else if (a === "--include-single-planet") out.includeSinglePlanet = true;
     else if (a === "--min-planets")
-      out.minPlanets = Math.max(1, Number(argv[++i]) || 3);
+      out.minPlanets = Math.max(1, Number(argv[++i]) || 2);
     else if (a === "--hosts") {
       out.hosts = String(argv[++i] || "")
         .split(",")
@@ -89,14 +95,18 @@ function parseArgs(argv) {
         .forEach((id) => out.forceIds.add(id));
     } else if (a === "--help" || a === "-h") {
       console.log(`Usage: node scripts/ingest-exoplanet-archive.mjs [options]
-  --limit N          Max systems to write (default 100)
-  --min-planets N    sy_pnum threshold when scanning (default 3)
-  --hosts a,b        Named host list (skips limit scan)
-  --force-ids a,b    Allow overwrite of protected curated ids
-  --dry-run          Fetch + build; do not write`);
+  --limit N               Max systems to write (default 100; ignored with --all)
+  --all                   No system cap — full multi-planet dump (artifact path; do not fat-commit)
+  --min-planets N         sy_pnum threshold when scanning (default 2 = multi-planet)
+  --include-single-planet Set min-planets to 1 (single-planet hosts; off by default)
+  --hosts a,b             Named host list (skips limit scan)
+  --force-ids a,b         Allow overwrite of protected curated ids
+  --dry-run               Fetch + build; do not write`);
       process.exit(0);
     }
   }
+  if (out.includeSinglePlanet) out.minPlanets = 1;
+  if (out.all) out.limit = Number.POSITIVE_INFINITY;
   return out;
 }
 
@@ -221,7 +231,7 @@ async function fetchRows(opts) {
   }
   // Pull a generous row window, then pick first N distinct hosts client-side.
   // (ADQL TOP applies to rows, not groups.)
-  const rowCap = Math.max(opts.limit * 12, 200);
+  const rowCap = opts.all ? 20000 : Math.max(opts.limit * 12, 200);
   const adql = `select top ${rowCap} ${cols} from pscomppars where sy_pnum >= ${opts.minPlanets} and pl_orbsmax is not null order by sy_pnum desc, hostname, pl_orbsmax`;
   return tapCsv(adql);
 }
@@ -456,7 +466,9 @@ async function main() {
   console.log(
     opts.hosts
       ? `NEA archive ingest — hosts: ${opts.hosts.join(", ")}`
-      : `NEA archive ingest — limit ${opts.limit} systems (sy_pnum >= ${opts.minPlanets})`,
+      : opts.all
+        ? `NEA archive ingest — ALL systems (sy_pnum >= ${opts.minPlanets}) [artifact path]`
+        : `NEA archive ingest — limit ${opts.limit} systems (sy_pnum >= ${opts.minPlanets})`,
   );
 
   let rows;
