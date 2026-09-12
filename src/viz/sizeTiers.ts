@@ -125,6 +125,12 @@ const PROBE_PROP_TRUE_MESH = 0.0125;
  */
 const STAR_NO_RADIUS_COMPANION_MESH_FRAC = 0.4;
 
+
+/** Cap satellite schematic mesh vs parent (Earth) — viz-only. */
+const SCHEMATIC_SAT_OF_PARENT = 0.045;
+const SCHEMATIC_SAT_MIN = 0.003;
+const SCHEMATIC_SAT_MAX = 0.006;
+
 function schematicRadiusNonMoon(body: Body): number {
   const tiers: Record<Exclude<BodyKind, "moon">, number> = {
     star: STAR_VISUAL_RADIUS,
@@ -134,8 +140,11 @@ function schematicRadiusNonMoon(body: Body): number {
       : PLANET_VISUAL_RADIUS_SMALL,
     dwarf_planet: 0.07,
     asteroid: 0.05,
-    /** Procedural sat marker — not a sphere radius from catalog. */
-    satellite: 0.018,
+    /**
+     * Procedural sat marker — not a catalog radius.
+     * Kept small vs Earth schematic (0.1): panels span ~2.6×r so ~0.013≪Earth.
+     */
+    satellite: 0.005,
     probe: 0.04,
   };
   return tiers[body.kind as Exclude<BodyKind, "moon">] ?? 0.05;
@@ -197,6 +206,22 @@ function schematicRadius(body: Body, systemBodies?: readonly Body[]): number {
       }
     }
     return SCHEMATIC_MOON_MIN;
+  }
+  if (body.kind === "satellite") {
+    const bodies = resolveSystemBodies(body, systemBodies);
+    const parent = body.parentId
+      ? bodies.find((b) => b.id === body.parentId) ?? getBody(body.parentId)
+      : undefined;
+    const parentVis = parent
+      ? schematicRadiusNonMoon(parent)
+      : schematicRadiusNonMoon(
+          bodies.find((b) => b.kind === "planet" && !b.parentId) ?? body,
+        );
+    const fromParent = parentVis * SCHEMATIC_SAT_OF_PARENT;
+    return Math.min(
+      SCHEMATIC_SAT_MAX,
+      Math.max(SCHEMATIC_SAT_MIN, fromParent),
+    );
   }
   const base = schematicRadiusNonMoon(body);
   if (body.kind !== "planet" && body.kind !== "dwarf_planet") return base;

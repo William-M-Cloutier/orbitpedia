@@ -334,7 +334,7 @@ export function SearchClient() {
           bodiesByKind.map(({ kind, bodies: group }) => (
             <section key={kind}>
               <h2 className="mb-2 text-xs font-medium uppercase tracking-wide text-zinc-500">
-                {KIND_LABEL[kind]}s
+                {(KIND_LABEL[kind] ?? kind)}s
               </h2>
               <ul className="divide-y divide-white/5 rounded-xl border border-white/10">
                 {group.map((b) => {

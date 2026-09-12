@@ -253,7 +253,7 @@ function DiscoverInner() {
                 <tbody className="divide-y divide-white/5">
                   {(
                     [
-                      ["Kind", (b) => KIND_LABEL[b.kind]],
+                      ["Kind", (b) => KIND_LABEL[b.kind] ?? b.kind],
                       ["Mass", (b) => (b.facts.massKg != null ? formatMass(b.facts.massKg) : "—")],
                       ["Radius", (b) => (b.facts.radiusMeanKm != null ? formatRadius(b.facts.radiusMeanKm) : "—")],
                       [

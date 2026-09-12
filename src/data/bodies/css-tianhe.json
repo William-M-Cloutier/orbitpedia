@@ -7,34 +7,35 @@
   "aliases": [
     "Tianhe",
     "CSS",
-    "China Space Station"
+    "China Space Station",
+    "CSS (TIANHE)",
+    "2021-035A"
   ],
-  "noradCatId": 48274,
   "facts": {
-    "owner": "CMSA/CNSA",
+    "owner": "CMSA / CNSA",
     "launchDate": "2021-04-29",
     "discoveryNotes": "Tianhe core module of the China Space Station."
   },
   "orbit": {
-    "frame": "geocentric",
+    "epochJd": 2461295.651725648,
+    "aAu": 0.00004522964109274585,
     "aKm": 6766.258,
-    "aAu": 4.522964109274585e-05,
     "e": 0.00026312,
     "iDeg": 41.4683,
     "omDeg": 154.0266,
     "wDeg": 272.9242,
     "maDeg": 87.1296,
     "periodD": 0.06410915596214346,
-    "qAu": 4.521774026958153e-05,
-    "qKm": 6764.4776621950405
+    "qAu": 0.00004521774026958153,
+    "qKm": 6764.4776621950405,
+    "frame": "geocentric"
   },
   "color": "#F0C27A",
+  "noradCatId": 48274,
   "meta": {
     "provenance": "Celestrak GP OMM JSON fetched 2026-09-12T22:34:00Z: https://celestrak.org/NORAD/elements/gp.php?CATNR=48274&FORMAT=JSON-PRETTY",
     "source": "Celestrak GP (OMM) NORAD 48274",
     "confidence": "known",
-    "fetchedAt": "2026-09-12T22:34:00Z",
-    "unitsVersion": 1,
     "sources": [
       {
         "name": "Celestrak NORAD GP elements",
@@ -48,6 +49,9 @@
           "orbit.wDeg",
           "orbit.maDeg",
           "orbit.periodD",
+          "orbit.qKm",
+          "orbit.qAu",
+          "orbit.epochJd",
           "noradCatId"
         ]
       },
@@ -59,7 +63,17 @@
           "facts.launchDate",
           "name"
         ]
+      },
+      {
+        "name": "Celestrak GP data formats",
+        "url": "https://celestrak.org/NORAD/documentation/gp-data-formats.php",
+        "fields": [
+          "orbit.frame",
+          "meta.provenance"
+        ]
       }
-    ]
+    ],
+    "fetchedAt": "2026-09-12T22:34:00Z",
+    "unitsVersion": 1
   }
 }

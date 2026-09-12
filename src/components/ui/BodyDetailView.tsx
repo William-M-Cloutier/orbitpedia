@@ -42,7 +42,7 @@ export function BodyDetailView({ body }: { body: Body }) {
                 {body.name}
               </h1>
               <p className="text-sm text-zinc-500">
-                {KIND_LABEL[body.kind]}
+                {KIND_LABEL[body.kind] ?? body.kind}
                 {body.systemId !== homeId ? ` · ${body.systemId}` : ""}
                 {body.aliases?.length
                   ? ` · also ${body.aliases.join(", ")}`

@@ -254,7 +254,7 @@ function visualRadius(body, tiers) {
     case "moon":
       return tiers.moon;
     case "satellite":
-      return tiers.satellite ?? 0.018;
+      return tiers.satellite ?? 0.005;
     case "probe":
       return tiers.probe ?? tiers.asteroid ?? 0.02;
     default:

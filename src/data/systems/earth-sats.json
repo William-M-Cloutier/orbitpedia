@@ -7,15 +7,28 @@
     "hst",
     "css-tianhe",
     "terra",
-    "noaa-20"
+    "noaa-20",
+    "noaa-19",
+    "suomi-npp",
+    "metop-b",
+    "metop-c",
+    "aqua",
+    "aura",
+    "landsat-8",
+    "landsat-9",
+    "sentinel-1a",
+    "sentinel-2a",
+    "sentinel-3a",
+    "icesat-2",
+    "swot",
+    "cloudsat"
   ],
-  "blurb": "Low-Earth and polar-orbiting satellites around Earth \u2014 the International Space Station, Hubble Space Telescope, China's Tiangong (Tianhe core), NASA's Terra, and NOAA-20.",
+  "blurb": "Low-Earth and polar-orbiting satellites around Earth \u2014 crewed stations, Hubble, and major weather, land-imaging, and Earth-science missions.",
   "highlights": [
-    "Crewed laboratory and visiting craft in low Earth orbit (ISS)",
-    "Hubble Space Telescope and Tiangong space station",
-    "Earth-observing missions Terra and NOAA-20 (JPSS-1)"
+    "Crewed laboratories: ISS and China Space Station (Tianhe)",
+    "Hubble Space Telescope in low Earth orbit",
+    "Weather and Earth-science fleet (NOAA, MetOp, Landsat, Copernicus, and more)"
   ],
-  "planetCount": 0,
   "compactnessNote": "These spacecraft fly a few hundred to about 800 km above Earth's surface, far closer than the Moon.",
   "meta": {
     "confidence": "known",
