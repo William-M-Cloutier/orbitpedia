@@ -10,6 +10,7 @@ import {
   quickPhysFactRows,
   type FactRow,
 } from "@/lib/factsDisplay";
+import { overviewBlurb } from "@/lib/interestBlurb";
 import { periodFromA } from "@/lib/kepler";
 import { formatAu, formatPeriodDays } from "@/lib/units";
 
@@ -164,7 +165,7 @@ export function FactsPanel({ body, system, onClear }: Props) {
   const period =
     body.orbit?.periodD ??
     (body.orbit ? periodFromA(body.orbit.aAu) : undefined);
-  const note = body.facts.discoveryNotes;
+  const overview = overviewBlurb(body, system);
   const discovered = discoveryDisplay(body);
   const quickRows = quickPhysFactRows(body);
   const fullRows = keyFactRows(body);
@@ -219,8 +220,8 @@ export function FactsPanel({ body, system, onClear }: Props) {
                 <Stat label="Semi-major axis" value={formatAu(body.orbit.aAu)} />
               )}
             </dl>
-            {note && (
-              <p className="text-sm leading-relaxed text-zinc-400">{note}</p>
+            {overview && (
+              <p className="text-sm leading-relaxed text-zinc-400">{overview}</p>
             )}
             {body.meta.sources && body.meta.sources.length > 0 && (
               <p className="text-[11px] text-zinc-500">
@@ -243,10 +244,10 @@ export function FactsPanel({ body, system, onClear }: Props) {
               <h3 className="mb-2 text-xs font-medium uppercase tracking-wider text-zinc-500">
                 Overview
               </h3>
-              {note ? (
-                <p className="text-sm text-zinc-300">{note}</p>
+              {overview ? (
+                <p className="text-sm text-zinc-300">{overview}</p>
               ) : null}
-              <p className={`text-[11px] text-zinc-600${note ? " mt-2" : ""}`}>
+              <p className={`text-[11px] text-zinc-600${overview ? " mt-2" : ""}`}>
                 Source: {bodyProvenance(body)}
               </p>
             </section>
