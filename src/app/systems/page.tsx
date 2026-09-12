@@ -15,9 +15,13 @@ import {
   getHomeSystem,
   getSystem,
   isFixtureSystemId,
-  listSystems,
 } from "@/data/catalog";
-import { hasUsableOrbit } from "@/data/schema";
+import {
+  getSystemGraphAsync,
+  listSystemsAsync,
+  type ArchiveSystemSummary,
+} from "@/data/archiveCatalog";
+import { hasUsableOrbit, type System } from "@/data/schema";
 import { SystemFacts } from "@/components/ui/SystemFacts";
 
 /** Inter-system node spacing — Schematic / Proportional only (no True). */
@@ -45,26 +49,48 @@ type SystemNode = {
   starColor: string;
 };
 
-function buildNodes(): SystemNode[] {
-  return listSystems()
+function nodeFromCurated(s: System): SystemNode {
+  const bodies = getBodiesForSystem(s.id);
+  const star = bodies.find((b) => b.kind === "star");
+  let outerAAu = 0;
+  for (const b of bodies) {
+    if (!hasUsableOrbit(b) || b.orbit?.frame === "parent") continue;
+    if (b.orbit.aAu > outerAAu) outerAAu = b.orbit.aAu;
+  }
+  return {
+    id: s.id,
+    name: s.name,
+    home: s.home === true,
+    memberCount: bodies.length,
+    planetCount: bodies.filter((b) => b.kind === "planet").length,
+    outerAAu: outerAAu > 0 ? outerAAu : 1,
+    starColor: star?.color ?? "#FDB813",
+  };
+}
+
+/** Index-only archive stub — OK on map before graph fetch. */
+function nodeFromArchiveStub(s: ArchiveSystemSummary): SystemNode {
+  const planets = s.planetCount ?? 0;
+  return {
+    id: s.id,
+    name: s.name,
+    home: false,
+    memberCount: planets + 1,
+    planetCount: planets,
+    outerAAu: 1,
+    starColor: "#FDB813",
+  };
+}
+
+function buildNodesFromList(
+  list: Array<System | ArchiveSystemSummary>,
+): SystemNode[] {
+  return list
     .filter((s) => !isFixtureSystemId(s.id))
     .map((s) => {
-      const bodies = getBodiesForSystem(s.id);
-      const star = bodies.find((b) => b.kind === "star");
-      let outerAAu = 0;
-      for (const b of bodies) {
-        if (!hasUsableOrbit(b) || b.orbit?.frame === "parent") continue;
-        if (b.orbit.aAu > outerAAu) outerAAu = b.orbit.aAu;
-      }
-      return {
-        id: s.id,
-        name: s.name,
-        home: s.home === true,
-        memberCount: bodies.length,
-        planetCount: bodies.filter((b) => b.kind === "planet").length,
-        outerAAu: outerAAu > 0 ? outerAAu : 1,
-        starColor: star?.color ?? "#FDB813",
-      };
+      const curated = getSystem(s.id);
+      if (curated) return nodeFromCurated(curated);
+      return nodeFromArchiveStub(s as ArchiveSystemSummary);
     });
 }
 
@@ -202,8 +228,43 @@ function SystemMapView() {
     y: WORLD_H / 2,
     zoom: 1,
   });
-  const nodes = useMemo(() => buildNodes(), []);
-  const selectedSystem = selectedId ? getSystem(selectedId) : null;
+  const [nodes, setNodes] = useState<SystemNode[]>([]);
+  const [selectedSystem, setSelectedSystem] = useState<System | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    listSystemsAsync().then((list) => {
+      if (cancelled) return;
+      setNodes(buildNodesFromList(list));
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  // Load full System for facts panel (archive → lazy graph).
+  useEffect(() => {
+    if (!selectedId) {
+      setSelectedSystem(null);
+      return;
+    }
+    const curated = getSystem(selectedId);
+    if (curated) {
+      setSelectedSystem(curated);
+      return;
+    }
+    let cancelled = false;
+    getSystemGraphAsync(selectedId)
+      .then((g) => {
+        if (!cancelled) setSelectedSystem(g.system);
+      })
+      .catch(() => {
+        if (!cancelled) setSelectedSystem(null);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [selectedId]);
   const laid = useMemo(
     () => layoutNodes(nodes, spacing, WORLD_W, WORLD_H),
     [nodes, spacing],

@@ -11,9 +11,10 @@ import {
   type System,
 } from "./schema";
 import {
-  getSystem,
   getSystemGraph,
+  isCuratedSystemId,
   listSystems,
+  registerLoadedSystemGraph,
   type SystemGraph,
 } from "./catalog";
 
@@ -79,7 +80,10 @@ export async function getArchiveSystemGraph(
   systemId: string,
 ): Promise<SystemGraph> {
   const cached = graphCache.get(systemId);
-  if (cached) return cached;
+  if (cached) {
+    registerLoadedSystemGraph(cached);
+    return cached;
+  }
   const res = await fetch(graphUrl(systemId));
   if (!res.ok) {
     throw new Error(
@@ -122,6 +126,7 @@ export async function getArchiveSystemGraph(
   }
   const graph: SystemGraph = { system, bodies };
   graphCache.set(systemId, graph);
+  registerLoadedSystemGraph(graph);
   return graph;
 }
 
@@ -129,7 +134,7 @@ export async function getArchiveSystemGraph(
 export async function getSystemGraphAsync(
   systemId: string,
 ): Promise<SystemGraph> {
-  if (getSystem(systemId)) {
+  if (isCuratedSystemId(systemId)) {
     return getSystemGraph(systemId);
   }
   return getArchiveSystemGraph(systemId);
@@ -157,5 +162,5 @@ export async function listSystemsAsync(): Promise<
 }
 
 export function isArchiveOnlySystemId(systemId: string): boolean {
-  return !getSystem(systemId);
+  return !isCuratedSystemId(systemId);
 }

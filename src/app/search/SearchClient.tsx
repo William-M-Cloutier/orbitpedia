@@ -19,11 +19,13 @@ import {
   getSystem,
   KIND_LABEL,
   KIND_ORDER,
-  listSystems,
   isFixtureSystemId,
   searchCatalog,
-  type CatalogSearchResult,
 } from "@/data/catalog";
+import {
+  listSystemsAsync,
+  type ArchiveSystemSummary,
+} from "@/data/archiveCatalog";
 import {
   loadRecentSearches,
   pushRecentSearch,
@@ -31,11 +33,16 @@ import {
 } from "@/lib/recentSearches";
 import type { Body, BodyKind, System } from "@/data/schema";
 
+type SystemHit = Pick<System, "id" | "name"> & Partial<System>;
+
 type FlatHit =
-  | { key: string; type: "system"; system: System; href: string }
+  | { key: string; type: "system"; system: SystemHit; href: string }
   | { key: string; type: "body"; body: Body; href: string };
 
-function flattenGrouped(result: CatalogSearchResult): FlatHit[] {
+function flattenGrouped(result: {
+  systems: SystemHit[];
+  bodies: Body[];
+}): FlatHit[] {
   const out: FlatHit[] = [];
   for (const s of result.systems) {
     out.push({
@@ -87,7 +94,48 @@ export function SearchClient() {
     setQ(param);
   }, [searchParams]);
 
-  const result = useMemo(() => searchCatalog(q), [q]);
+  const [listedSystems, setListedSystems] = useState<
+    Array<System | ArchiveSystemSummary>
+  >([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    listSystemsAsync().then((list) => {
+      if (!cancelled) setListedSystems(list);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const curatedResult = useMemo(() => searchCatalog(q), [q]);
+
+  const result = useMemo((): {
+    systems: SystemHit[];
+    bodies: Body[];
+  } => {
+    const qn = q.trim().toLowerCase();
+    if (!qn) {
+      return { systems: [], bodies: [] };
+    }
+    const curatedIds = new Set(curatedResult.systems.map((s) => s.id));
+    const archiveHits: SystemHit[] = [];
+    for (const s of listedSystems) {
+      if (curatedIds.has(s.id) || isFixtureSystemId(s.id)) continue;
+      if (getSystem(s.id)) continue; // curated already covered
+      if (
+        s.id.toLowerCase().includes(qn) ||
+        s.name.toLowerCase().includes(qn)
+      ) {
+        archiveHits.push({ id: s.id, name: s.name });
+      }
+    }
+    return {
+      systems: [...curatedResult.systems, ...archiveHits],
+      bodies: curatedResult.bodies,
+    };
+  }, [q, curatedResult, listedSystems]);
+
   const hits = useMemo(() => flattenGrouped(result), [result]);
 
   useEffect(() => {
@@ -95,8 +143,8 @@ export function SearchClient() {
   }, [q]);
 
   const systemsForChips = useMemo(
-    () => listSystems().filter((s) => !isFixtureSystemId(s.id)),
-    [],
+    () => listedSystems.filter((s) => !isFixtureSystemId(s.id)),
+    [listedSystems],
   );
 
   const go = useCallback(

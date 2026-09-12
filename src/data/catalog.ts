@@ -28,8 +28,45 @@ export const bodies: Body[] = catalog.bodies;
 const systemById = new Map(systems.map((s) => [s.id, s]));
 const bodyById = new Map(bodies.map((b) => [b.id, b]));
 
+export type SystemGraph = {
+  system: System;
+  bodies: Body[];
+};
+
+/**
+ * Session overlay for lazy archive graphs (public/archive). Curated maps stay
+ * authoritative; overlay never writes catalog.generated. Populated by
+ * archiveCatalog.getSystemGraphAsync after Zod-validated fetch.
+ */
+const overlaySystems = new Map<string, System>();
+const overlayBodies = new Map<string, Body>();
+const overlayMembers = new Map<string, Body[]>();
+
+/** Register a fetched archive (or any non-curated) graph for sync consumers. */
+export function registerLoadedSystemGraph(graph: SystemGraph): void {
+  const { system, bodies: graphBodies } = graph;
+  if (systemById.has(system.id)) return; // curated wins; no overlay
+  overlaySystems.set(system.id, system);
+  const byId = new Map(graphBodies.map((b) => [b.id, b]));
+  const ordered: Body[] = [];
+  for (const mid of system.memberIds) {
+    const b = byId.get(mid);
+    if (b) ordered.push(b);
+  }
+  for (const b of graphBodies) {
+    overlayBodies.set(b.id, b);
+    if (!ordered.some((x) => x.id === b.id)) ordered.push(b);
+  }
+  overlayMembers.set(system.id, ordered);
+}
+
 export function getSystem(id: string): System | undefined {
-  return systemById.get(id);
+  return systemById.get(id) ?? overlaySystems.get(id);
+}
+
+/** True if id is in the curated catalog (not archive overlay). */
+export function isCuratedSystemId(id: string): boolean {
+  return systemById.has(id);
 }
 
 /** All systems; home system first, then id order. For system map / Discover. */
@@ -42,18 +79,20 @@ export function listSystems(): System[] {
 }
 
 export function getBody(id: string): Body | undefined {
-  return bodyById.get(id);
+  return bodyById.get(id) ?? overlayBodies.get(id);
 }
 
 export function getBodiesForSystem(systemId: string): Body[] {
-  const sys = systemById.get(systemId);
-  if (!sys) return [];
-  const out: Body[] = [];
-  for (const mid of sys.memberIds) {
-    const b = bodyById.get(mid);
-    if (b) out.push(b);
+  const sysCurated = systemById.get(systemId);
+  if (sysCurated) {
+    const out: Body[] = [];
+    for (const mid of sysCurated.memberIds) {
+      const b = bodyById.get(mid);
+      if (b) out.push(b);
+    }
+    return out;
   }
-  return out;
+  return overlayMembers.get(systemId) ?? [];
 }
 
 export function getHomeSystem(): System {
@@ -63,11 +102,6 @@ export function getHomeSystem(): System {
   }
   return home;
 }
-
-export type SystemGraph = {
-  system: System;
-  bodies: Body[];
-};
 
 /** One system + its member body cards (default Explore load path). */
 export function getSystemGraph(systemId: string): SystemGraph {
@@ -102,7 +136,7 @@ export function getHomeSystemGraph(): SystemGraph {
 export function resolveParentTree(bodyId: string): Body[] {
   const chain: Body[] = [];
   const seen = new Set<string>();
-  let cur = bodyById.get(bodyId);
+  let cur = getBody(bodyId);
   while (cur) {
     if (seen.has(cur.id)) {
       throw new Error(`parent tree cycle at ${cur.id}`);
@@ -110,20 +144,26 @@ export function resolveParentTree(bodyId: string): Body[] {
     seen.add(cur.id);
     chain.push(cur);
     if (!cur.parentId) break;
-    cur = bodyById.get(cur.parentId);
+    cur = getBody(cur.parentId);
   }
   return chain;
 }
 
 export function getParent(id: string): Body | undefined {
-  const b = bodyById.get(id);
+  const b = getBody(id);
   if (!b?.parentId) return undefined;
-  return bodyById.get(b.parentId);
+  return getBody(b.parentId);
 }
 
-/** Direct children of a body (parentId === parentId), catalog order. */
+/** Direct children of a body (parentId === parentId), catalog / overlay order. */
 export function listChildren(parentId: string): Body[] {
-  return bodies.filter((b) => b.parentId === parentId);
+  const parent = getBody(parentId);
+  if (!parent) return [];
+  if (systemById.has(parent.systemId)) {
+    return bodies.filter((b) => b.parentId === parentId);
+  }
+  const members = overlayMembers.get(parent.systemId) ?? [];
+  return members.filter((b) => b.parentId === parentId);
 }
 
 export function getBodiesByKind(kind: BodyKind): Body[] {
@@ -218,11 +258,12 @@ export { hasUsableOrbit };
 
 /** Explore deep-link for a body (includes ?system= for non-home). */
 export function exploreHref(bodyId: string, systemId?: string): string {
-  const body = bodyById.get(bodyId);
+  const body = getBody(bodyId);
   const sid = systemId ?? body?.systemId;
   const homeId = getHomeSystem().id;
   const params = new URLSearchParams();
-  if (sid && sid !== homeId && systemById.has(sid)) {
+  // Allow curated + archive (?system=); home omits system param.
+  if (sid && sid !== homeId) {
     params.set("system", sid);
   }
   if (body) params.set("focus", bodyId);
@@ -230,10 +271,10 @@ export function exploreHref(bodyId: string, systemId?: string): string {
   return qs ? `/?${qs}` : "/";
 }
 
-/** Explore deep-link for a system (no focus). Home → `/`. */
+/** Explore deep-link for a system (no focus). Home → `/`. Archive ids OK. */
 export function exploreSystemHref(systemId: string): string {
   const homeId = getHomeSystem().id;
-  if (!systemById.has(systemId) || systemId === homeId) return "/";
+  if (systemId === homeId) return "/";
   return `/?system=${encodeURIComponent(systemId)}`;
 }
 

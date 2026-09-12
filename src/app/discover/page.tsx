@@ -11,9 +11,15 @@ import {
   getBody,
   getHomeSystem,
   getSystem,
+  isFixtureSystemId,
   KIND_LABEL,
-  listSystems,
 } from "@/data/catalog";
+import {
+  getSystemGraphAsync,
+  listSystemsAsync,
+  type ArchiveSystemSummary,
+} from "@/data/archiveCatalog";
+import type { System } from "@/data/schema";
 import {
   formatAu,
   formatDensity,
@@ -30,17 +36,48 @@ function DiscoverInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const homeId = getHomeSystem().id;
-  const systems = listSystems();
+  const [systems, setSystems] = useState<
+    Array<System | ArchiveSystemSummary>
+  >([]);
+  const [graphReady, setGraphReady] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    listSystemsAsync().then((list) => {
+      if (!cancelled) {
+        setSystems(list.filter((s) => !isFixtureSystemId(s.id)));
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const systemId = useMemo(() => {
-    const p = searchParams.get("system");
-    if (p && getSystem(p)) return p;
+    const p = searchParams.get("system")?.trim();
+    if (p) return p;
     return homeId;
   }, [searchParams, homeId]);
 
+  // Ensure archive graph is registered before BodyRail / charts read catalog.
+  useEffect(() => {
+    let cancelled = false;
+    setGraphReady(false);
+    getSystemGraphAsync(systemId)
+      .then(() => {
+        if (!cancelled) setGraphReady(true);
+      })
+      .catch(() => {
+        if (!cancelled) setGraphReady(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [systemId]);
+
   const systemBodies = useMemo(
-    () => getBodiesForSystem(systemId),
-    [systemId],
+    () => (graphReady ? getBodiesForSystem(systemId) : []),
+    [systemId, graphReady],
   );
 
   const defaultCompare = useMemo(() => {
@@ -78,7 +115,7 @@ function DiscoverInner() {
     [selected],
   );
 
-  const system = getSystem(systemId);
+  const system = graphReady ? getSystem(systemId) : undefined;
 
   return (
     <AppShell
