@@ -13,13 +13,13 @@
     ],
     "primaryStarId": "k2-266",
     "starCount": 2,
-    "blurb": "K2-266 — 4 confirmed planets · 253 ly",
+    "blurb": "K2-266 is a multi-star system (2 stars) with 4 confirmed planets. About 253 ly from the Sun. First planet discovered 2018 (Transit).",
     "planetCount": 4,
     "distanceLy": 253,
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T18:59:02.707Z",
+      "fetchedAt": "2026-09-12T20:22:03.017Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — K2-266 overview",
@@ -59,7 +59,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:59:02.707Z",
+        "fetchedAt": "2026-09-12T20:22:03.017Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -80,7 +80,7 @@
             "fields": []
           }
         ],
-        "fetchedAt": "2026-09-12T18:59:02.707Z",
+        "fetchedAt": "2026-09-12T20:22:03.017Z",
         "confidence": "placeholder",
         "unitsVersion": 1
       }
@@ -115,7 +115,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:59:02.707Z",
+        "fetchedAt": "2026-09-12T20:22:03.017Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -163,7 +163,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:59:02.707Z",
+        "fetchedAt": "2026-09-12T20:22:03.017Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -211,7 +211,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:59:02.707Z",
+        "fetchedAt": "2026-09-12T20:22:03.017Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -259,7 +259,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:59:02.707Z",
+        "fetchedAt": "2026-09-12T20:22:03.017Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

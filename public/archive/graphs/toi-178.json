@@ -14,14 +14,14 @@
     ],
     "primaryStarId": "toi-178",
     "starCount": 1,
-    "blurb": "TOI-178 (K) — 6 confirmed planets · 204.5 ly",
+    "blurb": "TOI-178 is a K system with 6 confirmed planets. About 205 ly from the Sun. First planet discovered 2021 (Transit).",
     "planetCount": 6,
     "distanceLy": 204.5,
     "hostSpectralType": "K",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T18:59:02.707Z",
+      "fetchedAt": "2026-09-12T20:22:03.017Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — TOI-178 overview",
@@ -62,7 +62,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:59:02.707Z",
+        "fetchedAt": "2026-09-12T20:22:03.017Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -97,7 +97,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:59:02.707Z",
+        "fetchedAt": "2026-09-12T20:22:03.017Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -145,7 +145,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:59:02.707Z",
+        "fetchedAt": "2026-09-12T20:22:03.017Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -193,7 +193,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:59:02.707Z",
+        "fetchedAt": "2026-09-12T20:22:03.017Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -241,7 +241,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:59:02.707Z",
+        "fetchedAt": "2026-09-12T20:22:03.017Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -289,7 +289,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:59:02.707Z",
+        "fetchedAt": "2026-09-12T20:22:03.017Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -337,7 +337,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:59:02.707Z",
+        "fetchedAt": "2026-09-12T20:22:03.017Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

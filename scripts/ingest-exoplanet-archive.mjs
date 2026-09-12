@@ -94,6 +94,101 @@ function discoveryNote(discYear, method) {
   return undefined;
 }
 
+
+/** Distance label matching Sky systemOverviewBlurb. */
+function formatDistanceLy(ly) {
+  if (!Number.isFinite(ly) || ly < 0) return "";
+  if (ly < 10) return `${Number(ly.toPrecision(2))} ly`;
+  if (ly < 100) return `${Number(ly.toPrecision(3))} ly`;
+  if (ly < 1000) return `${Math.round(ly)} ly`;
+  return `${Math.round(ly).toLocaleString("en-US")} ly`;
+}
+
+/**
+ * System overview blurb — Sky sentence voice (SystemFacts prefers hand blurb).
+ * Omit unknown clauses; never invent.
+ */
+function buildSystemOverviewBlurb({
+  name,
+  spectral,
+  planetCount,
+  starCount,
+  distanceLy,
+  firstYear,
+  firstMethod,
+}) {
+  const sentences = [];
+  const planetBit =
+    planetCount > 0
+      ? `${planetCount} confirmed planet${planetCount === 1 ? "" : "s"}`
+      : null;
+  if (spectral && planetBit) {
+    if (starCount >= 2) {
+      sentences.push(
+        `${name} is a ${spectral} multi-star system (${starCount} stars) with ${planetBit}.`,
+      );
+    } else {
+      sentences.push(`${name} is a ${spectral} system with ${planetBit}.`);
+    }
+  } else if (spectral) {
+    if (starCount >= 2) {
+      sentences.push(
+        `${name} is a ${spectral} multi-star system (${starCount} stars).`,
+      );
+    } else {
+      sentences.push(`${name} is a ${spectral} system.`);
+    }
+  } else if (planetBit) {
+    if (starCount >= 2) {
+      sentences.push(
+        `${name} is a multi-star system (${starCount} stars) with ${planetBit}.`,
+      );
+    } else {
+      sentences.push(`${name} hosts ${planetBit}.`);
+    }
+  } else if (starCount >= 2) {
+    sentences.push(`${name} is a multi-star system (${starCount} stars).`);
+  }
+
+  if (distanceLy != null && Number.isFinite(distanceLy) && distanceLy > 0) {
+    const d = formatDistanceLy(distanceLy);
+    if (d) sentences.push(`About ${d} from the Sun.`);
+  }
+
+  if (firstYear) {
+    sentences.push(
+      firstMethod
+        ? `First planet discovered ${firstYear} (${firstMethod}).`
+        : `First planet discovered ${firstYear}.`,
+    );
+  }
+
+  return sentences.length ? sentences.join(" ") : undefined;
+}
+
+/** Compact mid-dot line for archive index / map overlay (Sky optional path). */
+function buildIndexBlurb({
+  spectral,
+  planetCount,
+  starCount,
+  distanceLy,
+  firstYear,
+}) {
+  const parts = [];
+  if (spectral) parts.push(spectral);
+  if (planetCount > 0) {
+    parts.push(`${planetCount} planet${planetCount === 1 ? "" : "s"}`);
+  }
+  if (starCount >= 2) parts.push(`${starCount} stars`);
+  if (firstYear) parts.push(`first world ${firstYear}`);
+  if (distanceLy != null && Number.isFinite(distanceLy) && distanceLy > 0) {
+    const d = formatDistanceLy(distanceLy);
+    if (d) parts.push(d);
+  }
+  return parts.length ? parts.join(" · ") : undefined;
+}
+
+
 const COLUMNS = [
   "hostname",
   "pl_name",
@@ -761,6 +856,42 @@ function buildSystem(familyName, planetRows, fetchedAt, companionStarRows) {
     ...new Set([...stars.map((s) => s.id), ...planets.map((p) => p.id)]),
   ];
 
+  // Earliest planet discovery (for system blurb — not copied onto stars).
+  let firstYear;
+  let firstMethod;
+  let firstYearNum = Infinity;
+  for (const pl of planets) {
+    const raw = pl.facts?.discoveryDate;
+    if (!raw) continue;
+    const ym = /^(\d{4})/.exec(String(raw));
+    if (!ym) continue;
+    const y = Number(ym[1]);
+    if (!Number.isFinite(y) || y >= firstYearNum) continue;
+    firstYearNum = y;
+    firstYear = String(y);
+    const notes = pl.facts?.discoveryNotes;
+    const mm = notes && /\(([^)]+)\)\.?\s*$/.exec(String(notes).replace(/\s+/g, " ").trim());
+    firstMethod = mm ? mm[1] : undefined;
+  }
+
+  const systemBlurb = buildSystemOverviewBlurb({
+    name: familyName,
+    spectral: hostSpectralType,
+    planetCount: planets.length,
+    starCount,
+    distanceLy,
+    firstYear,
+    firstMethod,
+  });
+  const indexBlurb = buildIndexBlurb({
+    spectral: hostSpectralType,
+    planetCount: planets.length,
+    starCount,
+    distanceLy,
+    firstYear,
+  });
+
+
   const system = omitEmpty({
     id: systemId,
     name: familyName,
@@ -769,14 +900,7 @@ function buildSystem(familyName, planetRows, fetchedAt, companionStarRows) {
     primaryStarId,
     starCount,
     circumbinary: circumbinary || undefined,
-    blurb: [
-      familyName,
-      hostSpectralType ? `(${hostSpectralType})` : null,
-      `— ${planets.length} confirmed planet${planets.length === 1 ? "" : "s"}`,
-      distanceLy != null ? `· ${distanceLy} ly` : null,
-    ]
-      .filter((x) => x != null && x !== "")
-      .join(" "),
+    blurb: systemBlurb,
     planetCount: planets.length,
     distanceLy,
     hostSpectralType,
@@ -814,6 +938,7 @@ function buildSystem(familyName, planetRows, fetchedAt, companionStarRows) {
       hostSpectralType,
       hasGas,
       circumbinary: circumbinary || undefined,
+      blurb: indexBlurb,
       overviewUrl: ov,
       primaryStarId,
     }),

@@ -9,14 +9,14 @@
     ],
     "primaryStarId": "gj-3378",
     "starCount": 1,
-    "blurb": "GJ 3378 (M4 V) — 1 confirmed planet · 25.2 ly",
+    "blurb": "GJ 3378 is a M4 V system with 1 confirmed planet. About 25.2 ly from the Sun. First planet discovered 2026 (Radial Velocity).",
     "planetCount": 1,
     "distanceLy": 25.2,
     "hostSpectralType": "M4 V",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T18:59:02.707Z",
+      "fetchedAt": "2026-09-12T20:22:03.017Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — GJ 3378 overview",
@@ -57,7 +57,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:59:02.707Z",
+        "fetchedAt": "2026-09-12T20:22:03.017Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -93,7 +93,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:59:02.707Z",
+        "fetchedAt": "2026-09-12T20:22:03.017Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

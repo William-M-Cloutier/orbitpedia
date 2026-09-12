@@ -11,13 +11,13 @@
     ],
     "primaryStarId": "kepler-172",
     "starCount": 1,
-    "blurb": "Kepler-172 — 3 confirmed planets · 2702.5 ly",
+    "blurb": "Kepler-172 hosts 3 confirmed planets. About 2,703 ly from the Sun. First planet discovered 2014 (Transit).",
     "planetCount": 3,
     "distanceLy": 2702.5,
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T18:59:02.707Z",
+      "fetchedAt": "2026-09-12T20:22:03.017Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-172 overview",
@@ -57,7 +57,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:59:02.707Z",
+        "fetchedAt": "2026-09-12T20:22:03.017Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -93,7 +93,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:59:02.707Z",
+        "fetchedAt": "2026-09-12T20:22:03.017Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -140,7 +140,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:59:02.707Z",
+        "fetchedAt": "2026-09-12T20:22:03.017Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -187,7 +187,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:59:02.707Z",
+        "fetchedAt": "2026-09-12T20:22:03.017Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

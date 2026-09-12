@@ -10,13 +10,13 @@
     ],
     "primaryStarId": "kepler-102",
     "starCount": 1,
-    "blurb": "Kepler-102 — 2 confirmed planets · 351.6 ly",
+    "blurb": "Kepler-102 hosts 2 confirmed planets. About 352 ly from the Sun. First planet discovered 2014 (Transit).",
     "planetCount": 2,
     "distanceLy": 351.6,
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T18:59:02.707Z",
+      "fetchedAt": "2026-09-12T20:22:03.017Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-102 overview",
@@ -56,7 +56,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:59:02.707Z",
+        "fetchedAt": "2026-09-12T20:22:03.017Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -92,7 +92,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:59:02.707Z",
+        "fetchedAt": "2026-09-12T20:22:03.017Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -139,7 +139,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:59:02.707Z",
+        "fetchedAt": "2026-09-12T20:22:03.017Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

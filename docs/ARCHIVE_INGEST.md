@@ -247,3 +247,9 @@ Planets set `facts.discoveryNotes` from NEA when available (omit on `kind:star` 
 - Omit when both absent. No wiki in default ingest (optional later flag).
 - Sky Overview composes `discoveryDate` + `discoveryNotes` (no `facts.overview` field).
 
+## System blurb (archive)
+
+- Graph `system.blurb`: Sky sentence voice (`{name} is a {spectral} system with N confirmed planets. About D ly from the Sun. First planet discovered YYYY (Method).`) — omit unknown clauses.
+- Index `blurb`: compact mid-dot line (`G8 V · 7 planets · 2 stars · first world 1996 · 41 ly`) for map overlay before graph load.
+- Earliest planet discovery only (never invent; not copied onto `kind:star` discoveryNotes).
+

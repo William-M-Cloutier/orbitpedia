@@ -9,14 +9,14 @@
     ],
     "primaryStarId": "gliese-12",
     "starCount": 1,
-    "blurb": "Gliese 12 (M4 V) — 1 confirmed planet · 39.8 ly",
+    "blurb": "Gliese 12 is a M4 V system with 1 confirmed planet. About 39.8 ly from the Sun. First planet discovered 2024 (Transit).",
     "planetCount": 1,
     "distanceLy": 39.8,
     "hostSpectralType": "M4 V",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T18:59:02.707Z",
+      "fetchedAt": "2026-09-12T20:22:03.017Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Gliese 12 overview",
@@ -57,7 +57,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:59:02.707Z",
+        "fetchedAt": "2026-09-12T20:22:03.017Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -94,7 +94,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:59:02.707Z",
+        "fetchedAt": "2026-09-12T20:22:03.017Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

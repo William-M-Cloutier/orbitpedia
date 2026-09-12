@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "fetchedAt": "2026-09-12T18:59:02.707Z",
+  "fetchedAt": "2026-09-12T20:22:03.017Z",
   "source": "NASA Exoplanet Archive pscomppars",
   "systems": [
     {
@@ -11,6 +11,7 @@
       "distanceLy": 392.8,
       "hostSpectralType": "M8.5",
       "hasGas": true,
+      "blurb": "M8.5 · 1 planet · first world 2010 · 393 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/2MASS%20J04414489%2B2301513",
       "primaryStarId": "2mass-j04414489-2301513"
     },
@@ -22,6 +23,7 @@
       "distanceLy": 226.9,
       "hostSpectralType": "K7 V",
       "hasGas": true,
+      "blurb": "K7 V · 1 planet · first world 2016 · 227 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/2MASS%20J22362452%2B4751425",
       "primaryStarId": "2mass-j22362452-4751425"
     },
@@ -33,6 +35,7 @@
       "distanceLy": 41,
       "hostSpectralType": "G8 V",
       "hasGas": true,
+      "blurb": "G8 V · 7 planets · 2 stars · first world 1996 · 41 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/55%20Cnc",
       "primaryStarId": "55-cnc"
     },
@@ -44,6 +47,7 @@
       "distanceLy": 163.2,
       "hostSpectralType": "K2 V",
       "hasGas": true,
+      "blurb": "K2 V · 1 planet · first world 2005 · 163 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/AB%20Pic",
       "primaryStarId": "ab-pic"
     },
@@ -55,6 +59,7 @@
       "distanceLy": 31.7,
       "hostSpectralType": "M1 V",
       "hasGas": true,
+      "blurb": "M1 V · 4 planets · first world 2020 · 31.7 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/AU%20Mic",
       "primaryStarId": "au-mic"
     },
@@ -66,6 +71,7 @@
       "distanceLy": 142.1,
       "hostSpectralType": "K V",
       "hasGas": false,
+      "blurb": "K V · 1 planet · 2 stars · first world 2025 · 142 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/BD%2B05%204868%20A",
       "primaryStarId": "bd-05-4868"
     },
@@ -76,6 +82,7 @@
       "starCount": 2,
       "hostSpectralType": "L4.5 V",
       "hasGas": true,
+      "blurb": "L4.5 V · 1 planet · 2 stars · first world 2026",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/CD-35%202722%20B",
       "primaryStarId": "cd-35-2722"
     },
@@ -87,6 +94,7 @@
       "distanceLy": 1103.7,
       "hostSpectralType": "K1 V",
       "hasGas": true,
+      "blurb": "K1 V · 1 planet · first world 2010 · 1,104 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/CoRoT-10",
       "primaryStarId": "corot-10"
     },
@@ -98,6 +106,7 @@
       "distanceLy": 2136.4,
       "hostSpectralType": "F6 V",
       "hasGas": true,
+      "blurb": "F6 V · 1 planet · first world 2010 · 2,136 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/CoRoT-11",
       "primaryStarId": "corot-11"
     },
@@ -108,6 +117,7 @@
       "starCount": 1,
       "distanceLy": 3673.7,
       "hasGas": true,
+      "blurb": "1 planet · first world 2010 · 3,674 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/CoRoT-12",
       "primaryStarId": "corot-12"
     },
@@ -119,6 +129,7 @@
       "distanceLy": 3747.3,
       "hostSpectralType": "G0 V",
       "hasGas": true,
+      "blurb": "G0 V · 1 planet · first world 2010 · 3,747 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/CoRoT-13",
       "primaryStarId": "corot-13"
     },
@@ -130,6 +141,7 @@
       "distanceLy": 2499,
       "hostSpectralType": "G8/9 IV",
       "hasGas": true,
+      "blurb": "G8/9 IV · 1 planet · first world 2015 · 2,499 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/CoRoT-28",
       "primaryStarId": "corot-28"
     },
@@ -141,6 +153,7 @@
       "distanceLy": 2507.4,
       "hostSpectralType": "F3 V",
       "hasGas": true,
+      "blurb": "F3 V · 1 planet · first world 2008 · 2,507 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/CoRoT-3",
       "primaryStarId": "corot-3"
     },
@@ -152,6 +165,7 @@
       "distanceLy": 1050.3,
       "hostSpectralType": "K1 V",
       "hasGas": true,
+      "blurb": "K1 V · 1 planet · first world 2010 · 1,050 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/CoRoT-8",
       "primaryStarId": "corot-8"
     },
@@ -163,6 +177,7 @@
       "distanceLy": 622,
       "hostSpectralType": "K5e",
       "hasGas": true,
+      "blurb": "K5e · 1 planet · first world 2007 · 622 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/CT%20Cha",
       "primaryStarId": "ct-cha"
     },
@@ -174,6 +189,7 @@
       "distanceLy": 204,
       "hostSpectralType": "F8 V",
       "hasGas": false,
+      "blurb": "F8 V · 2 planets · first world 2019 · 204 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/DMPP-1",
       "primaryStarId": "dmpp-1"
     },
@@ -185,6 +201,7 @@
       "distanceLy": 82.6,
       "hostSpectralType": "F5-F8 V",
       "hasGas": false,
+      "blurb": "F5-F8 V · 1 planet · first world 2023 · 82.6 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/DMPP-4",
       "primaryStarId": "dmpp-4"
     },
@@ -195,6 +212,7 @@
       "starCount": 1,
       "distanceLy": 248.3,
       "hasGas": true,
+      "blurb": "1 planet · first world 2026 · 248 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/DMPP-8",
       "primaryStarId": "dmpp-8"
     },
@@ -205,6 +223,7 @@
       "starCount": 1,
       "distanceLy": 924,
       "hasGas": false,
+      "blurb": "1 planet · first world 2019 · 924 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/EPIC%20212499991",
       "primaryStarId": "epic-212499991"
     },
@@ -216,6 +235,7 @@
       "distanceLy": 91.1,
       "hostSpectralType": "M2.5 V",
       "hasGas": false,
+      "blurb": "M2.5 V · 1 planet · first world 2019 · 91.1 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/G%209-40",
       "primaryStarId": "g-9-40"
     },
@@ -227,6 +247,7 @@
       "distanceLy": 47.8,
       "hostSpectralType": "M4 V",
       "hasGas": false,
+      "blurb": "M4 V · 1 planet · first world 2009 · 47.8 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%201214",
       "primaryStarId": "gj-1214"
     },
@@ -238,6 +259,7 @@
       "distanceLy": 57.3,
       "hostSpectralType": "G6 V",
       "hasGas": true,
+      "blurb": "G6 V · 1 planet · 2 stars · first world 2000 · 57.3 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%203021",
       "primaryStarId": "gj-3021"
     },
@@ -249,6 +271,7 @@
       "distanceLy": 65.9,
       "hostSpectralType": "M2.5",
       "hasGas": true,
+      "blurb": "M2.5 · 4 planets · first world 2015 · 65.9 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%203293",
       "primaryStarId": "gj-3293"
     },
@@ -260,6 +283,7 @@
       "distanceLy": 25.2,
       "hostSpectralType": "M4 V",
       "hasGas": false,
+      "blurb": "M4 V · 1 planet · first world 2026 · 25.2 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%203378",
       "primaryStarId": "gj-3378"
     },
@@ -271,6 +295,7 @@
       "distanceLy": 34.1,
       "hostSpectralType": "M1",
       "hasGas": false,
+      "blurb": "M1 · 1 planet · first world 2025 · 34.1 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20341",
       "primaryStarId": "gj-341"
     },
@@ -282,6 +307,7 @@
       "distanceLy": 96,
       "hostSpectralType": "M1.5",
       "hasGas": true,
+      "blurb": "M1.5 · 1 planet · first world 2012 · 96 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%203470",
       "primaryStarId": "gj-3470"
     },
@@ -293,6 +319,7 @@
       "distanceLy": 31.8,
       "hostSpectralType": "M2.5 V",
       "hasGas": true,
+      "blurb": "M2.5 V · 1 planet · first world 2004 · 31.8 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20436",
       "primaryStarId": "gj-436"
     },
@@ -304,6 +331,7 @@
       "distanceLy": 59.9,
       "hostSpectralType": "M3.0 V",
       "hasGas": true,
+      "blurb": "M3.0 V · 1 planet · first world 2022 · 59.9 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20463",
       "primaryStarId": "gj-463"
     },
@@ -315,6 +343,7 @@
       "distanceLy": 26.3,
       "hostSpectralType": "M3.5 V",
       "hasGas": false,
+      "blurb": "M3.5 V · 1 planet · first world 2021 · 26.3 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20486",
       "primaryStarId": "gj-486"
     },
@@ -326,6 +355,7 @@
       "distanceLy": 23.6,
       "hostSpectralType": "M1.5 V",
       "hasGas": false,
+      "blurb": "M1.5 V · 4 planets · 3 stars · first world 2012 · 23.6 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20667%20C",
       "primaryStarId": "gj-667"
     },
@@ -337,6 +367,7 @@
       "distanceLy": 14.8,
       "hostSpectralType": "M2.5",
       "hasGas": false,
+      "blurb": "M2.5 · 1 planet · first world 2007 · 14.8 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20674",
       "primaryStarId": "gj-674"
     },
@@ -348,6 +379,7 @@
       "distanceLy": 52.3,
       "hostSpectralType": "M0",
       "hasGas": true,
+      "blurb": "M0 · 3 planets · 2 stars · first world 2012 · 52.3 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20676%20A",
       "primaryStarId": "gj-676"
     },
@@ -359,6 +391,7 @@
       "distanceLy": 10.7,
       "hostSpectralType": "M1 V",
       "hasGas": false,
+      "blurb": "M1 V · 3 planets · first world 2020 · 10.7 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20887",
       "primaryStarId": "gj-887"
     },
@@ -370,6 +403,7 @@
       "distanceLy": 39.8,
       "hostSpectralType": "M4 V",
       "hasGas": false,
+      "blurb": "M4 V · 1 planet · first world 2024 · 39.8 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Gliese%2012",
       "primaryStarId": "gliese-12"
     },
@@ -381,6 +415,7 @@
       "distanceLy": 353.9,
       "hostSpectralType": "K7",
       "hasGas": true,
+      "blurb": "K7 · 1 planet · first world 2010 · 354 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/GSC%2006214-00210",
       "primaryStarId": "gsc-06214-00210"
     },
@@ -392,6 +427,7 @@
       "distanceLy": 518.5,
       "hostSpectralType": "G0 V",
       "hasGas": true,
+      "blurb": "G0 V · 1 planet · 2 stars · first world 2006 · 519 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HAT-P-1",
       "primaryStarId": "hat-p-1"
     },
@@ -403,6 +439,7 @@
       "distanceLy": 465.6,
       "hostSpectralType": "K4",
       "hasGas": true,
+      "blurb": "K4 · 1 planet · first world 2009 · 466 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HAT-P-12",
       "primaryStarId": "hat-p-12"
     },
@@ -414,6 +451,7 @@
       "distanceLy": 127.1,
       "hostSpectralType": "G1 V",
       "hasGas": true,
+      "blurb": "G1 V · 4 planets · first world 2010 · 127 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2010180",
       "primaryStarId": "hd-10180"
     },
@@ -425,6 +463,7 @@
       "distanceLy": 210.7,
       "hostSpectralType": "G3 V",
       "hasGas": false,
+      "blurb": "G3 V · 4 planets · first world 2020 · 211 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20108236",
       "primaryStarId": "hd-108236"
     },
@@ -436,6 +475,7 @@
       "distanceLy": 104.9,
       "hostSpectralType": "K0.0 V",
       "hasGas": false,
+      "blurb": "K0.0 V · 6 planets · 3 stars · first world 2023 · 105 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20110067",
       "primaryStarId": "hd-110067"
     },
@@ -447,6 +487,7 @@
       "distanceLy": 87.4,
       "hostSpectralType": "G5IV",
       "hasGas": true,
+      "blurb": "G5IV · 5 planets · first world 2024 · 87.4 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20134606",
       "primaryStarId": "hd-134606"
     },
@@ -458,6 +499,7 @@
       "distanceLy": 120.7,
       "hostSpectralType": "K0",
       "hasGas": true,
+      "blurb": "K0 · 4 planets · first world 2014 · 121 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20141399",
       "primaryStarId": "hd-141399"
     },
@@ -469,6 +511,7 @@
       "distanceLy": 88.2,
       "hostSpectralType": "G0",
       "hasGas": false,
+      "blurb": "G0 · 5 planets · first world 2020 · 88.2 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20158259",
       "primaryStarId": "hd-158259"
     },
@@ -480,6 +523,7 @@
       "distanceLy": 50.9,
       "hostSpectralType": "G3 IV-V",
       "hasGas": true,
+      "blurb": "G3 IV-V · 4 planets · first world 2000 · 50.9 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20160691",
       "primaryStarId": "hd-160691"
     },
@@ -491,6 +535,7 @@
       "distanceLy": 174.8,
       "hostSpectralType": "G9 V",
       "hasGas": true,
+      "blurb": "G9 V · 5 planets · first world 2020 · 175 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20191939",
       "primaryStarId": "hd-191939"
     },
@@ -502,6 +547,7 @@
       "distanceLy": 117.3,
       "hostSpectralType": "K0 V",
       "hasGas": false,
+      "blurb": "K0 V · 3 planets · 2 stars · first world 2019 · 117 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2020781",
       "primaryStarId": "hd-20781"
     },
@@ -513,6 +559,7 @@
       "distanceLy": 70.4,
       "hostSpectralType": "K3 V",
       "hasGas": true,
+      "blurb": "K3 V · 3 planets · first world 2018 · 70.4 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20215152",
       "primaryStarId": "hd-215152"
     },
@@ -524,6 +571,7 @@
       "distanceLy": 21.3,
       "hostSpectralType": "K3 V",
       "hasGas": true,
+      "blurb": "K3 V · 5 planets · first world 2015 · 21.3 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20219134",
       "primaryStarId": "hd-219134"
     },
@@ -535,6 +583,7 @@
       "distanceLy": 127.3,
       "hostSpectralType": "K4 V",
       "hasGas": false,
+      "blurb": "K4 V · 5 planets · first world 2019 · 127 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2023472",
       "primaryStarId": "hd-23472"
     },
@@ -546,6 +595,7 @@
       "distanceLy": 154.2,
       "hostSpectralType": "K0 V",
       "hasGas": false,
+      "blurb": "K0 V · 4 planets · first world 2016 · 154 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%203167",
       "primaryStarId": "hd-3167"
     },
@@ -557,6 +607,7 @@
       "distanceLy": 150.3,
       "hostSpectralType": "G0 V",
       "hasGas": true,
+      "blurb": "G0 V · 4 planets · first world 2009 · 150 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2034445",
       "primaryStarId": "hd-34445"
     },
@@ -568,6 +619,7 @@
       "distanceLy": 42.2,
       "hostSpectralType": "K2.5 V",
       "hasGas": true,
+      "blurb": "K2.5 V · 5 planets · first world 2009 · 42.2 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2040307",
       "primaryStarId": "hd-40307"
     },
@@ -579,6 +631,7 @@
       "distanceLy": 346.7,
       "hostSpectralType": "F6",
       "hasGas": true,
+      "blurb": "F6 · 6 planets · first world 2016 · 347 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HIP%2041378",
       "primaryStarId": "hip-41378"
     },
@@ -590,6 +643,7 @@
       "distanceLy": 134.5,
       "hostSpectralType": "A5 V",
       "hasGas": true,
+      "blurb": "A5 V · 3 planets · first world 2008 · 135 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HR%208799",
       "primaryStarId": "hr-8799"
     },
@@ -601,6 +655,7 @@
       "distanceLy": 245.2,
       "hostSpectralType": "M1.5 V",
       "hasGas": false,
+      "blurb": "M1.5 V · 3 planets · first world 2017 · 245 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-133",
       "primaryStarId": "k2-133"
     },
@@ -612,6 +667,7 @@
       "distanceLy": 660.7,
       "hostSpectralType": "G8 V",
       "hasGas": false,
+      "blurb": "G8 V · 5 planets · first world 2017 · 661 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-138",
       "primaryStarId": "k2-138"
     },
@@ -622,6 +678,7 @@
       "starCount": 1,
       "distanceLy": 1079.3,
       "hasGas": false,
+      "blurb": "2 planets · first world 2018 · 1,079 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-187",
       "primaryStarId": "k2-187"
     },
@@ -632,6 +689,7 @@
       "starCount": 2,
       "distanceLy": 253,
       "hasGas": false,
+      "blurb": "4 planets · 2 stars · first world 2018 · 253 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-266",
       "primaryStarId": "k2-266"
     },
@@ -642,6 +700,7 @@
       "starCount": 1,
       "distanceLy": 1069.1,
       "hasGas": false,
+      "blurb": "4 planets · first world 2018 · 1,069 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-268",
       "primaryStarId": "k2-268"
     },
@@ -653,6 +712,7 @@
       "distanceLy": 505.4,
       "hostSpectralType": "K2 V",
       "hasGas": false,
+      "blurb": "K2 V · 4 planets · first world 2018 · 505 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-285",
       "primaryStarId": "k2-285"
     },
@@ -664,6 +724,7 @@
       "distanceLy": 514.3,
       "hostSpectralType": "G9 V",
       "hasGas": true,
+      "blurb": "G9 V · 4 planets · 2 stars · first world 2016 · 514 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-32",
       "primaryStarId": "k2-32"
     },
@@ -675,6 +736,7 @@
       "distanceLy": 269.6,
       "hostSpectralType": "M4 V",
       "hasGas": false,
+      "blurb": "M4 V · 2 planets · first world 2022 · 270 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-384",
       "primaryStarId": "k2-384"
     },
@@ -685,6 +747,7 @@
       "starCount": 1,
       "distanceLy": 216.7,
       "hasGas": false,
+      "blurb": "4 planets · first world 2016 · 217 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-72",
       "primaryStarId": "k2-72"
     },
@@ -695,6 +758,7 @@
       "starCount": 1,
       "distanceLy": 993.6,
       "hasGas": true,
+      "blurb": "4 planets · first world 2014 · 994 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-100",
       "primaryStarId": "kepler-100"
     },
@@ -705,6 +769,7 @@
       "starCount": 1,
       "distanceLy": 351.6,
       "hasGas": false,
+      "blurb": "2 planets · first world 2014 · 352 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-102",
       "primaryStarId": "kepler-102"
     },
@@ -715,6 +780,7 @@
       "starCount": 1,
       "distanceLy": 1449.2,
       "hasGas": false,
+      "blurb": "4 planets · first world 2014 · 1,449 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-106",
       "primaryStarId": "kepler-106"
     },
@@ -725,6 +791,7 @@
       "starCount": 1,
       "distanceLy": 1715.6,
       "hasGas": false,
+      "blurb": "3 planets · first world 2014 · 1,716 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-107",
       "primaryStarId": "kepler-107"
     },
@@ -735,6 +802,7 @@
       "starCount": 1,
       "distanceLy": 3351.1,
       "hasGas": true,
+      "blurb": "5 planets · first world 2014 · 3,351 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-122",
       "primaryStarId": "kepler-122"
     },
@@ -745,6 +813,7 @@
       "starCount": 2,
       "distanceLy": 1140.1,
       "hasGas": false,
+      "blurb": "4 planets · 2 stars · first world 2014 · 1,140 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-132",
       "primaryStarId": "kepler-132"
     },
@@ -756,6 +825,7 @@
       "distanceLy": 218.1,
       "hostSpectralType": "M1 V",
       "hasGas": false,
+      "blurb": "M1 V · 3 planets · first world 2014 · 218 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-138",
       "primaryStarId": "kepler-138"
     },
@@ -766,6 +836,7 @@
       "starCount": 1,
       "distanceLy": 1480.1,
       "hasGas": false,
+      "blurb": "4 planets · first world 2016 · 1,480 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-1388",
       "primaryStarId": "kepler-1388"
     },
@@ -776,6 +847,7 @@
       "starCount": 1,
       "distanceLy": 1275.4,
       "hasGas": false,
+      "blurb": "3 planets · first world 2014 · 1,275 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-139",
       "primaryStarId": "kepler-139"
     },
@@ -786,6 +858,7 @@
       "starCount": 1,
       "distanceLy": 2906.4,
       "hasGas": false,
+      "blurb": "3 planets · first world 2014 · 2,906 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-150",
       "primaryStarId": "kepler-150"
     },
@@ -796,6 +869,7 @@
       "starCount": 1,
       "distanceLy": 2985,
       "hasGas": false,
+      "blurb": "3 planets · first world 2014 · 2,985 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-154",
       "primaryStarId": "kepler-154"
     },
@@ -806,6 +880,7 @@
       "starCount": 1,
       "distanceLy": 1301.7,
       "hasGas": false,
+      "blurb": "3 planets · first world 2016 · 1,302 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-1542",
       "primaryStarId": "kepler-1542"
     },
@@ -816,6 +891,7 @@
       "starCount": 1,
       "distanceLy": 2905.3,
       "hasGas": true,
+      "blurb": "4 planets · first world 2014 · 2,905 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-164",
       "primaryStarId": "kepler-164"
     },
@@ -827,6 +903,7 @@
       "distanceLy": 1115.2,
       "hostSpectralType": "K4",
       "hasGas": true,
+      "blurb": "K4 · 4 planets · 2 stars · first world 2014 · 1,115 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-167",
       "primaryStarId": "kepler-167"
     },
@@ -837,6 +914,7 @@
       "starCount": 1,
       "distanceLy": 1325.9,
       "hasGas": false,
+      "blurb": "4 planets · first world 2014 · 1,326 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-169",
       "primaryStarId": "kepler-169"
     },
@@ -847,6 +925,7 @@
       "starCount": 1,
       "distanceLy": 2702.5,
       "hasGas": false,
+      "blurb": "3 planets · first world 2014 · 2,703 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-172",
       "primaryStarId": "kepler-172"
     },
@@ -857,6 +936,7 @@
       "starCount": 1,
       "distanceLy": 1719.9,
       "hasGas": false,
+      "blurb": "3 planets · first world 2014 · 1,720 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-176",
       "primaryStarId": "kepler-176"
     },
@@ -868,6 +948,7 @@
       "distanceLy": 579.2,
       "hostSpectralType": "M1",
       "hasGas": false,
+      "blurb": "M1 · 5 planets · first world 2014 · 579 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-186",
       "primaryStarId": "kepler-186"
     },
@@ -878,6 +959,7 @@
       "starCount": 2,
       "distanceLy": 921.6,
       "hasGas": true,
+      "blurb": "5 planets · 2 stars · first world 2011 · 922 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-20",
       "primaryStarId": "kepler-20"
     },
@@ -888,6 +970,7 @@
       "starCount": 1,
       "distanceLy": 5866.7,
       "hasGas": true,
+      "blurb": "5 planets · first world 2013 · 5,867 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-238",
       "primaryStarId": "kepler-238"
     },
@@ -898,6 +981,7 @@
       "starCount": 1,
       "distanceLy": 3445.8,
       "hasGas": false,
+      "blurb": "4 planets · first world 2014 · 3,446 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-292",
       "primaryStarId": "kepler-292"
     },
@@ -909,6 +993,7 @@
       "distanceLy": 544.7,
       "hostSpectralType": "M2 V",
       "hasGas": false,
+      "blurb": "M2 V · 4 planets · 2 stars · first world 2014 · 545 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-296",
       "primaryStarId": "kepler-296"
     },
@@ -920,6 +1005,7 @@
       "distanceLy": 1056.2,
       "hostSpectralType": "M1 V",
       "hasGas": true,
+      "blurb": "M1 V · 4 planets · first world 2011 · 1,056 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-32",
       "primaryStarId": "kepler-32"
     },
@@ -930,6 +1016,7 @@
       "starCount": 1,
       "distanceLy": 3943.7,
       "hasGas": true,
+      "blurb": "5 planets · first world 2011 · 3,944 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-33",
       "primaryStarId": "kepler-33"
     },
@@ -941,6 +1028,7 @@
       "distanceLy": 118.8,
       "hostSpectralType": "K",
       "hasGas": false,
+      "blurb": "K · 4 planets · 3 stars · first world 2015 · 119 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-444",
       "primaryStarId": "kepler-444"
     },
@@ -951,6 +1039,7 @@
       "starCount": 1,
       "distanceLy": 1000.4,
       "hasGas": true,
+      "blurb": "5 planets · first world 2012 · 1,000 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-48",
       "primaryStarId": "kepler-48"
     },
@@ -961,6 +1050,7 @@
       "starCount": 1,
       "distanceLy": 1887.8,
       "hasGas": true,
+      "blurb": "4 planets · first world 2012 · 1,888 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-55",
       "primaryStarId": "kepler-55"
     },
@@ -972,6 +1062,7 @@
       "distanceLy": 981.3,
       "hostSpectralType": "K2 V",
       "hasGas": false,
+      "blurb": "K2 V · 4 planets · first world 2013 · 981 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-62",
       "primaryStarId": "kepler-62"
     },
@@ -983,6 +1074,7 @@
       "distanceLy": 1205,
       "hostSpectralType": "K5",
       "hasGas": true,
+      "blurb": "K5 · 4 planets · first world 2012 · 1,205 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-80",
       "primaryStarId": "kepler-80"
     },
@@ -994,6 +1086,7 @@
       "distanceLy": 2949.5,
       "hostSpectralType": "G",
       "hasGas": true,
+      "blurb": "G · 5 planets · first world 2012 · 2,950 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-82",
       "primaryStarId": "kepler-82"
     },
@@ -1004,6 +1097,7 @@
       "starCount": 1,
       "distanceLy": 3339.5,
       "hasGas": false,
+      "blurb": "3 planets · first world 2012 · 3,340 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-84",
       "primaryStarId": "kepler-84"
     },
@@ -1014,6 +1108,7 @@
       "starCount": 1,
       "distanceLy": 2766.6,
       "hasGas": true,
+      "blurb": "5 planets · first world 2013 · 2,767 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/KOI-351",
       "primaryStarId": "koi-351"
     },
@@ -1024,6 +1119,7 @@
       "starCount": 2,
       "distanceLy": 1555.9,
       "hasGas": true,
+      "blurb": "4 planets · 2 stars · first world 2013 · 1,556 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/KOI-94",
       "primaryStarId": "koi-94"
     },
@@ -1035,6 +1131,7 @@
       "distanceLy": 34.6,
       "hostSpectralType": "M3 V",
       "hasGas": false,
+      "blurb": "M3 V · 5 planets · first world 2019 · 34.6 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/L%2098-59",
       "primaryStarId": "l-98-59"
     },
@@ -1045,6 +1142,7 @@
       "starCount": 1,
       "distanceLy": 275.7,
       "hasGas": true,
+      "blurb": "6 planets · first world 2022 · 276 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/TOI-1136",
       "primaryStarId": "toi-1136"
     },
@@ -1056,6 +1154,7 @@
       "distanceLy": 204.5,
       "hostSpectralType": "K",
       "hasGas": false,
+      "blurb": "K · 6 planets · first world 2021 · 205 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/TOI-178",
       "primaryStarId": "toi-178"
     },
@@ -1066,6 +1165,7 @@
       "starCount": 1,
       "distanceLy": 332.4,
       "hasGas": false,
+      "blurb": "3 planets · first world 2026 · 332 ly",
       "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/TOI-5624",
       "primaryStarId": "toi-5624"
     }

@@ -9,14 +9,14 @@
     ],
     "primaryStarId": "corot-28",
     "starCount": 1,
-    "blurb": "CoRoT-28 (G8/9 IV) — 1 confirmed planet · 2499 ly",
+    "blurb": "CoRoT-28 is a G8/9 IV system with 1 confirmed planet. About 2,499 ly from the Sun. First planet discovered 2015 (Transit).",
     "planetCount": 1,
     "distanceLy": 2499,
     "hostSpectralType": "G8/9 IV",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T18:59:02.707Z",
+      "fetchedAt": "2026-09-12T20:22:03.017Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — CoRoT-28 overview",
@@ -57,7 +57,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:59:02.707Z",
+        "fetchedAt": "2026-09-12T20:22:03.017Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -94,7 +94,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:59:02.707Z",
+        "fetchedAt": "2026-09-12T20:22:03.017Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

@@ -9,14 +9,14 @@
     ],
     "primaryStarId": "dmpp-4",
     "starCount": 1,
-    "blurb": "DMPP-4 (F5-F8 V) — 1 confirmed planet · 82.6 ly",
+    "blurb": "DMPP-4 is a F5-F8 V system with 1 confirmed planet. About 82.6 ly from the Sun. First planet discovered 2023 (Radial Velocity).",
     "planetCount": 1,
     "distanceLy": 82.6,
     "hostSpectralType": "F5-F8 V",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T18:59:02.707Z",
+      "fetchedAt": "2026-09-12T20:22:03.017Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — DMPP-4 overview",
@@ -57,7 +57,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:59:02.707Z",
+        "fetchedAt": "2026-09-12T20:22:03.017Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -93,7 +93,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:59:02.707Z",
+        "fetchedAt": "2026-09-12T20:22:03.017Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

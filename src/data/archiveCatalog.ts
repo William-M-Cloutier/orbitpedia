@@ -31,6 +31,8 @@ export type ArchiveSystemSummary = {
   planetCount?: number;
   distanceLy?: number;
   hostSpectralType?: string;
+  /** Factual mid-dot overview for map overlay (optional). */
+  blurb?: string;
   overviewUrl?: string;
   /** Archive hasGas (≳50 M⊕ or ≳4 R⊕). Missing = unknown / pre-flag index. */
   hasGas?: boolean;
