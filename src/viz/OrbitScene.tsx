@@ -313,40 +313,6 @@ function parentDisplayScale(
 
 
 /**
- * Viz-only layout for companion stars that lack usable Kepler elements.
- * Not a catalog AU claim — equal angles around primary, clearance from meshes.
- * Prefer real parent-frame elements when Ephemeris provides them.
- */
-function companionStarLayoutOffset(
-  body: Body,
-  sizeMode: SizeMode,
-  systemBodies: readonly Body[],
-  faceOn: FaceOnRotation,
-): [number, number, number] {
-  const companions = systemBodies.filter(
-    (b) => b.kind === "star" && b.parentId && !hasUsableOrbit(b),
-  );
-  const idx = companions.findIndex((b) => b.id === body.id);
-  if (idx < 0) return [0, 0, 0];
-  const primary =
-    systemBodies.find((b) => b.kind === "star" && !b.parentId) ??
-    systemBodies.find((b) => b.kind === "star");
-  const rPrimary = primary
-    ? visualRadius(primary, sizeMode, systemBodies)
-    : 0.35;
-  const rSelf = visualRadius(body, sizeMode, systemBodies);
-  const sep = rPrimary + rSelf + Math.max(0.12, rPrimary * 0.35);
-  const n = Math.max(companions.length, 1);
-  const ang = (2 * Math.PI * idx) / n - Math.PI / 2;
-  return eclipticToSceneFaceOn(
-    faceOn,
-    Math.cos(ang) * sep,
-    0,
-    Math.sin(ang) * sep,
-  );
-}
-
-/**
  * Scene-local Kepler position for one body's own elements (no parent offset).
  * `relScale` folds orbitDistanceScale and optional parent-frame display scale.
  */
@@ -356,13 +322,42 @@ function localOrbitPosition(
   relScale: number,
   faceOn: FaceOnRotation = FACE_ON_IDENTITY,
 ): [number, number, number] {
-  // Stars without usable elements stay at origin; companions with Kepler data move.
+  // No usable elements → origin; Kepler companions move. Mesh-omitted companions never call this.
   if (!hasUsableOrbit(body)) return [0, 0, 0];
   const period = body.orbit.periodD ?? periodFromA(body.orbit.aAu);
   const ma = body.orbit.maDeg + (360 * simDays) / period;
   const [x, y, z] = positionAtMa(body.orbit, ma);
   const s = relScale > 0 ? relScale : 1;
   return eclipticToSceneFaceOn(faceOn, x * s, y * s, z * s);
+}
+
+/**
+ * Explore mesh / OrbitLine visibility.
+ * - Primary/root star always meshes (at origin).
+ * - Binary companions mesh only when hasUsableOrbit (archive Kepler).
+ * - Orbit-unknown companion stars are rail/UI only — no circular sep dump.
+ * - Parent-frame children whose parent chain depends on an omitted companion
+ *   are also omitted (would otherwise stack at the primary origin).
+ *   Heliocentric / primary-frame orbiters and kids of meshed parents stay.
+ */
+function isExploreSceneBody(
+  body: Body,
+  primaryStarId: string | undefined,
+  byId: ReadonlyMap<string, Body>,
+  seen: Set<string> = new Set(),
+): boolean {
+  if (body.id === primaryStarId || (body.kind === "star" && !body.parentId)) {
+    return true;
+  }
+  if (!hasUsableOrbit(body)) return false;
+  if (body.orbit.frame === "parent" && body.parentId) {
+    if (seen.has(body.id)) return false;
+    seen.add(body.id);
+    const parent = byId.get(body.parentId);
+    if (!parent) return false;
+    return isExploreSceneBody(parent, primaryStarId, byId, seen);
+  }
+  return true;
 }
 
 /**
@@ -380,18 +375,9 @@ function bodyPosition(
   faceOn: FaceOnRotation = FACE_ON_IDENTITY,
   seen: Set<string> = new Set(),
 ): [number, number, number] {
-  // Primary / non-orbiters → origin; mesh-only companion stars get layout offset.
-  if (!hasUsableOrbit(body)) {
-    if (
-      body.kind === "star" &&
-      body.parentId &&
-      systemBodies &&
-      systemBodies.length > 0
-    ) {
-      return companionStarLayoutOffset(body, sizeMode, systemBodies, faceOn);
-    }
-    return [0, 0, 0];
-  }
+  // No usable orbit → origin. Orbit-unknown companions are omitted from the
+  // scene (see isExploreSceneBody) — do not invent layout-offset separation.
+  if (!hasUsableOrbit(body)) return [0, 0, 0];
   if (seen.has(body.id)) return [0, 0, 0];
   seen.add(body.id);
 
@@ -1641,28 +1627,32 @@ function SceneContent({
     [systemBodies, helioScale, faceOn, primaryStarId],
   );
 
-  // Orbit ellipses from system graph elements — skip if no usable orbit.
+  const bodyById = useMemo(() => {
+    const m = new Map<string, Body>();
+    for (const b of systemBodies) m.set(b.id, b);
+    return m;
+  }, [systemBodies]);
+
+  // Orbit ellipses / meshes: primary star + bodies with positionable orbits.
   // Sun wobble is BarycentricRoot viz-only; no catalog OrbitLine.
-  const orbiters = useMemo(
-    () => systemBodies.filter((b) => hasUsableOrbit(b)),
-    [systemBodies],
-  );
-  const visibleOrbiters = useMemo(
+  // Orbit-unknown companions (and their parent-frame kids) are rail-only.
+  const sceneBodies = useMemo(
     () =>
-      hiddenIds && hiddenIds.size > 0
-        ? orbiters.filter((b) => !hiddenIds.has(b.id))
-        : orbiters,
-    [orbiters, hiddenIds],
+      systemBodies.filter((b) =>
+        isExploreSceneBody(b, primaryStarId, bodyById),
+      ),
+    [systemBodies, primaryStarId, bodyById],
   );
+  const visibleOrbiters = useMemo(() => {
+    const orbiters = sceneBodies.filter((b) => hasUsableOrbit(b));
+    return hiddenIds && hiddenIds.size > 0
+      ? orbiters.filter((b) => !hiddenIds.has(b.id))
+      : orbiters;
+  }, [sceneBodies, hiddenIds]);
   const visibleBodies = useMemo(() => {
-    const base = systemBodies.filter((b) => {
-      if (hiddenIds && hiddenIds.has(b.id)) return false;
-      // Stars always mesh (primary + companions). Planets without aAu: rail only.
-      if (b.kind === "star") return true;
-      return hasUsableOrbit(b);
-    });
-    return base;
-  }, [systemBodies, hiddenIds]);
+    if (!hiddenIds || hiddenIds.size === 0) return sceneBodies;
+    return sceneBodies.filter((b) => !hiddenIds.has(b.id));
+  }, [sceneBodies, hiddenIds]);
   // Idle system view: no camera autoRotate (user orbits manually).
   // Follow mode still ride-alongs when a planet is selected.
   const invalidate = useThree((s) => s.invalidate);
