@@ -22,12 +22,17 @@ import {
 } from "@/lib/visualBinaryNote";
 import { periodFromA } from "@/lib/kepler";
 import { formatAu, formatPeriodDays } from "@/lib/units";
+import type { SurfacePoi } from "@/data/poiSchema";
+import { formatLatDeg, formatLonDeg } from "@/lib/latLon";
 
 type Props = {
   body: Body | null | undefined;
   /** Active system — shown when nothing is focused. */
   system?: System | null;
   onClear?: () => void;
+  /** Selected surface POI on the focused body (geographic lat/lon). */
+  selectedPoi?: SurfacePoi | null;
+  onClearPoi?: () => void;
 };
 
 function Stat({
@@ -149,12 +154,81 @@ function SourcesList({ body }: { body: Body }) {
   );
 }
 
-export function FactsPanel({ body, system, onClear }: Props) {
+
+function PoiDetail({
+  poi,
+  onClearPoi,
+}: {
+  poi: SurfacePoi;
+  onClearPoi?: () => void;
+}) {
+  const elev =
+    poi.elevationM != null
+      ? `${poi.elevationM.toLocaleString("en-US")} m`
+      : null;
+  const depth =
+    poi.depthM != null ? `${poi.depthM.toLocaleString("en-US")} m` : null;
+  return (
+    <section className="mb-4 rounded-lg border border-amber-400/25 bg-amber-500/[0.07] p-3">
+      <div className="flex items-start justify-between gap-2">
+        <div className="min-w-0">
+          <p className="text-[11px] uppercase tracking-wider text-amber-200/70">
+            Surface place
+          </p>
+          <h3 className="mt-0.5 truncate text-sm font-semibold text-zinc-100">
+            {poi.name}
+          </h3>
+        </div>
+        {onClearPoi ? (
+          <button
+            type="button"
+            onClick={onClearPoi}
+            className="shrink-0 rounded-md px-2 py-1 text-xs text-zinc-500 hover:bg-white/5 hover:text-zinc-300"
+            aria-label="Clear surface place"
+          >
+            ✕
+          </button>
+        ) : null}
+      </div>
+      <p className="mt-2 text-sm leading-relaxed text-zinc-300">{poi.summary}</p>
+      <dl className="mt-3 grid gap-2">
+        <Stat
+          label="Geographic latitude"
+          value={formatLatDeg(poi.latDeg)}
+          approximate={poi.confidence === "assumed"}
+        />
+        <Stat
+          label="Geographic longitude"
+          value={formatLonDeg(poi.lonDeg)}
+          approximate={poi.confidence === "assumed"}
+        />
+        {elev ? <Stat label="Elevation" value={elev} /> : null}
+        {depth ? <Stat label="Depth" value={depth} /> : null}
+      </dl>
+      <ul className="mt-3 space-y-1.5">
+        {poi.sources.map((s) => (
+          <li key={s.url} className="text-sm">
+            <a
+              href={s.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sky-300/90 hover:text-sky-200 hover:underline"
+            >
+              {s.name}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+export function FactsPanel({ body, system, onClear, selectedPoi, onClearPoi }: Props) {
   const [expanded, setExpanded] = useState(false);
 
   useEffect(() => {
     setExpanded(false);
-  }, [body?.id]);
+  }, [body?.id, selectedPoi?.id]);
 
   // Empty selection: lean system facts (not a blank column).
   if (!body) {
@@ -219,6 +293,9 @@ export function FactsPanel({ body, system, onClear }: Props) {
       </div>
 
       <div className="flex-1 overflow-y-auto p-4">
+        {selectedPoi && selectedPoi.bodyId === body.id ? (
+          <PoiDetail poi={selectedPoi} onClearPoi={onClearPoi} />
+        ) : null}
         {!expanded ? (
           <div className="space-y-3">
             <dl className="grid gap-2">

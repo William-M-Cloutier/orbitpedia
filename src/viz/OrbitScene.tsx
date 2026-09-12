@@ -56,6 +56,8 @@ import {
   COMPANION_OUT_OF_PLANE_FRAC,
 } from "./schematicFit";
 import { getBodyAppearanceMaterial, useRegistryTexture } from "./appearance";
+import { getPoisForBody } from "@/data/pois";
+import { SurfacePoiMarkers } from "./SurfacePoiMarkers";
 
 /** Must match <Canvas camera.near> — focus floors stay outside the near plane. */
 const CAMERA_NEAR = 0.01;
@@ -65,6 +67,9 @@ const CAMERA_NEAR = 0.01;
 type Props = {
   focusId?: string | null;
   onSelect?: (id: string | null) => void;
+  /** Selected surface POI id (Explore Facts); markers only on focused body. */
+  selectedPoiId?: string | null;
+  onSelectPoi?: (id: string | null) => void;
   highlightColor?: string;
   /** Simulated days advanced per real second (idle + follow). UI owns presets. */
   simDaysPerSec?: number;
@@ -704,11 +709,15 @@ const BodyMesh = memo(function BodyMesh({
   focused,
   onSelect,
   highlightColor,
+  selectedPoiId,
+  onSelectPoi,
 }: {
   body: Body;
   focused: boolean;
   onSelect?: (id: string | null) => void;
   highlightColor?: string;
+  selectedPoiId?: string | null;
+  onSelectPoi?: (id: string | null) => void;
 }) {
   const group = useRef<THREE.Group>(null);
   const { getSimDays } = useSimApi();
@@ -725,6 +734,7 @@ const BodyMesh = memo(function BodyMesh({
     highlightColor,
     surfaceMap,
   );
+  const surfacePois = focused ? getPoisForBody(body.id) : [];
 
   const handleClick = useCallback(
     (e: { stopPropagation: () => void }) => {
@@ -813,6 +823,14 @@ const BodyMesh = memo(function BodyMesh({
         scale={focused ? 1.35 : 1}
       >
         <sphereGeometry args={[r, 24, 24]} />
+        {surfacePois.length > 0 ? (
+          <SurfacePoiMarkers
+            pois={surfacePois}
+            radius={r}
+            selectedPoiId={selectedPoiId}
+            onSelectPoi={onSelectPoi}
+          />
+        ) : null}
       </mesh>
     </group>
   );
@@ -1720,6 +1738,8 @@ function SimProvider({
 function SceneContent({
   focusId,
   onSelect,
+  selectedPoiId,
+  onSelectPoi,
   highlightColor,
   simDaysPerSec,
   sizeMode = DEFAULT_SIZE_MODE,
@@ -1831,6 +1851,8 @@ function SceneContent({
             focused={focusId === b.id}
             onSelect={onSelect}
             highlightColor={highlightColor}
+            selectedPoiId={focusId === b.id ? selectedPoiId : null}
+            onSelectPoi={onSelectPoi}
           />
         ))}
       </BarycentricRoot>
@@ -1861,6 +1883,8 @@ function SceneContent({
 export function OrbitScene({
   focusId,
   onSelect,
+  selectedPoiId,
+  onSelectPoi,
   highlightColor,
   simDaysPerSec,
   sizeMode = DEFAULT_SIZE_MODE,
@@ -1874,6 +1898,7 @@ export function OrbitScene({
       className="h-full w-full"
       onContextMenu={(e) => {
         e.preventDefault();
+        onSelectPoi?.(null);
         onSelect?.(null);
       }}
     >
@@ -1894,6 +1919,8 @@ export function OrbitScene({
         <SceneContent
           focusId={focusId}
           onSelect={onSelect}
+          selectedPoiId={selectedPoiId}
+          onSelectPoi={onSelectPoi}
           highlightColor={highlightColor}
           simDaysPerSec={simDaysPerSec}
           sizeMode={sizeMode}
