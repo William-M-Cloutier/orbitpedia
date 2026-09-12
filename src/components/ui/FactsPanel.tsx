@@ -64,6 +64,11 @@ function Stat({
         title={approximate ? "Approximate" : undefined}
       >
         {value}
+        {approximate ? (
+          <span className="mt-0.5 block text-[11px] font-normal text-zinc-500">
+            Approximate
+          </span>
+        ) : null}
         {unknown && reason ? (
           <span className="mt-0.5 block text-[11px] font-normal text-zinc-600">
             {reason}
@@ -164,14 +169,17 @@ function PoiDetail({
   poi: SurfacePoi;
   onClearPoi?: () => void;
 }) {
+  const approx = poi.confidence === "assumed";
   const elev =
     poi.elevationM != null
       ? `${poi.elevationM.toLocaleString("en-US")} m`
       : null;
   const depth =
     poi.depthM != null ? `${poi.depthM.toLocaleString("en-US")} m` : null;
+  const lat = formatLatDeg(poi.latDeg);
+  const lon = formatLonDeg(poi.lonDeg);
   return (
-    <section className="mb-4 rounded-xl border border-amber-400/30 bg-amber-500/[0.08] p-3.5 shadow-[inset_0_1px_0_rgba(251,191,36,0.08)]">
+    <section className="mb-5 rounded-xl border border-amber-400/30 bg-amber-500/[0.08] p-3.5 shadow-[inset_0_1px_0_rgba(251,191,36,0.1)]">
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">
           <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-amber-200/70">
@@ -185,42 +193,49 @@ function PoiDetail({
           <button
             type="button"
             onClick={onClearPoi}
-            className="shrink-0 rounded-md px-2 py-1 text-xs text-zinc-500 hover:bg-white/5 hover:text-zinc-300"
+            className="shrink-0 rounded-md px-2 py-1 text-xs text-amber-200/80 hover:bg-amber-500/15 hover:text-amber-100"
             aria-label="Clear surface place"
           >
-            ✕
+            Clear
           </button>
         ) : null}
       </div>
       <p className="mt-2.5 text-sm leading-relaxed text-zinc-300/95">{poi.summary}</p>
-      <dl className="mt-3 grid gap-2">
+      <dl className="mt-3 grid grid-cols-2 gap-2">
         <Stat
           label="Latitude"
-          value={formatLatDeg(poi.latDeg)}
-          approximate={poi.confidence === "assumed"}
+          value={approx ? `~${lat}` : lat}
+          approximate={approx}
         />
         <Stat
           label="Longitude"
-          value={formatLonDeg(poi.lonDeg)}
-          approximate={poi.confidence === "assumed"}
+          value={approx ? `~${lon}` : lon}
+          approximate={approx}
         />
         {elev ? <Stat label="Elevation" value={elev} /> : null}
         {depth ? <Stat label="Depth" value={depth} /> : null}
       </dl>
-      <ul className="mt-3 space-y-1.5">
-        {poi.sources.map((s) => (
-          <li key={s.url} className="text-sm">
-            <a
-              href={s.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sky-300/90 hover:text-sky-200 hover:underline"
-            >
-              {s.name}
-            </a>
-          </li>
-        ))}
-      </ul>
+      {poi.sources.length > 0 ? (
+        <div className="mt-3.5">
+          <h4 className="mb-1.5 text-[10px] font-medium uppercase tracking-[0.14em] text-amber-200/55">
+            Sources
+          </h4>
+          <ul className="space-y-1.5">
+            {poi.sources.map((s) => (
+              <li key={s.url} className="text-sm">
+                <a
+                  href={s.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sky-300/90 hover:text-sky-200 hover:underline"
+                >
+                  {s.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
     </section>
   );
 }
