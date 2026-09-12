@@ -30,6 +30,9 @@
   },
   "color": "#D0C8A8",
   "horizonId": "502",
+  "appearance": {
+    "textureId": "europa-marquee"
+  },
   "meta": {
     "source": "JPL Horizons Europa vs Jupiter (ELEMENTS + OBJ_DATA)",
     "sources": [

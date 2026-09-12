@@ -30,6 +30,9 @@
   },
   "color": "#6A6058",
   "horizonId": "504",
+  "appearance": {
+    "textureId": "callisto-marquee"
+  },
   "meta": {
     "source": "JPL Horizons Callisto vs Jupiter (ELEMENTS + OBJ_DATA)",
     "sources": [

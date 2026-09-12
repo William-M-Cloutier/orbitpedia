@@ -25,6 +25,9 @@
   },
   "color": "#908888",
   "horizonId": "901",
+  "appearance": {
+    "textureId": "charon-marquee"
+  },
   "meta": {
     "source": "JPL Horizons Charon vs Pluto (ELEMENTS + OBJ_DATA)",
     "sources": [

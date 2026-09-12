@@ -707,6 +707,14 @@ if (!Number.isFinite(c)) {
     mercury: "mercury-marquee",
     pluto: "pluto-marquee",
     ceres: "ceres-marquee",
+    io: "io-marquee",
+    europa: "europa-marquee",
+    ganymede: "ganymede-marquee",
+    callisto: "callisto-marquee",
+    titan: "titan-marquee",
+    enceladus: "enceladus-marquee",
+    triton: "triton-marquee",
+    charon: "charon-marquee",
   };
   let packBytes = 0;
   let mapCount = 0;
@@ -748,12 +756,12 @@ if (!Number.isFinite(c)) {
       mapCount += 1;
     }
   }
-  if (packBytes > 6 * 1024 * 1024) {
-    fail(`texture pack over 6MB (${packBytes})`);
+  if (packBytes > 8 * 1024 * 1024) {
+    fail(`texture pack over 8MB (${packBytes})`);
   } else {
     ok(`texture pack ${(packBytes / 1024 / 1024).toFixed(2)}MB (${mapCount} maps)`);
   }
-  if (mapCount > 12) {
+  if (mapCount > 20) {
     fail(`too many marquee maps: ${mapCount}`);
   }
   // Facts must not surface texture/appearance fields.

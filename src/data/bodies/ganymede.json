@@ -30,6 +30,9 @@
   },
   "color": "#B0A090",
   "horizonId": "503",
+  "appearance": {
+    "textureId": "ganymede-marquee"
+  },
   "meta": {
     "source": "JPL Horizons Ganymede vs Jupiter (ELEMENTS + OBJ_DATA)",
     "sources": [

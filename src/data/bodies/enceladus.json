@@ -30,6 +30,9 @@
   },
   "color": "#E8F0F0",
   "horizonId": "602",
+  "appearance": {
+    "textureId": "enceladus-marquee"
+  },
   "meta": {
     "source": "JPL Horizons Enceladus vs Saturn (ELEMENTS + OBJ_DATA)",
     "sources": [

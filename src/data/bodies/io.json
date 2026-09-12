@@ -30,6 +30,9 @@
   },
   "color": "#E8C060",
   "horizonId": "501",
+  "appearance": {
+    "textureId": "io-marquee"
+  },
   "meta": {
     "source": "JPL Horizons Io vs Jupiter (ELEMENTS + OBJ_DATA)",
     "sources": [

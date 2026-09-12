@@ -27,6 +27,9 @@
   },
   "color": "#A0B0B8",
   "horizonId": "801",
+  "appearance": {
+    "textureId": "triton-marquee"
+  },
   "meta": {
     "source": "JPL Horizons Triton vs Neptune (ELEMENTS + OBJ_DATA)",
     "sources": [

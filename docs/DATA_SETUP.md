@@ -110,8 +110,8 @@ Optional additive field (omit on existing cards):
 - `textureId` = registry key only (kebab-case). **No** URLs, paths, or bytes on the card.
 - Fail-open: missing key / empty registry / failed load → procedural; never block Explore.
 - Keep textures **out of** `facts` and `meta.sources` (citations stay science pages).
-- Marquee Sol maps live under Guard caps: ≤512KB/file, ≤2048², ≤12 Sol maps,
-  ≤6MB pack, lazy on focus/near. See [APPEARANCE.md](./APPEARANCE.md) for seeded keys.
+- Marquee Sol maps live under Guard caps: ≤512KB/file, ≤2048², ≤20 Sol maps,
+  ≤8MB pack, lazy on focus/near. See [APPEARANCE.md](./APPEARANCE.md) for seeded keys.
 
 ## Sources policy (locked)
 

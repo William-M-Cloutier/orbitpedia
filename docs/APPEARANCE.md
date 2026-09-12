@@ -37,8 +37,8 @@ Lean WebP under Guard caps, served from `public/textures/`, registered in
 |-----|--------|
 | Per file | ≤ 512 KB |
 | Resolution | ≤ 2048² |
-| Sol bodies with real maps | ≤ 12 |
-| Pack total | ≤ 6 MB |
+| Sol bodies with real maps | ≤ 20 |
+| Pack total | ≤ 8 MB |
 | Load | Lazy on focus / near (async TextureLoader) |
 
 ### Seeded `textureId`s
@@ -57,9 +57,18 @@ Lean WebP under Guard caps, served from `public/textures/`, registered in
 | `mercury-marquee` | Mercury | NASA/MESSENGER-derived ([Solar System Scope](https://www.solarsystemscope.com/textures/) 2k, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)) — 2048×1024 WebP |
 | `pluto-marquee` | Pluto | NASA/JHUAPL/SwRI New Horizons extended-color cylindrical [PIA19956](https://photojournal.jpl.nasa.gov/catalog/PIA19956) (public domain) — 2048×1024 WebP |
 | `ceres-marquee` | Ceres | NASA/Dawn-derived ([Solar System Scope](https://www.solarsystemscope.com/textures/) 2k, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)) — 2048×1024 WebP |
+| `io-marquee` | Io | NASA/JPL/USGS Voyager–Galileo cylindrical mosaic (public domain) — 2048×1024 WebP |
+| `europa-marquee` | Europa | NASA/Juno–Voyager–Galileo cylindrical mosaic (public domain) — 2048×1024 WebP |
+| `ganymede-marquee` | Ganymede | NASA/JPL/USGS Voyager–Galileo cylindrical mosaic (public domain) — 2048×1024 WebP |
+| `callisto-marquee` | Callisto | NASA/Voyager–Galileo cylindrical mosaic (public domain) — 2048×1024 WebP |
+| `titan-marquee` | Titan | NASA/JPL-Caltech/SSI Cassini global map [PIA19658](https://photojournal.jpl.nasa.gov/catalog/PIA19658) (public domain) — 2048×1024 WebP |
+| `enceladus-marquee` | Enceladus | NASA/JPL/SSI Cassini global map [PIA08417](https://photojournal.jpl.nasa.gov/catalog/PIA08417) (public domain) — 2048×1024 WebP |
+| `triton-marquee` | Triton | NASA/Voyager cylindrical mosaic (public domain) — 2048×1024 WebP |
+| `charon-marquee` | Charon | NASA/JHUAPL/SwRI New Horizons cylindrical mosaic (public domain) — 2048×1024 WebP |
 
-Compress offline; no TIFFs / no huge sources in-repo. Pack fills the ≤12 Sol
-map Guard slot; other systems stay procedural. Moon tidal-lock is parked.
+Compress offline; no TIFFs / no huge sources in-repo. Code Guard ACK: pack
+cap bumped ≤12/≤6MB → ≤20/≤8MB (William+Lead) for iconic major moons; other
+moons stay procedural. Moon tidal-lock is parked.
 
 Mapped materials use the albedo map with white tint so continents / bands read
 true; procedural path unchanged for unmapped bodies.

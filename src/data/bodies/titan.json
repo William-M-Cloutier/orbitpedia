@@ -29,6 +29,9 @@
   },
   "color": "#C89040",
   "horizonId": "606",
+  "appearance": {
+    "textureId": "titan-marquee"
+  },
   "meta": {
     "source": "JPL Horizons Titan vs Saturn (ELEMENTS + OBJ_DATA)",
     "sources": [

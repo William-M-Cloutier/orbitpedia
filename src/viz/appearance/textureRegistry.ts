@@ -6,7 +6,8 @@
  *
  * Fail-open: missing key or failed load → procedural material.
  *
- * Guard caps: ≤512KB/file, ≤2048², ≤12 Sol bodies, ≤6MB pack, lazy load.
+ * Guard caps: ≤512KB/file, ≤2048², ≤20 Sol bodies, ≤8MB pack, lazy load.
+ * (Code Guard ACK: William+Lead bump from ≤12/≤6MB for major-moon pack.)
  */
 
 export type TextureRegistryEntry = {
@@ -79,6 +80,46 @@ export const TEXTURE_REGISTRY: Readonly<Record<string, TextureRegistryEntry>> =
       id: "ceres-marquee",
       src: "/textures/ceres-marquee.webp",
       credit: "NASA/Dawn-derived (Solar System Scope, CC BY 4.0)",
+    },
+    "io-marquee": {
+      id: "io-marquee",
+      src: "/textures/io-marquee.webp",
+      credit: "NASA/JPL/USGS Voyager-Galileo mosaic (cylindrical)",
+    },
+    "europa-marquee": {
+      id: "europa-marquee",
+      src: "/textures/europa-marquee.webp",
+      credit: "NASA/Juno-Voyager-Galileo mosaic (cylindrical)",
+    },
+    "ganymede-marquee": {
+      id: "ganymede-marquee",
+      src: "/textures/ganymede-marquee.webp",
+      credit: "NASA/JPL/USGS Voyager-Galileo mosaic (cylindrical)",
+    },
+    "callisto-marquee": {
+      id: "callisto-marquee",
+      src: "/textures/callisto-marquee.webp",
+      credit: "NASA/Voyager-Galileo mosaic (cylindrical)",
+    },
+    "titan-marquee": {
+      id: "titan-marquee",
+      src: "/textures/titan-marquee.webp",
+      credit: "NASA/JPL-Caltech/SSI Cassini PIA19658",
+    },
+    "enceladus-marquee": {
+      id: "enceladus-marquee",
+      src: "/textures/enceladus-marquee.webp",
+      credit: "NASA/JPL/SSI Cassini PIA08417",
+    },
+    "triton-marquee": {
+      id: "triton-marquee",
+      src: "/textures/triton-marquee.webp",
+      credit: "NASA/Voyager mosaic (cylindrical)",
+    },
+    "charon-marquee": {
+      id: "charon-marquee",
+      src: "/textures/charon-marquee.webp",
+      credit: "NASA/JHUAPL/SwRI New Horizons mosaic (cylindrical)",
     },
   });
 
