@@ -149,6 +149,16 @@ Systems map shows archive **index stubs**; graph loads on Explore open.
 
 
 
+
+## Facts copy (no process meta)
+
+Archive Facts / System blurbs are **factual-or-omit**:
+
+- Do **not** write process phrases into user-facing copy (`Archive host`, `ingest slice`,
+  `sample ingest`, `hand-enriched`, lazy-load wiring notes, etc.).
+- Star `discoveryNotes` omitted unless a real archive note exists; prefer `discoveryDate`.
+- System `blurb` = hostname + optional spectral type + confirmed planet count + distance when known.
+
 ## hasGas filter (index + system chunk)
 
 Archive index rows and system chunks include boolean **`hasGas`**:

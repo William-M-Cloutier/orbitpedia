@@ -343,7 +343,6 @@ function buildSystem(hostname, planetRows, fetchedAt) {
       massKg: mEarth != null && mEarth > 0 ? mEarth * M_EARTH_KG : undefined,
       radiusMeanKm: rEarth != null && rEarth > 0 ? rEarth * R_EARTH_KM : undefined,
       discoveryDate: discYear,
-      discoveryNotes: row.pl_name ? `NEA composite: ${row.pl_name}` : undefined,
     });
 
     const fields = [
@@ -418,7 +417,6 @@ function buildSystem(hostname, planetRows, fetchedAt) {
   const starFacts = omitEmpty({
     massKg: stMass != null && stMass > 0 ? stMass * M_SUN_KG : undefined,
     radiusMeanKm: stRad != null && stRad > 0 ? stRad * R_SUN_KM : undefined,
-    discoveryNotes: `Archive host (${planets.length} planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.`,
     discoveryDate: discYear,
   });
 
@@ -438,7 +436,6 @@ function buildSystem(hostname, planetRows, fetchedAt) {
           fields: [
             ...(starFacts.massKg != null ? ["facts.massKg"] : []),
             ...(starFacts.radiusMeanKm != null ? ["facts.radiusMeanKm"] : []),
-            "facts.discoveryNotes",
             ...(discYear ? ["facts.discoveryDate"] : []),
           ],
         },
@@ -454,7 +451,14 @@ function buildSystem(hostname, planetRows, fetchedAt) {
     name: hostname,
     home: false,
     memberIds,
-    blurb: `${hostname} — NASA Exoplanet Archive planetary system (${planets.length} planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.`,
+    blurb: [
+      hostname,
+      hostSpectralType ? `(${hostSpectralType})` : null,
+      `— ${planets.length} confirmed planet${planets.length === 1 ? "" : "s"}`,
+      distanceLy != null ? `· ${distanceLy} ly` : null,
+    ]
+      .filter((x) => x != null && x !== "")
+      .join(" "),
     planetCount: syPnum ?? planets.length,
     distanceLy,
     hostSpectralType,
