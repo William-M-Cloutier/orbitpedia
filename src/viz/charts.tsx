@@ -1805,3 +1805,155 @@ export function CatalogCharts({ systemId, focusId }: ChartsProps) {
     </div>
   );
 }
+
+
+/** Shared parent frame for selection compare — heliocentric siblings or same parentId. */
+function sharedParentFrame(
+  bodies: Body[],
+):
+  | { kind: "heliocentric"; systemId: string }
+  | { kind: "parent"; parentId: string; parent: Body }
+  | null {
+  if (bodies.length < 2) return null;
+
+  const parentIds = bodies.map((b) => b.parentId ?? null);
+  const firstParent = parentIds[0];
+  if (
+    firstParent != null &&
+    parentIds.every((p) => p != null && p === firstParent)
+  ) {
+    const parent = getBody(firstParent);
+    if (parent) {
+      return { kind: "parent", parentId: firstParent, parent };
+    }
+    return null;
+  }
+
+  const systemId = bodies[0]?.systemId;
+  if (
+    systemId &&
+    bodies.every(
+      (b) =>
+        b.systemId === systemId && b.orbit?.frame === "heliocentric",
+    )
+  ) {
+    return { kind: "heliocentric", systemId };
+  }
+
+  return null;
+}
+
+/** Selection size strip — discs by radius (same scale); omit missing radii. */
+function CompareSizeStrip({ bodies }: { bodies: Body[] }) {
+  const withR = [...bodies]
+    .filter(
+      (b) =>
+        b.facts.radiusMeanKm != null && (b.facts.radiusMeanKm as number) > 0,
+    )
+    .sort(
+      (a, b) =>
+        (b.facts.radiusMeanKm as number) - (a.facts.radiusMeanKm as number),
+    );
+  if (withR.length === 0) return null;
+
+  const maxR = Math.max(
+    ...withR.map((b) => b.facts.radiusMeanKm as number),
+  );
+  const dMax = 72;
+
+  return (
+    <div className="w-full rounded-xl border border-white/10 bg-white/[0.03] p-3">
+      <h3 className="mb-2 text-sm font-medium text-zinc-300">Size strip</h3>
+      <div className="flex flex-wrap items-end justify-center gap-4 py-2">
+        {withR.map((b) => {
+          const r = b.facts.radiusMeanKm as number;
+          const d = Math.max(10, (r / maxR) * dMax);
+          return (
+            <div key={b.id} className="flex flex-col items-center gap-1">
+              <div
+                className="rounded-full shadow-[inset_0_-6px_16px_rgba(0,0,0,0.35)]"
+                style={{
+                  width: d,
+                  height: d,
+                  background: b.color ?? "#a1a1aa",
+                }}
+                title={`${b.name}: ${formatRadius(r)}`}
+              />
+              <Link
+                href={`/body/${b.id}`}
+                className="max-w-[5rem] truncate text-center text-[11px] text-zinc-300 hover:text-sky-300"
+              >
+                {b.name}
+              </Link>
+              <div className="text-[10px] text-zinc-600">{formatRadius(r)}</div>
+            </div>
+          );
+        })}
+      </div>
+      <p className="mt-1 text-center text-[11px] text-zinc-600">
+        Discs scaled by mean radius
+      </p>
+    </div>
+  );
+}
+
+/**
+ * Discover multi-select compare visuals — selection-scoped only.
+ * Size strip always; mass–radius when ≥2 have both; orbit/period only on a
+ * shared parent frame (else one-line omit). Full-width vertical stack.
+ */
+export function CompareSelectionCharts({ bodies }: { bodies: Body[] }) {
+  if (bodies.length === 0) return null;
+
+  const mrCount = bodies.filter(
+    (b) =>
+      b.kind !== "star" &&
+      b.facts.massKg != null &&
+      b.facts.radiusMeanKm != null,
+  ).length;
+  const showMR = mrCount >= 2;
+
+  const frame = sharedParentFrame(bodies);
+  const orbiters = bodies.filter((b) => hasUsableOrbit(b));
+  const showOrbit = frame != null && orbiters.length >= 2;
+  const showOrbitWhy =
+    bodies.length >= 2 && frame == null && orbiters.length >= 1;
+
+  const hasSize = bodies.some(
+    (b) =>
+      b.facts.radiusMeanKm != null && (b.facts.radiusMeanKm as number) > 0,
+  );
+  if (!hasSize && !showMR && !showOrbit && !showOrbitWhy) return null;
+
+  return (
+    <div className="mt-4 space-y-3">
+      {hasSize ? <CompareSizeStrip bodies={bodies} /> : null}
+      {showMR ? (
+        <div className="w-full">
+          <MassRadiusChart
+            bodies={bodies}
+            title="Mass vs radius (Earth units)"
+          />
+        </div>
+      ) : null}
+      {showOrbit && frame?.kind === "heliocentric" ? (
+        <div className="w-full">
+          <APeriodChart
+            bodies={orbiters}
+            title="Semi-major axis vs orbital period"
+          />
+        </div>
+      ) : null}
+      {showOrbit && frame?.kind === "parent" ? (
+        <div className="w-full">
+          <HowFarOutMulti parent={frame.parent} moons={orbiters} />
+        </div>
+      ) : null}
+      {showOrbitWhy ? (
+        <p className="text-sm text-zinc-500">
+          Orbit and period need a shared parent frame.
+        </p>
+      ) : null}
+    </div>
+  );
+}
