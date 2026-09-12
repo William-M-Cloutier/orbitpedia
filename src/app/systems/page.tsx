@@ -975,7 +975,7 @@ function SystemMapView() {
                       <button
                         type="button"
                         aria-pressed={hasGasFilter}
-                        title="At least one gas giant (archive hasGas or curated bodies; ≳50 M⊕ or ≳4 R⊕)"
+                        title="At least one gas giant"
                         onClick={() => setHasGasFilter((v) => !v)}
                         className={
                           hasGasFilter
