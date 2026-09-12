@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
+import type { BodyKind } from "@/data/schema";
 import type { SizeMode } from "./sizeTiers";
 
 const OrbitScene = dynamic(
@@ -27,8 +28,8 @@ type Props = {
   sizeMode?: SizeMode;
   /** Session-only ids with mesh + orbit line suppressed (Explore hide). */
   hiddenIds?: ReadonlySet<string>;
-  /** Hide all probe trajectory polylines (ProbePathLine). Default false = visible. */
-  hideProbePaths?: boolean;
+  /** Body kinds whose OrbitLine / ProbePathLine are hidden. */
+  hideOrbitPathKinds?: ReadonlySet<BodyKind>;
   /** Hide all probe craft meshes / markers (ProbeBodyMesh). Default false = visible. */
   hideProbeMeshes?: boolean;
   /** Active system graph — remount parent with key={systemId} to unload RAF/meshes. */

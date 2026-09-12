@@ -54,10 +54,10 @@ type Props = {
   onToggleHidden?: (id: string) => void;
   /** Limit rail to one system graph (default: home). */
   systemId?: string;
-  /** Sol Explore: hide probe path polylines (default false = visible). */
-  hideProbePaths?: boolean;
-  onHideProbePathsChange?: (next: boolean) => void;
-  /** Sol Explore: hide probe craft meshes (default false = visible). */
+  /** Kinds whose orbit/path lines are hidden (default empty = all visible). */
+  hideOrbitPathKinds?: ReadonlySet<BodyKind>;
+  onToggleHideOrbitPathKind?: (kind: BodyKind) => void;
+  /** Hide probe craft meshes / markers (default false = visible). */
   hideProbeMeshes?: boolean;
   onHideProbeMeshesChange?: (next: boolean) => void;
 };
@@ -132,8 +132,8 @@ export function BodyRail({
   hiddenIds,
   onToggleHidden,
   systemId,
-  hideProbePaths = false,
-  onHideProbePathsChange,
+  hideOrbitPathKinds,
+  onToggleHideOrbitPathKind,
   hideProbeMeshes = false,
   onHideProbeMeshesChange,
 }: Props) {
@@ -431,10 +431,10 @@ export function BodyRail({
           <div className="space-y-2">
             {groupedSections.map((g) => {
               const closed = groupCollapsed.has(g.kind);
-              const showProbeToggles =
-                g.kind === "probe" &&
-                (onHideProbePathsChange != null ||
-                  onHideProbeMeshesChange != null);
+              const pathsHidden = hideOrbitPathKinds?.has(g.kind) ?? false;
+              const showPathToggle = onToggleHideOrbitPathKind != null;
+              const showProbeMeshToggle =
+                g.kind === "probe" && onHideProbeMeshesChange != null;
               return (
                 <div key={g.kind}>
                   <div className="mb-0.5 flex items-center gap-0.5">
@@ -453,30 +453,28 @@ export function BodyRail({
                       </span>
                     </button>
                   </div>
-                  {showProbeToggles ? (
+                  {showPathToggle || showProbeMeshToggle ? (
                     <div className="mb-1 flex flex-wrap gap-1 px-1">
-                      {onHideProbePathsChange ? (
+                      {showPathToggle ? (
                         <button
                           type="button"
-                          onClick={() =>
-                            onHideProbePathsChange(!hideProbePaths)
-                          }
+                          onClick={() => onToggleHideOrbitPathKind(g.kind)}
                           className={`rounded px-1.5 py-0.5 text-[10px] ${
-                            hideProbePaths
+                            pathsHidden
                               ? "bg-amber-500/15 text-amber-200/90"
                               : "bg-white/5 text-zinc-500 hover:text-zinc-300"
                           }`}
-                          aria-pressed={hideProbePaths}
+                          aria-pressed={pathsHidden}
                           title={
-                            hideProbePaths
-                              ? "Show probe paths"
-                              : "Hide probe paths"
+                            pathsHidden
+                              ? `Show ${g.label.toLowerCase()} paths`
+                              : `Hide ${g.label.toLowerCase()} paths`
                           }
                         >
-                          {hideProbePaths ? "Paths hidden" : "Hide paths"}
+                          {pathsHidden ? "Paths hidden" : "Hide paths"}
                         </button>
                       ) : null}
-                      {onHideProbeMeshesChange ? (
+                      {showProbeMeshToggle ? (
                         <button
                           type="button"
                           onClick={() =>
@@ -489,9 +487,7 @@ export function BodyRail({
                           }`}
                           aria-pressed={hideProbeMeshes}
                           title={
-                            hideProbeMeshes
-                              ? "Show probes"
-                              : "Hide probes"
+                            hideProbeMeshes ? "Show probes" : "Hide probes"
                           }
                         >
                           {hideProbeMeshes ? "Probes hidden" : "Hide probes"}

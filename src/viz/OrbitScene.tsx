@@ -24,7 +24,7 @@ import {
   hasUsableOrbit,
   listChildren,
 } from "@/data/catalog";
-import { isPrimaryHostKind, type Body } from "@/data/schema";
+import { isPrimaryHostKind, type Body, type BodyKind } from "@/data/schema";
 import {
   periodFromA,
   positionAtMa,
@@ -101,8 +101,8 @@ type Props = {
   sizeMode?: SizeMode;
   /** Session-only ids with mesh + orbit line suppressed (Explore hide). */
   hiddenIds?: ReadonlySet<string>;
-  /** Hide all probe trajectory polylines (ProbePathLine). Default false = visible. */
-  hideProbePaths?: boolean;
+  /** Body kinds whose OrbitLine / ProbePathLine are hidden. */
+  hideOrbitPathKinds?: ReadonlySet<BodyKind>;
   /** Hide all probe craft meshes / markers (ProbeBodyMesh). Default false = visible. */
   hideProbeMeshes?: boolean;
   /** Active system graph (default: home). Remount OrbitCanvas on change. */
@@ -762,6 +762,18 @@ function SoftHaze() {
 
 const ORBIT_LINE_SAMPLES = 192;
 
+
+/** True when orbit/path lines for this body kind should be suppressed. Moons inherit planet. */
+function orbitPathsHiddenFor(
+  kind: BodyKind,
+  hideOrbitPathKinds?: ReadonlySet<BodyKind>,
+): boolean {
+  if (!hideOrbitPathKinds || hideOrbitPathKinds.size === 0) return false;
+  if (hideOrbitPathKinds.has(kind)) return true;
+  if (kind === "moon" && hideOrbitPathKinds.has("planet")) return true;
+  return false;
+}
+
 const OrbitLine = memo(function OrbitLine({
   body,
   highlighted,
@@ -1119,7 +1131,7 @@ const BodyMesh = memo(function BodyMesh({
   selectedPoiId,
   onSelectPoi,
   satLod,
-  hideProbePaths = false,
+  hideOrbitPathKinds,
   hideProbeMeshes = false,
 }: {
   body: Body;
@@ -1130,7 +1142,7 @@ const BodyMesh = memo(function BodyMesh({
   onSelectPoi?: (id: string | null) => void;
   /** Satellite mesh LOD inputs (omit for non-sats). */
   satLod?: { satCount: number; meshRank: number };
-  hideProbePaths?: boolean;
+  hideOrbitPathKinds?: ReadonlySet<BodyKind>;
   hideProbeMeshes?: boolean;
 }) {
   const group = useRef<THREE.Group>(null);
@@ -1281,9 +1293,9 @@ const BodyMesh = memo(function BodyMesh({
 
   // Probe: procedural craft (ProbeBodyMesh) + optional path.waypoints Line.
   // Same click / contextMenu deselect contract. No OrbitLine without Kepler.
-  // hideProbePaths / hideProbeMeshes are independent (paths vs craft).
+  // hideOrbitPathKinds / hideProbeMeshes are independent (paths vs craft).
   if (body.kind === "probe") {
-    if (hideProbeMeshes && hideProbePaths) return null;
+    if (hideProbeMeshes && orbitPathsHiddenFor(body.kind, hideOrbitPathKinds)) return null;
     return (
       <>
         {!hideProbeMeshes ? (
@@ -1297,7 +1309,7 @@ const BodyMesh = memo(function BodyMesh({
             onContextMenu={handleContextMenu}
           />
         ) : null}
-        {!hideProbePaths ? (
+        {!orbitPathsHiddenFor(body.kind, hideOrbitPathKinds) ? (
           <ProbePathLine
             body={body}
             highlighted={focused}
@@ -2272,7 +2284,7 @@ function SceneContent({
   simDaysPerSec,
   sizeMode = DEFAULT_SIZE_MODE,
   hiddenIds,
-  hideProbePaths = false,
+  hideOrbitPathKinds,
   hideProbeMeshes = false,
   systemId,
   viewInsetLeft = 0,
@@ -2330,11 +2342,15 @@ function SceneContent({
     [systemBodies, primaryStarId, bodyById],
   );
   const visibleOrbiters = useMemo(() => {
-    const orbiters = sceneBodies.filter((b) => hasUsableOrbit(b));
-    return hiddenIds && hiddenIds.size > 0
-      ? orbiters.filter((b) => !hiddenIds.has(b.id))
-      : orbiters;
-  }, [sceneBodies, hiddenIds]);
+    let orbiters = sceneBodies.filter((b) => hasUsableOrbit(b));
+    if (hiddenIds && hiddenIds.size > 0) {
+      orbiters = orbiters.filter((b) => !hiddenIds.has(b.id));
+    }
+    orbiters = orbiters.filter(
+      (b) => !orbitPathsHiddenFor(b.kind, hideOrbitPathKinds),
+    );
+    return orbiters;
+  }, [sceneBodies, hiddenIds, hideOrbitPathKinds]);
   const visibleBodies = useMemo(() => {
     if (!hiddenIds || hiddenIds.size === 0) return sceneBodies;
     return sceneBodies.filter((b) => !hiddenIds.has(b.id));
@@ -2426,7 +2442,7 @@ function SceneContent({
             highlightColor={highlightColor}
             selectedPoiId={focusId === b.id ? selectedPoiId : null}
             onSelectPoi={onSelectPoi}
-            hideProbePaths={hideProbePaths}
+            hideOrbitPathKinds={hideOrbitPathKinds}
             hideProbeMeshes={hideProbeMeshes}
             satLod={
               b.kind === "satellite"
@@ -2472,7 +2488,7 @@ export function OrbitScene({
   simDaysPerSec,
   sizeMode = DEFAULT_SIZE_MODE,
   hiddenIds,
-  hideProbePaths,
+  hideOrbitPathKinds,
   hideProbeMeshes,
   systemId,
   viewInsetLeft = 0,
@@ -2510,7 +2526,7 @@ export function OrbitScene({
           simDaysPerSec={simDaysPerSec}
           sizeMode={sizeMode}
           hiddenIds={hiddenIds}
-          hideProbePaths={hideProbePaths}
+          hideOrbitPathKinds={hideOrbitPathKinds}
           hideProbeMeshes={hideProbeMeshes}
           systemId={systemId}
           viewInsetLeft={viewInsetLeft}
