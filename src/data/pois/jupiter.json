@@ -1,0 +1,24 @@
+{
+  "bodyId": "jupiter",
+  "pois": [
+    {
+      "id": "great-red-spot",
+      "bodyId": "jupiter",
+      "name": "Great Red Spot",
+      "latDeg": -22.5,
+      "lonDeg": -55,
+      "summary": "Persistent high-pressure anticyclonic storm in Jupiter’s atmosphere, centered near 22°S planetographic latitude. Longitude drifts continually; the marker uses a commonly cited reference longitude for this atmospheric feature, not a fixed surface landmark.",
+      "sources": [
+        {
+          "name": "NASA Science — Great Red Spot",
+          "url": "https://science.nasa.gov/jupiter/jupiter-facts/"
+        },
+        {
+          "name": "Hubble OPAL — GRS 90-day oscillation study",
+          "url": "https://iopscience.iop.org/article/10.3847/PSJ/ad71d1"
+        }
+      ],
+      "confidence": "assumed"
+    }
+  ]
+}

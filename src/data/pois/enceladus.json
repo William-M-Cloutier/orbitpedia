@@ -1,0 +1,24 @@
+{
+  "bodyId": "enceladus",
+  "pois": [
+    {
+      "id": "south-polar-plume-terrain",
+      "bodyId": "enceladus",
+      "name": "South Polar Plume Terrain",
+      "latDeg": -80.59,
+      "lonDeg": 16.77,
+      "summary": "Active tiger-stripe fractures near Enceladus’s south pole that vent water-rich plumes into space. The marker is centered near Damascus Sulcus within the south polar terrain mapped by Cassini.",
+      "sources": [
+        {
+          "name": "NASA Cassini — Enceladus plumes",
+          "url": "https://science.nasa.gov/mission/cassini/science/enceladus/"
+        },
+        {
+          "name": "NASA Science — Enceladus overview",
+          "url": "https://science.nasa.gov/saturn/moons/enceladus/"
+        }
+      ],
+      "confidence": "known"
+    }
+  ]
+}

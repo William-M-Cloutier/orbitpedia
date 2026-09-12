@@ -1,0 +1,25 @@
+{
+  "bodyId": "venus",
+  "pois": [
+    {
+      "id": "maxwell-montes",
+      "bodyId": "venus",
+      "name": "Maxwell Montes",
+      "latDeg": 65.2,
+      "lonDeg": 3.3,
+      "summary": "Highest mountain massif on Venus, rising about 11 km above mean planetary radius on the eastern rim of Lakshmi Planum. Magellan radar shows compressional ridges and the Cleopatra impact basin on its eastern flank.",
+      "elevationM": 11000,
+      "sources": [
+        {
+          "name": "USGS Gazetteer — Maxwell Montes",
+          "url": "https://planetarynames.wr.usgs.gov/Feature/3766"
+        },
+        {
+          "name": "NASA Photojournal — Maxwell Montes",
+          "url": "https://science.nasa.gov/photojournal/venus-maxwell-montes-and-cleopatra-crater/"
+        }
+      ],
+      "confidence": "known"
+    }
+  ]
+}

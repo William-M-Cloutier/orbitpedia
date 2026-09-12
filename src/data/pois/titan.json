@@ -1,0 +1,24 @@
+{
+  "bodyId": "titan",
+  "pois": [
+    {
+      "id": "kraken-mare",
+      "bodyId": "titan",
+      "name": "Kraken Mare",
+      "latDeg": 68,
+      "lonDeg": 50,
+      "summary": "Largest known liquid hydrocarbon sea on Titan, spanning more than a thousand kilometers across the north polar region. Cassini radar showed shoreline complexity and depths that make Kraken Mare Titan’s dominant polar sea.",
+      "sources": [
+        {
+          "name": "USGS Gazetteer — Kraken Mare",
+          "url": "https://planetarynames.wr.usgs.gov/Feature/14399"
+        },
+        {
+          "name": "NASA Cassini — Titan’s seas",
+          "url": "https://science.nasa.gov/mission/cassini/science/titan/"
+        }
+      ],
+      "confidence": "known"
+    }
+  ]
+}
