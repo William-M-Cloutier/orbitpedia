@@ -1,0 +1,251 @@
+{
+  "system": {
+    "id": "hd-164922",
+    "name": "HD 164922",
+    "home": false,
+    "memberIds": [
+      "hd-164922",
+      "hd-164922-d",
+      "hd-164922-e",
+      "hd-164922-c",
+      "hd-164922-b"
+    ],
+    "blurb": "HD 164922 — NASA Exoplanet Archive planetary system (4 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 4,
+    "distanceLy": 71.8,
+    "hostSpectralType": "G9 V",
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — HD 164922 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20164922",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy",
+            "hostSpectralType"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "hd-164922",
+      "name": "HD 164922",
+      "kind": "star",
+      "systemId": "hd-164922",
+      "facts": {
+        "massKg": 1.84132322e+30,
+        "radiusMeanKm": 658132.2,
+        "discoveryNotes": "Archive host (4 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2020"
+      },
+      "color": "#FDB813",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 164922 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20164922",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "hd-164922-d",
+      "name": "HD 164922 d",
+      "kind": "planet",
+      "systemId": "hd-164922",
+      "facts": {
+        "massKg": 2.38888e+25,
+        "radiusMeanKm": 11658.93,
+        "discoveryDate": "2020",
+        "discoveryNotes": "NEA composite: HD 164922 d"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 164922 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 164922 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20164922",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455198.58,
+        "aAu": 0.103,
+        "e": 0.12,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": -48,
+        "maDeg": 0,
+        "periodD": 12.458
+      }
+    },
+    {
+      "id": "hd-164922-e",
+      "name": "HD 164922 e",
+      "kind": "planet",
+      "systemId": "hd-164922",
+      "facts": {
+        "massKg": 6.2828262276494e+25,
+        "radiusMeanKm": 20578.329999999998,
+        "discoveryDate": "2020",
+        "discoveryNotes": "NEA composite: HD 164922 e"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 164922 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 164922 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20164922",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455256.6,
+        "aAu": 0.2292,
+        "e": 0.086,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": -17.1887,
+        "maDeg": 0,
+        "periodD": 41.763
+      }
+    },
+    {
+      "id": "hd-164922-c",
+      "name": "HD 164922 c",
+      "kind": "planet",
+      "systemId": "hd-164922",
+      "facts": {
+        "massKg": 7.76386e+25,
+        "radiusMeanKm": 23317.86,
+        "discoveryDate": "2020",
+        "discoveryNotes": "NEA composite: HD 164922 c"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 164922 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 164922 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20164922",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455221.1,
+        "aAu": 0.341,
+        "e": 0.12,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": -29,
+        "maDeg": 0,
+        "periodD": 75.74
+      }
+    },
+    {
+      "id": "hd-164922-b",
+      "name": "HD 164922 b",
+      "kind": "planet",
+      "systemId": "hd-164922",
+      "facts": {
+        "massKg": 6.927752e+26,
+        "radiusMeanKm": 84734.3,
+        "discoveryDate": "2020",
+        "discoveryNotes": "NEA composite: HD 164922 b"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 164922 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 164922 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20164922",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2456743,
+        "aAu": 2.16,
+        "e": 0.08,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 116,
+        "maDeg": 0,
+        "periodD": 1207
+      }
+    }
+  ]
+}

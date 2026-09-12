@@ -1,0 +1,349 @@
+{
+  "system": {
+    "id": "toi-178",
+    "name": "TOI-178",
+    "home": false,
+    "memberIds": [
+      "toi-178",
+      "toi-178-b",
+      "toi-178-c",
+      "toi-178-d",
+      "toi-178-e",
+      "toi-178-f",
+      "toi-178-g"
+    ],
+    "blurb": "TOI-178 — NASA Exoplanet Archive planetary system (6 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 6,
+    "distanceLy": 204.5,
+    "hostSpectralType": "K",
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — TOI-178 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/TOI-178",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy",
+            "hostSpectralType"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "toi-178",
+      "name": "TOI-178",
+      "kind": "star",
+      "systemId": "toi-178",
+      "facts": {
+        "massKg": 1.28654009e+30,
+        "radiusMeanKm": 460553.4,
+        "discoveryNotes": "Archive host (6 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2021"
+      },
+      "color": "#FF8C42",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — TOI-178 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/TOI-178",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "toi-178-b",
+      "name": "TOI-178 b",
+      "kind": "planet",
+      "systemId": "toi-178",
+      "facts": {
+        "massKg": 5.733312e+24,
+        "radiusMeanKm": 7645.2,
+        "discoveryDate": "2021",
+        "discoveryNotes": "NEA composite: TOI-178 b"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host TOI-178 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: e, wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — TOI-178 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/TOI-178",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2458931.1793,
+        "aAu": 0.02607,
+        "e": 0,
+        "iDeg": 88.8,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 1.9145601
+      }
+    },
+    {
+      "id": "toi-178-c",
+      "name": "TOI-178 c",
+      "kind": "planet",
+      "systemId": "toi-178",
+      "facts": {
+        "massKg": 2.7711007999999998e+25,
+        "radiusMeanKm": 11174.734,
+        "discoveryDate": "2021",
+        "discoveryNotes": "NEA composite: TOI-178 c"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host TOI-178 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — TOI-178 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/TOI-178",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2458356.107512,
+        "aAu": 0.037,
+        "e": 0.00032,
+        "iDeg": 88.4,
+        "omDeg": 0,
+        "wDeg": 26,
+        "maDeg": 0,
+        "periodD": 3.238486
+      }
+    },
+    {
+      "id": "toi-178-d",
+      "name": "TOI-178 d",
+      "kind": "planet",
+      "systemId": "toi-178",
+      "facts": {
+        "massKg": 3.1055440000000004e+25,
+        "radiusMeanKm": 17169.844999999998,
+        "discoveryDate": "2021",
+        "discoveryNotes": "NEA composite: TOI-178 d"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host TOI-178 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — TOI-178 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/TOI-178",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2458747.14623,
+        "aAu": 0.0592,
+        "e": 0.0068,
+        "iDeg": 88.58,
+        "omDeg": 0,
+        "wDeg": -146.3,
+        "maDeg": 0,
+        "periodD": 6.557569
+      }
+    },
+    {
+      "id": "toi-178-e",
+      "name": "TOI-178 e",
+      "kind": "planet",
+      "systemId": "toi-178",
+      "facts": {
+        "massKg": 2.0783256e+25,
+        "radiusMeanKm": 14659.671,
+        "discoveryDate": "2021",
+        "discoveryNotes": "NEA composite: TOI-178 e"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host TOI-178 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — TOI-178 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/TOI-178",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2458751.4658,
+        "aAu": 0.0783,
+        "e": 0.00038,
+        "iDeg": 88.71,
+        "omDeg": 0,
+        "wDeg": 2,
+        "maDeg": 0,
+        "periodD": 9.96318
+      }
+    },
+    {
+      "id": "toi-178-f",
+      "name": "TOI-178 f",
+      "kind": "planet",
+      "systemId": "toi-178",
+      "facts": {
+        "massKg": 3.3623486e+25,
+        "radiusMeanKm": 15398.706999999999,
+        "discoveryDate": "2021",
+        "discoveryNotes": "NEA composite: TOI-178 f"
+      },
+      "color": "#C88B3A",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host TOI-178 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — TOI-178 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/TOI-178",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2458745.7178,
+        "aAu": 0.1039,
+        "e": 0.00045,
+        "iDeg": 88.723,
+        "omDeg": 0,
+        "wDeg": 87.3,
+        "maDeg": 0,
+        "periodD": 15.23335
+      }
+    },
+    {
+      "id": "toi-178-g",
+      "name": "TOI-178 g",
+      "kind": "planet",
+      "systemId": "toi-178",
+      "facts": {
+        "massKg": 2.6277680000000005e+25,
+        "radiusMeanKm": 18724.369,
+        "discoveryDate": "2021",
+        "discoveryNotes": "NEA composite: TOI-178 g"
+      },
+      "color": "#7EC8E3",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host TOI-178 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — TOI-178 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/TOI-178",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2458748.0302,
+        "aAu": 0.1275,
+        "e": 0.00043,
+        "iDeg": 88.823,
+        "omDeg": 0,
+        "wDeg": -44,
+        "maDeg": 0,
+        "periodD": 20.71663
+      }
+    }
+  ]
+}

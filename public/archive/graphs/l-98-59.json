@@ -1,27 +1,27 @@
 {
   "system": {
-    "id": "55-cnc",
-    "name": "55 Cnc",
+    "id": "l-98-59",
+    "name": "L 98-59",
     "home": false,
     "memberIds": [
-      "55-cnc",
-      "55-cnc-e",
-      "55-cnc-b",
-      "55-cnc-c",
-      "55-cnc-f",
-      "55-cnc-d"
+      "l-98-59",
+      "l-98-59-b",
+      "l-98-59-c",
+      "l-98-59-d",
+      "l-98-59-e",
+      "l-98-59-f"
     ],
-    "blurb": "55 Cnc — NASA Exoplanet Archive planetary system (5 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
-    "planetCount": 7,
-    "distanceLy": 41,
-    "hostSpectralType": "G8 V",
+    "blurb": "L 98-59 — NASA Exoplanet Archive planetary system (5 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 5,
+    "distanceLy": 34.6,
+    "hostSpectralType": "M3 V",
     "meta": {
       "confidence": "known",
       "fetchedAt": "2026-09-12T04:17:28.837Z",
       "sources": [
         {
-          "name": "NASA Exoplanet Archive — 55 Cnc overview",
-          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/55%20Cnc",
+          "name": "NASA Exoplanet Archive — L 98-59 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/L%2098-59",
           "fields": [
             "blurb",
             "planetCount",
@@ -34,23 +34,23 @@
   },
   "bodies": [
     {
-      "id": "55-cnc",
-      "name": "55 Cnc",
+      "id": "l-98-59",
+      "name": "L 98-59",
       "kind": "star",
-      "systemId": "55-cnc",
+      "systemId": "l-98-59",
       "facts": {
-        "massKg": 1.79956535e+30,
-        "radiusMeanKm": 656045.1,
+        "massKg": 5.81229781e+29,
+        "radiusMeanKm": 219493.35,
         "discoveryNotes": "Archive host (5 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
-        "discoveryDate": "2004"
+        "discoveryDate": "2019"
       },
-      "color": "#FF8C42",
+      "color": "#E84A3C",
       "meta": {
         "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
         "sources": [
           {
-            "name": "NASA Exoplanet Archive — 55 Cnc overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/55%20Cnc",
+            "name": "NASA Exoplanet Archive — L 98-59 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/L%2098-59",
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
@@ -65,23 +65,23 @@
       }
     },
     {
-      "id": "55-cnc-e",
-      "name": "55 Cnc e",
+      "id": "l-98-59-b",
+      "name": "L 98-59 b",
       "kind": "planet",
-      "systemId": "55-cnc",
+      "systemId": "l-98-59",
       "facts": {
-        "massKg": 4.7717878e+25,
-        "radiusMeanKm": 11945.625,
-        "discoveryDate": "2004",
-        "discoveryNotes": "NEA composite: 55 Cnc e"
+        "massKg": 2.747212e+24,
+        "radiusMeanKm": 5332.527,
+        "discoveryDate": "2019",
+        "discoveryNotes": "NEA composite: L 98-59 b"
       },
       "color": "#C45C26",
       "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host 55 Cnc (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host L 98-59 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
         "sources": [
           {
-            "name": "NASA Exoplanet Archive — 55 Cnc overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/55%20Cnc",
+            "name": "NASA Exoplanet Archive — L 98-59 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/L%2098-59",
             "fields": [
               "orbit.aAu",
               "orbit.periodD",
@@ -101,34 +101,34 @@
       },
       "orbit": {
         "frame": "heliocentric",
-        "epochJd": 2457063.2096,
-        "aAu": 0.01544,
-        "e": 0.05,
-        "iDeg": 83.59,
+        "epochJd": 2458366.17056,
+        "aAu": 0.0223,
+        "e": 0.031,
+        "iDeg": 88.08,
         "omDeg": 0,
-        "wDeg": 86,
+        "wDeg": 192,
         "maDeg": 0,
-        "periodD": 0.7365474
+        "periodD": 2.253114
       }
     },
     {
-      "id": "55-cnc-b",
-      "name": "55 Cnc b",
+      "id": "l-98-59-c",
+      "name": "L 98-59 c",
       "kind": "planet",
-      "systemId": "55-cnc",
+      "systemId": "l-98-59",
       "facts": {
-        "massKg": 1.5765323977e+27,
-        "radiusMeanKm": 88556.90000000001,
-        "discoveryDate": "2004",
-        "discoveryNotes": "NEA composite: 55 Cnc b"
+        "massKg": 1.19444e+25,
+        "radiusMeanKm": 8467.059,
+        "discoveryDate": "2019",
+        "discoveryNotes": "NEA composite: L 98-59 c"
       },
       "color": "#D4A574",
       "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host 55 Cnc (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host L 98-59 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
         "sources": [
           {
-            "name": "NASA Exoplanet Archive — 55 Cnc overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/55%20Cnc",
+            "name": "NASA Exoplanet Archive — L 98-59 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/L%2098-59",
             "fields": [
               "orbit.aAu",
               "orbit.periodD",
@@ -148,34 +148,34 @@
       },
       "orbit": {
         "frame": "heliocentric",
-        "epochJd": 2455495.595,
-        "aAu": 0.118,
-        "e": 0.0029,
-        "iDeg": 89.73,
+        "epochJd": 2458367.27303,
+        "aAu": 0.0309,
+        "e": 0.002,
+        "iDeg": 88.88,
         "omDeg": 0,
-        "wDeg": 23,
+        "wDeg": 261,
         "maDeg": 0,
-        "periodD": 14.651552
+        "periodD": 3.6906764
       }
     },
     {
-      "id": "55-cnc-c",
-      "name": "55 Cnc c",
+      "id": "l-98-59-d",
+      "name": "L 98-59 d",
       "kind": "planet",
-      "systemId": "55-cnc",
+      "systemId": "l-98-59",
       "facts": {
-        "massKg": 3.2532842836e+26,
-        "radiusMeanKm": 54217.21,
-        "discoveryDate": "2004",
-        "discoveryNotes": "NEA composite: 55 Cnc c"
+        "massKg": 9.794408e+24,
+        "radiusMeanKm": 10365.617,
+        "discoveryDate": "2019",
+        "discoveryNotes": "NEA composite: L 98-59 d"
       },
       "color": "#6B93D6",
       "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host 55 Cnc (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host L 98-59 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
         "sources": [
           {
-            "name": "NASA Exoplanet Archive — 55 Cnc overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/55%20Cnc",
+            "name": "NASA Exoplanet Archive — L 98-59 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/L%2098-59",
             "fields": [
               "orbit.aAu",
               "orbit.periodD",
@@ -195,34 +195,34 @@
       },
       "orbit": {
         "frame": "heliocentric",
-        "epochJd": 2455491.23,
-        "aAu": 0.247,
-        "e": 0.088,
-        "iDeg": 89.73,
+        "epochJd": 2458362.74002,
+        "aAu": 0.0494,
+        "e": 0.006,
+        "iDeg": 88.44,
         "omDeg": 0,
-        "wDeg": 31,
+        "wDeg": 180,
         "maDeg": 0,
-        "periodD": 44.3936
+        "periodD": 7.450729
       }
     },
     {
-      "id": "55-cnc-f",
-      "name": "55 Cnc f",
+      "id": "l-98-59-e",
+      "name": "L 98-59 e",
       "kind": "planet",
-      "systemId": "55-cnc",
+      "systemId": "l-98-59",
       "facts": {
-        "massKg": 2.6762622639999998e+26,
-        "radiusMeanKm": 48355.89,
-        "discoveryDate": "2004",
-        "discoveryNotes": "NEA composite: 55 Cnc f"
+        "massKg": 1.6841604e+25,
+        "radiusMeanKm": 9492.789999999999,
+        "discoveryDate": "2019",
+        "discoveryNotes": "NEA composite: L 98-59 e"
       },
       "color": "#C1440E",
       "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host 55 Cnc (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host L 98-59 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
         "sources": [
           {
-            "name": "NASA Exoplanet Archive — 55 Cnc overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/55%20Cnc",
+            "name": "NASA Exoplanet Archive — L 98-59 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/L%2098-59",
             "fields": [
               "orbit.aAu",
               "orbit.periodD",
@@ -242,34 +242,34 @@
       },
       "orbit": {
         "frame": "heliocentric",
-        "epochJd": 2455236.4,
-        "aAu": 0.802,
-        "e": 0.063,
-        "iDeg": 89.73,
+        "epochJd": 2458438.48,
+        "aAu": 0.0712,
+        "e": 0.012,
+        "iDeg": 80,
         "omDeg": 0,
-        "wDeg": 100,
+        "wDeg": 165,
         "maDeg": 0,
-        "periodD": 260.58
+        "periodD": 12.8278
       }
     },
     {
-      "id": "55-cnc-d",
-      "name": "55 Cnc d",
+      "id": "l-98-59-f",
+      "name": "L 98-59 f",
       "kind": "planet",
-      "systemId": "55-cnc",
+      "systemId": "l-98-59",
       "facts": {
-        "massKg": 7.3606946946e+27,
-        "radiusMeanKm": 82823,
-        "discoveryDate": "2004",
-        "discoveryNotes": "NEA composite: 55 Cnc d"
+        "massKg": 1.672216e+25,
+        "radiusMeanKm": 9429.08,
+        "discoveryDate": "2019",
+        "discoveryNotes": "NEA composite: L 98-59 f"
       },
       "color": "#C88B3A",
       "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host 55 Cnc (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host L 98-59 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
         "sources": [
           {
-            "name": "NASA Exoplanet Archive — 55 Cnc overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/55%20Cnc",
+            "name": "NASA Exoplanet Archive — L 98-59 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/L%2098-59",
             "fields": [
               "orbit.aAu",
               "orbit.periodD",
@@ -289,14 +289,14 @@
       },
       "orbit": {
         "frame": "heliocentric",
-        "epochJd": 2451517.8,
-        "aAu": 5.6,
-        "e": 0.0913,
-        "iDeg": 89.73,
+        "epochJd": 2458437.84,
+        "aAu": 0.1052,
+        "e": 0.044,
+        "iDeg": 74,
         "omDeg": 0,
-        "wDeg": -90,
+        "wDeg": 4,
         "maDeg": 0,
-        "periodD": 4799
+        "periodD": 23.064
       }
     }
   ]

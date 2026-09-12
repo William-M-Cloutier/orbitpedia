@@ -1,27 +1,27 @@
 {
   "system": {
-    "id": "hip-41378",
-    "name": "HIP 41378",
+    "id": "kepler-80",
+    "name": "Kepler-80",
     "home": false,
     "memberIds": [
-      "hip-41378",
-      "hip-41378-b",
-      "hip-41378-c",
-      "hip-41378-e",
-      "hip-41378-d",
-      "hip-41378-f"
+      "kepler-80",
+      "kepler-80-f",
+      "kepler-80-d",
+      "kepler-80-e",
+      "kepler-80-b",
+      "kepler-80-c"
     ],
-    "blurb": "HIP 41378 — NASA Exoplanet Archive planetary system (5 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "Kepler-80 — NASA Exoplanet Archive planetary system (5 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
     "planetCount": 6,
-    "distanceLy": 346.7,
-    "hostSpectralType": "F6",
+    "distanceLy": 1205,
+    "hostSpectralType": "K5",
     "meta": {
       "confidence": "known",
       "fetchedAt": "2026-09-12T04:17:28.837Z",
       "sources": [
         {
-          "name": "NASA Exoplanet Archive — HIP 41378 overview",
-          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HIP%2041378",
+          "name": "NASA Exoplanet Archive — Kepler-80 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-80",
           "fields": [
             "blurb",
             "planetCount",
@@ -34,23 +34,23 @@
   },
   "bodies": [
     {
-      "id": "hip-41378",
-      "name": "HIP 41378",
+      "id": "kepler-80",
+      "name": "Kepler-80",
       "kind": "star",
-      "systemId": "hip-41378",
+      "systemId": "kepler-80",
       "facts": {
-        "massKg": 2.4259334e+30,
-        "radiusMeanKm": 904410,
+        "massKg": 1.4515831e+30,
+        "radiusMeanKm": 471684.60000000003,
         "discoveryNotes": "Archive host (5 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2016"
       },
-      "color": "#F8F7FF",
+      "color": "#FF8C42",
       "meta": {
         "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
         "sources": [
           {
-            "name": "NASA Exoplanet Archive — HIP 41378 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HIP%2041378",
+            "name": "NASA Exoplanet Archive — Kepler-80 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-80",
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
@@ -65,29 +65,28 @@
       }
     },
     {
-      "id": "hip-41378-b",
-      "name": "HIP 41378 b",
+      "id": "kepler-80-f",
+      "name": "Kepler-80 f",
       "kind": "planet",
-      "systemId": "hip-41378",
+      "systemId": "kepler-80",
       "facts": {
-        "massKg": 4.120818e+25,
-        "radiusMeanKm": 16819.440000000002,
+        "massKg": 2.6634399506e+28,
+        "radiusMeanKm": 7708.91,
         "discoveryDate": "2016",
-        "discoveryNotes": "NEA composite: HIP 41378 b"
+        "discoveryNotes": "NEA composite: Kepler-80 f"
       },
       "color": "#C45C26",
       "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HIP 41378 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-80 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
         "sources": [
           {
-            "name": "NASA Exoplanet Archive — HIP 41378 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HIP%2041378",
+            "name": "NASA Exoplanet Archive — Kepler-80 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-80",
             "fields": [
               "orbit.aAu",
               "orbit.periodD",
               "orbit.e",
               "orbit.iDeg",
-              "orbit.wDeg",
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
@@ -101,34 +100,34 @@
       },
       "orbit": {
         "frame": "heliocentric",
-        "epochJd": 2457152.282,
-        "aAu": 0.1303,
-        "e": 0.05,
-        "iDeg": 88.816,
+        "epochJd": 2454966.17036,
+        "aAu": 0.0175,
+        "e": 0.186,
+        "iDeg": 86.5,
         "omDeg": 0,
-        "wDeg": -13,
+        "wDeg": 0,
         "maDeg": 0,
-        "periodD": 15.57209
+        "periodD": 0.9867873
       }
     },
     {
-      "id": "hip-41378-c",
-      "name": "HIP 41378 c",
+      "id": "kepler-80-d",
+      "name": "Kepler-80 d",
       "kind": "planet",
-      "systemId": "hip-41378",
+      "systemId": "kepler-80",
       "facts": {
-        "massKg": 3.5654034e+25,
-        "radiusMeanKm": 17456.54,
+        "massKg": 4.031235e+25,
+        "radiusMeanKm": 9747.630000000001,
         "discoveryDate": "2016",
-        "discoveryNotes": "NEA composite: HIP 41378 c"
+        "discoveryNotes": "NEA composite: Kepler-80 d"
       },
       "color": "#D4A574",
       "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HIP 41378 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-80 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
         "sources": [
           {
-            "name": "NASA Exoplanet Archive — HIP 41378 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HIP%2041378",
+            "name": "NASA Exoplanet Archive — Kepler-80 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-80",
             "fields": [
               "orbit.aAu",
               "orbit.periodD",
@@ -148,39 +147,40 @@
       },
       "orbit": {
         "frame": "heliocentric",
-        "epochJd": 2457163.166,
-        "aAu": 0.2093,
-        "e": 0.044,
-        "iDeg": 88.462,
+        "epochJd": 2455695.129,
+        "aAu": 0.0372,
+        "e": 0.0041,
+        "iDeg": 88.35,
         "omDeg": 0,
-        "wDeg": 158,
+        "wDeg": 260,
         "maDeg": 0,
-        "periodD": 31.70591
+        "periodD": 3.07222
       }
     },
     {
-      "id": "hip-41378-e",
-      "name": "HIP 41378 e",
+      "id": "kepler-80-e",
+      "name": "Kepler-80 e",
       "kind": "planet",
-      "systemId": "hip-41378",
+      "systemId": "kepler-80",
       "facts": {
-        "massKg": 4.5508164e+25,
-        "radiusMeanKm": 33065.490000000005,
+        "massKg": 2.4665186e+25,
+        "radiusMeanKm": 10193.6,
         "discoveryDate": "2016",
-        "discoveryNotes": "NEA composite: HIP 41378 e"
+        "discoveryNotes": "NEA composite: Kepler-80 e"
       },
       "color": "#6B93D6",
       "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HIP 41378 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-80 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
         "sources": [
           {
-            "name": "NASA Exoplanet Archive — HIP 41378 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HIP%2041378",
+            "name": "NASA Exoplanet Archive — Kepler-80 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-80",
             "fields": [
               "orbit.aAu",
               "orbit.periodD",
               "orbit.e",
               "orbit.iDeg",
+              "orbit.wDeg",
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
@@ -194,39 +194,40 @@
       },
       "orbit": {
         "frame": "heliocentric",
-        "epochJd": 2457142.018,
-        "aAu": 0.68,
-        "e": 0.065,
-        "iDeg": 89.7,
+        "epochJd": 2455696.915,
+        "aAu": 0.0491,
+        "e": 0.0035,
+        "iDeg": 88.79,
         "omDeg": 0,
-        "wDeg": 0,
+        "wDeg": 71,
         "maDeg": 0,
-        "periodD": 393
+        "periodD": 4.64489
       }
     },
     {
-      "id": "hip-41378-d",
-      "name": "HIP 41378 d",
+      "id": "kepler-80-b",
+      "name": "Kepler-80 b",
       "kind": "planet",
-      "systemId": "hip-41378",
+      "systemId": "kepler-80",
       "facts": {
-        "massKg": 3.899846600000001e+25,
-        "radiusMeanKm": 23254.149999999998,
+        "massKg": 4.1387346e+25,
+        "radiusMeanKm": 17010.57,
         "discoveryDate": "2016",
-        "discoveryNotes": "NEA composite: HIP 41378 d"
+        "discoveryNotes": "NEA composite: Kepler-80 b"
       },
       "color": "#C1440E",
       "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HIP 41378 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-80 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
         "sources": [
           {
-            "name": "NASA Exoplanet Archive — HIP 41378 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HIP%2041378",
+            "name": "NASA Exoplanet Archive — Kepler-80 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-80",
             "fields": [
               "orbit.aAu",
               "orbit.periodD",
               "orbit.e",
               "orbit.iDeg",
+              "orbit.wDeg",
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
@@ -240,39 +241,40 @@
       },
       "orbit": {
         "frame": "heliocentric",
-        "epochJd": 2457166.261,
-        "aAu": 1.17,
-        "e": 0.063,
-        "iDeg": 89.93,
+        "epochJd": 2455658.399,
+        "aAu": 0.0648,
+        "e": 0.0049,
+        "iDeg": 89.34,
         "omDeg": 0,
-        "wDeg": 0,
+        "wDeg": 326,
         "maDeg": 0,
-        "periodD": 278.3618
+        "periodD": 7.05246
       }
     },
     {
-      "id": "hip-41378-f",
-      "name": "HIP 41378 f",
+      "id": "kepler-80-c",
+      "name": "Kepler-80 c",
       "kind": "planet",
-      "systemId": "hip-41378",
+      "systemId": "kepler-80",
       "facts": {
-        "massKg": 1.4930500000000001e+26,
-        "radiusMeanKm": 60333.37,
+        "massKg": 4.0252628000000005e+25,
+        "radiusMeanKm": 17456.54,
         "discoveryDate": "2016",
-        "discoveryNotes": "NEA composite: HIP 41378 f"
+        "discoveryNotes": "NEA composite: Kepler-80 c"
       },
       "color": "#C88B3A",
       "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HIP 41378 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-80 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
         "sources": [
           {
-            "name": "NASA Exoplanet Archive — HIP 41378 overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HIP%2041378",
+            "name": "NASA Exoplanet Archive — Kepler-80 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-80",
             "fields": [
               "orbit.aAu",
               "orbit.periodD",
               "orbit.e",
               "orbit.iDeg",
+              "orbit.wDeg",
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
@@ -286,14 +288,14 @@
       },
       "orbit": {
         "frame": "heliocentric",
-        "epochJd": 2457186.914,
-        "aAu": 1.394,
-        "e": 0.052,
-        "iDeg": 89.953,
+        "epochJd": 2455696.047,
+        "aAu": 0.0792,
+        "e": 0.0079,
+        "iDeg": 89.33,
         "omDeg": 0,
-        "wDeg": 0,
+        "wDeg": 190,
         "maDeg": 0,
-        "periodD": 542.0797
+        "periodD": 9.52355
       }
     }
   ]

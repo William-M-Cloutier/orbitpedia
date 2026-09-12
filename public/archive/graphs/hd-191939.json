@@ -1,0 +1,348 @@
+{
+  "system": {
+    "id": "hd-191939",
+    "name": "HD 191939",
+    "home": false,
+    "memberIds": [
+      "hd-191939",
+      "hd-191939-b",
+      "hd-191939-c",
+      "hd-191939-d",
+      "hd-191939-e",
+      "hd-191939-g",
+      "hd-191939-f"
+    ],
+    "blurb": "HD 191939 — NASA Exoplanet Archive planetary system (6 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 6,
+    "distanceLy": 174.8,
+    "hostSpectralType": "G9 V",
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — HD 191939 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20191939",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy",
+            "hostSpectralType"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "hd-191939",
+      "name": "HD 191939",
+      "kind": "star",
+      "systemId": "hd-191939",
+      "facts": {
+        "massKg": 1.6106607e+30,
+        "radiusMeanKm": 653958,
+        "discoveryNotes": "Archive host (6 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2020"
+      },
+      "color": "#FDB813",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 191939 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20191939",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "hd-191939-b",
+      "name": "HD 191939 b",
+      "kind": "planet",
+      "systemId": "hd-191939",
+      "facts": {
+        "massKg": 5.9722e+25,
+        "radiusMeanKm": 21725.11,
+        "discoveryDate": "2020",
+        "discoveryNotes": "NEA composite: HD 191939 b"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 191939 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 191939 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20191939",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2459443.54236,
+        "aAu": 0.0804,
+        "e": 0.031,
+        "iDeg": 88.1,
+        "omDeg": 0,
+        "wDeg": 5,
+        "maDeg": 0,
+        "periodD": 8.8803256
+      }
+    },
+    {
+      "id": "hd-191939-c",
+      "name": "HD 191939 c",
+      "kind": "planet",
+      "systemId": "hd-191939",
+      "facts": {
+        "massKg": 4.77776e+25,
+        "radiusMeanKm": 20355.344999999998,
+        "discoveryDate": "2020",
+        "discoveryNotes": "NEA composite: HD 191939 c"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 191939 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 191939 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20191939",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2459440.5491,
+        "aAu": 0.1752,
+        "e": 0.034,
+        "iDeg": 89.1,
+        "omDeg": 0,
+        "wDeg": -90,
+        "maDeg": 0,
+        "periodD": 28.579743
+      }
+    },
+    {
+      "id": "hd-191939-d",
+      "name": "HD 191939 d",
+      "kind": "planet",
+      "systemId": "hd-191939",
+      "facts": {
+        "massKg": 1.672216e+25,
+        "radiusMeanKm": 19081.145,
+        "discoveryDate": "2020",
+        "discoveryNotes": "NEA composite: HD 191939 d"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 191939 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 191939 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20191939",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2459433.906,
+        "aAu": 0.2132,
+        "e": 0.031,
+        "iDeg": 89.49,
+        "omDeg": 0,
+        "wDeg": 15,
+        "maDeg": 0,
+        "periodD": 38.353037
+      }
+    },
+    {
+      "id": "hd-191939-e",
+      "name": "HD 191939 e",
+      "kind": "planet",
+      "systemId": "hd-191939",
+      "facts": {
+        "massKg": 6.7008084e+26,
+        "radiusMeanKm": 82823,
+        "discoveryDate": "2020",
+        "discoveryNotes": "NEA composite: HD 191939 e"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 191939 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 191939 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20191939",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2459348.12,
+        "aAu": 0.407,
+        "e": 0.031,
+        "iDeg": 88.7,
+        "omDeg": 0,
+        "wDeg": -130,
+        "maDeg": 0,
+        "periodD": 101.12
+      }
+    },
+    {
+      "id": "hd-191939-g",
+      "name": "HD 191939 g",
+      "kind": "planet",
+      "systemId": "hd-191939",
+      "facts": {
+        "massKg": 8.06247e+25,
+        "radiusMeanKm": 23827.54,
+        "discoveryDate": "2020",
+        "discoveryNotes": "NEA composite: HD 191939 g"
+      },
+      "color": "#C88B3A",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 191939 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 191939 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20191939",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2459385,
+        "aAu": 0.812,
+        "e": 0.03,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 18,
+        "maDeg": 0,
+        "periodD": 284
+      }
+    },
+    {
+      "id": "hd-191939-f",
+      "name": "HD 191939 f",
+      "kind": "planet",
+      "systemId": "hd-191939",
+      "facts": {
+        "massKg": 5.466628259381953e+27,
+        "radiusMeanKm": 84097.2,
+        "discoveryDate": "2020",
+        "discoveryNotes": "NEA composite: HD 191939 f"
+      },
+      "color": "#7EC8E3",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 191939 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg, wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 191939 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20191939",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2460449,
+        "aAu": 3.71,
+        "e": 0,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 2898
+      }
+    }
+  ]
+}

@@ -1,0 +1,249 @@
+{
+  "system": {
+    "id": "kepler-245",
+    "name": "Kepler-245",
+    "home": false,
+    "memberIds": [
+      "kepler-245",
+      "kepler-245-e",
+      "kepler-245-b",
+      "kepler-245-c",
+      "kepler-245-d"
+    ],
+    "blurb": "Kepler-245 — NASA Exoplanet Archive planetary system (4 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 4,
+    "distanceLy": 2809.9,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — Kepler-245 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-245",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "kepler-245",
+      "name": "Kepler-245",
+      "kind": "star",
+      "systemId": "kepler-245",
+      "facts": {
+        "massKg": 1.7100841999999998e+30,
+        "radiusMeanKm": 556560,
+        "discoveryNotes": "Archive host (4 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2016"
+      },
+      "color": "#FF8C42",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-245 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-245",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "kepler-245-e",
+      "name": "Kepler-245 e",
+      "kind": "planet",
+      "systemId": "kepler-245",
+      "facts": {
+        "massKg": 1.0787943192e+28,
+        "radiusMeanKm": 11149.25,
+        "discoveryDate": "2016",
+        "discoveryNotes": "NEA composite: Kepler-245 e"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-245 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-245 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-245",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454966.0031,
+        "aAu": 0.04053,
+        "e": 0,
+        "iDeg": 89.72,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 3.219821056
+      }
+    },
+    {
+      "id": "kepler-245-b",
+      "name": "Kepler-245 b",
+      "kind": "planet",
+      "systemId": "kepler-245",
+      "facts": {
+        "massKg": 8.76599516e+26,
+        "radiusMeanKm": 16373.47,
+        "discoveryDate": "2016",
+        "discoveryNotes": "NEA composite: Kepler-245 b"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-245 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-245 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-245",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455007.94919,
+        "aAu": 0.071,
+        "e": 0,
+        "iDeg": 89.95,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 7.49019
+      }
+    },
+    {
+      "id": "kepler-245-c",
+      "name": "Kepler-245 c",
+      "kind": "planet",
+      "systemId": "kepler-245",
+      "facts": {
+        "massKg": 1.5945774e+26,
+        "radiusMeanKm": 13888.78,
+        "discoveryDate": "2016",
+        "discoveryNotes": "NEA composite: Kepler-245 c"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-245 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-245 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-245",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454970.26441,
+        "aAu": 0.124,
+        "e": 0,
+        "iDeg": 89.31,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 17.460812
+      }
+    },
+    {
+      "id": "kepler-245-d",
+      "name": "Kepler-245 d",
+      "kind": "planet",
+      "systemId": "kepler-245",
+      "facts": {
+        "massKg": 1.2899952000000002e+26,
+        "radiusMeanKm": 19304.129999999997,
+        "discoveryDate": "2016",
+        "discoveryNotes": "NEA composite: Kepler-245 d"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-245 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-245 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-245",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455034.27797,
+        "aAu": 0.202,
+        "e": 0,
+        "iDeg": 89.97,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 36.277108
+      }
+    }
+  ]
+}

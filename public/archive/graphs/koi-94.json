@@ -1,0 +1,249 @@
+{
+  "system": {
+    "id": "koi-94",
+    "name": "KOI-94",
+    "home": false,
+    "memberIds": [
+      "koi-94",
+      "koi-94-b",
+      "koi-94-c",
+      "koi-94-d",
+      "koi-94-e"
+    ],
+    "blurb": "KOI-94 — NASA Exoplanet Archive planetary system (4 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 4,
+    "distanceLy": 1555.9,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — KOI-94 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/KOI-94",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "koi-94",
+      "name": "KOI-94",
+      "kind": "star",
+      "systemId": "koi-94",
+      "facts": {
+        "massKg": 2.53927619e+30,
+        "radiusMeanKm": 1057464,
+        "discoveryNotes": "Archive host (4 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2013"
+      },
+      "color": "#F8F7FF",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — KOI-94 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/KOI-94",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "koi-94-b",
+      "name": "KOI-94 b",
+      "kind": "planet",
+      "systemId": "koi-94",
+      "facts": {
+        "massKg": 6.27081e+25,
+        "radiusMeanKm": 10894.41,
+        "discoveryDate": "2013",
+        "discoveryNotes": "NEA composite: KOI-94 b"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host KOI-94 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — KOI-94 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/KOI-94",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454964.6175,
+        "aAu": 0.05119,
+        "e": 0.25,
+        "iDeg": 89.3,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 3.743208
+      }
+    },
+    {
+      "id": "koi-94-c",
+      "name": "KOI-94 c",
+      "kind": "planet",
+      "systemId": "koi-94",
+      "facts": {
+        "massKg": 9.316632e+25,
+        "radiusMeanKm": 27522.72,
+        "discoveryDate": "2013",
+        "discoveryNotes": "NEA composite: KOI-94 c"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host KOI-94 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — KOI-94 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/KOI-94",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454971.0087,
+        "aAu": 0.1013,
+        "e": 0.43,
+        "iDeg": 88.36,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 10.423648
+      }
+    },
+    {
+      "id": "koi-94-d",
+      "name": "KOI-94 d",
+      "kind": "planet",
+      "systemId": "koi-94",
+      "facts": {
+        "massKg": 6.330532e+26,
+        "radiusMeanKm": 71801.17,
+        "discoveryDate": "2013",
+        "discoveryNotes": "NEA composite: KOI-94 d"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host KOI-94 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — KOI-94 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/KOI-94",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454965.74052,
+        "aAu": 0.1684,
+        "e": 0.022,
+        "iDeg": 89.871,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 22.342989
+      }
+    },
+    {
+      "id": "koi-94-e",
+      "name": "KOI-94 e",
+      "kind": "planet",
+      "systemId": "koi-94",
+      "facts": {
+        "massKg": 2.09027e+26,
+        "radiusMeanKm": 41793.759999999995,
+        "discoveryDate": "2013",
+        "discoveryNotes": "NEA composite: KOI-94 e"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host KOI-94 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — KOI-94 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/KOI-94",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454994.2379,
+        "aAu": 0.3046,
+        "e": 0.019,
+        "iDeg": 89.76,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 54.32031
+      }
+    }
+  ]
+}

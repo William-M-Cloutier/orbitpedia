@@ -1,0 +1,249 @@
+{
+  "system": {
+    "id": "kepler-1388",
+    "name": "Kepler-1388",
+    "home": false,
+    "memberIds": [
+      "kepler-1388",
+      "kepler-1388-c",
+      "kepler-1388-b",
+      "kepler-1388-d",
+      "kepler-1388-e"
+    ],
+    "blurb": "Kepler-1388 — NASA Exoplanet Archive planetary system (4 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 4,
+    "distanceLy": 1480.1,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — Kepler-1388 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-1388",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "kepler-1388",
+      "name": "Kepler-1388",
+      "kind": "star",
+      "systemId": "kepler-1388",
+      "facts": {
+        "massKg": 1.2527361e+30,
+        "radiusMeanKm": 424377,
+        "discoveryNotes": "Archive host (4 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2016"
+      },
+      "color": "#FF8C42",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-1388 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-1388",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "kepler-1388-c",
+      "name": "Kepler-1388 c",
+      "kind": "planet",
+      "systemId": "kepler-1388",
+      "facts": {
+        "massKg": 3.4220706000000003e+25,
+        "radiusMeanKm": 14398.46,
+        "discoveryDate": "2016",
+        "discoveryNotes": "NEA composite: Kepler-1388 c"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-1388 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-1388 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-1388",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454964.88574,
+        "aAu": 0.0519,
+        "e": 0,
+        "iDeg": 86.33,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 5.53608151
+      }
+    },
+    {
+      "id": "kepler-1388-b",
+      "name": "Kepler-1388 b",
+      "kind": "planet",
+      "systemId": "kepler-1388",
+      "facts": {
+        "massKg": 4.3119284e+25,
+        "radiusMeanKm": 16500.89,
+        "discoveryDate": "2016",
+        "discoveryNotes": "NEA composite: Kepler-1388 b"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-1388 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-1388 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-1388",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454964.90294,
+        "aAu": 0.0882,
+        "e": 0,
+        "iDeg": 89.46,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 12.2854603
+      }
+    },
+    {
+      "id": "kepler-1388-d",
+      "name": "Kepler-1388 d",
+      "kind": "planet",
+      "systemId": "kepler-1388",
+      "facts": {
+        "massKg": 5.106231000000001e+25,
+        "radiusMeanKm": 18221.059999999998,
+        "discoveryDate": "2016",
+        "discoveryNotes": "NEA composite: Kepler-1388 d"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-1388 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-1388 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-1388",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454972.0875,
+        "aAu": 0.126,
+        "e": 0,
+        "iDeg": 89.86,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 20.9568158
+      }
+    },
+    {
+      "id": "kepler-1388-e",
+      "name": "Kepler-1388 e",
+      "kind": "planet",
+      "systemId": "kepler-1388",
+      "facts": {
+        "massKg": 3.9535964e+25,
+        "radiusMeanKm": 15672.66,
+        "discoveryDate": "2016",
+        "discoveryNotes": "NEA composite: Kepler-1388 e"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-1388 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-1388 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-1388",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454991.8322,
+        "aAu": 0.1861,
+        "e": 0,
+        "iDeg": 89.69,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 37.6327084
+      }
+    }
+  ]
+}

@@ -1,0 +1,243 @@
+{
+  "system": {
+    "id": "hd-20781",
+    "name": "HD 20781",
+    "home": false,
+    "memberIds": [
+      "hd-20781",
+      "hd-20781-b",
+      "hd-20781-c",
+      "hd-20781-d",
+      "hd-20781-e"
+    ],
+    "blurb": "HD 20781 — NASA Exoplanet Archive planetary system (4 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 5,
+    "distanceLy": 117.3,
+    "hostSpectralType": "K0 V",
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — HD 20781 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2020781",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy",
+            "hostSpectralType"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "hd-20781",
+      "name": "HD 20781",
+      "kind": "star",
+      "systemId": "hd-20781",
+      "facts": {
+        "massKg": 1.391929e+30,
+        "radiusMeanKm": 579941.7813,
+        "discoveryNotes": "Archive host (4 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2019"
+      },
+      "color": "#FDB813",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 20781 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2020781",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "hd-20781-b",
+      "name": "HD 20781 b",
+      "kind": "planet",
+      "systemId": "hd-20781",
+      "facts": {
+        "massKg": 1.1526346e+25,
+        "radiusMeanKm": 7708.91,
+        "discoveryDate": "2019",
+        "discoveryNotes": "NEA composite: HD 20781 b"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 20781 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 20781 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2020781",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.0529,
+        "e": 0.1,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 84.04,
+        "maDeg": 0,
+        "periodD": 5.3135
+      }
+    },
+    {
+      "id": "hd-20781-c",
+      "name": "HD 20781 c",
+      "kind": "planet",
+      "systemId": "hd-20781",
+      "facts": {
+        "massKg": 3.1831826000000003e+25,
+        "radiusMeanKm": 13825.07,
+        "discoveryDate": "2019",
+        "discoveryNotes": "NEA composite: HD 20781 c"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 20781 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 20781 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2020781",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.1004,
+        "e": 0.09,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 7.44,
+        "maDeg": 0,
+        "periodD": 13.8905
+      }
+    },
+    {
+      "id": "hd-20781-d",
+      "name": "HD 20781 d",
+      "kind": "planet",
+      "systemId": "hd-20781",
+      "facts": {
+        "massKg": 6.3365042e+25,
+        "radiusMeanKm": 20705.75,
+        "discoveryDate": "2019",
+        "discoveryNotes": "NEA composite: HD 20781 d"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 20781 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 20781 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2020781",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.1647,
+        "e": 0.11,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 60.99,
+        "maDeg": 0,
+        "periodD": 29.158
+      }
+    },
+    {
+      "id": "hd-20781-e",
+      "name": "HD 20781 e",
+      "kind": "planet",
+      "systemId": "hd-20781",
+      "facts": {
+        "massKg": 8.3789966e+25,
+        "radiusMeanKm": 24400.93,
+        "discoveryDate": "2019",
+        "discoveryNotes": "NEA composite: HD 20781 e"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 20781 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 20781 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2020781",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.3374,
+        "e": 0.06,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 70.59,
+        "maDeg": 0,
+        "periodD": 85.5073
+      }
+    }
+  ]
+}

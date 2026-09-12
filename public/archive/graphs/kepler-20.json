@@ -1,0 +1,340 @@
+{
+  "system": {
+    "id": "kepler-20",
+    "name": "Kepler-20",
+    "home": false,
+    "memberIds": [
+      "kepler-20",
+      "kepler-20-b",
+      "kepler-20-e",
+      "kepler-20-c",
+      "kepler-20-f",
+      "kepler-20-g",
+      "kepler-20-d"
+    ],
+    "blurb": "Kepler-20 — NASA Exoplanet Archive planetary system (6 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 6,
+    "distanceLy": 921.6,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — Kepler-20 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-20",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "kepler-20",
+      "name": "Kepler-20",
+      "kind": "star",
+      "systemId": "kepler-20",
+      "facts": {
+        "massKg": 1.8472886300000002e+30,
+        "radiusMeanKm": 637539.48,
+        "discoveryNotes": "Archive host (6 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2011"
+      },
+      "color": "#FDB813",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-20 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-20",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "kepler-20-b",
+      "name": "Kepler-20 b",
+      "kind": "planet",
+      "systemId": "kepler-20",
+      "facts": {
+        "massKg": 5.793034e+25,
+        "radiusMeanKm": 11295.783,
+        "discoveryDate": "2011",
+        "discoveryNotes": "NEA composite: Kepler-20 b"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-20 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-20 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-20",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454967.50225,
+        "aAu": 0.04565,
+        "e": 0.083,
+        "iDeg": 87.36,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 3.6961049
+      }
+    },
+    {
+      "id": "kepler-20-e",
+      "name": "Kepler-20 e",
+      "kind": "planet",
+      "systemId": "kepler-20",
+      "facts": {
+        "massKg": 4.5388720000000003e+24,
+        "radiusMeanKm": 5230.590999999999,
+        "discoveryDate": "2011",
+        "discoveryNotes": "NEA composite: Kepler-20 e"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-20 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-20 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-20",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454968.93956,
+        "aAu": 0.0637,
+        "e": 0.092,
+        "iDeg": 87.63,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 6.0984882
+      }
+    },
+    {
+      "id": "kepler-20-c",
+      "name": "Kepler-20 c",
+      "kind": "planet",
+      "systemId": "kepler-20",
+      "facts": {
+        "massKg": 6.629142e+25,
+        "radiusMeanKm": 18437.674,
+        "discoveryDate": "2011",
+        "discoveryNotes": "NEA composite: Kepler-20 c"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-20 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-20 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-20",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454971.60886,
+        "aAu": 0.0936,
+        "e": 0.076,
+        "iDeg": 89.815,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 10.8540774
+      }
+    },
+    {
+      "id": "kepler-20-f",
+      "name": "Kepler-20 f",
+      "kind": "planet",
+      "systemId": "kepler-20",
+      "facts": {
+        "massKg": 8.36108e+24,
+        "radiusMeanKm": 6065.192,
+        "discoveryDate": "2011",
+        "discoveryNotes": "NEA composite: Kepler-20 f"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-20 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-20 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-20",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454968.19883,
+        "aAu": 0.1387,
+        "e": 0.094,
+        "iDeg": 88.788,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 19.578328
+      }
+    },
+    {
+      "id": "kepler-20-g",
+      "name": "Kepler-20 g",
+      "kind": "planet",
+      "systemId": "kepler-20",
+      "facts": {
+        "massKg": 1.19205112e+26,
+        "radiusMeanKm": 30007.41,
+        "discoveryDate": "2011",
+        "discoveryNotes": "NEA composite: Kepler-20 g"
+      },
+      "color": "#C88B3A",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-20 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg, wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-20 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-20",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.2055,
+        "e": 0.15,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 34.94
+      }
+    },
+    {
+      "id": "kepler-20-d",
+      "name": "Kepler-20 d",
+      "kind": "planet",
+      "systemId": "kepler-20",
+      "facts": {
+        "massKg": 8.002748e+25,
+        "radiusMeanKm": 16602.826,
+        "discoveryDate": "2011",
+        "discoveryNotes": "NEA composite: Kepler-20 d"
+      },
+      "color": "#7EC8E3",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-20 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-20 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-20",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454997.7296,
+        "aAu": 0.3474,
+        "e": 0.082,
+        "iDeg": 89.708,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 77.611455
+      }
+    }
+  ]
+}

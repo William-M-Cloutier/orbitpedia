@@ -1,0 +1,299 @@
+{
+  "system": {
+    "id": "kepler-82",
+    "name": "Kepler-82",
+    "home": false,
+    "memberIds": [
+      "kepler-82",
+      "kepler-82-d",
+      "kepler-82-e",
+      "kepler-82-b",
+      "kepler-82-c",
+      "kepler-82-f"
+    ],
+    "blurb": "Kepler-82 — NASA Exoplanet Archive planetary system (5 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 5,
+    "distanceLy": 2949.5,
+    "hostSpectralType": "G",
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — Kepler-82 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-82",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy",
+            "hostSpectralType"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "kepler-82",
+      "name": "Kepler-82",
+      "kind": "star",
+      "systemId": "kepler-82",
+      "facts": {
+        "massKg": 1.8810926199999998e+30,
+        "radiusMeanKm": 657436.5,
+        "discoveryNotes": "Archive host (5 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2014"
+      },
+      "color": "#FDB813",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-82 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-82",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "kepler-82-d",
+      "name": "Kepler-82 d",
+      "kind": "planet",
+      "systemId": "kepler-82",
+      "facts": {
+        "massKg": 5.2859822756e+27,
+        "radiusMeanKm": 11276.67,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-82 d"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-82 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-82 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-82",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454968.08186,
+        "aAu": 0.034,
+        "e": 0,
+        "iDeg": 86.85,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 2.382961
+      }
+    },
+    {
+      "id": "kepler-82-e",
+      "name": "Kepler-82 e",
+      "kind": "planet",
+      "systemId": "kepler-82",
+      "facts": {
+        "massKg": 1.517058244e+27,
+        "radiusMeanKm": 15736.37,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-82 e"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-82 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-82 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-82",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454969.78443,
+        "aAu": 0.063,
+        "e": 0,
+        "iDeg": 89.23,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 5.902206
+      }
+    },
+    {
+      "id": "kepler-82-b",
+      "name": "Kepler-82 b",
+      "kind": "planet",
+      "systemId": "kepler-82",
+      "facts": {
+        "massKg": 7.256223000000001e+25,
+        "radiusMeanKm": 25929.97,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-82 b"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-82 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-82 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-82",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455027.12074,
+        "aAu": 0.1683,
+        "e": 0.0033,
+        "iDeg": 89.052,
+        "omDeg": 0,
+        "wDeg": 236,
+        "maDeg": 0,
+        "periodD": 26.44
+      }
+    },
+    {
+      "id": "kepler-82-c",
+      "name": "Kepler-82 c",
+      "kind": "planet",
+      "systemId": "kepler-82",
+      "facts": {
+        "massKg": 8.301358e+25,
+        "radiusMeanKm": 34021.14,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-82 c"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-82 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-82 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-82",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455007.05501,
+        "aAu": 0.2626,
+        "e": 0.007,
+        "iDeg": 90.15,
+        "omDeg": 0,
+        "wDeg": 162,
+        "maDeg": 0,
+        "periodD": 51.54
+      }
+    },
+    {
+      "id": "kepler-82-f",
+      "name": "Kepler-82 f",
+      "kind": "planet",
+      "systemId": "kepler-82",
+      "facts": {
+        "massKg": 1.2481898e+26,
+        "radiusMeanKm": 30835.64,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-82 f"
+      },
+      "color": "#C88B3A",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-82 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-82 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-82",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.3395,
+        "e": 0.0014,
+        "iDeg": 86.3,
+        "omDeg": 0,
+        "wDeg": 62,
+        "maDeg": 0,
+        "periodD": 75.732
+      }
+    }
+  ]
+}

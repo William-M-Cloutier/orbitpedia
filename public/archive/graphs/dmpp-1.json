@@ -1,0 +1,242 @@
+{
+  "system": {
+    "id": "dmpp-1",
+    "name": "DMPP-1",
+    "home": false,
+    "memberIds": [
+      "dmpp-1",
+      "dmpp-1-d",
+      "dmpp-1-e",
+      "dmpp-1-c",
+      "dmpp-1-b"
+    ],
+    "blurb": "DMPP-1 — NASA Exoplanet Archive planetary system (4 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 4,
+    "distanceLy": 204,
+    "hostSpectralType": "F8 V",
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — DMPP-1 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/DMPP-1",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy",
+            "hostSpectralType"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "dmpp-1",
+      "name": "DMPP-1",
+      "kind": "star",
+      "systemId": "dmpp-1",
+      "facts": {
+        "massKg": 2.4060486999999998e+30,
+        "radiusMeanKm": 876582,
+        "discoveryNotes": "Archive host (4 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2019"
+      },
+      "color": "#F8F7FF",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — DMPP-1 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/DMPP-1",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "dmpp-1-d",
+      "name": "DMPP-1 d",
+      "kind": "planet",
+      "systemId": "dmpp-1",
+      "facts": {
+        "massKg": 2.8188784e+25,
+        "radiusMeanKm": 12869.42,
+        "discoveryDate": "2019",
+        "discoveryNotes": "NEA composite: DMPP-1 d"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host DMPP-1 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — DMPP-1 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/DMPP-1",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.04467,
+        "e": 0.36,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 233,
+        "maDeg": 0,
+        "periodD": 3.1417
+      }
+    },
+    {
+      "id": "dmpp-1-e",
+      "name": "DMPP-1 e",
+      "kind": "planet",
+      "systemId": "dmpp-1",
+      "facts": {
+        "massKg": 2.4665186e+25,
+        "radiusMeanKm": 11850.060000000001,
+        "discoveryDate": "2019",
+        "discoveryNotes": "NEA composite: DMPP-1 e"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host DMPP-1 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg, wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — DMPP-1 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/DMPP-1",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.0651,
+        "e": 0.07,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 5.516
+      }
+    },
+    {
+      "id": "dmpp-1-c",
+      "name": "DMPP-1 c",
+      "kind": "planet",
+      "systemId": "dmpp-1",
+      "facts": {
+        "massKg": 6.5335868e+25,
+        "radiusMeanKm": 21088.010000000002,
+        "discoveryDate": "2019",
+        "discoveryNotes": "NEA composite: DMPP-1 c"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host DMPP-1 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — DMPP-1 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/DMPP-1",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.0973,
+        "e": 0.22,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 121,
+        "maDeg": 0,
+        "periodD": 10.03
+      }
+    },
+    {
+      "id": "dmpp-1-b",
+      "name": "DMPP-1 b",
+      "kind": "planet",
+      "systemId": "dmpp-1",
+      "facts": {
+        "massKg": 1.0033296e+26,
+        "radiusMeanKm": 27140.46,
+        "discoveryDate": "2019",
+        "discoveryNotes": "NEA composite: DMPP-1 b"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host DMPP-1 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — DMPP-1 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/DMPP-1",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.1423,
+        "e": 0.2,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 184,
+        "maDeg": 0,
+        "periodD": 17.812
+      }
+    }
+  ]
+}

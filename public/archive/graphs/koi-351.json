@@ -5,14 +5,21 @@
     "home": false,
     "memberIds": [
       "koi-351",
-      "koi-351-b"
+      "koi-351-b",
+      "koi-351-c",
+      "koi-351-i",
+      "koi-351-d",
+      "koi-351-e",
+      "koi-351-f",
+      "koi-351-g",
+      "koi-351-h"
     ],
-    "blurb": "KOI-351 — NASA Exoplanet Archive planetary system (1 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "blurb": "KOI-351 — NASA Exoplanet Archive planetary system (8 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
     "planetCount": 8,
     "distanceLy": 2766.6,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T04:12:18.312Z",
+      "fetchedAt": "2026-09-12T04:17:28.837Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — KOI-351 overview",
@@ -35,7 +42,7 @@
       "facts": {
         "massKg": 2.386164e+30,
         "radiusMeanKm": 834840,
-        "discoveryNotes": "Archive host (1 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryNotes": "Archive host (8 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
         "discoveryDate": "2013"
       },
       "color": "#F8F7FF",
@@ -53,7 +60,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:12:18.312Z",
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -88,7 +95,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T04:12:18.312Z",
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -102,6 +109,330 @@
         "wDeg": 0,
         "maDeg": 0,
         "periodD": 7.008151
+      }
+    },
+    {
+      "id": "koi-351-c",
+      "name": "KOI-351 c",
+      "kind": "planet",
+      "systemId": "koi-351",
+      "facts": {
+        "massKg": 1.0809682e+25,
+        "radiusMeanKm": 7581.49,
+        "discoveryDate": "2013",
+        "discoveryNotes": "NEA composite: KOI-351 c"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host KOI-351 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — KOI-351 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/KOI-351",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454972.5687,
+        "aAu": 0.089,
+        "e": 0,
+        "iDeg": 89.68,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 8.719375
+      }
+    },
+    {
+      "id": "koi-351-i",
+      "name": "Kepler-90 i",
+      "kind": "planet",
+      "systemId": "koi-351",
+      "facts": {
+        "massKg": 1.373606e+25,
+        "radiusMeanKm": 8409.720000000001,
+        "discoveryDate": "2013",
+        "discoveryNotes": "NEA composite: Kepler-90 i"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host KOI-351 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — KOI-351 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/KOI-351",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455644.3488,
+        "aAu": 0.1201380843,
+        "e": 0,
+        "iDeg": 89.2,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 14.44912
+      }
+    },
+    {
+      "id": "koi-351-d",
+      "name": "KOI-351 d",
+      "kind": "planet",
+      "systemId": "koi-351",
+      "facts": {
+        "massKg": 5.136092e+25,
+        "radiusMeanKm": 18284.77,
+        "discoveryDate": "2013",
+        "discoveryNotes": "NEA composite: KOI-351 d"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host KOI-351 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — KOI-351 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/KOI-351",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454991.9656,
+        "aAu": 0.32,
+        "e": 0,
+        "iDeg": 89.71,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 59.73667
+      }
+    },
+    {
+      "id": "koi-351-e",
+      "name": "KOI-351 e",
+      "kind": "planet",
+      "systemId": "koi-351",
+      "facts": {
+        "massKg": 4.5149832e+25,
+        "radiusMeanKm": 16946.86,
+        "discoveryDate": "2013",
+        "discoveryNotes": "NEA composite: KOI-351 e"
+      },
+      "color": "#C88B3A",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host KOI-351 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — KOI-351 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/KOI-351",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454967.3127,
+        "aAu": 0.42,
+        "e": 0,
+        "iDeg": 89.79,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 91.93913
+      }
+    },
+    {
+      "id": "koi-351-f",
+      "name": "KOI-351 f",
+      "kind": "planet",
+      "systemId": "koi-351",
+      "facts": {
+        "massKg": 5.165953e+25,
+        "radiusMeanKm": 18348.48,
+        "discoveryDate": "2013",
+        "discoveryNotes": "NEA composite: KOI-351 f"
+      },
+      "color": "#7EC8E3",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host KOI-351 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — KOI-351 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/KOI-351",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455087.704,
+        "aAu": 0.48,
+        "e": 0,
+        "iDeg": 89.77,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 124.9144
+      }
+    },
+    {
+      "id": "koi-351-g",
+      "name": "KOI-351 g",
+      "kind": "planet",
+      "systemId": "koi-351",
+      "facts": {
+        "massKg": 8.9583e+25,
+        "radiusMeanKm": 49171.378,
+        "discoveryDate": "2013",
+        "discoveryNotes": "NEA composite: KOI-351 g"
+      },
+      "color": "#9B7EBD",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host KOI-351 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — KOI-351 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/KOI-351",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454979.97608,
+        "aAu": 0.71704,
+        "e": 0.0292,
+        "iDeg": 89.92,
+        "omDeg": 0,
+        "wDeg": 114.6,
+        "maDeg": 0,
+        "periodD": 210.73514
+      }
+    },
+    {
+      "id": "koi-351-h",
+      "name": "KOI-351 h",
+      "kind": "planet",
+      "systemId": "koi-351",
+      "facts": {
+        "massKg": 1.2123566e+27,
+        "radiusMeanKm": 71686.492,
+        "discoveryDate": "2013",
+        "discoveryNotes": "NEA composite: KOI-351 h"
+      },
+      "color": "#5B5DDF",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host KOI-351 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — KOI-351 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/KOI-351",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454973.50056,
+        "aAu": 0.97062,
+        "e": 0.0276,
+        "iDeg": 89.927,
+        "omDeg": 0,
+        "wDeg": 119,
+        "maDeg": 0,
+        "periodD": 331.60296
       }
     }
   ]

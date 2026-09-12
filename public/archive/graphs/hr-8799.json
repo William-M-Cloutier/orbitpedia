@@ -1,0 +1,242 @@
+{
+  "system": {
+    "id": "hr-8799",
+    "name": "HR 8799",
+    "home": false,
+    "memberIds": [
+      "hr-8799",
+      "hr-8799-e",
+      "hr-8799-d",
+      "hr-8799-c",
+      "hr-8799-b"
+    ],
+    "blurb": "HR 8799 — NASA Exoplanet Archive planetary system (4 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 4,
+    "distanceLy": 134.5,
+    "hostSpectralType": "A5",
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — HR 8799 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HR%208799",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy",
+            "hostSpectralType"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "hr-8799",
+      "name": "HR 8799",
+      "kind": "star",
+      "systemId": "hr-8799",
+      "facts": {
+        "massKg": 3.0025897e+30,
+        "radiusMeanKm": 1038944.4659999999,
+        "discoveryNotes": "Archive host (4 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2010"
+      },
+      "color": "#F8F7FF",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HR 8799 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HR%208799",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "hr-8799-e",
+      "name": "HR 8799 e",
+      "kind": "planet",
+      "systemId": "hr-8799",
+      "facts": {
+        "massKg": 1.8981443260000001e+28,
+        "radiusMeanKm": 83552.67063000001,
+        "discoveryDate": "2010",
+        "discoveryNotes": "NEA composite: HR 8799 e"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HR 8799 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HR 8799 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HR%208799",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 16.4,
+        "e": 0.15,
+        "iDeg": 25,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 20815.6
+      }
+    },
+    {
+      "id": "hr-8799-d",
+      "name": "HR 8799 d",
+      "kind": "planet",
+      "systemId": "hr-8799",
+      "facts": {
+        "massKg": 1.79166e+28,
+        "radiusMeanKm": 82823,
+        "discoveryDate": "2010",
+        "discoveryNotes": "NEA composite: HR 8799 d"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HR 8799 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HR 8799 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HR%208799",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 24,
+        "e": 0.6,
+        "iDeg": 38.63,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 37000
+      }
+    },
+    {
+      "id": "hr-8799-c",
+      "name": "HR 8799 c",
+      "kind": "planet",
+      "systemId": "hr-8799",
+      "facts": {
+        "massKg": 1.79166e+28,
+        "radiusMeanKm": 82823,
+        "discoveryDate": "2010",
+        "discoveryNotes": "NEA composite: HR 8799 c"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HR 8799 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HR 8799 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HR%208799",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 38,
+        "e": 0.5,
+        "iDeg": 29.43,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 69000
+      }
+    },
+    {
+      "id": "hr-8799-b",
+      "name": "HR 8799 b",
+      "kind": "planet",
+      "systemId": "hr-8799",
+      "facts": {
+        "massKg": 1.19444e+28,
+        "radiusMeanKm": 82823,
+        "discoveryDate": "2010",
+        "discoveryNotes": "NEA composite: HR 8799 b"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HR 8799 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: e, wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HR 8799 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HR%208799",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.iDeg",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 68,
+        "e": 0,
+        "iDeg": 30.27,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 170000
+      }
+    }
+  ]
+}

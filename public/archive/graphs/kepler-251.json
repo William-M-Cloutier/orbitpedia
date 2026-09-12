@@ -1,0 +1,249 @@
+{
+  "system": {
+    "id": "kepler-251",
+    "name": "Kepler-251",
+    "home": false,
+    "memberIds": [
+      "kepler-251",
+      "kepler-251-b",
+      "kepler-251-c",
+      "kepler-251-d",
+      "kepler-251-e"
+    ],
+    "blurb": "Kepler-251 — NASA Exoplanet Archive planetary system (4 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 4,
+    "distanceLy": 3015.7,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — Kepler-251 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-251",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "kepler-251",
+      "name": "Kepler-251",
+      "kind": "star",
+      "systemId": "kepler-251",
+      "facts": {
+        "massKg": 1.77172677e+30,
+        "radiusMeanKm": 619173,
+        "discoveryNotes": "Archive host (4 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2014"
+      },
+      "color": "#FDB813",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-251 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-251",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "kepler-251-b",
+      "name": "Kepler-251 b",
+      "kind": "planet",
+      "systemId": "kepler-251",
+      "facts": {
+        "massKg": 1.3915226000000001e+25,
+        "radiusMeanKm": 8473.43,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-251 b"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-251 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-251 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-251",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454969.31148,
+        "aAu": 0.053,
+        "e": 0,
+        "iDeg": 89.55,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 4.790936
+      }
+    },
+    {
+      "id": "kepler-251-c",
+      "name": "Kepler-251 c",
+      "kind": "planet",
+      "systemId": "kepler-251",
+      "facts": {
+        "massKg": 4.837482e+25,
+        "radiusMeanKm": 17647.670000000002,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-251 c"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-251 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-251 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-251",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455009.11632,
+        "aAu": 0.122,
+        "e": 0,
+        "iDeg": 89.22,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 16.514043
+      }
+    },
+    {
+      "id": "kepler-251-d",
+      "name": "Kepler-251 d",
+      "kind": "planet",
+      "systemId": "kepler-251",
+      "facts": {
+        "massKg": 4.837482e+25,
+        "radiusMeanKm": 17647.670000000002,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-251 d"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-251 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-251 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-251",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455023.38322,
+        "aAu": 0.182,
+        "e": 0,
+        "iDeg": 88.21,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 30.133001
+      }
+    },
+    {
+      "id": "kepler-251-e",
+      "name": "Kepler-251 e",
+      "kind": "planet",
+      "systemId": "kepler-251",
+      "facts": {
+        "massKg": 4.837482e+25,
+        "radiusMeanKm": 17647.670000000002,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-251 e"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-251 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-251 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-251",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455031.69312,
+        "aAu": 0.404,
+        "e": 0,
+        "iDeg": 89.99,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 99.640161
+      }
+    }
+  ]
+}

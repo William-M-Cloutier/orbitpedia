@@ -1,0 +1,296 @@
+{
+  "system": {
+    "id": "kepler-55",
+    "name": "Kepler-55",
+    "home": false,
+    "memberIds": [
+      "kepler-55",
+      "kepler-55-d",
+      "kepler-55-e",
+      "kepler-55-f",
+      "kepler-55-b",
+      "kepler-55-c"
+    ],
+    "blurb": "Kepler-55 — NASA Exoplanet Archive planetary system (5 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 5,
+    "distanceLy": 1887.8,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — Kepler-55 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-55",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "kepler-55",
+      "name": "Kepler-55",
+      "kind": "star",
+      "systemId": "kepler-55",
+      "facts": {
+        "massKg": 1.25472457e+30,
+        "radiusMeanKm": 430638.3,
+        "discoveryNotes": "Archive host (5 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2014"
+      },
+      "color": "#FF8C42",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-55 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-55",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "kepler-55-d",
+      "name": "Kepler-55 d",
+      "kind": "planet",
+      "systemId": "kepler-55",
+      "facts": {
+        "massKg": 1.881243e+25,
+        "radiusMeanKm": 10129.890000000001,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-55 d"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-55 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-55 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-55",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455003.14912,
+        "aAu": 0.029,
+        "e": 0,
+        "iDeg": 84.94,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 2.211099
+      }
+    },
+    {
+      "id": "kepler-55-e",
+      "name": "Kepler-55 e",
+      "kind": "planet",
+      "systemId": "kepler-55",
+      "facts": {
+        "massKg": 1.8036044e+25,
+        "radiusMeanKm": 9875.050000000001,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-55 e"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-55 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-55 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-55",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454968.04254,
+        "aAu": 0.048,
+        "e": 0,
+        "iDeg": 86.99,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 4.617534
+      }
+    },
+    {
+      "id": "kepler-55-f",
+      "name": "Kepler-55 f",
+      "kind": "planet",
+      "systemId": "kepler-55",
+      "facts": {
+        "massKg": 1.881243e+25,
+        "radiusMeanKm": 10129.890000000001,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-55 f"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-55 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-55 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-55",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454970.91714,
+        "aAu": 0.081,
+        "e": 0,
+        "iDeg": 88.27,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 10.198545
+      }
+    },
+    {
+      "id": "kepler-55-b",
+      "name": "Kepler-55 b",
+      "kind": "planet",
+      "systemId": "kepler-55",
+      "facts": {
+        "massKg": 2.568046e+26,
+        "radiusMeanKm": 15481.53,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-55 b"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-55 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-55 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-55",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455011.79598,
+        "aAu": 0.1593,
+        "e": 0,
+        "iDeg": 89.94,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 27.9481449
+      }
+    },
+    {
+      "id": "kepler-55-c",
+      "name": "Kepler-55 c",
+      "kind": "planet",
+      "systemId": "kepler-55",
+      "facts": {
+        "massKg": 4.1685956e+26,
+        "radiusMeanKm": 14079.91,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-55 c"
+      },
+      "color": "#C88B3A",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-55 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-55 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-55",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454971.99284,
+        "aAu": 0.2095,
+        "e": 0,
+        "iDeg": 89.96,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 42.1516418
+      }
+    }
+  ]
+}

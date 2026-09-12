@@ -1,0 +1,249 @@
+{
+  "system": {
+    "id": "kepler-176",
+    "name": "Kepler-176",
+    "home": false,
+    "memberIds": [
+      "kepler-176",
+      "kepler-176-b",
+      "kepler-176-c",
+      "kepler-176-d",
+      "kepler-176-e"
+    ],
+    "blurb": "Kepler-176 — NASA Exoplanet Archive planetary system (4 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 4,
+    "distanceLy": 1719.9,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — Kepler-176 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-176",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "kepler-176",
+      "name": "Kepler-176",
+      "kind": "star",
+      "systemId": "kepler-176",
+      "facts": {
+        "massKg": 1.7100841999999998e+30,
+        "radiusMeanKm": 619868.7,
+        "discoveryNotes": "Archive host (4 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2014"
+      },
+      "color": "#FDB813",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-176 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-176",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "kepler-176-b",
+      "name": "Kepler-176 b",
+      "kind": "planet",
+      "systemId": "kepler-176",
+      "facts": {
+        "massKg": 1.7351450714e+27,
+        "radiusMeanKm": 9110.529999999999,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-176 b"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-176 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-176 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-176",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454971.36967,
+        "aAu": 0.058,
+        "e": 0,
+        "iDeg": 86.69,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 5.433074
+      }
+    },
+    {
+      "id": "kepler-176-c",
+      "name": "Kepler-176 c",
+      "kind": "planet",
+      "systemId": "kepler-176",
+      "facts": {
+        "massKg": 7.943026000000001e+24,
+        "radiusMeanKm": 16564.600000000002,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-176 c"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-176 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-176 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-176",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455003.31062,
+        "aAu": 0.102,
+        "e": 0,
+        "iDeg": 88.25,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 12.759712
+      }
+    },
+    {
+      "id": "kepler-176-d",
+      "name": "Kepler-176 d",
+      "kind": "planet",
+      "systemId": "kepler-176",
+      "facts": {
+        "massKg": 1.0272184e+25,
+        "radiusMeanKm": 15991.21,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-176 d"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-176 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-176 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-176",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454969.44951,
+        "aAu": 0.163,
+        "e": 0,
+        "iDeg": 89.53,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 25.751974
+      }
+    },
+    {
+      "id": "kepler-176-e",
+      "name": "Kepler-176 e",
+      "kind": "planet",
+      "systemId": "kepler-176",
+      "facts": {
+        "massKg": 3.1100231500000005e+24,
+        "radiusMeanKm": 9237.949999999999,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-176 e"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-176 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-176 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-176",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455005.3084,
+        "aAu": 0.25654,
+        "e": 0,
+        "iDeg": 89.08,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 51.16579
+      }
+    }
+  ]
+}

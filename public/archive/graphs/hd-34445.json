@@ -1,0 +1,335 @@
+{
+  "system": {
+    "id": "hd-34445",
+    "name": "HD 34445",
+    "home": false,
+    "memberIds": [
+      "hd-34445",
+      "hd-34445-e",
+      "hd-34445-d",
+      "hd-34445-c",
+      "hd-34445-f",
+      "hd-34445-b",
+      "hd-34445-g"
+    ],
+    "blurb": "HD 34445 — NASA Exoplanet Archive planetary system (6 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 6,
+    "distanceLy": 150.3,
+    "hostSpectralType": "G0 V",
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — HD 34445 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2034445",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy",
+            "hostSpectralType"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "hd-34445",
+      "name": "HD 34445",
+      "kind": "star",
+      "systemId": "hd-34445",
+      "facts": {
+        "massKg": 2.1276629000000002e+30,
+        "radiusMeanKm": 960065.9999999999,
+        "discoveryNotes": "Archive host (6 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2017"
+      },
+      "color": "#FDB813",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 34445 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2034445",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "hd-34445-e",
+      "name": "HD 34445 e",
+      "kind": "planet",
+      "systemId": "hd-34445",
+      "facts": {
+        "massKg": 1.0033296e+26,
+        "radiusMeanKm": 27140.46,
+        "discoveryDate": "2017",
+        "discoveryNotes": "NEA composite: HD 34445 e"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 34445 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 34445 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2034445",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.2687,
+        "e": 0.09,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 303.7,
+        "maDeg": 0,
+        "periodD": 49.175
+      }
+    },
+    {
+      "id": "hd-34445-d",
+      "name": "HD 34445 d",
+      "kind": "planet",
+      "systemId": "hd-34445",
+      "facts": {
+        "massKg": 1.8334654e+26,
+        "radiusMeanKm": 38671.97,
+        "discoveryDate": "2017",
+        "discoveryNotes": "NEA composite: HD 34445 d"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 34445 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 34445 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2034445",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.4817,
+        "e": 0.027,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 246.4,
+        "maDeg": 0,
+        "periodD": 117.87
+      }
+    },
+    {
+      "id": "hd-34445-c",
+      "name": "HD 34445 c",
+      "kind": "planet",
+      "systemId": "hd-34445",
+      "facts": {
+        "massKg": 3.1951270000000004e+26,
+        "radiusMeanKm": 53643.82,
+        "discoveryDate": "2017",
+        "discoveryNotes": "NEA composite: HD 34445 c"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 34445 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 34445 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2034445",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.7181,
+        "e": 0.036,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 149,
+        "maDeg": 0,
+        "periodD": 214.67
+      }
+    },
+    {
+      "id": "hd-34445-f",
+      "name": "HD 34445 f",
+      "kind": "planet",
+      "systemId": "hd-34445",
+      "facts": {
+        "massKg": 2.2634638e+26,
+        "radiusMeanKm": 43832.479999999996,
+        "discoveryDate": "2017",
+        "discoveryNotes": "NEA composite: HD 34445 f"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 34445 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 34445 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2034445",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 1.543,
+        "e": 0.031,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 212,
+        "maDeg": 0,
+        "periodD": 676.8
+      }
+    },
+    {
+      "id": "hd-34445-b",
+      "name": "HD 34445 b",
+      "kind": "planet",
+      "systemId": "hd-34445",
+      "facts": {
+        "massKg": 1.5564783473200001e+27,
+        "radiusMeanKm": 88556.90000000001,
+        "discoveryDate": "2017",
+        "discoveryNotes": "NEA composite: HD 34445 b"
+      },
+      "color": "#C88B3A",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 34445 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 34445 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2034445",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454809,
+        "aAu": 2.07,
+        "e": 0.27,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 104,
+        "maDeg": 0,
+        "periodD": 1049
+      }
+    },
+    {
+      "id": "hd-34445-g",
+      "name": "HD 34445 g",
+      "kind": "planet",
+      "systemId": "hd-34445",
+      "facts": {
+        "massKg": 7.2024732e+26,
+        "radiusMeanKm": 86645.59999999999,
+        "discoveryDate": "2017",
+        "discoveryNotes": "NEA composite: HD 34445 g"
+      },
+      "color": "#7EC8E3",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 34445 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 34445 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2034445",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 6.36,
+        "e": 0.032,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 234.9,
+        "maDeg": 0,
+        "periodD": 5700
+      }
+    }
+  ]
+}

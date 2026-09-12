@@ -1,0 +1,249 @@
+{
+  "system": {
+    "id": "kepler-224",
+    "name": "Kepler-224",
+    "home": false,
+    "memberIds": [
+      "kepler-224",
+      "kepler-224-b",
+      "kepler-224-c",
+      "kepler-224-d",
+      "kepler-224-e"
+    ],
+    "blurb": "Kepler-224 — NASA Exoplanet Archive planetary system (4 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 4,
+    "distanceLy": 2550.8,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — Kepler-224 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-224",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "kepler-224",
+      "name": "Kepler-224",
+      "kind": "star",
+      "systemId": "kepler-224",
+      "facts": {
+        "massKg": 1.54504119e+30,
+        "radiusMeanKm": 470293.2,
+        "discoveryNotes": "Archive host (4 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2014"
+      },
+      "color": "#FF8C42",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-224 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-224",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "kepler-224-b",
+      "name": "Kepler-224 b",
+      "kind": "planet",
+      "systemId": "kepler-224",
+      "facts": {
+        "massKg": 1.4990221999999998e+25,
+        "radiusMeanKm": 8855.689999999999,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-224 b"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-224 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-224 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-224",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454968.67544,
+        "aAu": 0.038,
+        "e": 0,
+        "iDeg": 89.29,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 3.132924
+      }
+    },
+    {
+      "id": "kepler-224-c",
+      "name": "Kepler-224 c",
+      "kind": "planet",
+      "systemId": "kepler-224",
+      "facts": {
+        "massKg": 5.918450200000001e+25,
+        "radiusMeanKm": 19877.52,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-224 c"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-224 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-224 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-224",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455002.71508,
+        "aAu": 0.058,
+        "e": 0,
+        "iDeg": 84.9,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 5.925003
+      }
+    },
+    {
+      "id": "kepler-224-d",
+      "name": "Kepler-224 d",
+      "kind": "planet",
+      "systemId": "kepler-224",
+      "facts": {
+        "massKg": 3.5235980000000004e+25,
+        "radiusMeanKm": 14653.3,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-224 d"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-224 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-224 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-224",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454967.31602,
+        "aAu": 0.089,
+        "e": 0,
+        "iDeg": 89.14,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 11.349393
+      }
+    },
+    {
+      "id": "kepler-224-e",
+      "name": "Kepler-224 e",
+      "kind": "planet",
+      "systemId": "kepler-224",
+      "facts": {
+        "massKg": 2.7113788000000002e+25,
+        "radiusMeanKm": 12550.869999999999,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-224 e"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-224 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-224 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-224",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454974.62463,
+        "aAu": 0.124,
+        "e": 0,
+        "iDeg": 89.15,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 18.643577
+      }
+    }
+  ]
+}

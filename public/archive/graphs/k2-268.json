@@ -1,0 +1,152 @@
+{
+  "system": {
+    "id": "k2-268",
+    "name": "K2-268",
+    "home": false,
+    "memberIds": [
+      "k2-268",
+      "k2-268-b",
+      "k2-268-c"
+    ],
+    "blurb": "K2-268 — NASA Exoplanet Archive planetary system (2 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 5,
+    "distanceLy": 1069.1,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — K2-268 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-268",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "k2-268",
+      "name": "K2-268",
+      "kind": "star",
+      "systemId": "k2-268",
+      "facts": {
+        "massKg": 1.6703148e+30,
+        "radiusMeanKm": 542646,
+        "discoveryNotes": "Archive host (2 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2018"
+      },
+      "color": "#FF8C42",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — K2-268 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-268",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "k2-268-b",
+      "name": "K2-268 b",
+      "kind": "planet",
+      "systemId": "k2-268",
+      "facts": {
+        "massKg": 1.7080492e+25,
+        "radiusMeanKm": 9556.5,
+        "discoveryDate": "2018",
+        "discoveryNotes": "NEA composite: K2-268 b"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host K2-268 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: e, iDeg, wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — K2-268 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-268",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2457143.654276,
+        "aAu": 0.0308,
+        "e": 0,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 2.151676
+      }
+    },
+    {
+      "id": "k2-268-c",
+      "name": "K2-268 c",
+      "kind": "planet",
+      "systemId": "k2-268",
+      "facts": {
+        "massKg": 4.598594e+25,
+        "radiusMeanKm": 17137.989999999998,
+        "discoveryDate": "2018",
+        "discoveryNotes": "NEA composite: K2-268 c"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host K2-268 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: e, wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — K2-268 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-268",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2457140.84665,
+        "aAu": 0.0819,
+        "e": 0,
+        "iDeg": 88.71,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 9.327527
+      }
+    }
+  ]
+}

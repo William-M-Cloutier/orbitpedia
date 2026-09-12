@@ -1,0 +1,296 @@
+{
+  "system": {
+    "id": "kepler-122",
+    "name": "Kepler-122",
+    "home": false,
+    "memberIds": [
+      "kepler-122",
+      "kepler-122-b",
+      "kepler-122-c",
+      "kepler-122-d",
+      "kepler-122-e",
+      "kepler-122-f"
+    ],
+    "blurb": "Kepler-122 — NASA Exoplanet Archive planetary system (5 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 5,
+    "distanceLy": 3351.1,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — Kepler-122 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-122",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "kepler-122",
+      "name": "Kepler-122",
+      "kind": "star",
+      "systemId": "kepler-122",
+      "facts": {
+        "massKg": 1.95267754e+30,
+        "radiusMeanKm": 845971.2,
+        "discoveryNotes": "Archive host (5 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2014"
+      },
+      "color": "#F8F7FF",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-122 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-122",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "kepler-122-b",
+      "name": "Kepler-122 b",
+      "kind": "planet",
+      "systemId": "kepler-122",
+      "facts": {
+        "massKg": 3.6310976000000003e+25,
+        "radiusMeanKm": 14908.14,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-122 b"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-122 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-122 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-122",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454967.01488,
+        "aAu": 0.064,
+        "e": 0,
+        "iDeg": 89.92,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 5.766193
+      }
+    },
+    {
+      "id": "kepler-122-c",
+      "name": "Kepler-122 c",
+      "kind": "planet",
+      "systemId": "kepler-122",
+      "facts": {
+        "massKg": 1.731938e+26,
+        "radiusMeanKm": 37397.770000000004,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-122 c"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-122 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-122 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-122",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454967.00291,
+        "aAu": 0.108,
+        "e": 0,
+        "iDeg": 89.39,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 12.465988
+      }
+    },
+    {
+      "id": "kepler-122-d",
+      "name": "Kepler-122 d",
+      "kind": "planet",
+      "systemId": "kepler-122",
+      "facts": {
+        "massKg": 3.2727656000000003e+25,
+        "radiusMeanKm": 14016.2,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-122 d"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-122 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-122 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-122",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454975.97287,
+        "aAu": 0.155,
+        "e": 0,
+        "iDeg": 89.99,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 21.587475
+      }
+    },
+    {
+      "id": "kepler-122-e",
+      "name": "Kepler-122 e",
+      "kind": "planet",
+      "systemId": "kepler-122",
+      "facts": {
+        "massKg": 1.6542994e+26,
+        "radiusMeanKm": 16564.600000000002,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-122 e"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-122 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-122 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-122",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454996.01553,
+        "aAu": 0.227,
+        "e": 0,
+        "iDeg": 89.97,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 37.993273
+      }
+    },
+    {
+      "id": "kepler-122-f",
+      "name": "Kepler-122 f",
+      "kind": "planet",
+      "systemId": "kepler-122",
+      "facts": {
+        "massKg": 2.149992e+26,
+        "radiusMeanKm": 11149.25,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-122 f"
+      },
+      "color": "#C88B3A",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-122 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-122 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-122",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454997.21993,
+        "aAu": 0.28575,
+        "e": 0,
+        "iDeg": 89.97,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 56.268
+      }
+    }
+  ]
+}

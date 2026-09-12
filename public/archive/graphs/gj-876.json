@@ -1,0 +1,253 @@
+{
+  "system": {
+    "id": "gj-876",
+    "name": "GJ 876",
+    "home": false,
+    "memberIds": [
+      "gj-876",
+      "gj-876-d",
+      "gj-876-c",
+      "gj-876-b",
+      "gj-876-e"
+    ],
+    "blurb": "GJ 876 — NASA Exoplanet Archive planetary system (4 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 4,
+    "distanceLy": 15.2,
+    "hostSpectralType": "M2.5V",
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — GJ 876 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20876",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy",
+            "hostSpectralType"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "gj-876",
+      "name": "GJ 876",
+      "kind": "star",
+      "systemId": "gj-876",
+      "facts": {
+        "massKg": 6.363104e+29,
+        "radiusMeanKm": 208710,
+        "discoveryNotes": "Archive host (4 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2005"
+      },
+      "color": "#E84A3C",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — GJ 876 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20876",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "gj-876-d",
+      "name": "GJ 876 d",
+      "kind": "planet",
+      "systemId": "gj-876",
+      "facts": {
+        "massKg": 4.079012600000001e+25,
+        "radiusMeanKm": 15991.21,
+        "discoveryDate": "2005",
+        "discoveryNotes": "NEA composite: GJ 876 d"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host GJ 876 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — GJ 876 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20876",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455200.064,
+        "aAu": 0.02080665,
+        "e": 0.207,
+        "iDeg": 59,
+        "omDeg": 0,
+        "wDeg": 234,
+        "maDeg": 0,
+        "periodD": 1.93778
+      }
+    },
+    {
+      "id": "gj-876-c",
+      "name": "GJ 876 c",
+      "kind": "planet",
+      "systemId": "gj-876",
+      "facts": {
+        "massKg": 1.35559742812e+27,
+        "radiusMeanKm": 89194,
+        "discoveryDate": "2005",
+        "discoveryNotes": "NEA composite: GJ 876 c"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host GJ 876 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — GJ 876 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20876",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2453029.298,
+        "aAu": 0.12959,
+        "e": 0.25591,
+        "iDeg": 59,
+        "omDeg": 0,
+        "wDeg": 48.76,
+        "maDeg": 0,
+        "periodD": 30.0881
+      }
+    },
+    {
+      "id": "gj-876-b",
+      "name": "GJ 876 b",
+      "kind": "planet",
+      "systemId": "gj-876",
+      "facts": {
+        "massKg": 4.3192353866999996e+27,
+        "radiusMeanKm": 84734.3,
+        "discoveryDate": "2005",
+        "discoveryNotes": "NEA composite: GJ 876 b"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host GJ 876 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — GJ 876 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20876",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2453055.984,
+        "aAu": 0.208317,
+        "e": 0.0324,
+        "iDeg": 59,
+        "omDeg": 0,
+        "wDeg": 50.3,
+        "maDeg": 0,
+        "periodD": 61.1166
+      }
+    },
+    {
+      "id": "gj-876-e",
+      "name": "GJ 876 e",
+      "kind": "planet",
+      "systemId": "gj-876",
+      "facts": {
+        "massKg": 8.719412e+25,
+        "radiusMeanKm": 24974.32,
+        "discoveryDate": "2005",
+        "discoveryNotes": "NEA composite: GJ 876 e"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host GJ 876 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — GJ 876 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20876",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.3343,
+        "e": 0.055,
+        "iDeg": 59,
+        "omDeg": 0,
+        "wDeg": 239,
+        "maDeg": 0,
+        "periodD": 124.26
+      }
+    }
+  ]
+}

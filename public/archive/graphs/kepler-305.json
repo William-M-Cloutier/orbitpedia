@@ -1,0 +1,249 @@
+{
+  "system": {
+    "id": "kepler-305",
+    "name": "Kepler-305",
+    "home": false,
+    "memberIds": [
+      "kepler-305",
+      "kepler-305-e",
+      "kepler-305-b",
+      "kepler-305-c",
+      "kepler-305-d"
+    ],
+    "blurb": "Kepler-305 — NASA Exoplanet Archive planetary system (4 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 4,
+    "distanceLy": 2832.6,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — Kepler-305 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-305",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "kepler-305",
+      "name": "Kepler-305",
+      "kind": "star",
+      "systemId": "kepler-305",
+      "facts": {
+        "massKg": 1.6305454e+30,
+        "radiusMeanKm": 575538.0003,
+        "discoveryNotes": "Archive host (4 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2020"
+      },
+      "color": "#FF8C42",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-305 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-305",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "kepler-305-e",
+      "name": "Kepler-305 e",
+      "kind": "planet",
+      "systemId": "kepler-305",
+      "facts": {
+        "massKg": 2.3112414e+25,
+        "radiusMeanKm": 11428.3972763,
+        "discoveryDate": "2020",
+        "discoveryNotes": "NEA composite: Kepler-305 e"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-305 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-305 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-305",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455187.631,
+        "aAu": 0.04017,
+        "e": 0,
+        "iDeg": 87.1,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 3.20538
+      }
+    },
+    {
+      "id": "kepler-305-b",
+      "name": "Kepler-305 b",
+      "kind": "planet",
+      "systemId": "kepler-305",
+      "facts": {
+        "massKg": 6.27081e+25,
+        "radiusMeanKm": 22935.600000000002,
+        "discoveryDate": "2020",
+        "discoveryNotes": "NEA composite: Kepler-305 b"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-305 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-305 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-305",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455189.0773,
+        "aAu": 0.05746,
+        "e": 0.005,
+        "iDeg": 84.98,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 5.487
+      }
+    },
+    {
+      "id": "kepler-305-c",
+      "name": "Kepler-305 c",
+      "kind": "planet",
+      "systemId": "kepler-305",
+      "facts": {
+        "massKg": 3.5833200000000003e+25,
+        "radiusMeanKm": 21024.3,
+        "discoveryDate": "2020",
+        "discoveryNotes": "NEA composite: Kepler-305 c"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-305 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-305 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-305",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455192.63489,
+        "aAu": 0.07568,
+        "e": 0,
+        "iDeg": 83.45,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 8.291
+      }
+    },
+    {
+      "id": "kepler-305-d",
+      "name": "Kepler-305 d",
+      "kind": "planet",
+      "systemId": "kepler-305",
+      "facts": {
+        "massKg": 3.7027640000000003e+25,
+        "radiusMeanKm": 17583.96,
+        "discoveryDate": "2020",
+        "discoveryNotes": "NEA composite: Kepler-305 d"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-305 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-305 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-305",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455192.41655,
+        "aAu": 0.12091,
+        "e": 0,
+        "iDeg": 89.27,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 16.74
+      }
+    }
+  ]
+}

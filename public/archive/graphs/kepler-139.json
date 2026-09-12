@@ -1,0 +1,246 @@
+{
+  "system": {
+    "id": "kepler-139",
+    "name": "Kepler-139",
+    "home": false,
+    "memberIds": [
+      "kepler-139",
+      "kepler-139-d",
+      "kepler-139-b",
+      "kepler-139-c",
+      "kepler-139-e"
+    ],
+    "blurb": "Kepler-139 — NASA Exoplanet Archive planetary system (4 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 5,
+    "distanceLy": 1275.4,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — Kepler-139 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-139",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "kepler-139",
+      "name": "Kepler-139",
+      "kind": "star",
+      "systemId": "kepler-139",
+      "facts": {
+        "massKg": 2.14357066e+30,
+        "radiusMeanKm": 727006.5,
+        "discoveryNotes": "Archive host (4 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2023"
+      },
+      "color": "#FDB813",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-139 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-139",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "kepler-139-d",
+      "name": "Kepler-139 d",
+      "kind": "planet",
+      "systemId": "kepler-139",
+      "facts": {
+        "massKg": 1.19444e+25,
+        "radiusMeanKm": 10798.845000000001,
+        "discoveryDate": "2023",
+        "discoveryNotes": "NEA composite: Kepler-139 d"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-139 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-139 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-139",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454964.77905,
+        "aAu": 0.0755533961,
+        "e": 0,
+        "iDeg": 87.97,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 7.305699922
+      }
+    },
+    {
+      "id": "kepler-139-b",
+      "name": "Kepler-139 b",
+      "kind": "planet",
+      "systemId": "kepler-139",
+      "facts": {
+        "massKg": 4.18054e+25,
+        "radiusMeanKm": 18730.739999999998,
+        "discoveryDate": "2023",
+        "discoveryNotes": "NEA composite: Kepler-139 b"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-139 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-139 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-139",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455017.90582,
+        "aAu": 0.127,
+        "e": 0,
+        "iDeg": 89.98,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 15.771044
+      }
+    },
+    {
+      "id": "kepler-139-c",
+      "name": "Kepler-139 c",
+      "kind": "planet",
+      "systemId": "kepler-139",
+      "facts": {
+        "massKg": 7.76386e+25,
+        "radiusMeanKm": 21533.98,
+        "discoveryDate": "2023",
+        "discoveryNotes": "NEA composite: Kepler-139 c"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-139 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-139 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-139",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455314.26266,
+        "aAu": 0.586,
+        "e": 0,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 157.072878
+      }
+    },
+    {
+      "id": "kepler-139-e",
+      "name": "Kepler-139 e",
+      "kind": "planet",
+      "systemId": "kepler-139",
+      "facts": {
+        "massKg": 2.2574916000000002e+27,
+        "radiusMeanKm": 87282.7,
+        "discoveryDate": "2023",
+        "discoveryNotes": "NEA composite: Kepler-139 e"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-139 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg, wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-139 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-139",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 3.23579639,
+        "e": 0.013121,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 2047.635373
+      }
+    }
+  ]
+}

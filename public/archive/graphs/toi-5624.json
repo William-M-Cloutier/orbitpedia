@@ -1,0 +1,300 @@
+{
+  "system": {
+    "id": "toi-5624",
+    "name": "TOI-5624",
+    "home": false,
+    "memberIds": [
+      "toi-5624",
+      "toi-5624-b",
+      "toi-5624-c",
+      "toi-5624-d",
+      "toi-5624-e",
+      "toi-5624-f"
+    ],
+    "blurb": "TOI-5624 — NASA Exoplanet Archive planetary system (5 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 5,
+    "distanceLy": 332.4,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — TOI-5624 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/TOI-5624",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "toi-5624",
+      "name": "TOI-5624",
+      "kind": "star",
+      "systemId": "toi-5624",
+      "facts": {
+        "massKg": 1.70610726e+30,
+        "radiusMeanKm": 570474,
+        "discoveryNotes": "Archive host (5 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2026"
+      },
+      "color": "#FDB813",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — TOI-5624 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/TOI-5624",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "toi-5624-b",
+      "name": "TOI-5624 b",
+      "kind": "planet",
+      "systemId": "toi-5624",
+      "facts": {
+        "massKg": 5.613868e+25,
+        "radiusMeanKm": 14742.494,
+        "discoveryDate": "2026",
+        "discoveryNotes": "NEA composite: TOI-5624 b"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host TOI-5624 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — TOI-5624 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/TOI-5624",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2459649.1284,
+        "aAu": 0.04201,
+        "e": 0,
+        "iDeg": 89.41,
+        "omDeg": 0,
+        "wDeg": 90,
+        "maDeg": 0,
+        "periodD": 3.3903473
+      }
+    },
+    {
+      "id": "toi-5624-c",
+      "name": "TOI-5624 c",
+      "kind": "planet",
+      "systemId": "toi-5624",
+      "facts": {
+        "massKg": 2.866656e+25,
+        "radiusMeanKm": 15761.854000000001,
+        "discoveryDate": "2026",
+        "discoveryNotes": "NEA composite: TOI-5624 c"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host TOI-5624 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — TOI-5624 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/TOI-5624",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2459650.9241,
+        "aAu": 0.07374,
+        "e": 0,
+        "iDeg": 89.58,
+        "omDeg": 0,
+        "wDeg": 90,
+        "maDeg": 0,
+        "periodD": 7.885385
+      }
+    },
+    {
+      "id": "toi-5624-d",
+      "name": "TOI-5624 d",
+      "kind": "planet",
+      "systemId": "toi-5624",
+      "facts": {
+        "massKg": 2.9263780000000004e+25,
+        "radiusMeanKm": 22833.664,
+        "discoveryDate": "2026",
+        "discoveryNotes": "NEA composite: TOI-5624 d"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host TOI-5624 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — TOI-5624 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/TOI-5624",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2459655.2041,
+        "aAu": 0.1067,
+        "e": 0,
+        "iDeg": 89.69,
+        "omDeg": 0,
+        "wDeg": 90,
+        "maDeg": 0,
+        "periodD": 13.731468
+      }
+    },
+    {
+      "id": "toi-5624-e",
+      "name": "TOI-5624 e",
+      "kind": "planet",
+      "systemId": "toi-5624",
+      "facts": {
+        "massKg": 5.315258e+25,
+        "radiusMeanKm": 20686.637,
+        "discoveryDate": "2026",
+        "discoveryNotes": "NEA composite: TOI-5624 e"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host TOI-5624 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — TOI-5624 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/TOI-5624",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2459655.6215,
+        "aAu": 0.1439,
+        "e": 0,
+        "iDeg": 89.405,
+        "omDeg": 0,
+        "wDeg": 90,
+        "maDeg": 0,
+        "periodD": 21.489936
+      }
+    },
+    {
+      "id": "toi-5624-f",
+      "name": "TOI-5624 f",
+      "kind": "planet",
+      "systemId": "toi-5624",
+      "facts": {
+        "massKg": 7.76386e+25,
+        "radiusMeanKm": 23317.86,
+        "discoveryDate": "2026",
+        "discoveryNotes": "NEA composite: TOI-5624 f"
+      },
+      "color": "#C88B3A",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host TOI-5624 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — TOI-5624 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/TOI-5624",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2460338.3,
+        "aAu": 0.2366,
+        "e": 0,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 90,
+        "maDeg": 0,
+        "periodD": 45.37
+      }
+    }
+  ]
+}

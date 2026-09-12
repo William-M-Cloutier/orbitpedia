@@ -1,0 +1,303 @@
+{
+  "system": {
+    "id": "hd-108236",
+    "name": "HD 108236",
+    "home": false,
+    "memberIds": [
+      "hd-108236",
+      "hd-108236-b",
+      "hd-108236-c",
+      "hd-108236-d",
+      "hd-108236-e",
+      "hd-108236-f"
+    ],
+    "blurb": "HD 108236 — NASA Exoplanet Archive planetary system (5 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 5,
+    "distanceLy": 210.7,
+    "hostSpectralType": "G3 V",
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — HD 108236 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20108236",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy",
+            "hostSpectralType"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "hd-108236",
+      "name": "HD 108236",
+      "kind": "star",
+      "systemId": "hd-108236",
+      "facts": {
+        "massKg": 1.72798043e+30,
+        "radiusMeanKm": 610128.9,
+        "discoveryNotes": "Archive host (5 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2020"
+      },
+      "color": "#FDB813",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 108236 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20108236",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "hd-108236-b",
+      "name": "HD 108236 b",
+      "kind": "planet",
+      "systemId": "hd-108236",
+      "facts": {
+        "massKg": 1.9349928000000003e+25,
+        "radiusMeanKm": 10289.164999999999,
+        "discoveryDate": "2020",
+        "discoveryNotes": "NEA composite: HD 108236 b"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 108236 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 108236 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20108236",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2458773.2964,
+        "aAu": 0.04527,
+        "e": 0.045,
+        "iDeg": 87.59,
+        "omDeg": 0,
+        "wDeg": 126,
+        "maDeg": 0,
+        "periodD": 3.795963
+      }
+    },
+    {
+      "id": "hd-108236-c",
+      "name": "HD 108236 c",
+      "kind": "planet",
+      "systemId": "hd-108236",
+      "facts": {
+        "massKg": 2.9502668e+25,
+        "radiusMeanKm": 13194.341,
+        "discoveryDate": "2020",
+        "discoveryNotes": "NEA composite: HD 108236 c"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 108236 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 108236 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20108236",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2458770.90586,
+        "aAu": 0.062,
+        "e": 0.034,
+        "iDeg": 88.3,
+        "omDeg": 0,
+        "wDeg": 211,
+        "maDeg": 0,
+        "periodD": 6.203449
+      }
+    },
+    {
+      "id": "hd-108236-d",
+      "name": "TOI-1233.01",
+      "kind": "planet",
+      "systemId": "hd-108236",
+      "facts": {
+        "massKg": 4.168595600000001e+25,
+        "radiusMeanKm": 16175.969000000001,
+        "discoveryDate": "2020",
+        "discoveryNotes": "NEA composite: TOI-1233.01"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 108236 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 108236 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20108236",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2458769.79682,
+        "aAu": 0.1074,
+        "e": 0.055,
+        "iDeg": 89.06,
+        "omDeg": 0,
+        "wDeg": 151,
+        "maDeg": 0,
+        "periodD": 14.175685
+      }
+    },
+    {
+      "id": "hd-108236-e",
+      "name": "HD 108236 e",
+      "kind": "planet",
+      "systemId": "hd-108236",
+      "facts": {
+        "massKg": 5.799006200000001e+25,
+        "radiusMeanKm": 19641.793,
+        "discoveryDate": "2020",
+        "discoveryNotes": "NEA composite: HD 108236 e"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 108236 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 108236 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20108236",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2458782.46935,
+        "aAu": 0.1367,
+        "e": 0.058,
+        "iDeg": 89.245,
+        "omDeg": 0,
+        "wDeg": 128,
+        "maDeg": 0,
+        "periodD": 19.590025
+      }
+    },
+    {
+      "id": "hd-108236-f",
+      "name": "HD 108236 f",
+      "kind": "planet",
+      "systemId": "hd-108236",
+      "facts": {
+        "massKg": 2.8188784e+25,
+        "radiusMeanKm": 12850.306999999999,
+        "discoveryDate": "2020",
+        "discoveryNotes": "NEA composite: HD 108236 f"
+      },
+      "color": "#C88B3A",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 108236 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 108236 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20108236",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2458793.2786,
+        "aAu": 0.1758,
+        "e": 0.051,
+        "iDeg": 88.963,
+        "omDeg": 0,
+        "wDeg": 275,
+        "maDeg": 0,
+        "periodD": 29.54115
+      }
+    }
+  ]
+}

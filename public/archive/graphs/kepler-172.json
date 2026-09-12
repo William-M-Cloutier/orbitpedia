@@ -1,0 +1,249 @@
+{
+  "system": {
+    "id": "kepler-172",
+    "name": "Kepler-172",
+    "home": false,
+    "memberIds": [
+      "kepler-172",
+      "kepler-172-b",
+      "kepler-172-c",
+      "kepler-172-d",
+      "kepler-172-e"
+    ],
+    "blurb": "Kepler-172 — NASA Exoplanet Archive planetary system (4 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 4,
+    "distanceLy": 2702.5,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — Kepler-172 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-172",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "kepler-172",
+      "name": "Kepler-172",
+      "kind": "star",
+      "systemId": "kepler-172",
+      "facts": {
+        "massKg": 2.14953607e+30,
+        "radiusMeanKm": 754834.5,
+        "discoveryNotes": "Archive host (4 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2014"
+      },
+      "color": "#FDB813",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-172 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-172",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "kepler-172-b",
+      "name": "Kepler-172 b",
+      "kind": "planet",
+      "systemId": "kepler-172",
+      "facts": {
+        "massKg": 3.6549864e+25,
+        "radiusMeanKm": 14971.85,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-172 b"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-172 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-172 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-172",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455002.9034,
+        "aAu": 0.04,
+        "e": 0,
+        "iDeg": 80.64,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 2.940309
+      }
+    },
+    {
+      "id": "kepler-172-c",
+      "name": "Kepler-172 c",
+      "kind": "planet",
+      "systemId": "kepler-172",
+      "facts": {
+        "massKg": 5.106231000000001e+25,
+        "radiusMeanKm": 18221.059999999998,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-172 c"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-172 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-172 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-172",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455008.47434,
+        "aAu": 0.068,
+        "e": 0,
+        "iDeg": 83.26,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 6.388996
+      }
+    },
+    {
+      "id": "kepler-172-d",
+      "name": "Kepler-172 d",
+      "kind": "planet",
+      "systemId": "kepler-172",
+      "facts": {
+        "massKg": 3.3981818000000005e+25,
+        "radiusMeanKm": 14334.75,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-172 d"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-172 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-172 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-172",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454969.23672,
+        "aAu": 0.118,
+        "e": 0,
+        "iDeg": 84.97,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 14.627119
+      }
+    },
+    {
+      "id": "kepler-172-e",
+      "name": "Kepler-172 e",
+      "kind": "planet",
+      "systemId": "kepler-172",
+      "facts": {
+        "massKg": 4.807621000000001e+25,
+        "radiusMeanKm": 17583.96,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-172 e"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-172 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-172 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-172",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454985.11935,
+        "aAu": 0.211,
+        "e": 0,
+        "iDeg": 87.49,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 35.118736
+      }
+    }
+  ]
+}

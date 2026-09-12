@@ -1,0 +1,349 @@
+{
+  "system": {
+    "id": "toi-1136",
+    "name": "TOI-1136",
+    "home": false,
+    "memberIds": [
+      "toi-1136",
+      "toi-1136-b",
+      "toi-1136-c",
+      "toi-1136-d",
+      "toi-1136-e",
+      "toi-1136-f",
+      "toi-1136-g"
+    ],
+    "blurb": "TOI-1136 — NASA Exoplanet Archive planetary system (6 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 6,
+    "distanceLy": 275.7,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — TOI-1136 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/TOI-1136",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "toi-1136",
+      "name": "TOI-1136",
+      "kind": "star",
+      "systemId": "toi-1136",
+      "facts": {
+        "massKg": 2.03221634e+30,
+        "radiusMeanKm": 673437.6,
+        "discoveryNotes": "Archive host (6 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2022"
+      },
+      "color": "#FDB813",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — TOI-1136 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/TOI-1136",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "toi-1136-b",
+      "name": "TOI-1136 b",
+      "kind": "planet",
+      "systemId": "toi-1136",
+      "facts": {
+        "massKg": 2.09027e+25,
+        "radiusMeanKm": 12104.9,
+        "discoveryDate": "2022",
+        "discoveryNotes": "NEA composite: TOI-1136 b"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host TOI-1136 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — TOI-1136 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/TOI-1136",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2458684.7,
+        "aAu": 0.05106,
+        "e": 0.027,
+        "iDeg": 86.4,
+        "omDeg": 0,
+        "wDeg": 25,
+        "maDeg": 0,
+        "periodD": 4.1727
+      }
+    },
+    {
+      "id": "toi-1136-c",
+      "name": "TOI-1136 c",
+      "kind": "planet",
+      "systemId": "toi-1136",
+      "facts": {
+        "massKg": 3.7744304000000004e+25,
+        "radiusMeanKm": 18342.109,
+        "discoveryDate": "2022",
+        "discoveryNotes": "NEA composite: TOI-1136 c"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host TOI-1136 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — TOI-1136 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/TOI-1136",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2460366.026514,
+        "aAu": 0.0669,
+        "e": 0.11,
+        "iDeg": 88.8,
+        "omDeg": 0,
+        "wDeg": 70,
+        "maDeg": 0,
+        "periodD": 6.2574
+      }
+    },
+    {
+      "id": "toi-1136-d",
+      "name": "TOI-1136 d",
+      "kind": "planet",
+      "systemId": "toi-1136",
+      "facts": {
+        "massKg": 4.986787e+25,
+        "radiusMeanKm": 29478.617,
+        "discoveryDate": "2022",
+        "discoveryNotes": "NEA composite: TOI-1136 d"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host TOI-1136 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — TOI-1136 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/TOI-1136",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2458686.0628,
+        "aAu": 0.1062,
+        "e": 0.042,
+        "iDeg": 89.2,
+        "omDeg": 0,
+        "wDeg": -67,
+        "maDeg": 0,
+        "periodD": 12.5199
+      }
+    },
+    {
+      "id": "toi-1136-e",
+      "name": "TOI-1136 e",
+      "kind": "planet",
+      "systemId": "toi-1136",
+      "facts": {
+        "massKg": 3.6251254000000004e+25,
+        "radiusMeanKm": 16813.069,
+        "discoveryDate": "2022",
+        "discoveryNotes": "NEA composite: TOI-1136 e"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host TOI-1136 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — TOI-1136 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/TOI-1136",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2458697.755807,
+        "aAu": 0.14,
+        "e": 0.0425,
+        "iDeg": 89.2,
+        "omDeg": 0,
+        "wDeg": -67,
+        "maDeg": 0,
+        "periodD": 18.801
+      }
+    },
+    {
+      "id": "toi-1136-f",
+      "name": "TOI-1136 f",
+      "kind": "planet",
+      "systemId": "toi-1136",
+      "facts": {
+        "massKg": 5.793034e+25,
+        "radiusMeanKm": 23801.51331822,
+        "discoveryDate": "2022",
+        "discoveryNotes": "NEA composite: TOI-1136 f"
+      },
+      "color": "#C88B3A",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host TOI-1136 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — TOI-1136 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/TOI-1136",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2458699.3777,
+        "aAu": 0.174,
+        "e": 0.001,
+        "iDeg": 89.3,
+        "omDeg": 0,
+        "wDeg": -45,
+        "maDeg": 0,
+        "periodD": 26.321
+      }
+    },
+    {
+      "id": "toi-1136-g",
+      "name": "TOI-1136 g",
+      "kind": "planet",
+      "systemId": "toi-1136",
+      "facts": {
+        "massKg": 3.344432e+25,
+        "radiusMeanKm": 16118.63,
+        "discoveryDate": "2022",
+        "discoveryNotes": "NEA composite: TOI-1136 g"
+      },
+      "color": "#7EC8E3",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host TOI-1136 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — TOI-1136 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/TOI-1136",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2459423.6705,
+        "aAu": 0.229,
+        "e": 0.04,
+        "iDeg": 89.5,
+        "omDeg": 0,
+        "wDeg": -81,
+        "maDeg": 0,
+        "periodD": 39.545
+      }
+    }
+  ]
+}

@@ -1,0 +1,247 @@
+{
+  "system": {
+    "id": "gj-887",
+    "name": "GJ 887",
+    "home": false,
+    "memberIds": [
+      "gj-887",
+      "gj-887-e",
+      "gj-887-b",
+      "gj-887-c",
+      "gj-887-d"
+    ],
+    "blurb": "GJ 887 — NASA Exoplanet Archive planetary system (4 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 4,
+    "distanceLy": 10.7,
+    "hostSpectralType": "M1 V",
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — GJ 887 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20887",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy",
+            "hostSpectralType"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "gj-887",
+      "name": "GJ 887",
+      "kind": "star",
+      "systemId": "gj-887",
+      "facts": {
+        "massKg": 9.8429265e+29,
+        "radiusMeanKm": 325587.60000000003,
+        "discoveryNotes": "Archive host (4 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2026"
+      },
+      "color": "#E84A3C",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — GJ 887 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20887",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "gj-887-e",
+      "name": "GJ 887 e",
+      "kind": "planet",
+      "systemId": "gj-887",
+      "facts": {
+        "massKg": 8.719412e+24,
+        "radiusMeanKm": 7135.52,
+        "discoveryDate": "2026",
+        "discoveryNotes": "NEA composite: GJ 887 e"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host GJ 887 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: e, iDeg, wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — GJ 887 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20887",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2453488.05,
+        "aAu": 0.0417,
+        "e": 0,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 4.4249
+      }
+    },
+    {
+      "id": "gj-887-b",
+      "name": "GJ 887 b",
+      "kind": "planet",
+      "systemId": "gj-887",
+      "facts": {
+        "massKg": 2.329158e+25,
+        "radiusMeanKm": 11467.800000000001,
+        "discoveryDate": "2026",
+        "discoveryNotes": "NEA composite: GJ 887 b"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host GJ 887 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — GJ 887 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20887",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2453492.75,
+        "aAu": 0.0683,
+        "e": 0.14,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 180,
+        "maDeg": 0,
+        "periodD": 9.2619
+      }
+    },
+    {
+      "id": "gj-887-c",
+      "name": "GJ 887 c",
+      "kind": "planet",
+      "systemId": "gj-887",
+      "facts": {
+        "massKg": 3.88193e+25,
+        "radiusMeanKm": 15481.53,
+        "discoveryDate": "2026",
+        "discoveryNotes": "NEA composite: GJ 887 c"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host GJ 887 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — GJ 887 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20887",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2453498.2,
+        "aAu": 0.121,
+        "e": 0.17,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 200,
+        "maDeg": 0,
+        "periodD": 21.784
+      }
+    },
+    {
+      "id": "gj-887-d",
+      "name": "GJ 887 d",
+      "kind": "planet",
+      "systemId": "gj-887",
+      "facts": {
+        "massKg": 3.643042e+25,
+        "radiusMeanKm": 14908.14,
+        "discoveryDate": "2026",
+        "discoveryNotes": "NEA composite: GJ 887 d"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host GJ 887 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: e, iDeg, wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — GJ 887 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20887",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2453496,
+        "aAu": 0.212,
+        "e": 0,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 50.77
+      }
+    }
+  ]
+}

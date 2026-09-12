@@ -1,0 +1,249 @@
+{
+  "system": {
+    "id": "kepler-197",
+    "name": "Kepler-197",
+    "home": false,
+    "memberIds": [
+      "kepler-197",
+      "kepler-197-b",
+      "kepler-197-c",
+      "kepler-197-d",
+      "kepler-197-e"
+    ],
+    "blurb": "Kepler-197 — NASA Exoplanet Archive planetary system (4 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 4,
+    "distanceLy": 1078.2,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — Kepler-197 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-197",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "kepler-197",
+      "name": "Kepler-197",
+      "kind": "star",
+      "systemId": "kepler-197",
+      "facts": {
+        "massKg": 1.70411879e+30,
+        "radiusMeanKm": 779184.0000000001,
+        "discoveryNotes": "Archive host (4 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2014"
+      },
+      "color": "#F8F7FF",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-197 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-197",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "kepler-197-b",
+      "name": "Kepler-197 b",
+      "kind": "planet",
+      "systemId": "kepler-197",
+      "facts": {
+        "massKg": 6.211088000000001e+24,
+        "radiusMeanKm": 6498.42,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-197 b"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-197 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-197 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-197",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455004.47282,
+        "aAu": 0.06,
+        "e": 0.02,
+        "iDeg": 79.07,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 5.599308
+      }
+    },
+    {
+      "id": "kepler-197-c",
+      "name": "Kepler-197 c",
+      "kind": "planet",
+      "systemId": "kepler-197",
+      "facts": {
+        "massKg": 3.165266e+25,
+        "radiusMeanKm": 7836.33,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-197 c"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-197 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-197 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-197",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455007.06421,
+        "aAu": 0.09,
+        "e": 0.08,
+        "iDeg": 83.51,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 10.349695
+      }
+    },
+    {
+      "id": "kepler-197-d",
+      "name": "Kepler-197 d",
+      "kind": "planet",
+      "systemId": "kepler-197",
+      "facts": {
+        "massKg": 1.1824956e+25,
+        "radiusMeanKm": 7772.62,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-197 d"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-197 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-197 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-197",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455012.46886,
+        "aAu": 0.119,
+        "e": 0.03,
+        "iDeg": 84.55,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 15.677563
+      }
+    },
+    {
+      "id": "kepler-197-e",
+      "name": "Kepler-197 e",
+      "kind": "planet",
+      "systemId": "kepler-197",
+      "facts": {
+        "massKg": 4.1387346e+24,
+        "radiusMeanKm": 5797.610000000001,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-197 e"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-197 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-197 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-197",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454987.41342,
+        "aAu": 0.164,
+        "e": 0.38,
+        "iDeg": 87.69,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 25.209715
+      }
+    }
+  ]
+}

@@ -1,24 +1,24 @@
 {
   "system": {
-    "id": "55-cnc-comp-b",
-    "name": "55 Cnc B",
+    "id": "au-mic",
+    "name": "AU Mic",
     "home": false,
     "memberIds": [
-      "55-cnc-comp-b",
-      "55-cnc-comp-b-b",
-      "55-cnc-comp-b-c"
+      "au-mic",
+      "au-mic-b",
+      "au-mic-c"
     ],
-    "blurb": "55 Cnc B — NASA Exoplanet Archive planetary system (2 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
-    "planetCount": 7,
-    "distanceLy": 40.7,
-    "hostSpectralType": "M4.5 V",
+    "blurb": "AU Mic — NASA Exoplanet Archive planetary system (2 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 4,
+    "distanceLy": 31.7,
+    "hostSpectralType": "M1 V",
     "meta": {
       "confidence": "known",
       "fetchedAt": "2026-09-12T04:17:28.837Z",
       "sources": [
         {
-          "name": "NASA Exoplanet Archive — 55 Cnc B overview",
-          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/55%20Cnc%20B",
+          "name": "NASA Exoplanet Archive — AU Mic overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/AU%20Mic",
           "fields": [
             "blurb",
             "planetCount",
@@ -31,23 +31,23 @@
   },
   "bodies": [
     {
-      "id": "55-cnc-comp-b",
-      "name": "55 Cnc B",
+      "id": "au-mic",
+      "name": "AU Mic",
       "kind": "star",
-      "systemId": "55-cnc-comp-b",
+      "systemId": "au-mic",
       "facts": {
-        "massKg": 5.1700220000000004e+29,
-        "radiusMeanKm": 190621.80000000002,
+        "massKg": 1.26267845e+30,
+        "radiusMeanKm": 599693.4,
         "discoveryNotes": "Archive host (2 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
-        "discoveryDate": "2025"
+        "discoveryDate": "2020"
       },
       "color": "#E84A3C",
       "meta": {
         "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
         "sources": [
           {
-            "name": "NASA Exoplanet Archive — 55 Cnc B overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/55%20Cnc%20B",
+            "name": "NASA Exoplanet Archive — AU Mic overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/AU%20Mic",
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
@@ -62,27 +62,29 @@
       }
     },
     {
-      "id": "55-cnc-comp-b-b",
-      "name": "55 Cnc B b",
+      "id": "au-mic-b",
+      "name": "AU Mic b",
       "kind": "planet",
-      "systemId": "55-cnc-comp-b",
+      "systemId": "au-mic",
       "facts": {
-        "massKg": 2.09027e+25,
-        "radiusMeanKm": 10766.99,
-        "discoveryDate": "2025",
-        "discoveryNotes": "NEA composite: 55 Cnc B b"
+        "massKg": 5.3690078e+25,
+        "radiusMeanKm": 30517.09,
+        "discoveryDate": "2020",
+        "discoveryNotes": "NEA composite: AU Mic b"
       },
       "color": "#C45C26",
       "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host 55 Cnc B (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg, wDeg).",
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host AU Mic (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
         "sources": [
           {
-            "name": "NASA Exoplanet Archive — 55 Cnc B overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/55%20Cnc%20B",
+            "name": "NASA Exoplanet Archive — AU Mic overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/AU%20Mic",
             "fields": [
               "orbit.aAu",
               "orbit.periodD",
               "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
@@ -96,38 +98,40 @@
       },
       "orbit": {
         "frame": "heliocentric",
-        "epochJd": 2455495.7,
-        "aAu": 0.044,
-        "e": 0,
-        "iDeg": 90,
+        "epochJd": 2458330.350878,
+        "aAu": 0.07,
+        "e": 0.07,
+        "iDeg": 88.39,
         "omDeg": 0,
-        "wDeg": 0,
+        "wDeg": -52,
         "maDeg": 0,
-        "periodD": 6.7994
+        "periodD": 8.463446
       }
     },
     {
-      "id": "55-cnc-comp-b-c",
-      "name": "55 Cnc B c",
+      "id": "au-mic-c",
+      "name": "AU Mic c",
       "kind": "planet",
-      "systemId": "55-cnc-comp-b",
+      "systemId": "au-mic",
       "facts": {
-        "massKg": 3.165266e+25,
-        "radiusMeanKm": 13761.36,
-        "discoveryDate": "2025",
-        "discoveryNotes": "NEA composite: 55 Cnc B c"
+        "massKg": 8.635801200000001e+25,
+        "radiusMeanKm": 17775.09,
+        "discoveryDate": "2020",
+        "discoveryNotes": "NEA composite: AU Mic c"
       },
       "color": "#D4A574",
       "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host 55 Cnc B (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg, wDeg).",
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host AU Mic (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
         "sources": [
           {
-            "name": "NASA Exoplanet Archive — 55 Cnc B overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/55%20Cnc%20B",
+            "name": "NASA Exoplanet Archive — AU Mic overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/AU%20Mic",
             "fields": [
               "orbit.aAu",
               "orbit.periodD",
               "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
@@ -141,14 +145,14 @@
       },
       "orbit": {
         "frame": "heliocentric",
-        "epochJd": 2455491.8,
-        "aAu": 0.13,
-        "e": 0,
-        "iDeg": 90,
+        "epochJd": 2458342.223325,
+        "aAu": 0.119,
+        "e": 0.18,
+        "iDeg": 89.46,
         "omDeg": 0,
-        "wDeg": 0,
+        "wDeg": 72.8,
         "maDeg": 0,
-        "periodD": 33.747
+        "periodD": 18.859023
       }
     }
   ]

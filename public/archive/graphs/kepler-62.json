@@ -1,0 +1,298 @@
+{
+  "system": {
+    "id": "kepler-62",
+    "name": "Kepler-62",
+    "home": false,
+    "memberIds": [
+      "kepler-62",
+      "kepler-62-b",
+      "kepler-62-c",
+      "kepler-62-d",
+      "kepler-62-e",
+      "kepler-62-f"
+    ],
+    "blurb": "Kepler-62 — NASA Exoplanet Archive planetary system (5 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 5,
+    "distanceLy": 981.3,
+    "hostSpectralType": "K2 V",
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — Kepler-62 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-62",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy",
+            "hostSpectralType"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "kepler-62",
+      "name": "Kepler-62",
+      "kind": "star",
+      "systemId": "kepler-62",
+      "facts": {
+        "massKg": 1.3720443e+30,
+        "radiusMeanKm": 445248,
+        "discoveryNotes": "Archive host (5 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2013"
+      },
+      "color": "#FF8C42",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-62 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-62",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "kepler-62-b",
+      "name": "Kepler-62 b",
+      "kind": "planet",
+      "systemId": "kepler-62",
+      "facts": {
+        "massKg": 5.37498e+25,
+        "radiusMeanKm": 8346.01,
+        "discoveryDate": "2013",
+        "discoveryNotes": "NEA composite: Kepler-62 b"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-62 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-62 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-62",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455003.9189,
+        "aAu": 0.0553,
+        "e": 0,
+        "iDeg": 89.2,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 5.714932
+      }
+    },
+    {
+      "id": "kepler-62-c",
+      "name": "Kepler-62 c",
+      "kind": "planet",
+      "systemId": "kepler-62",
+      "facts": {
+        "massKg": 2.38888e+25,
+        "radiusMeanKm": 3440.34,
+        "discoveryDate": "2013",
+        "discoveryNotes": "NEA composite: Kepler-62 c"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-62 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-62 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-62",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454967.651,
+        "aAu": 0.0929,
+        "e": 0,
+        "iDeg": 89.7,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 12.4417
+      }
+    },
+    {
+      "id": "kepler-62-d",
+      "name": "Kepler-62 d",
+      "kind": "planet",
+      "systemId": "kepler-62",
+      "facts": {
+        "massKg": 8.36108e+25,
+        "radiusMeanKm": 12423.449999999999,
+        "discoveryDate": "2013",
+        "discoveryNotes": "NEA composite: Kepler-62 d"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-62 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-62 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-62",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455013.8117,
+        "aAu": 0.12,
+        "e": 0,
+        "iDeg": 89.7,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 18.16406
+      }
+    },
+    {
+      "id": "kepler-62-e",
+      "name": "Kepler-62 e",
+      "kind": "planet",
+      "systemId": "kepler-62",
+      "facts": {
+        "massKg": 2.149992e+26,
+        "radiusMeanKm": 10257.310000000001,
+        "discoveryDate": "2013",
+        "discoveryNotes": "NEA composite: Kepler-62 e"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-62 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-62 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-62",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454983.404,
+        "aAu": 0.427,
+        "e": 0,
+        "iDeg": 89.98,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 122.3874
+      }
+    },
+    {
+      "id": "kepler-62-f",
+      "name": "Kepler-62 f",
+      "kind": "planet",
+      "systemId": "kepler-62",
+      "facts": {
+        "massKg": 2.09027e+26,
+        "radiusMeanKm": 8983.109999999999,
+        "discoveryDate": "2013",
+        "discoveryNotes": "NEA composite: Kepler-62 f"
+      },
+      "color": "#C88B3A",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-62 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-62 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-62",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455422.71,
+        "aAu": 0.718,
+        "e": 0,
+        "iDeg": 89.9,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 267.291
+      }
+    }
+  ]
+}

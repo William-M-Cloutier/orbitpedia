@@ -1,0 +1,235 @@
+{
+  "system": {
+    "id": "hd-215152",
+    "name": "HD 215152",
+    "home": false,
+    "memberIds": [
+      "hd-215152",
+      "hd-215152-b",
+      "hd-215152-c",
+      "hd-215152-d",
+      "hd-215152-e"
+    ],
+    "blurb": "HD 215152 — NASA Exoplanet Archive planetary system (4 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 4,
+    "distanceLy": 70.4,
+    "hostSpectralType": "K3 V",
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — HD 215152 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20215152",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy",
+            "hostSpectralType"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "hd-215152",
+      "name": "HD 215152",
+      "kind": "star",
+      "systemId": "hd-215152",
+      "facts": {
+        "massKg": 1.5311219e+30,
+        "radiusMeanKm": 507861,
+        "discoveryNotes": "Archive host (4 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2018"
+      },
+      "color": "#FF8C42",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 215152 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20215152",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "hd-215152-b",
+      "name": "HD 215152 b",
+      "kind": "planet",
+      "systemId": "hd-215152",
+      "facts": {
+        "massKg": 3.3767818310378105e+27,
+        "discoveryDate": "2018",
+        "discoveryNotes": "NEA composite: HD 215152 b"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 215152 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 215152 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20215152",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "facts.massKg",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.057638,
+        "e": 0,
+        "iDeg": 0.1871,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 5.75999
+      }
+    },
+    {
+      "id": "hd-215152-c",
+      "name": "HD 215152 c",
+      "kind": "planet",
+      "systemId": "hd-215152",
+      "facts": {
+        "massKg": 2.799748848150826e+27,
+        "discoveryDate": "2018",
+        "discoveryNotes": "NEA composite: HD 215152 c"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 215152 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 215152 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20215152",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "facts.massKg",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.067393,
+        "e": 0,
+        "iDeg": 0.2035,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 7.28243
+      }
+    },
+    {
+      "id": "hd-215152-d",
+      "name": "HD 215152 d",
+      "kind": "planet",
+      "systemId": "hd-215152",
+      "facts": {
+        "massKg": 4.601078784991754e+27,
+        "discoveryDate": "2018",
+        "discoveryNotes": "NEA composite: HD 215152 d"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 215152 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 215152 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20215152",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "facts.massKg",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.08799,
+        "e": 0,
+        "iDeg": 0.1998,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 10.86499
+      }
+    },
+    {
+      "id": "hd-215152-e",
+      "name": "HD 215152 e",
+      "kind": "planet",
+      "systemId": "hd-215152",
+      "facts": {
+        "massKg": 5.825375738885976e+27,
+        "discoveryDate": "2018",
+        "discoveryNotes": "NEA composite: HD 215152 e"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 215152 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 215152 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20215152",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "facts.massKg",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.15417,
+        "e": 0,
+        "iDeg": 0.1869,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 25.1967
+      }
+    }
+  ]
+}

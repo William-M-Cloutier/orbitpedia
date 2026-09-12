@@ -1,0 +1,333 @@
+{
+  "system": {
+    "id": "hd-10180",
+    "name": "HD 10180",
+    "home": false,
+    "memberIds": [
+      "hd-10180",
+      "hd-10180-c",
+      "hd-10180-d",
+      "hd-10180-e",
+      "hd-10180-f",
+      "hd-10180-g",
+      "hd-10180-h"
+    ],
+    "blurb": "HD 10180 — NASA Exoplanet Archive planetary system (6 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 6,
+    "distanceLy": 127.1,
+    "hostSpectralType": "G1 V",
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — HD 10180 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2010180",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy",
+            "hostSpectralType"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "hd-10180",
+      "name": "HD 10180",
+      "kind": "star",
+      "systemId": "hd-10180",
+      "facts": {
+        "massKg": 2.1077782e+30,
+        "radiusMeanKm": 771531.3,
+        "discoveryNotes": "Archive host (6 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2010"
+      },
+      "color": "#FDB813",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 10180 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2010180",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "hd-10180-c",
+      "name": "HD 10180 c",
+      "kind": "planet",
+      "systemId": "hd-10180",
+      "facts": {
+        "massKg": 1.6373310890761915e+28,
+        "discoveryDate": "2010",
+        "discoveryNotes": "NEA composite: HD 10180 c"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 10180 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 10180 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2010180",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "facts.massKg",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.06412,
+        "e": 0.073,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 328,
+        "maDeg": 0,
+        "periodD": 5.75969
+      }
+    },
+    {
+      "id": "hd-10180-d",
+      "name": "HD 10180 d",
+      "kind": "planet",
+      "systemId": "hd-10180",
+      "facts": {
+        "massKg": 1.9683658003399599e+28,
+        "discoveryDate": "2010",
+        "discoveryNotes": "NEA composite: HD 10180 d"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 10180 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 10180 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2010180",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "facts.massKg",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.12859,
+        "e": 0.131,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 325,
+        "maDeg": 0,
+        "periodD": 16.357
+      }
+    },
+    {
+      "id": "hd-10180-e",
+      "name": "HD 10180 e",
+      "kind": "planet",
+      "systemId": "hd-10180",
+      "facts": {
+        "massKg": 1.4990222000000001e+26,
+        "radiusMeanKm": 34339.689999999995,
+        "discoveryDate": "2010",
+        "discoveryNotes": "NEA composite: HD 10180 e"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 10180 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 10180 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2010180",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.2699,
+        "e": 0.051,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 147,
+        "maDeg": 0,
+        "periodD": 49.748
+      }
+    },
+    {
+      "id": "hd-10180-f",
+      "name": "HD 10180 f",
+      "kind": "planet",
+      "systemId": "hd-10180",
+      "facts": {
+        "massKg": 1.4273558e+26,
+        "radiusMeanKm": 33384.04,
+        "discoveryDate": "2010",
+        "discoveryNotes": "NEA composite: HD 10180 f"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 10180 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 10180 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2010180",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 0.4929,
+        "e": 0.119,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 327,
+        "maDeg": 0,
+        "periodD": 122.744
+      }
+    },
+    {
+      "id": "hd-10180-g",
+      "name": "HD 10180 g",
+      "kind": "planet",
+      "systemId": "hd-10180",
+      "facts": {
+        "massKg": 2.015819170647095e+28,
+        "discoveryDate": "2010",
+        "discoveryNotes": "NEA composite: HD 10180 g"
+      },
+      "color": "#C88B3A",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 10180 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 10180 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2010180",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "facts.massKg",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 1.427,
+        "e": 0.263,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 327,
+        "maDeg": 0,
+        "periodD": 604.67
+      }
+    },
+    {
+      "id": "hd-10180-h",
+      "name": "HD 10180 h",
+      "kind": "planet",
+      "systemId": "hd-10180",
+      "facts": {
+        "massKg": 3.846096800000001e+26,
+        "radiusMeanKm": 59887.4,
+        "discoveryDate": "2010",
+        "discoveryNotes": "NEA composite: HD 10180 h"
+      },
+      "color": "#7EC8E3",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 10180 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 10180 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%2010180",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "aAu": 3.381,
+        "e": 0.095,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 142,
+        "maDeg": 0,
+        "periodD": 2205
+      }
+    }
+  ]
+}

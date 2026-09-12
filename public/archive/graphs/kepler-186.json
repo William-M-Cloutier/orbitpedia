@@ -1,0 +1,298 @@
+{
+  "system": {
+    "id": "kepler-186",
+    "name": "Kepler-186",
+    "home": false,
+    "memberIds": [
+      "kepler-186",
+      "kepler-186-b",
+      "kepler-186-c",
+      "kepler-186-d",
+      "kepler-186-e",
+      "kepler-186-f"
+    ],
+    "blurb": "Kepler-186 — NASA Exoplanet Archive planetary system (5 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 5,
+    "distanceLy": 579.2,
+    "hostSpectralType": "M1",
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — Kepler-186 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-186",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy",
+            "hostSpectralType"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "kepler-186",
+      "name": "Kepler-186",
+      "kind": "star",
+      "systemId": "kepler-186",
+      "facts": {
+        "massKg": 9.5048866e+29,
+        "radiusMeanKm": 328370.39999999997,
+        "discoveryNotes": "Archive host (5 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2014"
+      },
+      "color": "#FF8C42",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-186 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-186",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "kepler-186-b",
+      "name": "Kepler-186 b",
+      "kind": "planet",
+      "systemId": "kepler-186",
+      "facts": {
+        "massKg": 7.405528000000001e+24,
+        "radiusMeanKm": 6816.97,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-186 b"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-186 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-186 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-186",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454966.3304,
+        "aAu": 0.0343,
+        "e": 0,
+        "iDeg": 89.6,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 3.8867907
+      }
+    },
+    {
+      "id": "kepler-186-c",
+      "name": "Kepler-186 c",
+      "kind": "planet",
+      "systemId": "kepler-186",
+      "facts": {
+        "massKg": 1.254162e+25,
+        "radiusMeanKm": 7963.75,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-186 c"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-186 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-186 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-186",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455007.3142,
+        "aAu": 0.0451,
+        "e": 0,
+        "iDeg": 89.9,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 7.267302
+      }
+    },
+    {
+      "id": "kepler-186-d",
+      "name": "Kepler-186 d",
+      "kind": "planet",
+      "systemId": "kepler-186",
+      "facts": {
+        "massKg": 1.5169388000000002e+25,
+        "radiusMeanKm": 8919.4,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-186 d"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-186 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-186 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-186",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455009.9045,
+        "aAu": 0.0781,
+        "e": 0,
+        "iDeg": 89.1,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 13.342996
+      }
+    },
+    {
+      "id": "kepler-186-e",
+      "name": "Kepler-186 e",
+      "kind": "planet",
+      "systemId": "kepler-186",
+      "facts": {
+        "massKg": 1.284023e+25,
+        "radiusMeanKm": 8091.17,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-186 e"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-186 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-186 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-186",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454986.8006,
+        "aAu": 0.11,
+        "e": 0,
+        "iDeg": 89.84,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 22.407704
+      }
+    },
+    {
+      "id": "kepler-186-f",
+      "name": "Kepler-186 f",
+      "kind": "planet",
+      "systemId": "kepler-186",
+      "facts": {
+        "massKg": 1.0212462000000001e+25,
+        "radiusMeanKm": 7454.07,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-186 f"
+      },
+      "color": "#C88B3A",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-186 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-186 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-186",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455789.494,
+        "aAu": 0.432,
+        "e": 0.04,
+        "iDeg": 89.96,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 129.9441
+      }
+    }
+  ]
+}

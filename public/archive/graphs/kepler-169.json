@@ -1,0 +1,296 @@
+{
+  "system": {
+    "id": "kepler-169",
+    "name": "Kepler-169",
+    "home": false,
+    "memberIds": [
+      "kepler-169",
+      "kepler-169-b",
+      "kepler-169-c",
+      "kepler-169-d",
+      "kepler-169-e",
+      "kepler-169-f"
+    ],
+    "blurb": "Kepler-169 — NASA Exoplanet Archive planetary system (5 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 5,
+    "distanceLy": 1325.9,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — Kepler-169 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-169",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "kepler-169",
+      "name": "Kepler-169",
+      "kind": "star",
+      "systemId": "kepler-169",
+      "facts": {
+        "massKg": 1.64048775e+30,
+        "radiusMeanKm": 530819.1,
+        "discoveryNotes": "Archive host (5 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2014"
+      },
+      "color": "#FF8C42",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-169 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-169",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "kepler-169-b",
+      "name": "Kepler-169 b",
+      "kind": "planet",
+      "systemId": "kepler-169",
+      "facts": {
+        "massKg": 9.018022e+24,
+        "radiusMeanKm": 7199.23,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-169 b"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-169 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-169 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-169",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454966.69209,
+        "aAu": 0.04,
+        "e": 0,
+        "iDeg": 85.27,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 3.250619
+      }
+    },
+    {
+      "id": "kepler-169-c",
+      "name": "Kepler-169 c",
+      "kind": "planet",
+      "systemId": "kepler-169",
+      "facts": {
+        "massKg": 1.1466624e+25,
+        "radiusMeanKm": 7708.91,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-169 c"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-169 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-169 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-169",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454967.71616,
+        "aAu": 0.062,
+        "e": 0,
+        "iDeg": 87.06,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 6.195469
+      }
+    },
+    {
+      "id": "kepler-169-d",
+      "name": "Kepler-169 d",
+      "kind": "planet",
+      "systemId": "kepler-169",
+      "facts": {
+        "massKg": 1.254162e+25,
+        "radiusMeanKm": 7963.75,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-169 d"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-169 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-169 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-169",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454969.84117,
+        "aAu": 0.075,
+        "e": 0,
+        "iDeg": 86.78,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 8.348125
+      }
+    },
+    {
+      "id": "kepler-169-e",
+      "name": "Kepler-169 e",
+      "kind": "planet",
+      "systemId": "kepler-169",
+      "facts": {
+        "massKg": 3.2727656000000003e+25,
+        "radiusMeanKm": 14016.2,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-169 e"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-169 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-169 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-169",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455007.81064,
+        "aAu": 0.105,
+        "e": 0,
+        "iDeg": 87.99,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 13.767102
+      }
+    },
+    {
+      "id": "kepler-169-f",
+      "name": "Kepler-169 f",
+      "kind": "planet",
+      "systemId": "kepler-169",
+      "facts": {
+        "massKg": 4.2880396e+25,
+        "radiusMeanKm": 16437.18,
+        "discoveryDate": "2014",
+        "discoveryNotes": "NEA composite: Kepler-169 f"
+      },
+      "color": "#C88B3A",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-169 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-169 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-169",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455020.3184,
+        "aAu": 0.359,
+        "e": 0,
+        "iDeg": 89.15,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 87.090195
+      }
+    }
+  ]
+}

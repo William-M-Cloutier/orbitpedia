@@ -1,0 +1,249 @@
+{
+  "system": {
+    "id": "kepler-1542",
+    "name": "Kepler-1542",
+    "home": false,
+    "memberIds": [
+      "kepler-1542",
+      "kepler-1542-c",
+      "kepler-1542-b",
+      "kepler-1542-e",
+      "kepler-1542-d"
+    ],
+    "blurb": "Kepler-1542 — NASA Exoplanet Archive planetary system (4 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 4,
+    "distanceLy": 1301.7,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — Kepler-1542 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-1542",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "kepler-1542",
+      "name": "Kepler-1542",
+      "kind": "star",
+      "systemId": "kepler-1542",
+      "facts": {
+        "massKg": 1.8691618e+30,
+        "radiusMeanKm": 688743,
+        "discoveryNotes": "Archive host (4 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2016"
+      },
+      "color": "#FDB813",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-1542 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-1542",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "kepler-1542-c",
+      "name": "Kepler-1542 c",
+      "kind": "planet",
+      "systemId": "kepler-1542",
+      "facts": {
+        "massKg": 1.2422176e+24,
+        "radiusMeanKm": 4141.150000000001,
+        "discoveryDate": "2016",
+        "discoveryNotes": "NEA composite: Kepler-1542 c"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-1542 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-1542 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-1542",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454965.86465,
+        "aAu": 0.0387,
+        "e": 0,
+        "iDeg": 89.89,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 2.89223021
+      }
+    },
+    {
+      "id": "kepler-1542-b",
+      "name": "Kepler-1542 b",
+      "kind": "planet",
+      "systemId": "kepler-1542",
+      "facts": {
+        "massKg": 2.1679086e+24,
+        "radiusMeanKm": 4841.96,
+        "discoveryDate": "2016",
+        "discoveryNotes": "NEA composite: Kepler-1542 b"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-1542 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-1542 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-1542",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454967.22178,
+        "aAu": 0.04765,
+        "e": 0,
+        "iDeg": 88.05,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 3.95116882
+      }
+    },
+    {
+      "id": "kepler-1542-e",
+      "name": "Kepler-1542 e",
+      "kind": "planet",
+      "systemId": "kepler-1542",
+      "facts": {
+        "massKg": 2.1679086e+24,
+        "radiusMeanKm": 4841.96,
+        "discoveryDate": "2016",
+        "discoveryNotes": "NEA composite: Kepler-1542 e"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-1542 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-1542 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-1542",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454965.42378,
+        "aAu": 0.05649,
+        "e": 0,
+        "iDeg": 89.68,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 5.10115756
+      }
+    },
+    {
+      "id": "kepler-1542-d",
+      "name": "Kepler-1542 d",
+      "kind": "planet",
+      "systemId": "kepler-1542",
+      "facts": {
+        "massKg": 3.523598e+24,
+        "radiusMeanKm": 5542.7699999999995,
+        "discoveryDate": "2016",
+        "discoveryNotes": "NEA composite: Kepler-1542 d"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-1542 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-1542 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-1542",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454964.74864,
+        "aAu": 0.0629,
+        "e": 0,
+        "iDeg": 88.08,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 5.99273738
+      }
+    }
+  ]
+}

@@ -1,0 +1,296 @@
+{
+  "system": {
+    "id": "kepler-33",
+    "name": "Kepler-33",
+    "home": false,
+    "memberIds": [
+      "kepler-33",
+      "kepler-33-b",
+      "kepler-33-c",
+      "kepler-33-d",
+      "kepler-33-e",
+      "kepler-33-f"
+    ],
+    "blurb": "Kepler-33 — NASA Exoplanet Archive planetary system (5 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 5,
+    "distanceLy": 3943.7,
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T04:17:28.837Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — Kepler-33 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-33",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "kepler-33",
+      "name": "Kepler-33",
+      "kind": "star",
+      "systemId": "kepler-33",
+      "facts": {
+        "massKg": 2.56711477e+30,
+        "radiusMeanKm": 1266174,
+        "discoveryNotes": "Archive host (5 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2011"
+      },
+      "color": "#FDB813",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-33 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-33",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "kepler-33-b",
+      "name": "Kepler-33 b",
+      "kind": "planet",
+      "systemId": "kepler-33",
+      "facts": {
+        "massKg": 2.1977696e+25,
+        "radiusMeanKm": 11085.539999999999,
+        "discoveryDate": "2011",
+        "discoveryNotes": "NEA composite: Kepler-33 b"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-33 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-33 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-33",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454964.8981,
+        "aAu": 0.0677,
+        "e": 0,
+        "iDeg": 86.39,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 5.66793
+      }
+    },
+    {
+      "id": "kepler-33-c",
+      "name": "Kepler-33 c",
+      "kind": "planet",
+      "systemId": "kepler-33",
+      "facts": {
+        "massKg": 2.329158e+24,
+        "radiusMeanKm": 20387.2,
+        "discoveryDate": "2011",
+        "discoveryNotes": "NEA composite: Kepler-33 c"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-33 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-33 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-33",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454976.6764,
+        "aAu": 0.1189,
+        "e": 0,
+        "iDeg": 88.19,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 13.17562
+      }
+    },
+    {
+      "id": "kepler-33-d",
+      "name": "Kepler-33 d",
+      "kind": "planet",
+      "systemId": "kepler-33",
+      "facts": {
+        "massKg": 2.3351302000000004e+25,
+        "radiusMeanKm": 34084.85,
+        "discoveryDate": "2011",
+        "discoveryNotes": "NEA composite: Kepler-33 d"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-33 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-33 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-33",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455022.6342,
+        "aAu": 0.1662,
+        "e": 0,
+        "iDeg": 88.71,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 21.77596
+      }
+    },
+    {
+      "id": "kepler-33-e",
+      "name": "Kepler-33 e",
+      "kind": "planet",
+      "systemId": "kepler-33",
+      "facts": {
+        "massKg": 3.3265154000000005e+25,
+        "radiusMeanKm": 25611.42,
+        "discoveryDate": "2011",
+        "discoveryNotes": "NEA composite: Kepler-33 e"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-33 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-33 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-33",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2454968.8715,
+        "aAu": 0.2138,
+        "e": 0,
+        "iDeg": 88.94,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 31.7844
+      }
+    },
+    {
+      "id": "kepler-33-f",
+      "name": "Kepler-33 f",
+      "kind": "planet",
+      "systemId": "kepler-33",
+      "facts": {
+        "massKg": 5.733312e+25,
+        "radiusMeanKm": 28414.66,
+        "discoveryDate": "2011",
+        "discoveryNotes": "NEA composite: Kepler-33 f"
+      },
+      "color": "#C88B3A",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host Kepler-33 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — Kepler-33 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-33",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:17:28.837Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455005.5763,
+        "aAu": 0.2535,
+        "e": 0,
+        "iDeg": 89.17,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 41.02902
+      }
+    }
+  ]
+}
