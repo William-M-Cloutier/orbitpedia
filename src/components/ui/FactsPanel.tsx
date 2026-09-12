@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { KIND_LABEL } from "@/data/catalog";
+import { KIND_LABEL, getBodiesForSystem } from "@/data/catalog";
 import { bodyProvenance, type Body, type System } from "@/data/schema";
 import { SystemFacts } from "@/components/ui/SystemFacts";
 import {
@@ -153,7 +153,7 @@ export function FactsPanel({ body, system, onClear }: Props) {
     return (
       <aside className="pointer-events-auto flex max-h-[45vh] w-full flex-col overflow-hidden border-t border-white/10 bg-[#080d18]/95 backdrop-blur md:max-h-none md:h-full md:w-full md:border-l md:border-t-0">
         <div className="flex-1 overflow-y-auto p-4">
-          <SystemFacts system={system} />
+          <SystemFacts system={system} bodies={getBodiesForSystem(system.id)} />
           <p className="mt-4 text-xs text-zinc-600">
             Select a body in the scene or rail for body facts.
           </p>

@@ -1382,7 +1382,11 @@ function SystemMapView() {
                 </div>
               </div>
               <div className="min-h-0 flex-1 overflow-y-auto">
-                <SystemFacts system={selectedSystem} compact />
+                <SystemFacts
+                  system={selectedSystem}
+                  bodies={getBodiesForSystem(selectedSystem.id)}
+                  compact
+                />
               </div>
               <button
                 type="button"

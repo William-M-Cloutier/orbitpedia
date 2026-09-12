@@ -178,3 +178,124 @@ export function overviewBlurb(
   if (notes && !isMetaDiscoveryNotes(notes)) return notes;
   return interestBlurb(body, system);
 }
+
+
+function formatDistanceLy(ly: number): string {
+  if (!Number.isFinite(ly) || ly < 0) return "";
+  if (ly < 10) return `${Number(ly.toPrecision(2))} ly`;
+  if (ly < 100) return `${Number(ly.toPrecision(3))} ly`;
+  if (ly < 1000) return `${Math.round(ly)} ly`;
+  return `${Math.round(ly).toLocaleString("en-US")} ly`;
+}
+
+function earliestPlanetDiscovery(bodies: Body[]): {
+  date: string;
+  notes?: string;
+} | null {
+  let best: { year: number; date: string; notes?: string } | null = null;
+  for (const b of bodies) {
+    if (b.kind !== "planet" && b.kind !== "dwarf_planet") continue;
+    const raw = b.facts.discoveryDate?.trim();
+    if (!raw) continue;
+    const m = /^(\d{4})/.exec(raw);
+    if (!m) continue;
+    const year = Number(m[1]);
+    if (!Number.isFinite(year)) continue;
+    if (!best || year < best.year) {
+      const notes = b.facts.discoveryNotes?.trim();
+      best = {
+        year,
+        date: raw,
+        notes: notes && !isMetaDiscoveryNotes(notes) ? notes : undefined,
+      };
+    }
+  }
+  return best;
+}
+
+/**
+ * System overview for SystemFacts (map overlay + Explore empty selection).
+ * Prefer hand / ingest `system.blurb` when factual; else compose from catalog fields
+ * and optional member bodies (earliest planet discovery). Never invent.
+ */
+export function systemOverviewBlurb(
+  system: System,
+  bodies?: Body[] | null,
+): string | null {
+  const hand = system.blurb?.trim();
+  if (hand && !isMetaDiscoveryNotes(hand)) return hand;
+
+  const sentences: string[] = [];
+  const spectral = system.hostSpectralType?.trim();
+  const nPlanets = system.planetCount;
+  const nStars = system.starCount;
+  const dist = system.distanceLy;
+
+  const planetBit =
+    nPlanets != null && nPlanets > 0
+      ? `${nPlanets} confirmed planet${nPlanets === 1 ? "" : "s"}`
+      : null;
+
+  if (spectral && planetBit) {
+    if (nStars != null && nStars >= 2) {
+      sentences.push(
+        `${system.name} is a ${spectral} multi-star system (${nStars} stars) with ${planetBit}.`,
+      );
+    } else {
+      sentences.push(`${system.name} is a ${spectral} system with ${planetBit}.`);
+    }
+  } else if (spectral) {
+    if (nStars != null && nStars >= 2) {
+      sentences.push(
+        `${system.name} is a ${spectral} multi-star system (${nStars} stars).`,
+      );
+    } else {
+      sentences.push(`${system.name} is a ${spectral} system.`);
+    }
+  } else if (planetBit) {
+    if (nStars != null && nStars >= 2) {
+      sentences.push(
+        `${system.name} is a multi-star system (${nStars} stars) with ${planetBit}.`,
+      );
+    } else {
+      sentences.push(`${system.name} hosts ${planetBit}.`);
+    }
+  } else if (nStars != null && nStars >= 2) {
+    sentences.push(`${system.name} is a multi-star system (${nStars} stars).`);
+  }
+
+  if (dist != null && Number.isFinite(dist) && dist > 0 && sentences.length < 3) {
+    sentences.push(`About ${formatDistanceLy(dist)} from the Sun.`);
+  }
+
+  if (bodies && bodies.length > 0 && sentences.length < 3) {
+    const first = earliestPlanetDiscovery(bodies);
+    if (first) {
+      const method =
+        first.notes &&
+        /\(([^)]+)\)\.?\s*$/.exec(first.notes.replace(/\s+/g, " ").trim());
+      const when = formatDiscoveryDate(first.date);
+      sentences.push(
+        method
+          ? `First planet discovered ${when} (${method[1]}).`
+          : `First planet discovered ${when}.`,
+      );
+    }
+  } else if (
+    system.hasGas === true &&
+    sentences.length < 3 &&
+    !sentences.some((s) => /gas giant/i.test(s))
+  ) {
+    sentences.push("Includes at least one gas giant.");
+  }
+
+  const text = sentences
+    .slice(0, 3)
+    .join(" ")
+    .replace(/\s+/g, " ")
+    .trim();
+  if (!text) return null;
+  // Skip near-empty “X is a system.”
+  if (/^.+ is a system\.?$/i.test(text)) return null;
+  return text;
+}

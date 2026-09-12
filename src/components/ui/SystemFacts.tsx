@@ -1,16 +1,25 @@
 "use client";
 
-import type { System } from "@/data/schema";
+import type { Body, System } from "@/data/schema";
+import { systemOverviewBlurb } from "@/lib/interestBlurb";
 
 type Props = {
   system: System;
+  /** Optional members — used to compose earliest-planet discovery when blurb missing. */
+  bodies?: Body[] | null;
   /** Optional compact mode for map side panel. */
   compact?: boolean;
   className?: string;
 };
 
-/** Lean system blurb / highlights / meta from systems/*.json. */
-export function SystemFacts({ system, compact = false, className = "" }: Props) {
+/** Lean system blurb / highlights / meta from systems/*.json (+ compose fallback). */
+export function SystemFacts({
+  system,
+  bodies,
+  compact = false,
+  className = "",
+}: Props) {
+  const overview = systemOverviewBlurb(system, bodies);
   const highlights = system.highlights ?? [];
   const sources = system.meta?.sources;
   const fetched = system.meta?.fetchedAt;
@@ -31,8 +40,8 @@ export function SystemFacts({ system, compact = false, className = "" }: Props) 
         </h2>
       </div>
 
-      {system.blurb ? (
-        <p className="text-sm leading-relaxed text-zinc-300">{system.blurb}</p>
+      {overview ? (
+        <p className="text-sm leading-relaxed text-zinc-300">{overview}</p>
       ) : null}
 
       <dl className="grid gap-2">
