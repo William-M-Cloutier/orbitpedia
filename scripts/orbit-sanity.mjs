@@ -1958,6 +1958,23 @@ if (!Number.isFinite(c)) {
     }
   }
 
+  // hideOrbitPathKinds scene gate (OrbitLine + ProbePathLine; moons inherit planet).
+  {
+    const canvasSrc = fs.readFileSync(path.join(ROOT, "src/viz/OrbitCanvas.tsx"), "utf8");
+    if (!/hideOrbitPathKinds/.test(canvasSrc)) {
+      fail("OrbitCanvas missing hideOrbitPathKinds prop");
+    } else if (!/function shouldHideOrbitPath/.test(sceneSrc)) {
+      fail("OrbitScene missing shouldHideOrbitPath helper");
+    } else if (!/hideOrbitPathKinds/.test(sceneSrc)) {
+      fail("OrbitScene missing hideOrbitPathKinds plumbing");
+    } else if (!/kind === "moon".*has\("planet"\)|has\("planet"\).*kind === "moon"/.test(sceneSrc)
+      && !/body\.kind === "moon" && hideOrbitPathKinds\.has\("planet"\)/.test(sceneSrc)) {
+      fail("shouldHideOrbitPath must inherit moon when planet hidden");
+    } else {
+      ok("hideOrbitPathKinds gate wired (OrbitCanvas + shouldHideOrbitPath + moon inherit)");
+    }
+  }
+
   // Schematic tier 0.04 kept; Prop/True readable floor.
   if (!/probe:\s*0\.04/.test(sizeSrc)) {
     fail("sizeTiers schematic probe tier should remain 0.04");

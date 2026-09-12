@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
+import type { BodyKind } from "@/data/schema";
 import type { SizeMode } from "./sizeTiers";
 
 const OrbitScene = dynamic(
@@ -31,6 +32,8 @@ type Props = {
   hideProbePaths?: boolean;
   /** Hide all probe craft meshes / markers (ProbeBodyMesh). Default false = visible. */
   hideProbeMeshes?: boolean;
+  /** Suppress OrbitLine / ProbePathLine by body kind (moons inherit planet). Meshes stay. */
+  hideOrbitPathKinds?: ReadonlySet<BodyKind>;
   /** Active system graph — remount parent with key={systemId} to unload RAF/meshes. */
   systemId?: string;
   /** Canvas-space overlay insets for setViewOffset (see OrbitScene). */
