@@ -9,7 +9,7 @@
     "Perseverance rover"
   ],
   "facts": {
-    "discoveryNotes": "NASA Mars 2020 rover; cruise 2020-07-30 to 2021-02-18 landing in Jezero Crater. Waypoints cover cruise only (Horizons -168).",
+    "discoveryNotes": "NASA Mars 2020 rover; cruise 2020-07-30 to 2021-02-18 landing in Jezero Crater.",
     "discoveryDate": "2020"
   },
   "color": "#9A7B4F",
