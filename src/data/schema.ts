@@ -51,6 +51,11 @@ export const FactsSchema = z.object({
    * (e.g. ["massKg"]). Never invent estimates — only mark stored values.
    */
   approximateFields: z.array(z.string().min(1)).optional(),
+  /**
+   * Multi-star companion projected separation from primary (au).
+   * Not Kepler — omit if unknown; mark approximateFields / assumed when derived.
+   */
+  projectedSepAu: z.number().positive().optional(),
 });
 
 /**

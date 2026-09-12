@@ -55,6 +55,7 @@ const FactsSchema = z.object({
   discoveryNotes: z.string().optional(),
   discoveryDate: z.string().optional(),
   approximateFields: z.array(z.string().min(1)).optional(),
+  projectedSepAu: z.number().positive().optional(),
 });
 const BodyMetaSchema = z
   .object({
