@@ -18,6 +18,9 @@ import {
   getSystem,
   getSystemGraph,
   listSystems,
+  mergeArchiveSystemHits,
+  searchCatalog,
+  type CatalogSearchResult,
   type SystemGraph,
 } from "./catalog";
 import {
@@ -296,3 +299,22 @@ export async function getBodyAsync(
   }
   return undefined;
 }
+
+/**
+ * Curated searchCatalog + archive index names/ids (cached). Prefix-ranked.
+ * Lean typeahead / Search page — no graph fetch.
+ */
+export async function searchCatalogAsync(
+  query: string,
+): Promise<CatalogSearchResult> {
+  const curated = searchCatalog(query);
+  const q = query.trim();
+  if (!q) return curated;
+  try {
+    const archive = await listArchiveSystems();
+    return mergeArchiveSystemHits(curated, archive, q);
+  } catch {
+    return curated;
+  }
+}
+

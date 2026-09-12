@@ -185,15 +185,53 @@ function textMatch(hay: string, q: string): boolean {
   return hay.toLowerCase().includes(q);
 }
 
+/** 0 = name/id prefix, 1 = alias prefix, 2 = includes, 3 = alias includes, 99 = no match. */
+export function searchMatchRank(
+  name: string,
+  id: string,
+  q: string,
+  aliases?: readonly string[],
+): number {
+  const n = name.toLowerCase();
+  const i = id.toLowerCase();
+  if (n.startsWith(q) || i.startsWith(q)) return 0;
+  if (aliases?.some((a) => a.toLowerCase().startsWith(q))) return 1;
+  if (n.includes(q) || i.includes(q)) return 2;
+  if (aliases?.some((a) => a.toLowerCase().includes(q))) return 3;
+  return 99;
+}
+
 function systemMatchesQuery(s: System, q: string): boolean {
-  if (textMatch(s.id, q) || textMatch(s.name, q)) return true;
-  const aliases = SYSTEM_ALIASES[s.id];
-  return aliases?.some((a) => textMatch(a, q)) ?? false;
+  return searchMatchRank(s.name, s.id, q, SYSTEM_ALIASES[s.id]) < 99;
 }
 
 function bodyMatchesQuery(b: Body, q: string): boolean {
-  if (textMatch(b.name, q) || textMatch(b.id, q)) return true;
-  return b.aliases?.some((a) => textMatch(a, q)) ?? false;
+  return searchMatchRank(b.name, b.id, q, b.aliases) < 99;
+}
+
+function compareSearchSystems(a: System, b: System, q: string): number {
+  const ra = searchMatchRank(a.name, a.id, q, SYSTEM_ALIASES[a.id]);
+  const rb = searchMatchRank(b.name, b.id, q, SYSTEM_ALIASES[b.id]);
+  if (ra !== rb) return ra - rb;
+  if (a.home === true && b.home !== true) return -1;
+  if (b.home === true && a.home !== true) return 1;
+  return a.name.localeCompare(b.name);
+}
+
+function compareSearchBodies(a: Body, b: Body, q: string): number {
+  const kindRank: Record<BodyKind, number> = {
+    star: 0,
+    planet: 1,
+    dwarf_planet: 2,
+    moon: 3,
+    asteroid: 4,
+  };
+  const ra = searchMatchRank(a.name, a.id, q, a.aliases);
+  const rb = searchMatchRank(b.name, b.id, q, b.aliases);
+  if (ra !== rb) return ra - rb;
+  const kr = kindRank[a.kind] - kindRank[b.kind];
+  if (kr !== 0) return kr;
+  return a.name.localeCompare(b.name);
 }
 
 export type CatalogSearchResult = {
@@ -220,26 +258,38 @@ export function searchCatalog(query: string): CatalogSearchResult {
     return bodyMatchesQuery(b, q);
   });
 
-  // Stable kind order for grouped UIs.
-  const kindRank: Record<BodyKind, number> = {
-    star: 0,
-    planet: 1,
-    dwarf_planet: 2,
-    moon: 3,
-    asteroid: 4,
-  };
-  matchedBodies.sort((a, b) => {
-    const kr = kindRank[a.kind] - kindRank[b.kind];
-    if (kr !== 0) return kr;
-    return a.name.localeCompare(b.name);
-  });
-  matchedSystems.sort((a, b) => {
-    if (a.home === true && b.home !== true) return -1;
-    if (b.home === true && a.home !== true) return 1;
-    return a.name.localeCompare(b.name);
-  });
+  matchedBodies.sort((a, b) => compareSearchBodies(a, b, q));
+  matchedSystems.sort((a, b) => compareSearchSystems(a, b, q));
 
   return { systems: matchedSystems, bodies: matchedBodies };
+}
+
+/** Merge curated search with archive index stubs (names/ids). Prefix-ranked. */
+export function mergeArchiveSystemHits(
+  curated: CatalogSearchResult,
+  archive: ReadonlyArray<{ id: string; name: string }>,
+  query: string,
+): CatalogSearchResult {
+  const q = query.trim().toLowerCase();
+  if (!q) return curated;
+  const curatedIds = new Set(listSystems().map((s) => s.id));
+  for (const s of curated.systems) curatedIds.add(s.id);
+
+  const extras: System[] = [];
+  for (const s of archive) {
+    if (curatedIds.has(s.id)) continue;
+    if (isFixtureSystemId(s.id)) continue;
+    if (searchMatchRank(s.name, s.id, q) >= 99) continue;
+    extras.push({
+      id: s.id,
+      name: s.name,
+      memberIds: [],
+      home: false,
+    });
+  }
+  const systems = [...curated.systems, ...extras];
+  systems.sort((a, b) => compareSearchSystems(a, b, q));
+  return { systems, bodies: curated.bodies };
 }
 
 /** @deprecated Prefer searchCatalog — kept for body-only callers. */

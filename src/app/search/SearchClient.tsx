@@ -25,7 +25,10 @@ import {
   searchCatalog,
   type CatalogSearchResult,
 } from "@/data/catalog";
-import { listArchiveSystems } from "@/data/archiveCatalog";
+import {
+  listArchiveSystems,
+  searchCatalogAsync,
+} from "@/data/archiveCatalog";
 import {
   loadRecentSearches,
   pushRecentSearch,
@@ -89,48 +92,22 @@ export function SearchClient() {
     setQ(param);
   }, [searchParams]);
 
-  const [archiveHits, setArchiveHits] = useState<FlatHit[]>([]);
-  const result = useMemo(() => searchCatalog(q), [q]);
-  const hits = useMemo(() => {
-    const curated = flattenGrouped(result);
-    const curatedKeys = new Set(curated.map((h) => h.key));
-    return [...curated, ...archiveHits.filter((h) => !curatedKeys.has(h.key))];
-  }, [result, archiveHits]);
+  const [result, setResult] = useState<CatalogSearchResult>(() =>
+    searchCatalog(""),
+  );
+  const hits = useMemo(() => flattenGrouped(result), [result]);
 
   useEffect(() => {
     let cancelled = false;
-    const needle = q.trim().toLowerCase();
+    const needle = q.trim();
     if (!needle) {
-      setArchiveHits([]);
+      setResult({ systems: [], bodies: [] });
       return;
     }
+    setResult(searchCatalog(needle));
     (async () => {
-      try {
-        const archive = await listArchiveSystems();
-        if (cancelled) return;
-        const curatedIds = new Set(listSystems().map((s) => s.id));
-        const matched = archive
-          .filter(
-            (s) =>
-              !curatedIds.has(s.id) &&
-              (s.name.toLowerCase().includes(needle) ||
-                s.id.toLowerCase().includes(needle)),
-          )
-          .slice(0, 20)
-          .map((s) => ({
-            key: `sys:${s.id}`,
-            type: "system" as const,
-            system: {
-              id: s.id,
-              name: s.name,
-              memberIds: [] as string[],
-            },
-            href: exploreSystemHref(s.id),
-          }));
-        setArchiveHits(matched);
-      } catch {
-        if (!cancelled) setArchiveHits([]);
-      }
+      const next = await searchCatalogAsync(needle);
+      if (!cancelled) setResult(next);
     })();
     return () => {
       cancelled = true;

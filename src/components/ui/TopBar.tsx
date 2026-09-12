@@ -18,6 +18,7 @@ import {
   searchCatalog,
   type CatalogSearchResult,
 } from "@/data/catalog";
+import { searchCatalogAsync } from "@/data/archiveCatalog";
 import { pushRecentSearch } from "@/lib/recentSearches";
 
 const MODES = [
@@ -77,7 +78,28 @@ export function TopBar() {
   const [active, setActive] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const result = useMemo(() => searchCatalog(q), [q]);
+  const [result, setResult] = useState<CatalogSearchResult>(() =>
+    searchCatalog(""),
+  );
+
+  useEffect(() => {
+    let cancelled = false;
+    const needle = q.trim();
+    if (!needle) {
+      setResult({ systems: [], bodies: [] });
+      return;
+    }
+    // Sync curated immediately; archive merge fills in when index is ready.
+    setResult(searchCatalog(needle));
+    (async () => {
+      const next = await searchCatalogAsync(needle);
+      if (!cancelled) setResult(next);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [q]);
+
   const hits = useMemo(() => flattenHits(result, TYPEAHEAD_CAP), [result]);
 
   useEffect(() => {
