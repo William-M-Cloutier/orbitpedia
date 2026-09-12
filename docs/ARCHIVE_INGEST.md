@@ -130,11 +130,8 @@ npm run validate:catalog
 
 `src/data/archiveCatalog.ts`:
 
-- `listArchiveSystems()` — thin index (fetch `{base}/systems.index.json`)
-- `getArchiveSystemGraph(id)` — fetch `{base}/graphs/<id>.json`
-- **Base:** `NEXT_PUBLIC_ARCHIVE_BASE` if set; else prefer `/archive/bulk` when
-  present (local `--all`); else smoke `/archive`. Production stays on smoke
-  until an artifact/CDN is configured.
+- `listArchiveSystems()` — thin index (fetch `/archive/systems.index.json`)
+- `getArchiveSystemGraph(id)` — fetch `/archive/graphs/<id>.json`
 - `getSystemGraphAsync(id)` — curated sync hit first, else archive fetch
 - `listSystemsAsync()` — curated `listSystems()` ∪ archive index (archive ids
   omitted when a curated system already owns that id)

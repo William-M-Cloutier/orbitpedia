@@ -118,6 +118,7 @@ function parseArgs(argv) {
         .map((s) => s.trim())
         .filter(Boolean);
     } else if (a === "--dry-run") out.dryRun = true;
+    else if (a === "--verify") out.verify = true;
     else if (a === "--force-ids") {
       String(argv[++i] || "")
         .split(",")
