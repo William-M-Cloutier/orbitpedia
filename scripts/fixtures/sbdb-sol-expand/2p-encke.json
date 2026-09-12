@@ -1,0 +1,210 @@
+{
+  "phys_par": [
+    {
+      "notes": "2 parameter fit from 637 observations, autocmod 3.0g",
+      "desc": "absolute magnitude of comet and coma (i.e. total)",
+      "ref": "K273/14",
+      "name": "M1",
+      "sigma": "0.9",
+      "units": null,
+      "value": "15.6",
+      "title": "comet total magnitude"
+    },
+    {
+      "desc": "comet total magnitude slope parameter",
+      "notes": "autocmod 3.0g",
+      "value": "4.5",
+      "title": "comet total magnitude slope",
+      "sigma": null,
+      "units": null,
+      "name": "K1",
+      "ref": "K273/14"
+    },
+    {
+      "desc": "effective body diameter",
+      "notes": null,
+      "value": "4.8",
+      "title": "diameter",
+      "sigma": null,
+      "units": "km",
+      "name": "diameter",
+      "ref": "Lamy,P.L.;Toth,I.;Fernandez,Y.R.;Weaver,H.A. (2004) Comets II, pp. 223-264"
+    },
+    {
+      "name": "rot_per",
+      "ref": "LCDB (Rev. 2023-October); Warner et al., 2009",
+      "title": "rotation period",
+      "value": "11.083",
+      "sigma": null,
+      "units": "h",
+      "notes": "[Result based on less than full coverage, so that the period may be wrong by 30 percent or so.]  REFERENCE LIST:[Fernandez, Y.R.; Lowry, S.C.; Weissman, P.R.; Mueller, B.E.A.; et al. (2005) Icarus 175, 194-214.], [Lowry, S.C.; Weissman, P.R. (2007) Icarus 188, 212-223.]",
+      "desc": "body rotation period (synodic)"
+    },
+    {
+      "title": "geometric albedo",
+      "value": "0.046",
+      "sigma": "0.023",
+      "units": null,
+      "name": "albedo",
+      "ref": "Earth, Moon, and Planets, v. 89, Issue 1, p. 117-134 (2002)",
+      "desc": "geometric albedo",
+      "notes": null
+    }
+  ],
+  "object": {
+    "spkid": "1000025",
+    "pha": false,
+    "fullname": "2P/Encke",
+    "orbit_id": "K273/14",
+    "kind": "cn",
+    "des": "2P",
+    "prefix": "P",
+    "neo": true,
+    "orbit_class": {
+      "code": "ETc",
+      "name": "Encke-type Comet"
+    }
+  },
+  "signature": {
+    "source": "NASA/JPL Small-Body Database (SBDB) API",
+    "version": "1.3"
+  },
+  "orbit": {
+    "pe_used": "DE441",
+    "n_dop_obs_used": null,
+    "data_arc": "2863",
+    "soln_date": "2026-09-08 14:23:39",
+    "not_valid_before": null,
+    "comment": null,
+    "model_pars": [
+      {
+        "desc": "non-gravitational radial acceleration parameter",
+        "title": "non-grav. radial accel.",
+        "value": "2.229911330751396E-10",
+        "n": 1,
+        "sigma": "5.834E-11",
+        "units": "au/d^2",
+        "kind": "EST",
+        "name": "A1"
+      },
+      {
+        "kind": "EST",
+        "name": "A2",
+        "title": "non-grav. transverse accel.",
+        "value": "2.020304758924744E-12",
+        "sigma": "7.144E-13",
+        "n": 2,
+        "units": "au/d^2",
+        "desc": "non-gravitational transverse acceleration parameter"
+      }
+    ],
+    "rms": ".44303",
+    "equinox": "J2000",
+    "not_valid_after": null,
+    "moid": ".166532",
+    "cov_epoch": "2459936.5",
+    "n_obs_used": 696,
+    "first_obs": "2018-11-05",
+    "epoch": "2459936.5",
+    "n_del_obs_used": null,
+    "elements": [
+      {
+        "name": "e",
+        "label": "e",
+        "title": "eccentricity",
+        "value": ".8473114244958559",
+        "sigma": "2.1743E-7",
+        "units": null
+      },
+      {
+        "label": "a",
+        "name": "a",
+        "sigma": "1.3483E-7",
+        "units": "au",
+        "title": "semi-major axis",
+        "value": "2.219620901311434"
+      },
+      {
+        "name": "q",
+        "label": "q",
+        "units": "au",
+        "sigma": "5.014E-7",
+        "title": "perihelion distance",
+        "value": ".3389107535804672"
+      },
+      {
+        "label": "i",
+        "name": "i",
+        "title": "inclination; angle with respect to x-y ecliptic plane",
+        "value": "11.36818296959657",
+        "units": "deg",
+        "sigma": "1.9878E-5"
+      },
+      {
+        "label": "node",
+        "name": "om",
+        "sigma": "5.514E-5",
+        "units": "deg",
+        "value": "334.1128049930352",
+        "title": "longitude of the ascending node"
+      },
+      {
+        "title": "argument of perihelion",
+        "value": "187.2059914343342",
+        "units": "deg",
+        "sigma": "5.5271E-5",
+        "name": "w",
+        "label": "peri"
+      },
+      {
+        "name": "ma",
+        "label": "M",
+        "sigma": "1.303E-5",
+        "units": "deg",
+        "value": "269.5737329554696",
+        "title": "mean anomaly"
+      },
+      {
+        "label": "tp",
+        "name": "tp",
+        "units": "TDB",
+        "sigma": "6.8387E-5",
+        "title": "time of perihelion passage",
+        "value": "2460239.895222310893"
+      },
+      {
+        "name": "per",
+        "label": "period",
+        "units": "d",
+        "sigma": ".00011006",
+        "value": "1207.860100850287",
+        "title": "sidereal orbital period"
+      },
+      {
+        "sigma": "2.7158E-8",
+        "units": "deg/d",
+        "value": ".2980477621096795",
+        "title": "mean motion",
+        "label": "n",
+        "name": "n"
+      },
+      {
+        "label": "Q",
+        "name": "ad",
+        "value": "4.100331049042401",
+        "title": "aphelion distance",
+        "units": "au",
+        "sigma": "2.4908E-7"
+      }
+    ],
+    "condition_code": "1",
+    "moid_jup": ".910084",
+    "producer": "Davide Farnocchia",
+    "orbit_id": "K273/14",
+    "sb_used": "SB441-N16",
+    "t_jup": "3.024",
+    "source": "JPL",
+    "two_body": null,
+    "last_obs": "2026-09-07"
+  }
+}

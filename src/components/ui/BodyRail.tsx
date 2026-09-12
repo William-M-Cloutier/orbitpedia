@@ -21,6 +21,7 @@ const FILTERS: Array<BodyKind | "all"> = [
   "dwarf_planet",
   "probe",
   "asteroid",
+  "comet",
 ];
 
 /** All-tab kind sections (moons nest under planet/dwarf, not their own section). */
@@ -37,6 +38,7 @@ const KIND_GROUPS: Array<{
   { kind: "dwarf_planet", label: "Dwarf planets" },
   { kind: "probe", label: "Probes" },
   { kind: "asteroid", label: "Asteroids" },
+  { kind: "comet", label: "Comets" },
 ];
 
 type Props = {

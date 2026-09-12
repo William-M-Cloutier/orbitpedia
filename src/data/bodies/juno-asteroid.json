@@ -1,0 +1,57 @@
+{
+  "id": "juno-asteroid",
+  "name": "Juno",
+  "kind": "asteroid",
+  "systemId": "solar",
+  "aliases": [
+    "3 Juno"
+  ],
+  "facts": {
+    "discoveryNotes": "Discovered 1804 by Karl Ludwig Harding; one of the largest main-belt asteroids.",
+    "discoveryDate": "1804-09-01",
+    "radiusMeanKm": 123.298,
+    "albedo": 0.214,
+    "rotationPeriodD": 0.30041666666666667
+  },
+  "color": "#B8A078",
+  "sbdbDes": "3",
+  "meta": {
+    "source": "JPL SBDB (full-prec + phys-par)",
+    "sources": [
+      {
+        "name": "JPL Small-Body Database lookup",
+        "url": "https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/?sstr=3",
+        "fields": [
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "orbit.epochJd",
+          "sbdbDes",
+          "facts.radiusMeanKm",
+          "facts.albedo",
+          "facts.rotationPeriodD",
+          "facts.discoveryDate",
+          "facts.discoveryNotes"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-12T23:41:35.981Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  },
+  "orbit": {
+    "frame": "heliocentric",
+    "epochJd": 2461200.5,
+    "aAu": 2.670989527103278,
+    "e": 0.2556999836681878,
+    "iDeg": 12.98659236598085,
+    "omDeg": 169.8115953492418,
+    "wDeg": 247.8950743075613,
+    "maDeg": 262.7322944883855,
+    "periodD": 1594.434579527149
+  }
+}

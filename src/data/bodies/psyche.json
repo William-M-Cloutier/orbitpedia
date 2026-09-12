@@ -1,0 +1,61 @@
+{
+  "id": "psyche",
+  "name": "Psyche",
+  "kind": "asteroid",
+  "systemId": "solar",
+  "aliases": [
+    "16 Psyche"
+  ],
+  "facts": {
+    "discoveryNotes": "Discovered 1852 by Annibale de Gasparis; metal-rich main-belt asteroid and NASA Psyche mission target.",
+    "discoveryDate": "1852-03-17",
+    "radiusMeanKm": 111,
+    "densityGcm3": 4.172,
+    "albedo": 0.1203,
+    "rotationPeriodD": 0.1748333333333333,
+    "massKg": 23987534273257124000
+  },
+  "color": "#8B7355",
+  "sbdbDes": "16",
+  "meta": {
+    "source": "JPL SBDB (full-prec + phys-par)",
+    "sources": [
+      {
+        "name": "JPL Small-Body Database lookup",
+        "url": "https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/?sstr=16",
+        "fields": [
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "orbit.epochJd",
+          "sbdbDes",
+          "facts.radiusMeanKm",
+          "facts.massKg",
+          "facts.densityGcm3",
+          "facts.albedo",
+          "facts.rotationPeriodD",
+          "facts.discoveryDate",
+          "facts.discoveryNotes"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-12T23:41:35.981Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  },
+  "orbit": {
+    "frame": "heliocentric",
+    "epochJd": 2461200.5,
+    "aAu": 2.925720466462538,
+    "e": 0.1349324738201893,
+    "iDeg": 3.098749116151128,
+    "omDeg": 149.9753859305033,
+    "wDeg": 230.0326782748359,
+    "maDeg": 79.76939505329617,
+    "periodD": 1827.87996016922
+  }
+}

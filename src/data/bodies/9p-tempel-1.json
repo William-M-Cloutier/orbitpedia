@@ -1,0 +1,57 @@
+{
+  "id": "9p-tempel-1",
+  "name": "Tempel 1",
+  "kind": "comet",
+  "systemId": "solar",
+  "aliases": [
+    "9P/Tempel 1"
+  ],
+  "facts": {
+    "discoveryNotes": "Jupiter-family comet discovered 1867 by Ernst Tempel; target of NASA Deep Impact (2005).",
+    "discoveryDate": "1867-04-03",
+    "radiusMeanKm": 3,
+    "albedo": 0.05,
+    "rotationPeriodD": 1.6958333333333335
+  },
+  "color": "#8A8878",
+  "sbdbDes": "9P",
+  "meta": {
+    "source": "JPL SBDB (full-prec + phys-par)",
+    "sources": [
+      {
+        "name": "JPL Small-Body Database lookup",
+        "url": "https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/?sstr=9P",
+        "fields": [
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "orbit.epochJd",
+          "sbdbDes",
+          "facts.radiusMeanKm",
+          "facts.albedo",
+          "facts.rotationPeriodD",
+          "facts.discoveryDate",
+          "facts.discoveryNotes"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-12T23:41:35.981Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  },
+  "orbit": {
+    "frame": "heliocentric",
+    "epochJd": 2457470.5,
+    "aAu": 3.146133758958915,
+    "e": 0.5097028326964878,
+    "iDeg": 10.4734281543904,
+    "omDeg": 68.75357468050096,
+    "wDeg": 179.1972753698572,
+    "maDeg": 336.5854438553629,
+    "periodD": 2038.281680411032
+  }
+}

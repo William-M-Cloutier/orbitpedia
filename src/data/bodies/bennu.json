@@ -1,0 +1,62 @@
+{
+  "id": "bennu",
+  "name": "Bennu",
+  "kind": "asteroid",
+  "systemId": "solar",
+  "aliases": [
+    "101955 Bennu",
+    "1999 RQ36"
+  ],
+  "facts": {
+    "discoveryNotes": "Discovered 1999 by LINEAR; near-Earth asteroid and OSIRIS-REx sample-return target.",
+    "discoveryDate": "1999-09-11",
+    "radiusMeanKm": 0.24222,
+    "densityGcm3": 1.194,
+    "albedo": 0.044,
+    "rotationPeriodD": 0.17900254166666665,
+    "massKg": 73272103441.55943
+  },
+  "color": "#5C5346",
+  "sbdbDes": "101955",
+  "meta": {
+    "source": "JPL SBDB (full-prec + phys-par)",
+    "sources": [
+      {
+        "name": "JPL Small-Body Database lookup",
+        "url": "https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/?sstr=101955",
+        "fields": [
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "orbit.epochJd",
+          "sbdbDes",
+          "facts.radiusMeanKm",
+          "facts.massKg",
+          "facts.densityGcm3",
+          "facts.albedo",
+          "facts.rotationPeriodD",
+          "facts.discoveryDate",
+          "facts.discoveryNotes"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-12T23:41:35.981Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  },
+  "orbit": {
+    "frame": "heliocentric",
+    "epochJd": 2455562.5,
+    "aAu": 1.126391025894812,
+    "e": 0.2037450762416414,
+    "iDeg": 6.03494377024794,
+    "omDeg": 2.06086619569642,
+    "wDeg": 66.22306084084298,
+    "maDeg": 101.703952002457,
+    "periodD": 436.6487281120201
+  }
+}

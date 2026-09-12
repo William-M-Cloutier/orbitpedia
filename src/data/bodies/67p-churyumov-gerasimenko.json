@@ -1,0 +1,60 @@
+{
+  "id": "67p-churyumov-gerasimenko",
+  "name": "Churyumov–Gerasimenko",
+  "kind": "comet",
+  "systemId": "solar",
+  "aliases": [
+    "67P/Churyumov-Gerasimenko",
+    "67P"
+  ],
+  "facts": {
+    "discoveryNotes": "Jupiter-family comet discovered 1969 by Klim Churyumov and Svetlana Gerasimenko; Rosetta/Philae target.",
+    "discoveryDate": "1969-09-20",
+    "radiusMeanKm": 1.7,
+    "densityGcm3": 0.533,
+    "rotationPeriodD": 0.5317204166666667,
+    "massKg": 9921639722517.717
+  },
+  "color": "#7A8A7A",
+  "sbdbDes": "67P",
+  "meta": {
+    "source": "JPL SBDB (full-prec + phys-par)",
+    "sources": [
+      {
+        "name": "JPL Small-Body Database lookup",
+        "url": "https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/?sstr=67P",
+        "fields": [
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "orbit.epochJd",
+          "sbdbDes",
+          "facts.radiusMeanKm",
+          "facts.massKg",
+          "facts.densityGcm3",
+          "facts.rotationPeriodD",
+          "facts.discoveryDate",
+          "facts.discoveryNotes"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-12T23:41:35.981Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  },
+  "orbit": {
+    "frame": "heliocentric",
+    "epochJd": 2457305.5,
+    "aAu": 3.462249490129549,
+    "e": 0.6409081308996354,
+    "iDeg": 7.040294937543767,
+    "omDeg": 50.13557377155012,
+    "wDeg": 12.79824970228189,
+    "maDeg": 8.859927425218402,
+    "periodD": 2353.076067903661
+  }
+}

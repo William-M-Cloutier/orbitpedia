@@ -250,6 +250,7 @@ function visualRadius(body, tiers) {
     case "dwarf_planet":
       return tiers.dwarf;
     case "asteroid":
+    case "comet":
       return tiers.asteroid;
     case "moon":
       return tiers.moon;
@@ -539,7 +540,9 @@ function runSystemSanity(system) {
   }
 
   // Mesh must sit on the OrbitLine polyline (same elements / MA / scale).
-  const off = distBodyToOrbitLine(o, o.maDeg, SAMPLE_N);
+  // High-e comets need denser true-anomaly samples: apoapsis chords grow with a(1+e).
+  const lineN = o.e > 0.9 ? Math.max(SAMPLE_N, 512) : SAMPLE_N;
+  const off = distBodyToOrbitLine(o, o.maDeg, lineN);
   if (!(off <= BODY_ON_LINE_TOL_AU)) {
     fail(
       `${b.id}: epoch pose is ${off} au off OrbitLine polyline (tol ${BODY_ON_LINE_TOL_AU})`,

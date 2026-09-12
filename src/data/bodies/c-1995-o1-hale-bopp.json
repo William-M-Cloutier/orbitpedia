@@ -1,0 +1,57 @@
+{
+  "id": "c-1995-o1-hale-bopp",
+  "name": "Hale–Bopp",
+  "kind": "comet",
+  "systemId": "solar",
+  "aliases": [
+    "C/1995 O1",
+    "Hale-Bopp",
+    "Comet Hale-Bopp"
+  ],
+  "facts": {
+    "discoveryNotes": "Long-period comet discovered independently by Alan Hale and Thomas Bopp in 1995; Great Comet of 1997.",
+    "discoveryDate": "1995-07-23",
+    "radiusMeanKm": 30,
+    "albedo": 0.04
+  },
+  "color": "#9A8AAA",
+  "sbdbDes": "C/1995 O1",
+  "meta": {
+    "source": "JPL SBDB (full-prec + phys-par)",
+    "sources": [
+      {
+        "name": "JPL Small-Body Database lookup",
+        "url": "https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/?sstr=C%2F1995%20O1",
+        "fields": [
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "orbit.epochJd",
+          "sbdbDes",
+          "facts.radiusMeanKm",
+          "facts.albedo",
+          "facts.discoveryDate",
+          "facts.discoveryNotes"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-12T23:41:35.981Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  },
+  "orbit": {
+    "frame": "heliocentric",
+    "epochJd": 2459837.5,
+    "aAu": 177.4333839117583,
+    "e": 0.9949810027633206,
+    "iDeg": 89.28759424740302,
+    "omDeg": 282.7334213961641,
+    "wDeg": 130.4146670659176,
+    "maDeg": 3.878386339423241,
+    "periodD": 863279.5034870314
+  }
+}

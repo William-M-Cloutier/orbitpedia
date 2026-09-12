@@ -225,9 +225,10 @@ function compareSearchBodies(a: Body, b: Body, q: string): number {
     planet: 2,
     dwarf_planet: 3,
     moon: 4,
-    asteroid: 5,
-    satellite: 6,
-    probe: 7,
+    satellite: 5,
+    probe: 6,
+    asteroid: 7,
+    comet: 8,
   };
   const ra = searchMatchRank(a.name, a.id, q, a.aliases);
   const rb = searchMatchRank(b.name, b.id, q, b.aliases);
@@ -339,6 +340,7 @@ export const KIND_LABEL: Record<BodyKind, string> = {
   planet: "Planet",
   dwarf_planet: "Dwarf planet",
   asteroid: "Asteroid",
+  comet: "Comet",
   moon: "Moon",
   black_hole: "Black hole",
   satellite: "Satellite",
@@ -352,9 +354,10 @@ export const KIND_ORDER: BodyKind[] = [
   "planet",
   "dwarf_planet",
   "moon",
-  "asteroid",
   "satellite",
   "probe",
+  "asteroid",
+  "comet",
 ];
 
 /** Earth-centered satellites Explore system — exclude from Sky star map. */

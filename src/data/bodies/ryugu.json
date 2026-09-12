@@ -1,0 +1,62 @@
+{
+  "id": "ryugu",
+  "name": "Ryugu",
+  "kind": "asteroid",
+  "systemId": "solar",
+  "aliases": [
+    "162173 Ryugu",
+    "1999 JU3"
+  ],
+  "facts": {
+    "discoveryNotes": "Discovered 1999 by LINEAR; near-Earth asteroid and Hayabusa2 sample-return target.",
+    "discoveryDate": "1999-05-15",
+    "radiusMeanKm": 0.448,
+    "densityGcm3": 1.19,
+    "albedo": 0.045,
+    "rotationPeriodD": 0.31802583333333334,
+    "massKg": 449485339286.5169
+  },
+  "color": "#6B5B4A",
+  "sbdbDes": "162173",
+  "meta": {
+    "source": "JPL SBDB (full-prec + phys-par)",
+    "sources": [
+      {
+        "name": "JPL Small-Body Database lookup",
+        "url": "https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/?sstr=162173",
+        "fields": [
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "orbit.epochJd",
+          "sbdbDes",
+          "facts.radiusMeanKm",
+          "facts.massKg",
+          "facts.densityGcm3",
+          "facts.albedo",
+          "facts.rotationPeriodD",
+          "facts.discoveryDate",
+          "facts.discoveryNotes"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-12T23:41:35.981Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  },
+  "orbit": {
+    "frame": "heliocentric",
+    "epochJd": 2461200.5,
+    "aAu": 1.190918932702464,
+    "e": 0.1910730046480051,
+    "iDeg": 5.866442486408568,
+    "omDeg": 251.2897123995624,
+    "wDeg": 211.608993811871,
+    "maDeg": 62.34067409463987,
+    "periodD": 474.7027265420688
+  }
+}

@@ -1,0 +1,250 @@
+{
+  "phys_par": [
+    {
+      "notes": "2 parameter fit from 3528 observations, autocmod 3.0g",
+      "desc": "absolute magnitude of comet and coma (i.e. total)",
+      "name": "M1",
+      "ref": "K284/1",
+      "title": "comet total magnitude",
+      "value": "12.9",
+      "sigma": "0.8",
+      "units": null
+    },
+    {
+      "sigma": null,
+      "units": null,
+      "value": "7.5",
+      "title": "comet total magnitude slope",
+      "ref": "K284/1",
+      "name": "K1",
+      "desc": "comet total magnitude slope parameter",
+      "notes": "autocmod 3.0g"
+    },
+    {
+      "ref": "Sierks et al., Science 347, aaa1044 (2015)",
+      "name": "diameter",
+      "sigma": "0.1",
+      "units": "km",
+      "value": "3.4",
+      "title": "diameter",
+      "notes": null,
+      "desc": "effective body diameter"
+    },
+    {
+      "notes": null,
+      "desc": "standard gravitational parameter: product of the mass (M) and gravitational constant (G)",
+      "ref": "Patzold et al., Nature 530, 63 (2016)",
+      "name": "GM",
+      "sigma": "0.2e-9",
+      "units": "km^3/s^2",
+      "value": "662.2e-9",
+      "title": "GM"
+    },
+    {
+      "title": "bulk density",
+      "value": "0.533",
+      "sigma": "0.006",
+      "units": "g/cm^3",
+      "name": "density",
+      "ref": "Patzold et al., Nature 530, 63 (2016)",
+      "desc": "bulk density",
+      "notes": null
+    },
+    {
+      "sigma": "0.00005",
+      "units": "h",
+      "value": "12.76129",
+      "title": "rotation period",
+      "ref": "Mottola et al., Astronomy & Astrophysics 569, L2 (2014)",
+      "name": "rot_per",
+      "desc": "body rotation period (synodic)",
+      "notes": "Pre-perihelion in 2015 value, post-perihelion period is 12.4043 +- 0.0007 h"
+    },
+    {
+      "notes": null,
+      "desc": "spin-pole direction in R.A./Dec.",
+      "ref": "Sierks et al., Science 347, aaa1044 (2015)",
+      "name": "pole",
+      "sigma": "0.1",
+      "units": null,
+      "value": "69.3/64.1",
+      "title": "pole direction"
+    }
+  ],
+  "object": {
+    "kind": "cn",
+    "des": "67P",
+    "orbit_id": "K284/1",
+    "pha": false,
+    "fullname": "67P/Churyumov-Gerasimenko",
+    "spkid": "1000012",
+    "orbit_class": {
+      "name": "Jupiter-family Comet",
+      "code": "JFc"
+    },
+    "neo": true,
+    "prefix": "P"
+  },
+  "signature": {
+    "source": "NASA/JPL Small-Body Database (SBDB) API",
+    "version": "1.3"
+  },
+  "orbit": {
+    "last_obs": "2025-06-21",
+    "source": "JPL",
+    "two_body": null,
+    "t_jup": "2.746",
+    "sb_used": "SB441-N16",
+    "orbit_id": "K284/1",
+    "elements": [
+      {
+        "name": "e",
+        "label": "e",
+        "value": ".6409081308996354",
+        "title": "eccentricity",
+        "units": null,
+        "sigma": "2.7482E-8"
+      },
+      {
+        "title": "semi-major axis",
+        "value": "3.462249490129549",
+        "sigma": "1.5491E-7",
+        "units": "au",
+        "label": "a",
+        "name": "a"
+      },
+      {
+        "sigma": "9.8887E-8",
+        "units": "au",
+        "value": "1.243265640702404",
+        "title": "perihelion distance",
+        "name": "q",
+        "label": "q"
+      },
+      {
+        "name": "i",
+        "label": "i",
+        "title": "inclination; angle with respect to x-y ecliptic plane",
+        "value": "7.040294937543767",
+        "units": "deg",
+        "sigma": "2.7139E-6"
+      },
+      {
+        "sigma": "2.2797E-5",
+        "units": "deg",
+        "title": "longitude of the ascending node",
+        "value": "50.13557377155012",
+        "name": "om",
+        "label": "node"
+      },
+      {
+        "units": "deg",
+        "sigma": "2.3022E-5",
+        "title": "argument of perihelion",
+        "value": "12.79824970228189",
+        "name": "w",
+        "label": "peri"
+      },
+      {
+        "value": "8.859927425218402",
+        "title": "mean anomaly",
+        "sigma": "2.7815E-6",
+        "units": "deg",
+        "name": "ma",
+        "label": "M"
+      },
+      {
+        "label": "tp",
+        "name": "tp",
+        "value": "2457247.588657812098",
+        "title": "time of perihelion passage",
+        "units": "TDB",
+        "sigma": "1.7765E-5"
+      },
+      {
+        "sigma": ".00015793",
+        "units": "d",
+        "title": "sidereal orbital period",
+        "value": "2353.076067903661",
+        "name": "per",
+        "label": "period"
+      },
+      {
+        "value": ".1529912291873851",
+        "title": "mean motion",
+        "units": "deg/d",
+        "sigma": "1.0268E-8",
+        "label": "n",
+        "name": "n"
+      },
+      {
+        "sigma": "2.542E-7",
+        "units": "au",
+        "value": "5.681233339556694",
+        "title": "aphelion distance",
+        "label": "Q",
+        "name": "ad"
+      }
+    ],
+    "condition_code": "0",
+    "n_del_obs_used": null,
+    "epoch": "2457305.5",
+    "producer": "Davide Farnocchia",
+    "moid_jup": ".0837763",
+    "first_obs": "2008-06-01",
+    "not_valid_after": null,
+    "equinox": "J2000",
+    "comment": null,
+    "rms": ".55084",
+    "model_pars": [
+      {
+        "desc": "non-gravitational radial acceleration parameter",
+        "sigma": "1.321E-11",
+        "n": 1,
+        "units": "au/d^2",
+        "title": "non-grav. radial accel.",
+        "value": "1.042562555200506E-9",
+        "name": "A1",
+        "kind": "EST"
+      },
+      {
+        "kind": "EST",
+        "name": "A2",
+        "n": 2,
+        "sigma": "2.921E-12",
+        "units": "au/d^2",
+        "value": "-6.733588284934391E-11",
+        "title": "non-grav. transverse accel.",
+        "desc": "non-gravitational transverse acceleration parameter"
+      },
+      {
+        "name": "A3",
+        "kind": "EST",
+        "value": "2.960397918052828E-10",
+        "title": "non-grav. normal accel.",
+        "n": 3,
+        "sigma": "1.147E-11",
+        "units": "au/d^2",
+        "desc": "non-gravitational normal acceleration parameter"
+      },
+      {
+        "desc": "non-gravitational perihelion-maximum offset",
+        "title": "non-grav. perihelion offset",
+        "value": "45.66665437504378",
+        "sigma": "1.18",
+        "n": 4,
+        "units": "d",
+        "kind": "EST",
+        "name": "DT"
+      }
+    ],
+    "n_obs_used": 8610,
+    "cov_epoch": "2457305.5",
+    "moid": ".256932",
+    "not_valid_before": null,
+    "soln_date": "2026-09-04 10:25:07",
+    "data_arc": "6229",
+    "n_dop_obs_used": null,
+    "pe_used": "DE441"
+  }
+}

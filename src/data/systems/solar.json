@@ -37,6 +37,19 @@
     "vesta",
     "pallas",
     "hygiea",
+    "eros",
+    "psyche",
+    "juno-asteroid",
+    "interamnia",
+    "bennu",
+    "ryugu",
+    "apophis",
+    "1p-halley",
+    "2p-encke",
+    "c-1995-o1-hale-bopp",
+    "67p-churyumov-gerasimenko",
+    "9p-tempel-1",
+    "103p-hartley-2",
     "voyager-1",
     "voyager-2",
     "new-horizons",
@@ -47,18 +60,18 @@
     "juno",
     "perseverance"
   ],
-  "blurb": "Our home planetary system \u2014 a G-type star with eight planets, major moons, and a main-belt asteroid population.",
+  "blurb": "Our home planetary system — a G-type star with eight planets, major moons, main-belt and near-Earth asteroids, and famous periodic comets.",
   "highlights": [
     "Eight planets from Mercury to Neptune (plus dwarf planet Pluto in the catalog)",
-    "Earth\u2013Moon and other major moons use parent-frame orbits",
-    "Distances span ~0.4\u201330+ au for the planets"
+    "Earth–Moon and other major moons use parent-frame orbits",
+    "Famous asteroids (Eros, Psyche, Bennu, …) and comets (Halley, 67P, …) from JPL SBDB"
   ],
   "planetCount": 8,
   "hostSpectralType": "G2V",
-  "compactnessNote": "Planet orbits span from inside Mercury's path out past Neptune \u2014 vastly larger than TRAPPIST-1's packed system.",
+  "compactnessNote": "Planet orbits span from inside Mercury's path out past Neptune — vastly larger than TRAPPIST-1's packed system.",
   "meta": {
     "confidence": "known",
-    "fetchedAt": "2026-09-11T18:38:13.479Z",
+    "fetchedAt": "2026-09-12T23:41:54.192Z",
     "sources": [
       {
         "name": "NASA Solar System Exploration",

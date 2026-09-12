@@ -14,6 +14,8 @@ const EXPECTED_BY_KIND: Record<BodyKind, ReadonlySet<string>> = {
   dwarf_planet: new Set(["massKg", "radiusMeanKm"]),
   /** Radius preferred; mass often unknown — omit mass row when missing. */
   asteroid: new Set(["radiusMeanKm"]),
+  /** Nucleus radius when SBDB diameter known; mass often unknown. */
+  comet: new Set(["radiusMeanKm"]),
   moon: new Set(["radiusMeanKm"]),
   /** Artificial sats: owner/launch shown separately; phys often sparse. */
   satellite: new Set([]),
