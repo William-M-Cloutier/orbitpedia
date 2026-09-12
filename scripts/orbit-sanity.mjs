@@ -248,6 +248,12 @@ function visualRadius(body, tiers) {
       return tiers.asteroid;
     case "moon":
       return tiers.moon;
+    case "satellite":
+      return tiers.satellite ?? 0.018;
+    case "black_hole":
+      return tiers.STAR_VISUAL_RADIUS;
+    case "probe":
+      return tiers.probe ?? tiers.asteroid ?? 0.02;
     default:
       throw new Error(`unknown kind ${body.kind}`);
   }
@@ -306,13 +312,26 @@ function runSystemSanity(system) {
     (system.primaryStarId && bodyById.get(system.primaryStarId)) ||
     bodies.find((b) => b.kind === "star" && !b.parentId) ||
     bodies.find((b) => b.kind === "star") ||
+    bodies.find((b) => b.kind === "black_hole" && !b.parentId) ||
+    // Earth-sats: central planet host with geocentric members only.
+    bodies.find((b) => b.id === "earth-sats-earth") ||
+    bodies.find((b) => !b.parentId && !b.orbit) ||
     bodies.find((b) => b.id === "sun");
   if (!central) {
-    fail(`no central star in system ${system.id}`);
+    fail(`no central body in system ${system.id}`);
     return;
   }
-  if (central.kind !== "star") {
-    fail(`central ${central.id} must be kind star`);
+  const geoOnly =
+    bodies.some((b) => b.orbit?.frame === "geocentric") &&
+    bodies
+      .filter((b) => b.id !== central.id && b.orbit)
+      .every((b) => b.orbit.frame === "geocentric");
+  const okCentral =
+    central.kind === "star" ||
+    central.kind === "black_hole" ||
+    (geoOnly && (central.kind === "planet" || central.id === "earth-sats-earth"));
+  if (!okCentral) {
+    fail(`central ${central.id} must be kind star (or Earth host for geocentric sats)`);
     return;
   }
 
@@ -330,7 +349,7 @@ function runSystemSanity(system) {
   console.log(`  central ${central.id} realRadiusAu=${realSunRadiusAu} visualRadius=${sunVisual} M/Msun=${Number.isFinite(mSun) ? mSun.toPrecision(4) : "?"}`);
 
   if (central.orbit) {
-    fail(`${central.id}: central star must not carry a heliocentric orbit`);
+    fail(`${central.id}: central body must not carry a heliocentric orbit`);
   } else {
     ok(`${central.id}: no heliocentric orbit (no OrbitLine)`);
   }
