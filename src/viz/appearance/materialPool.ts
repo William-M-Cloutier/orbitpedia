@@ -44,7 +44,7 @@ function buildProceduralMaterial(
   }
 
   const roughness =
-    family === "ice" ? 0.42 : family === "gas" ? 0.58 : 0.78;
+    family === "ice" ? 0.42 : family === "gas" ? 0.55 : 0.78;
   const metalness = family === "ice" ? 0.08 : 0.03;
   return new THREE.MeshStandardMaterial({
     color: colorHex,
@@ -56,28 +56,55 @@ function buildProceduralMaterial(
   });
 }
 
+function buildMappedMaterial(
+  family: SurfaceFamily,
+  focused: boolean,
+  emissiveHex: string,
+  surfaceMap: THREE.Texture,
+): THREE.Material {
+  // Color maps carry albedo — keep tint white so continents / bands read true.
+  const roughness =
+    family === "ice" ? 0.42 : family === "gas" ? 0.52 : 0.72;
+  const metalness = family === "ice" ? 0.06 : 0.02;
+  return new THREE.MeshStandardMaterial({
+    color: "#ffffff",
+    map: surfaceMap,
+    roughness,
+    metalness,
+    emissive: focused ? softEmissiveHex(emissiveHex) : "#000000",
+    emissiveIntensity: focused ? FOCUS_EMISSIVE_INTENSITY : 0,
+  });
+}
+
 /**
  * Resolve mesh material for a body.
  *
- * This slice: procedural by family + catalog color only.
- * `appearance.textureId` is intentionally ignored for rendering (fail-open
- * forever when real maps land later — missing/failed maps never block Explore).
+ * Prefer a loaded registry map when present; otherwise procedural by family +
+ * catalog color. Missing/failed maps → fail-open to procedural (never block).
  *
- * Shared pool keyed by family|color|focus|emissive — lean, no per-mesh alloc.
+ * Shared pool keyed by family|color|focus|emissive|texId — lean.
  */
 export function getBodyAppearanceMaterial(
-  body: Pick<Body, "kind" | "facts" | "color">,
+  body: Pick<Body, "kind" | "facts" | "color" | "appearance">,
   focused: boolean,
   highlightColor?: string,
+  surfaceMap?: THREE.Texture | null,
 ): THREE.Material {
   const family = inferSurfaceFamily(body);
   const colorHex = normalizeHex(body.color, family);
   const emissiveHex = normalizeHex(highlightColor ?? body.color, family);
+  const textureId = body.appearance?.textureId;
+  const useMap = Boolean(surfaceMap && textureId);
 
-  const key = `${family}|${colorHex}|${focused ? 1 : 0}|${focused ? emissiveHex : ""}`;
+  const key = useMap
+    ? `map|${textureId}|${family}|${focused ? 1 : 0}|${focused ? emissiveHex : ""}`
+    : `${family}|${colorHex}|${focused ? 1 : 0}|${focused ? emissiveHex : ""}`;
+
   let mat = pool.get(key);
   if (!mat) {
-    mat = buildProceduralMaterial(family, colorHex, focused, emissiveHex);
+    mat = useMap
+      ? buildMappedMaterial(family, focused, emissiveHex, surfaceMap!)
+      : buildProceduralMaterial(family, colorHex, focused, emissiveHex);
     pool.set(key, mat);
   }
   return mat;

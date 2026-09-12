@@ -1,7 +1,13 @@
 import * as THREE from "three";
 import type { SurfaceFamily } from "./surfaceFamily";
 
-const TEX_SIZE = 64;
+/** Gas/ice need more pixels so lat bands read on small spheres; rocky stays tiny. */
+const TEX_SIZE: Record<SurfaceFamily, number> = {
+  gas: 128,
+  ice: 128,
+  rocky: 64,
+  star: 64,
+};
 
 /** Tiny deterministic hash → [0,1). */
 function hash2(x: number, y: number, seed: number): number {
@@ -46,16 +52,40 @@ function sampleFamily(
 ): number {
   switch (family) {
     case "gas": {
-      // Soft latitude bands + light longitudinal noise (readable, not striped neon).
+      // Clear latitudinal bands + subtle longitudinal turbulence/swirls.
+      // Grayscale modulates catalog tint (Jupiter amber, Saturn cream, etc.).
+      const warp = fbm(u * 2.2, v * 1.8, 3, 3) * 0.55;
       const bands =
-        0.72 + 0.18 * Math.sin(v * Math.PI * 8 + fbm(u * 2.5, v * 1.5, 3, 2) * 0.9);
-      const swirl = 0.05 * fbm(u * 5, v * 3, 11, 2);
-      return Math.min(1, Math.max(0.55, bands + swirl));
+        0.5 + 0.5 * Math.sin(v * Math.PI * 11 + warp * Math.PI * 1.4);
+      const fine =
+        0.5 + 0.5 * Math.sin(v * Math.PI * 23 + fbm(u * 1.5, v * 3, 19, 2) * 2);
+      const turb = fbm(u * 7, v * 3.5, 11, 3);
+      const swirl =
+        0.5 +
+        0.5 *
+          Math.sin(
+            u * Math.PI * 5 + v * 8 + fbm(u * 2, v * 2, 17, 2) * 3.5,
+          );
+      const n =
+        0.42 +
+        0.38 * bands +
+        0.1 * fine +
+        0.12 * turb +
+        0.08 * swirl;
+      return Math.min(1, Math.max(0.28, n));
     }
     case "ice": {
-      // Pale frost with gentle mottling — keep albedo high so catalog cyan/white holds.
-      const n = fbm(u * 3.5, v * 3.5, 7, 2);
-      return Math.min(1, Math.max(0.7, 0.82 + 0.18 * n));
+      // Ice-giant look: softer latitude bands + frost mottling (still high albedo).
+      const warp = fbm(u * 1.8, v * 1.6, 5, 2) * 0.45;
+      const bands =
+        0.5 + 0.5 * Math.sin(v * Math.PI * 7 + warp * Math.PI);
+      const mottling = fbm(u * 4.5, v * 4.5, 7, 3);
+      const streak =
+        0.5 +
+        0.5 * Math.sin(u * Math.PI * 3 + v * 5 + fbm(u, v, 23, 2) * 2);
+      const n =
+        0.68 + 0.16 * bands + 0.12 * mottling + 0.06 * streak;
+      return Math.min(1, Math.max(0.55, n));
     }
     case "star": {
       // Soft granulation; stay bright so MeshBasic host stars read cleanly.
@@ -65,7 +95,7 @@ function sampleFamily(
     case "rocky":
     default: {
       // Light noise only — catalog color must dominate (Earth #6B93D6 stays
-      // blue-ish, not mottled neon / alien green under yellow sun light).
+      // blue-ish when unmapped; mapped Earth uses a real albedo map instead).
       const n = fbm(u * 5, v * 5, 2, 2);
       return Math.min(1, Math.max(0.78, 0.88 + 0.12 * n));
     }
@@ -73,7 +103,7 @@ function sampleFamily(
 }
 
 function buildDataTexture(family: SurfaceFamily): THREE.DataTexture {
-  const size = TEX_SIZE;
+  const size = TEX_SIZE[family];
   const data = new Uint8Array(size * size * 4);
   for (let y = 0; y < size; y++) {
     for (let x = 0; x < size; x++) {

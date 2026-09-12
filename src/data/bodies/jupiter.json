@@ -13,6 +13,9 @@
   },
   "color": "#C88B3A",
   "horizonId": "599",
+  "appearance": {
+    "textureId": "jupiter-marquee"
+  },
   "meta": {
     "source": "JPL Horizons + SSD phys_par",
     "sources": [

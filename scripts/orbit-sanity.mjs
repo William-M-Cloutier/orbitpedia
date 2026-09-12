@@ -636,13 +636,15 @@ if (!Number.isFinite(c)) {
   }
 }
 
-// Procedural body materials (shared pool by kind/traits; textureId ignored).
+// Procedural body materials + marquee texture registry (fail-open).
 {
   const appearanceDir = path.join(ROOT, "src/viz/appearance");
   const need = [
     "surfaceFamily.ts",
     "proceduralTextures.ts",
     "materialPool.ts",
+    "textureRegistry.ts",
+    "textureLoader.ts",
     "index.ts",
   ];
   for (const f of need) {
@@ -652,6 +654,9 @@ if (!Number.isFinite(c)) {
   }
   const poolSrc = fs.readFileSync(path.join(appearanceDir, "materialPool.ts"), "utf8");
   const famSrc = fs.readFileSync(path.join(appearanceDir, "surfaceFamily.ts"), "utf8");
+  const procSrc = fs.readFileSync(path.join(appearanceDir, "proceduralTextures.ts"), "utf8");
+  const regSrc = fs.readFileSync(path.join(appearanceDir, "textureRegistry.ts"), "utf8");
+  const loaderSrc = fs.readFileSync(path.join(appearanceDir, "textureLoader.ts"), "utf8");
   const sceneSrc = fs.readFileSync(path.join(ROOT, "src/viz/OrbitScene.tsx"), "utf8");
   if (!/getBodyAppearanceMaterial/.test(poolSrc)) {
     fail("materialPool missing getBodyAppearanceMaterial");
@@ -665,9 +670,73 @@ if (!Number.isFinite(c)) {
   if (/sharedSunMat/.test(sceneSrc)) {
     fail("OrbitScene still uses sharedSunMat flat star color");
   }
-  // textureId must not drive rendering this slice (fail-open forever later).
-  if (/lookupTextureId\(/.test(poolSrc) || /appearance\?\.textureId/.test(poolSrc)) {
-    fail("materialPool must ignore appearance.textureId this slice");
+  if (!/useRegistryTexture/.test(sceneSrc)) {
+    fail("OrbitScene BodyMesh must useRegistryTexture for marquee maps");
+  }
+  if (!/TEXTURE_REGISTRY/.test(regSrc) || !/earth-marquee/.test(regSrc)) {
+    fail("textureRegistry must seed earth-marquee");
+  }
+  if (!/requestRegistryTexture/.test(loaderSrc) || !/resolve\(null\)/.test(loaderSrc)) {
+    fail("textureLoader missing fail-open requestRegistryTexture");
+  } else {
+    ok("textureLoader fail-open on miss/error");
+  }
+  // Gas procedural must show latitudinal bands (sin over v), not flat noise only.
+  if (!/case "gas"/.test(procSrc) || !/Math\.sin\(\s*v\s*\*\s*Math\.PI/.test(procSrc)) {
+    fail("proceduralTextures gas family must use latitudinal Math.sin(v * Math.PI…) bands");
+  } else {
+    ok("gas procedural has latitudinal bands");
+  }
+  if (!/case "ice"/.test(procSrc) || !/Math\.sin\(\s*v\s*\*\s*Math\.PI/.test(procSrc)) {
+    fail("proceduralTextures ice family must use latitudinal bands");
+  } else {
+    ok("ice procedural has latitudinal bands");
+  }
+  // Guard: pack files exist, sized, and registry keys match seeded cards.
+  const texDir = path.join(ROOT, "public/textures");
+  const seeded = {
+    earth: "earth-marquee",
+    moon: "moon-marquee",
+    mars: "mars-marquee",
+    jupiter: "jupiter-marquee",
+  };
+  let packBytes = 0;
+  let mapCount = 0;
+  for (const [bodyId, texId] of Object.entries(seeded)) {
+    const body = bodyById.get(bodyId);
+    if (!body) {
+      fail(`marquee body missing: ${bodyId}`);
+      continue;
+    }
+    if (body.appearance?.textureId !== texId) {
+      fail(`${bodyId} appearance.textureId want ${texId}, got ${body.appearance?.textureId}`);
+    } else {
+      ok(`${bodyId} textureId=${texId}`);
+    }
+    if (!new RegExp(`"${texId}"`).test(regSrc) && !regSrc.includes(texId)) {
+      fail(`TEXTURE_REGISTRY missing ${texId}`);
+    }
+    const webp = path.join(texDir, `${texId}.webp`);
+    if (!fs.existsSync(webp)) {
+      fail(`missing texture file ${texId}.webp`);
+      continue;
+    }
+    const st = fs.statSync(webp);
+    packBytes += st.size;
+    mapCount += 1;
+    if (st.size > 512 * 1024) {
+      fail(`${texId}.webp over 512KB (${st.size})`);
+    } else {
+      ok(`${texId}.webp ${(st.size / 1024).toFixed(1)}KB`);
+    }
+  }
+  if (packBytes > 6 * 1024 * 1024) {
+    fail(`texture pack over 6MB (${packBytes})`);
+  } else {
+    ok(`texture pack ${(packBytes / 1024 / 1024).toFixed(2)}MB (${mapCount} maps)`);
+  }
+  if (mapCount > 12) {
+    fail(`too many marquee maps: ${mapCount}`);
   }
   // Facts must not surface texture/appearance fields.
   const factsSrc = fs.readFileSync(path.join(ROOT, "src/lib/factsDisplay.ts"), "utf8");
@@ -719,7 +788,7 @@ if (!Number.isFinite(c)) {
       ok(`appearance family ${id} → ${got}`);
     }
   }
-  ok("procedural body materials wired (pool + BodyMesh; textureId ignored)");
+  ok("procedural + marquee maps wired (pool + BodyMesh + registry; fail-open)");
   // Soft selection glow — avoid neon rim regression (emissiveIntensity was 0.45).
   if (!/FOCUS_EMISSIVE_INTENSITY/.test(poolSrc)) {
     fail("materialPool missing FOCUS_EMISSIVE_INTENSITY soft-select constant");

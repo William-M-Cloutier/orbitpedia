@@ -42,7 +42,7 @@ import {
   visualRadius,
   type SizeMode,
 } from "./sizeTiers";
-import { getBodyAppearanceMaterial } from "./appearance";
+import { getBodyAppearanceMaterial, useRegistryTexture } from "./appearance";
 
 /** Must match <Canvas camera.near> — focus floors stay outside the near plane. */
 const CAMERA_NEAR = 0.01;
@@ -576,8 +576,15 @@ const BodyMesh = memo(function BodyMesh({
   const sizeMode = useSizeMode();
   const distScale = orbitDistanceScale(sizeMode);
   const r = visualRadius(body, sizeMode, systemBodies);
-  // Procedural shared pool by kind/traits; textureId ignored this slice.
-  const mat = getBodyAppearanceMaterial(body, focused, highlightColor);
+  // Marquee maps: lazy-load when focused or body is in-scene (near); fail-open.
+  const textureId = body.appearance?.textureId;
+  const surfaceMap = useRegistryTexture(textureId, Boolean(textureId));
+  const mat = getBodyAppearanceMaterial(
+    body,
+    focused,
+    highlightColor,
+    surfaceMap,
+  );
 
   const handleClick = useCallback(
     (e: { stopPropagation: () => void }) => {

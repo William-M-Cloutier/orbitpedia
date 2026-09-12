@@ -29,6 +29,9 @@
   },
   "color": "#C8C8C8",
   "horizonId": "301",
+  "appearance": {
+    "textureId": "moon-marquee"
+  },
   "meta": {
     "source": "JPL Horizons Moon vs Earth (ELEMENTS + OBJ_DATA)",
     "sources": [
