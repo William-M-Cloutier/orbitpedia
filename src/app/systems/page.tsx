@@ -5,6 +5,7 @@ import {
   useEffect,
   useMemo,
   useRef,
+  Suspense,
   useState,
   type PointerEvent as ReactPointerEvent,
   type WheelEvent as ReactWheelEvent,
@@ -1473,5 +1474,15 @@ function SystemMapView() {
 }
 
 export default function SystemsPage() {
-  return <SystemMapView />;
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-[calc(100vh-3.5rem)] items-center justify-center text-sm text-zinc-500">
+          Loading systems…
+        </div>
+      }
+    >
+      <SystemMapView />
+    </Suspense>
+  );
 }
