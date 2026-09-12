@@ -1,0 +1,76 @@
+{
+  "id": "sentinel-2b",
+  "name": "Sentinel-2B",
+  "kind": "satellite",
+  "systemId": "earth-sats",
+  "parentId": "earth-sats-earth",
+  "aliases": [
+    "SENTINEL-2B",
+    "2017-013A"
+  ],
+  "facts": {
+    "owner": "ESA / Copernicus",
+    "launchDate": "2017-03-07",
+    "discoveryNotes": "Copernicus optical land-monitoring satellite."
+  },
+  "orbit": {
+    "epochJd": 2461295.84034772,
+    "aAu": 0.00004790944527795342,
+    "aKm": 7167.151,
+    "e": 0.00012189,
+    "iDeg": 98.5729,
+    "omDeg": 328.8578,
+    "wDeg": 87.4262,
+    "maDeg": 272.7061,
+    "periodD": 0.0698903257943827,
+    "qAu": 0.00004790360559566849,
+    "qKm": 7166.27739596461,
+    "frame": "geocentric"
+  },
+  "color": "#EB984E",
+  "noradCatId": 42063,
+  "meta": {
+    "provenance": "Celestrak GP OMM JSON fetched 2026-09-12T23:37:00Z: https://celestrak.org/NORAD/elements/gp.php?CATNR=42063&FORMAT=JSON",
+    "source": "Celestrak GP (OMM) NORAD 42063",
+    "confidence": "known",
+    "sources": [
+      {
+        "name": "Celestrak NORAD GP elements",
+        "url": "https://celestrak.org/NORAD/elements/",
+        "fields": [
+          "orbit.aKm",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "orbit.qKm",
+          "orbit.qAu",
+          "orbit.epochJd",
+          "noradCatId"
+        ]
+      },
+      {
+        "name": "Celestrak satcat CATNR=42063",
+        "url": "https://celestrak.org/satcat/records.php?CATNR=42063",
+        "fields": [
+          "facts.owner",
+          "facts.launchDate",
+          "name"
+        ]
+      },
+      {
+        "name": "Celestrak GP data formats",
+        "url": "https://celestrak.org/NORAD/documentation/gp-data-formats.php",
+        "fields": [
+          "orbit.frame",
+          "meta.provenance"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-12T23:37:00Z",
+    "unitsVersion": 1
+  }
+}

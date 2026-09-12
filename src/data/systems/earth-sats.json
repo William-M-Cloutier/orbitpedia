@@ -6,10 +6,16 @@
     "iss",
     "hst",
     "css-tianhe",
+    "css-wentian",
+    "css-mengtian",
     "terra",
     "aqua",
     "aura",
     "cloudsat",
+    "calipso",
+    "gcom-w1",
+    "noaa-15",
+    "noaa-18",
     "noaa-19",
     "noaa-20",
     "suomi-npp",
@@ -18,22 +24,25 @@
     "landsat-8",
     "landsat-9",
     "sentinel-1a",
+    "sentinel-1b",
     "sentinel-2a",
+    "sentinel-2b",
     "sentinel-3a",
+    "sentinel-3b",
     "icesat-2",
     "swot"
   ],
-  "blurb": "Low-Earth and polar-orbiting satellites around Earth \u2014 crewed stations (ISS, Tiangong/Tianhe), Hubble, and major weather and Earth-science missions (NOAA/MetOp, Terra/Aqua/Aura, Landsat, Sentinel, ICESat-2, SWOT).",
+  "blurb": "Low-Earth and polar-orbiting satellites around Earth \u2014 crewed stations (ISS, Tiangong with Tianhe/Wentian/Mengtian), Hubble, and major weather and Earth-science missions (NOAA/MetOp, Terra/Aqua/Aura, Landsat, Sentinel, ICESat-2, SWOT, CALIPSO, GCOM-W1).",
   "highlights": [
-    "Crewed laboratories in LEO (ISS and China Space Station Tianhe)",
+    "Crewed laboratories in LEO (ISS and China Space Station modules)",
     "Hubble Space Telescope",
-    "Polar weather: NOAA-19/20, Suomi NPP, MetOp-B/C",
-    "Earth science: Terra, Aqua, Aura, CloudSat, Landsat 8/9, Sentinel-1A/2A/3A, ICESat-2, SWOT"
+    "Polar weather: NOAA-15/18/19/20, Suomi NPP, MetOp-B/C",
+    "Earth science: Terra, Aqua, Aura, CloudSat, CALIPSO, GCOM-W1, Landsat, Sentinel, ICESat-2, SWOT"
   ],
   "compactnessNote": "These spacecraft fly a few hundred to about 800 km above Earth's surface, far closer than the Moon.",
   "meta": {
     "confidence": "known",
-    "fetchedAt": "2026-09-12T23:20:00Z",
+    "fetchedAt": "2026-09-12T23:40:00Z",
     "sources": [
       {
         "name": "Celestrak NORAD GP elements",

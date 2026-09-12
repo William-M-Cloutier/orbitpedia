@@ -1,0 +1,76 @@
+{
+  "id": "noaa-18",
+  "name": "NOAA-18",
+  "kind": "satellite",
+  "systemId": "earth-sats",
+  "parentId": "earth-sats-earth",
+  "aliases": [
+    "NOAA 18",
+    "2005-018A"
+  ],
+  "facts": {
+    "owner": "NOAA",
+    "launchDate": "2005-05-20",
+    "discoveryNotes": "NOAA polar-orbiting weather satellite."
+  },
+  "orbit": {
+    "epochJd": 2461295.8156645484,
+    "aAu": 0.00004829433043527939,
+    "aKm": 7224.729,
+    "e": 0.00131793,
+    "iDeg": 98.8062,
+    "omDeg": 333.7064,
+    "wDeg": 262.5578,
+    "maDeg": 97.4097,
+    "periodD": 0.07073422612663581,
+    "qAu": 0.00004823068188836882,
+    "qKm": 7215.20731290903,
+    "frame": "geocentric"
+  },
+  "color": "#7FB3D5",
+  "noradCatId": 28654,
+  "meta": {
+    "provenance": "Celestrak GP OMM JSON fetched 2026-09-12T23:37:00Z: https://celestrak.org/NORAD/elements/gp.php?CATNR=28654&FORMAT=JSON",
+    "source": "Celestrak GP (OMM) NORAD 28654",
+    "confidence": "known",
+    "sources": [
+      {
+        "name": "Celestrak NORAD GP elements",
+        "url": "https://celestrak.org/NORAD/elements/",
+        "fields": [
+          "orbit.aKm",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "orbit.qKm",
+          "orbit.qAu",
+          "orbit.epochJd",
+          "noradCatId"
+        ]
+      },
+      {
+        "name": "Celestrak satcat CATNR=28654",
+        "url": "https://celestrak.org/satcat/records.php?CATNR=28654",
+        "fields": [
+          "facts.owner",
+          "facts.launchDate",
+          "name"
+        ]
+      },
+      {
+        "name": "Celestrak GP data formats",
+        "url": "https://celestrak.org/NORAD/documentation/gp-data-formats.php",
+        "fields": [
+          "orbit.frame",
+          "meta.provenance"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-12T23:37:00Z",
+    "unitsVersion": 1
+  }
+}
