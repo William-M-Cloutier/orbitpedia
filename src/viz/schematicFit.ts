@@ -1,5 +1,10 @@
 import { hasUsableOrbit, type Body } from "@/data/schema";
-import { visualRadius, type SizeMode } from "./sizeTiers";
+import {
+  PERIHELION_CLEARANCE_MARGIN_AU,
+  parentFrameSharedDisplayScale,
+  visualRadius,
+  type SizeMode,
+} from "./sizeTiers";
 
 /**
  * Schematic idle framing for wide / sparse systems.
@@ -93,6 +98,63 @@ export function systemSceneExtent(
   return maxApo * hs;
 }
 
+
+/**
+ * Viz-only floor on companion display sep so parent-frame kids orbiting an
+ * orbit-unknown companion cannot reach into the primary mesh (worst-case apo
+ * toward the primary ≈ sep − aAu(1+e)·ps). Returns 0 when there are no such
+ * kids — Sol moons / planet hosts never hit this path (not visual-binary).
+ */
+export function visualBinaryKidsClearanceSep(
+  companion: Body,
+  sizeMode: SizeMode,
+  systemBodies: readonly Body[],
+): number {
+  if (companion.kind !== "star" || !companion.parentId || hasUsableOrbit(companion)) {
+    return 0;
+  }
+  const kids = systemBodies.filter(
+    (c) =>
+      c.parentId === companion.id &&
+      c.orbit?.frame === "parent" &&
+      hasUsableOrbit(c),
+  );
+  if (kids.length === 0) return 0;
+
+  const primary =
+    systemBodies.find((b) => b.id === companion.parentId) ??
+    systemBodies.find((b) => b.kind === "star" && !b.parentId);
+  const rPrimary = primary
+    ? visualRadius(primary, sizeMode, systemBodies)
+    : visualRadius(companion, sizeMode, systemBodies);
+  const parentVis = visualRadius(companion, sizeMode, systemBodies);
+  const rows = kids.map((c) => {
+    const o = c.orbit!;
+    const qAu =
+      o.qAu != null && Number.isFinite(o.qAu) ? o.qAu : o.aAu * (1 - o.e);
+    return {
+      qAu,
+      aAu: o.aAu,
+      e: o.e,
+      vis: visualRadius(c, sizeMode, systemBodies),
+    };
+  });
+  const ps = parentFrameSharedDisplayScale(parentVis, rows);
+  let maxApo = 0;
+  let maxChildVis = 0;
+  for (const r of rows) {
+    const apo = r.aAu * (1 + r.e) * ps;
+    if (Number.isFinite(apo) && apo > maxApo) maxApo = apo;
+    if (r.vis > maxChildVis) maxChildVis = r.vis;
+  }
+  const margin = Math.min(
+    PERIHELION_CLEARANCE_MARGIN_AU,
+    Math.max(rPrimary * 0.35, maxChildVis),
+  );
+  // companionSep - maxApo >= rPrimary + childVis + margin
+  return maxApo + rPrimary + maxChildVis + margin;
+}
+
 /**
  * Viz-only display separation (scene AU) for one orbit-unknown companion.
  * Same formula as Explore visual-binary placement — catalog projectedSepAu
@@ -123,7 +185,10 @@ export function visualBinaryDisplaySep(
     !Number.isFinite(projected) ||
     !(projected > 0)
   ) {
-    return schematicSep;
+    return Math.max(
+      schematicSep,
+      visualBinaryKidsClearanceSep(body, sizeMode, systemBodies),
+    );
   }
   let outerPrimaryOrbitA = 0;
   for (const b of systemBodies) {
@@ -144,6 +209,8 @@ export function visualBinaryDisplaySep(
     Math.max(floor, compressed),
   );
   sep = Math.max(sep, rPrimary + rSelf + VISUAL_BINARY_CLEARANCE_MARGIN);
+  // Parent-frame kids around this companion must not reach into the primary.
+  sep = Math.max(sep, visualBinaryKidsClearanceSep(body, sizeMode, systemBodies));
   return sep;
 }
 

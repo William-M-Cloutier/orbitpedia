@@ -1025,6 +1025,25 @@ if (!Number.isFinite(c)) {
   } else {
     ok("visualBinaryCompanionOffset keeps mesh clearance after fitScale");
   }
+  // Parent resolution prefers active systemBodies (archive session can miss).
+  if (
+    !/resolveParentBody/.test(sceneSrc) ||
+    !/systemBodies\?\.find\(\(b\) => b\.id === body\.parentId\)/.test(sceneSrc)
+  ) {
+    fail("parentDisplayScale/bodyPosition must resolve parent via systemBodies first (resolveParentBody)");
+  } else {
+    ok("resolveParentBody prefers systemBodies over getParent/getBody");
+  }
+  if (
+    !/visualBinaryKidsClearanceSep/.test(sceneSrc) &&
+    !/visualBinaryKidsClearanceSep/.test(fitSrcVb)
+  ) {
+    fail("missing visualBinaryKidsClearanceSep for companion-hosted parent-frame kids");
+  } else if (!/kidsFloor/.test(sceneSrc)) {
+    fail("visualBinaryCompanionOffset must floor sep at kidsFloor after fit");
+  } else {
+    ok("visualBinaryCompanionOffset bumps sep for parent-frame kids vs primary");
+  }
   // Display-only compression: raw Gaia-class seps must NOT be used verbatim.
   if (
     !/Math\.log1p\(projected\)/.test(sceneSrc) &&
@@ -1424,6 +1443,170 @@ if (!Number.isFinite(c)) {
     } else {
       ok(`wide-host perihelion floor=${floor.toFixed(3)} <1 (fit compress preserved)`);
     }
+  }
+}
+
+
+// Parent-frame planets around orbit-unknown companions (55 Cnc B b/c class).
+{
+  const MARGIN = tiers.PERIHELION_CLEARANCE_MARGIN_AU;
+  const STAR_VISUAL_RADIUS = tiers.STAR_VISUAL_RADIUS;
+  const fitSrcKids = fs.readFileSync(path.join(ROOT, "src/viz/schematicFit.ts"), "utf8");
+  if (!/visualBinaryKidsClearanceSep/.test(fitSrcKids)) {
+    fail("schematicFit missing visualBinaryKidsClearanceSep");
+  } else {
+    ok("schematicFit exports visualBinaryKidsClearanceSep");
+  }
+
+  // Synthetic: small-aAu parent-frame planet around schematic-sep companion.
+  const synPrimary = {
+    id: "syn-host",
+    kind: "star",
+    systemId: "syn-host",
+    facts: { radiusMeanKm: 700000, massKg: 2e30 },
+  };
+  const synComp = {
+    id: "syn-comp",
+    kind: "star",
+    systemId: "syn-host",
+    parentId: "syn-host",
+    facts: { radiusMeanKm: 400000, massKg: 8e29 },
+    // no projectedSepAu → schematic sep only (tight) so kids floor must bump
+  };
+  const synKid = {
+    id: "syn-comp-b",
+    kind: "planet",
+    systemId: "syn-host",
+    parentId: "syn-comp",
+    facts: { radiusMeanKm: 10000 },
+    orbit: {
+      frame: "parent",
+      aAu: 0.044,
+      e: 0,
+      iDeg: 90,
+      omDeg: 0,
+      wDeg: 0,
+      maDeg: 0,
+      periodD: 7,
+    },
+  };
+  const synBodies = [synPrimary, synComp, synKid];
+  const parentVis = STAR_VISUAL_RADIUS;
+  const childVis = visualRadius(synKid, tiers);
+  const qAu = synKid.orbit.aAu * (1 - synKid.orbit.e);
+  const ps = parentFrameSharedDisplayScale(
+    parentVis,
+    [{ qAu, aAu: synKid.orbit.aAu, e: synKid.orbit.e, vis: childVis }],
+    MARGIN,
+  );
+  const qDisp = qAu * ps;
+  const periNeed = Math.max(
+    parentVis + childVis + Math.min(MARGIN, Math.max(parentVis * 0.35, childVis)),
+    parentVis * 1.85 + childVis,
+  );
+  if (!(ps > 1.01)) {
+    fail(`synthetic companion-host: expected parentDisplayScale ≫ 1 (got ${ps})`);
+  } else if (!(qDisp + 1e-9 >= periNeed)) {
+    fail(`synthetic companion-host: q*ps=${qDisp} < companion mesh need ${periNeed}`);
+  } else {
+    ok(
+      `synthetic companion-host: ps=${ps.toFixed(3)} q*ps=${qDisp.toFixed(3)} ≥ need ${periNeed.toFixed(3)}`,
+    );
+  }
+  const rPrimary = STAR_VISUAL_RADIUS;
+  const rSelf = STAR_VISUAL_RADIUS;
+  const schematicSep = Math.max((rPrimary + rSelf) * 1.3, 0.04);
+  const maxApo = synKid.orbit.aAu * (1 + synKid.orbit.e) * ps;
+  const priMargin = Math.min(MARGIN, Math.max(rPrimary * 0.35, childVis));
+  const kidsFloor = maxApo + rPrimary + childVis + priMargin;
+  const sep = Math.max(schematicSep, kidsFloor);
+  const minDist = sep - maxApo;
+  const priNeed = rPrimary + childVis + priMargin;
+  if (!(sep + 1e-12 >= kidsFloor)) {
+    fail(`synthetic companion-host: sep ${sep} < kidsFloor ${kidsFloor}`);
+  } else if (!(minDist + 1e-12 >= priNeed)) {
+    fail(`synthetic companion-host: minDist to primary ${minDist} < need ${priNeed}`);
+  } else if (!(schematicSep + 1e-12 < kidsFloor)) {
+    fail("synthetic companion-host: expected schematic sep alone to violate kids clearance (test setup)");
+  } else {
+    ok(
+      `synthetic companion-host: sep=${sep.toFixed(3)} (schematic ${schematicSep.toFixed(3)}) keeps apo clear of primary`,
+    );
+  }
+
+  // 55 Cnc archive spot-check (parentVis, ps, q*ps, companionSep, min dist).
+  const cncPath = path.join(ROOT, "public/archive/graphs/55-cnc.json");
+  if (fs.existsSync(cncPath)) {
+    const cnc = JSON.parse(fs.readFileSync(cncPath, "utf8"));
+    const cBodies = cnc.bodies;
+    const cComp = cBodies.find((b) => b.id === "55-cnc-comp-b");
+    const cKids = cBodies.filter(
+      (b) => b.parentId === "55-cnc-comp-b" && b.orbit?.frame === "parent",
+    );
+    if (!cComp || cKids.length < 2) {
+      fail("55 Cnc archive missing comp-b + parent-frame B b/c");
+    } else {
+      const pVis = STAR_VISUAL_RADIUS;
+      const rows = cKids.map((c) => ({
+        id: c.id,
+        qAu: c.orbit.aAu * (1 - c.orbit.e),
+        aAu: c.orbit.aAu,
+        e: c.orbit.e,
+        vis: visualRadius(c, tiers),
+      }));
+      const cPs = parentFrameSharedDisplayScale(pVis, rows, MARGIN);
+      let allClear = true;
+      for (const r of rows) {
+        const need = Math.max(
+          pVis + r.vis + Math.min(MARGIN, Math.max(pVis * 0.35, r.vis)),
+          pVis * 1.85 + r.vis,
+        );
+        if (!(r.qAu * cPs + 1e-9 >= need)) {
+          fail(`${r.id}: q*ps=${r.qAu * cPs} < need ${need} (ps=${cPs})`);
+          allClear = false;
+        }
+      }
+      const projected = cComp.facts?.projectedSepAu;
+      const outerA = Math.max(
+        ...cBodies
+          .filter((b) => b.orbit && b.orbit.frame !== "parent")
+          .map((b) => b.orbit.aAu),
+      );
+      const sch = Math.max((STAR_VISUAL_RADIUS * 2) * 1.3, 0.04);
+      const floor = Math.max(sch, outerA * 1.2);
+      const compressed = Math.log1p(projected) * 3.0;
+      let cSep = Math.min(36, Math.max(floor, compressed));
+      cSep = Math.max(cSep, STAR_VISUAL_RADIUS * 2 + 0.005);
+      const maxApoC = Math.max(...rows.map((r) => r.aAu * (1 + r.e) * cPs));
+      const maxCVis = Math.max(...rows.map((r) => r.vis));
+      const kidsF = maxApoC + STAR_VISUAL_RADIUS + maxCVis + Math.min(MARGIN, Math.max(STAR_VISUAL_RADIUS * 0.35, maxCVis));
+      cSep = Math.max(cSep, kidsF);
+      const minD = cSep - maxApoC;
+      const needD = STAR_VISUAL_RADIUS + maxCVis + Math.min(MARGIN, Math.max(STAR_VISUAL_RADIUS * 0.35, maxCVis));
+      if (allClear && minD + 1e-9 >= needD) {
+        ok(
+          `55 Cnc B b/c: parentVis=${pVis} ps=${cPs.toFixed(3)} q*ps(b)=${(0.044 * cPs).toFixed(3)} sep=${cSep.toFixed(3)} minDist=${minD.toFixed(3)}≥${needD.toFixed(3)}`,
+        );
+      } else if (allClear) {
+        fail(`55 Cnc B b/c: minDist ${minD} < need ${needD} (sep=${cSep})`);
+      }
+    }
+  } else {
+    ok("55 Cnc archive graph absent — skip spot-check");
+  }
+
+  // Sol moon / TRAPPIST: no companion offset path (fitScale 1 / no kidsFloor bump).
+  const sceneSrc2 = fs.readFileSync(path.join(ROOT, "src/viz/OrbitScene.tsx"), "utf8");
+  if (!/system\.home/.test(sceneSrc2) && !/home === true/.test(sceneSrc2) && !/\.home\b/.test(sceneSrc2)) {
+    fail("OrbitScene should gate fitScale=1 on home (Sol unchanged)");
+  } else {
+    ok("Sol path: home gate keeps fitScale=1 (moons use parent-frame, not visual-binary)");
+  }
+  // Kids clearance only for orbit-unknown companion stars — never planet parents.
+  if (!/companion\.kind !== "star"/.test(fitSrcKids) && !/kind !== "star"/.test(fitSrcKids)) {
+    fail("visualBinaryKidsClearanceSep must gate on companion kind===star");
+  } else {
+    ok("kids clearance gated to orbit-unknown companion stars (Sol moons / TRAPPIST untouched)");
   }
 }
 

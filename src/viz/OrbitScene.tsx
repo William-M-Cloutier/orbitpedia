@@ -50,6 +50,7 @@ import {
   schematicOrbitFitScale,
   schematicIdleCameraDistance,
   visualBinaryDisplaySep,
+  visualBinaryKidsClearanceSep,
   VISUAL_BINARY_CLEARANCE_MARGIN,
 } from "./schematicFit";
 import { getBodyAppearanceMaterial, useRegistryTexture } from "./appearance";
@@ -237,6 +238,22 @@ function orbitQAu(orbit: NonNullable<Body["orbit"]>): number {
 }
 
 /**
+ * Prefer the active Explore graph for parent resolution. Archive session
+ * getters can miss during graph swaps; systemBodies is the live members list.
+ */
+function resolveParentBody(
+  body: Body,
+  systemBodies?: readonly Body[],
+): Body | undefined {
+  if (!body.parentId) return undefined;
+  return (
+    systemBodies?.find((b) => b.id === body.parentId) ??
+    getParent(body.id) ??
+    getBody(body.parentId)
+  );
+}
+
+/**
  * Viz-only parent-frame orbit inflate. Shared per parent so Galileans / etc.
  * keep relative spacing instead of each child independently mapping to the
  * same display periapsis (catalog a/e/i unchanged).
@@ -247,7 +264,7 @@ function parentDisplayScale(
   systemBodies?: readonly Body[],
 ): number {
   if (body.orbit?.frame !== "parent" || !body.parentId) return 1;
-  const parent = getParent(body.id) ?? getBody(body.parentId);
+  const parent = resolveParentBody(body, systemBodies);
   if (!parent) return 1;
   const pool =
     systemBodies && systemBodies.length > 0
@@ -359,9 +376,12 @@ function visualBinaryCompanionOffset(
     ? visualRadius(parent, sizeMode, systemBodies)
     : visualRadius(body, sizeMode, systemBodies);
   const rSelf = visualRadius(body, sizeMode, systemBodies);
+  // Parent-frame kids (e.g. 55 Cnc B b/c): bump sep so apo cannot enter primary.
+  const kidsFloor = visualBinaryKidsClearanceSep(body, sizeMode, systemBodies);
   const sep = Math.max(
     baseSep * fs,
     rPrimary + rSelf + VISUAL_BINARY_CLEARANCE_MARGIN,
+    kidsFloor,
   );
   // Even spread in the face-on orbital plane (start at 0 → +X). Horizontal ring.
   const ang = (2 * Math.PI * idx) / n;
@@ -437,7 +457,7 @@ function bodyPosition(
   const s = distScale > 0 ? distScale : 1;
   const hs = helioScale > 0 ? helioScale : 1;
   if (body.orbit.frame === "parent" && body.parentId) {
-    const parent = getParent(body.id) ?? getBody(body.parentId);
+    const parent = resolveParentBody(body, systemBodies);
     if (parent) {
       const parentPos = bodyPosition(
         parent,
@@ -586,7 +606,7 @@ const OrbitLine = memo(function OrbitLine({
   const { getSimDays } = useSimApi();
   const parent =
     body.orbit?.frame === "parent" && body.parentId
-      ? getParent(body.id) ?? getBody(body.parentId)
+      ? resolveParentBody(body, systemBodies)
       : undefined;
   const relScale = useMemo(() => {
     if (!hasUsableOrbit(body)) return distScale;
