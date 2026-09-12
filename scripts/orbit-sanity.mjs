@@ -15,7 +15,8 @@
  *   5) Parent-frame: q clears parent real radius; shared viz scale; skip sun Kepler-3
  *   6) Epoch MA pose lies on true-anomaly OrbitLine polyline (body-on-line)
  *   7) Multi-star: hasUsableOrbit allows companion stars; orbit-unknown
- *      companions mesh via tight visualBinaryCompanionOffset (no OrbitLine /
+ *      companions mesh via visualBinaryCompanionOffset — prefer
+ *      facts.projectedSepAu when set, else mesh-radii schematic (no OrbitLine /
  *      no invented aAu; ban old companionStarLayoutOffset dump)
  *
  * Usage: node scripts/orbit-sanity.mjs
@@ -970,6 +971,61 @@ if (!Number.isFinite(c)) {
     fail("OrbitScene missing VISUAL_BINARY_SEP_FACTOR (tight sep from mesh radii)");
   } else {
     ok("OrbitScene uses VISUAL_BINARY_SEP_FACTOR for mesh-radius clearance");
+  }
+  // Prefer facts.projectedSepAu (Gaia / projected) when set; else schematic.
+  if (!/projectedSepAu/.test(sceneSrc)) {
+    fail("OrbitScene should read facts.projectedSepAu for visual-binary sep");
+  } else if (
+    !/Number\.isFinite\(projected\)/.test(sceneSrc) &&
+    !/Number\.isFinite\(body\.facts\.projectedSepAu\)/.test(sceneSrc) &&
+    !/Number\.isFinite\(.*projectedSepAu/.test(sceneSrc)
+  ) {
+    fail("OrbitScene should gate projectedSepAu with Number.isFinite");
+  } else {
+    ok("OrbitScene reads facts.projectedSepAu for companion placement");
+  }
+  // Soft clearance when projected sep would bury mesh in primary (display-only).
+  if (
+    !/VISUAL_BINARY_CLEARANCE_MARGIN/.test(sceneSrc) &&
+    !/rPrimary \+ rSelf \+/.test(sceneSrc)
+  ) {
+    fail("OrbitScene should soft-clear projectedSepAu vs primary+self+margin");
+  } else {
+    ok("OrbitScene soft-clears projectedSepAu against primary+self+margin");
+  }
+  // Synthetic: companion with facts.projectedSepAu → source prefers that sep.
+  {
+    const projectedCompanion = {
+      id: "syn-projected",
+      kind: "star",
+      parentId: "syn-primary",
+      facts: { projectedSepAu: 12.5, radiusMeanKm: 40000 },
+    };
+    const projected = projectedCompanion.facts.projectedSepAu;
+    const prefersProjected =
+      /projectedSepAu/.test(sceneSrc) &&
+      Number.isFinite(projected) &&
+      projected > 0 &&
+      (/\?\.projectedSepAu|facts\.projectedSepAu/.test(sceneSrc));
+    if (!prefersProjected) {
+      fail("source contract: visualBinaryCompanionOffset should prefer facts.projectedSepAu");
+    } else {
+      ok("synthetic companion with facts.projectedSepAu gets sep preference in source");
+    }
+  }
+  // visualBinaryNote exports remain (UI note; copy unchanged).
+  {
+    const noteSrc = fs.readFileSync(
+      path.join(ROOT, "src/lib/visualBinaryNote.ts"),
+      "utf8",
+    );
+    if (!/export function hasVisualBinaryCompanions/.test(noteSrc)) {
+      fail("visualBinaryNote missing hasVisualBinaryCompanions export");
+    } else if (!/export const VISUAL_BINARY_NOTE/.test(noteSrc)) {
+      fail("visualBinaryNote missing VISUAL_BINARY_NOTE export");
+    } else {
+      ok("visualBinaryNote exports hasVisualBinaryCompanions + VISUAL_BINARY_NOTE");
+    }
   }
   // Visual-binary offsets stay in Explore face-on plane (horizontal ring).
   // Do not re-apply faceOn to ecliptic-XY offsets (tips → scene Y stacking).

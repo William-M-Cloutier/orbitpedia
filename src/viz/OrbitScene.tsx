@@ -334,15 +334,18 @@ function localOrbitPosition(
 
 /**
  * Viz-only display ring for orbit-unknown companion stars in Explore's
- * face-on plane. NOT an orbit — no OrbitLine, no invented aAu/period, not
- * catalog AU. Smoke archive: 17/17 multi-star systems have companions with no
- * usable Kepler; bulk: 0/425 multi-star graphs have companion orbit.aAu.
- * Prefer real Kepler via hasUsableOrbit when archive has elements; otherwise
- * place a tight visual-binary offset from mesh radii so companions are visible.
+ * face-on plane. NOT an orbit — no OrbitLine, no invented aAu/period.
+ * Smoke archive: 17/17 multi-star systems have companions with no usable
+ * Kepler; bulk: 0/425 multi-star graphs have companion orbit.aAu.
+ * Prefer real Kepler via hasUsableOrbit when archive has elements.
  *
- * Separation = (rPrimary + rSelf) * VISUAL_BINARY_SEP_FACTOR (clearance without
- * the old sprawling companion-star layout-offset dump). Locked sizeTiers /
- * visualRadius contract (incl. companion Prop/True) is respected as-is.
+ * Separation (AU → scene distance; orbitDistanceScale is 1 today, same as
+ * Kepler XYZ): use facts.projectedSepAu when finite and > 0 (Gaia /
+ * projected sep); else schematic (rPrimary + rSelf) * VISUAL_BINARY_SEP_FACTOR
+ * with MIN_SEP floor. Projected sep gets a soft clearance max so the mesh
+ * still clears primary+self+margin (display-only; never rewrite catalog).
+ * Locked sizeTiers / visualRadius contract (incl. companion Prop/True) is
+ * respected as-is. Never draw OrbitLine unless hasUsableOrbit.
  *
  * Coords are already in the face-on ecliptic plane — map with eclipticToScene
  * only. Do NOT re-apply faceOn: that rotation is for catalog orbital positions;
@@ -352,6 +355,8 @@ function localOrbitPosition(
 const VISUAL_BINARY_SEP_FACTOR = 1.3;
 /** Floor so tiny Prop/True companion meshes still clear the primary surface. */
 const VISUAL_BINARY_MIN_SEP = 0.04;
+/** Soft clearance margin (AU) so projected-sep meshes do not bury in primary. */
+const VISUAL_BINARY_CLEARANCE_MARGIN = 0.005;
 
 function visualBinaryCompanionOffset(
   body: Body,
@@ -379,10 +384,21 @@ function visualBinaryCompanionOffset(
     ? visualRadius(parent, sizeMode, systemBodies)
     : visualRadius(body, sizeMode, systemBodies);
   const rSelf = visualRadius(body, sizeMode, systemBodies);
-  const sep = Math.max(
+  const schematicSep = Math.max(
     (rPrimary + rSelf) * VISUAL_BINARY_SEP_FACTOR,
     VISUAL_BINARY_MIN_SEP,
   );
+  const projected = body.facts?.projectedSepAu;
+  // Gaia/projected sep when known; else mesh-radii schematic.
+  const sep =
+    typeof projected === "number" &&
+    Number.isFinite(projected) &&
+    projected > 0
+      ? Math.max(
+          projected,
+          rPrimary + rSelf + VISUAL_BINARY_CLEARANCE_MARGIN,
+        )
+      : schematicSep;
   // Even spread in the face-on orbital plane (start at 0 → +X). Horizontal ring.
   const ang = (2 * Math.PI * idx) / n;
   const x = sep * Math.cos(ang);
