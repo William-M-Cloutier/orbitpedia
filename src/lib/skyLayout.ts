@@ -138,3 +138,78 @@ export function placeSystemSky(
     unknownSky: false,
   };
 }
+
+/**
+ * Minimum center-to-center gap (world units) so map discs (NODE_R ≈ 10) do not
+ * visually overlap. NODE_R*2 + generous pad.
+ */
+export const MIN_VISUAL_GAP = 56;
+
+/**
+ * Push overlapping sky nodes apart without moving pinned hosts (Sol/home).
+ * Only acts when distance < minGap — distant systems stay at true sky positions.
+ * Push is along the existing offset; coincident pairs use +Y.
+ */
+export function separateSkyNodes(
+  pts: Array<{ x: number; y: number; home?: boolean; pinned?: boolean }>,
+  minGap: number = MIN_VISUAL_GAP,
+  pinX: number = SOL_GAL.x,
+  pinY: number = SOL_GAL.y,
+  iters = 64,
+): void {
+  const isPinned = (p: { home?: boolean; pinned?: boolean }) =>
+    p.pinned === true || p.home === true;
+  const pin = () => {
+    for (const p of pts) {
+      if (isPinned(p)) {
+        p.x = pinX;
+        p.y = pinY;
+      }
+    }
+  };
+  pin();
+  for (let iter = 0; iter < iters; iter++) {
+    let moved = false;
+    for (let i = 0; i < pts.length; i++) {
+      for (let j = i + 1; j < pts.length; j++) {
+        const a = pts[i]!;
+        const b = pts[j]!;
+        const aPin = isPinned(a);
+        const bPin = isPinned(b);
+        if (aPin && bPin) continue;
+        let dx = b.x - a.x;
+        let dy = b.y - a.y;
+        let dist = Math.hypot(dx, dy);
+        if (dist >= minGap) continue;
+        // Coincident / numerically zero → push along +Y
+        let ux: number;
+        let uy: number;
+        if (dist < 1e-9) {
+          ux = 0;
+          uy = 1;
+          dist = 0;
+        } else {
+          ux = dx / dist;
+          uy = dy / dist;
+        }
+        if (aPin) {
+          b.x = a.x + ux * minGap;
+          b.y = a.y + uy * minGap;
+        } else if (bPin) {
+          a.x = b.x - ux * minGap;
+          a.y = b.y - uy * minGap;
+        } else {
+          const push = (minGap - dist) / 2;
+          a.x -= ux * push;
+          a.y -= uy * push;
+          b.x += ux * push;
+          b.y += uy * push;
+        }
+        moved = true;
+      }
+    }
+    pin();
+    if (!moved) break;
+  }
+}
+
