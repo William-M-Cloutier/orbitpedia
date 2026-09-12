@@ -1,0 +1,24 @@
+{
+  "bodyId": "io",
+  "pois": [
+    {
+      "id": "loki-patera",
+      "bodyId": "io",
+      "name": "Loki Patera",
+      "latDeg": 12.97,
+      "lonDeg": 51.2,
+      "summary": "Largest volcanic depression on Io, a horseshoe-shaped lava lake roughly 200 km across. Ground-based infrared monitoring and Galileo/Juno data show Loki as one of Io’s most powerful and persistently active volcanic centers.",
+      "sources": [
+        {
+          "name": "USGS Gazetteer — Loki Patera",
+          "url": "https://planetarynames.wr.usgs.gov/Feature/3459"
+        },
+        {
+          "name": "NASA Science — Io volcanism",
+          "url": "https://science.nasa.gov/jupiter/moons/io/"
+        }
+      ],
+      "confidence": "known"
+    }
+  ]
+}

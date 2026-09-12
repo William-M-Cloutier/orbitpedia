@@ -1,0 +1,24 @@
+{
+  "bodyId": "europa",
+  "pois": [
+    {
+      "id": "pwyll",
+      "bodyId": "europa",
+      "name": "Pwyll",
+      "latDeg": -25.2,
+      "lonDeg": 88.6,
+      "summary": "Young impact crater on Europa with a dark central region and bright ejecta rays that cross surrounding ridged plains. Galileo imaging used Pwyll\u2019s fresh rays to help map the relative ages of Europa\u2019s icy surface units.",
+      "sources": [
+        {
+          "name": "NASA Science \u2014 Pwyll Crater on Europa",
+          "url": "https://science.nasa.gov/resource/pwyll-crater-on-europa/"
+        },
+        {
+          "name": "USGS SIM 3513 \u2014 Global Geologic Map of Europa",
+          "url": "https://pubs.usgs.gov/sim/3513/"
+        }
+      ],
+      "confidence": "known"
+    }
+  ]
+}

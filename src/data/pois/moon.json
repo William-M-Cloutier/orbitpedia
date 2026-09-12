@@ -1,0 +1,43 @@
+{
+  "bodyId": "moon",
+  "pois": [
+    {
+      "id": "tranquility-base",
+      "bodyId": "moon",
+      "name": "Tranquility Base",
+      "latDeg": 0.67,
+      "lonDeg": 23.47,
+      "summary": "Apollo 11 landing site in southwestern Mare Tranquillitatis, formally named Statio Tranquillitatis. Neil Armstrong and Buzz Aldrin walked here on 20 July 1969, the first crewed landing on another world.",
+      "sources": [
+        {
+          "name": "USGS Gazetteer — Statio Tranquillitatis",
+          "url": "https://planetarynames.wr.usgs.gov/Feature/5684"
+        },
+        {
+          "name": "NASA — Apollo 11 Mission Overview",
+          "url": "https://www.nasa.gov/mission_pages/apollo/missions/apollo11.html"
+        }
+      ],
+      "confidence": "known"
+    },
+    {
+      "id": "tycho",
+      "bodyId": "moon",
+      "name": "Tycho",
+      "latDeg": -43.3,
+      "lonDeg": -11.22,
+      "summary": "Prominent young impact crater in the southern lunar highlands, about 85 km wide with a bright ray system that stretches across much of the near side. Its sharp rim and central peak make it a classic telescopic landmark.",
+      "sources": [
+        {
+          "name": "USGS Gazetteer — Tycho",
+          "url": "https://planetarynames.wr.usgs.gov/Feature/6163"
+        },
+        {
+          "name": "NASA Lunar Reconnaissance Orbiter — Tycho",
+          "url": "https://science.nasa.gov/mission/lro/"
+        }
+      ],
+      "confidence": "known"
+    }
+  ]
+}
