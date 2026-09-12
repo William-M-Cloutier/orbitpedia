@@ -92,6 +92,10 @@ function ExploreHome() {
   const [sizeMode, setSizeMode] = useState<SizeMode>(DEFAULT_SIZE_MODE);
   /** Session-only — never written to catalog JSON. Cleared on system switch. */
   const [hiddenIds, setHiddenIds] = useState<Set<string>>(() => new Set());
+  /** Sol Explore: hide all probe trajectory polylines (default visible). */
+  const [hideProbePaths, setHideProbePaths] = useState(false);
+  /** Sol Explore: hide all probe craft meshes / markers (default visible). */
+  const [hideProbeMeshes, setHideProbeMeshes] = useState(false);
   const focus = focusId ? getBody(focusId) : undefined;
   const selectedPoi = selectedPoiId ? getPoi(selectedPoiId) : undefined;
   const simDaysPerSec = useMemo(
@@ -104,6 +108,8 @@ function ExploreHome() {
   // Drop session hide set when leaving a system (no leftover filters).
   useEffect(() => {
     setHiddenIds(new Set());
+    setHideProbePaths(false);
+    setHideProbeMeshes(false);
   }, [systemId]);
 
   // Earth sats: LEO periods need Slow (not Sol Default / Realism).
@@ -226,6 +232,12 @@ function ExploreHome() {
           onFocus={onRailFocus}
           hiddenIds={hiddenIds}
           onToggleHidden={onToggleHidden}
+          {...({
+            hideProbePaths,
+            hideProbeMeshes,
+            onHideProbePathsChange: setHideProbePaths,
+            onHideProbeMeshesChange: setHideProbeMeshes,
+          } as object)}
         />
       }
     >
@@ -277,6 +289,8 @@ function ExploreHome() {
                 simDaysPerSec={simDaysPerSec}
                 sizeMode={sizeMode}
                 hiddenIds={hiddenIds}
+                hideProbePaths={hideProbePaths}
+                hideProbeMeshes={hideProbeMeshes}
               />
               <div className="pointer-events-none absolute left-3 top-3 z-10 flex flex-col gap-2 items-start">
                 <SizeModeControl mode={sizeMode} onModeChange={setSizeMode} />

@@ -101,6 +101,10 @@ type Props = {
   sizeMode?: SizeMode;
   /** Session-only ids with mesh + orbit line suppressed (Explore hide). */
   hiddenIds?: ReadonlySet<string>;
+  /** Hide all probe trajectory polylines (ProbePathLine). Default false = visible. */
+  hideProbePaths?: boolean;
+  /** Hide all probe craft meshes / markers (ProbeBodyMesh). Default false = visible. */
+  hideProbeMeshes?: boolean;
   /** Active system graph (default: home). Remount OrbitCanvas on change. */
   systemId?: string;
   /**
@@ -1115,6 +1119,8 @@ const BodyMesh = memo(function BodyMesh({
   selectedPoiId,
   onSelectPoi,
   satLod,
+  hideProbePaths = false,
+  hideProbeMeshes = false,
 }: {
   body: Body;
   focused: boolean;
@@ -1124,6 +1130,8 @@ const BodyMesh = memo(function BodyMesh({
   onSelectPoi?: (id: string | null) => void;
   /** Satellite mesh LOD inputs (omit for non-sats). */
   satLod?: { satCount: number; meshRank: number };
+  hideProbePaths?: boolean;
+  hideProbeMeshes?: boolean;
 }) {
   const group = useRef<THREE.Group>(null);
   const { getSimDays } = useSimApi();
@@ -1273,23 +1281,29 @@ const BodyMesh = memo(function BodyMesh({
 
   // Probe: procedural craft (ProbeBodyMesh) + optional path.waypoints Line.
   // Same click / contextMenu deselect contract. No OrbitLine without Kepler.
+  // hideProbePaths / hideProbeMeshes are independent (paths vs craft).
   if (body.kind === "probe") {
+    if (hideProbeMeshes && hideProbePaths) return null;
     return (
       <>
-        <ProbeBodyMesh
-          body={body}
-          focused={focused}
-          groupRef={group}
-          spinRef={spinMesh}
-          r={r}
-          onClick={handleClick}
-          onContextMenu={handleContextMenu}
-        />
-        <ProbePathLine
-          body={body}
-          highlighted={focused}
-          highlightColor={highlightColor}
-        />
+        {!hideProbeMeshes ? (
+          <ProbeBodyMesh
+            body={body}
+            focused={focused}
+            groupRef={group}
+            spinRef={spinMesh}
+            r={r}
+            onClick={handleClick}
+            onContextMenu={handleContextMenu}
+          />
+        ) : null}
+        {!hideProbePaths ? (
+          <ProbePathLine
+            body={body}
+            highlighted={focused}
+            highlightColor={highlightColor}
+          />
+        ) : null}
       </>
     );
   }
@@ -1487,7 +1501,14 @@ function ViewOffsetController({
  * null-focus freeze snapshots the extent-framed distance (not the Canvas
  * legacy fallback). Deep-link focus leaves pose to FollowCamera.
  */
-function IdleCameraBootstrap({ focusId }: { focusId?: string | null }) {
+function IdleCameraBootstrap({
+  focusId,
+  hideProbeMeshes = false,
+}: {
+  focusId?: string | null;
+  /** When craft meshes are hidden, ignore probe marker ring extent (fail-open). */
+  hideProbeMeshes?: boolean;
+}) {
   const { bodies: systemBodies, helioScale, fitScale } = useSystemViz();
   const sizeMode = useSizeMode();
   const camera = useThree((s) => s.camera);
@@ -1528,7 +1549,10 @@ function IdleCameraBootstrap({ focusId }: { focusId?: string | null }) {
         systemSceneExtent(systemBodies, helioScale),
         maxCompanionDisplaySep(systemBodies, sizeMode) * fitScale,
         // Marker-only probe ring (NOT ephemeris) — keep idle frame outside placeholders.
-        probeMarkerDisplaySep(sizeMode, systemBodies, helioScale),
+        // Skip when probe meshes are hidden (would inflate framing for invisible markers).
+        hideProbeMeshes
+          ? 0
+          : probeMarkerDisplaySep(sizeMode, systemBodies, helioScale),
       );
       for (const b of systemBodies) {
         if (b.kind !== "star" || !b.parentId || hasUsableOrbit(b)) continue;
@@ -1553,7 +1577,7 @@ function IdleCameraBootstrap({ focusId }: { focusId?: string | null }) {
       controls.update();
     }
     invalidate();
-  }, [camera, controls, invalidate, focusId, systemBodies, helioScale, fitScale, sizeMode]);
+  }, [camera, controls, invalidate, focusId, systemBodies, helioScale, fitScale, sizeMode, hideProbeMeshes]);
 
   return null;
 }
@@ -2248,6 +2272,8 @@ function SceneContent({
   simDaysPerSec,
   sizeMode = DEFAULT_SIZE_MODE,
   hiddenIds,
+  hideProbePaths = false,
+  hideProbeMeshes = false,
   systemId,
   viewInsetLeft = 0,
   viewInsetRight = 0,
@@ -2400,6 +2426,8 @@ function SceneContent({
             highlightColor={highlightColor}
             selectedPoiId={focusId === b.id ? selectedPoiId : null}
             onSelectPoi={onSelectPoi}
+            hideProbePaths={hideProbePaths}
+            hideProbeMeshes={hideProbeMeshes}
             satLod={
               b.kind === "satellite"
                 ? {
@@ -2426,7 +2454,7 @@ function SceneContent({
         maxDistance={80}
         onChange={() => invalidate()}
       />
-      <IdleCameraBootstrap focusId={focusId} />
+      <IdleCameraBootstrap focusId={focusId} hideProbeMeshes={hideProbeMeshes} />
       <FollowCamera />
       <WasdFly />
     </SimProvider>
@@ -2444,6 +2472,8 @@ export function OrbitScene({
   simDaysPerSec,
   sizeMode = DEFAULT_SIZE_MODE,
   hiddenIds,
+  hideProbePaths,
+  hideProbeMeshes,
   systemId,
   viewInsetLeft = 0,
   viewInsetRight = 0,
@@ -2480,6 +2510,8 @@ export function OrbitScene({
           simDaysPerSec={simDaysPerSec}
           sizeMode={sizeMode}
           hiddenIds={hiddenIds}
+          hideProbePaths={hideProbePaths}
+          hideProbeMeshes={hideProbeMeshes}
           systemId={systemId}
           viewInsetLeft={viewInsetLeft}
           viewInsetRight={viewInsetRight}
