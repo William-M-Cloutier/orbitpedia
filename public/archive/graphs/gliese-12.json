@@ -26,11 +26,15 @@
             "planetCount",
             "starCount",
             "distanceLy",
-            "hostSpectralType"
+            "hostSpectralType",
+            "raDeg",
+            "decDeg"
           ]
         }
       ]
-    }
+    },
+    "raDeg": 3.9579137,
+    "decDeg": 13.5576175
   },
   "bodies": [
     {

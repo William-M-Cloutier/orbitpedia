@@ -686,6 +686,13 @@ function buildSystem(familyName, planetRows, fetchedAt, stellarHosts, stellarByF
   const distPc = num(first.sy_dist);
   const distanceLy =
     distPc != null ? Math.round(distPc * 3.26156 * 10) / 10 : undefined;
+  // ICRS degrees from the same primary/first TAP row as sy_dist — never invent.
+  const raRaw = num(first.ra);
+  const decRaw = num(first.dec);
+  const raDeg =
+    raRaw != null && raRaw >= 0 && raRaw <= 360 ? raRaw : undefined;
+  const decDeg =
+    decRaw != null && decRaw >= -90 && decRaw <= 90 ? decRaw : undefined;
   const hostSpectralType = first.st_spectype || undefined;
   const discYear = first.disc_year
     ? String(Math.trunc(num(first.disc_year) ?? first.disc_year))
@@ -1009,6 +1016,8 @@ function buildSystem(familyName, planetRows, fetchedAt, stellarHosts, stellarByF
     blurb: systemBlurb,
     planetCount: planets.length,
     distanceLy,
+    raDeg,
+    decDeg,
     hostSpectralType,
     hasGas,
     meta: {
@@ -1023,6 +1032,8 @@ function buildSystem(familyName, planetRows, fetchedAt, stellarHosts, stellarByF
             "planetCount",
             "starCount",
             ...(distanceLy != null ? ["distanceLy"] : []),
+            ...(raDeg != null ? ["raDeg"] : []),
+            ...(decDeg != null ? ["decDeg"] : []),
             ...(hostSpectralType ? ["hostSpectralType"] : []),
             ...(circumbinary ? ["circumbinary"] : []),
           ],
@@ -1041,6 +1052,8 @@ function buildSystem(familyName, planetRows, fetchedAt, stellarHosts, stellarByF
       planetCount: planets.length,
       starCount,
       distanceLy,
+      raDeg,
+      decDeg,
       hostSpectralType,
       hasGas,
       circumbinary: circumbinary || undefined,

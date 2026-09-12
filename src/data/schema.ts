@@ -248,6 +248,15 @@ export const SystemSchema = z.object({
   planetCount: z.number().int().nonnegative().optional(),
   /** Distance from Sol in light-years (omit for home). */
   distanceLy: z.number().nonnegative().optional(),
+  /**
+   * ICRS right ascension in degrees (archive / SIMBAD). Omit for Sol/home
+   * and when unknown — never invent.
+   */
+  raDeg: z.number().min(0).max(360).optional(),
+  /**
+   * ICRS declination in degrees. Omit for Sol/home and when unknown.
+   */
+  decDeg: z.number().min(-90).max(90).optional(),
   hostSpectralType: z.string().min(1).optional(),
   compactnessNote: z.string().min(1).optional(),
   /** Archive plane: any planet ≳50 M⊕ or ≳4 R⊕ (see ingest / hasGas.ts). */

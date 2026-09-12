@@ -68,7 +68,7 @@ Per archive system chunk `graphs/<systemId>.json`:
 {
   "system": {
     "id", "name", "memberIds", "primaryStarId", "planetCount", "starCount",
-    "distanceLy?", "hostSpectralType?", "hasGas", "circumbinary?", "blurb?", "meta"
+    "distanceLy?", "raDeg?", "decDeg?", "hostSpectralType?", "hasGas", "circumbinary?", "blurb?", "meta"
   },
   "bodies": [ /* N stars (primary + comps + placeholders) + planets */ ]
 }
@@ -99,7 +99,7 @@ Thin index `systems.index.json`:
   "source": "NASA Exoplanet Archive pscomppars",
   "systems": [
     {
-      "id", "name", "planetCount", "starCount", "distanceLy?",
+      "id", "name", "planetCount", "starCount", "distanceLy?", "raDeg?", "decDeg?",
       "hostSpectralType?", "hasGas", "circumbinary?", "overviewUrl", "primaryStarId?"
     }
   ]
@@ -111,6 +111,7 @@ Thin index `systems.index.json`:
 - **Do not clobber curated:** never write archive chunks for
   `solar`, `trappist-1`, `kepler-11`, `sparse-test` unless `--force-ids` lists them.
 - **Sol stays curated** — Horizons / SSD path (`scripts/ingest.mjs`), not NEA.
+- **Sky coords:** `raDeg` / `decDeg` (ICRS degrees) from the same primary/first TAP row as `sy_dist`. Omit when missing; Sol/home never gets invented coords. Focused backfill: `node scripts/backfill-archive-sky-coords.mjs`.
 - **No invented moons** for exoplanet systems.
 - Default importer is **bounded** (`--limit N`) so CI does not pull the full dump.
 

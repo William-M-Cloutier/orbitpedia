@@ -35,16 +35,22 @@
           "planetCount",
           "distanceLy",
           "hostSpectralType",
-          "compactnessNote"
+          "compactnessNote",
+          "raDeg",
+          "decDeg"
         ]
       },
       {
         "name": "NASA Exoplanet Archive",
         "url": "https://exoplanetarchive.ipac.caltech.edu/",
         "fields": [
-          "distanceLy"
+          "distanceLy",
+          "raDeg",
+          "decDeg"
         ]
       }
     ]
-  }
+  },
+  "raDeg": 346.6263919,
+  "decDeg": -5.0434618
 }

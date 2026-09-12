@@ -24,11 +24,15 @@
             "blurb",
             "planetCount",
             "starCount",
-            "distanceLy"
+            "distanceLy",
+            "raDeg",
+            "decDeg"
           ]
         }
       ]
-    }
+    },
+    "raDeg": 100.7656871,
+    "decDeg": -1.2964437
   },
   "bodies": [
     {
