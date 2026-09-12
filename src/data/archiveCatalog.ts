@@ -124,6 +124,10 @@ export function archiveCoordCoverage(index: ArchiveIndex): number {
   return both / n;
 }
 
+/** Alias — Ephemeris / ingest docs historically used this name. */
+export const archiveSkyCoordCoverage = archiveCoordCoverage;
+
+
 /**
  * Fetch archive index with AbortController timeout. Abort / error → null.
  * Exported for tests and callers that need a timed probe.
