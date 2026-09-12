@@ -5,13 +5,14 @@
   "systemId": "earth-sats",
   "parentId": "earth-sats-earth",
   "aliases": [
+    "Surface Water and Ocean Topography",
     "SWOT",
     "2022-173A"
   ],
   "facts": {
-    "owner": "NASA / CNES",
+    "owner": "NASA/CNES",
     "launchDate": "2022-12-16",
-    "discoveryNotes": "NASA/CNES surface water and ocean topography mission."
+    "discoveryNotes": "NASA/CNES Surface Water and Ocean Topography mission."
   },
   "orbit": {
     "epochJd": 2461295.805326713,
@@ -27,7 +28,7 @@
     "qKm": 7271.200626418829,
     "frame": "geocentric"
   },
-  "color": "#5499C7",
+  "color": "#4DB8D4",
   "noradCatId": 54754,
   "meta": {
     "provenance": "Celestrak GP OMM JSON fetched 2026-09-12T23:10:00Z: https://celestrak.org/NORAD/elements/gp.php?CATNR=54754&FORMAT=JSON",

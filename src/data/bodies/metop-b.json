@@ -5,13 +5,14 @@
   "systemId": "earth-sats",
   "parentId": "earth-sats-earth",
   "aliases": [
+    "MetOp-B",
     "METOP-B",
     "2012-049A"
   ],
   "facts": {
-    "owner": "EUMETSAT / ESA",
+    "owner": "EUMETSAT/ESA",
     "launchDate": "2012-09-17",
-    "discoveryNotes": "Europe's polar-orbiting meteorological satellite (MetOp series)."
+    "discoveryNotes": "EUMETSAT polar meteorological satellite (MetOp series)."
   },
   "orbit": {
     "epochJd": 2461295.7626999654,
@@ -27,7 +28,7 @@
     "qKm": 7196.0724574623,
     "frame": "geocentric"
   },
-  "color": "#76D7C4",
+  "color": "#6BA3D8",
   "noradCatId": 38771,
   "meta": {
     "provenance": "Celestrak GP OMM JSON fetched 2026-09-12T23:10:00Z: https://celestrak.org/NORAD/elements/gp.php?CATNR=38771&FORMAT=JSON",

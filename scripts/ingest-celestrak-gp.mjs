@@ -68,10 +68,12 @@ const FIRST_SLICE = [
     name: "ISS (Zarya)",
     aliases: ["ISS", "International Space Station", "Zarya"],
     color: "#E8E8E8",
+    group: "stations",
     facts: {
-      owner: "International (NASA / Roscosmos / ESA / JAXA / CSA)",
+      owner: "International (NASA/Roscosmos/ESA/JAXA/CSA)",
       launchDate: "1998-11-20",
-      discoveryNotes: "International Space Station — crewed laboratory in low Earth orbit.",
+      discoveryNotes:
+        "International Space Station — crewed laboratory in low Earth orbit.",
     },
   },
   {
@@ -80,6 +82,7 @@ const FIRST_SLICE = [
     name: "Hubble Space Telescope",
     aliases: ["HST", "Hubble"],
     color: "#9BB7D4",
+    group: "stations",
     facts: {
       owner: "NASA",
       launchDate: "1990-04-24",
@@ -92,8 +95,9 @@ const FIRST_SLICE = [
     name: "CSS Tianhe",
     aliases: ["Tianhe", "CSS", "China Space Station"],
     color: "#F0C27A",
+    group: "stations",
     facts: {
-      owner: "CMSA / CNSA",
+      owner: "CMSA/CNSA",
       launchDate: "2021-04-29",
       discoveryNotes: "Tianhe core module of the China Space Station.",
     },
@@ -104,6 +108,7 @@ const FIRST_SLICE = [
     name: "Terra",
     aliases: ["EOS AM-1"],
     color: "#6BCB77",
+    group: "science",
     facts: {
       owner: "NASA",
       launchDate: "1999-12-18",
@@ -116,8 +121,9 @@ const FIRST_SLICE = [
     name: "NOAA-20",
     aliases: ["JPSS-1", "NOAA 20"],
     color: "#4D96FF",
+    group: "weather",
     facts: {
-      owner: "NOAA / NASA",
+      owner: "NOAA/NASA",
       launchDate: "2017-11-18",
       discoveryNotes: "NOAA/NASA Joint Polar Satellite System-1 (JPSS-1).",
     },
@@ -127,83 +133,90 @@ const FIRST_SLICE = [
     id: "noaa-19",
     name: "NOAA-19",
     aliases: ["NOAA 19"],
-    color: "#5DADE2",
+    color: "#3A7BD5",
+    group: "weather",
     facts: {
       owner: "NOAA",
       launchDate: "2009-02-06",
-      discoveryNotes: "NOAA polar-orbiting weather satellite.",
+      discoveryNotes: "NOAA polar-orbiting weather satellite (POES).",
     },
   },
   {
     catnr: 37849,
     id: "suomi-npp",
     name: "Suomi NPP",
-    aliases: ["NPP", "Suomi"],
-    color: "#85C1E9",
+    aliases: ["NPP", "Suomi National Polar-orbiting Partnership"],
+    color: "#5B9BD5",
+    group: "weather",
     facts: {
-      owner: "NASA / NOAA",
+      owner: "NASA/NOAA",
       launchDate: "2011-10-28",
-      discoveryNotes: "Suomi National Polar-orbiting Partnership weather and climate satellite.",
+      discoveryNotes: "NASA/NOAA Suomi National Polar-orbiting Partnership.",
     },
   },
   {
     catnr: 38771,
     id: "metop-b",
     name: "MetOp-B",
-    aliases: ["METOP-B"],
-    color: "#76D7C4",
+    aliases: ["MetOp-B", "METOP-B"],
+    color: "#6BA3D8",
+    group: "weather",
     facts: {
-      owner: "EUMETSAT / ESA",
+      owner: "EUMETSAT/ESA",
       launchDate: "2012-09-17",
-      discoveryNotes: "Europe's polar-orbiting meteorological satellite (MetOp series).",
+      discoveryNotes: "EUMETSAT polar meteorological satellite (MetOp series).",
     },
   },
   {
     catnr: 43689,
     id: "metop-c",
     name: "MetOp-C",
-    aliases: ["METOP-C"],
-    color: "#73C6B6",
+    aliases: ["MetOp-C", "METOP-C"],
+    color: "#7BB0E0",
+    group: "weather",
     facts: {
-      owner: "EUMETSAT / ESA",
+      owner: "EUMETSAT/ESA",
       launchDate: "2018-11-07",
-      discoveryNotes: "Third MetOp polar-orbiting meteorological satellite.",
+      discoveryNotes: "EUMETSAT polar meteorological satellite (MetOp series).",
     },
   },
   {
     catnr: 27424,
     id: "aqua",
     name: "Aqua",
-    aliases: [],
-    color: "#5DADE2",
+    aliases: ["EOS PM-1", "AQUA"],
+    color: "#2E86AB",
+    group: "science",
     facts: {
       owner: "NASA",
       launchDate: "2002-05-04",
-      discoveryNotes: "NASA Earth Observing System afternoon (PM) satellite.",
+      discoveryNotes: "NASA Earth Observing System flagship (PM) satellite.",
     },
   },
   {
     catnr: 28376,
     id: "aura",
     name: "Aura",
-    aliases: [],
-    color: "#AF7AC5",
+    aliases: ["EOS Aura", "AURA"],
+    color: "#3A9BC2",
+    group: "science",
     facts: {
       owner: "NASA",
       launchDate: "2004-07-15",
-      discoveryNotes: "NASA Earth Observing System atmospheric chemistry mission.",
+      discoveryNotes: "NASA Earth Observing System atmospheric chemistry satellite.",
     },
   },
   {
     catnr: 39084,
     id: "landsat-8",
     name: "Landsat 8",
-    aliases: ["LANDSAT 8"],
-    color: "#58D68D",
+    aliases: ["LDCM", "LANDSAT 8"],
+    color: "#88C057",
+    group: "science",
     facts: {
-      owner: "NASA / USGS",
+      owner: "NASA/USGS",
       launchDate: "2013-02-11",
-      discoveryNotes: "Landsat continuum Earth land-imaging satellite.",
+      discoveryNotes: "NASA/USGS Landsat 8 Earth-imaging satellite.",
     },
   },
   {
@@ -211,71 +224,77 @@ const FIRST_SLICE = [
     id: "landsat-9",
     name: "Landsat 9",
     aliases: ["LANDSAT 9"],
-    color: "#52BE80",
+    color: "#9AD06A",
+    group: "science",
     facts: {
-      owner: "NASA / USGS",
+      owner: "NASA/USGS",
       launchDate: "2021-09-27",
-      discoveryNotes: "Landsat land-imaging mission flying with Landsat 8.",
+      discoveryNotes: "NASA/USGS Landsat 9 Earth-imaging satellite.",
     },
   },
   {
     catnr: 39634,
     id: "sentinel-1a",
     name: "Sentinel-1A",
-    aliases: [],
-    color: "#F5B041",
+    aliases: ["S1A", "SENTINEL-1A"],
+    color: "#C9A227",
+    group: "science",
     facts: {
-      owner: "ESA / Copernicus",
+      owner: "ESA/Copernicus",
       launchDate: "2014-04-03",
-      discoveryNotes: "Copernicus radar Earth-observation satellite.",
+      discoveryNotes: "ESA Copernicus Sentinel-1A C-band SAR satellite.",
     },
   },
   {
     catnr: 40697,
     id: "sentinel-2a",
     name: "Sentinel-2A",
-    aliases: [],
-    color: "#EB984E",
+    aliases: ["S2A", "SENTINEL-2A"],
+    color: "#D4B03A",
+    group: "science",
     facts: {
-      owner: "ESA / Copernicus",
+      owner: "ESA/Copernicus",
       launchDate: "2015-06-23",
-      discoveryNotes: "Copernicus optical land-monitoring satellite.",
+      discoveryNotes: "ESA Copernicus Sentinel-2A optical Earth-observation satellite.",
     },
   },
   {
     catnr: 41335,
     id: "sentinel-3a",
     name: "Sentinel-3A",
-    aliases: [],
-    color: "#DC7633",
+    aliases: ["S3A", "SENTINEL-3A"],
+    color: "#E0C04D",
+    group: "science",
     facts: {
-      owner: "ESA / EUMETSAT",
+      owner: "ESA/EUMETSAT",
       launchDate: "2016-02-16",
-      discoveryNotes: "Copernicus ocean and land monitoring satellite.",
+      discoveryNotes: "ESA/EUMETSAT Copernicus Sentinel-3A ocean/land monitoring satellite.",
     },
   },
   {
     catnr: 43613,
     id: "icesat-2",
     name: "ICESat-2",
-    aliases: ["ICESAT-2"],
-    color: "#AED6F1",
+    aliases: ["ICESAT-2", "ICESat 2"],
+    color: "#7EC8E3",
+    group: "science",
     facts: {
       owner: "NASA",
       launchDate: "2018-09-15",
-      discoveryNotes: "NASA laser altimeter ice and vegetation mission.",
+      discoveryNotes: "NASA Ice, Cloud and land Elevation Satellite-2 (laser altimeter).",
     },
   },
   {
     catnr: 54754,
     id: "swot",
     name: "SWOT",
-    aliases: [],
-    color: "#5499C7",
+    aliases: ["Surface Water and Ocean Topography"],
+    color: "#4DB8D4",
+    group: "science",
     facts: {
-      owner: "NASA / CNES",
+      owner: "NASA/CNES",
       launchDate: "2022-12-16",
-      discoveryNotes: "NASA/CNES surface water and ocean topography mission.",
+      discoveryNotes: "NASA/CNES Surface Water and Ocean Topography mission.",
     },
   },
   {
@@ -283,11 +302,12 @@ const FIRST_SLICE = [
     id: "cloudsat",
     name: "CloudSat",
     aliases: ["CLOUDSAT"],
-    color: "#D7BDE2",
+    color: "#A8C5D4",
+    group: "science",
     facts: {
-      owner: "NASA / CSA",
+      owner: "NASA/CSA",
       launchDate: "2006-04-28",
-      discoveryNotes: "NASA cloud-profiling radar satellite.",
+      discoveryNotes: "NASA/CSA cloud-profiling radar Earth science satellite.",
     },
   },
 ];
@@ -422,6 +442,7 @@ function parseArgs(argv) {
     systemId: DEFAULT_SYSTEM_ID,
     parentId: DEFAULT_PARENT_ID,
     catnrs: null,
+    group: null,
     seedPath: SEED_PATH,
     help: false,
   };
@@ -445,6 +466,8 @@ function parseArgs(argv) {
         .split(",")
         .map((s) => Number(s.trim()))
         .filter((n) => Number.isFinite(n) && n > 0);
+    } else if (a === "--group" && argv[i + 1]) {
+      opts.group = argv[++i].trim();
     } else {
       console.error(`Unknown arg: ${a}`);
       opts.help = true;
@@ -462,6 +485,7 @@ Options:
   --from-seed        Use scripts/fixtures/celestrak-gp-first-slice.json
   --seed <path>      Custom seed JSON (implies --from-seed)
   --catnr a,b,...    Subset of NORAD catalog numbers
+  --group name       Subset by curated group: stations|weather|science
   --with-tle         Also fetch FORMAT=2LE into satellite.tle (live only)
   --system-id <id>   Default: earth-sats
   --parent-id <id>   Default: earth-sats-earth
@@ -771,12 +795,21 @@ async function main() {
     process.exit(0);
   }
 
-  const slice = opts.catnrs?.length
-    ? FIRST_SLICE.filter((s) => opts.catnrs.includes(s.catnr))
-    : FIRST_SLICE;
+  let slice = FIRST_SLICE;
+  if (opts.group) {
+    const allowed = new Set(["stations", "weather", "science"]);
+    if (!allowed.has(opts.group)) {
+      console.error(`Unknown --group ${opts.group} (use stations|weather|science)`);
+      process.exit(1);
+    }
+    slice = slice.filter((s) => s.group === opts.group);
+  }
+  if (opts.catnrs?.length) {
+    slice = slice.filter((s) => opts.catnrs.includes(s.catnr));
+  }
 
   if (!slice.length) {
-    console.error("No matching first-slice entries for --catnr");
+    console.error("No matching first-slice entries for --catnr/--group");
     process.exit(1);
   }
 
