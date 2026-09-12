@@ -181,16 +181,19 @@ export function getSatSharedMaterial(
   return mat as THREE.MeshStandardMaterial;
 }
 
-/** Shared PointsMaterial for far / dense sat impostors. */
+/**
+ * Shared PointsMaterial for far / dense sat impostors.
+ * Pixel size (sizeAttenuation: false) — world-attenuated size blew up near camera.
+ */
 export function getSatPointsMaterial(colorHex: string): THREE.PointsMaterial {
   const hex = (colorHex || "#c8c8c8").trim().toLowerCase();
-  const key = `sat|points|${hex}`;
+  const key = `sat|points|px|${hex}`;
   let mat = satPool.get(key);
   if (!mat) {
     mat = new THREE.PointsMaterial({
       color: hex,
-      size: 0.07,
-      sizeAttenuation: true,
+      size: 4,
+      sizeAttenuation: false,
       depthWrite: false,
     });
     satPool.set(key, mat);

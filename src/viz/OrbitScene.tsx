@@ -1098,7 +1098,8 @@ const SatelliteBodyMesh = memo(function SatelliteBodyMesh({
         </mesh>
         {/* Far / dense: tiny Points impostor. */}
         <points ref={pointsRef} frustumCulled visible={false}>
-          <bufferGeometry>
+          {/* Shared attr — do not let R3F dispose on unmount. */}
+          <bufferGeometry dispose={null}>
             <primitive
               attach="attributes-position"
               object={SAT_POINT_POSITION_ATTR}
