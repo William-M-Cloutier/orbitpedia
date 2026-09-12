@@ -78,7 +78,9 @@ Per archive system chunk `graphs/<systemId>.json`:
   present. Companion stars + placeholders set `parentId` → `primaryStarId` (Orbit Viz
   Explore rail) but **omit `orbit`** unless real NEA binary elements exist (none
   invented). Placeholders: `kind:star`, `meta.confidence: "placeholder"`, no
-  invented spectype/mass/teff/orbit.
+  invented spectype/mass/teff/orbit. Explore **omits** orbit-unknown companion
+  meshes (rail/Facts only); Prop/True size for stars lacking `radiusMeanKm` uses a
+  display fraction of the primary mesh — not an invented catalog radius.
 - Planet cards: if `pl_orbsmax` present → Kepler elements with
   `orbit.frame: "heliocentric"` (host-centric). If missing/invalid → **omit
   `orbit` entirely** but still emit the planet card when mass/radius/discovery
