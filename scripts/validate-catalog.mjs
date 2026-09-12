@@ -191,6 +191,10 @@ const SystemSchema = z.object({
   highlights: z.array(z.string().min(1)).optional(),
   planetCount: z.number().int().nonnegative().optional(),
   distanceLy: z.number().nonnegative().optional(),
+  /** ICRS RA degrees (archive / SIMBAD). Omit for Sol/home and when unknown. */
+  raDeg: z.number().min(0).max(360).optional(),
+  /** ICRS Dec degrees. Omit for Sol/home and when unknown. */
+  decDeg: z.number().min(-90).max(90).optional(),
   hostSpectralType: z.string().min(1).optional(),
   compactnessNote: z.string().min(1).optional(),
   hasGas: z.boolean().optional(),

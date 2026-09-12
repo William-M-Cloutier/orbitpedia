@@ -16,11 +16,13 @@
     "blurb": "HD 191939 (G9 V) — 5 planets; 175 ly; first confirmed 2020 (Transit).",
     "planetCount": 5,
     "distanceLy": 174.8,
+    "raDeg": 302.0256247,
+    "decDeg": 66.8503014,
     "hostSpectralType": "G9 V",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:49:08.900Z",
+      "fetchedAt": "2026-09-12T22:39:16.441Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — HD 191939 overview",
@@ -30,15 +32,13 @@
             "planetCount",
             "starCount",
             "distanceLy",
-            "hostSpectralType",
             "raDeg",
-            "decDeg"
+            "decDeg",
+            "hostSpectralType"
           ]
         }
       ]
-    },
-    "raDeg": 302.0256247,
-    "decDeg": 66.8503014
+    }
   },
   "bodies": [
     {
@@ -65,7 +65,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -102,7 +102,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -150,7 +150,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -198,7 +198,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -245,7 +245,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -291,7 +291,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

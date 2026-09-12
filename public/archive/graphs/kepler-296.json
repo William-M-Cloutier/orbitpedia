@@ -16,11 +16,13 @@
     "blurb": "Kepler-296 (M2 V) — 4 planets, 2 stars; 545 ly; first confirmed 2014 (Transit).",
     "planetCount": 4,
     "distanceLy": 544.7,
+    "raDeg": 286.5400278,
+    "decDeg": 49.4372614,
     "hostSpectralType": "M2 V",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:49:08.900Z",
+      "fetchedAt": "2026-09-12T22:39:16.441Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-296 overview",
@@ -30,15 +32,13 @@
             "planetCount",
             "starCount",
             "distanceLy",
-            "hostSpectralType",
             "raDeg",
-            "decDeg"
+            "decDeg",
+            "hostSpectralType"
           ]
         }
       ]
-    },
-    "raDeg": 286.5400278,
-    "decDeg": 49.4372614
+    }
   },
   "bodies": [
     {
@@ -65,7 +65,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -91,7 +91,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       }
@@ -127,7 +127,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -174,7 +174,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -221,7 +221,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -268,7 +268,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

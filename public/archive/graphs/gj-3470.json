@@ -12,11 +12,13 @@
     "blurb": "GJ 3470 (M1.5) — 1 planet; 96 ly; first confirmed 2012 (Radial Velocity).",
     "planetCount": 1,
     "distanceLy": 96,
+    "raDeg": 119.7735021,
+    "decDeg": 15.391209,
     "hostSpectralType": "M1.5",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:49:08.900Z",
+      "fetchedAt": "2026-09-12T22:39:16.441Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — GJ 3470 overview",
@@ -26,15 +28,13 @@
             "planetCount",
             "starCount",
             "distanceLy",
-            "hostSpectralType",
             "raDeg",
-            "decDeg"
+            "decDeg",
+            "hostSpectralType"
           ]
         }
       ]
-    },
-    "raDeg": 119.7735021,
-    "decDeg": 15.391209
+    }
   },
   "bodies": [
     {
@@ -61,7 +61,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -98,7 +98,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

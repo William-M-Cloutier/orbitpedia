@@ -14,11 +14,13 @@
     "blurb": "K2-133 (M1.5 V) — 3 planets; 245 ly; first confirmed 2017 (Transit).",
     "planetCount": 3,
     "distanceLy": 245.2,
+    "raDeg": 70.1493775,
+    "decDeg": 25.0098135,
     "hostSpectralType": "M1.5 V",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:49:08.900Z",
+      "fetchedAt": "2026-09-12T22:39:16.441Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — K2-133 overview",
@@ -28,15 +30,13 @@
             "planetCount",
             "starCount",
             "distanceLy",
-            "hostSpectralType",
             "raDeg",
-            "decDeg"
+            "decDeg",
+            "hostSpectralType"
           ]
         }
       ]
-    },
-    "raDeg": 70.1493775,
-    "decDeg": 25.0098135
+    }
   },
   "bodies": [
     {
@@ -63,7 +63,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -98,7 +98,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -144,7 +144,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -190,7 +190,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

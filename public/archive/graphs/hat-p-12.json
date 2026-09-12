@@ -12,11 +12,13 @@
     "blurb": "HAT-P-12 (K4) — 1 planet; 466 ly; first confirmed 2009 (Transit).",
     "planetCount": 1,
     "distanceLy": 465.6,
+    "raDeg": 209.3886452,
+    "decDeg": 43.49331,
     "hostSpectralType": "K4",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:49:08.900Z",
+      "fetchedAt": "2026-09-12T22:39:16.441Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — HAT-P-12 overview",
@@ -26,15 +28,13 @@
             "planetCount",
             "starCount",
             "distanceLy",
-            "hostSpectralType",
             "raDeg",
-            "decDeg"
+            "decDeg",
+            "hostSpectralType"
           ]
         }
       ]
-    },
-    "raDeg": 209.3886452,
-    "decDeg": 43.49331
+    }
   },
   "bodies": [
     {
@@ -61,7 +61,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -98,7 +98,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

@@ -12,11 +12,13 @@
     "starCount": 2,
     "blurb": "CD-35 2722 (L4.5 V) — 1 planet, 2 stars; first confirmed 2026 (Radial Velocity).",
     "planetCount": 1,
+    "raDeg": 92.33,
+    "decDeg": -35.8255389,
     "hostSpectralType": "L4.5 V",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:49:08.900Z",
+      "fetchedAt": "2026-09-12T22:39:16.441Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — CD-35 2722 overview",
@@ -25,6 +27,8 @@
             "blurb",
             "planetCount",
             "starCount",
+            "raDeg",
+            "decDeg",
             "hostSpectralType"
           ]
         }
@@ -54,7 +58,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -86,7 +90,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "approximateFields": [
           "facts.projectedSepAu"
@@ -125,7 +129,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

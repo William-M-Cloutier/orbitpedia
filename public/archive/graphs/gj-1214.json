@@ -12,11 +12,13 @@
     "blurb": "GJ 1214 (M4 V) — 1 planet; 47.8 ly; first confirmed 2009 (Transit).",
     "planetCount": 1,
     "distanceLy": 47.8,
+    "raDeg": 258.8313991,
+    "decDeg": 4.9606795,
     "hostSpectralType": "M4 V",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:49:08.900Z",
+      "fetchedAt": "2026-09-12T22:39:16.441Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — GJ 1214 overview",
@@ -26,15 +28,13 @@
             "planetCount",
             "starCount",
             "distanceLy",
-            "hostSpectralType",
             "raDeg",
-            "decDeg"
+            "decDeg",
+            "hostSpectralType"
           ]
         }
       ]
-    },
-    "raDeg": 258.8313991,
-    "decDeg": 4.9606795
+    }
   },
   "bodies": [
     {
@@ -61,7 +61,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -98,7 +98,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

@@ -12,11 +12,13 @@
     "blurb": "CoRoT-28 (G8/9 IV) — 1 planet; 2,499 ly; first confirmed 2015 (Transit).",
     "planetCount": 1,
     "distanceLy": 2499,
+    "raDeg": 278.6883216,
+    "decDeg": 5.5736911,
     "hostSpectralType": "G8/9 IV",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:49:08.900Z",
+      "fetchedAt": "2026-09-12T22:39:16.441Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — CoRoT-28 overview",
@@ -26,15 +28,13 @@
             "planetCount",
             "starCount",
             "distanceLy",
-            "hostSpectralType",
             "raDeg",
-            "decDeg"
+            "decDeg",
+            "hostSpectralType"
           ]
         }
       ]
-    },
-    "raDeg": 278.6883216,
-    "decDeg": 5.5736911
+    }
   },
   "bodies": [
     {
@@ -61,7 +61,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -98,7 +98,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

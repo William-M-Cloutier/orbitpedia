@@ -12,11 +12,13 @@
     "blurb": "GJ 341 (M1) — 1 planet; 34.1 ly; first confirmed 2025 (Transit).",
     "planetCount": 1,
     "distanceLy": 34.1,
+    "raDeg": 140.3993759,
+    "decDeg": -60.2811692,
     "hostSpectralType": "M1",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:49:08.900Z",
+      "fetchedAt": "2026-09-12T22:39:16.441Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — GJ 341 overview",
@@ -26,15 +28,13 @@
             "planetCount",
             "starCount",
             "distanceLy",
-            "hostSpectralType",
             "raDeg",
-            "decDeg"
+            "decDeg",
+            "hostSpectralType"
           ]
         }
       ]
-    },
-    "raDeg": 140.3993759,
-    "decDeg": -60.2811692
+    }
   },
   "bodies": [
     {
@@ -61,7 +61,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -92,7 +92,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "known",
         "unitsVersion": 1
       }

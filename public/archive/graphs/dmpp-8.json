@@ -12,10 +12,12 @@
     "blurb": "DMPP-8 — 1 planet; 248 ly; first confirmed 2026 (Radial Velocity).",
     "planetCount": 1,
     "distanceLy": 248.3,
+    "raDeg": 305.3083517,
+    "decDeg": -81.6166664,
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:49:08.900Z",
+      "fetchedAt": "2026-09-12T22:39:16.441Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — DMPP-8 overview",
@@ -30,9 +32,7 @@
           ]
         }
       ]
-    },
-    "raDeg": 305.3083517,
-    "decDeg": -81.6166664
+    }
   },
   "bodies": [
     {
@@ -59,7 +59,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -94,7 +94,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

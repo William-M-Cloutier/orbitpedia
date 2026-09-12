@@ -13,11 +13,13 @@
     "blurb": "BD+05 4868 (K V) — 1 planet, 2 stars; 142 ly; first confirmed 2025 (Transit).",
     "planetCount": 1,
     "distanceLy": 142.1,
+    "raDeg": 326.8614036,
+    "decDeg": 6.6053185,
     "hostSpectralType": "K V",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:49:08.900Z",
+      "fetchedAt": "2026-09-12T22:39:16.441Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — BD+05 4868 A overview",
@@ -27,6 +29,8 @@
             "planetCount",
             "starCount",
             "distanceLy",
+            "raDeg",
+            "decDeg",
             "hostSpectralType"
           ]
         }
@@ -58,7 +62,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -90,7 +94,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "approximateFields": [
           "facts.projectedSepAu"
@@ -125,7 +129,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

@@ -13,11 +13,13 @@
     "blurb": "HAT-P-1 (G0 V) — 1 planet, 2 stars; 519 ly; first confirmed 2006 (Transit).",
     "planetCount": 1,
     "distanceLy": 518.5,
+    "raDeg": 344.4453632,
+    "decDeg": 38.674919,
     "hostSpectralType": "G0 V",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:49:08.900Z",
+      "fetchedAt": "2026-09-12T22:39:16.441Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — HAT-P-1 overview",
@@ -27,15 +29,13 @@
             "planetCount",
             "starCount",
             "distanceLy",
-            "hostSpectralType",
             "raDeg",
-            "decDeg"
+            "decDeg",
+            "hostSpectralType"
           ]
         }
       ]
-    },
-    "raDeg": 344.4453632,
-    "decDeg": 38.674919
+    }
   },
   "bodies": [
     {
@@ -62,7 +62,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -83,7 +83,7 @@
             "fields": []
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "placeholder",
         "unitsVersion": 1
       }
@@ -120,7 +120,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

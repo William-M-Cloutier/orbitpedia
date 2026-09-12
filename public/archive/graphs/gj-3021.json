@@ -13,11 +13,13 @@
     "blurb": "GJ 3021 (G6 V) — 1 planet, 2 stars; 57.3 ly; first confirmed 2000 (Radial Velocity).",
     "planetCount": 1,
     "distanceLy": 57.3,
+    "raDeg": 4.0634323,
+    "decDeg": -79.8514218,
     "hostSpectralType": "G6 V",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:49:08.900Z",
+      "fetchedAt": "2026-09-12T22:39:16.441Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — GJ 3021 overview",
@@ -27,15 +29,13 @@
             "planetCount",
             "starCount",
             "distanceLy",
-            "hostSpectralType",
             "raDeg",
-            "decDeg"
+            "decDeg",
+            "hostSpectralType"
           ]
         }
       ]
-    },
-    "raDeg": 4.0634323,
-    "decDeg": -79.8514218
+    }
   },
   "bodies": [
     {
@@ -62,7 +62,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -83,7 +83,7 @@
             "fields": []
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "placeholder",
         "unitsVersion": 1
       }
@@ -118,7 +118,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
