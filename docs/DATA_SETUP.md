@@ -82,6 +82,11 @@ dwarfs/asteroids, moons either after their parent or listed anywhere as long as
 
 Do **not** fill unknowns with zeros or Wikipedia guesses.
 
+Facts / UI copy is **human astronomy**. Thresholds and field names (`hasGas`,
+`pl_bmasse`, `pl_rade`, ingest flags) live in code comments and docs only —
+never in blurbs, highlights, discoveryNotes, tooltips, or other user-facing
+strings. `npm test` runs `scripts/check-ui-copy.mjs`.
+
 ### Orbit
 
 - Always set `frame`.
