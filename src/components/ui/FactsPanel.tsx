@@ -171,13 +171,13 @@ function PoiDetail({
   const depth =
     poi.depthM != null ? `${poi.depthM.toLocaleString("en-US")} m` : null;
   return (
-    <section className="mb-4 rounded-lg border border-amber-400/25 bg-amber-500/[0.07] p-3">
+    <section className="mb-4 rounded-xl border border-amber-400/30 bg-amber-500/[0.08] p-3.5 shadow-[inset_0_1px_0_rgba(251,191,36,0.08)]">
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">
-          <p className="text-[11px] uppercase tracking-wider text-amber-200/70">
+          <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-amber-200/70">
             Surface place
           </p>
-          <h3 className="mt-0.5 truncate text-sm font-semibold text-zinc-100">
+          <h3 className="mt-1 truncate text-[15px] font-semibold tracking-tight text-zinc-50">
             {poi.name}
           </h3>
         </div>
@@ -192,7 +192,7 @@ function PoiDetail({
           </button>
         ) : null}
       </div>
-      <p className="mt-2 text-sm leading-relaxed text-zinc-300">{poi.summary}</p>
+      <p className="mt-2.5 text-sm leading-relaxed text-zinc-300/95">{poi.summary}</p>
       <dl className="mt-3 grid gap-2">
         <Stat
           label="Latitude"
