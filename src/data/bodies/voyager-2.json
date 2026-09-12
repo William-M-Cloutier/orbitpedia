@@ -1,0 +1,60 @@
+{
+  "id": "voyager-2",
+  "name": "Voyager 2",
+  "kind": "probe",
+  "systemId": "solar",
+  "aliases": [
+    "V2",
+    "Voyager II"
+  ],
+  "facts": {
+    "discoveryNotes": "NASA Voyager Interstellar Mission spacecraft. Only spacecraft to visit Uranus and Neptune. Entered interstellar space in 2018.",
+    "discoveryDate": "1977"
+  },
+  "color": "#A8B8C8",
+  "horizonId": "-32",
+  "mission": {
+    "launchDate": "1977-08-20",
+    "status": "active",
+    "targets": [
+      "Jupiter",
+      "Saturn",
+      "Uranus",
+      "Neptune",
+      "Interstellar space"
+    ]
+  },
+  "meta": {
+    "source": "NASA Science mission pages + JPL Horizons spacecraft IDs",
+    "sources": [
+      {
+        "name": "NASA Voyager fact sheet",
+        "url": "https://science.nasa.gov/mission/voyager/fact-sheet/",
+        "fields": [
+          "mission.launchDate",
+          "mission.status",
+          "mission.targets",
+          "facts.discoveryNotes"
+        ]
+      },
+      {
+        "name": "JPL Horizons web app (Voyager 2, -32)",
+        "url": "https://ssd.jpl.nasa.gov/horizons/app.html",
+        "fields": [
+          "horizonId"
+        ]
+      },
+      {
+        "name": "NASA Voyager mission",
+        "url": "https://science.nasa.gov/mission/voyager/",
+        "fields": [
+          "mission.status",
+          "facts.discoveryNotes"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-12T22:36:56.000Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  }
+}

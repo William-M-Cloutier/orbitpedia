@@ -229,3 +229,13 @@ Lazy load helpers: `src/data/archiveCatalog.ts`
 
 Optional string list of fact keys whose **stored** values should render with a leading `~` (archive-backed estimates). Cite the estimate in `meta.sources`. Never invent estimates just to fill the UI.
 
+## Probes (`kind: probe`)
+
+Additive spacecraft cards on solar (and later other systems):
+
+- Required: `id`, `name`, `kind: "probe"`, `systemId`, `meta` (+ Sources), usually `horizonId` (JPL Horizons spacecraft ID, e.g. `-31`).
+- Optional `mission`: `{ launchDate, status, targets[] }` — real NASA/JPL values only.
+- **Omit `orbit`** when the trajectory is hyperbolic escape (`OrbitSchema.e` is ≤1). Viz owns path/icon; do not invent Kepler elements or waypoints.
+- Explore this slice: **marker-only** placement (octahedron icon outside the outer planet display apo). **Not an ephemeris / not a trajectory** — placeholders until `path.waypoints` (Arch-owned schema). Selectable via focusId/onSelect; no OrbitLine without usable Kepler.
+- `facts.discoveryNotes` may summarize the mission factually (no process meta).
+

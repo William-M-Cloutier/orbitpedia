@@ -25,6 +25,7 @@ import { formatAu, formatPeriodDays } from "@/lib/units";
 import { satelliteFactRows } from "@/lib/satelliteDisplay";
 import type { SurfacePoi } from "@/data/poiSchema";
 import { formatLatDeg, formatLonDeg } from "@/lib/latLon";
+import { missionFactRows } from "@/lib/missionDisplay";
 
 type Props = {
   body: Body | null | undefined;
@@ -257,6 +258,8 @@ export function FactsPanel({ body, system, onClear, selectedPoi, onClearPoi }: P
   const fullRows = keyFactRows(body);
   const satRows = satelliteFactRows(body);
   const isSatellite = body.kind === "satellite";
+  const missionRows = missionFactRows(body);
+  const isProbe = body.kind === "probe";
 
   return (
     <aside className="pointer-events-auto flex max-h-[45vh] w-full flex-col overflow-hidden border-t border-white/10 bg-[#080d18]/95 backdrop-blur md:max-h-none md:h-full md:w-full md:border-l md:border-t-0">
@@ -305,7 +308,10 @@ export function FactsPanel({ body, system, onClear, selectedPoi, onClearPoi }: P
               {satRows.map((r) => (
                 <Stat key={r.label} label={r.label} value={r.value} />
               ))}
-              {!isSatellite ? (
+              {missionRows.map((r) => (
+                <Stat key={r.label} label={r.label} value={r.value} />
+              ))}
+              {!isSatellite && !isProbe ? (
                 <Stat label="Discovered" value={discovered} />
               ) : null}
               <FactStats rows={quickRows} />
@@ -387,12 +393,25 @@ export function FactsPanel({ body, system, onClear, selectedPoi, onClearPoi }: P
               </section>
             ) : null}
 
+            {missionRows.length > 0 ? (
+              <section>
+                <h3 className="mb-2 text-xs font-medium uppercase tracking-wider text-zinc-500">
+                  Mission
+                </h3>
+                <dl className="grid gap-2">
+                  {missionRows.map((r) => (
+                    <Stat key={r.label} label={r.label} value={r.value} />
+                  ))}
+                </dl>
+              </section>
+            ) : null}
+
             <section>
               <h3 className="mb-2 text-xs font-medium uppercase tracking-wider text-zinc-500">
                 Key facts
               </h3>
               <dl className="grid gap-2">
-                {!isSatellite ? (
+                {!isSatellite && !isProbe ? (
                   <Stat label="Discovered" value={discovered} />
                 ) : null}
                 <FactStats rows={fullRows} />

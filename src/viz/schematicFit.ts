@@ -268,6 +268,52 @@ export function maxCompanionDisplaySep(
 }
 
 /**
+ * Viz-only radial separation for marker-only probes (kind===probe without
+ * usable Kepler / path.waypoints).
+ *
+ * **NOT an ephemeris / NOT a trajectory** — placeholders until schema has
+ * path.waypoints. Do not invent Horizons samples or fake Kepler elements.
+ *
+ * Outside outermost primary-frame planet (or orbiter) display apoapsis
+ * (aAu*(1+e)*helioScale) + probe mesh + outermost mesh + margin. Shared ring
+ * for all probes in the graph; angles assigned in OrbitScene (stable id sort).
+ * Catalog aAu / cards unchanged.
+ */
+export function probeMarkerDisplaySep(
+  sizeMode: SizeMode,
+  systemBodies: readonly Body[],
+  helioScale: number,
+): number {
+  const probes = systemBodies.filter(
+    (b) => b.kind === "probe" && !hasUsableOrbit(b),
+  );
+  if (probes.length === 0) return 0;
+  const hs = helioScale > 0 && Number.isFinite(helioScale) ? helioScale : 1;
+  let outerApoDisplay = 0;
+  let maxOrbiterVis = 0;
+  for (const b of systemBodies) {
+    if (!hasUsableOrbit(b) || b.orbit?.frame === "parent") continue;
+    const o = b.orbit!;
+    const apo = o.aAu * (1 + o.e) * hs;
+    if (Number.isFinite(apo) && apo > outerApoDisplay) outerApoDisplay = apo;
+    const vis = visualRadius(b, sizeMode, systemBodies);
+    if (Number.isFinite(vis) && vis > maxOrbiterVis) maxOrbiterVis = vis;
+  }
+  // Representative probe mesh (tiers are kind-uniform; no per-probe magic).
+  const rSelf = visualRadius(probes[0]!, sizeMode, systemBodies);
+  const margin = Math.min(
+    PERIHELION_CLEARANCE_MARGIN_AU,
+    Math.max(VISUAL_BINARY_CLEARANCE_MARGIN, maxOrbiterVis),
+  );
+  // Never stack on the Sun even when the graph has no primary-frame orbiters.
+  return Math.max(
+    outerApoDisplay + rSelf + maxOrbiterVis + margin,
+    rSelf + VISUAL_BINARY_CLEARANCE_MARGIN + 0.5,
+  );
+}
+
+
+/**
  * Framing extent for schematic idle / fit: planet apo×helio plus companion
  * display seps so wide visual-binary hosts frame correctly.
  */
@@ -279,6 +325,7 @@ export function schematicFramingExtent(
   let max = Math.max(
     systemSceneExtent(bodies, helioScale),
     maxCompanionDisplaySep(bodies, sizeMode),
+    probeMarkerDisplaySep(sizeMode, bodies, helioScale),
   );
   for (const b of bodies) {
     if (b.kind !== "star" || !b.parentId || hasUsableOrbit(b)) continue;
