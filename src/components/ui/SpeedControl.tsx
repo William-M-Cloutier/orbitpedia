@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 /** 1 simulated Earth day per 24h wall-clock (fun; not default). */
 export const REALISM_DAYS_PER_SEC = 1 / 86_400;
 
@@ -95,11 +97,38 @@ function nearestPreset(multiple: number): SpeedPresetId | null {
 type Props = {
   multiple: number;
   onMultipleChange: (multiple: number) => void;
+  /**
+   * When false, preset chips only light after a chip click (not nearest-match).
+   * Used for earth-sats 1d/60s default so Slow is not auto-selected.
+   */
+  highlightNearestPreset?: boolean;
 };
 
-export function SpeedControl({ multiple, onMultipleChange }: Props) {
+export function SpeedControl({
+  multiple,
+  onMultipleChange,
+  highlightNearestPreset = true,
+}: Props) {
   const daysPerSec = multipleToDaysPerSec(multiple);
-  const active = nearestPreset(multiple);
+  const nearest = nearestPreset(multiple);
+  const [clickedPreset, setClickedPreset] = useState<SpeedPresetId | null>(
+    null,
+  );
+
+  useEffect(() => {
+    if (!clickedPreset) return;
+    const p = SPEED_PRESETS.find((x) => x.id === clickedPreset);
+    if (!p) {
+      setClickedPreset(null);
+      return;
+    }
+    const err = Math.abs(Math.log(multiple) - Math.log(p.multiple));
+    if (err >= 0.08) setClickedPreset(null);
+  }, [multiple, clickedPreset]);
+
+  const active = highlightNearestPreset
+    ? nearest
+    : clickedPreset;
   const slider = multipleToSlider(multiple);
 
   return (
@@ -123,7 +152,10 @@ export function SpeedControl({ multiple, onMultipleChange }: Props) {
             <button
               key={p.id}
               type="button"
-              onClick={() => onMultipleChange(p.multiple)}
+              onClick={() => {
+                setClickedPreset(p.id);
+                onMultipleChange(p.multiple);
+              }}
               className={`rounded px-2 py-0.5 text-[11px] transition ${
                 isOn
                   ? p.id === "realism"
@@ -149,9 +181,13 @@ export function SpeedControl({ multiple, onMultipleChange }: Props) {
         max={1}
         step={0.001}
         value={slider}
-        onChange={(e) =>
-          onMultipleChange(sliderToMultiple(Number(e.target.value)))
-        }
+        onChange={(e) => {
+          const next = sliderToMultiple(Number(e.target.value));
+          if (!highlightNearestPreset) {
+            setClickedPreset(nearestPreset(next));
+          }
+          onMultipleChange(next);
+        }}
         className="h-1.5 w-full cursor-pointer appearance-none rounded-full bg-white/10 accent-sky-400"
         aria-label="Simulation speed"
       />

@@ -100,6 +100,7 @@ function ExploreHome() {
   );
 
   const isHome = systemId === homeId;
+  const isEarthSats = systemId === EARTH_SATS_SYSTEM_ID;
 
   // Drop session hide set when leaving a system (no leftover filters).
   useEffect(() => {
@@ -279,10 +280,15 @@ function ExploreHome() {
                 hiddenIds={hiddenIds}
               />
               <div className="pointer-events-none absolute left-3 top-3 z-10 flex flex-col gap-2 items-start">
-                <SizeModeControl mode={sizeMode} onModeChange={setSizeMode} />
+                {!isEarthSats ? (
+
+                  <SizeModeControl mode={sizeMode} onModeChange={setSizeMode} />
+
+                ) : null}
                 <SpeedControl
                   multiple={speedMultiple}
                   onMultipleChange={setSpeedMultiple}
+                  highlightNearestPreset={!isEarthSats}
                 />
               </div>
             </div>
