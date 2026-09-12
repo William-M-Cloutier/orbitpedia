@@ -251,6 +251,8 @@ export function searchCatalog(query: string): CatalogSearchResult {
 
   const matchedSystems = systems.filter((s) => {
     if (!showFixture && isFixtureSystemId(s.id)) return false;
+    // Earth sats mode is TopBar Earth — omit from sky-map-style system search.
+    if (isEarthSatsSystemId(s.id)) return false;
     return systemMatchesQuery(s, q);
   });
 

@@ -22,6 +22,7 @@ import {
 } from "@/lib/visualBinaryNote";
 import { periodFromA } from "@/lib/kepler";
 import { formatAu, formatPeriodDays } from "@/lib/units";
+import { satelliteFactRows } from "@/lib/satelliteDisplay";
 
 type Props = {
   body: Body | null | undefined;
@@ -180,6 +181,8 @@ export function FactsPanel({ body, system, onClear }: Props) {
   const discovered = discoveryDisplay(body);
   const quickRows = quickPhysFactRows(body);
   const fullRows = keyFactRows(body);
+  const satRows = satelliteFactRows(body);
+  const isSatellite = body.kind === "satellite";
 
   return (
     <aside className="pointer-events-auto flex max-h-[45vh] w-full flex-col overflow-hidden border-t border-white/10 bg-[#080d18]/95 backdrop-blur md:max-h-none md:h-full md:w-full md:border-l md:border-t-0">
@@ -222,7 +225,12 @@ export function FactsPanel({ body, system, onClear }: Props) {
         {!expanded ? (
           <div className="space-y-3">
             <dl className="grid gap-2">
-              <Stat label="Discovered" value={discovered} />
+              {satRows.map((r) => (
+                <Stat key={r.label} label={r.label} value={r.value} />
+              ))}
+              {!isSatellite ? (
+                <Stat label="Discovered" value={discovered} />
+              ) : null}
               <FactStats rows={quickRows} />
               {period != null && (
                 <Stat label="Orbital period" value={formatPeriodDays(period)} />
@@ -289,12 +297,27 @@ export function FactsPanel({ body, system, onClear }: Props) {
               </p>
             </section>
 
+            {satRows.length > 0 ? (
+              <section>
+                <h3 className="mb-2 text-xs font-medium uppercase tracking-wider text-zinc-500">
+                  Satellite
+                </h3>
+                <dl className="grid gap-2">
+                  {satRows.map((r) => (
+                    <Stat key={r.label} label={r.label} value={r.value} />
+                  ))}
+                </dl>
+              </section>
+            ) : null}
+
             <section>
               <h3 className="mb-2 text-xs font-medium uppercase tracking-wider text-zinc-500">
                 Key facts
               </h3>
               <dl className="grid gap-2">
-                <Stat label="Discovered" value={discovered} />
+                {!isSatellite ? (
+                  <Stat label="Discovered" value={discovered} />
+                ) : null}
                 <FactStats rows={fullRows} />
               </dl>
             </section>
