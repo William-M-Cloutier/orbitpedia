@@ -31,21 +31,41 @@ const BodyKindSchema = z.enum([
   "dwarf_planet",
   "asteroid",
   "moon",
+  "satellite",
 ]);
-const OrbitFrameSchema = z.enum(["heliocentric", "barycentric", "parent"]);
+const OrbitFrameSchema = z.enum([
+  "heliocentric",
+  "barycentric",
+  "parent",
+  "geocentric",
+]);
 const ConfidenceSchema = z.enum(["known", "assumed", "placeholder"]);
-const OrbitSchema = z.object({
-  epochJd: z.number().optional(),
-  aAu: z.number().positive(),
-  e: z.number().min(0).max(1),
-  iDeg: z.number(),
-  omDeg: z.number(),
-  wDeg: z.number(),
-  maDeg: z.number(),
-  periodD: z.number().positive().optional(),
-  qAu: z.number().positive().optional(),
-  frame: OrbitFrameSchema,
-});
+const OrbitSchema = z
+  .object({
+    epochJd: z.number().optional(),
+    aAu: z.number().positive(),
+    aKm: z.number().positive().optional(),
+    e: z.number().min(0).max(1),
+    iDeg: z.number(),
+    omDeg: z.number(),
+    wDeg: z.number(),
+    maDeg: z.number(),
+    periodD: z.number().positive().optional(),
+    qAu: z.number().positive().optional(),
+    qKm: z.number().positive().optional(),
+    frame: OrbitFrameSchema,
+  })
+  .superRefine((orbit, ctx) => {
+    if (orbit.frame === "geocentric") {
+      if (orbit.aKm == null || !(orbit.aKm > 0)) {
+        ctx.addIssue({
+          code: "custom",
+          message: "geocentric orbit requires positive aKm",
+          path: ["aKm"],
+        });
+      }
+    }
+  });
 const FactsSchema = z.object({
   massKg: z.number().positive().optional(),
   radiusMeanKm: z.number().positive().optional(),
@@ -54,6 +74,9 @@ const FactsSchema = z.object({
   albedo: z.number().min(0).max(2).optional(), // geometric albedo can exceed 1 (e.g. Enceladus)
   discoveryNotes: z.string().optional(),
   discoveryDate: z.string().optional(),
+  owner: z.string().min(1).optional(),
+  launchDate: z.string().min(1).optional(),
+  expectedReentry: z.string().min(1).optional(),
   approximateFields: z.array(z.string().min(1)).optional(),
   projectedSepAu: z.number().positive().optional(),
 });
@@ -92,21 +115,45 @@ const AppearanceSchema = z
       .optional(),
   })
   .strict();
-const BodySchema = z.object({
-  id: z.string().min(1),
-  name: z.string().min(1),
-  kind: BodyKindSchema,
-  systemId: z.string().min(1),
-  parentId: z.string().min(1).optional(),
-  aliases: z.array(z.string()).optional(),
-  facts: FactsSchema.default({}),
-  orbit: OrbitSchema.optional(),
-  color: z.string().optional(),
-  horizonId: z.string().optional(),
-  sbdbDes: z.string().optional(),
-  appearance: AppearanceSchema.optional(),
-  meta: BodyMetaSchema,
-});
+const SatelliteBlockSchema = z
+  .object({
+    tle: z.tuple([z.string().min(1), z.string().min(1)]).optional(),
+  })
+  .strict();
+const BodySchema = z
+  .object({
+    id: z.string().min(1),
+    name: z.string().min(1),
+    kind: BodyKindSchema,
+    systemId: z.string().min(1),
+    parentId: z.string().min(1).optional(),
+    aliases: z.array(z.string()).optional(),
+    facts: FactsSchema.default({}),
+    orbit: OrbitSchema.optional(),
+    color: z.string().optional(),
+    horizonId: z.string().optional(),
+    sbdbDes: z.string().optional(),
+    noradCatId: z.number().int().positive().optional(),
+    satellite: SatelliteBlockSchema.optional(),
+    appearance: AppearanceSchema.optional(),
+    meta: BodyMetaSchema,
+  })
+  .superRefine((body, ctx) => {
+    if (body.parentId && body.parentId === body.id) {
+      ctx.addIssue({
+        code: "custom",
+        message: "parentId must not equal id",
+        path: ["parentId"],
+      });
+    }
+    if (body.orbit?.frame === "geocentric" && !body.parentId) {
+      ctx.addIssue({
+        code: "custom",
+        message: "geocentric orbit requires parentId",
+        path: ["parentId"],
+      });
+    }
+  });
 const SystemMetaSchema = z.object({
   sources: z
     .array(
@@ -301,10 +348,11 @@ function findCentralBody(bodies, idHint) {
     if (!hit) throw new Error(`central body id not found: ${idHint}`);
     return hit;
   }
-  // Prefer body with no parent + star, else first star, else sun id
+  // Prefer root star, else root body with no orbit (earth-sats Earth), else sun id
   return (
     bodies.find((b) => b.kind === "star" && !b.parentId) ??
     bodies.find((b) => b.kind === "star") ??
+    bodies.find((b) => !b.parentId && !b.orbit) ??
     bodies.find((b) => b.id === "sun")
   );
 }
@@ -341,15 +389,24 @@ function collectWeakFieldFlags(body, centralId) {
     flags.push("orbit missing (non-central)");
   }
   if (body.orbit && body.id !== centralId) {
-    if (!body.horizonId && !body.sbdbDes) flags.push("horizonId/sbdbDes missing");
+    if (!body.horizonId && !body.sbdbDes && body.noradCatId == null) {
+      flags.push("horizonId/sbdbDes/noradCatId missing");
+    }
     if (!body.orbit.frame) flags.push("orbit.frame missing");
   }
   if (body.kind === "star" && !body.horizonId) flags.push("horizonId missing (star)");
-  if (body.facts.radiusMeanKm == null) flags.push("facts.radiusMeanKm missing");
-  if (body.facts.densityGcm3 == null && body.kind !== "star") {
+  if (body.facts.radiusMeanKm == null && body.kind !== "satellite") {
+    flags.push("facts.radiusMeanKm missing");
+  }
+  if (body.facts.densityGcm3 == null && body.kind !== "star" && body.kind !== "satellite") {
     flags.push("facts.densityGcm3 missing");
   }
-  if (body.facts.albedo == null && body.kind !== "star" && body.kind !== "moon") {
+  if (
+    body.facts.albedo == null &&
+    body.kind !== "star" &&
+    body.kind !== "moon" &&
+    body.kind !== "satellite"
+  ) {
     flags.push("facts.albedo missing");
   }
   if (body.orbit) {
@@ -473,9 +530,9 @@ for (const system of systemsToCheck) {
       continue;
     }
     const q = periapsisAu(b.orbit);
-    if (b.orbit.frame === "parent") {
+    if (b.orbit.frame === "parent" || b.orbit.frame === "geocentric") {
       if (!b.parentId) {
-        hardErrors.push(`${b.id}: orbit.frame=parent requires parentId`);
+        hardErrors.push(`${b.id}: orbit.frame=${b.orbit.frame} requires parentId`);
       } else {
         const parent = bodyById.get(b.parentId);
         if (!parent) {
@@ -484,13 +541,13 @@ for (const system of systemsToCheck) {
           const parentRkm = parent.facts?.radiusMeanKm;
           if (parentRkm == null || !(parentRkm > 0)) {
             hardErrors.push(
-              `${b.id}: parent ${parent.id} missing facts.radiusMeanKm for parent-frame clearance`,
+              `${b.id}: parent ${parent.id} missing facts.radiusMeanKm for ${b.orbit.frame} clearance`,
             );
           } else {
             const parentR = parentRkm / AU_KM;
             if (!(q > parentR + EPS_AU)) {
               hardErrors.push(
-                `${b.id}: parent-frame periapsis q=${q.toPrecision(8)} au does not clear parent '${parent.id}' radius ${parentR.toPrecision(8)} au`,
+                `${b.id}: ${b.orbit.frame} periapsis q=${q.toPrecision(8)} au does not clear parent '${parent.id}' radius ${parentR.toPrecision(8)} au`,
               );
             }
           }

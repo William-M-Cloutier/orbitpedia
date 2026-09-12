@@ -1,0 +1,35 @@
+{
+  "id": "earth-sats",
+  "name": "Earth satellites",
+  "memberIds": [
+    "earth-sats-earth",
+    "iss",
+    "hst",
+    "css-tianhe",
+    "terra",
+    "noaa-20"
+  ],
+  "blurb": "Curated low-Earth and polar satellites around Earth \u2014 ISS, Hubble, CSS Tianhe, Terra, and NOAA-20 from Celestrak GP elements (educational Earth-centered Explore).",
+  "highlights": [
+    "Five real GP/OMM orbits from Celestrak (2026-09-12 fetch)",
+    "Earth at origin; geocentric frame (not a fake exoplanet system)",
+    "Schematic altitude amplification in Explore \u2014 Facts keep real km"
+  ],
+  "planetCount": 0,
+  "compactnessNote": "LEO altitudes are tiny vs Earth radius; Explore amplifies radial altitude for readability while Earth sphere stays readable.",
+  "meta": {
+    "confidence": "known",
+    "fetchedAt": "2026-09-12T22:34:00Z",
+    "sources": [
+      {
+        "name": "Celestrak NORAD GP elements",
+        "url": "https://celestrak.org/NORAD/elements/",
+        "fields": [
+          "blurb",
+          "highlights",
+          "memberIds"
+        ]
+      }
+    ]
+  }
+}

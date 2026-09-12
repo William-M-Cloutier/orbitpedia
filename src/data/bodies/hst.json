@@ -1,0 +1,64 @@
+{
+  "id": "hst",
+  "name": "Hubble Space Telescope",
+  "kind": "satellite",
+  "systemId": "earth-sats",
+  "parentId": "earth-sats-earth",
+  "aliases": [
+    "HST",
+    "Hubble"
+  ],
+  "noradCatId": 20580,
+  "facts": {
+    "owner": "NASA",
+    "launchDate": "1990-04-24",
+    "discoveryNotes": "NASA space telescope in low Earth orbit."
+  },
+  "orbit": {
+    "frame": "geocentric",
+    "aKm": 6849.111,
+    "aAu": 4.578347918958716e-05,
+    "e": 0.00017951,
+    "iDeg": 28.473,
+    "omDeg": 205.3366,
+    "wDeg": 39.5104,
+    "maDeg": 320.5623,
+    "periodD": 0.06529027574755127,
+    "qAu": 4.5775260597237835e-05,
+    "qKm": 6847.88151608439
+  },
+  "color": "#9BB7D4",
+  "meta": {
+    "provenance": "Celestrak GP OMM JSON fetched 2026-09-12T22:34:00Z: https://celestrak.org/NORAD/elements/gp.php?CATNR=20580&FORMAT=JSON-PRETTY",
+    "source": "Celestrak GP (OMM) NORAD 20580",
+    "confidence": "known",
+    "fetchedAt": "2026-09-12T22:34:00Z",
+    "unitsVersion": 1,
+    "sources": [
+      {
+        "name": "Celestrak NORAD GP elements",
+        "url": "https://celestrak.org/NORAD/elements/",
+        "fields": [
+          "orbit.aKm",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "noradCatId"
+        ]
+      },
+      {
+        "name": "Celestrak satcat CATNR=20580",
+        "url": "https://celestrak.org/satcat/records.php?CATNR=20580",
+        "fields": [
+          "facts.owner",
+          "facts.launchDate",
+          "name"
+        ]
+      }
+    ]
+  }
+}

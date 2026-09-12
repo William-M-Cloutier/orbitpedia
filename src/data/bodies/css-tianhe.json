@@ -1,0 +1,65 @@
+{
+  "id": "css-tianhe",
+  "name": "CSS Tianhe",
+  "kind": "satellite",
+  "systemId": "earth-sats",
+  "parentId": "earth-sats-earth",
+  "aliases": [
+    "Tianhe",
+    "CSS",
+    "China Space Station"
+  ],
+  "noradCatId": 48274,
+  "facts": {
+    "owner": "CMSA/CNSA",
+    "launchDate": "2021-04-29",
+    "discoveryNotes": "Tianhe core module of the China Space Station."
+  },
+  "orbit": {
+    "frame": "geocentric",
+    "aKm": 6766.258,
+    "aAu": 4.522964109274585e-05,
+    "e": 0.00026312,
+    "iDeg": 41.4683,
+    "omDeg": 154.0266,
+    "wDeg": 272.9242,
+    "maDeg": 87.1296,
+    "periodD": 0.06410915596214346,
+    "qAu": 4.521774026958153e-05,
+    "qKm": 6764.4776621950405
+  },
+  "color": "#F0C27A",
+  "meta": {
+    "provenance": "Celestrak GP OMM JSON fetched 2026-09-12T22:34:00Z: https://celestrak.org/NORAD/elements/gp.php?CATNR=48274&FORMAT=JSON-PRETTY",
+    "source": "Celestrak GP (OMM) NORAD 48274",
+    "confidence": "known",
+    "fetchedAt": "2026-09-12T22:34:00Z",
+    "unitsVersion": 1,
+    "sources": [
+      {
+        "name": "Celestrak NORAD GP elements",
+        "url": "https://celestrak.org/NORAD/elements/",
+        "fields": [
+          "orbit.aKm",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "noradCatId"
+        ]
+      },
+      {
+        "name": "Celestrak satcat CATNR=48274",
+        "url": "https://celestrak.org/satcat/records.php?CATNR=48274",
+        "fields": [
+          "facts.owner",
+          "facts.launchDate",
+          "name"
+        ]
+      }
+    ]
+  }
+}

@@ -225,6 +225,7 @@ function compareSearchBodies(a: Body, b: Body, q: string): number {
     dwarf_planet: 2,
     moon: 3,
     asteroid: 4,
+    satellite: 5,
   };
   const ra = searchMatchRank(a.name, a.id, q, a.aliases);
   const rb = searchMatchRank(b.name, b.id, q, b.aliases);
@@ -335,6 +336,7 @@ export const KIND_LABEL: Record<BodyKind, string> = {
   dwarf_planet: "Dwarf planet",
   asteroid: "Asteroid",
   moon: "Moon",
+  satellite: "Satellite",
 };
 
 /** Kind order for Search / typeahead grouping. */
@@ -344,4 +346,17 @@ export const KIND_ORDER: BodyKind[] = [
   "dwarf_planet",
   "moon",
   "asteroid",
+  "satellite",
 ];
+
+/** Earth-centered satellites Explore system — exclude from Sky star map. */
+export const EARTH_SATS_SYSTEM_ID = "earth-sats";
+
+export function isEarthSatsSystemId(systemId: string): boolean {
+  return systemId === EARTH_SATS_SYSTEM_ID;
+}
+
+/** Systems omitted from Systems map proportional/schematic star layout. */
+export function isSkyMapExcludedSystemId(systemId: string): boolean {
+  return isFixtureSystemId(systemId) || isEarthSatsSystemId(systemId);
+}

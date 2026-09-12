@@ -1,0 +1,40 @@
+{
+  "id": "earth-sats-earth",
+  "name": "Earth",
+  "kind": "planet",
+  "systemId": "earth-sats",
+  "aliases": [
+    "Terra"
+  ],
+  "facts": {
+    "massKg": 5.97217e+24,
+    "radiusMeanKm": 6371.0084,
+    "densityGcm3": 5.5134,
+    "rotationPeriodD": 0.99726968,
+    "albedo": 0.367,
+    "discoveryNotes": "Central body for Earth-orbiting satellites Explore mode (same physical Earth as Sol; separate card so solar membership stays intact)."
+  },
+  "color": "#6B93D6",
+  "appearance": {
+    "textureId": "earth-marquee"
+  },
+  "meta": {
+    "source": "JPL SSD Planetary Physical Parameters (Earth central for earth-sats)",
+    "confidence": "known",
+    "fetchedAt": "2026-09-12T22:34:00Z",
+    "unitsVersion": 1,
+    "sources": [
+      {
+        "name": "JPL SSD Planetary Physical Parameters",
+        "url": "https://ssd.jpl.nasa.gov/planets/phys_par.html",
+        "fields": [
+          "facts.massKg",
+          "facts.radiusMeanKm",
+          "facts.densityGcm3",
+          "facts.rotationPeriodD",
+          "facts.albedo"
+        ]
+      }
+    ]
+  }
+}

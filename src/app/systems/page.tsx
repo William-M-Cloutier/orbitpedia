@@ -16,6 +16,7 @@ import {
   getHomeSystem,
   getSystem,
   isFixtureSystemId,
+  isSkyMapExcludedSystemId,
   listSystems,
 } from "@/data/catalog";
 import {
@@ -498,7 +499,7 @@ function SystemMapView() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [nodes, setNodes] = useState<SystemNode[]>(() =>
-    buildNodesFromList(listSystems().filter((s) => !isFixtureSystemId(s.id))),
+    buildNodesFromList(listSystems().filter((s) => !isSkyMapExcludedSystemId(s.id))),
   );
   const [cam, setCam] = useState<Cam>(CAM0);
   const [favoriteIds, setFavoriteIds] = useState<Set<string>>(
@@ -590,7 +591,7 @@ function SystemMapView() {
         const list = await listSystemsAsync();
         if (cancelled) return;
         setNodes(
-          buildNodesFromList(list.filter((s) => !isFixtureSystemId(s.id))),
+          buildNodesFromList(list.filter((s) => !isSkyMapExcludedSystemId(s.id))),
         );
       } catch {
         /* curated seed already shown */
