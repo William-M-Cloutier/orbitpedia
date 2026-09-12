@@ -247,8 +247,14 @@ function buildNodesFromList(
         hasGas,
         blurb: curated.blurb,
         distanceLy: curated.distanceLy,
-        raDeg: curated.raDeg,
-        decDeg: curated.decDeg,
+        raDeg:
+          "raDeg" in curated && typeof curated.raDeg === "number"
+            ? curated.raDeg
+            : undefined,
+        decDeg:
+          "decDeg" in curated && typeof curated.decDeg === "number"
+            ? curated.decDeg
+            : undefined,
       };
     }
     const planets = s.planetCount ?? 0;
@@ -650,8 +656,6 @@ function SystemMapView() {
         hasGas: n.hasGas,
         blurb: n.blurb,
         distanceLy: n.distanceLy,
-        raDeg: n.raDeg,
-        decDeg: n.decDeg,
       });
     } else {
       setSelectedSystem(null);
