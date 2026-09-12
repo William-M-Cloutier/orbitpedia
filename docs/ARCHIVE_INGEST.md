@@ -265,3 +265,14 @@ Planets set `facts.discoveryNotes` from NEA when available (omit on `kind:star` 
 - Placeholders / unknown sep → omit field (Viz keeps tight schematic). Product disclaimer (Sky): companion positions approximate when schematic or projected-sep without full orbit.
 - Coverage (2026-09-12 `--all`): **220 / 425** multi-star systems (223 companion stars) received `facts.projectedSepAu`. Remainder stay schematic (omit field). Ingest logs `projectedSepAu coverage: X/Y multi-star…`.
 
+## Bulk sky coords
+
+`public/archive/bulk/` is gitignored. After `ingest-nea --all`, run:
+
+```bash
+node scripts/backfill-archive-sky-coords.mjs --bulk
+```
+
+Map-side selection (`archiveCoordCoverage` in `archiveCatalog`, PR #29) adopts bulk
+only when coverage is sufficient. Prefer smoke until the dump has raDeg/decDeg.
+

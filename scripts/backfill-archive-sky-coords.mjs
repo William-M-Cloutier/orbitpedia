@@ -16,11 +16,13 @@ const ROOT = existsSync(join(__dirname, "package.json"))
   ? __dirname
   : join(__dirname, "..");
 const TAP = "https://exoplanetarchive.ipac.caltech.edu/TAP/sync";
-const ARCHIVE = join(ROOT, "public", "archive");
+const dryRun = process.argv.includes("--dry-run");
+const useBulk = process.argv.includes("--bulk");
+const ARCHIVE = useBulk
+  ? join(ROOT, "public", "archive", "bulk")
+  : join(ROOT, "public", "archive");
 const INDEX_PATH = join(ARCHIVE, "systems.index.json");
 const GRAPHS = join(ARCHIVE, "graphs");
-
-const dryRun = process.argv.includes("--dry-run");
 
 function num(v) {
   if (v == null || v === "") return null;
