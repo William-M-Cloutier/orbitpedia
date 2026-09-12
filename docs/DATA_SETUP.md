@@ -135,6 +135,16 @@ Dedicated Explore system (not `home`). Central card `earth-sats-earth` (kind
   should not treat this as an exoplanet host).
 - Never invent orbital elements — Celestrak GP/OMM only.
 
+### Geocentric Explore scale (viz-only)
+
+Catalog `aKm` / `aAu` stay honest. Explore amplifies **altitude above R⊕** so
+LEO rings clear the Earth mesh (`GEOCENTRIC_ALT_AMPLIFY = 12` in
+`sizeTiers.ts`):
+
+`sceneA = earthVis × (1 + 12 × (aKm − R⊕) / R⊕)` then `scale = sceneA / aAu`.
+
+Sol Explore is unchanged (heliocentric / parent-frame paths only).
+
 ## Sources policy (locked)
 
 **Allow (human-readable pages people can open):**

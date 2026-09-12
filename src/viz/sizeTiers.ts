@@ -57,6 +57,43 @@ export const STAR_VISUAL_RADIUS = 0.12;
 
 const AU_KM = 149_597_870.7;
 
+/**
+ * Earth-sat Explore scale (viz-only; catalog aKm unchanged).
+ *
+ * LEO altitudes are tiny vs R⊕ (ISS ~0.067 R⊕). Amplify altitude so rings
+ * read outside the Earth sphere while Earth mesh stays readable:
+ *   sceneA = earthVis * (1 + GEOCENTRIC_ALT_AMPLIFY * (aKm - R⊕) / R⊕)
+ *   scale  = sceneA / aAu   (Kepler samples land at sceneA)
+ *
+ * Amplify = 12 → ISS ~1.8× Earth mesh radius; NOAA-20 ~2.6×. Facts keep real km.
+ */
+export const GEOCENTRIC_ALT_AMPLIFY = 12;
+/** Mean Earth radius for altitude amplification (matches earth-sats-earth card). */
+export const GEOCENTRIC_EARTH_RADIUS_KM = 6371.0084;
+
+export function geocentricSceneSemiMajor(
+  aKm: number,
+  earthVisR: number,
+  amplify: number = GEOCENTRIC_ALT_AMPLIFY,
+  earthRadiusKm: number = GEOCENTRIC_EARTH_RADIUS_KM,
+): number {
+  const altKm = Math.max(0, aKm - earthRadiusKm);
+  return earthVisR * (1 + amplify * (altKm / earthRadiusKm));
+}
+
+/** Multiply Kepler aAu samples so geocentric orbits are readable around Earth. */
+export function geocentricDisplayScale(
+  body: Pick<Body, "orbit">,
+  earthVisR: number,
+): number {
+  const o = body.orbit;
+  if (!o || !(o.aAu > 0)) return 1;
+  const aKm = o.aKm != null && o.aKm > 0 ? o.aKm : o.aAu * AU_KM;
+  const sceneA = geocentricSceneSemiMajor(aKm, earthVisR);
+  return sceneA / o.aAu;
+}
+
+
 /** Fallback when a system has no usable primary-frame orbiter (rare). */
 const FALLBACK_INNER_Q_AU = 0.307;
 const FALLBACK_INNER_RADIUS_KM = 2_439.7;
