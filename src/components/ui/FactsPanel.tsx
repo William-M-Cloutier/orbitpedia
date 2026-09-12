@@ -200,7 +200,9 @@ function PoiDetail({
           </button>
         ) : null}
       </div>
-      <p className="mt-2.5 text-sm leading-relaxed text-zinc-300/95">{poi.summary}</p>
+      <p className="mt-2.5 text-[13px] leading-relaxed text-zinc-300/95">
+        {poi.summary}
+      </p>
       <dl className="mt-3 grid grid-cols-2 gap-2">
         <Stat
           label="Latitude"
@@ -212,11 +214,19 @@ function PoiDetail({
           value={approx ? `~${lon}` : lon}
           approximate={approx}
         />
-        {elev ? <Stat label="Elevation" value={elev} /> : null}
-        {depth ? <Stat label="Depth" value={depth} /> : null}
+        {elev ? (
+          <div className={depth ? undefined : "col-span-2"}>
+            <Stat label="Elevation" value={elev} />
+          </div>
+        ) : null}
+        {depth ? (
+          <div className={elev ? undefined : "col-span-2"}>
+            <Stat label="Depth" value={depth} />
+          </div>
+        ) : null}
       </dl>
       {poi.sources.length > 0 ? (
-        <div className="mt-3.5">
+        <div className="mt-3.5 border-t border-amber-400/15 pt-3">
           <h4 className="mb-1.5 text-[10px] font-medium uppercase tracking-[0.14em] text-amber-200/55">
             Sources
           </h4>
