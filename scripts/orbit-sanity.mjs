@@ -811,6 +811,7 @@ if (!Number.isFinite(c)) {
   const CLASSIC_GAS_RADIUS_KM = 40_000;
   function inferFamily(body) {
     if (body.kind === "star") return "star";
+    if (body.kind === "black_hole") return "black_hole";
     const r = body.facts?.radiusMeanKm;
     const density = body.facts?.densityGcm3;
     const albedo = body.facts?.albedo;
@@ -850,6 +851,38 @@ if (!Number.isFinite(c)) {
     } else {
       ok(`appearance family ${id} → ${got}`);
     }
+  }
+  // Black-hole procedural family (kind → family; no appearance.surfaceFamily field).
+  if (!/"black_hole"/.test(famSrc) || !/kind === "black_hole"/.test(famSrc)) {
+    fail("surfaceFamily must extend SurfaceFamily + infer black_hole");
+  } else {
+    ok("surfaceFamily includes black_hole");
+  }
+  const bhGot = inferFamily({ kind: "black_hole", facts: {} });
+  if (bhGot !== "black_hole") {
+    fail(`appearance family black_hole: got ${bhGot}, want black_hole`);
+  } else {
+    ok("appearance family black_hole → black_hole");
+  }
+  if (!/case "black_hole"/.test(procSrc) || !/black_hole:\s*128|black_hole:\s*64/.test(procSrc)) {
+    fail("proceduralTextures must include black_hole TEX_SIZE + sample map");
+  } else {
+    ok("proceduralTextures includes black_hole");
+  }
+  if (!/family === "black_hole"|family !== "black_hole"/.test(poolSrc)) {
+    fail("materialPool must fail-open procedural-only for black_hole");
+  } else {
+    ok("materialPool black_hole procedural fail-open");
+  }
+  // OrbitScene: BH primary host light (cooler/dimmer accretion pointLight).
+  if (
+    !/isPrimaryHostKind/.test(sceneSrc) ||
+    !/body\.kind === "black_hole"/.test(sceneSrc) ||
+    !/intensity=\{1\.2\}/.test(sceneSrc)
+  ) {
+    fail("OrbitScene must treat black_hole as host light (isPrimaryHostKind + pointLight ~1.2)");
+  } else {
+    ok("OrbitScene treats black_hole as host light");
   }
   ok("procedural + marquee maps wired (pool + BodyMesh + registry; fail-open)");
   // Soft selection glow — avoid neon rim regression (emissiveIntensity was 0.45).

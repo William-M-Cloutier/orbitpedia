@@ -3,9 +3,9 @@ import type { Body } from "@/data/schema";
 /**
  * Procedural surface family — drives shared material look when no real map
  * is registered. Distinct by kind/traits so sparse catalogs still read as
- * intentional (rocky / gas / ice / star), not flat same-tint balls.
+ * intentional (rocky / gas / ice / star / black_hole), not flat same-tint balls.
  */
-export type SurfaceFamily = "star" | "gas" | "ice" | "rocky";
+export type SurfaceFamily = "star" | "gas" | "ice" | "rocky" | "black_hole";
 
 /** Gas-giant schematic threshold (matches sizeTiers large-planet cut). */
 const GAS_RADIUS_KM = 20_000;
@@ -15,11 +15,13 @@ const CLASSIC_GAS_RADIUS_KM = 40_000;
 /**
  * Infer surface family from catalog traits only (no invented science).
  * Prefer radius / density / albedo already on the card.
+ * Contract: kind → family internally (no appearance.surfaceFamily field).
  */
 export function inferSurfaceFamily(
   body: Pick<Body, "kind" | "facts">,
 ): SurfaceFamily {
-  if (body.kind === "star" || body.kind === "black_hole") return "star";
+  if (body.kind === "star") return "star";
+  if (body.kind === "black_hole") return "black_hole";
 
   const r = body.facts.radiusMeanKm;
   const density = body.facts.densityGcm3;
@@ -50,6 +52,9 @@ export function defaultFamilyColor(family: SurfaceFamily): string {
   switch (family) {
     case "star":
       return "#FDB813";
+    case "black_hole":
+      // Deep purple-crimson disk tint — readable against starfield, not flat black.
+      return "#4a1020";
     case "gas":
       return "#C88B3A";
     case "ice":

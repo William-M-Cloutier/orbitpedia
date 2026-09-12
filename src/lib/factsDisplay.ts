@@ -9,6 +9,7 @@ import {
 /** Fact keys the UI treats as expected for a kind (show muted Unknown if missing). */
 const EXPECTED_BY_KIND: Record<BodyKind, ReadonlySet<string>> = {
   star: new Set(["massKg", "radiusMeanKm"]),
+  black_hole: new Set(["massKg", "radiusMeanKm"]),
   planet: new Set(["massKg", "radiusMeanKm"]),
   dwarf_planet: new Set(["massKg", "radiusMeanKm"]),
   /** Radius preferred; mass often unknown — omit mass row when missing. */

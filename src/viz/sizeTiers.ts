@@ -1,4 +1,4 @@
-import { hasUsableOrbit, type Body, type BodyKind } from "@/data/schema";
+import { hasUsableOrbit, isPrimaryHostKind, type Body, type BodyKind } from "@/data/schema";
 import { getBody, getHomeSystemGraph, getSystemGraph } from "@/data/catalog";
 
 /**
@@ -180,21 +180,22 @@ function resolveSystemBodies(
   return getHomeSystemGraph().bodies;
 }
 
-/** Clearance star = system kind==="star" (prefer root / no parentId). */
+/** Clearance host = primary star | black_hole (prefer root / no parentId). */
 function systemStar(bodies: readonly Body[]): Body | undefined {
-  const isHost = (b: Body) => b.kind === "star" || b.kind === "black_hole";
   return (
-    bodies.find((b) => isHost(b) && !b.parentId) ?? bodies.find((b) => isHost(b))
+    bodies.find((b) => isPrimaryHostKind(b.kind) && !b.parentId) ??
+    bodies.find((b) => isPrimaryHostKind(b.kind))
   );
 }
 
 /**
- * Primary / root star for Prop/True sunMesh clearance.
+ * Primary / root host for Prop/True sunMesh clearance.
  * Companions have parentId set; root = systemStar (!parentId). Explore also
  * uses system.primaryStarId — same body when catalog is consistent.
+ * Accepts star | black_hole via isPrimaryHostKind (BH is not a companion path).
  */
 function isSystemPrimaryStar(body: Body, bodies: readonly Body[]): boolean {
-  if (body.kind !== "star" && body.kind !== "black_hole") return false;
+  if (!isPrimaryHostKind(body.kind)) return false;
   if (body.parentId) return false;
   const star = systemStar(bodies);
   return star != null && star.id === body.id;
@@ -237,7 +238,7 @@ function innermostPrimaryOrbitBody(
   let best: Body | undefined;
   let bestQ = Infinity;
   for (const b of bodies) {
-    if (b.kind === "star" || b.kind === "black_hole") continue;
+    if (isPrimaryHostKind(b.kind)) continue;
     if (!hasUsableOrbit(b)) continue;
     if (b.orbit.frame === "parent") continue;
     const q = orbitQAu(b.orbit);
@@ -254,7 +255,7 @@ function innermostPrimaryOrbitBody(
 function maxNonStarRadiusKm(bodies: readonly Body[]): number {
   let max = 0;
   for (const b of bodies) {
-    if (b.kind === "star" || b.kind === "black_hole") continue;
+    if (isPrimaryHostKind(b.kind)) continue;
     const r = b.facts.radiusMeanKm;
     if (r != null && r > max) max = r;
   }
@@ -320,10 +321,14 @@ function proportionalRadius(body: Body, bodies: readonly Body[]): number {
   const sunMesh = Math.max(1e-6, (innerQAu - margin) / denom);
   const scale = (0.92 * sunMesh) / Math.max(maxNonStarKm, 1); // km → scene
 
-  if (body.kind === "star" || body.kind === "black_hole") {
+  if (body.kind === "star") {
     // Primary: clearance sunMesh (star-readable), even if catalog R missing.
     if (isSystemPrimaryStar(body, bodies)) return sunMesh;
     return companionStarMesh(body, bodies, sunMesh);
+  }
+  if (body.kind === "black_hole") {
+    // Primary BH host: same clearance sunMesh (not a visual-binary companion path).
+    return sunMesh;
   }
   const km = body.facts.radiusMeanKm ?? 1;
   // No absolute 0.008 floor — it exceeded sunMesh on TRAPPIST and made
@@ -343,11 +348,15 @@ function trueRadius(body: Body, bodies: readonly Body[]): number {
   const sunMesh = Math.max(1e-6, (innerQAu - margin) / denom);
   const scale = sunMesh / Math.max(starKm, 1);
 
-  if (body.kind === "star" || body.kind === "black_hole") {
+  if (body.kind === "star") {
     // Primary: star-readable clearance mesh (not km??1 which vanishes).
     if (isSystemPrimaryStar(body, bodies)) return sunMesh;
     // Companions stay visible: missing R → fraction; known R → ratio, ≤ primary.
     return companionStarMesh(body, bodies, sunMesh);
+  }
+  if (body.kind === "black_hole") {
+    // Primary BH host: same clearance sunMesh (not a visual-binary companion path).
+    return sunMesh;
   }
   const km = body.facts.radiusMeanKm ?? 1;
   return Math.max(1e-6, km * scale);

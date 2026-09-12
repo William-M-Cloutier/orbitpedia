@@ -220,11 +220,12 @@ function compareSearchSystems(a: System, b: System, q: string): number {
 
 function compareSearchBodies(a: Body, b: Body, q: string): number {
   const kindRank: Record<BodyKind, number> = {
-    star: 0,
-    planet: 1,
-    dwarf_planet: 2,
-    moon: 3,
-    asteroid: 4,
+    black_hole: 0,
+    star: 1,
+    planet: 2,
+    dwarf_planet: 3,
+    moon: 4,
+    asteroid: 5,
   };
   const ra = searchMatchRank(a.name, a.id, q, a.aliases);
   const rb = searchMatchRank(b.name, b.id, q, b.aliases);

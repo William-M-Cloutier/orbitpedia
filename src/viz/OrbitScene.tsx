@@ -22,7 +22,7 @@ import {
   hasUsableOrbit,
   listChildren,
 } from "@/data/catalog";
-import type { Body } from "@/data/schema";
+import { isPrimaryHostKind, type Body } from "@/data/schema";
 import {
   periodFromA,
   positionAtMa,
@@ -114,10 +114,16 @@ function useSystemViz(): SystemVizApi {
  * {@link heliocentricSharedDisplayScale} (star clearance + planet/dwarf
  * sibling gaps; asteroids excluded from sibling loop).
  */
+/** Primary host = first star|black_hole root (prefer !parentId). */
+function findPrimaryHost(bodies: readonly Body[]): Body | undefined {
+  return (
+    bodies.find((b) => isPrimaryHostKind(b.kind) && !b.parentId) ??
+    bodies.find((b) => isPrimaryHostKind(b.kind))
+  );
+}
+
 function heliocentricDisplayScale(bodies: Body[], sizeMode: SizeMode): number {
-  const star =
-    bodies.find((b) => b.kind === "star" && !b.parentId) ??
-    bodies.find((b) => b.kind === "star");
+  const star = findPrimaryHost(bodies);
   if (!star) return 1;
   const kids = bodies.filter(
     (b) => hasUsableOrbit(b) && b.orbit?.frame !== "parent",
@@ -379,7 +385,7 @@ function visualBinaryCompanionOffset(
   // Mesh clearance after fit: fitScale must not bury companions in the primary.
   const parent =
     systemBodies.find((b) => b.id === body.parentId) ??
-    systemBodies.find((b) => b.kind === "star" && !b.parentId);
+    findPrimaryHost(systemBodies);
   const rPrimary = parent
     ? visualRadius(parent, sizeMode, systemBodies)
     : visualRadius(body, sizeMode, systemBodies);
@@ -427,10 +433,15 @@ function isExploreSceneBody(
   byId: ReadonlyMap<string, Body>,
   seen: Set<string> = new Set(),
 ): boolean {
-  if (body.id === primaryStarId || (body.kind === "star" && !body.parentId)) {
+  // Primary host (star | black_hole): always mesh. BH is never a companion path.
+  if (
+    body.id === primaryStarId ||
+    (isPrimaryHostKind(body.kind) && !body.parentId)
+  ) {
     return true;
   }
   // Mesh companion stars even without Kepler (visual-binary display offset).
+  // Black holes are not visual-binary companions.
   if (body.kind === "star" && body.parentId) {
     return true;
   }
@@ -803,6 +814,28 @@ const BodyMesh = memo(function BodyMesh({
     );
   }
 
+  if (body.kind === "black_hole") {
+    // Primary BH host: sphere + cooler/dimmer accretion pointLight (no OrbitLine).
+    return (
+      <group ref={group} name={body.id}>
+        <pointLight
+          intensity={1.2}
+          distance={60}
+          color={body.color ?? "#ff6a3d"}
+        />
+        <mesh
+          ref={spinMesh}
+          onClick={handleClick}
+          onContextMenu={handleContextMenu}
+          material={mat}
+          scale={focused ? 1.2 : 1}
+        >
+          <sphereGeometry args={[r, 32, 32]} />
+        </mesh>
+      </group>
+    );
+  }
+
   return (
     <group ref={group} name={body.id}>
       <mesh
@@ -832,7 +865,7 @@ function wrapDeltaAngle(d: number): number {
  * this when computing FOV distance — matches Pluto gold-standard screenshot.
  */
 function focusMeshScale(body: Body): number {
-  return body.kind === "star" ? 1.2 : 1.35;
+  return isPrimaryHostKind(body.kind) ? 1.2 : 1.35;
 }
 
 /**
@@ -1017,9 +1050,7 @@ function IdleCameraBootstrap({ focusId }: { focusId?: string | null }) {
       );
       if (clear > extent) extent = clear;
     }
-    const star =
-      systemBodies.find((b) => b.kind === "star" && !b.parentId) ??
-      systemBodies.find((b) => b.kind === "star");
+    const star = findPrimaryHost(systemBodies);
     const starVis = star ? visualRadius(star, sizeMode, systemBodies) : 0;
     const dist = schematicIdleCameraDistance(extent, starVis, fitScale);
     const [ox, oy, oz] = IDLE_CAMERA_OFFSET;
@@ -1756,10 +1787,7 @@ function SceneContent({
   const primaryStarId = useMemo(() => {
     const declared = systemGraph.system.primaryStarId;
     if (declared) return declared;
-    return (
-      systemBodies.find((b) => b.kind === "star" && !b.parentId)?.id ??
-      systemBodies.find((b) => b.kind === "star")?.id
-    );
+    return findPrimaryHost(systemBodies)?.id;
   }, [systemGraph, systemBodies]);
   const systemViz = useMemo(
     () => ({ bodies: systemBodies, helioScale, fitScale, faceOn, primaryStarId }),
