@@ -10,7 +10,14 @@ export const BodyKindSchema = z.enum([
   "asteroid",
   /** Natural satellite (parent-frame orbit around parentId). */
   "moon",
+  /** Central compact host (omit orbit like a primary star). */
+  "black_hole",
 ]);
+
+/** Primary gravitational host kinds (multi-star / BH systems). */
+export function isPrimaryHostKind(kind: z.infer<typeof BodyKindSchema>): boolean {
+  return kind === "star" || kind === "black_hole";
+}
 
 export const OrbitFrameSchema = z.enum([
   "heliocentric",
@@ -155,8 +162,8 @@ export const SystemSchema = z.object({
   /** Optional primary when graph is sparse / placeholder. */
   placeholderPrimaryId: z.string().min(1).optional(),
   /**
-   * Multi-star: id of the primary star member (kind star, omit orbit).
-   * Companions use parentId → primary + orbit.frame parent.
+   * Primary host id (kind star | black_hole, omit orbit + parentId).
+   * Field name kept for compat; companions/planets parent-frame to this id.
    */
   primaryStarId: z.string().min(1).optional(),
   /** Short system blurb for System cards. */
@@ -236,10 +243,10 @@ export const CatalogSchema = z
         continue;
       }
       const primary = bodyById.get(s.primaryStarId);
-      if (!primary || primary.kind !== "star") {
+      if (!primary || (primary.kind !== "star" && primary.kind !== "black_hole")) {
         ctx.addIssue({
           code: "custom",
-          message: `system ${s.id} primaryStarId must be kind star: ${s.primaryStarId}`,
+          message: `system ${s.id} primaryStarId must be kind star|black_hole: ${s.primaryStarId}`,
           path: ["systems"],
         });
         continue;
@@ -254,14 +261,14 @@ export const CatalogSchema = z
       if (primary.orbit) {
         ctx.addIssue({
           code: "custom",
-          message: `system ${s.id} primary star must omit orbit (companions use parent-frame)`,
+          message: `system ${s.id} primary host must omit orbit (companions use parent-frame)`,
           path: ["systems"],
         });
       }
       if (primary.parentId) {
         ctx.addIssue({
           code: "custom",
-          message: `system ${s.id} primary star must omit parentId`,
+          message: `system ${s.id} primary host must omit parentId`,
           path: ["systems"],
         });
       }

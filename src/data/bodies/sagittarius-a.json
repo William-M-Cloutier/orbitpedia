@@ -1,0 +1,46 @@
+{
+  "id": "sagittarius-a",
+  "name": "Sagittarius A*",
+  "kind": "black_hole",
+  "systemId": "sagittarius-a",
+  "aliases": [
+    "Sgr A*",
+    "Sgr A-star",
+    "Galactic Center black hole"
+  ],
+  "facts": {
+    "massKg": 7.953664000000001e+36,
+    "radiusMeanKm": 11812000.0,
+    "approximateFields": [
+      "massKg",
+      "radiusMeanKm"
+    ],
+    "discoveryNotes": "Galactic-center supermassive black hole \u2014 open this system from the Systems map to explore the host. Listed size uses the Schwarzschild radius from the cited mass as a horizon-scale size proxy, not a solid surface.",
+    "discoveryDate": "1974"
+  },
+  "color": "#1a1a2e",
+  "meta": {
+    "source": "NASA Chandra / JPL Education \u2014 mass ~4e6 Msun; Schwarzschild radius from mass (approximateFields)",
+    "confidence": "known",
+    "sources": [
+      {
+        "name": "NASA \u2014 Supermassive Black Hole Sagittarius A*",
+        "url": "https://www.nasa.gov/image-article/supermassive-black-hole-sagittarius/",
+        "fields": [
+          "facts.massKg",
+          "facts.discoveryNotes"
+        ]
+      },
+      {
+        "name": "NASA JPL Education \u2014 Milky Way's Black Hole",
+        "url": "https://www.jpl.nasa.gov/edu/resources/teachable-moment/telescopes-get-extraordinary-view-of-milky-ways-black-hole/",
+        "fields": [
+          "facts.radiusMeanKm",
+          "facts.massKg"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-12T22:38:28.400Z",
+    "unitsVersion": 1
+  }
+}
