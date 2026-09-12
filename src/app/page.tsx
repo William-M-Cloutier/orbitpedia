@@ -15,6 +15,7 @@ import { FactsPanel } from "@/components/ui/FactsPanel";
 import {
   DEFAULT_SPEED_PRESET,
   EARTH_SATS_SPEED_MULTIPLE,
+  EARTH_SATS_SPEED_PRESETS,
   SpeedControl,
   multipleToDaysPerSec,
 } from "@/components/ui/SpeedControl";
@@ -304,7 +305,7 @@ function ExploreHome() {
                 <SpeedControl
                   multiple={speedMultiple}
                   onMultipleChange={setSpeedMultiple}
-                  highlightNearestPreset={!isEarthSats}
+                  presets={isEarthSats ? EARTH_SATS_SPEED_PRESETS : undefined}
                 />
               </div>
             </div>
