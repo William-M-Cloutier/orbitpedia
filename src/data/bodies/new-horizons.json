@@ -24,7 +24,7 @@
     ]
   },
   "meta": {
-    "source": "NASA Science mission pages + JPL Horizons spacecraft IDs",
+    "source": "NASA Science mission pages + JPL Horizons VECTORS waypoints",
     "sources": [
       {
         "name": "NASA New Horizons mission",
@@ -33,14 +33,16 @@
           "mission.launchDate",
           "mission.status",
           "mission.targets",
-          "facts.discoveryNotes"
+          "facts.discoveryNotes",
+          "path.waypoints"
         ]
       },
       {
         "name": "JPL Horizons web app (New Horizons, -98)",
         "url": "https://ssd.jpl.nasa.gov/horizons/app.html",
         "fields": [
-          "horizonId"
+          "horizonId",
+          "path.waypoints"
         ]
       },
       {
@@ -48,12 +50,59 @@
         "url": "https://www.jhuapl.edu/destinations/missions/new-horizons",
         "fields": [
           "mission.launchDate",
-          "mission.targets"
+          "mission.targets",
+          "path.waypoints"
         ]
       }
     ],
-    "fetchedAt": "2026-09-12T22:36:56.000Z",
+    "fetchedAt": "2026-09-12T23:20:00.000Z",
     "confidence": "known",
-    "unitsVersion": 1
+    "unitsVersion": 1,
+    "provenance": "path.waypoints from JPL Horizons VECTORS (CENTER=500@10 Sun, REF_PLANE=ECLIPTIC, OUT_UNITS=AU-D); earthDistAu = |r| from VECTORS CENTER=500@399 (Earth) at the same epochs. Cached under scripts/fixtures/horizons-probes/."
+  },
+  "path": {
+    "frame": "heliocentric",
+    "waypoints": [
+      {
+        "date": "2006-01-20",
+        "jd": 2453755.5,
+        "xAu": -0.48868937743,
+        "yAu": 0.854081403967,
+        "zAu": 1.37749334826e-05,
+        "earthDistAu": 0.0013639322
+      },
+      {
+        "date": "2007-02-28",
+        "jd": 2454159.5,
+        "xAu": -2.09561971842,
+        "yAu": -4.91621451859,
+        "zAu": 0.0652167920625,
+        "earthDistAu": 5.4014774
+      },
+      {
+        "date": "2015-07-14",
+        "jd": 2457217.5,
+        "xAu": 8.00133291312,
+        "yAu": -31.8978262923,
+        "zAu": 1.09771173622,
+        "earthDistAu": 31.896156
+      },
+      {
+        "date": "2019-01-01",
+        "jd": 2458484.5,
+        "xAu": 12.0446432432,
+        "yAu": -41.5404979476,
+        "zAu": 1.47530425237,
+        "earthDistAu": 44.253775
+      },
+      {
+        "date": "2026-09-12",
+        "jd": 2461295.5,
+        "xAu": 20.7889237964,
+        "yAu": -62.1387882672,
+        "zAu": 2.28512575171,
+        "earthDistAu": 65.072865
+      }
+    ]
   }
 }

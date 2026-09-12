@@ -1,0 +1,5 @@
+API VERSION: 1.2
+API SOURCE: NASA/JPL Horizons API
+
+
+No ephemeris for target "Pioneer 10 (spacecraft)" prior to A.D. 1972-MAR-03 02:04:42.1854 TDB

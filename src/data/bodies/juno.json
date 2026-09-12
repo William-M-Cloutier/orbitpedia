@@ -1,0 +1,96 @@
+{
+  "id": "juno",
+  "name": "Juno",
+  "kind": "probe",
+  "systemId": "solar",
+  "aliases": [
+    "Juno spacecraft",
+    "Juno orbiter"
+  ],
+  "facts": {
+    "discoveryNotes": "NASA New Frontiers Jupiter polar orbiter; Earth gravity assist 2013; Jupiter orbit insertion 2016.",
+    "discoveryDate": "2011"
+  },
+  "color": "#A0522D",
+  "horizonId": "-61",
+  "mission": {
+    "launchDate": "2011-08-05",
+    "status": "active",
+    "targets": [
+      "Earth",
+      "Jupiter"
+    ]
+  },
+  "path": {
+    "frame": "heliocentric",
+    "waypoints": [
+      {
+        "date": "2011-08-06",
+        "jd": 2455779.5,
+        "xAu": 0.693224034795,
+        "yAu": -0.740296869081,
+        "zAu": -1.65330266227e-06,
+        "earthDistAu": 0.0010805144
+      },
+      {
+        "date": "2013-10-09",
+        "jd": 2456574.5,
+        "xAu": 0.957930162891,
+        "yAu": 0.266821314445,
+        "zAu": -4.50871317571e-05,
+        "earthDistAu": 0.0049417177
+      },
+      {
+        "date": "2016-07-05",
+        "jd": 2457574.5,
+        "xAu": -5.4357180965,
+        "yAu": 0.275050185299,
+        "zAu": 0.122267028253,
+        "earthDistAu": 5.8083518
+      },
+      {
+        "date": "2026-09-12",
+        "jd": 2461295.5,
+        "xAu": -3.37649312579,
+        "yAu": 4.08470960756,
+        "zAu": 0.0406779320231,
+        "earthDistAu": 6.1118579
+      }
+    ]
+  },
+  "meta": {
+    "source": "NASA Science mission pages + JPL Horizons VECTORS waypoints",
+    "provenance": "path.waypoints from JPL Horizons VECTORS (CENTER=500@10 Sun, REF_PLANE=ECLIPTIC, OUT_UNITS=AU-D); earthDistAu = |r| from VECTORS CENTER=500@399 (Earth) at the same epochs. Cached under scripts/fixtures/horizons-probes/.",
+    "sources": [
+      {
+        "name": "NASA Juno mission",
+        "url": "https://science.nasa.gov/mission/juno/",
+        "fields": [
+          "mission.launchDate",
+          "mission.status",
+          "mission.targets",
+          "facts.discoveryNotes"
+        ]
+      },
+      {
+        "name": "JPL Horizons web app",
+        "url": "https://ssd.jpl.nasa.gov/horizons/app.html",
+        "fields": [
+          "horizonId",
+          "path.waypoints"
+        ]
+      },
+      {
+        "name": "NASA Solar System Exploration \u2014 Juno",
+        "url": "https://solarsystem.nasa.gov/missions/juno/in-depth/",
+        "fields": [
+          "mission.status",
+          "facts.discoveryNotes"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-12T23:20:00.000Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  }
+}

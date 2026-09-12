@@ -57,6 +57,7 @@ import {
   visualBinaryKidsClearanceSep,
   visualBinaryHelioPlanetClearanceSep,
   probeMarkerDisplaySep,
+  hasProbePathWaypoints,
   VISUAL_BINARY_CLEARANCE_MARGIN,
   COMPANION_OUT_OF_PLANE_FRAC,
 } from "./schematicFit";
@@ -72,6 +73,7 @@ import {
   assignSatMeshRanks,
   resolveSatLodTier,
   shouldDrawGeocentricOrbitLine,
+  SAT_LOD_NEAR_DIST,
   type SatLodTier,
 } from "./satLod";
 
@@ -444,16 +446,18 @@ function visualBinaryCompanionOffset(
 
 
 /**
- * Marker-only Explore placement for probes without usable Kepler.
+ * Marker-only Explore placement for probes without usable Kepler and without
+ * catalog `path.waypoints`.
  *
- * **NOT an ephemeris / NOT a trajectory.** Placeholders until `path.waypoints`
- * land on the schema (Arch-owned). Do NOT invent Horizons samples, fake
- * Kepler elements, or OrbitLine ellipses here.
+ * **NOT an ephemeris / NOT a trajectory.** Fail-open ring when waypoints are
+ * absent. Do NOT invent Horizons samples, fake Kepler elements, or OrbitLine
+ * ellipses here. When `path.waypoints` length ≥ 2, craft sits on the last
+ * waypoint instead (see bodyPosition / ProbePathLine).
  *
  * Layout: shared ring outside outermost primary-frame display apo × helioScale
  * (+ mesh + margin) via {@link probeMarkerDisplaySep}; even angles among
- * probes in the face-on ecliptic plane, mapped with eclipticToScene(x,y,0).
- * Stable sort by id. Never stack on the Sun.
+ * marker-only probes in the face-on ecliptic plane, mapped with
+ * eclipticToScene(x,y,0). Stable sort by id. Never stack on the Sun.
  */
 function probeMarkerOffset(
   body: Body,
@@ -461,11 +465,20 @@ function probeMarkerOffset(
   systemBodies: readonly Body[],
   helioScale: number = 1,
 ): [number, number, number] {
-  if (body.kind !== "probe" || hasUsableOrbit(body)) {
+  if (
+    body.kind !== "probe" ||
+    hasUsableOrbit(body) ||
+    hasProbePathWaypoints(body)
+  ) {
     return [0, 0, 0];
   }
   const probes = systemBodies
-    .filter((b) => b.kind === "probe" && !hasUsableOrbit(b))
+    .filter(
+      (b) =>
+        b.kind === "probe" &&
+        !hasUsableOrbit(b) &&
+        !hasProbePathWaypoints(b),
+    )
     .slice()
     .sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
   const idx = probes.findIndex((p) => p.id === body.id);
@@ -484,8 +497,8 @@ function probeMarkerOffset(
  * - Primary/root star always meshes (at origin).
  * - Companion stars (kind===star && parentId) always mesh — Kepler path when
  *   hasUsableOrbit; otherwise tight visual-binary offset (no OrbitLine).
- * - Probes (kind===probe) always mesh — marker-only when !hasUsableOrbit
- *   (no invented path.waypoints / OrbitLine this slice).
+ * - Probes (kind===probe) always mesh — path.waypoints polyline when present
+ *   (never invent); else marker-only ring. No OrbitLine without Kepler.
  * - Other bodies require hasUsableOrbit.
  * - Parent-frame children: parent must be scene-visible (primary, Kepler body,
  *   OR orbit-unknown companion now visible via visual binary). Kids of
@@ -512,7 +525,7 @@ function isExploreSceneBody(
   if (body.kind === "star" && body.parentId) {
     return true;
   }
-  // Mesh probes even without Kepler (marker-only placement; no OrbitLine).
+  // Mesh probes even without Kepler (waypoints polyline or marker-only; no OrbitLine).
   if (body.kind === "probe") {
     return true;
   }
@@ -568,7 +581,7 @@ function bodyPosition(
   seen: Set<string> = new Set(),
 ): [number, number, number] {
   // No usable Kepler: orbit-unknown companion stars → visual-binary offset;
-  // probes → marker-only ring (NOT ephemeris); else origin (no invented orbit).
+  // probes → last path.waypoint or marker-only ring (NOT ephemeris); else origin.
   if (!hasUsableOrbit(body)) {
     if (body.kind === "star" && body.parentId && systemBodies) {
       return visualBinaryCompanionOffset(
@@ -579,8 +592,24 @@ function bodyPosition(
         helioScale,
       );
     }
-    if (body.kind === "probe" && systemBodies) {
-      return probeMarkerOffset(body, sizeMode, systemBodies, helioScale);
+    if (body.kind === "probe") {
+      // Honest archive waypoints: craft at last sample (heliocentric au).
+      if (hasProbePathWaypoints(body)) {
+        const last = body.path!.waypoints![body.path!.waypoints!.length - 1]!;
+        const s =
+          (distScale > 0 ? distScale : 1) * (helioScale > 0 ? helioScale : 1);
+        return eclipticToSceneFaceOn(
+          faceOn,
+          last.xAu * s,
+          last.yAu * s,
+          last.zAu * s,
+        );
+      }
+      // Fail-open marker ring when waypoints absent (NOT an ephemeris).
+      if (systemBodies) {
+        return probeMarkerOffset(body, sizeMode, systemBodies, helioScale);
+      }
+      return [0, 0, 0];
     }
     return [0, 0, 0];
   }
@@ -816,6 +845,160 @@ const OrbitLine = memo(function OrbitLine({
     );
   }
   return line;
+});
+
+/**
+ * Honest probe trajectory polyline from catalog `path.waypoints` (≥2).
+ * Heliocentric ecliptic au → scene via faceOn × distScale × helioScale.
+ * Never invents points — returns null when waypoints are absent.
+ */
+const ProbePathLine = memo(function ProbePathLine({
+  body,
+  highlighted,
+  highlightColor,
+}: {
+  body: Body;
+  highlighted: boolean;
+  highlightColor?: string;
+}) {
+  const sizeMode = useSizeMode();
+  const distScale = orbitDistanceScale(sizeMode);
+  const { helioScale, faceOn } = useSystemViz();
+
+  const points = useMemo(() => {
+    const wps = body.path?.waypoints;
+    if (!wps || wps.length < 2) return null;
+    const s =
+      (distScale > 0 ? distScale : 1) * (helioScale > 0 ? helioScale : 1);
+    return wps.map((wp) => {
+      const [sx, sy, sz] = eclipticToSceneFaceOn(
+        faceOn,
+        wp.xAu * s,
+        wp.yAu * s,
+        wp.zAu * s,
+      );
+      return new THREE.Vector3(sx, sy, sz);
+    });
+  }, [body.path?.waypoints, distScale, helioScale, faceOn]);
+
+  if (!points) return null;
+  const base = body.color ?? "#888";
+  const color = highlighted ? (highlightColor ?? base) : base;
+  return (
+    <Line
+      points={points}
+      color={color}
+      lineWidth={highlighted ? 2 : 1.1}
+      transparent
+      opacity={highlighted ? 0.8 : 0.45}
+    />
+  );
+});
+
+/**
+ * Probe craft mesh (procedural, no texture packs).
+ * Full (focused/near): bus box + HGA dish + boom/antenna.
+ * Far/simple: small box. Shared materials via getSatSharedMaterial.
+ * frustumCulled true; body.color tint; same click/contextMenu as BodyMesh.
+ */
+const ProbeBodyMesh = memo(function ProbeBodyMesh({
+  body,
+  focused,
+  groupRef,
+  spinRef,
+  r,
+  onClick,
+  onContextMenu,
+}: {
+  body: Body;
+  focused: boolean;
+  groupRef: RefObject<THREE.Group | null>;
+  spinRef: RefObject<THREE.Object3D | null>;
+  r: number;
+  onClick: (e: { stopPropagation: () => void }) => void;
+  onContextMenu: (e: {
+    stopPropagation: () => void;
+    nativeEvent?: { preventDefault?: () => void };
+  }) => void;
+}) {
+  const tint = body.color ?? "#c8c8c8";
+  const busMat = getSatSharedMaterial("bus", tint);
+  const dishMat = getSatSharedMaterial("antenna", "#e8e8e8");
+  const boomMat = getSatSharedMaterial("antenna", "#bbbbbb");
+  const tierRef = useRef<"full" | "simple">(focused ? "full" : "simple");
+  const fullRef = useRef<THREE.Group>(null);
+  const simpleRef = useRef<THREE.Mesh>(null);
+  const { camera } = useThree();
+
+  const applyTier = (tier: "full" | "simple") => {
+    tierRef.current = tier;
+    if (fullRef.current) fullRef.current.visible = tier === "full";
+    if (simpleRef.current) simpleRef.current.visible = tier === "simple";
+  };
+
+  useLayoutEffect(() => {
+    applyTier(focused ? "full" : "simple");
+  }, [focused]);
+
+  useFrame(() => {
+    if (!groupRef.current) return;
+    const dist = camera.position.distanceTo(groupRef.current.position);
+    const next: "full" | "simple" =
+      focused || !(dist > SAT_LOD_NEAR_DIST) ? "full" : "simple";
+    if (next !== tierRef.current) applyTier(next);
+  });
+
+  const s = focused ? 1.35 : 1;
+  return (
+    <group ref={groupRef} name={body.id}>
+      <group
+        ref={spinRef}
+        scale={s}
+        onClick={onClick}
+        onContextMenu={onContextMenu}
+      >
+        {/* Focused / near: bus + HGA dish + boom/antenna. */}
+        <group ref={fullRef} visible={focused}>
+          <mesh frustumCulled material={busMat}>
+            <boxGeometry args={[r * 1.3, r * 0.75, r * 0.95]} />
+          </mesh>
+          {/* HGA: thin dish (flattened sphere). */}
+          <mesh
+            frustumCulled
+            position={[0, 0, r * 0.78]}
+            scale={[1, 1, 0.18]}
+            material={dishMat}
+          >
+            <sphereGeometry args={[r * 0.9, 16, 12]} />
+          </mesh>
+          {/* Boom / antenna mast. */}
+          <mesh
+            frustumCulled
+            position={[0, r * 0.95, 0]}
+            material={boomMat}
+          >
+            <boxGeometry args={[r * 0.12, r * 1.35, r * 0.12]} />
+          </mesh>
+          <mesh
+            frustumCulled
+            position={[0, r * 1.7, 0]}
+            material={dishMat}
+          >
+            <boxGeometry args={[r * 0.35, r * 0.12, r * 0.35]} />
+          </mesh>
+        </group>
+        {/* Far / idle: single small box. */}
+        <mesh
+          ref={simpleRef}
+          frustumCulled
+          visible={!focused}
+          material={busMat}
+        >
+          <boxGeometry args={[r * 1.15, r * 1.15, r * 1.15]} />
+        </mesh>
+      </group>
+    </group>
+  );
 });
 
 /**
@@ -1088,21 +1271,26 @@ const BodyMesh = memo(function BodyMesh({
     );
   }
 
-  // Probe: distinct octahedron marker (not a planet sphere). Same click /
-  // contextMenu deselect contract. No OrbitLine without hasUsableOrbit.
+  // Probe: procedural craft (ProbeBodyMesh) + optional path.waypoints Line.
+  // Same click / contextMenu deselect contract. No OrbitLine without Kepler.
   if (body.kind === "probe") {
     return (
-      <group ref={group} name={body.id}>
-        <mesh
-          ref={spinMesh}
+      <>
+        <ProbeBodyMesh
+          body={body}
+          focused={focused}
+          groupRef={group}
+          spinRef={spinMesh}
+          r={r}
           onClick={handleClick}
           onContextMenu={handleContextMenu}
-          material={mat}
-          scale={focused ? 1.35 : 1}
-        >
-          <octahedronGeometry args={[r, 0]} />
-        </mesh>
-      </group>
+        />
+        <ProbePathLine
+          body={body}
+          highlighted={focused}
+          highlightColor={highlightColor}
+        />
+      </>
     );
   }
 

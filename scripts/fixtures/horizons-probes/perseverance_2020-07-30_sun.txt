@@ -1,0 +1,5 @@
+API VERSION: 1.2
+API SOURCE: NASA/JPL Horizons API
+
+
+No ephemeris for target "Mars2020 (spacecraft)" prior to A.D. 2020-JUL-30 12:52:43.6433 TDB

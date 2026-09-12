@@ -235,7 +235,8 @@ Additive spacecraft cards on solar (and later other systems):
 
 - Required: `id`, `name`, `kind: "probe"`, `systemId`, `meta` (+ Sources), usually `horizonId` (JPL Horizons spacecraft ID, e.g. `-31`).
 - Optional `mission`: `{ launchDate, status, targets[] }` — real NASA/JPL values only.
+- Optional `path`: `{ waypoints: [{ jd?, date?, xAu, yAu, zAu, earthDistAu? }, ...] }` — sparse **archive** heliocentric samples only (never invent). Viz draws polyline; charts may use `earthDistAu` / derived distances when sourced.
 - **Omit `orbit`** when the trajectory is hyperbolic escape (`OrbitSchema.e` is ≤1). Viz owns path/icon; do not invent Kepler elements or waypoints.
-- Explore this slice: **marker-only** placement (octahedron icon outside the outer planet display apo). **Not an ephemeris / not a trajectory** — placeholders until `path.waypoints` (Arch-owned schema). Selectable via focusId/onSelect; no OrbitLine without usable Kepler.
+- Explore: procedural **ProbeBodyMesh** craft; when `path.waypoints` length ≥ 2, draw polyline + place craft at the **last** waypoint (heliocentric au × distScale × helioScale, faceOn). Without waypoints: **marker-only** ring outside outer planet display apo (fail-open; **not an ephemeris**). Never invent points. Selectable via focusId/onSelect; no OrbitLine without usable Kepler.
 - `facts.discoveryNotes` may summarize the mission factually (no process meta).
 

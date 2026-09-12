@@ -1,0 +1,100 @@
+{
+  "id": "cassini",
+  "name": "Cassini",
+  "kind": "probe",
+  "systemId": "solar",
+  "aliases": [
+    "Cassini-Huygens",
+    "Cassini Orbiter"
+  ],
+  "facts": {
+    "discoveryNotes": "NASA/ESA/ASI Saturn orbiter with Huygens Titan lander; Grand Finale plunge into Saturn 2017-09-15.",
+    "discoveryDate": "1997"
+  },
+  "color": "#D4C4A8",
+  "horizonId": "-82",
+  "mission": {
+    "launchDate": "1997-10-15",
+    "status": "completed",
+    "targets": [
+      "Venus",
+      "Earth",
+      "Jupiter",
+      "Saturn",
+      "Titan",
+      "Enceladus"
+    ]
+  },
+  "path": {
+    "frame": "heliocentric",
+    "waypoints": [
+      {
+        "date": "1997-10-16",
+        "jd": 2450737.5,
+        "xAu": 0.92115644601,
+        "yAu": 0.383820724122,
+        "zAu": 0.000238011509986,
+        "earthDistAu": 0.0017640547
+      },
+      {
+        "date": "2000-12-30",
+        "jd": 2451908.5,
+        "xAu": 1.85028961184,
+        "yAu": 4.65633676325,
+        "zAu": -0.0609723222407,
+        "earthDistAu": 4.190982
+      },
+      {
+        "date": "2004-07-01",
+        "jd": 2453187.5,
+        "xAu": -2.56683983561,
+        "yAu": 8.66894032989,
+        "zAu": -0.0482061353352,
+        "earthDistAu": 10.050838
+      },
+      {
+        "date": "2017-09-14",
+        "jd": 2458010.5,
+        "xAu": -0.529147002919,
+        "yAu": -10.0507738955,
+        "zAu": 0.200542492053,
+        "earthDistAu": 10.014257
+      }
+    ]
+  },
+  "meta": {
+    "source": "NASA Science mission pages + JPL Horizons VECTORS waypoints",
+    "provenance": "path.waypoints from JPL Horizons VECTORS (CENTER=500@10 Sun, REF_PLANE=ECLIPTIC, OUT_UNITS=AU-D); earthDistAu = |r| from VECTORS CENTER=500@399 (Earth) at the same epochs. Cached under scripts/fixtures/horizons-probes/.",
+    "sources": [
+      {
+        "name": "NASA Cassini mission",
+        "url": "https://science.nasa.gov/mission/cassini/",
+        "fields": [
+          "mission.launchDate",
+          "mission.status",
+          "mission.targets",
+          "facts.discoveryNotes"
+        ]
+      },
+      {
+        "name": "JPL Horizons web app",
+        "url": "https://ssd.jpl.nasa.gov/horizons/app.html",
+        "fields": [
+          "horizonId",
+          "path.waypoints"
+        ]
+      },
+      {
+        "name": "NASA Solar System Exploration \u2014 Cassini",
+        "url": "https://solarsystem.nasa.gov/missions/cassini/overview/",
+        "fields": [
+          "mission.status",
+          "facts.discoveryNotes"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-12T23:20:00.000Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  }
+}

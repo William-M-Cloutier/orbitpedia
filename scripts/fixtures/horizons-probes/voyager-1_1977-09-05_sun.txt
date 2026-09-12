@@ -1,0 +1,5 @@
+API VERSION: 1.2
+API SOURCE: NASA/JPL Horizons API
+
+
+No ephemeris for target "Voyager 1 (spacecraft)" prior to A.D. 1977-SEP-05 13:59:24.3830 TDB

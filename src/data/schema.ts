@@ -162,6 +162,33 @@ export const MissionSchema = z
   })
   .strict();
 
+/**
+ * Honest probe trajectory / chart series — never invent points.
+ * Heliocentric au positions from NASA/JPL archives (or documented published samples).
+ */
+export const ProbeWaypointSchema = z
+  .object({
+    /** Optional Julian Day for the sample. */
+    jd: z.number().optional(),
+    /** Optional ISO date label for charts (YYYY-MM-DD). */
+    date: z.string().min(1).optional(),
+    xAu: z.number(),
+    yAu: z.number(),
+    zAu: z.number(),
+    /** Optional heliocentric distance from Earth (au) when sourced. */
+    earthDistAu: z.number().nonnegative().optional(),
+  })
+  .strict();
+
+export const ProbePathSchema = z
+  .object({
+    /** Sparse archive waypoints (launch / flybys / epochs) — omit if none. */
+    waypoints: z.array(ProbeWaypointSchema).min(2).optional(),
+    /** Frame for waypoint coordinates (default heliocentric ecliptic). */
+    frame: z.enum(["heliocentric"]).optional(),
+  })
+  .strict();
+
 export const BodySchema = z
   .object({
     id: z.string().min(1),
@@ -185,6 +212,8 @@ export const BodySchema = z
     appearance: AppearanceSchema.optional(),
     /** Probe/spacecraft mission metadata (not SI facts). */
     mission: MissionSchema.optional(),
+    /** Optional honest trajectory samples for probes (Viz polyline / charts). */
+    path: ProbePathSchema.optional(),
     meta: BodyMetaSchema,
   })
   .superRefine((body, ctx) => {
@@ -391,6 +420,8 @@ export type Facts = z.infer<typeof FactsSchema>;
 export type Appearance = z.infer<typeof AppearanceSchema>;
 export type SatelliteBlock = z.infer<typeof SatelliteBlockSchema>;
 export type Mission = z.infer<typeof MissionSchema>;
+export type ProbeWaypoint = z.infer<typeof ProbeWaypointSchema>;
+export type ProbePath = z.infer<typeof ProbePathSchema>;
 export type BodyMeta = z.infer<typeof BodyMetaSchema>;
 export type Body = z.infer<typeof BodySchema>;
 export type SystemMeta = z.infer<typeof SystemMetaSchema>;

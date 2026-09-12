@@ -268,16 +268,24 @@ export function maxCompanionDisplaySep(
 }
 
 /**
+ * True when catalog provides ≥2 honest `path.waypoints` (never invent).
+ */
+export function hasProbePathWaypoints(body: Body): boolean {
+  const wps = body.path?.waypoints;
+  return Array.isArray(wps) && wps.length >= 2;
+}
+
+/**
  * Viz-only radial separation for marker-only probes (kind===probe without
- * usable Kepler / path.waypoints).
+ * usable Kepler and without path.waypoints).
  *
- * **NOT an ephemeris / NOT a trajectory** — placeholders until schema has
- * path.waypoints. Do not invent Horizons samples or fake Kepler elements.
+ * **NOT an ephemeris / NOT a trajectory** — fail-open ring when waypoints are
+ * absent. Do not invent Horizons samples or fake Kepler elements.
  *
  * Outside outermost primary-frame planet (or orbiter) display apoapsis
  * (aAu*(1+e)*helioScale) + probe mesh + outermost mesh + margin. Shared ring
- * for all probes in the graph; angles assigned in OrbitScene (stable id sort).
- * Catalog aAu / cards unchanged.
+ * for marker-only probes; angles assigned in OrbitScene (stable id sort).
+ * Catalog aAu / cards unchanged. Probes with path.waypoints sit on the polyline.
  */
 export function probeMarkerDisplaySep(
   sizeMode: SizeMode,
@@ -285,7 +293,7 @@ export function probeMarkerDisplaySep(
   helioScale: number,
 ): number {
   const probes = systemBodies.filter(
-    (b) => b.kind === "probe" && !hasUsableOrbit(b),
+    (b) => b.kind === "probe" && !hasUsableOrbit(b) && !hasProbePathWaypoints(b),
   );
   if (probes.length === 0) return 0;
   const hs = helioScale > 0 && Number.isFinite(helioScale) ? helioScale : 1;
@@ -313,6 +321,28 @@ export function probeMarkerDisplaySep(
 }
 
 
+
+/**
+ * Max heliocentric waypoint radius × helioScale for probes with honest
+ * path.waypoints (scene extent; never invent points).
+ */
+export function probePathWaypointsDisplayExtent(
+  bodies: readonly Body[],
+  helioScale: number,
+): number {
+  const hs = helioScale > 0 && Number.isFinite(helioScale) ? helioScale : 1;
+  let max = 0;
+  for (const b of bodies) {
+    if (b.kind !== "probe" || !hasProbePathWaypoints(b)) continue;
+    for (const wp of b.path!.waypoints!) {
+      const r = Math.hypot(wp.xAu, wp.yAu, wp.zAu) * hs;
+      if (Number.isFinite(r) && r > max) max = r;
+    }
+  }
+  return max;
+}
+
+
 /**
  * Framing extent for schematic idle / fit: planet apo×helio plus companion
  * display seps so wide visual-binary hosts frame correctly.
@@ -326,6 +356,7 @@ export function schematicFramingExtent(
     systemSceneExtent(bodies, helioScale),
     maxCompanionDisplaySep(bodies, sizeMode),
     probeMarkerDisplaySep(sizeMode, bodies, helioScale),
+    probePathWaypointsDisplayExtent(bodies, helioScale),
   );
   for (const b of bodies) {
     if (b.kind !== "star" || !b.parentId || hasUsableOrbit(b)) continue;

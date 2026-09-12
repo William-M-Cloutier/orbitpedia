@@ -25,7 +25,7 @@
     ]
   },
   "meta": {
-    "source": "NASA Science mission pages + JPL Horizons spacecraft IDs",
+    "source": "NASA Science mission pages + JPL Horizons VECTORS waypoints",
     "sources": [
       {
         "name": "NASA Voyager fact sheet",
@@ -41,7 +41,8 @@
         "name": "JPL Horizons web app (Voyager 2, -32)",
         "url": "https://ssd.jpl.nasa.gov/horizons/app.html",
         "fields": [
-          "horizonId"
+          "horizonId",
+          "path.waypoints"
         ]
       },
       {
@@ -53,8 +54,62 @@
         ]
       }
     ],
-    "fetchedAt": "2026-09-12T22:36:56.000Z",
+    "fetchedAt": "2026-09-12T23:20:00.000Z",
     "confidence": "known",
-    "unitsVersion": 1
+    "unitsVersion": 1,
+    "provenance": "path.waypoints from JPL Horizons VECTORS (CENTER=500@10 Sun, REF_PLANE=ECLIPTIC, OUT_UNITS=AU-D); earthDistAu = |r| from VECTORS CENTER=500@399 (Earth) at the same epochs. Cached under scripts/fixtures/horizons-probes/."
+  },
+  "path": {
+    "frame": "heliocentric",
+    "waypoints": [
+      {
+        "date": "1977-08-21",
+        "jd": 2443376.5,
+        "xAu": 0.859834457106,
+        "yAu": -0.531891679105,
+        "zAu": 0.000686378813502,
+        "earthDistAu": 0.0021620239
+      },
+      {
+        "date": "1979-07-09",
+        "jd": 2444063.5,
+        "xAu": -3.92365604387,
+        "yAu": 3.59378458889,
+        "zAu": 0.0732099280613,
+        "earthDistAu": 6.2146757
+      },
+      {
+        "date": "1981-08-25",
+        "jd": 2444841.5,
+        "xAu": -9.38491558679,
+        "yAu": -1.94183885233,
+        "zAu": 0.406841942831,
+        "earthDistAu": 10.389223
+      },
+      {
+        "date": "1986-01-24",
+        "jd": 2446454.5,
+        "xAu": -3.67199316622,
+        "yAu": -18.7599487465,
+        "zAu": -0.0219610058322,
+        "earthDistAu": 19.824502
+      },
+      {
+        "date": "1989-08-25",
+        "jd": 2447763.5,
+        "xAu": 5.99916777448,
+        "yAu": -29.6063346072,
+        "zAu": 0.471651196383,
+        "earthDistAu": 29.578697
+      },
+      {
+        "date": "2026-09-12",
+        "jd": 2461295.5,
+        "xAu": 39.8441463556,
+        "yAu": -105.361852656,
+        "zAu": -89.5791272564,
+        "earthDistAu": 143.50798
+      }
+    ]
   }
 }

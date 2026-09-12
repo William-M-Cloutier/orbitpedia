@@ -39,7 +39,13 @@
     "hygiea",
     "voyager-1",
     "voyager-2",
-    "new-horizons"
+    "new-horizons",
+    "pioneer-10",
+    "pioneer-11",
+    "galileo",
+    "cassini",
+    "juno",
+    "perseverance"
   ],
   "blurb": "Our home planetary system \u2014 a G-type star with eight planets, major moons, and a main-belt asteroid population.",
   "highlights": [
