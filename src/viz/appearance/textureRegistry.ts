@@ -65,6 +65,21 @@ export const TEXTURE_REGISTRY: Readonly<Record<string, TextureRegistryEntry>> =
       src: "/textures/sun-marquee.webp",
       credit: "NASA SDO-derived (Solar System Scope, CC BY 4.0)",
     },
+    "mercury-marquee": {
+      id: "mercury-marquee",
+      src: "/textures/mercury-marquee.webp",
+      credit: "NASA/MESSENGER-derived (Solar System Scope, CC BY 4.0)",
+    },
+    "pluto-marquee": {
+      id: "pluto-marquee",
+      src: "/textures/pluto-marquee.webp",
+      credit: "NASA/JHUAPL/SwRI New Horizons PIA19956",
+    },
+    "ceres-marquee": {
+      id: "ceres-marquee",
+      src: "/textures/ceres-marquee.webp",
+      credit: "NASA/Dawn-derived (Solar System Scope, CC BY 4.0)",
+    },
   });
 
 export function lookupTextureId(

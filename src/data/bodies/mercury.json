@@ -12,6 +12,9 @@
     "albedo": 0.106
   },
   "color": "#B5B5B5",
+  "appearance": {
+    "textureId": "mercury-marquee"
+  },
   "horizonId": "199",
   "meta": {
     "source": "JPL Horizons + SSD phys_par",

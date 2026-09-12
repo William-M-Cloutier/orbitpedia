@@ -16,6 +16,9 @@
     "discoveryDate": "1801-01-01"
   },
   "color": "#8A8A8A",
+  "appearance": {
+    "textureId": "ceres-marquee"
+  },
   "sbdbDes": "1",
   "meta": {
     "source": "JPL SBDB (full-prec + phys-par)",

@@ -704,6 +704,9 @@ if (!Number.isFinite(c)) {
     uranus: "uranus-marquee",
     neptune: "neptune-marquee",
     sun: "sun-marquee",
+    mercury: "mercury-marquee",
+    pluto: "pluto-marquee",
+    ceres: "ceres-marquee",
   };
   let packBytes = 0;
   let mapCount = 0;

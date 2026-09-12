@@ -54,9 +54,12 @@ Lean WebP under Guard caps, served from `public/textures/`, registered in
 | `uranus-marquee` | Uranus | NASA/Voyager-derived ([Solar System Scope](https://www.solarsystemscope.com/textures/) 2k, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)) — 2048×1024 WebP |
 | `neptune-marquee` | Neptune | NASA/Voyager-derived ([Solar System Scope](https://www.solarsystemscope.com/textures/) 2k, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)) — 2048×1024 WebP |
 | `sun-marquee` | Sun | NASA SDO-derived ([Solar System Scope](https://www.solarsystemscope.com/textures/) 2k, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)) — 2048×1024 WebP |
+| `mercury-marquee` | Mercury | NASA/MESSENGER-derived ([Solar System Scope](https://www.solarsystemscope.com/textures/) 2k, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)) — 2048×1024 WebP |
+| `pluto-marquee` | Pluto | NASA/JHUAPL/SwRI New Horizons extended-color cylindrical [PIA19956](https://photojournal.jpl.nasa.gov/catalog/PIA19956) (public domain) — 2048×1024 WebP |
+| `ceres-marquee` | Ceres | NASA/Dawn-derived ([Solar System Scope](https://www.solarsystemscope.com/textures/) 2k, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)) — 2048×1024 WebP |
 
-Compress offline; no TIFFs / no huge sources in-repo. Residual: 3 Sol slots
-and ~5 MB remain within the ≤12 / ≤6 MB pack budget.
+Compress offline; no TIFFs / no huge sources in-repo. Pack fills the ≤12 Sol
+map Guard slot; other systems stay procedural. Moon tidal-lock is parked.
 
 Mapped materials use the albedo map with white tint so continents / bands read
 true; procedural path unchanged for unmapped bodies.

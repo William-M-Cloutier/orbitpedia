@@ -13,6 +13,9 @@
     "discoveryDate": "1930-02-18"
   },
   "color": "#C9B8A8",
+  "appearance": {
+    "textureId": "pluto-marquee"
+  },
   "horizonId": "999",
   "meta": {
     "source": "JPL Horizons + SSD phys_par",
