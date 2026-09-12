@@ -333,17 +333,21 @@ function localOrbitPosition(
 }
 
 /**
- * Viz-only display separation for orbit-unknown companion stars.
- *
- * NOT an orbit — no OrbitLine, no invented aAu/period, not catalog AU.
- * Smoke archive: 17/17 multi-star systems have companions with no usable
- * Kepler; bulk: 0/425 multi-star graphs have companion orbit.aAu. Prefer real
- * Kepler via hasUsableOrbit when archive has elements; otherwise place a tight
- * visual-binary offset from mesh radii so companions are visible in Explore.
+ * Viz-only display ring for orbit-unknown companion stars in Explore's
+ * face-on plane. NOT an orbit — no OrbitLine, no invented aAu/period, not
+ * catalog AU. Smoke archive: 17/17 multi-star systems have companions with no
+ * usable Kepler; bulk: 0/425 multi-star graphs have companion orbit.aAu.
+ * Prefer real Kepler via hasUsableOrbit when archive has elements; otherwise
+ * place a tight visual-binary offset from mesh radii so companions are visible.
  *
  * Separation = (rPrimary + rSelf) * VISUAL_BINARY_SEP_FACTOR (clearance without
  * the old sprawling companion-star layout-offset dump). Locked sizeTiers /
  * visualRadius contract (incl. companion Prop/True) is respected as-is.
+ *
+ * Coords are already in the face-on ecliptic plane — map with eclipticToScene
+ * only. Do NOT re-apply faceOn: that rotation is for catalog orbital positions;
+ * applying it to ecliptic-XY offsets tips them out of the horizontal plane
+ * (tipped Z → scene Y → vertical stacking).
  */
 const VISUAL_BINARY_SEP_FACTOR = 1.3;
 /** Floor so tiny Prop/True companion meshes still clear the primary surface. */
@@ -353,7 +357,6 @@ function visualBinaryCompanionOffset(
   body: Body,
   sizeMode: SizeMode,
   systemBodies: readonly Body[],
-  faceOn: FaceOnRotation = FACE_ON_IDENTITY,
 ): [number, number, number] {
   if (body.kind !== "star" || !body.parentId || hasUsableOrbit(body)) {
     return [0, 0, 0];
@@ -380,11 +383,12 @@ function visualBinaryCompanionOffset(
     (rPrimary + rSelf) * VISUAL_BINARY_SEP_FACTOR,
     VISUAL_BINARY_MIN_SEP,
   );
-  // Equal angles in the face-on ecliptic plane (start at −π/2 → scene "up").
-  const ang = (2 * Math.PI * idx) / n - Math.PI / 2;
+  // Even spread in the face-on orbital plane (start at 0 → +X). Horizontal ring.
+  const ang = (2 * Math.PI * idx) / n;
   const x = sep * Math.cos(ang);
   const y = sep * Math.sin(ang);
-  return eclipticToSceneFaceOn(faceOn, x, y, 0);
+  // ecliptic XY → scene XZ only (scene Y = 0). No faceOn re-application.
+  return eclipticToScene(x, y, 0);
 }
 
 /**
@@ -442,12 +446,7 @@ function bodyPosition(
   // visual-binary offset; everything else stays at origin (no invented orbit).
   if (!hasUsableOrbit(body)) {
     if (body.kind === "star" && body.parentId && systemBodies) {
-      return visualBinaryCompanionOffset(
-        body,
-        sizeMode,
-        systemBodies,
-        faceOn,
-      );
+      return visualBinaryCompanionOffset(body, sizeMode, systemBodies);
     }
     return [0, 0, 0];
   }

@@ -971,6 +971,47 @@ if (!Number.isFinite(c)) {
   } else {
     ok("OrbitScene uses VISUAL_BINARY_SEP_FACTOR for mesh-radius clearance");
   }
+  // Visual-binary offsets stay in Explore face-on plane (horizontal ring).
+  // Do not re-apply faceOn to ecliptic-XY offsets (tips → scene Y stacking).
+  if (!/Do NOT re-apply faceOn|No faceOn re-application|not re-appl/.test(sceneSrc)) {
+    fail("OrbitScene visualBinaryCompanionOffset should document not re-applying faceOn");
+  } else {
+    ok("OrbitScene documents not re-applying faceOn for visual-binary offsets");
+  }
+  // FACE_ON_IDENTITY-equivalent path: eclipticToScene(x,y,0) → scene Y ≈ 0.
+  {
+    const eclipticToScene = (x, y, z) => [x, z, -y];
+    const sep = 0.1;
+    const n = 3;
+    let maxAbsY = 0;
+    for (let idx = 0; idx < n; idx++) {
+      const ang = (2 * Math.PI * idx) / n;
+      const x = sep * Math.cos(ang);
+      const y = sep * Math.sin(ang);
+      const [, sy] = eclipticToScene(x, y, 0);
+      maxAbsY = Math.max(maxAbsY, Math.abs(sy));
+    }
+    if (maxAbsY > 1e-12) {
+      fail(`visual-binary face-on offsets should have scene Y≈0, got max |Y|=${maxAbsY}`);
+    } else {
+      ok("visual-binary display ring: eclipticToScene(x,y,0) → scene Y ≈ 0 (horizontal)");
+    }
+  }
+  // Helper maps via eclipticToScene only (not eclipticToSceneFaceOn).
+  if (
+    !/No faceOn re-application[\s\S]{0,120}return eclipticToScene\(x, y, 0\)/.test(
+      sceneSrc,
+    ) &&
+    !/Horizontal ring[\s\S]{0,200}return eclipticToScene\(x, y, 0\)/.test(sceneSrc)
+  ) {
+    fail("visualBinaryCompanionOffset should return eclipticToScene(x, y, 0) without faceOn");
+  } else if (
+    /sep \* Math\.sin\(ang\);\s*\n\s*return eclipticToSceneFaceOn/.test(sceneSrc)
+  ) {
+    fail("visualBinaryCompanionOffset must not call eclipticToSceneFaceOn (tips out of plane)");
+  } else {
+    ok("visualBinaryCompanionOffset uses eclipticToScene only (no faceOn)");
+  }
   if (!/isExploreSceneBody/.test(sceneSrc)) {
     fail("OrbitScene missing isExploreSceneBody visibility gate");
   } else {

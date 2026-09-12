@@ -3,7 +3,12 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { KIND_LABEL, getBodiesForSystem } from "@/data/catalog";
-import { bodyProvenance, type Body, type System } from "@/data/schema";
+import {
+  bodyProvenance,
+  hasUsableOrbit,
+  type Body,
+  type System,
+} from "@/data/schema";
 import { SystemFacts } from "@/components/ui/SystemFacts";
 import {
   keyFactRows,
@@ -11,6 +16,7 @@ import {
   type FactRow,
 } from "@/lib/factsDisplay";
 import { overviewBlurb } from "@/lib/interestBlurb";
+import { VISUAL_BINARY_NOTE } from "@/lib/visualBinaryNote";
 import { periodFromA } from "@/lib/kepler";
 import { formatAu, formatPeriodDays } from "@/lib/units";
 
@@ -223,6 +229,13 @@ export function FactsPanel({ body, system, onClear }: Props) {
             {overview && (
               <p className="text-sm leading-relaxed text-zinc-400">{overview}</p>
             )}
+            {body.kind === "star" &&
+            body.parentId &&
+            !hasUsableOrbit(body) ? (
+              <p className="text-xs leading-relaxed text-zinc-400">
+                {VISUAL_BINARY_NOTE}
+              </p>
+            ) : null}
             {body.meta.sources && body.meta.sources.length > 0 && (
               <p className="text-[11px] text-zinc-500">
                 {body.meta.sources.length} source
@@ -246,6 +259,15 @@ export function FactsPanel({ body, system, onClear }: Props) {
               </h3>
               {overview ? (
                 <p className="text-sm text-zinc-300">{overview}</p>
+              ) : null}
+              {body.kind === "star" &&
+              body.parentId &&
+              !hasUsableOrbit(body) ? (
+                <p
+                  className={`text-xs leading-relaxed text-zinc-400${overview ? " mt-2" : ""}`}
+                >
+                  {VISUAL_BINARY_NOTE}
+                </p>
               ) : null}
               <p className={`text-[11px] text-zinc-600${overview ? " mt-2" : ""}`}>
                 Source: {bodyProvenance(body)}
