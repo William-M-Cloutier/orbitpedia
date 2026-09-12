@@ -561,8 +561,10 @@ function buildSystem(familyName, planetRows, fetchedAt, companionStarRows) {
       const iDeg = iRaw != null ? iRaw : (assumed.push("iDeg"), 90);
       const wDeg = wRaw != null ? wRaw : (assumed.push("wDeg"), 0);
       assumed.push("omDeg", "maDeg");
+      // Companion-host planets: elements are relative to that star → parent frame (Arch).
+      const onCompanion = row.hostname !== primaryHostname;
       orbit = omitEmpty({
-        frame: "heliocentric",
+        frame: onCompanion ? "parent" : "heliocentric",
         epochJd,
         aAu,
         e: Math.min(Math.max(e, 0), 0.999999),
@@ -611,8 +613,12 @@ function buildSystem(familyName, planetRows, fetchedAt, companionStarRows) {
     }
 
     const hostForMeta = row.hostname || primaryHostname || familyName;
+    const onCompanion = row.hostname !== primaryHostname;
+    const parentStarId = onCompanion ? hostForId : undefined;
     const metaSource = hasOrbit
-      ? `NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host ${hostForMeta} (not SSB). omDeg=0 and maDeg=0 assumed${assumed.length ? ` (also defaulted: ${assumed.filter((x) => x !== "omDeg" && x !== "maDeg").join(", ") || "none"})` : ""}.`
+      ? onCompanion
+        ? `NASA Exoplanet Archive pscomppars; orbit.frame=parent relative to companion host ${hostForMeta} (parentId=${parentStarId}). omDeg=0 and maDeg=0 assumed${assumed.length ? ` (also defaulted: ${assumed.filter((x) => x !== "omDeg" && x !== "maDeg").join(", ") || "none"})` : ""}.`
+        : `NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host ${hostForMeta} (not SSB). omDeg=0 and maDeg=0 assumed${assumed.length ? ` (also defaulted: ${assumed.filter((x) => x !== "omDeg" && x !== "maDeg").join(", ") || "none"})` : ""}.`
       : `NASA Exoplanet Archive pscomppars; no pl_orbsmax — orbit omitted.`;
 
     planets.push(
@@ -621,6 +627,7 @@ function buildSystem(familyName, planetRows, fetchedAt, companionStarRows) {
         name: row.pl_name || `${hostForMeta} ${letter}`,
         kind: "planet",
         systemId,
+        parentId: parentStarId,
         facts,
         color: planetColor(pi),
         meta: {

@@ -23,7 +23,7 @@
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T08:21:42.502Z",
+      "fetchedAt": "2026-09-12T08:23:37.922Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — 55 Cnc overview",
@@ -64,7 +64,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:21:42.502Z",
+        "fetchedAt": "2026-09-12T08:23:37.922Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -94,7 +94,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:21:42.502Z",
+        "fetchedAt": "2026-09-12T08:23:37.922Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -129,7 +129,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:21:42.502Z",
+        "fetchedAt": "2026-09-12T08:23:37.922Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -175,7 +175,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:21:42.502Z",
+        "fetchedAt": "2026-09-12T08:23:37.922Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -221,7 +221,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:21:42.502Z",
+        "fetchedAt": "2026-09-12T08:23:37.922Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -267,7 +267,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:21:42.502Z",
+        "fetchedAt": "2026-09-12T08:23:37.922Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -313,7 +313,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:21:42.502Z",
+        "fetchedAt": "2026-09-12T08:23:37.922Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -334,6 +334,7 @@
       "name": "55 Cnc B b",
       "kind": "planet",
       "systemId": "55-cnc",
+      "parentId": "55-cnc-comp-b",
       "facts": {
         "massKg": 2.09027e+25,
         "radiusMeanKm": 10766.99,
@@ -341,7 +342,7 @@
       },
       "color": "#7EC8E3",
       "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host 55 Cnc B (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg, wDeg).",
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=parent relative to companion host 55 Cnc B (parentId=55-cnc-comp-b). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg, wDeg).",
         "sources": [
           {
             "name": "NASA Exoplanet Archive — 55 Cnc B overview",
@@ -357,12 +358,12 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:21:42.502Z",
+        "fetchedAt": "2026-09-12T08:23:37.922Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
       "orbit": {
-        "frame": "heliocentric",
+        "frame": "parent",
         "epochJd": 2455495.7,
         "aAu": 0.044,
         "e": 0,
@@ -378,6 +379,7 @@
       "name": "55 Cnc B c",
       "kind": "planet",
       "systemId": "55-cnc",
+      "parentId": "55-cnc-comp-b",
       "facts": {
         "massKg": 3.165266e+25,
         "radiusMeanKm": 13761.36,
@@ -385,7 +387,7 @@
       },
       "color": "#9B7EBD",
       "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host 55 Cnc B (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg, wDeg).",
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=parent relative to companion host 55 Cnc B (parentId=55-cnc-comp-b). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg, wDeg).",
         "sources": [
           {
             "name": "NASA Exoplanet Archive — 55 Cnc B overview",
@@ -401,12 +403,12 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:21:42.502Z",
+        "fetchedAt": "2026-09-12T08:23:37.922Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
       "orbit": {
-        "frame": "heliocentric",
+        "frame": "parent",
         "epochJd": 2455491.8,
         "aAu": 0.13,
         "e": 0,

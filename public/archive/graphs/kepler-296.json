@@ -20,7 +20,7 @@
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T08:21:42.502Z",
+      "fetchedAt": "2026-09-12T08:23:37.922Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-296 overview",
@@ -61,7 +61,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:21:42.502Z",
+        "fetchedAt": "2026-09-12T08:23:37.922Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -82,7 +82,7 @@
             "fields": []
           }
         ],
-        "fetchedAt": "2026-09-12T08:21:42.502Z",
+        "fetchedAt": "2026-09-12T08:23:37.922Z",
         "confidence": "placeholder",
         "unitsVersion": 1
       }
@@ -116,7 +116,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:21:42.502Z",
+        "fetchedAt": "2026-09-12T08:23:37.922Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -161,7 +161,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:21:42.502Z",
+        "fetchedAt": "2026-09-12T08:23:37.922Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -206,7 +206,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:21:42.502Z",
+        "fetchedAt": "2026-09-12T08:23:37.922Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -251,7 +251,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:21:42.502Z",
+        "fetchedAt": "2026-09-12T08:23:37.922Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

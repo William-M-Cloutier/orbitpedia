@@ -16,7 +16,7 @@
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T08:21:42.502Z",
+      "fetchedAt": "2026-09-12T08:23:37.922Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — CoRoT-11 overview",
@@ -57,7 +57,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:21:42.502Z",
+        "fetchedAt": "2026-09-12T08:23:37.922Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -91,7 +91,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:21:42.502Z",
+        "fetchedAt": "2026-09-12T08:23:37.922Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
