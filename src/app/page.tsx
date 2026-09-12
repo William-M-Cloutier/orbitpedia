@@ -14,11 +14,13 @@ import { BodyRail } from "@/components/ui/BodyRail";
 import { FactsPanel } from "@/components/ui/FactsPanel";
 import {
   DEFAULT_SPEED_PRESET,
+  SLOW_SPEED_PRESET,
   SpeedControl,
   multipleToDaysPerSec,
 } from "@/components/ui/SpeedControl";
 import { OrbitCanvas } from "@/viz/OrbitCanvas";
 import {
+  EARTH_SATS_SYSTEM_ID,
   getBody,
   getHomeSystem,
   getSystemGraph,
@@ -102,6 +104,15 @@ function ExploreHome() {
   // Drop session hide set when leaving a system (no leftover filters).
   useEffect(() => {
     setHiddenIds(new Set());
+  }, [systemId]);
+
+  // Earth sats: LEO periods need Slow (not Sol Default / Realism).
+  useEffect(() => {
+    setSpeedMultiple(
+      systemId === EARTH_SATS_SYSTEM_ID
+        ? SLOW_SPEED_PRESET.multiple
+        : DEFAULT_SPEED_PRESET.multiple,
+    );
   }, [systemId]);
 
   // Hydrate (and re-hydrate) from ?system=&focus=
