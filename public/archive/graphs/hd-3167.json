@@ -15,11 +15,13 @@
     "blurb": "HD 3167 (K0 V) — 4 planets; 154 ly; first confirmed 2016 (Transit).",
     "planetCount": 4,
     "distanceLy": 154.2,
+    "raDeg": 8.7401487,
+    "decDeg": 4.3807215,
     "hostSpectralType": "K0 V",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:49:08.900Z",
+      "fetchedAt": "2026-09-12T22:39:16.441Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — HD 3167 overview",
@@ -29,6 +31,8 @@
             "planetCount",
             "starCount",
             "distanceLy",
+            "raDeg",
+            "decDeg",
             "hostSpectralType"
           ]
         }
@@ -60,7 +64,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -97,7 +101,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -145,7 +149,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -193,7 +197,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -241,7 +245,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

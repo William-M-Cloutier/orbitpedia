@@ -16,11 +16,13 @@
     "blurb": "HD 134606 (G5IV) — 5 planets; 87.4 ly; first confirmed 2024 (Radial Velocity).",
     "planetCount": 5,
     "distanceLy": 87.4,
+    "raDeg": 228.8103897,
+    "decDeg": -70.5203328,
     "hostSpectralType": "G5IV",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:49:08.900Z",
+      "fetchedAt": "2026-09-12T22:39:16.441Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — HD 134606 overview",
@@ -30,6 +32,8 @@
             "planetCount",
             "starCount",
             "distanceLy",
+            "raDeg",
+            "decDeg",
             "hostSpectralType"
           ]
         }
@@ -61,7 +65,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -96,7 +100,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -141,7 +145,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -186,7 +190,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -231,7 +235,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -276,7 +280,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

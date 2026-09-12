@@ -13,10 +13,12 @@
     "blurb": "K2-187 — 2 planets; 1,079 ly; first confirmed 2018 (Transit).",
     "planetCount": 2,
     "distanceLy": 1079.3,
+    "raDeg": 132.5235618,
+    "decDeg": 23.1924709,
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:49:08.900Z",
+      "fetchedAt": "2026-09-12T22:39:16.441Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — K2-187 overview",
@@ -25,7 +27,9 @@
             "blurb",
             "planetCount",
             "starCount",
-            "distanceLy"
+            "distanceLy",
+            "raDeg",
+            "decDeg"
           ]
         }
       ]
@@ -56,7 +60,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -91,7 +95,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -137,7 +141,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

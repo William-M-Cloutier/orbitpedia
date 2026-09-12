@@ -15,10 +15,12 @@
     "blurb": "K2-72 — 4 planets; 217 ly; first confirmed 2016 (Transit).",
     "planetCount": 4,
     "distanceLy": 216.7,
+    "raDeg": 334.6227504,
+    "decDeg": -9.6120084,
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:49:08.900Z",
+      "fetchedAt": "2026-09-12T22:39:16.441Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — K2-72 overview",
@@ -27,7 +29,9 @@
             "blurb",
             "planetCount",
             "starCount",
-            "distanceLy"
+            "distanceLy",
+            "raDeg",
+            "decDeg"
           ]
         }
       ]
@@ -58,7 +62,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -95,7 +99,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -143,7 +147,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -191,7 +195,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -239,7 +243,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

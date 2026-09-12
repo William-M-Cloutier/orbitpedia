@@ -14,10 +14,12 @@
     "blurb": "Kepler-1542 — 3 planets; 1,302 ly; first confirmed 2016 (Transit).",
     "planetCount": 3,
     "distanceLy": 1301.7,
+    "raDeg": 285.7284757,
+    "decDeg": 42.6544651,
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:49:08.900Z",
+      "fetchedAt": "2026-09-12T22:39:16.441Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-1542 overview",
@@ -26,7 +28,9 @@
             "blurb",
             "planetCount",
             "starCount",
-            "distanceLy"
+            "distanceLy",
+            "raDeg",
+            "decDeg"
           ]
         }
       ]
@@ -57,7 +61,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -93,7 +97,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -140,7 +144,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -187,7 +191,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

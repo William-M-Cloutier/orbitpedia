@@ -12,11 +12,13 @@
     "blurb": "AB Pic (K2 V) — 1 planet; 163 ly; first confirmed 2005 (Imaging).",
     "planetCount": 1,
     "distanceLy": 163.2,
+    "raDeg": 94.8039208,
+    "decDeg": -58.0541184,
     "hostSpectralType": "K2 V",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:49:08.900Z",
+      "fetchedAt": "2026-09-12T22:39:16.441Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — AB Pic overview",
@@ -26,6 +28,8 @@
             "planetCount",
             "starCount",
             "distanceLy",
+            "raDeg",
+            "decDeg",
             "hostSpectralType"
           ]
         }
@@ -57,7 +61,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -89,7 +93,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

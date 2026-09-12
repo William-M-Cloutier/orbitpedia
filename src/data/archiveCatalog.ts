@@ -33,6 +33,10 @@ export type ArchiveSystemSummary = {
   name: string;
   planetCount?: number;
   distanceLy?: number;
+  /** ICRS RA degrees when known (omit if missing). */
+  raDeg?: number;
+  /** ICRS Dec degrees when known (omit if missing). */
+  decDeg?: number;
   hostSpectralType?: string;
   /** Factual mid-dot overview for map overlay (optional). */
   blurb?: string;

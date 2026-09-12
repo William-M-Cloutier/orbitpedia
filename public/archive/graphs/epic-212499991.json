@@ -12,10 +12,12 @@
     "blurb": "EPIC 212499991 — 1 planet; 924 ly; first confirmed 2019 (Transit).",
     "planetCount": 1,
     "distanceLy": 924,
+    "raDeg": 202.488752,
+    "decDeg": -12.7347749,
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:49:08.900Z",
+      "fetchedAt": "2026-09-12T22:39:16.441Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — EPIC 212499991 overview",
@@ -24,7 +26,9 @@
             "blurb",
             "planetCount",
             "starCount",
-            "distanceLy"
+            "distanceLy",
+            "raDeg",
+            "decDeg"
           ]
         }
       ]
@@ -55,7 +59,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -86,7 +90,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "known",
         "unitsVersion": 1
       }

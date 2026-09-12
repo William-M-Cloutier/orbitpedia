@@ -35,8 +35,13 @@ import {
   starColorFromSpectralType,
 } from "@/lib/starColor";
 import { systemHasGasGiant } from "@/lib/hasGas";
+import { placeSystemSky, SOL_GAL } from "@/lib/skyLayout";
+import {
+  MilkyWayBackdrop,
+  type MwLook,
+} from "@/components/map/MilkyWayBackdrop";
 
-/** Inter-system node spacing — Schematic / Proportional share 2D; Prop stretches r. */
+/** Inter-system spacing — sky direction from coords; Prop uses true distance. */
 type MapSpacing = "schematic" | "proportional";
 
 const SPACING_MODES: { id: MapSpacing; label: string }[] = [
@@ -44,10 +49,16 @@ const SPACING_MODES: { id: MapSpacing; label: string }[] = [
   { id: "proportional", label: "Proportional" },
 ];
 
+const MW_LOOKS: { id: MwLook; label: string }[] = [
+  { id: "realistic", label: "Realistic" },
+  { id: "artistic", label: "Artistic" },
+];
+
 /** Viewport size in world units at zoom = 1. Layout is much larger. */
 const WORLD_W = 960;
 const WORLD_H = 560;
-const ZOOM_MIN = 0.22;
+/** Low enough to reveal Sol's neighborhood on the full disk. */
+const ZOOM_MIN = 0.008;
 const ZOOM_MAX = 6;
 const PAN_SPEED = 520;
 const PAN_SHIFT = 2.6;
@@ -162,6 +173,8 @@ type SystemNode = {
   /** Index mid-dot overview (archive stubs before graph load). */
   blurb?: string;
   distanceLy?: number;
+  raDeg?: number;
+  decDeg?: number;
 };
 
 function buildNodesFromList(
@@ -234,6 +247,14 @@ function buildNodesFromList(
         hasGas,
         blurb: curated.blurb,
         distanceLy: curated.distanceLy,
+        raDeg:
+          "raDeg" in curated && typeof curated.raDeg === "number"
+            ? curated.raDeg
+            : undefined,
+        decDeg:
+          "decDeg" in curated && typeof curated.decDeg === "number"
+            ? curated.decDeg
+            : undefined,
       };
     }
     const planets = s.planetCount ?? 0;
@@ -261,6 +282,10 @@ function buildNodesFromList(
       "distanceLy" in s && typeof s.distanceLy === "number"
         ? s.distanceLy
         : undefined;
+    const raDeg =
+      "raDeg" in s && typeof s.raDeg === "number" ? s.raDeg : undefined;
+    const decDeg =
+      "decDeg" in s && typeof s.decDeg === "number" ? s.decDeg : undefined;
     return {
       id: s.id,
       name: s.name,
@@ -276,6 +301,8 @@ function buildNodesFromList(
       hasGas,
       blurb,
       distanceLy,
+      raDeg,
+      decDeg,
     };
   });
 }
@@ -352,43 +379,44 @@ function separateNodes(
 function layoutNodes(
   nodes: SystemNode[],
   spacing: MapSpacing,
-): Array<SystemNode & { x: number; y: number; r: number }> {
+): Array<SystemNode & { x: number; y: number; r: number; unknownSky: boolean }> {
   if (nodes.length === 0) return [];
 
-  const sorted = [...nodes].sort((a, b) => {
-    if (a.home !== b.home) return a.home ? -1 : 1;
-    return b.outerAAu - a.outerAAu;
-  });
-  const GOLDEN = Math.PI * (3 - Math.sqrt(5));
-  const maxExtent = Math.max(
-    ...sorted.map((n) => Math.sqrt(n.outerAAu)),
-    1,
-  );
-
-  const pts = sorted.map((n, i) => {
-    const r = NODE_R;
-    if (n.home || sorted.length === 1) {
-      return { ...n, x: 0, y: 0, r };
+  // Stable gutter order for missing coords (do not invent sky positions).
+  const unknownOrder = new Map<string, number>();
+  let gutter = 0;
+  for (const n of nodes) {
+    if (n.home) continue;
+    const has =
+      typeof n.raDeg === "number" &&
+      Number.isFinite(n.raDeg) &&
+      typeof n.decDeg === "number" &&
+      Number.isFinite(n.decDeg);
+    if (!has) {
+      unknownOrder.set(n.id, gutter++);
     }
-    const ang = i * GOLDEN;
-    // Same sunflower for both modes; Prop only stretches radial distance.
-    const distMul =
-      spacing === "proportional"
-        ? 0.7 + 0.9 * (Math.sqrt(n.outerAAu) / maxExtent)
-        : 1;
-    const rad = MIN_SEP * Math.sqrt(i) * distMul;
-    return {
-      ...n,
-      x: Math.cos(ang) * rad,
-      y: Math.sin(ang) * rad * 0.72,
-      r,
-    };
+  }
+
+  const pts = nodes.map((n) => {
+    const placed = placeSystemSky(
+      n,
+      spacing,
+      unknownOrder.get(n.id) ?? 0,
+    );
+    return { ...n, x: placed.x, y: placed.y, r: NODE_R, unknownSky: placed.unknownSky };
   });
 
-  if (pts.length <= SEPARATE_N_MAX) {
-    separateNodes(pts, spacing === "schematic" ? 36 : 32);
+  // Separate only the local sky clump (and gutter) — never a sunflower first.
+  const local = pts.filter(
+    (p) =>
+      p.unknownSky ||
+      p.home ||
+      Math.hypot(p.x - SOL_GAL.x, p.y - SOL_GAL.y) < 2500,
+  );
+  if (local.length <= SEPARATE_N_MAX) {
+    separateNodes(local, spacing === "schematic" ? 28 : 22);
   } else {
-    gridSeparate(pts, MIN_SEP);
+    gridSeparate(local, Math.min(MIN_SEP, 96));
   }
 
   return pts;
@@ -484,7 +512,7 @@ function buildNeighborEdges(
 
 type Cam = { x: number; y: number; zoom: number };
 
-const CAM0: Cam = { x: 0, y: 0, zoom: 1 };
+const CAM0: Cam = { x: SOL_GAL.x, y: SOL_GAL.y, zoom: 1 };
 
 function viewBoxFor(cam: Cam): string {
   const w = WORLD_W / cam.zoom;
@@ -496,6 +524,7 @@ function SystemMapView() {
   const router = useRouter();
   const homeId = getHomeSystem().id;
   const [spacing, setSpacing] = useState<MapSpacing>("schematic");
+  const [mwLook, setMwLook] = useState<MwLook>("realistic");
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [nodes, setNodes] = useState<SystemNode[]>(() =>
@@ -952,8 +981,8 @@ function SystemMapView() {
           <div>
             <h1 className="text-lg font-medium text-zinc-100">System map</h1>
             <p className="mt-0.5 max-w-xl text-sm text-zinc-500">
-              Pan and zoom to explore. Drag or WASD (Shift faster); scroll to
-              zoom.
+              Sky map of catalog systems on the Milky Way. Drag or WASD (Shift
+              faster); scroll to zoom out across the disk.
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
@@ -969,6 +998,27 @@ function SystemMapView() {
                     onClick={() => setSpacing(m.id)}
                     className={
                       spacing === m.id
+                        ? "rounded-md bg-sky-600 px-2 py-1 font-medium text-white"
+                        : "rounded-md bg-white/5 px-2 py-1 text-zinc-400 hover:bg-white/10 hover:text-zinc-200"
+                    }
+                  >
+                    {m.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="rounded-lg border border-white/10 bg-zinc-950/80 px-3 py-2 text-xs text-zinc-300">
+              <div className="mb-1.5 font-medium uppercase tracking-wide text-zinc-500">
+                Milky Way
+              </div>
+              <div className="flex gap-1">
+                {MW_LOOKS.map((m) => (
+                  <button
+                    key={m.id}
+                    type="button"
+                    onClick={() => setMwLook(m.id)}
+                    className={
+                      mwLook === m.id
                         ? "rounded-md bg-sky-600 px-2 py-1 font-medium text-white"
                         : "rounded-md bg-white/5 px-2 py-1 text-zinc-400 hover:bg-white/10 hover:text-zinc-200"
                     }
@@ -1203,14 +1253,7 @@ function SystemMapView() {
             aria-label="System map canvas"
             onClick={() => setSelectedId(null)}
           >
-            <defs>
-              <radialGradient id="mapGlow" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor="#1a2a4a" stopOpacity="0.9" />
-                <stop offset="100%" stopColor="#060a14" stopOpacity="0" />
-              </radialGradient>
-            </defs>
-            <rect x={-24000} y={-18000} width={48000} height={36000} fill="#060a14" />
-            <ellipse cx={0} cy={0} rx={380} ry={280} fill="url(#mapGlow)" />
+            <MilkyWayBackdrop look={mwLook} />
 
             {visibleEdges.map((e) => (
               <line

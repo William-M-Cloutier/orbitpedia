@@ -12,11 +12,13 @@
     "blurb": "Gliese 12 (M4 V) — 1 planet; 39.8 ly; first confirmed 2024 (Transit).",
     "planetCount": 1,
     "distanceLy": 39.8,
+    "raDeg": 3.9579137,
+    "decDeg": 13.5576175,
     "hostSpectralType": "M4 V",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:49:08.900Z",
+      "fetchedAt": "2026-09-12T22:39:16.441Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Gliese 12 overview",
@@ -26,6 +28,8 @@
             "planetCount",
             "starCount",
             "distanceLy",
+            "raDeg",
+            "decDeg",
             "hostSpectralType"
           ]
         }
@@ -57,7 +61,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -94,7 +98,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

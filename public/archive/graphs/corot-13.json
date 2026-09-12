@@ -12,11 +12,13 @@
     "blurb": "CoRoT-13 (G0 V) — 1 planet; 3,747 ly; first confirmed 2010 (Transit).",
     "planetCount": 1,
     "distanceLy": 3747.3,
+    "raDeg": 102.7211432,
+    "decDeg": -5.0864557,
     "hostSpectralType": "G0 V",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:49:08.900Z",
+      "fetchedAt": "2026-09-12T22:39:16.441Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — CoRoT-13 overview",
@@ -26,6 +28,8 @@
             "planetCount",
             "starCount",
             "distanceLy",
+            "raDeg",
+            "decDeg",
             "hostSpectralType"
           ]
         }
@@ -57,7 +61,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -93,7 +97,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

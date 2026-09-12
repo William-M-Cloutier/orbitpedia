@@ -248,6 +248,15 @@ export const SystemSchema = z.object({
   planetCount: z.number().int().nonnegative().optional(),
   /** Distance from Sol in light-years (omit for home). */
   distanceLy: z.number().nonnegative().optional(),
+  /**
+   * ICRS right ascension in degrees (archive / SIMBAD). Omit for Sol/home
+   * and when unknown — never invent.
+   */
+  raDeg: z.number().min(0).max(360).optional(),
+  /**
+   * ICRS declination in degrees. Omit for Sol/home and when unknown.
+   */
+  decDeg: z.number().min(-90).max(90).optional(),
   hostSpectralType: z.string().min(1).optional(),
   compactnessNote: z.string().min(1).optional(),
   /** Archive plane: any planet ≳50 M⊕ or ≳4 R⊕ (see ingest / hasGas.ts). */
@@ -260,7 +269,17 @@ export const SystemSchema = z.object({
    */
   companionSpectralTypes: z.array(z.string().min(1)).optional(),
   meta: SystemMetaSchema.optional(),
-});
+})
+  .superRefine((s, ctx) => {
+    const hasRa = s.raDeg != null;
+    const hasDec = s.decDeg != null;
+    if (hasRa === hasDec) return;
+    ctx.addIssue({
+      code: "custom",
+      message: `system ${s.id} raDeg/decDeg must both be present or both omitted`,
+      path: hasRa ? ["decDeg"] : ["raDeg"],
+    });
+  });
 
 export const CatalogSchema = z
   .object({

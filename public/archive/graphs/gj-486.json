@@ -12,11 +12,13 @@
     "blurb": "GJ 486 (M3.5 V) — 1 planet; 26.3 ly; first confirmed 2021 (Radial Velocity).",
     "planetCount": 1,
     "distanceLy": 26.3,
+    "raDeg": 191.981531,
+    "decDeg": 9.7494181,
     "hostSpectralType": "M3.5 V",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:49:08.900Z",
+      "fetchedAt": "2026-09-12T22:39:16.441Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — GJ 486 overview",
@@ -26,6 +28,8 @@
             "planetCount",
             "starCount",
             "distanceLy",
+            "raDeg",
+            "decDeg",
             "hostSpectralType"
           ]
         }
@@ -57,7 +61,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -94,7 +98,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "fetchedAt": "2026-09-12T22:39:16.441Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

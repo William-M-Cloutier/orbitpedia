@@ -191,11 +191,25 @@ const SystemSchema = z.object({
   highlights: z.array(z.string().min(1)).optional(),
   planetCount: z.number().int().nonnegative().optional(),
   distanceLy: z.number().nonnegative().optional(),
+  /** ICRS RA degrees (archive / SIMBAD). Omit for Sol/home and when unknown. */
+  raDeg: z.number().min(0).max(360).optional(),
+  /** ICRS Dec degrees. Omit for Sol/home and when unknown. */
+  decDeg: z.number().min(-90).max(90).optional(),
   hostSpectralType: z.string().min(1).optional(),
   compactnessNote: z.string().min(1).optional(),
   hasGas: z.boolean().optional(),
   meta: SystemMetaSchema.optional(),
-});
+})
+  .superRefine((s, ctx) => {
+    const hasRa = s.raDeg != null;
+    const hasDec = s.decDeg != null;
+    if (hasRa === hasDec) return;
+    ctx.addIssue({
+      code: "custom",
+      message: `system ${s.id} raDeg/decDeg must both be present or both omitted`,
+      path: hasRa ? ["decDeg"] : ["raDeg"],
+    });
+  });
 const CatalogSchema = z
   .object({
     version: z.literal(CATALOG_VERSION),
