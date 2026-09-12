@@ -14,7 +14,7 @@ import { BodyRail } from "@/components/ui/BodyRail";
 import { FactsPanel } from "@/components/ui/FactsPanel";
 import {
   DEFAULT_SPEED_PRESET,
-  SLOW_SPEED_PRESET,
+  EARTH_SATS_SPEED_MULTIPLE,
   SpeedControl,
   multipleToDaysPerSec,
 } from "@/components/ui/SpeedControl";
@@ -106,11 +106,11 @@ function ExploreHome() {
     setHiddenIds(new Set());
   }, [systemId]);
 
-  // Earth sats: LEO periods need Slow (not Sol Default / Realism).
+  // Earth sats: 1 day / 60s wall (not Sol Default). Slow remains a user option.
   useEffect(() => {
     setSpeedMultiple(
       systemId === EARTH_SATS_SYSTEM_ID
-        ? SLOW_SPEED_PRESET.multiple
+        ? EARTH_SATS_SPEED_MULTIPLE
         : DEFAULT_SPEED_PRESET.multiple,
     );
   }, [systemId]);

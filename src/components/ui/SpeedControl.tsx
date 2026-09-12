@@ -20,7 +20,7 @@ export type SpeedPreset = {
 /** Presets are multiples of Realism. Default is slower than the old follow rate (6 d/s). */
 export const SPEED_PRESETS: SpeedPreset[] = [
   { id: "realism", label: "Realism", multiple: 1 },
-  { id: "slow", label: "Slow", multiple: 1_440 }, // ~1 day / min
+  { id: "slow", label: "Slow", multiple: 1_440 }, // 1 day / 60s
   { id: "default", label: "Default", multiple: 17_280 }, // 0.2 day / s = 1 day / 5s
   { id: "fast", label: "Fast", multiple: 518_400 }, // 6 day / s (former)
   { id: "warp", label: "Warp", multiple: 2_592_000 }, // 30 day / s
@@ -28,6 +28,9 @@ export const SPEED_PRESETS: SpeedPreset[] = [
 
 export const DEFAULT_SPEED_PRESET = SPEED_PRESETS.find((p) => p.id === "default")!;
 export const SLOW_SPEED_PRESET = SPEED_PRESETS.find((p) => p.id === "slow")!;
+
+/** Earth sats Explore default: 1 simulated day per 60s wall (same rate as Slow). */
+export const EARTH_SATS_SPEED_MULTIPLE = SLOW_SPEED_PRESET.multiple;
 
 export function multipleToDaysPerSec(multiple: number): number {
   return multiple * REALISM_DAYS_PER_SEC;
