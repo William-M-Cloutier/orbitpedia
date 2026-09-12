@@ -27,6 +27,10 @@ type Props = {
   sizeMode?: SizeMode;
   /** Session-only ids with mesh + orbit line suppressed (Explore hide). */
   hiddenIds?: ReadonlySet<string>;
+  /** Hide all probe trajectory polylines (ProbePathLine). Default false = visible. */
+  hideProbePaths?: boolean;
+  /** Hide all probe craft meshes / markers (ProbeBodyMesh). Default false = visible. */
+  hideProbeMeshes?: boolean;
   /** Active system graph — remount parent with key={systemId} to unload RAF/meshes. */
   systemId?: string;
   /** Canvas-space overlay insets for setViewOffset (see OrbitScene). */
