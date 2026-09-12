@@ -59,20 +59,20 @@ const LABEL_CAP = 220;
 const NODE_R = 10;
 const NODE_R_FAV = 13;
 
-/** Spectral chip groups — first Harvard letter; Other = missing/weird. */
+/** Spectral filter groups — first Harvard letter; Other = missing/non-letter. */
 type SpectralChip = "M" | "K" | "G" | "FA" | "Other";
 const SPECTRAL_CHIPS: { id: SpectralChip; label: string }[] = [
-  { id: "M", label: "M" },
+  { id: "M", label: "M dwarf" },
   { id: "K", label: "K" },
-  { id: "G", label: "G" },
-  { id: "FA", label: "F+A" },
-  { id: "Other", label: "Other" },
+  { id: "G", label: "G (Sun-like)" },
+  { id: "FA", label: "F / A (hotter)" },
+  { id: "Other", label: "Other / unknown" },
 ];
 
 /** Exclusive planet-count bins (soft ranges). */
 type PlanetBin = "2" | "3-4" | "5+";
 const PLANET_CHIPS: { id: PlanetBin; label: string }[] = [
-  { id: "2", label: "2" },
+  { id: "2", label: "2 planets" },
   { id: "3-4", label: "3–4" },
   { id: "5+", label: "5+" },
 ];
@@ -395,6 +395,8 @@ function SystemMapView() {
   const [planetFilters, setPlanetFilters] = useState<Set<PlanetBin>>(
     () => new Set(),
   );
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const filtersRef = useRef<HTMLDivElement>(null);
 
   const clearMapFilters = useCallback(() => {
     setSpectralFilters(new Set());
@@ -402,8 +404,28 @@ function SystemMapView() {
     setFavoritesOnly(false);
   }, []);
 
+  const panelFiltersActive =
+    spectralFilters.size > 0 || planetFilters.size > 0;
+  const panelFilterCount = spectralFilters.size + planetFilters.size;
   const filtersActive =
     favoritesOnly || spectralFilters.size > 0 || planetFilters.size > 0;
+
+  useEffect(() => {
+    if (!filtersOpen) return;
+    const onDown = (e: MouseEvent) => {
+      const el = filtersRef.current;
+      if (el && !el.contains(e.target as Node)) setFiltersOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setFiltersOpen(false);
+    };
+    document.addEventListener("mousedown", onDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [filtersOpen]);
 
   useEffect(() => {
     setFavoriteIds(loadFavoriteSystemIds(homeId));
@@ -784,113 +806,170 @@ function SystemMapView() {
               Explore to enter.
             </p>
           </div>
-          <div className="flex flex-col items-stretch gap-2 sm:items-end">
-            <div className="flex flex-wrap items-center justify-end gap-1.5">
-              {SPACING_MODES.map((m) => (
-                <button
-                  key={m.id}
-                  type="button"
-                  onClick={() => setSpacing(m.id)}
-                  className={
-                    spacing === m.id
-                      ? "rounded-full bg-sky-600 px-2.5 py-1 text-[11px] font-medium text-white"
-                      : "rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] text-zinc-400 hover:bg-white/10 hover:text-zinc-200"
-                  }
-                >
-                  {m.label}
-                </button>
-              ))}
-              <button
-                type="button"
-                onClick={resetView}
-                className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] text-zinc-300 hover:bg-white/10"
-              >
-                Reset
-              </button>
-              <button
-                type="button"
-                onClick={() => router.push("/")}
-                className="rounded-full border border-sky-500/30 bg-sky-500/15 px-2.5 py-1 text-[11px] text-sky-200 hover:bg-sky-500/25"
-              >
-                Home
-              </button>
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="rounded-lg border border-white/10 bg-zinc-950/80 px-3 py-2 text-xs text-zinc-300">
+              <div className="mb-1.5 font-medium uppercase tracking-wide text-zinc-500">
+                Spacing
+              </div>
+              <div className="flex gap-1">
+                {SPACING_MODES.map((m) => (
+                  <button
+                    key={m.id}
+                    type="button"
+                    onClick={() => setSpacing(m.id)}
+                    className={
+                      spacing === m.id
+                        ? "rounded-md bg-sky-600 px-2 py-1 font-medium text-white"
+                        : "rounded-md bg-white/5 px-2 py-1 text-zinc-400 hover:bg-white/10 hover:text-zinc-200"
+                    }
+                  >
+                    {m.label}
+                  </button>
+                ))}
+              </div>
             </div>
-            <div
-              className="flex flex-wrap items-center justify-end gap-1"
-              role="group"
-              aria-label="Map filters"
+            <button
+              type="button"
+              onClick={resetView}
+              className="rounded-md border border-white/10 bg-white/5 px-3 py-2 text-xs text-zinc-300 hover:bg-white/10"
             >
-              {SPECTRAL_CHIPS.map((c) => {
-                const on = spectralFilters.has(c.id);
-                return (
-                  <button
-                    key={c.id}
-                    type="button"
-                    aria-pressed={on}
-                    onClick={() =>
-                      setSpectralFilters((prev) => toggleInSet(prev, c.id))
-                    }
-                    className={
-                      on
-                        ? "rounded-full bg-sky-600/90 px-2 py-0.5 text-[11px] font-medium text-white"
-                        : "rounded-full border border-white/10 bg-white/[0.04] px-2 py-0.5 text-[11px] text-zinc-400 hover:border-sky-500/30 hover:text-zinc-200"
-                    }
-                  >
-                    {c.label}
-                  </button>
-                );
-              })}
-              <span className="mx-0.5 h-3 w-px bg-white/10" aria-hidden />
-              {PLANET_CHIPS.map((c) => {
-                const on = planetFilters.has(c.id);
-                return (
-                  <button
-                    key={c.id}
-                    type="button"
-                    aria-pressed={on}
-                    title={`${c.label} planets`}
-                    onClick={() =>
-                      setPlanetFilters((prev) => toggleInSet(prev, c.id))
-                    }
-                    className={
-                      on
-                        ? "rounded-full bg-sky-600/90 px-2 py-0.5 text-[11px] font-medium text-white"
-                        : "rounded-full border border-white/10 bg-white/[0.04] px-2 py-0.5 text-[11px] text-zinc-400 hover:border-sky-500/30 hover:text-zinc-200"
-                    }
-                  >
-                    {c.label}
-                  </button>
-                );
-              })}
-              <span className="mx-0.5 h-3 w-px bg-white/10" aria-hidden />
+              Reset
+            </button>
+            <button
+              type="button"
+              onClick={() => router.push("/")}
+              className="rounded-md border border-sky-500/30 bg-sky-500/15 px-3 py-2 text-xs text-sky-200 hover:bg-sky-500/25"
+            >
+              Home
+            </button>
+            <button
+              type="button"
+              onClick={() => setFavoritesOnly((v) => !v)}
+              aria-pressed={favoritesOnly}
+              className={
+                favoritesOnly
+                  ? "rounded-md border border-amber-400/40 bg-amber-500/20 px-3 py-2 text-xs font-medium text-amber-100"
+                  : "rounded-md border border-white/10 bg-white/5 px-3 py-2 text-xs text-zinc-300 hover:bg-white/10"
+              }
+            >
+              ★ Fav
+            </button>
+            <div ref={filtersRef} className="relative">
               <button
                 type="button"
-                onClick={() => setFavoritesOnly((v) => !v)}
-                aria-pressed={favoritesOnly}
+                onClick={() => setFiltersOpen((o) => !o)}
+                aria-expanded={filtersOpen}
+                aria-haspopup="dialog"
                 className={
-                  favoritesOnly
-                    ? "rounded-full border border-amber-400/40 bg-amber-500/20 px-2 py-0.5 text-[11px] font-medium text-amber-100"
-                    : "rounded-full border border-white/10 bg-white/[0.04] px-2 py-0.5 text-[11px] text-zinc-400 hover:border-amber-400/30 hover:text-zinc-200"
+                  panelFiltersActive || filtersOpen
+                    ? "rounded-md border border-sky-500/40 bg-sky-500/15 px-3 py-2 text-xs font-medium text-sky-100"
+                    : "rounded-md border border-white/10 bg-white/5 px-3 py-2 text-xs text-zinc-300 hover:bg-white/10"
                 }
               >
-                ★ Fav
+                Filters
+                {panelFilterCount > 0 ? (
+                  <span className="ml-1.5 inline-flex min-w-[1.1rem] items-center justify-center rounded-full bg-sky-500/90 px-1 text-[10px] font-semibold text-white">
+                    {panelFilterCount}
+                  </span>
+                ) : null}
               </button>
-              {filtersActive ? (
-                <button
-                  type="button"
-                  onClick={clearMapFilters}
-                  className="rounded-full px-2 py-0.5 text-[11px] text-zinc-500 hover:text-zinc-300"
+              {filtersOpen ? (
+                <div
+                  role="dialog"
+                  aria-label="Map filters"
+                  className="absolute right-0 z-30 mt-1.5 w-[min(100vw-2rem,18rem)] rounded-lg border border-white/10 bg-zinc-950/95 p-3 shadow-xl backdrop-blur"
                 >
-                  Clear
-                </button>
+                  <div className="mb-3">
+                    <div className="mb-1.5 text-[11px] font-medium uppercase tracking-wide text-zinc-500">
+                      Sun type
+                    </div>
+                    <div className="flex flex-wrap gap-1">
+                      {SPECTRAL_CHIPS.map((c) => {
+                        const on = spectralFilters.has(c.id);
+                        return (
+                          <button
+                            key={c.id}
+                            type="button"
+                            aria-pressed={on}
+                            title={
+                              c.id === "Other"
+                                ? "Unknown, missing, or non Harvard-letter spectral types"
+                                : undefined
+                            }
+                            onClick={() =>
+                              setSpectralFilters((prev) =>
+                                toggleInSet(prev, c.id),
+                              )
+                            }
+                            className={
+                              on
+                                ? "rounded-md bg-sky-600 px-2 py-1 text-[11px] font-medium text-white"
+                                : "rounded-md bg-white/5 px-2 py-1 text-[11px] text-zinc-400 hover:bg-white/10 hover:text-zinc-200"
+                            }
+                          >
+                            {c.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                    <p className="mt-1.5 text-[10px] leading-snug text-zinc-600">
+                      Other / unknown: missing type, or outside M/K/G/F/A
+                      (includes O, B, and non-letter).
+                    </p>
+                  </div>
+                  <div className="mb-3">
+                    <div className="mb-1.5 text-[11px] font-medium uppercase tracking-wide text-zinc-500">
+                      Planets
+                    </div>
+                    <div className="flex flex-wrap gap-1">
+                      {PLANET_CHIPS.map((c) => {
+                        const on = planetFilters.has(c.id);
+                        return (
+                          <button
+                            key={c.id}
+                            type="button"
+                            aria-pressed={on}
+                            onClick={() =>
+                              setPlanetFilters((prev) =>
+                                toggleInSet(prev, c.id),
+                              )
+                            }
+                            className={
+                              on
+                                ? "rounded-md bg-sky-600 px-2 py-1 text-[11px] font-medium text-white"
+                                : "rounded-md bg-white/5 px-2 py-1 text-[11px] text-zinc-400 hover:bg-white/10 hover:text-zinc-200"
+                            }
+                          >
+                            {c.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between gap-2 border-t border-white/10 pt-2">
+                    <span className="text-[11px] tabular-nums text-zinc-500">
+                      {mapNodes.length}
+                      {mapNodes.length !== nodes.length
+                        ? ` / ${nodes.length}`
+                        : ""}{" "}
+                      systems
+                    </span>
+                    {filtersActive ? (
+                      <button
+                        type="button"
+                        onClick={clearMapFilters}
+                        className="rounded-md px-2 py-1 text-[11px] text-zinc-400 hover:bg-white/5 hover:text-zinc-200"
+                      >
+                        Clear
+                      </button>
+                    ) : (
+                      <span className="text-[10px] text-zinc-600">
+                        Empty = all
+                      </span>
+                    )}
+                  </div>
+                </div>
               ) : null}
-              <span className="ml-1 text-[11px] tabular-nums text-zinc-500">
-                {mapNodes.length}
-                {mapNodes.length !== nodes.length
-                  ? ` / ${nodes.length}`
-                  : ""}{" "}
-                systems
-              </span>
             </div>
           </div>
         </div>
@@ -1123,7 +1202,7 @@ function SystemMapView() {
 
         <p className="mt-2 text-xs text-zinc-600">
           Drag or WASD to pan · Shift faster · scroll wheel zoom · Reset
-          recenters on Sol. Spectral / planet chips OR within a group, AND
+          recenters on Sol. Filters (spectral / planet) OR within a group, AND
           across groups (+ ★ Fav). Click empty space to dismiss facts. Enter
           opens selected system.
         </p>
