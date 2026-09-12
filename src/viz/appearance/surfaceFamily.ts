@@ -19,7 +19,7 @@ const CLASSIC_GAS_RADIUS_KM = 40_000;
 export function inferSurfaceFamily(
   body: Pick<Body, "kind" | "facts">,
 ): SurfaceFamily {
-  if (body.kind === "star") return "star";
+  if (body.kind === "star" || body.kind === "black_hole") return "star";
 
   const r = body.facts.radiusMeanKm;
   const density = body.facts.densityGcm3;

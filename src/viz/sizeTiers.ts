@@ -193,7 +193,7 @@ function systemStar(bodies: readonly Body[]): Body | undefined {
  * uses system.primaryStarId — same body when catalog is consistent.
  */
 function isSystemPrimaryStar(body: Body, bodies: readonly Body[]): boolean {
-  if (body.kind !== "star") return false;
+  if (body.kind !== "star" && body.kind !== "black_hole") return false;
   if (body.parentId) return false;
   const star = systemStar(bodies);
   return star != null && star.id === body.id;
@@ -319,7 +319,7 @@ function proportionalRadius(body: Body, bodies: readonly Body[]): number {
   const sunMesh = Math.max(1e-6, (innerQAu - margin) / denom);
   const scale = (0.92 * sunMesh) / Math.max(maxNonStarKm, 1); // km → scene
 
-  if (body.kind === "star") {
+  if (body.kind === "star" || body.kind === "black_hole") {
     // Primary: clearance sunMesh (star-readable), even if catalog R missing.
     if (isSystemPrimaryStar(body, bodies)) return sunMesh;
     return companionStarMesh(body, bodies, sunMesh);
@@ -342,7 +342,7 @@ function trueRadius(body: Body, bodies: readonly Body[]): number {
   const sunMesh = Math.max(1e-6, (innerQAu - margin) / denom);
   const scale = sunMesh / Math.max(starKm, 1);
 
-  if (body.kind === "star") {
+  if (body.kind === "star" || body.kind === "black_hole") {
     // Primary: star-readable clearance mesh (not km??1 which vanishes).
     if (isSystemPrimaryStar(body, bodies)) return sunMesh;
     // Companions stay visible: missing R → fraction; known R → ratio, ≤ primary.
