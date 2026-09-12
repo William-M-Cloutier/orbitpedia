@@ -44,7 +44,7 @@ Never invent elements: skip a CATNR when required GP fields are missing.
 
 ## Curated set (LEO / polar)
 
-Groups: `stations` | `weather` | `science`. Fixture: `scripts/fixtures/celestrak-gp-first-slice.json` (19 GP records).
+Groups: `stations` | `weather` | `science`. Fixture: `scripts/fixtures/celestrak-gp-first-slice.json` (28 GP records).
 
 | id | CATNR | group |
 |----|-------|-------|
@@ -67,6 +67,15 @@ Groups: `stations` | `weather` | `science`. Fixture: `scripts/fixtures/celestrak
 | `icesat-2` | 43613 | science |
 | `swot` | 54754 | science |
 | `cloudsat` | 29107 | science |
+| `css-wentian` | 53239 | stations |
+| `css-mengtian` | 54216 | stations |
+| `noaa-18` | 28654 | weather |
+| `noaa-15` | 25338 | weather |
+| `sentinel-1b` | 41456 | science |
+| `sentinel-2b` | 42063 | science |
+| `sentinel-3b` | 43437 | science |
+| `calipso` | 29108 | science |
+| `gcom-w1` | 38337 | science |
 
 **SWOT** is NORAD **54754** (not 53847 — that CATNR is Starlink).
 

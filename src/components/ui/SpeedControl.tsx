@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 /** 1 simulated Earth day per 24h wall-clock (fun; not default). */
 export const REALISM_DAYS_PER_SEC = 1 / 86_400;
 
@@ -20,7 +22,7 @@ export type SpeedPreset = {
 /** Presets are multiples of Realism. Default is slower than the old follow rate (6 d/s). */
 export const SPEED_PRESETS: SpeedPreset[] = [
   { id: "realism", label: "Realism", multiple: 1 },
-  { id: "slow", label: "Slow", multiple: 1_440 }, // ~1 day / min
+  { id: "slow", label: "Slow", multiple: 1_440 }, // 1 day / 60s
   { id: "default", label: "Default", multiple: 17_280 }, // 0.2 day / s = 1 day / 5s
   { id: "fast", label: "Fast", multiple: 518_400 }, // 6 day / s (former)
   { id: "warp", label: "Warp", multiple: 2_592_000 }, // 30 day / s
@@ -28,6 +30,9 @@ export const SPEED_PRESETS: SpeedPreset[] = [
 
 export const DEFAULT_SPEED_PRESET = SPEED_PRESETS.find((p) => p.id === "default")!;
 export const SLOW_SPEED_PRESET = SPEED_PRESETS.find((p) => p.id === "slow")!;
+
+/** Earth sats Explore default: 1 simulated day per 60s wall (same rate as Slow). */
+export const EARTH_SATS_SPEED_MULTIPLE = SLOW_SPEED_PRESET.multiple;
 
 export function multipleToDaysPerSec(multiple: number): number {
   return multiple * REALISM_DAYS_PER_SEC;
@@ -92,11 +97,38 @@ function nearestPreset(multiple: number): SpeedPresetId | null {
 type Props = {
   multiple: number;
   onMultipleChange: (multiple: number) => void;
+  /**
+   * When false, preset chips only light after a chip click (not nearest-match).
+   * Used for earth-sats 1d/60s default so Slow is not auto-selected.
+   */
+  highlightNearestPreset?: boolean;
 };
 
-export function SpeedControl({ multiple, onMultipleChange }: Props) {
+export function SpeedControl({
+  multiple,
+  onMultipleChange,
+  highlightNearestPreset = true,
+}: Props) {
   const daysPerSec = multipleToDaysPerSec(multiple);
-  const active = nearestPreset(multiple);
+  const nearest = nearestPreset(multiple);
+  const [clickedPreset, setClickedPreset] = useState<SpeedPresetId | null>(
+    null,
+  );
+
+  useEffect(() => {
+    if (!clickedPreset) return;
+    const p = SPEED_PRESETS.find((x) => x.id === clickedPreset);
+    if (!p) {
+      setClickedPreset(null);
+      return;
+    }
+    const err = Math.abs(Math.log(multiple) - Math.log(p.multiple));
+    if (err >= 0.08) setClickedPreset(null);
+  }, [multiple, clickedPreset]);
+
+  const active = highlightNearestPreset
+    ? nearest
+    : clickedPreset;
   const slider = multipleToSlider(multiple);
 
   return (
@@ -120,7 +152,10 @@ export function SpeedControl({ multiple, onMultipleChange }: Props) {
             <button
               key={p.id}
               type="button"
-              onClick={() => onMultipleChange(p.multiple)}
+              onClick={() => {
+                setClickedPreset(p.id);
+                onMultipleChange(p.multiple);
+              }}
               className={`rounded px-2 py-0.5 text-[11px] transition ${
                 isOn
                   ? p.id === "realism"
@@ -146,9 +181,13 @@ export function SpeedControl({ multiple, onMultipleChange }: Props) {
         max={1}
         step={0.001}
         value={slider}
-        onChange={(e) =>
-          onMultipleChange(sliderToMultiple(Number(e.target.value)))
-        }
+        onChange={(e) => {
+          const next = sliderToMultiple(Number(e.target.value));
+          if (!highlightNearestPreset) {
+            setClickedPreset(nearestPreset(next));
+          }
+          onMultipleChange(next);
+        }}
         className="h-1.5 w-full cursor-pointer appearance-none rounded-full bg-white/10 accent-sky-400"
         aria-label="Simulation speed"
       />

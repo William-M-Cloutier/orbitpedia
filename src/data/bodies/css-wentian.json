@@ -1,0 +1,77 @@
+{
+  "id": "css-wentian",
+  "name": "CSS Wentian",
+  "kind": "satellite",
+  "systemId": "earth-sats",
+  "parentId": "earth-sats-earth",
+  "aliases": [
+    "Wentian",
+    "CSS (WENTIAN)",
+    "2022-085A"
+  ],
+  "facts": {
+    "owner": "CMSA / CNSA",
+    "launchDate": "2022-07-24",
+    "discoveryNotes": "Wentian laboratory module of the China Space Station."
+  },
+  "orbit": {
+    "epochJd": 2461295.651725648,
+    "aAu": 0.00004522964109274585,
+    "aKm": 6766.258,
+    "e": 0.00026312,
+    "iDeg": 41.4683,
+    "omDeg": 154.0266,
+    "wDeg": 272.9242,
+    "maDeg": 87.1296,
+    "periodD": 0.06410915596214346,
+    "qAu": 0.00004521774026958153,
+    "qKm": 6764.4776621950405,
+    "frame": "geocentric"
+  },
+  "color": "#E8B86D",
+  "noradCatId": 53239,
+  "meta": {
+    "provenance": "Celestrak GP OMM JSON fetched 2026-09-12T23:37:00Z: https://celestrak.org/NORAD/elements/gp.php?CATNR=53239&FORMAT=JSON",
+    "source": "Celestrak GP (OMM) NORAD 53239",
+    "confidence": "known",
+    "sources": [
+      {
+        "name": "Celestrak NORAD GP elements",
+        "url": "https://celestrak.org/NORAD/elements/",
+        "fields": [
+          "orbit.aKm",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "orbit.qKm",
+          "orbit.qAu",
+          "orbit.epochJd",
+          "noradCatId"
+        ]
+      },
+      {
+        "name": "Celestrak satcat CATNR=53239",
+        "url": "https://celestrak.org/satcat/records.php?CATNR=53239",
+        "fields": [
+          "facts.owner",
+          "facts.launchDate",
+          "name"
+        ]
+      },
+      {
+        "name": "Celestrak GP data formats",
+        "url": "https://celestrak.org/NORAD/documentation/gp-data-formats.php",
+        "fields": [
+          "orbit.frame",
+          "meta.provenance"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-12T23:37:00Z",
+    "unitsVersion": 1
+  }
+}
