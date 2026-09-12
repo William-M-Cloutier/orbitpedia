@@ -3,6 +3,10 @@
  * Curated Sol / showcase stay in catalog.ts + catalog.generated.ts.
  *
  * Graphs are lazy-fetched so thousands of cards never enter the client bundle.
+ *
+ * Base resolution (once per session):
+ *   NEXT_PUBLIC_ARCHIVE_BASE → else /archive/bulk if present → else /archive (smoke).
+ * Bulk is gitignored; never import archive JSON into the client bundle.
  */
 import {
   BodySchema,
@@ -42,31 +46,89 @@ export type ArchiveSystemGraphFile = {
   bodies: Body[];
 };
 
-const INDEX_URL = "/archive/systems.index.json";
+/** Smoke plane (committed). Bulk plane is gitignored local/dev. */
+const SMOKE_ARCHIVE_BASE = "/archive";
+const BULK_ARCHIVE_BASE = "/archive/bulk";
 
-function graphUrl(systemId: string): string {
-  return `/archive/graphs/${encodeURIComponent(systemId)}.json`;
+/**
+ * Override with NEXT_PUBLIC_ARCHIVE_BASE (e.g. "/archive/bulk" or a CDN prefix).
+ * Production default remains smoke `/archive` unless env is set.
+ */
+function envArchiveBase(): string | null {
+  const raw = process.env.NEXT_PUBLIC_ARCHIVE_BASE?.trim();
+  if (!raw) return null;
+  return raw.replace(/\/$/, "");
 }
 
+let archiveBase: string | null = null;
 let indexCache: ArchiveIndex | null = null;
 const graphCache = new Map<string, SystemGraph>();
+
+function indexUrl(base: string): string {
+  return `${base}/systems.index.json`;
+}
+
+function graphUrl(systemId: string): string {
+  const base = archiveBase ?? SMOKE_ARCHIVE_BASE;
+  return `${base}/graphs/${encodeURIComponent(systemId)}.json`;
+}
+
+async function fetchArchiveIndex(base: string): Promise<ArchiveIndex | null> {
+  try {
+    const res = await fetch(indexUrl(base));
+    if (!res.ok) return null;
+    const data = (await res.json()) as ArchiveIndex;
+    if (!data || !Array.isArray(data.systems)) return null;
+    return data;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Resolve archive base once per session:
+ * 1) NEXT_PUBLIC_ARCHIVE_BASE if set
+ * 2) else prefer /archive/bulk when present (local --all)
+ * 3) else smoke /archive
+ */
+async function resolveArchiveBase(): Promise<string> {
+  if (archiveBase) return archiveBase;
+  const fromEnv = envArchiveBase();
+  if (fromEnv) {
+    archiveBase = fromEnv;
+    return archiveBase;
+  }
+  const bulk = await fetchArchiveIndex(BULK_ARCHIVE_BASE);
+  if (bulk) {
+    archiveBase = BULK_ARCHIVE_BASE;
+    indexCache = bulk;
+    return archiveBase;
+  }
+  archiveBase = SMOKE_ARCHIVE_BASE;
+  return archiveBase;
+}
+
+/** Active archive base after first resolve (null until loadArchiveIndex). */
+export function getArchiveBase(): string | null {
+  return archiveBase;
+}
 
 /** Clear in-memory archive caches (tests / re-ingest). */
 export function clearArchiveCaches(): void {
   indexCache = null;
   graphCache.clear();
+  archiveBase = null;
   clearSystemGraphSession();
 }
 
 export async function loadArchiveIndex(): Promise<ArchiveIndex> {
   if (indexCache) return indexCache;
-  const res = await fetch(INDEX_URL);
-  if (!res.ok) {
-    throw new Error(`archive index HTTP ${res.status} at ${INDEX_URL}`);
-  }
-  const data = (await res.json()) as ArchiveIndex;
-  if (!data || !Array.isArray(data.systems)) {
-    throw new Error("archive index missing systems[]");
+  const base = await resolveArchiveBase();
+  // resolveArchiveBase may have already filled indexCache when probing bulk
+  if (indexCache) return indexCache;
+  const data = await fetchArchiveIndex(base);
+  if (!data) {
+    throw new Error(`archive index missing/unreadable at ${indexUrl(base)}`);
   }
   indexCache = data;
   return data;
