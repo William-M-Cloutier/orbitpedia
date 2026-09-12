@@ -10,10 +10,10 @@
     "blurb": "Kepler-245 — NASA Exoplanet Archive planetary system (1 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
     "planetCount": 4,
     "distanceLy": 2809.9,
-    "hasGas": false,
+    "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:30:33.227Z",
+      "fetchedAt": "2026-09-12T07:31:36.839Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-245 overview",
@@ -54,7 +54,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:30:33.227Z",
+        "fetchedAt": "2026-09-12T07:31:36.839Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -89,7 +89,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:30:33.227Z",
+        "fetchedAt": "2026-09-12T07:31:36.839Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

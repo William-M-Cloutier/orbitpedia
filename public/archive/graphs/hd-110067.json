@@ -19,7 +19,7 @@
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:30:33.227Z",
+      "fetchedAt": "2026-09-12T07:31:36.839Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — HD 110067 overview",
@@ -61,7 +61,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:30:33.227Z",
+        "fetchedAt": "2026-09-12T07:31:36.839Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -95,7 +95,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:30:33.227Z",
+        "fetchedAt": "2026-09-12T07:31:36.839Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -140,7 +140,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:30:33.227Z",
+        "fetchedAt": "2026-09-12T07:31:36.839Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -185,7 +185,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:30:33.227Z",
+        "fetchedAt": "2026-09-12T07:31:36.839Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -230,7 +230,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:30:33.227Z",
+        "fetchedAt": "2026-09-12T07:31:36.839Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -275,7 +275,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:30:33.227Z",
+        "fetchedAt": "2026-09-12T07:31:36.839Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -320,7 +320,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:30:33.227Z",
+        "fetchedAt": "2026-09-12T07:31:36.839Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

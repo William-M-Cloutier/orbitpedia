@@ -14,10 +14,10 @@
     "planetCount": 4,
     "distanceLy": 501.2,
     "hostSpectralType": "K2 V",
-    "hasGas": false,
+    "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T07:30:33.227Z",
+      "fetchedAt": "2026-09-12T07:31:36.839Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-411 overview",
@@ -59,7 +59,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:30:33.227Z",
+        "fetchedAt": "2026-09-12T07:31:36.839Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -95,7 +95,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:30:33.227Z",
+        "fetchedAt": "2026-09-12T07:31:36.839Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -142,7 +142,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:30:33.227Z",
+        "fetchedAt": "2026-09-12T07:31:36.839Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -188,7 +188,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:30:33.227Z",
+        "fetchedAt": "2026-09-12T07:31:36.839Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -234,7 +234,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T07:30:33.227Z",
+        "fetchedAt": "2026-09-12T07:31:36.839Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

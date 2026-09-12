@@ -331,6 +331,7 @@ function buildSystem(hostname, planetRows, fetchedAt) {
     const epochJd = num(row.pl_tranmid);
     const rEarth = num(row.pl_rade);
     const mEarth = num(row.pl_bmasse);
+    if (planetLooksGas(mEarth, rEarth)) hasGas = true;
 
     const assumed = [];
     const e = eRaw != null ? eRaw : (assumed.push("e"), 0);
