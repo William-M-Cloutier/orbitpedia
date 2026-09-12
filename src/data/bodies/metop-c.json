@@ -5,13 +5,14 @@
   "systemId": "earth-sats",
   "parentId": "earth-sats-earth",
   "aliases": [
+    "MetOp-C",
     "METOP-C",
     "2018-087A"
   ],
   "facts": {
-    "owner": "EUMETSAT / ESA",
+    "owner": "EUMETSAT/ESA",
     "launchDate": "2018-11-07",
-    "discoveryNotes": "Third MetOp polar-orbiting meteorological satellite."
+    "discoveryNotes": "EUMETSAT polar meteorological satellite (MetOp series)."
   },
   "orbit": {
     "epochJd": 2461295.7077233912,
@@ -27,7 +28,7 @@
     "qKm": 7197.99439214416,
     "frame": "geocentric"
   },
-  "color": "#73C6B6",
+  "color": "#7BB0E0",
   "noradCatId": 43689,
   "meta": {
     "provenance": "Celestrak GP OMM JSON fetched 2026-09-12T23:10:00Z: https://celestrak.org/NORAD/elements/gp.php?CATNR=43689&FORMAT=JSON",

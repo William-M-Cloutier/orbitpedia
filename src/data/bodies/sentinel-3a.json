@@ -5,13 +5,14 @@
   "systemId": "earth-sats",
   "parentId": "earth-sats-earth",
   "aliases": [
+    "S3A",
     "SENTINEL-3A",
     "2016-011A"
   ],
   "facts": {
-    "owner": "ESA / EUMETSAT",
+    "owner": "ESA/EUMETSAT",
     "launchDate": "2016-02-16",
-    "discoveryNotes": "Copernicus ocean and land monitoring satellite."
+    "discoveryNotes": "ESA/EUMETSAT Copernicus Sentinel-3A ocean/land monitoring satellite."
   },
   "orbit": {
     "epochJd": 2461295.817840174,
@@ -27,7 +28,7 @@
     "qKm": 7180.02164598255,
     "frame": "geocentric"
   },
-  "color": "#DC7633",
+  "color": "#E0C04D",
   "noradCatId": 41335,
   "meta": {
     "provenance": "Celestrak GP OMM JSON fetched 2026-09-12T23:10:00Z: https://celestrak.org/NORAD/elements/gp.php?CATNR=41335&FORMAT=JSON",

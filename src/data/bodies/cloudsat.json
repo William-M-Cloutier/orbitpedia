@@ -9,9 +9,9 @@
     "2006-016A"
   ],
   "facts": {
-    "owner": "NASA / CSA",
+    "owner": "NASA/CSA",
     "launchDate": "2006-04-28",
-    "discoveryNotes": "NASA cloud-profiling radar satellite."
+    "discoveryNotes": "NASA/CSA cloud-profiling radar Earth science satellite."
   },
   "orbit": {
     "epochJd": 2461295.754031759,
@@ -27,7 +27,7 @@
     "qKm": 6982.5301793442295,
     "frame": "geocentric"
   },
-  "color": "#D7BDE2",
+  "color": "#A8C5D4",
   "noradCatId": 29107,
   "meta": {
     "provenance": "Celestrak GP OMM JSON fetched 2026-09-12T23:10:00Z: https://celestrak.org/NORAD/elements/gp.php?CATNR=29107&FORMAT=JSON",

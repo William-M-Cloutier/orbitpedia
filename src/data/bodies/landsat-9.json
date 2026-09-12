@@ -9,9 +9,9 @@
     "2021-088A"
   ],
   "facts": {
-    "owner": "NASA / USGS",
+    "owner": "NASA/USGS",
     "launchDate": "2021-09-27",
-    "discoveryNotes": "Landsat land-imaging mission flying with Landsat 8."
+    "discoveryNotes": "NASA/USGS Landsat 9 Earth-imaging satellite."
   },
   "orbit": {
     "epochJd": 2461295.7012347686,
@@ -27,7 +27,7 @@
     "qKm": 7079.60815939781,
     "frame": "geocentric"
   },
-  "color": "#52BE80",
+  "color": "#9AD06A",
   "noradCatId": 49260,
   "meta": {
     "provenance": "Celestrak GP OMM JSON fetched 2026-09-12T23:10:00Z: https://celestrak.org/NORAD/elements/gp.php?CATNR=49260&FORMAT=JSON",

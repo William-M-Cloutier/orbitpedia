@@ -5,13 +5,14 @@
   "systemId": "earth-sats",
   "parentId": "earth-sats-earth",
   "aliases": [
+    "EOS Aura",
     "AURA",
     "2004-026A"
   ],
   "facts": {
     "owner": "NASA",
     "launchDate": "2004-07-15",
-    "discoveryNotes": "NASA Earth Observing System atmospheric chemistry mission."
+    "discoveryNotes": "NASA Earth Observing System atmospheric chemistry satellite."
   },
   "orbit": {
     "epochJd": 2461295.715232743,
@@ -27,7 +28,7 @@
     "qKm": 7065.5787361967405,
     "frame": "geocentric"
   },
-  "color": "#AF7AC5",
+  "color": "#3A9BC2",
   "noradCatId": 28376,
   "meta": {
     "provenance": "Celestrak GP OMM JSON fetched 2026-09-12T23:10:00Z: https://celestrak.org/NORAD/elements/gp.php?CATNR=28376&FORMAT=JSON",

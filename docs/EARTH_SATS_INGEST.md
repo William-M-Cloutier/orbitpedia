@@ -9,8 +9,11 @@ First-slice path: **Celestrak GP (OMM) JSON by CATNR** → Store B `kind: "satel
 node scripts/ingest-celestrak-gp.mjs --from-seed --dry-run
 node scripts/ingest-celestrak-gp.mjs --from-seed --write
 
+# Subset by curated group
+node scripts/ingest-celestrak-gp.mjs --from-seed --group weather --dry-run
+
 # Live fetch (cached ~2h under /tmp)
-node scripts/ingest-celestrak-gp.mjs --catnr 25544,20580,48274,25994,43013 --dry-run
+node scripts/ingest-celestrak-gp.mjs --catnr 25544,20580,48274 --dry-run
 ```
 
 Never invent elements: skip a CATNR when required GP fields are missing.
@@ -39,18 +42,36 @@ Never invent elements: skip a CATNR when required GP fields are missing.
 | `satellite.tle` | Optional two-line strings when provided in seed/fetch |
 | `meta.sources` | Human Celestrak GP + satcat pages (not raw JSON API strings as user-facing sole link) |
 
-## First-slice CATNRs
+## Curated set (LEO / polar)
 
-| id | CATNR |
-|----|-------|
-| `iss` | 25544 |
-| `hst` | 20580 |
-| `css-tianhe` | 48274 |
-| `terra` | 25994 |
-| `noaa-20` | 43013 |
+Groups: `stations` | `weather` | `science`. Fixture: `scripts/fixtures/celestrak-gp-first-slice.json` (19 GP records).
 
-System shell + Earth central card are owned by Earth Sats lead. This script only (re)writes `src/data/bodies/<id>.json` for those ids.
+| id | CATNR | group |
+|----|-------|-------|
+| `iss` | 25544 | stations |
+| `hst` | 20580 | stations |
+| `css-tianhe` | 48274 | stations |
+| `terra` | 25994 | science |
+| `noaa-20` | 43013 | weather |
+| `noaa-19` | 33591 | weather |
+| `suomi-npp` | 37849 | weather |
+| `metop-b` | 38771 | weather |
+| `metop-c` | 43689 | weather |
+| `aqua` | 27424 | science |
+| `aura` | 28376 | science |
+| `landsat-8` | 39084 | science |
+| `landsat-9` | 49260 | science |
+| `sentinel-1a` | 39634 | science |
+| `sentinel-2a` | 40697 | science |
+| `sentinel-3a` | 41335 | science |
+| `icesat-2` | 43613 | science |
+| `swot` | 54754 | science |
+| `cloudsat` | 29107 | science |
+
+**SWOT** is NORAD **54754** (not 53847 — that CATNR is Starlink).
+
+System shell + Earth central card are owned by Earth Sats lead. This script only (re)writes `src/data/bodies/<id>.json` for satellite ids; after write, update `src/data/systems/earth-sats.json` `memberIds` and run `npm run generate:catalog`.
 
 ## Full catalog later
 
-Pagination / group GP files after first-slice stub validates in Explore. Keep Celestrak usage limits (cache identical CATNR fetches).
+Pagination / group GP files after first-slice stub validates in Explore. Keep Celestrak usage limits (cache identical CATNR fetches). Prefer refreshing the fixture via WebFetch/GP when box TLS to Celestrak fails.

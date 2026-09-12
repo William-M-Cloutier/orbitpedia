@@ -6,14 +6,14 @@
   "parentId": "earth-sats-earth",
   "aliases": [
     "NPP",
-    "Suomi",
+    "Suomi National Polar-orbiting Partnership",
     "SUOMI NPP",
     "2011-061A"
   ],
   "facts": {
-    "owner": "NASA / NOAA",
+    "owner": "NASA/NOAA",
     "launchDate": "2011-10-28",
-    "discoveryNotes": "Suomi National Polar-orbiting Partnership weather and climate satellite."
+    "discoveryNotes": "NASA/NOAA Suomi National Polar-orbiting Partnership."
   },
   "orbit": {
     "epochJd": 2461295.8198833796,
@@ -29,7 +29,7 @@
     "qKm": 7203.02324677109,
     "frame": "geocentric"
   },
-  "color": "#85C1E9",
+  "color": "#5B9BD5",
   "noradCatId": 37849,
   "meta": {
     "provenance": "Celestrak GP OMM JSON fetched 2026-09-12T23:10:00Z: https://celestrak.org/NORAD/elements/gp.php?CATNR=37849&FORMAT=JSON",
