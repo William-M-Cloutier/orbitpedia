@@ -130,18 +130,91 @@ export function getBodiesByKind(kind: BodyKind): Body[] {
   return bodies.filter((b) => b.kind === kind);
 }
 
-export function searchBodies(query: string): Body[] {
+/** UI fixture system — hide from default search unless query matches. */
+export const FIXTURE_SYSTEM_ID = "sparse-test";
+
+/** Common system aliases (id → tokens). Bodies already carry aliases in JSON. */
+const SYSTEM_ALIASES: Record<string, readonly string[]> = {
+  solar: ["sol", "solar system"],
+  "trappist-1": ["trappist", "trappist 1"],
+  "kepler-11": ["kepler 11", "kepler11"],
+};
+
+export function isFixtureSystemId(systemId: string): boolean {
+  return systemId === FIXTURE_SYSTEM_ID;
+}
+
+function queryUnlocksFixture(q: string): boolean {
+  return q.includes("sparse");
+}
+
+function textMatch(hay: string, q: string): boolean {
+  return hay.toLowerCase().includes(q);
+}
+
+function systemMatchesQuery(s: System, q: string): boolean {
+  if (textMatch(s.id, q) || textMatch(s.name, q)) return true;
+  const aliases = SYSTEM_ALIASES[s.id];
+  return aliases?.some((a) => textMatch(a, q)) ?? false;
+}
+
+function bodyMatchesQuery(b: Body, q: string): boolean {
+  if (textMatch(b.name, q) || textMatch(b.id, q)) return true;
+  return b.aliases?.some((a) => textMatch(a, q)) ?? false;
+}
+
+export type CatalogSearchResult = {
+  systems: System[];
+  bodies: Body[];
+};
+
+/**
+ * Unified client-side search over systems + bodies.
+ * Hides sparse-test (and its members) unless the query clearly matches ("sparse").
+ */
+export function searchCatalog(query: string): CatalogSearchResult {
   const q = query.trim().toLowerCase();
-  if (!q) return bodies;
-  return bodies.filter((b) => {
-    if (b.name.toLowerCase().includes(q)) return true;
-    if (b.id.toLowerCase().includes(q)) return true;
-    return b.aliases?.some((a) => a.toLowerCase().includes(q)) ?? false;
+  if (!q) return { systems: [], bodies: [] };
+  const showFixture = queryUnlocksFixture(q);
+
+  const matchedSystems = systems.filter((s) => {
+    if (!showFixture && isFixtureSystemId(s.id)) return false;
+    return systemMatchesQuery(s, q);
   });
+
+  const matchedBodies = bodies.filter((b) => {
+    if (!showFixture && isFixtureSystemId(b.systemId)) return false;
+    return bodyMatchesQuery(b, q);
+  });
+
+  // Stable kind order for grouped UIs.
+  const kindRank: Record<BodyKind, number> = {
+    star: 0,
+    planet: 1,
+    dwarf_planet: 2,
+    moon: 3,
+    asteroid: 4,
+  };
+  matchedBodies.sort((a, b) => {
+    const kr = kindRank[a.kind] - kindRank[b.kind];
+    if (kr !== 0) return kr;
+    return a.name.localeCompare(b.name);
+  });
+  matchedSystems.sort((a, b) => {
+    if (a.home === true && b.home !== true) return -1;
+    if (b.home === true && a.home !== true) return 1;
+    return a.name.localeCompare(b.name);
+  });
+
+  return { systems: matchedSystems, bodies: matchedBodies };
+}
+
+/** @deprecated Prefer searchCatalog — kept for body-only callers. */
+export function searchBodies(query: string): Body[] {
+  return searchCatalog(query).bodies;
 }
 
 export { hasUsableOrbit };
-
 
 /** Explore deep-link for a body (includes ?system= for non-home). */
 export function exploreHref(bodyId: string, systemId?: string): string {
@@ -157,6 +230,13 @@ export function exploreHref(bodyId: string, systemId?: string): string {
   return qs ? `/?${qs}` : "/";
 }
 
+/** Explore deep-link for a system (no focus). Home → `/`. */
+export function exploreSystemHref(systemId: string): string {
+  const homeId = getHomeSystem().id;
+  if (!systemById.has(systemId) || systemId === homeId) return "/";
+  return `/?system=${encodeURIComponent(systemId)}`;
+}
+
 export const KIND_LABEL: Record<BodyKind, string> = {
   star: "Star",
   planet: "Planet",
@@ -164,3 +244,12 @@ export const KIND_LABEL: Record<BodyKind, string> = {
   asteroid: "Asteroid",
   moon: "Moon",
 };
+
+/** Kind order for Search / typeahead grouping. */
+export const KIND_ORDER: BodyKind[] = [
+  "star",
+  "planet",
+  "dwarf_planet",
+  "moon",
+  "asteroid",
+];
