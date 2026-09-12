@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { BodyRail } from "@/components/ui/BodyRail";
 import { AppShell } from "@/components/ui/AppShell";
-import { exploreHref, getHomeSystem, KIND_LABEL } from "@/data/catalog";
+import { exploreHref, getHomeSystem, getSystem, KIND_LABEL } from "@/data/catalog";
 import { bodyProvenance, type Body } from "@/data/schema";
 import { keyFactRows } from "@/lib/factsDisplay";
+import { overviewBlurb } from "@/lib/interestBlurb";
 import { periodFromA } from "@/lib/kepler";
 import { formatAu, formatPeriodDays } from "@/lib/units";
 import { CatalogChartsLazy } from "@/viz/CatalogChartsLazy";
@@ -14,6 +15,7 @@ export function BodyDetailView({ body }: { body: Body }) {
     body.orbit?.periodD ??
     (body.orbit ? periodFromA(body.orbit.aAu) : undefined);
   const homeId = getHomeSystem().id;
+  const overview = overviewBlurb(body, getSystem(body.systemId));
 
   return (
     <AppShell rail={<BodyRail activeId={body.id} systemId={body.systemId} />}>
@@ -49,12 +51,12 @@ export function BodyDetailView({ body }: { body: Body }) {
           <h2 className="mb-3 text-sm font-medium uppercase tracking-wider text-zinc-500">
             Overview
           </h2>
-          {body.facts.discoveryNotes ? (
-            <p className="text-zinc-300">{body.facts.discoveryNotes}</p>
+          {overview ? (
+            <p className="text-zinc-300">{overview}</p>
           ) : null}
           <p
             className={`text-xs text-zinc-600${
-              body.facts.discoveryNotes ? " mt-2" : ""
+              overview ? " mt-2" : ""
             }`}
           >
             Source: {bodyProvenance(body)}

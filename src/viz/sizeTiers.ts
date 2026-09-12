@@ -14,6 +14,10 @@ import { getBody, getHomeSystemGraph, getSystemGraph } from "@/data/catalog";
  *   primary-frame clearance body)
  * - true: one system-local km→scene scale (star clearance); honest tiny planets
  *
+ * Companion / placeholder stars lacking radiusMeanKm use a display-only
+ * fraction of the primary mesh in Prop/True — not an invented catalog radius.
+ * Primary stars keep clearance sunMesh (star-readable) even when R is missing.
+ *
  * Prop/True dial off the *active* system graph (star + innermost non-star
  * primary-frame perihelion) — never hardcode Sol/Mercury ids.
  *
@@ -68,6 +72,12 @@ export function minClearanceAu(
 /** Cap moon mesh as a fraction of its parent schematic mesh (readability). */
 const SCHEMATIC_MOON_MAX_OF_PARENT = 0.45;
 const SCHEMATIC_MOON_MIN = 0.012;
+
+/**
+ * Prop/True display mesh for companion stars with no radiusMeanKm.
+ * Fraction of primary sunMesh — viz fallback only, never written as catalog R.
+ */
+const STAR_NO_RADIUS_COMPANION_MESH_FRAC = 0.4;
 
 function schematicRadiusNonMoon(body: Body): number {
   const tiers: Record<Exclude<BodyKind, "moon">, number> = {
@@ -177,6 +187,17 @@ function systemStar(bodies: readonly Body[]): Body | undefined {
   );
 }
 
+function isSystemPrimaryStar(body: Body, bodies: readonly Body[]): boolean {
+  const star = systemStar(bodies);
+  return star != null && star.id === body.id;
+}
+
+/** Catalog radius when positive; else null (missing / unusable). */
+function catalogRadiusKm(body: Body): number | null {
+  const r = body.facts.radiusMeanKm;
+  return r != null && r > 0 && Number.isFinite(r) ? r : null;
+}
+
 /**
  * Inner clearance reference: smallest perihelion among non-star bodies with a
  * usable *primary-frame* orbit (frame !== "parent") in this system.
@@ -271,7 +292,18 @@ function proportionalRadius(body: Body, bodies: readonly Body[]): number {
   const scale = (0.92 * sunMesh) / Math.max(maxNonStarKm, 1); // km → scene
 
   if (body.kind === "star") {
-    return sunMesh; // largest by construction
+    // Primary: clearance sunMesh (star-readable), even if catalog R missing.
+    if (isSystemPrimaryStar(body, bodies)) return sunMesh;
+    const km = catalogRadiusKm(body);
+    if (km == null) {
+      // Display fallback — not an invented catalog radius.
+      return sunMesh * STAR_NO_RADIUS_COMPANION_MESH_FRAC;
+    }
+    const primaryKm = starRadiusKm(bodies);
+    return Math.min(
+      sunMesh,
+      Math.max(1e-6, sunMesh * (km / Math.max(primaryKm, 1))),
+    );
   }
   const km = body.facts.radiusMeanKm ?? 1;
   // No absolute 0.008 floor — it exceeded sunMesh on TRAPPIST and made
@@ -290,6 +322,17 @@ function trueRadius(body: Body, bodies: readonly Body[]): number {
   // No schematic-tier floor — same rationale as proportionalRadius.
   const sunMesh = Math.max(1e-6, (innerQAu - margin) / denom);
   const scale = sunMesh / Math.max(starKm, 1);
+
+  if (body.kind === "star") {
+    // Primary: star-readable clearance mesh (not km??1 which vanishes).
+    if (isSystemPrimaryStar(body, bodies)) return sunMesh;
+    const km = catalogRadiusKm(body);
+    if (km == null) {
+      // Display fallback — keep visible, always smaller than primary.
+      return sunMesh * STAR_NO_RADIUS_COMPANION_MESH_FRAC;
+    }
+    return Math.max(1e-6, km * scale);
+  }
   const km = body.facts.radiusMeanKm ?? 1;
   return Math.max(1e-6, km * scale);
 }
