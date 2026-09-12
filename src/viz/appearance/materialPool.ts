@@ -139,3 +139,62 @@ export function getBodyAppearanceMaterial(
 export function appearancePoolSize(): number {
   return pool.size;
 }
+
+/** Shared procedural sat materials — keyed by role|color (no per-mount alloc). */
+const satPool = new Map<string, THREE.Material>();
+
+export type SatMaterialRole = "bus" | "panel" | "antenna";
+
+const SAT_ROLE_PROPS: Record<
+  SatMaterialRole,
+  { metalness: number; roughness: number }
+> = {
+  bus: { metalness: 0.35, roughness: 0.45 },
+  panel: { metalness: 0.2, roughness: 0.55 },
+  antenna: { metalness: 0.1, roughness: 0.6 },
+};
+
+/**
+ * Shared MeshStandardMaterial for artificial-satellite procedural parts.
+ * Pool by role + color so dense catalogs do not allocate forever on mount.
+ */
+export function getSatSharedMaterial(
+  role: SatMaterialRole,
+  colorHex: string,
+): THREE.MeshStandardMaterial {
+  const hex = (colorHex || "#c8c8c8").trim().toLowerCase();
+  const key = `sat|${role}|${hex}`;
+  let mat = satPool.get(key);
+  if (!mat) {
+    const props = SAT_ROLE_PROPS[role];
+    mat = new THREE.MeshStandardMaterial({
+      color: hex,
+      metalness: props.metalness,
+      roughness: props.roughness,
+    });
+    satPool.set(key, mat);
+  }
+  return mat as THREE.MeshStandardMaterial;
+}
+
+/** Shared PointsMaterial for far / dense sat impostors. */
+export function getSatPointsMaterial(colorHex: string): THREE.PointsMaterial {
+  const hex = (colorHex || "#c8c8c8").trim().toLowerCase();
+  const key = `sat|points|${hex}`;
+  let mat = satPool.get(key);
+  if (!mat) {
+    mat = new THREE.PointsMaterial({
+      color: hex,
+      size: 0.07,
+      sizeAttenuation: true,
+      depthWrite: false,
+    });
+    satPool.set(key, mat);
+  }
+  return mat as THREE.PointsMaterial;
+}
+
+/** Test / debug — sat pool stays small (roles × colors). */
+export function satAppearancePoolSize(): number {
+  return satPool.size;
+}
