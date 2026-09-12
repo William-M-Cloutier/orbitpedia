@@ -639,15 +639,32 @@ if (!Number.isFinite(c)) {
     ok("FollowCamera scales camera by size-mode framing ratio (no full reset)");
   }
   // Idle camera: extent × pad for compact systems; legacy cap preserves Sol.
+  const fitSrc = fs.readFileSync(path.join(ROOT, "src/viz/schematicFit.ts"), "utf8");
   if (
-    !/systemSceneExtent/.test(sceneSrc) ||
-    !/idleCameraDistance/.test(sceneSrc) ||
-    !/IDLE_EXTENT_PAD/.test(sceneSrc) ||
-    !/IdleCameraBootstrap/.test(sceneSrc)
+    !/IdleCameraBootstrap/.test(sceneSrc) ||
+    !/systemSceneExtent/.test(fitSrc) ||
+    !/idleCameraDistance/.test(fitSrc) ||
+    !/IDLE_EXTENT_PAD/.test(fitSrc)
   ) {
-    fail("OrbitScene missing extent-based idle camera framing");
+    fail("OrbitScene/schematicFit missing extent-based idle camera framing");
   } else {
     ok("OrbitScene idle camera uses system extent (legacy cap for Sol-scale)");
+  }
+  // Schematic wide-system orbit fit (viz-only compress; home always 1).
+  if (
+    !/schematicOrbitFitScale/.test(fitSrc) ||
+    !/STAR_IDLE_FILL_MIN/.test(fitSrc) ||
+    !/SCHEMATIC_FIT_MIN/.test(fitSrc)
+  ) {
+    fail("schematicFit missing schematicOrbitFitScale / fill constants");
+  } else if (
+    !/schematicOrbitFitScale/.test(sceneSrc) ||
+    !/fitScale/.test(sceneSrc) ||
+    !/system\.home === true/.test(sceneSrc)
+  ) {
+    fail("OrbitScene must wire schematicOrbitFitScale gated on schematic + non-home");
+  } else {
+    ok("schematic orbit fit wired (home → fitScale 1; wide schematic compress)");
   }
 }
 
@@ -958,6 +975,7 @@ if (!Number.isFinite(c)) {
     ok("schema hasUsableOrbit allows stars with finite elements");
   }
   const sceneSrc = fs.readFileSync(path.join(ROOT, "src/viz/OrbitScene.tsx"), "utf8");
+  const fitSrcVb = fs.readFileSync(path.join(ROOT, "src/viz/schematicFit.ts"), "utf8");
   if (/companionStarLayoutOffset/.test(sceneSrc)) {
     fail("OrbitScene still contains companionStarLayoutOffset (circular sep dump)");
   } else {
@@ -968,54 +986,65 @@ if (!Number.isFinite(c)) {
   } else {
     ok("OrbitScene has visualBinaryCompanionOffset (tight visual-binary display)");
   }
-  if (!/VISUAL_BINARY_SEP_FACTOR/.test(sceneSrc)) {
-    fail("OrbitScene missing VISUAL_BINARY_SEP_FACTOR (tight sep from mesh radii)");
+  if (!/VISUAL_BINARY_SEP_FACTOR/.test(fitSrcVb) && !/VISUAL_BINARY_SEP_FACTOR/.test(sceneSrc)) {
+    fail("missing VISUAL_BINARY_SEP_FACTOR (tight sep from mesh radii)");
   } else {
     ok("OrbitScene uses VISUAL_BINARY_SEP_FACTOR for mesh-radius clearance");
   }
   // Prefer facts.projectedSepAu (Gaia / projected) when set; else schematic.
-  if (!/projectedSepAu/.test(sceneSrc)) {
-    fail("OrbitScene should read facts.projectedSepAu for visual-binary sep");
+  if (!/projectedSepAu/.test(sceneSrc) && !/projectedSepAu/.test(fitSrcVb)) {
+    fail("OrbitScene/schematicFit should read facts.projectedSepAu for visual-binary sep");
   } else if (
     !/Number\.isFinite\(projected\)/.test(sceneSrc) &&
+    !/Number\.isFinite\(projected\)/.test(fitSrcVb) &&
     !/Number\.isFinite\(body\.facts\.projectedSepAu\)/.test(sceneSrc) &&
-    !/Number\.isFinite\(.*projectedSepAu/.test(sceneSrc)
+    !/Number\.isFinite\(.*projectedSepAu/.test(sceneSrc) &&
+    !/Number\.isFinite\(.*projectedSepAu/.test(fitSrcVb)
   ) {
-    fail("OrbitScene should gate projectedSepAu with Number.isFinite");
+    fail("OrbitScene/schematicFit should gate projectedSepAu with Number.isFinite");
   } else {
     ok("OrbitScene reads facts.projectedSepAu for companion placement");
   }
   // Soft clearance when projected sep would bury mesh in primary (display-only).
   if (
     !/VISUAL_BINARY_CLEARANCE_MARGIN/.test(sceneSrc) &&
-    !/rPrimary \+ rSelf \+/.test(sceneSrc)
+    !/VISUAL_BINARY_CLEARANCE_MARGIN/.test(fitSrcVb) &&
+    !/rPrimary \+ rSelf \+/.test(sceneSrc) &&
+    !/rPrimary \+ rSelf \+/.test(fitSrcVb)
   ) {
-    fail("OrbitScene should soft-clear projectedSepAu vs primary+self+margin");
+    fail("OrbitScene/schematicFit should soft-clear projectedSepAu vs primary+self+margin");
   } else {
     ok("OrbitScene soft-clears projectedSepAu against primary+self+margin");
   }
   // Display-only compression: raw Gaia-class seps must NOT be used verbatim.
-  if (!/Math\.log1p\(projected\)/.test(sceneSrc) && !/log1p\(projected\)/.test(sceneSrc)) {
-    fail("OrbitScene should compress projectedSepAu with log1p (display scale)");
-  } else if (
-    !/PROJECTED_SEP_LOG_SCALE/.test(sceneSrc) ||
-    !/PROJECTED_SEP_DISPLAY_CAP_AU/.test(sceneSrc)
+  if (
+    !/Math\.log1p\(projected\)/.test(sceneSrc) &&
+    !/log1p\(projected\)/.test(sceneSrc) &&
+    !/Math\.log1p\(projected\)/.test(fitSrcVb) &&
+    !/log1p\(projected\)/.test(fitSrcVb)
   ) {
-    fail("OrbitScene missing PROJECTED_SEP_LOG_SCALE / PROJECTED_SEP_DISPLAY_CAP_AU");
+    fail("OrbitScene/schematicFit should compress projectedSepAu with log1p (display scale)");
+  } else if (
+    (!/PROJECTED_SEP_LOG_SCALE/.test(sceneSrc) && !/PROJECTED_SEP_LOG_SCALE/.test(fitSrcVb)) ||
+    (!/PROJECTED_SEP_DISPLAY_CAP_AU/.test(sceneSrc) && !/PROJECTED_SEP_DISPLAY_CAP_AU/.test(fitSrcVb))
+  ) {
+    fail("missing PROJECTED_SEP_LOG_SCALE / PROJECTED_SEP_DISPLAY_CAP_AU");
   } else if (
     // Ban raw projected as scene distance: `Math.max(projected, …)` without log.
-    /Math\.max\(\s*projected\s*,/.test(sceneSrc) &&
-    !/log1p\(projected\)/.test(sceneSrc)
+    (/Math\.max\(\s*projected\s*,/.test(sceneSrc) || /Math\.max\(\s*projected\s*,/.test(fitSrcVb)) &&
+    !/log1p\(projected\)/.test(sceneSrc) &&
+    !/log1p\(projected\)/.test(fitSrcVb)
   ) {
-    fail("OrbitScene must not use raw projectedSepAu as scene distance");
+    fail("must not use raw projectedSepAu as scene distance");
   } else {
     ok("OrbitScene display-scales projectedSepAu (log1p + cap; not raw AU)");
   }
   // Comments: display-only; catalog / Facts keep true AU.
   if (
-    !/display-only|Display-only|catalog AU unchanged|Facts.*true/i.test(sceneSrc)
+    !/display-only|Display-only|catalog AU unchanged|Facts.*true/i.test(sceneSrc) &&
+    !/display-only|Display-only|catalog AU unchanged|Facts.*true/i.test(fitSrcVb)
   ) {
-    fail("OrbitScene should document display-only compression; Facts show true AU");
+    fail("OrbitScene/schematicFit should document display-only compression; Facts show true AU");
   } else {
     ok("OrbitScene documents display-only sep compression (Facts show true AU)");
   }
@@ -1055,8 +1084,8 @@ if (!Number.isFinite(c)) {
         `synthetic 1067.5 display sep should be in [floor=${floor}, CAP=${PROJECTED_SEP_DISPLAY_CAP_AU}], got ${sep}`,
       );
     } else if (
-      !/log1p\(projected\)/.test(sceneSrc) ||
-      !/PROJECTED_SEP_DISPLAY_CAP_AU/.test(sceneSrc)
+      (!/log1p\(projected\)/.test(sceneSrc) && !/log1p\(projected\)/.test(fitSrcVb)) ||
+      (!/PROJECTED_SEP_DISPLAY_CAP_AU/.test(sceneSrc) && !/PROJECTED_SEP_DISPLAY_CAP_AU/.test(fitSrcVb))
     ) {
       fail("source missing log1p / display cap for projected sep");
     } else {
@@ -1203,6 +1232,86 @@ if (!Number.isFinite(c)) {
     }
   } else {
     ok("isExploreSceneBody includes orbit-unknown companion stars");
+  }
+}
+
+
+// Schematic wide-system orbit fit (pure formula; catalog aAu unchanged).
+{
+  const fitSrc = fs.readFileSync(path.join(ROOT, "src/viz/schematicFit.ts"), "utf8");
+  const IDLE_CAMERA_DIST_LEGACY = Math.hypot(0, 8, 14);
+  const IDLE_EXTENT_PAD = 1.17;
+  const STAR_IDLE_FILL_MIN = 0.08;
+  const STAR_IDLE_FILL_TARGET = 0.1;
+  const SCHEMATIC_FIT_MIN = 0.15;
+  const tanHalf = Math.tan((45 * Math.PI) / 180 / 2);
+  const starVis = 0.12;
+  function idle(extent) {
+    if (!(extent > 1e-6) || !Number.isFinite(extent)) return IDLE_CAMERA_DIST_LEGACY;
+    return Math.min(IDLE_CAMERA_DIST_LEGACY, extent * IDLE_EXTENT_PAD);
+  }
+  function fitScaleOf(extent0) {
+    const dist0 = idle(extent0);
+    const fill0 = starVis / (dist0 * tanHalf);
+    if (fill0 >= STAR_IDLE_FILL_MIN) return 1;
+    const targetDist = starVis / (STAR_IDLE_FILL_TARGET * tanHalf);
+    let c = 1;
+    if (targetDist < IDLE_CAMERA_DIST_LEGACY - 1e-12) {
+      c = targetDist / (extent0 * IDLE_EXTENT_PAD);
+    }
+    c = Math.min(1, Math.max(SCHEMATIC_FIT_MIN, c));
+    if (idle(extent0 * c) >= dist0 - 1e-9) return 1;
+    return c;
+  }
+  // Home gate is caller-side; Sol-scale extent must still be allowed c=1 by caller.
+  if (!/system\.home === true/.test(fs.readFileSync(path.join(ROOT, "src/viz/OrbitScene.tsx"), "utf8"))) {
+    fail("OrbitScene must gate fitScale=1 on system.home");
+  } else {
+    ok("OrbitScene home gate keeps Sol fitScale=1");
+  }
+  // Wide synthetic: extent large → fill tiny → fitScale < 1.
+  const wideExtent = 30.4; // 14 Her-class apo
+  const wideC = fitScaleOf(wideExtent);
+  if (!(wideC < 1) || !(wideC >= SCHEMATIC_FIT_MIN - 1e-12)) {
+    fail(`wide synthetic fitScale expected in [${SCHEMATIC_FIT_MIN},1), got ${wideC}`);
+  } else {
+    const distF = idle(wideExtent * wideC);
+    const fillF = starVis / (distF * tanHalf);
+    ok(`wide synthetic schematic fitScale=${wideC.toFixed(3)} fill≈${(fillF * 100).toFixed(1)}%`);
+  }
+  // Compact: already readable fill → c=1.
+  const compactExtent = 2.1; // TRAPPIST/Kepler-class display extent
+  const compactC = fitScaleOf(compactExtent);
+  if (compactC !== 1) {
+    fail(`compact synthetic fitScale should be 1, got ${compactC}`);
+  } else {
+    ok("compact synthetic schematic fitScale=1 (already readable)");
+  }
+  // Compress that cannot pull idle below legacy → c=1 (preserve clearance hosts).
+  const hugeExtent = 134;
+  const hugeC = fitScaleOf(hugeExtent);
+  if (hugeC !== 1) {
+    fail(`huge-extent synthetic fitScale should be 1 (no idle improvement), got ${hugeC}`);
+  } else {
+    ok("huge-extent synthetic fitScale=1 (compress would not pull idle)");
+  }
+  // Catalog aAu must not be mutated by fit helpers (source contract).
+  if (/aAu\s*=/.test(fitSrc) && /body\.orbit\.aAu\s*=/.test(fitSrc)) {
+    fail("schematicFit must not assign body.orbit.aAu");
+  } else if (!/Catalog aAu unchanged|catalog aAu unchanged|viz-only/i.test(fitSrc)) {
+    fail("schematicFit should document viz-only / catalog aAu unchanged");
+  } else {
+    ok("schematicFit is viz-only (no catalog aAu mutation)");
+  }
+  if (!/STAR_VISUAL_RADIUS/.test(fitSrc) || /STAR_VISUAL_RADIUS\s*=/.test(fitSrc)) {
+    // reading via visualRadius is fine; must not redefine the locked constant
+    if (/export const STAR_VISUAL_RADIUS/.test(fitSrc) || /STAR_VISUAL_RADIUS\s*=\s*0\./.test(fitSrc)) {
+      fail("schematicFit must not redefine STAR_VISUAL_RADIUS");
+    } else {
+      ok("schematicFit does not redefine STAR_VISUAL_RADIUS");
+    }
+  } else {
+    ok("schematicFit does not redefine STAR_VISUAL_RADIUS");
   }
 }
 

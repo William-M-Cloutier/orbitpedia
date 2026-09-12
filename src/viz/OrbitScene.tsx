@@ -42,29 +42,20 @@ import {
   visualRadius,
   type SizeMode,
 } from "./sizeTiers";
+import {
+  IDLE_CAMERA_OFFSET,
+  systemSceneExtent,
+  maxCompanionDisplaySep,
+  schematicOrbitFitScale,
+  schematicIdleCameraDistance,
+  visualBinaryDisplaySep,
+} from "./schematicFit";
 import { getBodyAppearanceMaterial, useRegistryTexture } from "./appearance";
 
 /** Must match <Canvas camera.near> — focus floors stay outside the near plane. */
 const CAMERA_NEAR = 0.01;
 
-/**
- * Legacy Sol idle camera offset (Canvas default). Direction is reused for every
- * system; distance comes from {@link idleCameraDistance}.
- */
-const IDLE_CAMERA_OFFSET = [0, 8, 14] as const;
-const IDLE_CAMERA_DIST_LEGACY = Math.hypot(
-  IDLE_CAMERA_OFFSET[0],
-  IDLE_CAMERA_OFFSET[1],
-  IDLE_CAMERA_OFFSET[2],
-);
-
-/**
- * Compact-system idle pad: sceneExtent × pad → camera distance.
- * ~1.17 ≈ 10% closer than the prior shared legacy camera for mid-size systems
- * (e.g. Kepler-11 extent ≈12.4 → ~14.5 vs legacy ≈16.1). Large systems whose
- * extent × pad exceeds legacy (Sol) keep {@link IDLE_CAMERA_DIST_LEGACY}.
- */
-const IDLE_EXTENT_PAD = 1.17;
+/** Idle offset / distance / extent — see {@link ./schematicFit}. */
 
 type Props = {
   focusId?: string | null;
@@ -89,8 +80,16 @@ type Props = {
 
 type SystemVizApi = {
   bodies: Body[];
-  /** Shared primary-frame orbit display inflate (compact systems, formula). */
+  /**
+   * Effective primary-frame orbit display scale: clearance helio × schematic
+   * fitScale (fitScale=1 for Prop/True and home).
+   */
   helioScale: number;
+  /**
+   * Schematic wide-system orbit compress ∈ (0,1]. Always 1 for home / non-
+   * schematic. Companions multiply display sep by this so they track the system.
+   */
+  fitScale: number;
   /** Viz-only map of system mean orbital plane → ecliptic (face-on Explore). */
   faceOn: FaceOnRotation;
   /** Strong pointLight star — System.primaryStarId or inferred root star. */
@@ -134,43 +133,6 @@ function heliocentricDisplayScale(bodies: Body[], sizeMode: SizeMode): number {
   );
 }
 
-
-/**
- * Primary-frame scene extent (display au): max apoapsis × helioScale.
- * Prefer planet/dwarf (same set that defines the face-on plane); fall back to
- * all primary-frame orbiters so asteroid-only graphs still frame.
- */
-function systemSceneExtent(
-  bodies: readonly Body[],
-  helioScale: number,
-): number {
-  const hs = helioScale > 0 && Number.isFinite(helioScale) ? helioScale : 1;
-  const primary = bodies.filter(
-    (b) => hasUsableOrbit(b) && b.orbit?.frame !== "parent",
-  );
-  const preferred = primary.filter(
-    (b) => b.kind === "planet" || b.kind === "dwarf_planet",
-  );
-  const pool = preferred.length > 0 ? preferred : primary;
-  let maxApo = 0;
-  for (const b of pool) {
-    const o = b.orbit!;
-    const apo = o.aAu * (1 + o.e);
-    if (Number.isFinite(apo) && apo > maxApo) maxApo = apo;
-  }
-  return maxApo * hs;
-}
-
-/**
- * Idle Explore camera distance from system scene extent (formula only).
- * Compact hosts pull in; Sol-scale extents stay on the legacy framing.
- */
-function idleCameraDistance(extent: number): number {
-  if (!(extent > 1e-6) || !Number.isFinite(extent)) {
-    return IDLE_CAMERA_DIST_LEGACY;
-  }
-  return Math.min(IDLE_CAMERA_DIST_LEGACY, extent * IDLE_EXTENT_PAD);
-}
 
 /**
  * Face-on rotation from primary planet/dwarf orbits (catalog iDeg unchanged).
@@ -359,29 +321,13 @@ function localOrbitPosition(
  * applying it to ecliptic-XY offsets tips them out of the horizontal plane
  * (tipped Z → scene Y → vertical stacking).
  */
-const VISUAL_BINARY_SEP_FACTOR = 1.3;
-/** Floor so tiny Prop/True companion meshes still clear the primary surface. */
-const VISUAL_BINARY_MIN_SEP = 0.04;
-/** Soft clearance margin (AU) so projected-sep meshes do not bury in primary. */
-const VISUAL_BINARY_CLEARANCE_MARGIN = 0.005;
-/**
- * Display-only log compress for Gaia/projected sep → scene AU.
- * log1p(1000) * 3 ≈ 20.7 — wide companions stay inside maxDistance 80.
- * Catalog / Facts projectedSepAu unchanged.
- */
-const PROJECTED_SEP_LOG_SCALE = 3.0;
-/**
- * Hard cap on companion display sep (scene AU). Comfortably under Explore
- * OrbitControls maxDistance 80 so meshes stay in the camera box.
- */
-const PROJECTED_SEP_DISPLAY_CAP_AU = 36;
-/** Place companion outside outermost primary-frame planet orbit when known. */
-const PROJECTED_SEP_ORBIT_FLOOR_FACTOR = 1.2;
+// Visual-binary sep constants live in schematicFit (shared with fit extent).
 
 function visualBinaryCompanionOffset(
   body: Body,
   sizeMode: SizeMode,
   systemBodies: readonly Body[],
+  fitScale: number = 1,
 ): [number, number, number] {
   if (body.kind !== "star" || !body.parentId || hasUsableOrbit(body)) {
     return [0, 0, 0];
@@ -397,50 +343,11 @@ function visualBinaryCompanionOffset(
   const idx = companions.findIndex((c) => c.id === body.id);
   if (idx < 0) return [0, 0, 0];
   const n = companions.length;
-  const parent =
-    systemBodies.find((b) => b.id === body.parentId) ??
-    systemBodies.find((b) => b.kind === "star" && !b.parentId);
-  const rPrimary = parent
-    ? visualRadius(parent, sizeMode, systemBodies)
-    : visualRadius(body, sizeMode, systemBodies);
-  const rSelf = visualRadius(body, sizeMode, systemBodies);
-  const schematicSep = Math.max(
-    (rPrimary + rSelf) * VISUAL_BINARY_SEP_FACTOR,
-    VISUAL_BINARY_MIN_SEP,
-  );
-  const projected = body.facts?.projectedSepAu;
-  // Gaia/projected sep → display-scaled scene AU; else mesh-radii schematic.
-  // Catalog / Facts keep the true projectedSepAu — this is viz-only.
-  let sep = schematicSep;
-  if (
-    typeof projected === "number" &&
-    Number.isFinite(projected) &&
-    projected > 0
-  ) {
-    let outerPrimaryOrbitA = 0;
-    for (const b of systemBodies) {
-      if (!hasUsableOrbit(b) || b.orbit?.frame === "parent") continue;
-      const a = b.orbit!.aAu;
-      if (Number.isFinite(a) && a > outerPrimaryOrbitA) outerPrimaryOrbitA = a;
-    }
-    const floor =
-      outerPrimaryOrbitA > 0
-        ? Math.max(
-            schematicSep,
-            outerPrimaryOrbitA * PROJECTED_SEP_ORBIT_FLOOR_FACTOR,
-          )
-        : schematicSep;
-    // log1p compress: ~1000 au → ~20 scene-AU; monotonic → relative order OK.
-    const compressed = Math.log1p(projected) * PROJECTED_SEP_LOG_SCALE;
-    sep = Math.min(
-      PROJECTED_SEP_DISPLAY_CAP_AU,
-      Math.max(floor, compressed),
-    );
-    sep = Math.max(
-      sep,
-      rPrimary + rSelf + VISUAL_BINARY_CLEARANCE_MARGIN,
-    );
-  }
+  // Gaia/projected → display-scaled scene AU; else mesh-radii schematic.
+  // Catalog / Facts keep the true projectedSepAu — viz-only (see schematicFit).
+  const baseSep = visualBinaryDisplaySep(body, sizeMode, systemBodies);
+  const fs = fitScale > 0 && Number.isFinite(fitScale) ? fitScale : 1;
+  const sep = baseSep * fs;
   // Even spread in the face-on orbital plane (start at 0 → +X). Horizontal ring.
   const ang = (2 * Math.PI * idx) / n;
   const x = sep * Math.cos(ang);
@@ -498,13 +405,14 @@ function bodyPosition(
   helioScale: number = 1,
   systemBodies?: readonly Body[],
   faceOn: FaceOnRotation = FACE_ON_IDENTITY,
+  fitScale: number = 1,
   seen: Set<string> = new Set(),
 ): [number, number, number] {
   // No usable Kepler: orbit-unknown companion stars sit on a viz-only
   // visual-binary offset; everything else stays at origin (no invented orbit).
   if (!hasUsableOrbit(body)) {
     if (body.kind === "star" && body.parentId && systemBodies) {
-      return visualBinaryCompanionOffset(body, sizeMode, systemBodies);
+      return visualBinaryCompanionOffset(body, sizeMode, systemBodies, fitScale);
     }
     return [0, 0, 0];
   }
@@ -524,6 +432,7 @@ function bodyPosition(
         helioScale,
         systemBodies,
         faceOn,
+        fitScale,
         seen,
       );
       const ps = parentDisplayScale(body, sizeMode, systemBodies);
@@ -548,6 +457,7 @@ function bodyWorldPosition(
   helioScale: number = 1,
   systemBodies?: readonly Body[],
   faceOn: FaceOnRotation = FACE_ON_IDENTITY,
+  fitScale: number = 1,
 ): [number, number, number] {
   const [x, y, z] = bodyPosition(
     body,
@@ -557,6 +467,7 @@ function bodyWorldPosition(
     helioScale,
     systemBodies,
     faceOn,
+    fitScale,
   );
   return [x + bary[0], y + bary[1], z + bary[2]];
 }
@@ -656,7 +567,7 @@ const OrbitLine = memo(function OrbitLine({
   const group = useRef<THREE.Group>(null);
   const sizeMode = useSizeMode();
   const distScale = orbitDistanceScale(sizeMode);
-  const { bodies: systemBodies, helioScale, faceOn } = useSystemViz();
+  const { bodies: systemBodies, helioScale, fitScale, faceOn } = useSystemViz();
   const { getSimDays } = useSimApi();
   const parent =
     body.orbit?.frame === "parent" && body.parentId
@@ -692,6 +603,7 @@ const OrbitLine = memo(function OrbitLine({
       helioScale,
       systemBodies,
       faceOn,
+      fitScale,
     );
     group.current.position.set(x, y, z);
   };
@@ -699,7 +611,7 @@ const OrbitLine = memo(function OrbitLine({
   useLayoutEffect(() => {
     syncParent(getSimDays());
     // eslint-disable-next-line react-hooks/exhaustive-deps -- parent pose sync
-  }, [parent, distScale, sizeMode, helioScale, faceOn]);
+  }, [parent, distScale, sizeMode, helioScale, fitScale, faceOn]);
 
   useFrame(() => {
     syncParent(getSimDays());
@@ -741,7 +653,7 @@ const BodyMesh = memo(function BodyMesh({
 }) {
   const group = useRef<THREE.Group>(null);
   const { getSimDays } = useSimApi();
-  const { bodies: systemBodies, helioScale, faceOn, primaryStarId } = useSystemViz();
+  const { bodies: systemBodies, helioScale, fitScale, faceOn, primaryStarId } = useSystemViz();
   const sizeMode = useSizeMode();
   const distScale = orbitDistanceScale(sizeMode);
   const r = visualRadius(body, sizeMode, systemBodies);
@@ -785,6 +697,7 @@ const BodyMesh = memo(function BodyMesh({
       helioScale,
       systemBodies,
       faceOn,
+      fitScale,
     );
     group.current.position.set(x, y, z);
     const period = body.facts.rotationPeriodD;
@@ -1017,7 +930,8 @@ function ViewOffsetController({
  * legacy fallback). Deep-link focus leaves pose to FollowCamera.
  */
 function IdleCameraBootstrap({ focusId }: { focusId?: string | null }) {
-  const { bodies: systemBodies, helioScale } = useSystemViz();
+  const { bodies: systemBodies, helioScale, fitScale } = useSystemViz();
+  const sizeMode = useSizeMode();
   const camera = useThree((s) => s.camera);
   const controls = useThree((s) => s.controls) as OrbitControlsImpl | null;
   const invalidate = useThree((s) => s.invalidate);
@@ -1028,8 +942,16 @@ function IdleCameraBootstrap({ focusId }: { focusId?: string | null }) {
     applied.current = true;
     if (focusId) return; // FollowCamera focus snap owns pose
 
-    const extent = systemSceneExtent(systemBodies, helioScale);
-    const dist = idleCameraDistance(extent);
+    // Planet apo×helio (already fit-scaled) + companion display seps × fitScale.
+    const extent = Math.max(
+      systemSceneExtent(systemBodies, helioScale),
+      maxCompanionDisplaySep(systemBodies, sizeMode) * fitScale,
+    );
+    const star =
+      systemBodies.find((b) => b.kind === "star" && !b.parentId) ??
+      systemBodies.find((b) => b.kind === "star");
+    const starVis = star ? visualRadius(star, sizeMode, systemBodies) : 0;
+    const dist = schematicIdleCameraDistance(extent, starVis, fitScale);
     const [ox, oy, oz] = IDLE_CAMERA_OFFSET;
     const len = Math.hypot(ox, oy, oz) || 1;
     camera.position.set((ox / len) * dist, (oy / len) * dist, (oz / len) * dist);
@@ -1039,7 +961,7 @@ function IdleCameraBootstrap({ focusId }: { focusId?: string | null }) {
       controls.update();
     }
     invalidate();
-  }, [camera, controls, invalidate, focusId, systemBodies, helioScale]);
+  }, [camera, controls, invalidate, focusId, systemBodies, helioScale, fitScale, sizeMode]);
 
   return null;
 }
@@ -1072,7 +994,7 @@ function IdleCameraBootstrap({ focusId }: { focusId?: string | null }) {
 function FollowCamera() {
   const sizeMode = useSizeMode();
   const distScale = orbitDistanceScale(sizeMode);
-  const { bodies: systemBodies, helioScale, faceOn } = useSystemViz();
+  const { bodies: systemBodies, helioScale, fitScale, faceOn } = useSystemViz();
   const { getSimDays, getFollowing, getFocusId, getBaryOffset } = useSimApi();
   const focusId = getFocusId();
   const camera = useThree((s) => s.camera);
@@ -1175,6 +1097,7 @@ function FollowCamera() {
       helioScale,
       systemBodies,
       faceOn,
+      fitScale,
     );
     const pos = bodyWorldPosition(
       b,
@@ -1185,6 +1108,7 @@ function FollowCamera() {
       helioScale,
       systemBodies,
       faceOn,
+      fitScale,
     );
     const fovY =
       camera instanceof THREE.PerspectiveCamera ? camera.fov : 45;
@@ -1264,6 +1188,7 @@ function FollowCamera() {
         helioScale,
         systemBodies,
         faceOn,
+        fitScale,
       );
       target.current.set(pos[0], pos[1], pos[2]);
       desired.current.copy(target.current);
@@ -1334,6 +1259,7 @@ function FollowCamera() {
       helioScale,
       systemBodies,
       faceOn,
+      fitScale,
     );
     const pos = bodyWorldPosition(
       b,
@@ -1344,6 +1270,7 @@ function FollowCamera() {
       helioScale,
       systemBodies,
       faceOn,
+      fitScale,
     );
     desired.current.set(pos[0], pos[1], pos[2]);
 
@@ -1737,10 +1664,17 @@ function SceneContent({
     [resolvedSystemId],
   );
   const systemBodies = systemGraph.bodies;
-  const helioScale = useMemo(
+  const clearanceHelio = useMemo(
     () => heliocentricDisplayScale(systemBodies, sizeMode),
     [systemBodies, sizeMode],
   );
+  // Home (Sol): always fitScale=1. Schematic-only compress for wide/sparse hosts.
+  const isHome = systemGraph.system.home === true;
+  const fitScale = useMemo(() => {
+    if (sizeMode !== "schematic" || isHome) return 1;
+    return schematicOrbitFitScale(systemBodies, clearanceHelio);
+  }, [sizeMode, isHome, systemBodies, clearanceHelio]);
+  const helioScale = clearanceHelio * fitScale;
   const faceOn = useMemo(
     () => systemFaceOnRotation(systemBodies),
     [systemBodies],
@@ -1754,8 +1688,8 @@ function SceneContent({
     );
   }, [systemGraph, systemBodies]);
   const systemViz = useMemo(
-    () => ({ bodies: systemBodies, helioScale, faceOn, primaryStarId }),
-    [systemBodies, helioScale, faceOn, primaryStarId],
+    () => ({ bodies: systemBodies, helioScale, fitScale, faceOn, primaryStarId }),
+    [systemBodies, helioScale, fitScale, faceOn, primaryStarId],
   );
 
   const bodyById = useMemo(() => {
