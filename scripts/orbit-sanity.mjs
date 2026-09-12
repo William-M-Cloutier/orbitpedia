@@ -14,7 +14,8 @@
  *   4) Central / primary star has no orbit / no OrbitLine; companions may orbit
  *   5) Parent-frame: q clears parent real radius; shared viz scale; skip sun Kepler-3
  *   6) Epoch MA pose lies on true-anomaly OrbitLine polyline (body-on-line)
- *   7) Multi-star: hasUsableOrbit allows companion stars; mesh-only companions OK
+ *   7) Multi-star: hasUsableOrbit allows companion stars; mesh-only companions
+ *      OK in catalog but Explore omits them (no layout-offset dump)
  *
  * Usage: node scripts/orbit-sanity.mjs
  *        npm test
@@ -872,6 +873,7 @@ if (!Number.isFinite(c)) {
       qAu: 0.08 * (1 - 0.02),
     },
   };
+  // Catalog may include orbit-unknown companions; Explore must NOT invent layout.
   const meshOnly = {
     id: "syn-mesh",
     kind: "star",
@@ -895,15 +897,35 @@ if (!Number.isFinite(c)) {
       periodD: 40,
     },
   };
+  // Parent-frame planet hosted by orbit-unknown companion — catalog OK, Explore omit.
+  const parentFrameKid = {
+    id: "syn-mesh-planet",
+    kind: "planet",
+    systemId: "syn-binary",
+    parentId: "syn-mesh",
+    facts: { radiusMeanKm: 5000 },
+    orbit: {
+      frame: "parent",
+      aAu: 0.02,
+      e: 0.01,
+      iDeg: 2,
+      omDeg: 0,
+      wDeg: 0,
+      maDeg: 0,
+      periodD: 5,
+    },
+  };
 
   if (hasUsableOrbit(primary)) fail("synthetic primary must not have usable orbit");
   else ok("synthetic primary: hasUsableOrbit false");
   if (!hasUsableOrbit(companion)) fail("synthetic companion with elements must have usable orbit");
   else ok("synthetic companion: hasUsableOrbit true (parent-frame)");
   if (hasUsableOrbit(meshOnly)) fail("synthetic mesh-only companion must not have usable orbit");
-  else ok("synthetic mesh-only companion: hasUsableOrbit false");
+  else ok("synthetic mesh-only companion: hasUsableOrbit false (catalog OK)");
   if (!hasUsableOrbit(planet)) fail("synthetic planet must have usable orbit");
   else ok("synthetic planet: hasUsableOrbit true");
+  if (!hasUsableOrbit(parentFrameKid)) fail("synthetic parent-frame kid must have usable orbit");
+  else ok("synthetic parent-frame kid: hasUsableOrbit true (catalog)");
 
   const parentRealAu = primary.facts.radiusMeanKm / AU_KM;
   const q = periapsisAu(companion.orbit);
@@ -914,7 +936,7 @@ if (!Number.isFinite(c)) {
   }
 
   // Helio kids = primary-frame only (companion is parent-frame → excluded).
-  const bodies = [primary, companion, meshOnly, planet];
+  const bodies = [primary, companion, meshOnly, planet, parentFrameKid];
   const helioKids = bodies.filter(
     (b) => hasUsableOrbit(b) && b.orbit?.frame !== "parent",
   );
@@ -931,17 +953,52 @@ if (!Number.isFinite(c)) {
     ok("schema hasUsableOrbit allows stars with finite elements");
   }
   const sceneSrc = fs.readFileSync(path.join(ROOT, "src/viz/OrbitScene.tsx"), "utf8");
+  if (/companionStarLayoutOffset/.test(sceneSrc)) {
+    fail("OrbitScene still contains companionStarLayoutOffset (circular sep dump)");
+  } else {
+    ok("OrbitScene has no companionStarLayoutOffset (no layout-offset dump)");
+  }
+  if (!/isExploreSceneBody/.test(sceneSrc)) {
+    fail("OrbitScene missing isExploreSceneBody visibility gate");
+  } else {
+    ok("OrbitScene gates Explore meshes via isExploreSceneBody");
+  }
   if (/if \(body\.kind === "star" \|\| !body\.orbit\) return \[0, 0, 0\]/.test(sceneSrc)) {
     fail("OrbitScene bodyPosition/localOrbit still blanks all stars at origin");
-  } else if (!/hasUsableOrbit\(body\)\) return \[0, 0, 0\]/.test(sceneSrc)) {
+  } else if (
+    !/hasUsableOrbit\(body\)\) return \[0, 0, 0\]/.test(sceneSrc) &&
+    !/if \(!hasUsableOrbit\(body\)\) return \[0, 0, 0\]/.test(sceneSrc)
+  ) {
     fail("OrbitScene should gate star pose on hasUsableOrbit");
   } else {
-    ok("OrbitScene positions companion stars via hasUsableOrbit / Kepler");
+    ok("OrbitScene positions Kepler companions via hasUsableOrbit; unknown → origin/omit");
   }
   if (!/lightIntensity|isPrimaryStar/.test(sceneSrc) || !/0\.8/.test(sceneSrc)) {
     fail("OrbitScene missing dimmed companion star pointLights");
   } else {
-    ok("OrbitScene dims companion star pointLights (soft perf)");
+    ok("OrbitScene dims companion star pointLights when companions mesh (soft perf)");
+  }
+  // Explore visibility contract (mirror isExploreSceneBody): mesh-only companion
+  // and its parent-frame kids must NOT require invented placement.
+  function exploreVisible(body, primaryId, byId, seen = new Set()) {
+    if (body.id === primaryId || (body.kind === "star" && !body.parentId)) return true;
+    if (!hasUsableOrbit(body)) return false;
+    if (body.orbit?.frame === "parent" && body.parentId) {
+      if (seen.has(body.id)) return false;
+      seen.add(body.id);
+      const parent = byId.get(body.parentId);
+      if (!parent) return false;
+      return exploreVisible(parent, primaryId, byId, seen);
+    }
+    return true;
+  }
+  const byId = new Map(bodies.map((b) => [b.id, b]));
+  const vis = bodies.filter((b) => exploreVisible(b, "syn-primary", byId)).map((b) => b.id);
+  const expect = ["syn-primary", "syn-companion", "syn-planet"];
+  if (vis.join(",") !== expect.join(",")) {
+    fail(`Explore visibility expected [${expect}], got [${vis}]`);
+  } else {
+    ok("Explore omits orbit-unknown companion + its parent-frame kids (rail only)");
   }
 }
 
