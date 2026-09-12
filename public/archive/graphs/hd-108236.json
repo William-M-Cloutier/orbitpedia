@@ -13,13 +13,13 @@
     "primaryStarId": "hd-108236",
     "starCount": 1,
     "blurb": "HD 108236 (G3 V) — 4 confirmed planets · 210.7 ly",
-    "planetCount": 5,
+    "planetCount": 4,
     "distanceLy": 210.7,
     "hostSpectralType": "G3 V",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T08:17:16.771Z",
+      "fetchedAt": "2026-09-12T08:21:42.502Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — HD 108236 overview",
@@ -60,7 +60,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "fetchedAt": "2026-09-12T08:21:42.502Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -95,7 +95,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "fetchedAt": "2026-09-12T08:21:42.502Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -141,7 +141,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "fetchedAt": "2026-09-12T08:21:42.502Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -187,7 +187,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "fetchedAt": "2026-09-12T08:21:42.502Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -233,7 +233,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "fetchedAt": "2026-09-12T08:21:42.502Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

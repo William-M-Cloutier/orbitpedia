@@ -13,13 +13,13 @@
     "primaryStarId": "kepler-62",
     "starCount": 1,
     "blurb": "Kepler-62 (K2 V) — 4 confirmed planets · 981.3 ly",
-    "planetCount": 5,
+    "planetCount": 4,
     "distanceLy": 981.3,
     "hostSpectralType": "K2 V",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T08:17:16.771Z",
+      "fetchedAt": "2026-09-12T08:21:42.502Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-62 overview",
@@ -60,7 +60,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "fetchedAt": "2026-09-12T08:21:42.502Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -94,7 +94,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "fetchedAt": "2026-09-12T08:21:42.502Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -139,7 +139,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "fetchedAt": "2026-09-12T08:21:42.502Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -184,7 +184,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "fetchedAt": "2026-09-12T08:21:42.502Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -229,7 +229,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "fetchedAt": "2026-09-12T08:21:42.502Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

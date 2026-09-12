@@ -13,12 +13,12 @@
     "primaryStarId": "kepler-169",
     "starCount": 1,
     "blurb": "Kepler-169 — 4 confirmed planets · 1325.9 ly",
-    "planetCount": 5,
+    "planetCount": 4,
     "distanceLy": 1325.9,
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T08:17:16.771Z",
+      "fetchedAt": "2026-09-12T08:21:42.502Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-169 overview",
@@ -58,7 +58,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "fetchedAt": "2026-09-12T08:21:42.502Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -92,7 +92,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "fetchedAt": "2026-09-12T08:21:42.502Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -137,7 +137,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "fetchedAt": "2026-09-12T08:21:42.502Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -182,7 +182,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "fetchedAt": "2026-09-12T08:21:42.502Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -227,7 +227,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "fetchedAt": "2026-09-12T08:21:42.502Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

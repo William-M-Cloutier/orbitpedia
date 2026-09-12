@@ -14,13 +14,13 @@
     "primaryStarId": "kepler-296",
     "starCount": 2,
     "blurb": "Kepler-296 (M2 V) — 4 confirmed planets · 544.7 ly",
-    "planetCount": 5,
+    "planetCount": 4,
     "distanceLy": 544.7,
     "hostSpectralType": "M2 V",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T08:17:16.771Z",
+      "fetchedAt": "2026-09-12T08:21:42.502Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-296 overview",
@@ -61,7 +61,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "fetchedAt": "2026-09-12T08:21:42.502Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -82,7 +82,7 @@
             "fields": []
           }
         ],
-        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "fetchedAt": "2026-09-12T08:21:42.502Z",
         "confidence": "placeholder",
         "unitsVersion": 1
       }
@@ -116,7 +116,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "fetchedAt": "2026-09-12T08:21:42.502Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -161,7 +161,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "fetchedAt": "2026-09-12T08:21:42.502Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -206,7 +206,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "fetchedAt": "2026-09-12T08:21:42.502Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -251,7 +251,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "fetchedAt": "2026-09-12T08:21:42.502Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

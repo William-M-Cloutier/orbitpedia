@@ -525,8 +525,13 @@ function buildSystem(familyName, planetRows, fetchedAt, companionStarRows) {
     const letter =
       (row.pl_letter || "").trim().toLowerCase() ||
       kebabId(row.pl_name).split("-").pop();
-    const bodyId = `${systemId}-${letter}`;
-    // Dedupe by body id across family host rows (companion-host planet aliases).
+    // Companion-host planets (e.g. 55 Cnc B b) must not collide with primary 55 Cnc b.
+    const hostForId =
+      row.hostname === primaryHostname
+        ? systemId
+        : systemIdForHostname(row.hostname);
+    const bodyId = `${hostForId}-${letter}`;
+    // Dedupe by body id across family host rows (true aliases only).
     if (seenBodyIds.has(bodyId)) continue;
     seenBodyIds.add(bodyId);
     const eRaw = num(row.pl_orbeccen);
@@ -739,7 +744,7 @@ function buildSystem(familyName, planetRows, fetchedAt, companionStarRows) {
     ]
       .filter((x) => x != null && x !== "")
       .join(" "),
-    planetCount: syPnum ?? planets.length,
+    planetCount: planets.length,
     distanceLy,
     hostSpectralType,
     hasGas,
@@ -770,7 +775,7 @@ function buildSystem(familyName, planetRows, fetchedAt, companionStarRows) {
     indexRow: omitEmpty({
       id: systemId,
       name: familyName,
-      planetCount: syPnum ?? planets.length,
+      planetCount: planets.length,
       starCount,
       distanceLy,
       hostSpectralType,

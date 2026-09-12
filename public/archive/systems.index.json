@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "fetchedAt": "2026-09-12T08:17:16.771Z",
+  "fetchedAt": "2026-09-12T08:21:42.502Z",
   "source": "NASA Exoplanet Archive pscomppars",
   "systems": [
     {
@@ -169,7 +169,7 @@
     {
       "id": "dmpp-1",
       "name": "DMPP-1",
-      "planetCount": 4,
+      "planetCount": 2,
       "starCount": 1,
       "distanceLy": 204,
       "hostSpectralType": "F8 V",
@@ -321,7 +321,7 @@
     {
       "id": "gj-667",
       "name": "GJ 667",
-      "planetCount": 5,
+      "planetCount": 4,
       "starCount": 3,
       "distanceLy": 23.6,
       "hostSpectralType": "M1.5 V",
@@ -343,7 +343,7 @@
     {
       "id": "gj-676",
       "name": "GJ 676",
-      "planetCount": 4,
+      "planetCount": 3,
       "starCount": 2,
       "distanceLy": 52.3,
       "hostSpectralType": "M0",
@@ -354,7 +354,7 @@
     {
       "id": "gj-887",
       "name": "GJ 887",
-      "planetCount": 4,
+      "planetCount": 3,
       "starCount": 1,
       "distanceLy": 10.7,
       "hostSpectralType": "M1 V",
@@ -409,7 +409,7 @@
     {
       "id": "hd-10180",
       "name": "HD 10180",
-      "planetCount": 6,
+      "planetCount": 4,
       "starCount": 1,
       "distanceLy": 127.1,
       "hostSpectralType": "G1 V",
@@ -420,7 +420,7 @@
     {
       "id": "hd-108236",
       "name": "HD 108236",
-      "planetCount": 5,
+      "planetCount": 4,
       "starCount": 1,
       "distanceLy": 210.7,
       "hostSpectralType": "G3 V",
@@ -486,7 +486,7 @@
     {
       "id": "hd-191939",
       "name": "HD 191939",
-      "planetCount": 6,
+      "planetCount": 5,
       "starCount": 1,
       "distanceLy": 174.8,
       "hostSpectralType": "G9 V",
@@ -497,7 +497,7 @@
     {
       "id": "hd-20781",
       "name": "HD 20781",
-      "planetCount": 5,
+      "planetCount": 3,
       "starCount": 2,
       "distanceLy": 117.3,
       "hostSpectralType": "K0 V",
@@ -508,7 +508,7 @@
     {
       "id": "hd-215152",
       "name": "HD 215152",
-      "planetCount": 4,
+      "planetCount": 3,
       "starCount": 1,
       "distanceLy": 70.4,
       "hostSpectralType": "K3 V",
@@ -519,7 +519,7 @@
     {
       "id": "hd-219134",
       "name": "HD 219134",
-      "planetCount": 6,
+      "planetCount": 5,
       "starCount": 1,
       "distanceLy": 21.3,
       "hostSpectralType": "K3 V",
@@ -552,7 +552,7 @@
     {
       "id": "hd-34445",
       "name": "HD 34445",
-      "planetCount": 6,
+      "planetCount": 4,
       "starCount": 1,
       "distanceLy": 150.3,
       "hostSpectralType": "G0 V",
@@ -585,7 +585,7 @@
     {
       "id": "hr-8799",
       "name": "HR 8799",
-      "planetCount": 4,
+      "planetCount": 3,
       "starCount": 1,
       "distanceLy": 134.5,
       "hostSpectralType": "A5 V",
@@ -596,7 +596,7 @@
     {
       "id": "k2-133",
       "name": "K2-133",
-      "planetCount": 4,
+      "planetCount": 3,
       "starCount": 1,
       "distanceLy": 245.2,
       "hostSpectralType": "M1.5 V",
@@ -607,7 +607,7 @@
     {
       "id": "k2-138",
       "name": "K2-138",
-      "planetCount": 6,
+      "planetCount": 5,
       "starCount": 1,
       "distanceLy": 660.7,
       "hostSpectralType": "G8 V",
@@ -618,7 +618,7 @@
     {
       "id": "k2-187",
       "name": "K2-187",
-      "planetCount": 4,
+      "planetCount": 2,
       "starCount": 1,
       "distanceLy": 1079.3,
       "hasGas": false,
@@ -638,7 +638,7 @@
     {
       "id": "k2-268",
       "name": "K2-268",
-      "planetCount": 5,
+      "planetCount": 4,
       "starCount": 1,
       "distanceLy": 1069.1,
       "hasGas": false,
@@ -670,7 +670,7 @@
     {
       "id": "k2-384",
       "name": "K2-384",
-      "planetCount": 5,
+      "planetCount": 2,
       "starCount": 1,
       "distanceLy": 269.6,
       "hostSpectralType": "M4 V",
@@ -701,7 +701,7 @@
     {
       "id": "kepler-102",
       "name": "Kepler-102",
-      "planetCount": 5,
+      "planetCount": 2,
       "starCount": 1,
       "distanceLy": 351.6,
       "hasGas": false,
@@ -721,7 +721,7 @@
     {
       "id": "kepler-107",
       "name": "Kepler-107",
-      "planetCount": 4,
+      "planetCount": 3,
       "starCount": 1,
       "distanceLy": 1715.6,
       "hasGas": false,
@@ -751,7 +751,7 @@
     {
       "id": "kepler-138",
       "name": "Kepler-138",
-      "planetCount": 4,
+      "planetCount": 3,
       "starCount": 1,
       "distanceLy": 218.1,
       "hostSpectralType": "M1 V",
@@ -772,7 +772,7 @@
     {
       "id": "kepler-139",
       "name": "Kepler-139",
-      "planetCount": 5,
+      "planetCount": 3,
       "starCount": 1,
       "distanceLy": 1275.4,
       "hasGas": false,
@@ -782,7 +782,7 @@
     {
       "id": "kepler-150",
       "name": "Kepler-150",
-      "planetCount": 5,
+      "planetCount": 3,
       "starCount": 1,
       "distanceLy": 2906.4,
       "hasGas": false,
@@ -792,7 +792,7 @@
     {
       "id": "kepler-154",
       "name": "Kepler-154",
-      "planetCount": 5,
+      "planetCount": 3,
       "starCount": 1,
       "distanceLy": 2985,
       "hasGas": false,
@@ -802,7 +802,7 @@
     {
       "id": "kepler-1542",
       "name": "Kepler-1542",
-      "planetCount": 4,
+      "planetCount": 3,
       "starCount": 1,
       "distanceLy": 1301.7,
       "hasGas": false,
@@ -833,7 +833,7 @@
     {
       "id": "kepler-169",
       "name": "Kepler-169",
-      "planetCount": 5,
+      "planetCount": 4,
       "starCount": 1,
       "distanceLy": 1325.9,
       "hasGas": false,
@@ -843,7 +843,7 @@
     {
       "id": "kepler-172",
       "name": "Kepler-172",
-      "planetCount": 4,
+      "planetCount": 3,
       "starCount": 1,
       "distanceLy": 2702.5,
       "hasGas": false,
@@ -853,7 +853,7 @@
     {
       "id": "kepler-176",
       "name": "Kepler-176",
-      "planetCount": 4,
+      "planetCount": 3,
       "starCount": 1,
       "distanceLy": 1719.9,
       "hasGas": false,
@@ -874,7 +874,7 @@
     {
       "id": "kepler-20",
       "name": "Kepler-20",
-      "planetCount": 6,
+      "planetCount": 5,
       "starCount": 2,
       "distanceLy": 921.6,
       "hasGas": true,
@@ -894,7 +894,7 @@
     {
       "id": "kepler-292",
       "name": "Kepler-292",
-      "planetCount": 5,
+      "planetCount": 4,
       "starCount": 1,
       "distanceLy": 3445.8,
       "hasGas": false,
@@ -904,7 +904,7 @@
     {
       "id": "kepler-296",
       "name": "Kepler-296",
-      "planetCount": 5,
+      "planetCount": 4,
       "starCount": 2,
       "distanceLy": 544.7,
       "hostSpectralType": "M2 V",
@@ -915,7 +915,7 @@
     {
       "id": "kepler-32",
       "name": "Kepler-32",
-      "planetCount": 5,
+      "planetCount": 4,
       "starCount": 1,
       "distanceLy": 1056.2,
       "hostSpectralType": "M1 V",
@@ -936,7 +936,7 @@
     {
       "id": "kepler-444",
       "name": "Kepler-444",
-      "planetCount": 5,
+      "planetCount": 4,
       "starCount": 3,
       "distanceLy": 118.8,
       "hostSpectralType": "K",
@@ -957,7 +957,7 @@
     {
       "id": "kepler-55",
       "name": "Kepler-55",
-      "planetCount": 5,
+      "planetCount": 4,
       "starCount": 1,
       "distanceLy": 1887.8,
       "hasGas": true,
@@ -967,7 +967,7 @@
     {
       "id": "kepler-62",
       "name": "Kepler-62",
-      "planetCount": 5,
+      "planetCount": 4,
       "starCount": 1,
       "distanceLy": 981.3,
       "hostSpectralType": "K2 V",
@@ -978,7 +978,7 @@
     {
       "id": "kepler-80",
       "name": "Kepler-80",
-      "planetCount": 6,
+      "planetCount": 4,
       "starCount": 1,
       "distanceLy": 1205,
       "hostSpectralType": "K5",
@@ -1000,7 +1000,7 @@
     {
       "id": "kepler-84",
       "name": "Kepler-84",
-      "planetCount": 5,
+      "planetCount": 3,
       "starCount": 1,
       "distanceLy": 3339.5,
       "hasGas": false,
@@ -1010,7 +1010,7 @@
     {
       "id": "koi-351",
       "name": "KOI-351",
-      "planetCount": 8,
+      "planetCount": 5,
       "starCount": 1,
       "distanceLy": 2766.6,
       "hasGas": true,
@@ -1062,7 +1062,7 @@
     {
       "id": "toi-5624",
       "name": "TOI-5624",
-      "planetCount": 5,
+      "planetCount": 3,
       "starCount": 1,
       "distanceLy": 332.4,
       "hasGas": false,

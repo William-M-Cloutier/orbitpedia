@@ -10,18 +10,20 @@
       "55-cnc-b",
       "55-cnc-c",
       "55-cnc-f",
-      "55-cnc-d"
+      "55-cnc-d",
+      "55-cnc-comp-b-b",
+      "55-cnc-comp-b-c"
     ],
     "primaryStarId": "55-cnc",
     "starCount": 2,
-    "blurb": "55 Cnc (G8 V) — 5 confirmed planets · 41 ly",
+    "blurb": "55 Cnc (G8 V) — 7 confirmed planets · 41 ly",
     "planetCount": 7,
     "distanceLy": 41,
     "hostSpectralType": "G8 V",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T08:17:16.771Z",
+      "fetchedAt": "2026-09-12T08:21:42.502Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — 55 Cnc overview",
@@ -62,7 +64,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "fetchedAt": "2026-09-12T08:21:42.502Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -92,7 +94,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "fetchedAt": "2026-09-12T08:21:42.502Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -127,7 +129,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "fetchedAt": "2026-09-12T08:21:42.502Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -173,7 +175,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "fetchedAt": "2026-09-12T08:21:42.502Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -219,7 +221,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "fetchedAt": "2026-09-12T08:21:42.502Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -265,7 +267,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "fetchedAt": "2026-09-12T08:21:42.502Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -311,7 +313,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:17:16.771Z",
+        "fetchedAt": "2026-09-12T08:21:42.502Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -325,6 +327,94 @@
         "wDeg": -90,
         "maDeg": 0,
         "periodD": 4799
+      }
+    },
+    {
+      "id": "55-cnc-comp-b-b",
+      "name": "55 Cnc B b",
+      "kind": "planet",
+      "systemId": "55-cnc",
+      "facts": {
+        "massKg": 2.09027e+25,
+        "radiusMeanKm": 10766.99,
+        "discoveryDate": "2004"
+      },
+      "color": "#7EC8E3",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host 55 Cnc B (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg, wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — 55 Cnc B overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/55%20Cnc%20B",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:21:42.502Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455495.7,
+        "aAu": 0.044,
+        "e": 0,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 6.7994
+      }
+    },
+    {
+      "id": "55-cnc-comp-b-c",
+      "name": "55 Cnc B c",
+      "kind": "planet",
+      "systemId": "55-cnc",
+      "facts": {
+        "massKg": 3.165266e+25,
+        "radiusMeanKm": 13761.36,
+        "discoveryDate": "2004"
+      },
+      "color": "#9B7EBD",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host 55 Cnc B (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg, wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — 55 Cnc B overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/55%20Cnc%20B",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T08:21:42.502Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2455491.8,
+        "aAu": 0.13,
+        "e": 0,
+        "iDeg": 90,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 33.747
       }
     }
   ]
