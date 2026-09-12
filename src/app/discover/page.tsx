@@ -173,7 +173,7 @@ function DiscoverInner() {
             <button
               type="button"
               onClick={() => setPickerOpen((o) => !o)}
-              className="flex w-full max-w-xl items-center justify-between gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-left text-sm hover:bg-white/[0.07]"
+              className="flex w-full items-center justify-between gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-left text-sm hover:bg-white/[0.07]"
               aria-expanded={pickerOpen}
             >
               <span>
@@ -189,7 +189,7 @@ function DiscoverInner() {
               </span>
             </button>
             {pickerOpen ? (
-              <div className="mt-2 max-h-64 max-w-xl overflow-y-auto rounded-lg border border-white/10 bg-zinc-950/90 p-2">
+              <div className="mt-2 max-h-64 w-full overflow-y-auto rounded-lg border border-white/10 bg-zinc-950/90 p-2">
                 <div className="flex flex-wrap gap-2">
                   {orderedSystems.map((s) => (
                     <button
