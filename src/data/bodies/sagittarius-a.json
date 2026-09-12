@@ -15,7 +15,7 @@
       "massKg",
       "radiusMeanKm"
     ],
-    "discoveryNotes": "Galactic-center supermassive black hole \u2014 open this system from the Systems map to explore the host. Listed size uses the Schwarzschild radius from the cited mass as a horizon-scale size proxy, not a solid surface.",
+    "discoveryNotes": "Galactic-center supermassive black hole. Listed size uses the Schwarzschild radius from the cited mass as a horizon-scale size proxy, not a solid surface.",
     "discoveryDate": "1974"
   },
   "color": "#1a1a2e",
