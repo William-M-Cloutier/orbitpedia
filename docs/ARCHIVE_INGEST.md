@@ -282,6 +282,10 @@ only when coverage is sufficient. Prefer smoke until the dump has raDeg/decDeg.
 - `public/archive/systems.index.smoke.json` — small ~100-row plane **bundled** for sync first paint only.
 - `public/archive/graphs/` — smoke sample graphs (lazy). Full graphs remain in gitignored `public/archive/bulk/graphs/` for local `--all`.
 
+The Systems map paints the small bundled smoke list first, then adopts the
+HTTP full index (and local `/archive/bulk` when larger) after hydrate when
+sky-coord coverage is at least 50% — no manual reload.
+
 Refresh full index after bulk sky backfill:
 
 ```bash
