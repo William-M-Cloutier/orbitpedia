@@ -1970,6 +1970,13 @@ if (!Number.isFinite(c)) {
       fail("shouldHideOrbitPath must inherit moon when planet hidden");
     } else {
       ok("hideOrbitPathKinds gate wired (OrbitCanvas + shouldHideOrbitPath + moon inherit)");
+    // Paths/meshes independent: visibleBodies must not drop mesh-hidden probes.
+    if (/visibleBodies[\s\S]{0,400}shouldHideMesh/.test(sceneSrc) &&
+        /list\.filter\([\s\S]*shouldHideMesh/.test(sceneSrc)) {
+      fail("visibleBodies must not filter shouldHideMesh (drops ProbePathLine when mesh-only hidden)");
+    } else {
+      ok("visibleBodies keeps probes mounted when only meshes hidden");
+    }
     }
   }
 

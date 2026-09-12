@@ -1278,6 +1278,16 @@ const BodyMesh = memo(function BodyMesh({
     );
   }
 
+
+  // Mesh-only hide: keep body mounted for probes (paths); other kinds skip mesh
+  // while OrbitLine remains on visibleOrbiters.
+  if (
+    body.kind !== "probe" &&
+    shouldHideMesh(body, hideMeshKinds, hideProbeMeshes)
+  ) {
+    return null;
+  }
+
   if (body.kind === "black_hole") {
     // Primary BH host: dark sphere + thin equatorial accretion torus +
     // color-keyed pointLight (no OrbitLine; no extra glow shells).
@@ -1319,10 +1329,11 @@ const BodyMesh = memo(function BodyMesh({
   if (body.kind === "probe") {
     const hidePath =
       hideProbePaths || shouldHideOrbitPath(body, hideOrbitPathKinds);
-    if (hideProbeMeshes && hidePath) return null;
+    const hideMesh = shouldHideMesh(body, hideMeshKinds, hideProbeMeshes);
+    if (hideMesh && hidePath) return null;
     return (
       <>
-        {!shouldHideMesh(body, hideMeshKinds, hideProbeMeshes) ? (
+        {!hideMesh ? (
           <ProbeBodyMesh
             body={body}
             focused={focused}
@@ -2379,16 +2390,12 @@ function SceneContent({
     );
     return orbiters;
   }, [sceneBodies, hiddenIds, hideOrbitPathKinds]);
-    const visibleBodies = useMemo(() => {
-    let list = sceneBodies;
-    if (hiddenIds && hiddenIds.size > 0) {
-      list = list.filter((b) => !hiddenIds.has(b.id));
-    }
-    list = list.filter(
-      (b) => !shouldHideMesh(b, hideMeshKinds, hideProbeMeshes),
-    );
-    return list;
-  }, [sceneBodies, hiddenIds, hideMeshKinds, hideProbeMeshes]);
+  const visibleBodies = useMemo(() => {
+    // Do NOT filter by shouldHideMesh — probes must stay mounted so ProbePathLine
+    // can show when only meshes are hidden (paths/meshes independent).
+    if (!hiddenIds || hiddenIds.size === 0) return sceneBodies;
+    return sceneBodies.filter((b) => !hiddenIds.has(b.id));
+  }, [sceneBodies, hiddenIds]);
   // Sat mesh / OrbitLine LOD ranks (system-agnostic; N≤cap keeps all mesh-eligible).
   const visibleSats = useMemo(
     () => visibleBodies.filter((b) => b.kind === "satellite"),
@@ -2479,6 +2486,7 @@ function SceneContent({
             hideProbePaths={hideProbePaths}
             hideProbeMeshes={hideProbeMeshes}
             hideOrbitPathKinds={hideOrbitPathKinds}
+            hideMeshKinds={hideMeshKinds}
             satLod={
               b.kind === "satellite"
                 ? {
