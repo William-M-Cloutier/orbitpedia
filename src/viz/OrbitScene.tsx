@@ -894,7 +894,7 @@ const SatelliteBodyMesh = memo(function SatelliteBodyMesh({
             <boxGeometry args={[r * 1.4, r * 0.7, r * 0.9]} />
           </mesh>
           <mesh frustumCulled material={panelMat}>
-            <boxGeometry args={[r * 4.2, r * 0.08, r * 1.1]} />
+            <boxGeometry args={[r * 2.6, r * 0.08, r * 1.1]} />
           </mesh>
           <mesh frustumCulled position={[0, r * 0.55, 0]} material={antennaMat}>
             <boxGeometry args={[r * 0.35, r * 0.55, r * 0.35]} />
