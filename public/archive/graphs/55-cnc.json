@@ -23,7 +23,7 @@
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T18:56:45.295Z",
+      "fetchedAt": "2026-09-12T18:59:02.707Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — 55 Cnc overview",
@@ -48,8 +48,7 @@
       "facts": {
         "massKg": 1.79956535e+30,
         "radiusMeanKm": 656045.1,
-        "discoveryDate": "2004",
-        "discoveryNotes": "Discovered 2004 (Radial Velocity)."
+        "discoveryDate": "2004"
       },
       "color": "#FF8C42",
       "meta": {
@@ -61,12 +60,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate",
-              "facts.discoveryNotes"
+              "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:56:45.295Z",
+        "fetchedAt": "2026-09-12T18:59:02.707Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -80,8 +78,7 @@
       "facts": {
         "massKg": 5.1700220000000004e+29,
         "radiusMeanKm": 190621.80000000002,
-        "discoveryDate": "2004",
-        "discoveryNotes": "Discovered 2004 (Radial Velocity)."
+        "discoveryDate": "2004"
       },
       "color": "#E84A3C",
       "meta": {
@@ -93,12 +90,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate",
-              "facts.discoveryNotes"
+              "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:56:45.295Z",
+        "fetchedAt": "2026-09-12T18:59:02.707Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -135,7 +131,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:56:45.295Z",
+        "fetchedAt": "2026-09-12T18:59:02.707Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -183,7 +179,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:56:45.295Z",
+        "fetchedAt": "2026-09-12T18:59:02.707Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -231,7 +227,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:56:45.295Z",
+        "fetchedAt": "2026-09-12T18:59:02.707Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -279,7 +275,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:56:45.295Z",
+        "fetchedAt": "2026-09-12T18:59:02.707Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -327,7 +323,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:56:45.295Z",
+        "fetchedAt": "2026-09-12T18:59:02.707Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -374,7 +370,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:56:45.295Z",
+        "fetchedAt": "2026-09-12T18:59:02.707Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -421,7 +417,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:56:45.295Z",
+        "fetchedAt": "2026-09-12T18:59:02.707Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

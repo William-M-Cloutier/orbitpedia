@@ -20,7 +20,7 @@
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T18:56:45.295Z",
+      "fetchedAt": "2026-09-12T18:59:02.707Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — HD 158259 overview",
@@ -45,8 +45,7 @@
       "facts": {
         "massKg": 2.1475476e+30,
         "radiusMeanKm": 841797,
-        "discoveryDate": "2020",
-        "discoveryNotes": "Discovered 2020 (Radial Velocity)."
+        "discoveryDate": "2020"
       },
       "color": "#FDB813",
       "meta": {
@@ -58,12 +57,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate",
-              "facts.discoveryNotes"
+              "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:56:45.295Z",
+        "fetchedAt": "2026-09-12T18:59:02.707Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -94,7 +92,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:56:45.295Z",
+        "fetchedAt": "2026-09-12T18:59:02.707Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -125,7 +123,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:56:45.295Z",
+        "fetchedAt": "2026-09-12T18:59:02.707Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -156,7 +154,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:56:45.295Z",
+        "fetchedAt": "2026-09-12T18:59:02.707Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -187,7 +185,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:56:45.295Z",
+        "fetchedAt": "2026-09-12T18:59:02.707Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -218,7 +216,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:56:45.295Z",
+        "fetchedAt": "2026-09-12T18:59:02.707Z",
         "confidence": "known",
         "unitsVersion": 1
       }

@@ -16,7 +16,7 @@
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T18:56:45.295Z",
+      "fetchedAt": "2026-09-12T18:59:02.707Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — DMPP-4 overview",
@@ -41,8 +41,7 @@
       "facts": {
         "massKg": 2.4855875e+30,
         "radiusMeanKm": 960065.9999999999,
-        "discoveryDate": "2023",
-        "discoveryNotes": "Discovered 2023 (Radial Velocity)."
+        "discoveryDate": "2023"
       },
       "color": "#F8F7FF",
       "meta": {
@@ -54,12 +53,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate",
-              "facts.discoveryNotes"
+              "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:56:45.295Z",
+        "fetchedAt": "2026-09-12T18:59:02.707Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -95,7 +93,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:56:45.295Z",
+        "fetchedAt": "2026-09-12T18:59:02.707Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

@@ -16,7 +16,7 @@
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T18:56:45.295Z",
+      "fetchedAt": "2026-09-12T18:59:02.707Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — GJ 3378 overview",
@@ -41,8 +41,7 @@
       "facts": {
         "massKg": 5.2097914e+29,
         "radiusMeanKm": 191317.50000000003,
-        "discoveryDate": "2026",
-        "discoveryNotes": "Discovered 2026 (Radial Velocity)."
+        "discoveryDate": "2026"
       },
       "color": "#E84A3C",
       "meta": {
@@ -54,12 +53,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate",
-              "facts.discoveryNotes"
+              "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:56:45.295Z",
+        "fetchedAt": "2026-09-12T18:59:02.707Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -95,7 +93,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:56:45.295Z",
+        "fetchedAt": "2026-09-12T18:59:02.707Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

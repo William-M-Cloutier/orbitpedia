@@ -21,7 +21,7 @@
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T18:56:45.295Z",
+      "fetchedAt": "2026-09-12T18:59:02.707Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — GJ 667 C overview",
@@ -45,8 +45,7 @@
       "systemId": "gj-667",
       "facts": {
         "massKg": 6.561951e+29,
-        "discoveryDate": "2012",
-        "discoveryNotes": "Discovered 2012 (Radial Velocity)."
+        "discoveryDate": "2012"
       },
       "color": "#E84A3C",
       "meta": {
@@ -57,12 +56,11 @@
             "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20667%20C",
             "fields": [
               "facts.massKg",
-              "facts.discoveryDate",
-              "facts.discoveryNotes"
+              "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:56:45.295Z",
+        "fetchedAt": "2026-09-12T18:59:02.707Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -83,7 +81,7 @@
             "fields": []
           }
         ],
-        "fetchedAt": "2026-09-12T18:56:45.295Z",
+        "fetchedAt": "2026-09-12T18:59:02.707Z",
         "confidence": "placeholder",
         "unitsVersion": 1
       }
@@ -104,7 +102,7 @@
             "fields": []
           }
         ],
-        "fetchedAt": "2026-09-12T18:56:45.295Z",
+        "fetchedAt": "2026-09-12T18:59:02.707Z",
         "confidence": "placeholder",
         "unitsVersion": 1
       }
@@ -139,7 +137,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:56:45.295Z",
+        "fetchedAt": "2026-09-12T18:59:02.707Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -184,7 +182,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:56:45.295Z",
+        "fetchedAt": "2026-09-12T18:59:02.707Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -229,7 +227,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:56:45.295Z",
+        "fetchedAt": "2026-09-12T18:59:02.707Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -274,7 +272,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:56:45.295Z",
+        "fetchedAt": "2026-09-12T18:59:02.707Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

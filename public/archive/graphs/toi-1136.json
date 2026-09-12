@@ -20,7 +20,7 @@
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T18:56:45.295Z",
+      "fetchedAt": "2026-09-12T18:59:02.707Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — TOI-1136 overview",
@@ -44,8 +44,7 @@
       "facts": {
         "massKg": 2.03221634e+30,
         "radiusMeanKm": 673437.6,
-        "discoveryDate": "2022",
-        "discoveryNotes": "Discovered 2022 (Transit)."
+        "discoveryDate": "2022"
       },
       "color": "#FDB813",
       "meta": {
@@ -57,12 +56,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate",
-              "facts.discoveryNotes"
+              "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:56:45.295Z",
+        "fetchedAt": "2026-09-12T18:59:02.707Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -99,7 +97,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:56:45.295Z",
+        "fetchedAt": "2026-09-12T18:59:02.707Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -147,7 +145,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:56:45.295Z",
+        "fetchedAt": "2026-09-12T18:59:02.707Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -195,7 +193,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:56:45.295Z",
+        "fetchedAt": "2026-09-12T18:59:02.707Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -243,7 +241,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:56:45.295Z",
+        "fetchedAt": "2026-09-12T18:59:02.707Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -291,7 +289,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:56:45.295Z",
+        "fetchedAt": "2026-09-12T18:59:02.707Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -339,7 +337,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:56:45.295Z",
+        "fetchedAt": "2026-09-12T18:59:02.707Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

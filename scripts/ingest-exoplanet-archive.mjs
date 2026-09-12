@@ -410,12 +410,11 @@ function buildStarBody({
   const stMass = num(row?.st_mass);
   const stRad = num(row?.st_rad);
   const stTeff = num(row?.st_teff);
-  const starNote = discoveryNote(discYear, discMethod || row?.discoverymethod);
+  // Do not copy NEA planet disc_year/method onto stars — misleading on kind:star.
   const starFacts = omitEmpty({
     massKg: stMass != null && stMass > 0 ? stMass * M_SUN_KG : undefined,
     radiusMeanKm: stRad != null && stRad > 0 ? stRad * R_SUN_KM : undefined,
     discoveryDate: discYear,
-    discoveryNotes: starNote,
   });
   const hasReal =
     starFacts.massKg != null ||
@@ -442,7 +441,6 @@ function buildStarBody({
             ...(starFacts.massKg != null ? ["facts.massKg"] : []),
             ...(starFacts.radiusMeanKm != null ? ["facts.radiusMeanKm"] : []),
             ...(discYear ? ["facts.discoveryDate"] : []),
-            ...(starNote ? ["facts.discoveryNotes"] : []),
           ],
         },
       ],

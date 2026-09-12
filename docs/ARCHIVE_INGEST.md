@@ -241,7 +241,7 @@ node scripts/ingest-exoplanet-archive.mjs --limit 100 --min-planets 1 --verify
 
 ## Body discoveryNotes (archive)
 
-Planets and host stars set `facts.discoveryNotes` from NEA when available:
+Planets set `facts.discoveryNotes` from NEA when available (omit on `kind:star` — planet discovery year/method is misleading on the host):
 
 - `Discovered {disc_year} ({discoverymethod}).` — or year-only / method-only if one is missing.
 - Omit when both absent. No wiki in default ingest (optional later flag).

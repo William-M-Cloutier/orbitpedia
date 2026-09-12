@@ -17,7 +17,7 @@
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T18:56:45.295Z",
+      "fetchedAt": "2026-09-12T18:59:02.707Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — HAT-P-1 overview",
@@ -42,8 +42,7 @@
       "facts": {
         "massKg": 2.28872897e+30,
         "radiusMeanKm": 816751.7999999999,
-        "discoveryDate": "2006",
-        "discoveryNotes": "Discovered 2006 (Transit)."
+        "discoveryDate": "2006"
       },
       "color": "#FDB813",
       "meta": {
@@ -55,12 +54,11 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate",
-              "facts.discoveryNotes"
+              "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:56:45.295Z",
+        "fetchedAt": "2026-09-12T18:59:02.707Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -81,7 +79,7 @@
             "fields": []
           }
         ],
-        "fetchedAt": "2026-09-12T18:56:45.295Z",
+        "fetchedAt": "2026-09-12T18:59:02.707Z",
         "confidence": "placeholder",
         "unitsVersion": 1
       }
@@ -118,7 +116,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T18:56:45.295Z",
+        "fetchedAt": "2026-09-12T18:59:02.707Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
