@@ -76,16 +76,25 @@ function buildChildrenMap(bodies: Body[]): {
   return { roots, children };
 }
 
-/** Rows for one kind section: section roots + nested children (moons). */
+/** Rows for one kind section: section roots + nested children (moons / companion stars). */
 function buildGroupRows(
   bodies: Body[],
   groupKind: BodyKind,
   collapsed: ReadonlySet<string>,
 ): RailRow[] {
   const { children } = buildChildrenMap(bodies);
+  const byId = new Map(bodies.map((b) => [b.id, b]));
   const index = new Map(bodies.map((b, i) => [b.id, i]));
+  // Same-kind children (e.g. companion star under primary) nest under parent — not also as roots.
   const sectionRoots = bodies
-    .filter((b) => b.kind === groupKind)
+    .filter((b) => {
+      if (b.kind !== groupKind) return false;
+      if (b.parentId) {
+        const parent = byId.get(b.parentId);
+        if (parent && parent.kind === groupKind) return false;
+      }
+      return true;
+    })
     .sort((a, b) => (index.get(a.id) ?? 0) - (index.get(b.id) ?? 0));
 
   const rows: RailRow[] = [];
