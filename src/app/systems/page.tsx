@@ -15,13 +15,12 @@ import {
   getBodiesForSystem,
   getHomeSystem,
   getSystem,
-  isFixtureSystemId,
   isSkyMapExcludedSystemId,
-  listSystems,
 } from "@/data/catalog";
 import {
   getSystemGraphAsync,
   listSystemsAsync,
+  listSystemsWithSmokeSync,
   type ArchiveSystemSummary,
 } from "@/data/archiveCatalog";
 import { hasUsableOrbit, type System } from "@/data/schema";
@@ -479,7 +478,14 @@ function buildNeighborEdges(
 
 type Cam = { x: number; y: number; zoom: number };
 
-const CAM0: Cam = { x: SOL_GAL.x, y: SOL_GAL.y, zoom: 1 };
+/**
+ * Default / Reset zoom frames Sol's schematic neighborhood (SCHEMATIC_R≈280
+ * plus separation slack) so smoke archive hosts are on-screen — not a tight
+ * Sol-only crop that makes ~97 systems look "missing". Full-disk zoom-out
+ * stays cheap via ZOOM_MIN.
+ */
+const NEIGHBORHOOD_ZOOM = 0.42;
+const CAM0: Cam = { x: SOL_GAL.x, y: SOL_GAL.y, zoom: NEIGHBORHOOD_ZOOM };
 
 function viewBoxFor(cam: Cam): string {
   const w = WORLD_W / cam.zoom;
@@ -495,7 +501,9 @@ function SystemMapView() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [nodes, setNodes] = useState<SystemNode[]>(() =>
-    buildNodesFromList(listSystems().filter((s) => !isSkyMapExcludedSystemId(s.id))),
+    buildNodesFromList(
+      listSystemsWithSmokeSync().filter((s) => !isSkyMapExcludedSystemId(s.id)),
+    ),
   );
   const [cam, setCam] = useState<Cam>(CAM0);
   const [favoriteIds, setFavoriteIds] = useState<Set<string>>(
@@ -595,7 +603,7 @@ function SystemMapView() {
           buildNodesFromList(list.filter((s) => !isSkyMapExcludedSystemId(s.id))),
         );
       } catch {
-        /* curated seed already shown */
+        /* sync smoke seed already shown */
       }
     })();
     return () => {
@@ -941,7 +949,9 @@ function SystemMapView() {
 
   const resetView = () => {
     const n = homeLaid;
-    const next = n ? { x: n.x, y: n.y, zoom: 1 } : CAM0;
+    const next = n
+      ? { x: n.x, y: n.y, zoom: NEIGHBORHOOD_ZOOM }
+      : CAM0;
     camRef.current = next;
     applyViewBox(next);
     setCam(next);

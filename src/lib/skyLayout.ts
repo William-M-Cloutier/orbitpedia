@@ -146,9 +146,110 @@ export function placeSystemSky(
 export const MIN_VISUAL_GAP = 56;
 
 /**
+ * Above this count, pairwise O(n²) separation is skipped — spatial-hash only.
+ * Guards against bulk dumps (thousands) freezing the Systems map.
+ */
+export const SEPARATE_N_MAX = 80;
+
+type SepPt = { x: number; y: number; home?: boolean; pinned?: boolean };
+
+function isSepPinned(p: SepPt): boolean {
+  return p.pinned === true || p.home === true;
+}
+
+function sepPushPair(
+  a: SepPt,
+  b: SepPt,
+  minGap: number,
+): boolean {
+  const aPin = isSepPinned(a);
+  const bPin = isSepPinned(b);
+  if (aPin && bPin) return false;
+  let dx = b.x - a.x;
+  let dy = b.y - a.y;
+  let dist = Math.hypot(dx, dy);
+  if (dist >= minGap) return false;
+  let ux: number;
+  let uy: number;
+  if (dist < 1e-9) {
+    ux = 0;
+    uy = 1;
+    dist = 0;
+  } else {
+    ux = dx / dist;
+    uy = dy / dist;
+  }
+  if (aPin) {
+    b.x = a.x + ux * minGap;
+    b.y = a.y + uy * minGap;
+  } else if (bPin) {
+    a.x = b.x - ux * minGap;
+    a.y = b.y - uy * minGap;
+  } else {
+    const push = (minGap - dist) / 2;
+    a.x -= ux * push;
+    a.y -= uy * push;
+    b.x += ux * push;
+    b.y += uy * push;
+  }
+  return true;
+}
+
+/** Spatial-hash separation — O(n · k) neighbor checks; safe for thousands. */
+function separateSkyNodesGrid(
+  pts: SepPt[],
+  minGap: number,
+  pinX: number,
+  pinY: number,
+  iters: number,
+): void {
+  const pin = () => {
+    for (const p of pts) {
+      if (isSepPinned(p)) {
+        p.x = pinX;
+        p.y = pinY;
+      }
+    }
+  };
+  pin();
+  const cell = Math.max(minGap, 1);
+  const cellKey = (x: number, y: number) =>
+    `${Math.floor(x / cell)}:${Math.floor(y / cell)}`;
+  for (let iter = 0; iter < iters; iter++) {
+    let moved = false;
+    const bins = new Map<string, number[]>();
+    for (let i = 0; i < pts.length; i++) {
+      const p = pts[i]!;
+      const k = cellKey(p.x, p.y);
+      const list = bins.get(k);
+      if (list) list.push(i);
+      else bins.set(k, [i]);
+    }
+    for (let i = 0; i < pts.length; i++) {
+      const a = pts[i]!;
+      const cx = Math.floor(a.x / cell);
+      const cy = Math.floor(a.y / cell);
+      for (let dx = -1; dx <= 1; dx++) {
+        for (let dy = -1; dy <= 1; dy++) {
+          const idxs = bins.get(`${cx + dx}:${cy + dy}`);
+          if (!idxs) continue;
+          for (const j of idxs) {
+            if (j <= i) continue;
+            if (sepPushPair(a, pts[j]!, minGap)) moved = true;
+          }
+        }
+      }
+    }
+    pin();
+    if (!moved) break;
+  }
+}
+
+/**
  * Push overlapping sky nodes apart without moving pinned hosts (Sol/home).
  * Only acts when distance < minGap — distant systems stay at true sky positions.
  * Push is along the existing offset; coincident pairs use +Y.
+ * N > SEPARATE_N_MAX → spatial-hash / grid only (never O(n²) on thousands).
  */
 export function separateSkyNodes(
   pts: Array<{ x: number; y: number; home?: boolean; pinned?: boolean }>,
@@ -157,11 +258,14 @@ export function separateSkyNodes(
   pinY: number = SOL_GAL.y,
   iters = 64,
 ): void {
-  const isPinned = (p: { home?: boolean; pinned?: boolean }) =>
-    p.pinned === true || p.home === true;
+  if (pts.length === 0) return;
+  if (pts.length > SEPARATE_N_MAX) {
+    separateSkyNodesGrid(pts, minGap, pinX, pinY, iters);
+    return;
+  }
   const pin = () => {
     for (const p of pts) {
-      if (isPinned(p)) {
+      if (isSepPinned(p)) {
         p.x = pinX;
         p.y = pinY;
       }
@@ -172,40 +276,7 @@ export function separateSkyNodes(
     let moved = false;
     for (let i = 0; i < pts.length; i++) {
       for (let j = i + 1; j < pts.length; j++) {
-        const a = pts[i]!;
-        const b = pts[j]!;
-        const aPin = isPinned(a);
-        const bPin = isPinned(b);
-        if (aPin && bPin) continue;
-        let dx = b.x - a.x;
-        let dy = b.y - a.y;
-        let dist = Math.hypot(dx, dy);
-        if (dist >= minGap) continue;
-        // Coincident / numerically zero → push along +Y
-        let ux: number;
-        let uy: number;
-        if (dist < 1e-9) {
-          ux = 0;
-          uy = 1;
-          dist = 0;
-        } else {
-          ux = dx / dist;
-          uy = dy / dist;
-        }
-        if (aPin) {
-          b.x = a.x + ux * minGap;
-          b.y = a.y + uy * minGap;
-        } else if (bPin) {
-          a.x = b.x - ux * minGap;
-          a.y = b.y - uy * minGap;
-        } else {
-          const push = (minGap - dist) / 2;
-          a.x -= ux * push;
-          a.y -= uy * push;
-          b.x += ux * push;
-          b.y += uy * push;
-        }
-        moved = true;
+        if (sepPushPair(pts[i]!, pts[j]!, minGap)) moved = true;
       }
     }
     pin();
