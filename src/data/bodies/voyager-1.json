@@ -1,0 +1,59 @@
+{
+  "id": "voyager-1",
+  "name": "Voyager 1",
+  "kind": "probe",
+  "systemId": "solar",
+  "aliases": [
+    "V1",
+    "Voyager I"
+  ],
+  "facts": {
+    "discoveryNotes": "NASA Voyager Interstellar Mission spacecraft. Entered interstellar space in 2012. Heliocentric escape trajectory \u2014 Kepler orbit omitted (hyperbolic; use Horizons for ephemeris).",
+    "discoveryDate": "1977"
+  },
+  "color": "#C0C0C0",
+  "horizonId": "-31",
+  "mission": {
+    "launchDate": "1977-09-05",
+    "status": "active",
+    "targets": [
+      "Jupiter",
+      "Saturn",
+      "Titan",
+      "Interstellar space"
+    ]
+  },
+  "meta": {
+    "source": "NASA Science mission pages + JPL Horizons spacecraft IDs",
+    "sources": [
+      {
+        "name": "NASA Voyager fact sheet",
+        "url": "https://science.nasa.gov/mission/voyager/fact-sheet/",
+        "fields": [
+          "mission.launchDate",
+          "mission.status",
+          "mission.targets",
+          "facts.discoveryNotes"
+        ]
+      },
+      {
+        "name": "JPL Horizons web app (Voyager 1, -31)",
+        "url": "https://ssd.jpl.nasa.gov/horizons/app.html",
+        "fields": [
+          "horizonId"
+        ]
+      },
+      {
+        "name": "NASA Voyager mission",
+        "url": "https://science.nasa.gov/mission/voyager/",
+        "fields": [
+          "mission.status",
+          "facts.discoveryNotes"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-12T22:36:56.000Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  }
+}

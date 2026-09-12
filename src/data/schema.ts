@@ -14,6 +14,8 @@ export const BodyKindSchema = z.enum([
   "satellite",
   /** Central compact host (omit orbit like a primary star). */
   "black_hole",
+  /** Spacecraft / probe (omit Kepler when hyperbolic escape; use horizonId). */
+  "probe",
 ]);
 
 /** Primary gravitational host kinds (multi-star / BH systems). */
@@ -131,6 +133,19 @@ export const BodyMetaSchema = z
   });
 
 
+/**
+ * Optional spacecraft mission block (probes). Additive — omit for natural bodies.
+ * Never invent launch dates or targets.
+ */
+export const MissionSchema = z.object({
+  /** ISO date (YYYY-MM-DD) or full ISO timestamp when known. */
+  launchDate: z.string().min(1),
+  /** Short status label, e.g. active / complete / hibernating. */
+  status: z.string().min(1),
+  /** Flyby / science targets (human names). */
+  targets: z.array(z.string().min(1)).optional(),
+});
+
 export const AppearanceSchema = z
   .object({
     /** Registry key for a future texture pack — never a URL, path, or bytes. */
@@ -170,6 +185,8 @@ export const BodySchema = z
     satellite: SatelliteBlockSchema.optional(),
     /** Optional render hint — textureId is a registry key only (no URLs/bytes). */
     appearance: AppearanceSchema.optional(),
+    /** Spacecraft mission facts (kind probe). */
+    mission: MissionSchema.optional(),
     meta: BodyMetaSchema,
   })
   .superRefine((body, ctx) => {
@@ -350,6 +367,7 @@ export const CatalogSchema = z
   });
 
 export type BodyKind = z.infer<typeof BodyKindSchema>;
+export type Mission = z.infer<typeof MissionSchema>;
 export type OrbitFrame = z.infer<typeof OrbitFrameSchema>;
 export type Confidence = z.infer<typeof ConfidenceSchema>;
 export type Orbit = z.infer<typeof OrbitSchema>;

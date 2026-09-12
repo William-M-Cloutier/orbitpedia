@@ -1,0 +1,59 @@
+{
+  "id": "new-horizons",
+  "name": "New Horizons",
+  "kind": "probe",
+  "systemId": "solar",
+  "aliases": [
+    "NH",
+    "NewHorizons"
+  ],
+  "facts": {
+    "discoveryNotes": "NASA New Frontiers Pluto/Kuiper Belt flyby spacecraft. Pluto\u2013Charon flyby 2015-07-14; Arrokoth flyby 2019-01-01. Heliocentric escape trajectory \u2014 Kepler orbit omitted (hyperbolic; use Horizons for ephemeris).",
+    "discoveryDate": "2006"
+  },
+  "color": "#E8D5A3",
+  "horizonId": "-98",
+  "mission": {
+    "launchDate": "2006-01-19",
+    "status": "active",
+    "targets": [
+      "Jupiter",
+      "Pluto",
+      "Charon",
+      "Arrokoth"
+    ]
+  },
+  "meta": {
+    "source": "NASA Science mission pages + JPL Horizons spacecraft IDs",
+    "sources": [
+      {
+        "name": "NASA New Horizons mission",
+        "url": "https://science.nasa.gov/mission/new-horizons/",
+        "fields": [
+          "mission.launchDate",
+          "mission.status",
+          "mission.targets",
+          "facts.discoveryNotes"
+        ]
+      },
+      {
+        "name": "JPL Horizons web app (New Horizons, -98)",
+        "url": "https://ssd.jpl.nasa.gov/horizons/app.html",
+        "fields": [
+          "horizonId"
+        ]
+      },
+      {
+        "name": "JHU APL New Horizons",
+        "url": "https://www.jhuapl.edu/destinations/missions/new-horizons",
+        "fields": [
+          "mission.launchDate",
+          "mission.targets"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-12T22:36:56.000Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  }
+}
