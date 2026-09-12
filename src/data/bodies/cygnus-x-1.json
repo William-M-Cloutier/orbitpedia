@@ -13,7 +13,7 @@
     "approximateFields": [
       "radiusMeanKm"
     ],
-    "discoveryNotes": "Stellar-mass black hole with a massive blue companion \u2014 open from the Systems map. Companion orbit not included yet. Listed size uses the Schwarzschild radius from the cited mass as a horizon-scale size proxy.",
+    "discoveryNotes": "Stellar-mass black hole with a massive blue companion star. Listed size uses the Schwarzschild radius from the cited mass as a horizon-scale size proxy.",
     "discoveryDate": "1971"
   },
   "color": "#2d1b4e",
