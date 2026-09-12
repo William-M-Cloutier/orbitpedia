@@ -40,6 +40,7 @@ import body_mercury from "./bodies/mercury.json";
 import body_miranda from "./bodies/miranda.json";
 import body_moon from "./bodies/moon.json";
 import body_neptune from "./bodies/neptune.json";
+import body_new_horizons from "./bodies/new-horizons.json";
 import body_noaa_20 from "./bodies/noaa-20.json";
 import body_oberon from "./bodies/oberon.json";
 import body_pallas from "./bodies/pallas.json";
@@ -75,6 +76,8 @@ import body_umbriel from "./bodies/umbriel.json";
 import body_uranus from "./bodies/uranus.json";
 import body_venus from "./bodies/venus.json";
 import body_vesta from "./bodies/vesta.json";
+import body_voyager_1 from "./bodies/voyager-1.json";
+import body_voyager_2 from "./bodies/voyager-2.json";
 
 export const loadedSystems = [system_cygnus_x_1, system_earth_sats, system_kepler_11, system_sagittarius_a, system_solar, system_sparse_test, system_trappist_1];
-export const loadedBodies = [body_ariel, body_callisto, body_ceres, body_charon, body_css_tianhe, body_cygnus_x_1, body_deimos, body_dione, body_earth_sats_earth, body_earth, body_enceladus, body_europa, body_ganymede, body_hst, body_hygiea, body_iapetus, body_io, body_iss, body_jupiter, body_kepler_11_b, body_kepler_11_c, body_kepler_11_d, body_kepler_11_e, body_kepler_11_f, body_kepler_11_g, body_kepler_11, body_mars, body_mercury, body_miranda, body_moon, body_neptune, body_noaa_20, body_oberon, body_pallas, body_phobos, body_pluto, body_rhea, body_sagittarius_a, body_saturn, body_sparse_test_b, body_sparse_test_c, body_sparse_test_complete, body_sparse_test_d, body_sparse_test_e, body_sparse_test_f, body_sparse_test_g, body_sparse_test_moon, body_sparse_test, body_sun, body_terra, body_tethys, body_titan, body_titania, body_trappist_1_b, body_trappist_1_c, body_trappist_1_d, body_trappist_1_e, body_trappist_1_f, body_trappist_1_g, body_trappist_1_h, body_trappist_1, body_triton, body_umbriel, body_uranus, body_venus, body_vesta];
+export const loadedBodies = [body_ariel, body_callisto, body_ceres, body_charon, body_css_tianhe, body_cygnus_x_1, body_deimos, body_dione, body_earth_sats_earth, body_earth, body_enceladus, body_europa, body_ganymede, body_hst, body_hygiea, body_iapetus, body_io, body_iss, body_jupiter, body_kepler_11_b, body_kepler_11_c, body_kepler_11_d, body_kepler_11_e, body_kepler_11_f, body_kepler_11_g, body_kepler_11, body_mars, body_mercury, body_miranda, body_moon, body_neptune, body_new_horizons, body_noaa_20, body_oberon, body_pallas, body_phobos, body_pluto, body_rhea, body_sagittarius_a, body_saturn, body_sparse_test_b, body_sparse_test_c, body_sparse_test_complete, body_sparse_test_d, body_sparse_test_e, body_sparse_test_f, body_sparse_test_g, body_sparse_test_moon, body_sparse_test, body_sun, body_terra, body_tethys, body_titan, body_titania, body_trappist_1_b, body_trappist_1_c, body_trappist_1_d, body_trappist_1_e, body_trappist_1_f, body_trappist_1_g, body_trappist_1_h, body_trappist_1, body_triton, body_umbriel, body_uranus, body_venus, body_vesta, body_voyager_1, body_voyager_2];

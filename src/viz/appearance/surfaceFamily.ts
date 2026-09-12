@@ -22,6 +22,7 @@ export function inferSurfaceFamily(
 ): SurfaceFamily {
   if (body.kind === "star") return "star";
   if (body.kind === "black_hole") return "black_hole";
+  if (body.kind === "probe") return "rocky";
 
   const r = body.facts.radiusMeanKm;
   const density = body.facts.densityGcm3;

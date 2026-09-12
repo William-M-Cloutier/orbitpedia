@@ -56,6 +56,7 @@ import {
   visualBinaryDisplaySep,
   visualBinaryKidsClearanceSep,
   visualBinaryHelioPlanetClearanceSep,
+  probeMarkerDisplaySep,
   VISUAL_BINARY_CLEARANCE_MARGIN,
   COMPANION_OUT_OF_PLANE_FRAC,
 } from "./schematicFit";
@@ -441,11 +442,50 @@ function visualBinaryCompanionOffset(
   return eclipticToScene(x, y, z);
 }
 
+
+/**
+ * Marker-only Explore placement for probes without usable Kepler.
+ *
+ * **NOT an ephemeris / NOT a trajectory.** Placeholders until `path.waypoints`
+ * land on the schema (Arch-owned). Do NOT invent Horizons samples, fake
+ * Kepler elements, or OrbitLine ellipses here.
+ *
+ * Layout: shared ring outside outermost primary-frame display apo × helioScale
+ * (+ mesh + margin) via {@link probeMarkerDisplaySep}; even angles among
+ * probes in the face-on ecliptic plane, mapped with eclipticToScene(x,y,0).
+ * Stable sort by id. Never stack on the Sun.
+ */
+function probeMarkerOffset(
+  body: Body,
+  sizeMode: SizeMode,
+  systemBodies: readonly Body[],
+  helioScale: number = 1,
+): [number, number, number] {
+  if (body.kind !== "probe" || hasUsableOrbit(body)) {
+    return [0, 0, 0];
+  }
+  const probes = systemBodies
+    .filter((b) => b.kind === "probe" && !hasUsableOrbit(b))
+    .slice()
+    .sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
+  const idx = probes.findIndex((p) => p.id === body.id);
+  if (idx < 0) return [0, 0, 0];
+  const n = probes.length;
+  const sep = probeMarkerDisplaySep(sizeMode, systemBodies, helioScale);
+  if (!(sep > 0)) return [0, 0, 0];
+  const ang = (2 * Math.PI * idx) / n;
+  const x = sep * Math.cos(ang);
+  const y = sep * Math.sin(ang);
+  return eclipticToScene(x, y, 0);
+}
+
 /**
  * Explore mesh / OrbitLine visibility.
  * - Primary/root star always meshes (at origin).
  * - Companion stars (kind===star && parentId) always mesh — Kepler path when
  *   hasUsableOrbit; otherwise tight visual-binary offset (no OrbitLine).
+ * - Probes (kind===probe) always mesh — marker-only when !hasUsableOrbit
+ *   (no invented path.waypoints / OrbitLine this slice).
  * - Other bodies require hasUsableOrbit.
  * - Parent-frame children: parent must be scene-visible (primary, Kepler body,
  *   OR orbit-unknown companion now visible via visual binary). Kids of
@@ -470,6 +510,10 @@ function isExploreSceneBody(
   // Mesh companion stars even without Kepler (visual-binary display offset).
   // Black holes are not visual-binary companions.
   if (body.kind === "star" && body.parentId) {
+    return true;
+  }
+  // Mesh probes even without Kepler (marker-only placement; no OrbitLine).
+  if (body.kind === "probe") {
     return true;
   }
   if (!hasUsableOrbit(body)) return false;
@@ -523,8 +567,8 @@ function bodyPosition(
   fitScale: number = 1,
   seen: Set<string> = new Set(),
 ): [number, number, number] {
-  // No usable Kepler: orbit-unknown companion stars sit on a viz-only
-  // visual-binary offset; everything else stays at origin (no invented orbit).
+  // No usable Kepler: orbit-unknown companion stars → visual-binary offset;
+  // probes → marker-only ring (NOT ephemeris); else origin (no invented orbit).
   if (!hasUsableOrbit(body)) {
     if (body.kind === "star" && body.parentId && systemBodies) {
       return visualBinaryCompanionOffset(
@@ -534,6 +578,9 @@ function bodyPosition(
         fitScale,
         helioScale,
       );
+    }
+    if (body.kind === "probe" && systemBodies) {
+      return probeMarkerOffset(body, sizeMode, systemBodies, helioScale);
     }
     return [0, 0, 0];
   }
@@ -1028,6 +1075,24 @@ const BodyMesh = memo(function BodyMesh({
     );
   }
 
+  // Probe: distinct octahedron marker (not a planet sphere). Same click /
+  // contextMenu deselect contract. No OrbitLine without hasUsableOrbit.
+  if (body.kind === "probe") {
+    return (
+      <group ref={group} name={body.id}>
+        <mesh
+          ref={spinMesh}
+          onClick={handleClick}
+          onContextMenu={handleContextMenu}
+          material={mat}
+          scale={focused ? 1.35 : 1}
+        >
+          <octahedronGeometry args={[r, 0]} />
+        </mesh>
+      </group>
+    );
+  }
+
   return (
     <group ref={group} name={body.id}>
       <mesh
@@ -1261,6 +1326,8 @@ function IdleCameraBootstrap({ focusId }: { focusId?: string | null }) {
       extent = Math.max(
         systemSceneExtent(systemBodies, helioScale),
         maxCompanionDisplaySep(systemBodies, sizeMode) * fitScale,
+        // Marker-only probe ring (NOT ephemeris) — keep idle frame outside placeholders.
+        probeMarkerDisplaySep(sizeMode, systemBodies, helioScale),
       );
       for (const b of systemBodies) {
         if (b.kind !== "star" || !b.parentId || hasUsableOrbit(b)) continue;

@@ -112,6 +112,14 @@ const SCHEMATIC_MOON_MAX_OF_PARENT = 0.45;
 const SCHEMATIC_MOON_MIN = 0.012;
 
 /**
+ * Prop/True probe mesh floor — tiny readable constant (~¼ schematic asteroid).
+ * Probes omit radiusMeanKm; display-only, system-agnostic, no per-probe magic.
+ * Not a catalog radius.
+ */
+const PROBE_PROP_TRUE_MESH = 0.0125;
+
+
+/**
  * Prop/True display mesh for companion stars with no radiusMeanKm.
  * Fraction of primary sunMesh — viz fallback only, never written as catalog R.
  */
@@ -128,6 +136,7 @@ function schematicRadiusNonMoon(body: Body): number {
     asteroid: 0.05,
     /** Procedural sat marker — not a sphere radius from catalog. */
     satellite: 0.018,
+    probe: 0.04,
   };
   return tiers[body.kind as Exclude<BodyKind, "moon">] ?? 0.05;
 }
@@ -370,6 +379,10 @@ function proportionalRadius(body: Body, bodies: readonly Body[]): number {
     // Primary BH host: same clearance sunMesh (not a visual-binary companion path).
     return sunMesh;
   }
+  // Probes: readable floor (no catalog R). Cap below sun so modes stay honest.
+  if (body.kind === "probe") {
+    return Math.min(sunMesh * 0.08, PROBE_PROP_TRUE_MESH);
+  }
   const km = body.facts.radiusMeanKm ?? 1;
   // No absolute 0.008 floor — it exceeded sunMesh on TRAPPIST and made
   // planets bigger than the star.
@@ -397,6 +410,10 @@ function trueRadius(body: Body, bodies: readonly Body[]): number {
   if (body.kind === "black_hole") {
     // Primary BH host: same clearance sunMesh (not a visual-binary companion path).
     return sunMesh;
+  }
+  // Probes: same readable floor as Prop (no catalog R / no per-probe magic).
+  if (body.kind === "probe") {
+    return Math.min(sunMesh * 0.08, PROBE_PROP_TRUE_MESH);
   }
   const km = body.facts.radiusMeanKm ?? 1;
   return Math.max(1e-6, km * scale);

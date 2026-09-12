@@ -227,6 +227,7 @@ function compareSearchBodies(a: Body, b: Body, q: string): number {
     moon: 4,
     asteroid: 5,
     satellite: 6,
+    probe: 7,
   };
   const ra = searchMatchRank(a.name, a.id, q, a.aliases);
   const rb = searchMatchRank(b.name, b.id, q, b.aliases);
@@ -341,6 +342,7 @@ export const KIND_LABEL: Record<BodyKind, string> = {
   moon: "Moon",
   black_hole: "Black hole",
   satellite: "Satellite",
+  probe: "Probe",
 };
 
 /** Kind order for Search / typeahead grouping. */
@@ -352,6 +354,7 @@ export const KIND_ORDER: BodyKind[] = [
   "moon",
   "asteroid",
   "satellite",
+  "probe",
 ];
 
 /** Earth-centered satellites Explore system — exclude from Sky star map. */

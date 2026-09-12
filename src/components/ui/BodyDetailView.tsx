@@ -5,6 +5,7 @@ import { exploreHref, getHomeSystem, getSystem, KIND_LABEL } from "@/data/catalo
 import { bodyProvenance, type Body } from "@/data/schema";
 import { keyFactRows } from "@/lib/factsDisplay";
 import { satelliteFactRows } from "@/lib/satelliteDisplay";
+import { missionFactRows } from "@/lib/missionDisplay";
 import { overviewBlurb } from "@/lib/interestBlurb";
 import {
   VISUAL_BINARY_NOTE,
@@ -25,6 +26,7 @@ export function BodyDetailView({ body }: { body: Body }) {
   const sepLabel = projectedSepDisplay(body);
   const visualBinary = isVisualBinaryCompanion(body);
   const satRows = satelliteFactRows(body);
+  const missionRows = missionFactRows(body);
 
   return (
     <AppShell rail={<BodyRail activeId={body.id} systemId={body.systemId} />}>
@@ -99,6 +101,25 @@ export function BodyDetailView({ body }: { body: Body }) {
             </h2>
             <dl className="grid gap-3 sm:grid-cols-2">
               {satRows.map((r) => (
+                <div
+                  key={r.label}
+                  className="rounded-lg border border-white/10 bg-white/[0.02] px-4 py-3"
+                >
+                  <dt className="text-xs text-zinc-500">{r.label}</dt>
+                  <dd className="mt-0.5 text-zinc-100">{r.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </section>
+        ) : null}
+
+        {missionRows.length > 0 ? (
+          <section className="rounded-xl border border-white/10 bg-white/[0.03] p-5">
+            <h2 className="mb-3 text-sm font-medium uppercase tracking-wider text-zinc-500">
+              Mission
+            </h2>
+            <dl className="grid gap-3 sm:grid-cols-2">
+              {missionRows.map((r) => (
                 <div
                   key={r.label}
                   className="rounded-lg border border-white/10 bg-white/[0.02] px-4 py-3"

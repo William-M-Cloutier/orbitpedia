@@ -36,17 +36,20 @@
     "ceres",
     "vesta",
     "pallas",
-    "hygiea"
+    "hygiea",
+    "voyager-1",
+    "voyager-2",
+    "new-horizons"
   ],
-  "blurb": "Our home planetary system — a G-type star with eight planets, major moons, and a main-belt asteroid population.",
+  "blurb": "Our home planetary system \u2014 a G-type star with eight planets, major moons, and a main-belt asteroid population.",
   "highlights": [
     "Eight planets from Mercury to Neptune (plus dwarf planet Pluto in the catalog)",
-    "Earth–Moon and other major moons use parent-frame orbits",
-    "Distances span ~0.4–30+ au for the planets"
+    "Earth\u2013Moon and other major moons use parent-frame orbits",
+    "Distances span ~0.4\u201330+ au for the planets"
   ],
   "planetCount": 8,
   "hostSpectralType": "G2V",
-  "compactnessNote": "Planet orbits span from inside Mercury's path out past Neptune — vastly larger than TRAPPIST-1's packed system.",
+  "compactnessNote": "Planet orbits span from inside Mercury's path out past Neptune \u2014 vastly larger than TRAPPIST-1's packed system.",
   "meta": {
     "confidence": "known",
     "fetchedAt": "2026-09-11T18:38:13.479Z",

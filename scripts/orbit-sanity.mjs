@@ -427,6 +427,11 @@ function runSystemSanity(system) {
       ok(`${b.id}: companion star mesh-only (no usable orbit / OrbitLine)`);
       continue;
     }
+    // Probes: hyperbolic / marker-only this slice — no invented Kepler / waypoints.
+    if (b.kind === "probe") {
+      ok(`${b.id}: probe marker-only (no usable orbit / OrbitLine; not ephemeris)`);
+      continue;
+    }
     fail(`${b.id}: non-central body missing usable orbit (elements + frame)`);
     continue;
   }
@@ -1295,6 +1300,7 @@ if (!Number.isFinite(c)) {
   function exploreVisible(body, primaryId, byId, seen = new Set()) {
     if (body.id === primaryId || (body.kind === "star" && !body.parentId)) return true;
     if (body.kind === "star" && body.parentId) return true;
+    if (body.kind === "probe") return true;
     if (!hasUsableOrbit(body)) return false;
     if (body.orbit?.frame === "parent" && body.parentId) {
       if (seen.has(body.id)) return false;
@@ -1930,6 +1936,82 @@ if (!Number.isFinite(c)) {
     }
   }
 }
+
+
+
+// Probe markers (marker-only Explore; no invented path.waypoints).
+{
+  const sceneSrc = fs.readFileSync(path.join(ROOT, "src/viz/OrbitScene.tsx"), "utf8");
+  const fitSrc = fs.readFileSync(path.join(ROOT, "src/viz/schematicFit.ts"), "utf8");
+  const sizeSrc = fs.readFileSync(path.join(ROOT, "src/viz/sizeTiers.ts"), "utf8");
+
+  // isExploreSceneBody: kind===probe always meshes (source of Explore filter).
+  if (!/kind === "probe"/.test(sceneSrc) || !/function isExploreSceneBody/.test(sceneSrc)) {
+    fail("isExploreSceneBody / OrbitScene missing probe kind gate");
+  } else if (
+    !/Mesh probes even without Kepler/.test(sceneSrc) &&
+    !/body\.kind === "probe"/.test(sceneSrc)
+  ) {
+    fail("isExploreSceneBody should treat kind===probe as scene-eligible");
+  } else {
+    ok("isExploreSceneBody includes probes (kind===probe always mesh)");
+  }
+
+  // Marker layout helper — no invented path.waypoints / Horizons samples.
+  if (!/function probeMarkerOffset/.test(sceneSrc)) {
+    fail("OrbitScene missing probeMarkerOffset marker layout helper");
+  } else if (!/probeMarkerDisplaySep/.test(fitSrc) || !/probeMarkerDisplaySep/.test(sceneSrc)) {
+    fail("probeMarkerDisplaySep helper missing (schematicFit + OrbitScene)");
+  } else if (/path\.waypoints\s*=/.test(sceneSrc) || /waypoints:\s*\[/.test(sceneSrc)) {
+    fail("OrbitScene must not invent path.waypoints for probes");
+  } else if (!/NOT an ephemeris/.test(sceneSrc) && !/NOT an ephemeris/.test(fitSrc)) {
+    fail("probe marker helpers should document NOT an ephemeris / not a trajectory");
+  } else {
+    ok("probe marker layout helper present; no invented path.waypoints");
+  }
+
+  // Distinct mesh (not planet sphere) + OrbitLine still gated.
+  if (!/octahedronGeometry/.test(sceneSrc)) {
+    fail("BodyMesh should use distinct octahedronGeometry for probes");
+  } else {
+    ok("BodyMesh probe look uses octahedronGeometry (not planet sphere)");
+  }
+
+  // Schematic tier 0.04 kept; Prop/True readable floor.
+  if (!/probe:\s*0\.04/.test(sizeSrc)) {
+    fail("sizeTiers schematic probe tier should remain 0.04");
+  } else if (!/PROBE_PROP_TRUE_MESH/.test(sizeSrc)) {
+    fail("sizeTiers missing PROBE_PROP_TRUE_MESH readable floor for Prop/True");
+  } else {
+    ok("sizeTiers: probe schematic 0.04 + Prop/True readable floor");
+  }
+
+  // Solar catalog: 3 probes (voyager-1/2, new-horizons).
+  const solarPath = path.join(ROOT, "src/data/systems/solar.json");
+  const solar = JSON.parse(fs.readFileSync(solarPath, "utf8"));
+  const memberIds = solar.memberIds || [];
+  const probeIds = ["voyager-1", "voyager-2", "new-horizons"];
+  const missing = probeIds.filter((id) => !memberIds.includes(id));
+  if (missing.length) {
+    fail(`solar memberIds missing probes: ${missing.join(",")}`);
+  } else {
+    let probeCount = 0;
+    for (const id of probeIds) {
+      const bp = path.join(ROOT, "src/data/bodies", `${id}.json`);
+      if (!fs.existsSync(bp)) {
+        fail(`missing probe card ${id}.json`);
+        continue;
+      }
+      const card = JSON.parse(fs.readFileSync(bp, "utf8"));
+      if (card.kind !== "probe") fail(`${id} kind should be probe, got ${card.kind}`);
+      else if (card.orbit) fail(`${id} should omit orbit this slice (hyperbolic)`);
+      else if (card.path?.waypoints) fail(`${id} must not invent path.waypoints`);
+      else probeCount++;
+    }
+    if (probeCount === 3) ok("solar catalog has 3 probes (voyager-1/2, new-horizons)");
+  }
+}
+
 
 if (process.exitCode) {
   console.error("\norbit-sanity FAILED");

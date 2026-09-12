@@ -17,6 +17,8 @@ const EXPECTED_BY_KIND: Record<BodyKind, ReadonlySet<string>> = {
   moon: new Set(["radiusMeanKm"]),
   /** Artificial sats: owner/launch shown separately; phys often sparse. */
   satellite: new Set([]),
+  /** Mission fields live on body.mission — no SI expected set. */
+  probe: new Set(),
 };
 
 export type FactKey =
