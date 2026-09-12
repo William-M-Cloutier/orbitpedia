@@ -162,7 +162,7 @@ export function interestBlurb(
   const trimmed = sentences.slice(0, 3);
   if (
     trimmed.length === 1 &&
-    /^.+ is a (?:planet|dwarf planet|asteroid|star)\.?$/i.test(trimmed[0]!)
+    /^.+ is a (?:planet|dwarf planet|asteroid|comet|star)\.?$/i.test(trimmed[0]!)
   ) {
     return null;
   }

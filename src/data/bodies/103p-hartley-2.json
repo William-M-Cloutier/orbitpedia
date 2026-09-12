@@ -1,0 +1,55 @@
+{
+  "id": "103p-hartley-2",
+  "name": "Hartley 2",
+  "kind": "comet",
+  "systemId": "solar",
+  "aliases": [
+    "103P/Hartley 2"
+  ],
+  "facts": {
+    "discoveryNotes": "Jupiter-family comet discovered 1986 by Malcolm Hartley; target of NASA EPOXI (2010).",
+    "discoveryDate": "1986-06-15",
+    "radiusMeanKm": 0.8,
+    "rotationPeriodD": 0.7541666666666668
+  },
+  "color": "#6A8A9A",
+  "sbdbDes": "103P",
+  "meta": {
+    "source": "JPL SBDB (full-prec + phys-par)",
+    "sources": [
+      {
+        "name": "JPL Small-Body Database lookup",
+        "url": "https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/?sstr=103P",
+        "fields": [
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "orbit.epochJd",
+          "sbdbDes",
+          "facts.radiusMeanKm",
+          "facts.rotationPeriodD",
+          "facts.discoveryDate",
+          "facts.discoveryNotes"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-12T23:41:35.981Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  },
+  "orbit": {
+    "frame": "heliocentric",
+    "epochJd": 2457152.5,
+    "aAu": 3.475652487146584,
+    "e": 0.6935978573940613,
+    "iDeg": 13.59946797122405,
+    "omDeg": 219.7421743331336,
+    "wDeg": 181.3218438419628,
+    "maDeg": 251.7821727285582,
+    "periodD": 2366.753060797867
+  }
+}

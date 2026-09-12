@@ -1,0 +1,57 @@
+{
+  "id": "2p-encke",
+  "name": "Encke",
+  "kind": "comet",
+  "systemId": "solar",
+  "aliases": [
+    "2P/Encke"
+  ],
+  "facts": {
+    "discoveryNotes": "Short-period Encke-type comet; orbit computed by Johann Franz Encke; among the shortest known periods.",
+    "discoveryDate": "1786-01-17",
+    "radiusMeanKm": 2.4,
+    "albedo": 0.046,
+    "rotationPeriodD": 0.46179166666666666
+  },
+  "color": "#8A9A8A",
+  "sbdbDes": "2P",
+  "meta": {
+    "source": "JPL SBDB (full-prec + phys-par)",
+    "sources": [
+      {
+        "name": "JPL Small-Body Database lookup",
+        "url": "https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/?sstr=2P",
+        "fields": [
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "orbit.epochJd",
+          "sbdbDes",
+          "facts.radiusMeanKm",
+          "facts.albedo",
+          "facts.rotationPeriodD",
+          "facts.discoveryDate",
+          "facts.discoveryNotes"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-12T23:41:35.981Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  },
+  "orbit": {
+    "frame": "heliocentric",
+    "epochJd": 2459936.5,
+    "aAu": 2.219620901311434,
+    "e": 0.847311424495856,
+    "iDeg": 11.36818296959657,
+    "omDeg": 334.1128049930352,
+    "wDeg": 187.2059914343342,
+    "maDeg": 269.5737329554696,
+    "periodD": 1207.860100850287
+  }
+}

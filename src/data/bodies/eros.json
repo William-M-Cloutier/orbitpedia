@@ -1,0 +1,61 @@
+{
+  "id": "eros",
+  "name": "Eros",
+  "kind": "asteroid",
+  "systemId": "solar",
+  "aliases": [
+    "433 Eros"
+  ],
+  "facts": {
+    "discoveryNotes": "Discovered 1898 by Carl Gustav Witt; near-Earth Amor asteroid visited by NEAR Shoemaker.",
+    "discoveryDate": "1898-08-13",
+    "radiusMeanKm": 8.42,
+    "densityGcm3": 2.67,
+    "albedo": 0.25,
+    "rotationPeriodD": 0.21958333333333332,
+    "massKg": 6686843564119084
+  },
+  "color": "#C4A882",
+  "sbdbDes": "433",
+  "meta": {
+    "source": "JPL SBDB (full-prec + phys-par)",
+    "sources": [
+      {
+        "name": "JPL Small-Body Database lookup",
+        "url": "https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/?sstr=433",
+        "fields": [
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "orbit.epochJd",
+          "sbdbDes",
+          "facts.radiusMeanKm",
+          "facts.massKg",
+          "facts.densityGcm3",
+          "facts.albedo",
+          "facts.rotationPeriodD",
+          "facts.discoveryDate",
+          "facts.discoveryNotes"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-12T23:41:35.981Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  },
+  "orbit": {
+    "frame": "heliocentric",
+    "epochJd": 2461200.5,
+    "aAu": 1.458243716760167,
+    "e": 0.2228779627700761,
+    "iDeg": 10.82854410314273,
+    "omDeg": 304.2679713350896,
+    "wDeg": 178.9181319135911,
+    "maDeg": 62.51145501986792,
+    "periodD": 643.1963890927677
+  }
+}

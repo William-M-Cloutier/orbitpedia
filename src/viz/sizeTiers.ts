@@ -140,6 +140,8 @@ function schematicRadiusNonMoon(body: Body): number {
       : PLANET_VISUAL_RADIUS_SMALL,
     dwarf_planet: 0.07,
     asteroid: 0.05,
+    /** Same schematic tier as asteroid (tiny readable marker). */
+    comet: 0.05,
     /**
      * Procedural sat marker — not a catalog radius.
      * Kept small vs Earth schematic (0.1): panels span ~2.6×r so ~0.013≪Earth.

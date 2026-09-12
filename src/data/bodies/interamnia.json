@@ -1,0 +1,59 @@
+{
+  "id": "interamnia",
+  "name": "Interamnia",
+  "kind": "asteroid",
+  "systemId": "solar",
+  "aliases": [
+    "704 Interamnia"
+  ],
+  "facts": {
+    "discoveryNotes": "Discovered 1910 by Vincenzo Cerulli; among the largest main-belt asteroids by volume.",
+    "discoveryDate": "1910-10-02",
+    "radiusMeanKm": 153.1565,
+    "albedo": 0.078,
+    "rotationPeriodD": 0.36362500000000003,
+    "massKg": 74914223214419500000
+  },
+  "color": "#6E6A68",
+  "sbdbDes": "704",
+  "meta": {
+    "source": "JPL SBDB (full-prec + phys-par)",
+    "sources": [
+      {
+        "name": "JPL Small-Body Database lookup",
+        "url": "https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/?sstr=704",
+        "fields": [
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "orbit.epochJd",
+          "sbdbDes",
+          "facts.radiusMeanKm",
+          "facts.massKg",
+          "facts.albedo",
+          "facts.rotationPeriodD",
+          "facts.discoveryDate",
+          "facts.discoveryNotes"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-12T23:41:35.981Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  },
+  "orbit": {
+    "frame": "heliocentric",
+    "epochJd": 2461200.5,
+    "aAu": 3.056811711282865,
+    "e": 0.1550586536072489,
+    "iDeg": 17.31528178196839,
+    "omDeg": 280.1672242333686,
+    "wDeg": 94.06172596616008,
+    "maDeg": 221.144848377515,
+    "periodD": 1952.097295218148
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "id": "1p-halley",
+  "name": "Halley's Comet",
+  "kind": "comet",
+  "systemId": "solar",
+  "aliases": [
+    "1P/Halley",
+    "Halley"
+  ],
+  "facts": {
+    "discoveryNotes": "Periodic Halley-type comet; periodicity recognized by Edmond Halley; returns about every 76 years.",
+    "radiusMeanKm": 5.5,
+    "albedo": 0.04
+  },
+  "color": "#7A9AAA",
+  "sbdbDes": "1P",
+  "meta": {
+    "source": "JPL SBDB (full-prec + phys-par)",
+    "sources": [
+      {
+        "name": "JPL Small-Body Database lookup",
+        "url": "https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/?sstr=1P",
+        "fields": [
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "orbit.epochJd",
+          "sbdbDes",
+          "facts.radiusMeanKm",
+          "facts.albedo",
+          "facts.discoveryNotes"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-12T23:41:35.981Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  },
+  "orbit": {
+    "frame": "heliocentric",
+    "epochJd": 2439875.5,
+    "aAu": 17.92863504856923,
+    "e": 0.9679359956953211,
+    "iDeg": 162.1905300439129,
+    "omDeg": 59.09894720612437,
+    "wDeg": 112.2414314637764,
+    "maDeg": 274.3823371366792,
+    "periodD": 27728.04608790421
+  }
+}

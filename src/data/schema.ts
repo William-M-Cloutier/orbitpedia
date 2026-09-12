@@ -8,6 +8,8 @@ export const BodyKindSchema = z.enum([
   "planet",
   "dwarf_planet",
   "asteroid",
+  /** Small-body comet (heliocentric Kepler like asteroid; e must be ≤1). */
+  "comet",
   /** Natural satellite (parent-frame orbit around parentId). */
   "moon",
   /** Artificial Earth satellite (geocentric frame around Earth central). */

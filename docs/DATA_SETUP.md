@@ -66,7 +66,7 @@ dwarfs/asteroids, moons either after their parent or listed anywhere as long as
 |------|-------|--------|
 | `star` | **none** | none |
 | `black_hole` | **none** (central host, same as primary star) | none |
-| `planet` / `dwarf_planet` / `asteroid` | Kepler + `frame: "heliocentric"` (relative to **host**, not SSB for exoplanets) | omit (or star id only if you need tree hints — Sol planets omit) |
+| `planet` / `dwarf_planet` / `asteroid` / `comet` | Kepler + `frame: "heliocentric"` (relative to **host**, not SSB for exoplanets) | omit (or star id only if you need tree hints — Sol planets omit) |
 | `moon` | Kepler + `frame: "parent"` | **required** `parentId` |
 | `satellite` | Kepler + `frame: "geocentric"` + **`aKm`** (aAu = aKm/149597870.7) | **required** `parentId` → Earth central |
 

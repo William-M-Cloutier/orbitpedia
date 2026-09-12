@@ -1,0 +1,220 @@
+{
+  "signature": {
+    "source": "NASA/JPL Small-Body Database (SBDB) API",
+    "version": "1.3"
+  },
+  "orbit": {
+    "last_obs": "2025-12-22",
+    "source": "JPL",
+    "two_body": null,
+    "t_jup": "2.970",
+    "sb_used": "SB441-N16",
+    "orbit_id": "K284/2",
+    "condition_code": "0",
+    "elements": [
+      {
+        "name": "e",
+        "label": "e",
+        "title": "eccentricity",
+        "value": ".5097028326964878",
+        "sigma": "4.623E-8",
+        "units": null
+      },
+      {
+        "name": "a",
+        "label": "a",
+        "units": "au",
+        "sigma": "8.9632E-8",
+        "value": "3.146133758958915",
+        "title": "semi-major axis"
+      },
+      {
+        "name": "q",
+        "label": "q",
+        "value": "1.542540469975507",
+        "title": "perihelion distance",
+        "sigma": "1.722E-7",
+        "units": "au"
+      },
+      {
+        "name": "i",
+        "label": "i",
+        "title": "inclination; angle with respect to x-y ecliptic plane",
+        "value": "10.4734281543904",
+        "units": "deg",
+        "sigma": "4.1756E-6"
+      },
+      {
+        "label": "node",
+        "name": "om",
+        "sigma": "3.6987E-5",
+        "units": "deg",
+        "value": "68.75357468050096",
+        "title": "longitude of the ascending node"
+      },
+      {
+        "units": "deg",
+        "sigma": "3.8173E-5",
+        "title": "argument of perihelion",
+        "value": "179.1972753698572",
+        "name": "w",
+        "label": "peri"
+      },
+      {
+        "name": "ma",
+        "label": "M",
+        "sigma": "5.8245E-6",
+        "units": "deg",
+        "title": "mean anomaly",
+        "value": "336.5854438553629"
+      },
+      {
+        "value": "2457603.070724568248",
+        "title": "time of perihelion passage",
+        "units": "TDB",
+        "sigma": "3.3292E-5",
+        "name": "tp",
+        "label": "tp"
+      },
+      {
+        "value": "2038.281680411032",
+        "title": "sidereal orbital period",
+        "units": "d",
+        "sigma": "8.7105E-5",
+        "label": "period",
+        "name": "per"
+      },
+      {
+        "units": "deg/d",
+        "sigma": "7.5477E-9",
+        "value": ".1766193571083874",
+        "title": "mean motion",
+        "label": "n",
+        "name": "n"
+      },
+      {
+        "name": "ad",
+        "label": "Q",
+        "sigma": "1.3532E-7",
+        "units": "au",
+        "value": "4.749727047942323",
+        "title": "aphelion distance"
+      }
+    ],
+    "n_del_obs_used": null,
+    "epoch": "2457470.5",
+    "producer": "Davide Farnocchia",
+    "moid_jup": ".29626",
+    "first_obs": "2008-10-25",
+    "not_valid_after": null,
+    "equinox": "J2000",
+    "comment": null,
+    "rms": ".48717",
+    "model_pars": [
+      {
+        "kind": "EST",
+        "name": "A1",
+        "units": "au/d^2",
+        "sigma": "2.17E-11",
+        "n": 1,
+        "title": "non-grav. radial accel.",
+        "value": "1.80041343176761E-11",
+        "desc": "non-gravitational radial acceleration parameter"
+      },
+      {
+        "desc": "non-gravitational transverse acceleration parameter",
+        "n": 2,
+        "sigma": "1.173E-12",
+        "units": "au/d^2",
+        "title": "non-grav. transverse accel.",
+        "value": "1.179466662405115E-11",
+        "kind": "EST",
+        "name": "A2"
+      }
+    ],
+    "n_obs_used": 3283,
+    "cov_epoch": "2457470.5",
+    "moid": ".529397",
+    "not_valid_before": null,
+    "data_arc": "6267",
+    "soln_date": "2025-12-29 09:30:51",
+    "n_dop_obs_used": null,
+    "pe_used": "DE441"
+  },
+  "phys_par": [
+    {
+      "desc": "absolute magnitude of comet and coma (i.e. total)",
+      "notes": "2 parameter fit from 1223 observations, autocmod 3.0g",
+      "sigma": "0.7",
+      "units": null,
+      "title": "comet total magnitude",
+      "value": "12.9",
+      "ref": "K284/2",
+      "name": "M1"
+    },
+    {
+      "value": "9.",
+      "title": "comet total magnitude slope",
+      "sigma": null,
+      "units": null,
+      "name": "K1",
+      "ref": "K284/2",
+      "desc": "comet total magnitude slope parameter",
+      "notes": "autocmod 3.0g"
+    },
+    {
+      "desc": "effective body diameter",
+      "notes": null,
+      "value": "6.0",
+      "title": "diameter",
+      "sigma": "0.2",
+      "units": "km",
+      "name": "diameter",
+      "ref": "A'Hearn, M.F. et al. (2005) Science 310:258-264"
+    },
+    {
+      "name": "extent",
+      "ref": "A'Hearn, M.F. et al. (2005) Science 310:258-264",
+      "title": "extent",
+      "value": "7.6x4.9",
+      "sigma": null,
+      "units": "km",
+      "notes": "preliminary shape model",
+      "desc": "tri(or bi)-axial body dimensions"
+    },
+    {
+      "notes": null,
+      "desc": "body rotation period (synodic)",
+      "name": "rot_per",
+      "ref": "A'Hearn, M.F. et al. (2005) Science 310:258-264",
+      "value": "40.7",
+      "title": "rotation period",
+      "sigma": null,
+      "units": "h"
+    },
+    {
+      "notes": null,
+      "desc": "geometric albedo",
+      "name": "albedo",
+      "ref": "Earth, Moon, and Planets, v. 89, Issue 1, p. 117-134 (2002)",
+      "title": "geometric albedo",
+      "value": "0.05",
+      "sigma": "0.02",
+      "units": null
+    }
+  ],
+  "object": {
+    "prefix": "P",
+    "neo": false,
+    "orbit_class": {
+      "code": "JFc",
+      "name": "Jupiter-family Comet"
+    },
+    "spkid": "1000093",
+    "pha": false,
+    "fullname": "9P/Tempel 1",
+    "orbit_id": "K284/2",
+    "kind": "cn",
+    "des": "9P"
+  }
+}

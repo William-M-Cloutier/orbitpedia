@@ -1,0 +1,58 @@
+{
+  "id": "apophis",
+  "name": "Apophis",
+  "kind": "asteroid",
+  "systemId": "solar",
+  "aliases": [
+    "99942 Apophis",
+    "2004 MN4"
+  ],
+  "facts": {
+    "discoveryNotes": "Discovered 2004 by Roy A. Tucker, David J. Tholen, and Fabrizio Bernardi; near-Earth Aten asteroid.",
+    "discoveryDate": "2004-06-19",
+    "radiusMeanKm": 0.17,
+    "albedo": 0.35,
+    "rotationPeriodD": 1.2733333333333332
+  },
+  "color": "#9A8B7A",
+  "sbdbDes": "99942",
+  "meta": {
+    "source": "JPL SBDB (full-prec + phys-par)",
+    "sources": [
+      {
+        "name": "JPL Small-Body Database lookup",
+        "url": "https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/?sstr=99942",
+        "fields": [
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "orbit.epochJd",
+          "sbdbDes",
+          "facts.radiusMeanKm",
+          "facts.albedo",
+          "facts.rotationPeriodD",
+          "facts.discoveryDate",
+          "facts.discoveryNotes"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-12T23:41:35.981Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  },
+  "orbit": {
+    "frame": "heliocentric",
+    "epochJd": 2461200.5,
+    "aAu": 0.9223592206975018,
+    "e": 0.1911492279663492,
+    "iDeg": 3.340996879880978,
+    "omDeg": 203.8936514240762,
+    "wDeg": 126.6795706895841,
+    "maDeg": 175.3304026592739,
+    "periodD": 323.5553366891694
+  }
+}

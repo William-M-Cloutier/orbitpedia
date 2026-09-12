@@ -30,6 +30,7 @@ const BodyKindSchema = z.enum([
   "planet",
   "dwarf_planet",
   "asteroid",
+  "comet",
   "moon",
   "satellite",
   "black_hole",
