@@ -24,7 +24,7 @@
     ]
   },
   "meta": {
-    "source": "NASA Science mission pages + JPL Horizons spacecraft IDs",
+    "source": "NASA Science mission pages + JPL Horizons VECTORS waypoints",
     "sources": [
       {
         "name": "NASA Voyager fact sheet",
@@ -40,7 +40,8 @@
         "name": "JPL Horizons web app (Voyager 1, -31)",
         "url": "https://ssd.jpl.nasa.gov/horizons/app.html",
         "fields": [
-          "horizonId"
+          "horizonId",
+          "path.waypoints"
         ]
       },
       {
@@ -52,8 +53,54 @@
         ]
       }
     ],
-    "fetchedAt": "2026-09-12T22:36:56.000Z",
+    "fetchedAt": "2026-09-12T23:20:00.000Z",
     "confidence": "known",
-    "unitsVersion": 1
+    "unitsVersion": 1,
+    "provenance": "path.waypoints from JPL Horizons VECTORS (CENTER=500@10 Sun, REF_PLANE=ECLIPTIC, OUT_UNITS=AU-D); earthDistAu = |r| from VECTORS CENTER=500@399 (Earth) at the same epochs. Cached under scripts/fixtures/horizons-probes/."
+  },
+  "path": {
+    "frame": "heliocentric",
+    "waypoints": [
+      {
+        "date": "1977-09-06",
+        "jd": 2443392.5,
+        "xAu": 0.967931851124,
+        "yAu": -0.28209955546,
+        "zAu": 0.000171115075992,
+        "earthDistAu": 0.0025733809
+      },
+      {
+        "date": "1979-03-05",
+        "jd": 2443937.5,
+        "xAu": -3.21517775088,
+        "yAu": 4.19279172416,
+        "zAu": 0.0547139834401,
+        "earthDistAu": 4.5269609
+      },
+      {
+        "date": "1980-11-12",
+        "jd": 2444555.5,
+        "xAu": -9.49140837651,
+        "yAu": -0.356123079592,
+        "zAu": 0.381509078122,
+        "earthDistAu": 10.195384
+      },
+      {
+        "date": "2012-08-25",
+        "jd": 2456164.5,
+        "xAu": -26.0024137567,
+        "yAu": -96.2226432268,
+        "zAu": 69.6580500774,
+        "earthDistAu": 121.4223
+      },
+      {
+        "date": "2026-09-12",
+        "jd": 2461295.5,
+        "xAu": -32.1403075623,
+        "yAu": -136.675235758,
+        "zAu": 98.8873412609,
+        "earthDistAu": 171.76533
+      }
+    ]
   }
 }

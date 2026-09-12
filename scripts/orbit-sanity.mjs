@@ -427,9 +427,9 @@ function runSystemSanity(system) {
       ok(`${b.id}: companion star mesh-only (no usable orbit / OrbitLine)`);
       continue;
     }
-    // Probes: hyperbolic / marker-only this slice — no invented Kepler / waypoints.
+    // Probes: omit hyperbolic Kepler; optional path.waypoints (not usable OrbitLine).
     if (b.kind === "probe") {
-      ok(`${b.id}: probe marker-only (no usable orbit / OrbitLine; not ephemeris)`);
+      ok(`${b.id}: probe without Kepler (path.waypoints OK; not OrbitLine ephemeris)`);
       continue;
     }
     fail(`${b.id}: non-central body missing usable orbit (elements + frame)`);
@@ -1931,11 +1931,21 @@ if (!Number.isFinite(c)) {
     ok("sizeTiers: probe schematic 0.04 + Prop/True readable floor");
   }
 
-  // Solar catalog: 3 probes (voyager-1/2, new-horizons) — marker-only OK (no invented waypoints).
+  // Solar catalog probes: omit hyperbolic Kepler; sparse Horizons path.waypoints (≥2) with jd/date + earthDistAu when sourced.
   const solarPath = path.join(ROOT, "src/data/systems/solar.json");
   const solar = JSON.parse(fs.readFileSync(solarPath, "utf8"));
   const memberIds = solar.memberIds || [];
-  const probeIds = ["voyager-1", "voyager-2", "new-horizons"];
+  const probeIds = [
+    "voyager-1",
+    "voyager-2",
+    "new-horizons",
+    "pioneer-10",
+    "pioneer-11",
+    "galileo",
+    "cassini",
+    "juno",
+    "perseverance",
+  ];
   const missing = probeIds.filter((id) => !memberIds.includes(id));
   if (missing.length) {
     fail(`solar memberIds missing probes: ${missing.join(",")}`);
@@ -1950,10 +1960,27 @@ if (!Number.isFinite(c)) {
       const card = JSON.parse(fs.readFileSync(bp, "utf8"));
       if (card.kind !== "probe") fail(`${id} kind should be probe, got ${card.kind}`);
       else if (card.orbit) fail(`${id} should omit orbit this slice (hyperbolic)`);
-      else if (card.path?.waypoints) fail(`${id} must not invent path.waypoints`);
-      else probeCount++;
+      else {
+        const wps = card.path?.waypoints;
+        if (!Array.isArray(wps) || wps.length < 2) {
+          fail(`${id} needs ≥2 archive path.waypoints (Horizons; never invent)`);
+          continue;
+        }
+        const bad = wps.find(
+          (w) =>
+            typeof w.xAu !== "number" ||
+            typeof w.yAu !== "number" ||
+            typeof w.zAu !== "number" ||
+            (w.jd == null && !w.date) ||
+            typeof w.earthDistAu !== "number",
+        );
+        if (bad) fail(`${id} waypoint missing x/y/z + jd|date + earthDistAu`);
+        else probeCount++;
+      }
     }
-    if (probeCount === 3) ok("solar catalog has 3 probes (voyager-1/2, new-horizons; marker-only OK)");
+    if (probeCount === probeIds.length) {
+      ok(`solar catalog has ${probeIds.length} probes with Horizons path.waypoints`);
+    }
   }
 }
 

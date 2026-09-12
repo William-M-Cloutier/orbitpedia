@@ -1,0 +1,5 @@
+API VERSION: 1.2
+API SOURCE: NASA/JPL Horizons API
+
+
+No ephemeris for target "Juno (spacecraft)" prior to A.D. 2011-AUG-05 17:19:12.1832 TDB

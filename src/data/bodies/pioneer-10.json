@@ -1,0 +1,88 @@
+{
+  "id": "pioneer-10",
+  "name": "Pioneer 10",
+  "kind": "probe",
+  "systemId": "solar",
+  "aliases": [
+    "P10",
+    "Pioneer10"
+  ],
+  "facts": {
+    "discoveryNotes": "First spacecraft to fly by Jupiter (1973) and leave the inner Solar System; last signal era ~2003.",
+    "discoveryDate": "1972"
+  },
+  "color": "#B87333",
+  "horizonId": "-23",
+  "mission": {
+    "launchDate": "1972-03-03",
+    "status": "contact_lost",
+    "targets": [
+      "Jupiter",
+      "Interstellar space"
+    ]
+  },
+  "path": {
+    "frame": "heliocentric",
+    "waypoints": [
+      {
+        "date": "1972-03-04",
+        "jd": 2441380.5,
+        "xAu": -0.954495582104,
+        "yAu": 0.270224259171,
+        "zAu": -0.000756948972385,
+        "earthDistAu": 0.0049714672
+      },
+      {
+        "date": "1973-12-04",
+        "jd": 2442020.5,
+        "xAu": 3.7887505608,
+        "yAu": -3.34158347958,
+        "zAu": -0.0716677587058,
+        "earthDistAu": 5.5193581
+      },
+      {
+        "date": "2003-01-23",
+        "jd": 2452662.5,
+        "xAu": 17.7420870055,
+        "yAu": 80.0739380082,
+        "zAu": 4.33960139555,
+        "earthDistAu": 81.438802
+      }
+    ]
+  },
+  "meta": {
+    "source": "NASA Science mission pages + JPL Horizons VECTORS waypoints",
+    "provenance": "path.waypoints from JPL Horizons VECTORS (CENTER=500@10 Sun, REF_PLANE=ECLIPTIC, OUT_UNITS=AU-D); earthDistAu = |r| from VECTORS CENTER=500@399 (Earth) at the same epochs. Cached under scripts/fixtures/horizons-probes/.",
+    "sources": [
+      {
+        "name": "NASA Pioneer 10 mission",
+        "url": "https://science.nasa.gov/mission/pioneer-10/",
+        "fields": [
+          "mission.launchDate",
+          "mission.status",
+          "mission.targets",
+          "facts.discoveryNotes"
+        ]
+      },
+      {
+        "name": "JPL Horizons web app",
+        "url": "https://ssd.jpl.nasa.gov/horizons/app.html",
+        "fields": [
+          "horizonId",
+          "path.waypoints"
+        ]
+      },
+      {
+        "name": "NASA Solar System Exploration \u2014 Pioneer 10",
+        "url": "https://solarsystem.nasa.gov/missions/pioneer-10/in-depth/",
+        "fields": [
+          "mission.status",
+          "facts.discoveryNotes"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-12T23:20:00.000Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  }
+}

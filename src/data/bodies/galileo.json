@@ -1,0 +1,109 @@
+{
+  "id": "galileo",
+  "name": "Galileo",
+  "kind": "probe",
+  "systemId": "solar",
+  "aliases": [
+    "Galileo Orbiter",
+    "Galileo spacecraft"
+  ],
+  "facts": {
+    "discoveryNotes": "NASA Jupiter orbiter and atmospheric probe; arrived 1995; intentionally deorbited into Jupiter in 2003.",
+    "discoveryDate": "1989"
+  },
+  "color": "#C4A35A",
+  "horizonId": "-77",
+  "mission": {
+    "launchDate": "1989-10-18",
+    "status": "completed",
+    "targets": [
+      "Venus",
+      "Earth",
+      "Jupiter",
+      "Io",
+      "Europa",
+      "Ganymede",
+      "Callisto"
+    ]
+  },
+  "path": {
+    "frame": "heliocentric",
+    "waypoints": [
+      {
+        "date": "1989-10-19",
+        "jd": 2447818.583333333,
+        "xAu": 0.896696863393,
+        "yAu": 0.433478680189,
+        "zAu": 0.000208343959038,
+        "earthDistAu": 0.00027383826
+      },
+      {
+        "date": "1990-02-10",
+        "jd": 2447932.5,
+        "xAu": -0.648641832284,
+        "yAu": 0.308958594042,
+        "zAu": 0.0418994554743,
+        "earthDistAu": 0.33522716
+      },
+      {
+        "date": "1992-12-08",
+        "jd": 2448964.5,
+        "xAu": 0.23626904213,
+        "yAu": 0.959088073023,
+        "zAu": 0.00104224960663,
+        "earthDistAu": 0.0033596561
+      },
+      {
+        "date": "1995-12-07",
+        "jd": 2450058.5,
+        "xAu": -0.397119387798,
+        "yAu": -5.25819696036,
+        "zAu": 0.0304303097717,
+        "earthDistAu": 6.2425188
+      },
+      {
+        "date": "2003-09-21",
+        "jd": 2452903.5,
+        "xAu": -4.70400269501,
+        "yAu": 2.59286330114,
+        "zAu": 0.0947245063234,
+        "earthDistAu": 6.2871653
+      }
+    ]
+  },
+  "meta": {
+    "source": "NASA Science mission pages + JPL Horizons VECTORS waypoints",
+    "provenance": "path.waypoints from JPL Horizons VECTORS (CENTER=500@10 Sun, REF_PLANE=ECLIPTIC, OUT_UNITS=AU-D); earthDistAu = |r| from VECTORS CENTER=500@399 (Earth) at the same epochs. Cached under scripts/fixtures/horizons-probes/.",
+    "sources": [
+      {
+        "name": "NASA Galileo mission",
+        "url": "https://science.nasa.gov/mission/galileo/",
+        "fields": [
+          "mission.launchDate",
+          "mission.status",
+          "mission.targets",
+          "facts.discoveryNotes"
+        ]
+      },
+      {
+        "name": "JPL Horizons web app",
+        "url": "https://ssd.jpl.nasa.gov/horizons/app.html",
+        "fields": [
+          "horizonId",
+          "path.waypoints"
+        ]
+      },
+      {
+        "name": "NASA Solar System Exploration \u2014 Galileo",
+        "url": "https://solarsystem.nasa.gov/missions/galileo/in-depth/",
+        "fields": [
+          "mission.status",
+          "facts.discoveryNotes"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-12T23:20:00.000Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  }
+}

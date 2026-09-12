@@ -1,0 +1,97 @@
+{
+  "id": "pioneer-11",
+  "name": "Pioneer 11",
+  "kind": "probe",
+  "systemId": "solar",
+  "aliases": [
+    "P11",
+    "Pioneer11"
+  ],
+  "facts": {
+    "discoveryNotes": "First spacecraft to encounter Saturn (1979) after a Jupiter flyby; contact later lost.",
+    "discoveryDate": "1973"
+  },
+  "color": "#8B6914",
+  "horizonId": "-24",
+  "mission": {
+    "launchDate": "1973-04-06",
+    "status": "contact_lost",
+    "targets": [
+      "Jupiter",
+      "Saturn",
+      "Interstellar space"
+    ]
+  },
+  "path": {
+    "frame": "heliocentric",
+    "waypoints": [
+      {
+        "date": "1973-04-07",
+        "jd": 2441779.5,
+        "xAu": -0.953752959737,
+        "yAu": -0.30426578335,
+        "zAu": -0.00111347520783,
+        "earthDistAu": 0.0049824953
+      },
+      {
+        "date": "1974-12-03",
+        "jd": 2442384.5,
+        "xAu": 4.91070580496,
+        "yAu": -0.755441716267,
+        "zAu": -0.10866476883,
+        "earthDistAu": 4.8876193
+      },
+      {
+        "date": "1979-09-01",
+        "jd": 2444117.5,
+        "xAu": -9.13842096402,
+        "yAu": 2.07380687446,
+        "zAu": 0.327702530983,
+        "earthDistAu": 10.374151
+      },
+      {
+        "date": "1995-09-30",
+        "jd": 2449990.5,
+        "xAu": 2.1399013684,
+        "yAu": -42.4362350503,
+        "zAu": 11.717510177,
+        "earthDistAu": 44.147197
+      }
+    ]
+  },
+  "meta": {
+    "source": "NASA Science mission pages + JPL Horizons VECTORS waypoints",
+    "provenance": "path.waypoints from JPL Horizons VECTORS (CENTER=500@10 Sun, REF_PLANE=ECLIPTIC, OUT_UNITS=AU-D); earthDistAu = |r| from VECTORS CENTER=500@399 (Earth) at the same epochs. Cached under scripts/fixtures/horizons-probes/.",
+    "sources": [
+      {
+        "name": "NASA Pioneer 11 mission",
+        "url": "https://science.nasa.gov/mission/pioneer-11/",
+        "fields": [
+          "mission.launchDate",
+          "mission.status",
+          "mission.targets",
+          "facts.discoveryNotes"
+        ]
+      },
+      {
+        "name": "JPL Horizons web app",
+        "url": "https://ssd.jpl.nasa.gov/horizons/app.html",
+        "fields": [
+          "horizonId",
+          "path.waypoints"
+        ]
+      },
+      {
+        "name": "NASA Solar System Exploration \u2014 Pioneer 11",
+        "url": "https://solarsystem.nasa.gov/missions/pioneer-11/in-depth/",
+        "fields": [
+          "mission.status",
+          "facts.discoveryNotes"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-12T23:20:00.000Z",
+    "confidence": "known",
+    "unitsVersion": 1
+  }
+}
