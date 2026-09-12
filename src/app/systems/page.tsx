@@ -21,7 +21,9 @@ import {
 import {
   getSystemGraphAsync,
   listSystemsAsync,
+  listSystemsMergedSync,
   listSystemsWithSmokeSync,
+  subscribeArchiveIndex,
   type ArchiveSystemSummary,
 } from "@/data/archiveCatalog";
 import { hasUsableOrbit, type System } from "@/data/schema";
@@ -596,12 +598,26 @@ function SystemMapView() {
 
   useEffect(() => {
     let cancelled = false;
+    const applyMerged = () => {
+      if (cancelled) return;
+      setNodes(
+        buildNodesFromList(
+          listSystemsMergedSync().filter(
+            (s) => !isSkyMapExcludedSystemId(s.id),
+          ),
+        ),
+      );
+    };
+    // Post-hydrate: HTTP full index / bulk adopt notifies → setState (no remount).
+    const unsubscribe = subscribeArchiveIndex(applyMerged);
     (async () => {
       try {
         const list = await listSystemsAsync();
         if (cancelled) return;
         setNodes(
-          buildNodesFromList(list.filter((s) => !isSkyMapExcludedSystemId(s.id))),
+          buildNodesFromList(
+            list.filter((s) => !isSkyMapExcludedSystemId(s.id)),
+          ),
         );
       } catch {
         /* sync smoke seed already shown */
@@ -609,6 +625,7 @@ function SystemMapView() {
     })();
     return () => {
       cancelled = true;
+      unsubscribe();
     };
   }, []);
 

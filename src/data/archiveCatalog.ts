@@ -5,11 +5,12 @@
  * Graphs are lazy-fetched so thousands of cards never enter the client bundle.
  *
  * Base resolution (once per session):
- *   NEXT_PUBLIC_ARCHIVE_BASE → else smoke `/archive` immediately.
- * Bulk `/archive/bulk` is probed only as a background upgrade (timed) and
- * adopted only when it has more systems AND real raDeg/decDeg coverage
- * (≥50%). A 0%-coord overnight dump must never replace smoke or freeze the map.
- * The committed smoke index is also bundled as a sync/HTTP fallback.
+ *   NEXT_PUBLIC_ARCHIVE_BASE → else `/archive` immediately for graphs.
+ * Sync first paint uses bundled systems.index.smoke.json only (SSR == client).
+ * After hydrate, HTTP `/archive/systems.index.json` (full sky index) and optional
+ * `/archive/bulk` are probed in the background and adopted when larger AND
+ * raDeg/decDeg coverage ≥50%. Adopts notify subscribeArchiveIndex listeners.
+ * A 0%-coord dump must never replace smoke or freeze the map.
  */
 import {
   BodySchema,
@@ -74,8 +75,10 @@ export type ArchiveSystemGraphFile = {
 const SMOKE_ARCHIVE_BASE = "/archive";
 const BULK_ARCHIVE_BASE = "/archive/bulk";
 
-/** Timed fetch budget for index probes (bulk can hang on huge parse). */
+/** Quick probe budget (smoke / hung connection). */
 const FETCH_TIMEOUT_MS = 1500;
+/** Full ~2MB index + bulk: allow slow body/parse; abort only on long hang. */
+const FULL_INDEX_TIMEOUT_MS = 20_000;
 
 /**
  * Minimum fraction of rows with both raDeg+decDeg before adopting bulk.
@@ -97,6 +100,37 @@ let archiveBase: string | null = null;
 let indexCache: ArchiveIndex | null = null;
 let bulkUpgradeStarted = false;
 const graphCache = new Map<string, SystemGraph>();
+const indexListeners = new Set<() => void>();
+
+/**
+ * Notify when indexCache is adopted/replaced (full HTTP index or bulk upgrade).
+ * Map page subscribes and setStates — cache mutate alone is invisible to React.
+ */
+export function subscribeArchiveIndex(listener: () => void): () => void {
+  indexListeners.add(listener);
+  return () => {
+    indexListeners.delete(listener);
+  };
+}
+
+function notifyArchiveIndexListeners(): void {
+  for (const listener of indexListeners) {
+    try {
+      listener();
+    } catch {
+      /* listener errors must not break adopt */
+    }
+  }
+}
+
+/** Adopt a larger, sky-covered index and notify subscribers. */
+function adoptArchiveIndex(next: ArchiveIndex, base: string): boolean {
+  if (!isAdoptableBulk(next, indexCache)) return false;
+  archiveBase = base;
+  indexCache = next;
+  notifyArchiveIndexListeners();
+  return true;
+}
 
 function indexUrl(base: string): string {
   return `${base}/systems.index.json`;
@@ -141,6 +175,8 @@ export async function fetchArchiveIndex(
   const timer = setTimeout(() => ctrl.abort(), timeoutMs);
   try {
     const res = await fetch(indexUrl(base), { signal: ctrl.signal });
+    // Connection ok — clear abort so a slow 2MB JSON parse is not killed.
+    clearTimeout(timer);
     if (!res.ok) return null;
     const data = (await res.json()) as ArchiveIndex;
     if (!data || !Array.isArray(data.systems)) return null;
@@ -163,8 +199,11 @@ function isAdoptableBulk(
 }
 
 /**
- * Non-blocking bulk probe. Never awaited on the map first-paint path.
- * Adopts bulk only when coverage ≥50% and row count exceeds current cache.
+ * Non-blocking post-hydrate upgrade. Never awaited on first paint.
+ * 1) HTTP `/archive/systems.index.json` (committed full sky index, ~2MB)
+ * 2) Optional local `/archive/bulk` if even larger
+ * Adopts only when coverage ≥50% and row count exceeds current cache.
+ * Notifies subscribeArchiveIndex listeners on adopt.
  */
 function startBackgroundBulkUpgrade(): void {
   if (bulkUpgradeStarted) return;
@@ -172,11 +211,17 @@ function startBackgroundBulkUpgrade(): void {
   if (typeof window === "undefined") return;
   bulkUpgradeStarted = true;
   void (async () => {
-    const bulk = await fetchArchiveIndex(BULK_ARCHIVE_BASE, FETCH_TIMEOUT_MS);
-    if (!bulk) return;
-    if (!isAdoptableBulk(bulk, indexCache)) return;
-    archiveBase = BULK_ARCHIVE_BASE;
-    indexCache = bulk;
+    const full = await fetchArchiveIndex(
+      SMOKE_ARCHIVE_BASE,
+      FULL_INDEX_TIMEOUT_MS,
+    );
+    if (full) adoptArchiveIndex(full, SMOKE_ARCHIVE_BASE);
+
+    const bulk = await fetchArchiveIndex(
+      BULK_ARCHIVE_BASE,
+      FULL_INDEX_TIMEOUT_MS,
+    );
+    if (bulk) adoptArchiveIndex(bulk, BULK_ARCHIVE_BASE);
   })();
 }
 
@@ -209,6 +254,7 @@ export function clearArchiveCaches(): void {
   graphCache.clear();
   archiveBase = null;
   bulkUpgradeStarted = false;
+  indexListeners.clear();
   clearSystemGraphSession();
 }
 
@@ -227,10 +273,26 @@ function bundledSmokeArchiveIndex(): ArchiveIndex {
 }
 
 /**
- * Sync curated + bundled smoke extras — no await, no fetch.
- * First paint for the Systems map (~100+ archive, not curated-only).
+ * Sync curated + bundled smoke extras — no await, no fetch, ignores indexCache.
+ * First paint for the Systems map must match SSR and client (~100+ archive).
+ * Post-hydrate upgrades use listSystemsMergedSync / listSystemsAsync + subscribe.
  */
 export function listSystemsWithSmokeSync(): Array<
+  System | ArchiveSystemSummary
+> {
+  const curated = listSystems();
+  const curatedIds = new Set(curated.map((s) => s.id));
+  const extra = bundledSmokeArchiveIndex().systems.filter(
+    (s) => !curatedIds.has(s.id),
+  );
+  return [...curated, ...extra];
+}
+
+/**
+ * Curated + current indexCache (or bundled smoke if cache empty).
+ * Used after archive adopts notify the map to setState without remount.
+ */
+export function listSystemsMergedSync(): Array<
   System | ArchiveSystemSummary
 > {
   const curated = listSystems();
@@ -250,27 +312,23 @@ export async function loadArchiveIndex(): Promise<ArchiveIndex> {
   // resolveArchiveBase never fills indexCache from bulk anymore
   if (indexCache) return indexCache;
 
-  const data = await fetchArchiveIndex(base, FETCH_TIMEOUT_MS);
+  // Full sky index at `/archive/systems.index.json` (~2MB) — long timeout.
+  // Env override may point at a CDN/bulk prefix; same coverage gate.
+  const data = await fetchArchiveIndex(base, FULL_INDEX_TIMEOUT_MS);
   if (data) {
-    // Fail-closed: env/bulk with near-zero coords must not replace smoke
-    // (map would gutter-pack thousands and freeze on separation).
-    const coverage = archiveCoordCoverage(data);
-    if (base === SMOKE_ARCHIVE_BASE || coverage >= MIN_BULK_COORD_COVERAGE) {
+    // Fail-closed: near-zero coords must not replace smoke (map freeze).
+    if (archiveCoordCoverage(data) >= MIN_BULK_COORD_COVERAGE) {
       indexCache = data;
+      notifyArchiveIndexListeners();
       startBackgroundBulkUpgrade();
       return data;
     }
-    // Bad coverage — fall through to smoke / bundled
-    archiveBase = SMOKE_ARCHIVE_BASE;
+    if (base !== SMOKE_ARCHIVE_BASE) {
+      archiveBase = SMOKE_ARCHIVE_BASE;
+    }
   }
 
-  const smoke = await fetchArchiveIndex(SMOKE_ARCHIVE_BASE, FETCH_TIMEOUT_MS);
-  if (smoke) {
-    indexCache = smoke;
-    startBackgroundBulkUpgrade();
-    return smoke;
-  }
-  // HTTP failed — still serve the committed smoke plane (never curated-only).
+  // HTTP failed or rejected — bundled smoke (never curated-only).
   indexCache = bundledSmokeArchiveIndex();
   startBackgroundBulkUpgrade();
   return indexCache;
