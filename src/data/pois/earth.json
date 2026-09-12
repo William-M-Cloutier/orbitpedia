@@ -1,0 +1,160 @@
+{
+  "bodyId": "earth",
+  "pois": [
+    {
+      "id": "mount-everest",
+      "bodyId": "earth",
+      "name": "Mount Everest",
+      "latDeg": 27.9881,
+      "lonDeg": 86.925,
+      "summary": "Highest peak above sea level on Earth, rising about 8,849 meters on the Nepal–China border in the Himalaya. Its summit marks the top of the planet’s solid surface in conventional elevation surveys.",
+      "elevationM": 8849,
+      "sources": [
+        {
+          "name": "USGS Everest",
+          "url": "https://www.usgs.gov/news/featured-story/new-elevation-mount-everest-announced"
+        },
+        {
+          "name": "Britannica — Mount Everest",
+          "url": "https://www.britannica.com/place/Mount-Everest"
+        }
+      ],
+      "confidence": "known"
+    },
+    {
+      "id": "challenger-deep",
+      "bodyId": "earth",
+      "name": "Challenger Deep",
+      "latDeg": 11.3733,
+      "lonDeg": 142.5917,
+      "summary": "Deepest known point in the ocean, in the southern Mariana Trench of the western Pacific. Soundings place the seafloor roughly 10,900 meters below sea level.",
+      "depthM": 10920,
+      "sources": [
+        {
+          "name": "NOAA — Challenger Deep",
+          "url": "https://oceanservice.noaa.gov/facts/oceandepth.html"
+        },
+        {
+          "name": "NOAA Ocean Exploration — Mariana Trench",
+          "url": "https://oceanexplorer.noaa.gov/explorations/17trench/welcome.html"
+        }
+      ],
+      "confidence": "assumed"
+    },
+    {
+      "id": "grand-canyon",
+      "bodyId": "earth",
+      "name": "Grand Canyon",
+      "latDeg": 36.0544,
+      "lonDeg": -112.1401,
+      "summary": "Deep canyon carved by the Colorado River in Arizona, exposing a nearly continuous rock record spanning about two billion years. Steep walls and plateaus make it one of Earth’s most studied continental landforms.",
+      "sources": [
+        {
+          "name": "USGS — Grand Canyon",
+          "url": "https://www.usgs.gov/geology-and-ecology-of-national-parks/geology-grand-canyon-national-park"
+        },
+        {
+          "name": "NPS — Grand Canyon",
+          "url": "https://www.nps.gov/grca/learn/nature/geology.htm"
+        }
+      ],
+      "confidence": "known"
+    },
+    {
+      "id": "great-barrier-reef",
+      "bodyId": "earth",
+      "name": "Great Barrier Reef",
+      "latDeg": -18.2871,
+      "lonDeg": 147.6992,
+      "summary": "World’s largest coral reef system, stretching along Australia’s northeastern coast. Its reefs and islands host exceptional marine biodiversity across a vast shallow shelf.",
+      "sources": [
+        {
+          "name": "UNESCO — Great Barrier Reef",
+          "url": "https://whc.unesco.org/en/list/154/"
+        },
+        {
+          "name": "NASA Earth Observatory — Great Barrier Reef",
+          "url": "https://earthobservatory.nasa.gov/images/146298/the-great-barrier-reef"
+        }
+      ],
+      "confidence": "known"
+    },
+    {
+      "id": "amazon-basin",
+      "bodyId": "earth",
+      "name": "Amazon Basin",
+      "latDeg": -3.4653,
+      "lonDeg": -62.2159,
+      "summary": "Largest tropical rainforest basin on Earth, drained by the Amazon River and its tributaries across northern South America. Dense canopy and river networks shape regional climate and biodiversity.",
+      "sources": [
+        {
+          "name": "NASA Earth Observatory — Amazon",
+          "url": "https://earthobservatory.nasa.gov/biome/amazon.php"
+        },
+        {
+          "name": "Britannica — Amazon Rainforest",
+          "url": "https://www.britannica.com/place/Amazon-Rainforest"
+        }
+      ],
+      "confidence": "assumed"
+    },
+    {
+      "id": "sahara",
+      "bodyId": "earth",
+      "name": "Sahara",
+      "latDeg": 23.4162,
+      "lonDeg": 25.6628,
+      "summary": "Largest hot desert on Earth, spanning much of northern Africa. Sand seas, rocky plateaus, and hyper-arid climate define a vast subtropical dry belt.",
+      "sources": [
+        {
+          "name": "Britannica — Sahara",
+          "url": "https://www.britannica.com/place/Sahara-desert-Africa"
+        },
+        {
+          "name": "NASA Earth Observatory — Sahara",
+          "url": "https://earthobservatory.nasa.gov/images/92050/the-sahara-desert"
+        }
+      ],
+      "confidence": "assumed"
+    },
+    {
+      "id": "mauna-loa",
+      "bodyId": "earth",
+      "name": "Mauna Loa",
+      "latDeg": 19.4797,
+      "lonDeg": -155.6028,
+      "summary": "Earth’s largest volcano by volume, a broad shield on the Island of Hawaiʻi built by countless basaltic lava flows. Its summit caldera and rift zones remain volcanically active.",
+      "elevationM": 4169,
+      "sources": [
+        {
+          "name": "USGS Hawaiian Volcano Observatory — Mauna Loa",
+          "url": "https://www.usgs.gov/volcanoes/mauna-loa"
+        },
+        {
+          "name": "Smithsonian GVP — Mauna Loa",
+          "url": "https://volcano.si.edu/volcano.cfm?vn=332020"
+        }
+      ],
+      "confidence": "known"
+    },
+    {
+      "id": "yellowstone",
+      "bodyId": "earth",
+      "name": "Yellowstone Caldera",
+      "latDeg": 44.428,
+      "lonDeg": -110.5885,
+      "summary": "Active volcanic caldera and hydrothermal province in the northern Rocky Mountains. Geysers, hot springs, and a restless magma system mark one of Earth’s best-known continental volcanic centers.",
+      "sources": [
+        {
+          "name": "USGS — Yellowstone Volcano Observatory",
+          "url": "https://www.usgs.gov/volcanoes/yellowstone"
+        },
+        {
+          "name": "NPS — Yellowstone Geology",
+          "url": "https://www.nps.gov/yell/learn/nature/geology.htm"
+        }
+      ],
+      "confidence": "known"
+    }
+  ]
+}

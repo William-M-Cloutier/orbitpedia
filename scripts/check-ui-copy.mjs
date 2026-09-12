@@ -7,6 +7,7 @@
  *     and prose-like string literals (contains whitespace). Code comments skipped.
  *   - committed public/archive JSON — blurb, discoveryNotes, highlights
  *     (skips public/archive/bulk)
+ *   - src/data/pois/*.json — summary (and other COPY_FIELDS)
  *
  * Code identifiers (`hasGas`, import paths, object keys) are allowed.
  * The same tokens in user-facing prose / attrs / archive fields are banned.
@@ -54,7 +55,7 @@ const IDENT_BANNED = [
 const UI_ATTR_RE =
   /\b(?:title|alt|placeholder|label|aria-[\w-]+)\s*=\s*(["'`])/gi;
 
-const COPY_FIELDS = new Set(["blurb", "discoveryNotes", "highlights"]);
+const COPY_FIELDS = new Set(["blurb", "discoveryNotes", "highlights", "summary"]);
 
 /** JSX text that looks like source, not copy (TS generics false positives). */
 function looksLikeCode(s) {
@@ -326,6 +327,21 @@ function main() {
   }).sort();
 
   for (const abs of archiveFiles) {
+    const rel = path.relative(ROOT, abs);
+    files++;
+    let json;
+    try {
+      json = JSON.parse(fs.readFileSync(abs, "utf8"));
+    } catch (err) {
+      fail(`${rel} invalid JSON: ${err.message}`);
+      continue;
+    }
+    hits += checkArchive(rel, json);
+  }
+
+  const poisRoot = path.join(ROOT, "src/data/pois");
+  const poiFiles = walkFiles(poisRoot, (p) => p.endsWith(".json")).sort();
+  for (const abs of poiFiles) {
     const rel = path.relative(ROOT, abs);
     files++;
     let json;

@@ -1,0 +1,24 @@
+{
+  "bodyId": "mercury",
+  "pois": [
+    {
+      "id": "caloris-basin",
+      "bodyId": "mercury",
+      "name": "Caloris Basin",
+      "latDeg": 31.65,
+      "lonDeg": 161.98,
+      "summary": "Mercury’s largest well-preserved impact basin, roughly 1,500 km across, filled by volcanic smooth plains known as Caloris Planitia. MESSENGER mapping placed its center near 32°N, 162°E and showed extensive tectonic deformation of the interior plains.",
+      "sources": [
+        {
+          "name": "USGS Gazetteer — Caloris Planitia",
+          "url": "https://planetarynames.wr.usgs.gov/Feature/979"
+        },
+        {
+          "name": "NASA Science — Caloris Basin",
+          "url": "https://science.nasa.gov/mercury/caloris-basin/"
+        }
+      ],
+      "confidence": "known"
+    }
+  ]
+}

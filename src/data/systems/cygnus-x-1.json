@@ -1,0 +1,33 @@
+{
+  "id": "cygnus-x-1",
+  "name": "Cygnus X-1",
+  "home": false,
+  "memberIds": [
+    "cygnus-x-1"
+  ],
+  "primaryStarId": "cygnus-x-1",
+  "blurb": "A stellar-mass black hole with a massive blue companion star \u2014 famous high-mass X-ray binary in Cygnus.",
+  "highlights": [
+    "Stellar-mass black hole with a massive blue companion",
+    "Mass about 14.8 times the Sun (Chandra-era determination)",
+    "About 6,070 light-years from Earth"
+  ],
+  "planetCount": 0,
+  "distanceLy": 6070,
+  "meta": {
+    "confidence": "known",
+    "fetchedAt": "2026-09-12T22:38:28.400Z",
+    "sources": [
+      {
+        "name": "Chandra \u2014 Cygnus X-1",
+        "url": "https://chandra.harvard.edu/photo/2011/cygx1/",
+        "fields": [
+          "blurb",
+          "highlights",
+          "planetCount",
+          "distanceLy"
+        ]
+      }
+    ]
+  }
+}

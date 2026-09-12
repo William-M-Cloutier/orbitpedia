@@ -1,0 +1,24 @@
+{
+  "bodyId": "saturn",
+  "pois": [
+    {
+      "id": "north-polar-hexagon",
+      "bodyId": "saturn",
+      "name": "North Polar Hexagon",
+      "latDeg": 78,
+      "lonDeg": 0,
+      "summary": "Long-lived hexagonal jet-stream pattern encircling Saturn\u2019s north pole near 78\u00b0N planetographic latitude. This is an atmospheric feature imaged by Voyager and Cassini; longitude here marks a representative point on the jet rather than a solid surface site.",
+      "sources": [
+        {
+          "name": "NASA Cassini \u2014 Saturn\u2019s Hexagon",
+          "url": "https://science.nasa.gov/mission/cassini/science/saturn/hexagon-in-motion/"
+        },
+        {
+          "name": "NASA \u2014 Saturn\u2019s North Polar Hexagon",
+          "url": "https://www.nasa.gov/image-article/saturns-north-polar-hexagon/"
+        }
+      ],
+      "confidence": "assumed"
+    }
+  ]
+}

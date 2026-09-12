@@ -27,6 +27,9 @@ function softEmissiveHex(hex: string): string {
   return `#${c.getHexString()}`;
 }
 
+/** Soft accretion glow when a black hole is focused (still ≤ soft-select band). */
+const BH_FOCUS_EMISSIVE_INTENSITY = 0.22;
+
 function buildProceduralMaterial(
   family: SurfaceFamily,
   colorHex: string,
@@ -40,6 +43,19 @@ function buildProceduralMaterial(
       color: colorHex,
       map,
       toneMapped: true,
+    });
+  }
+  if (family === "black_hole") {
+    // Dark MeshStandard + accretion map×catalog tint. Readable unfocused
+    // (warm disk band, not invisible); slight emissive glow when focused.
+    // Procedural only — never requires textureId / registry maps.
+    return new THREE.MeshStandardMaterial({
+      color: colorHex,
+      map,
+      roughness: 0.88,
+      metalness: 0.12,
+      emissive: focused ? softEmissiveHex(emissiveHex) : "#000000",
+      emissiveIntensity: focused ? BH_FOCUS_EMISSIVE_INTENSITY : 0,
     });
   }
 
@@ -102,7 +118,8 @@ export function getBodyAppearanceMaterial(
   const colorHex = normalizeHex(body.color, family);
   const emissiveHex = normalizeHex(highlightColor ?? body.color, family);
   const textureId = body.appearance?.textureId;
-  const useMap = Boolean(surfaceMap && textureId);
+  // Black holes are procedural-only (fail-open; never require textureId/URLs).
+  const useMap = family !== "black_hole" && Boolean(surfaceMap && textureId);
 
   const key = useMap
     ? `map|${textureId}|${family}|${focused ? 1 : 0}|${focused ? emissiveHex : ""}`

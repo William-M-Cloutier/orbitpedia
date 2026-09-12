@@ -1,0 +1,44 @@
+{
+  "bodyId": "mars",
+  "pois": [
+    {
+      "id": "olympus-mons",
+      "bodyId": "mars",
+      "name": "Olympus Mons",
+      "latDeg": 18.65,
+      "lonDeg": -133.8,
+      "summary": "Largest volcano in the Solar System by volume, a vast shield in western Tharsis rising more than 21 km above the Martian datum. Its summit caldera complex spans tens of kilometers across a gently sloping basaltic edifice.",
+      "elevationM": 21287,
+      "sources": [
+        {
+          "name": "USGS Gazetteer — Olympus Mons",
+          "url": "https://planetarynames.wr.usgs.gov/Feature/4453"
+        },
+        {
+          "name": "NASA Mars Exploration — Olympus Mons",
+          "url": "https://mars.nasa.gov/resources/20604/olympus-mons/"
+        }
+      ],
+      "confidence": "known"
+    },
+    {
+      "id": "valles-marineris",
+      "bodyId": "mars",
+      "name": "Valles Marineris",
+      "latDeg": -13.74,
+      "lonDeg": -59.2,
+      "summary": "Enormous equatorial canyon system east of Tharsis, stretching thousands of kilometers with depths of several kilometers. Its chasmata expose layered wall rock and host landslide and outflow deposits that record a long tectonic and erosional history.",
+      "sources": [
+        {
+          "name": "USGS Gazetteer — Valles Marineris",
+          "url": "https://planetarynames.wr.usgs.gov/Feature/6288"
+        },
+        {
+          "name": "NASA Mars Exploration — Valles Marineris",
+          "url": "https://mars.nasa.gov/resources/7898/valles-marineris-the-grand-canyon-of-mars/"
+        }
+      ],
+      "confidence": "known"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "id": "cygnus-x-1",
+  "name": "Cygnus X-1",
+  "kind": "black_hole",
+  "systemId": "cygnus-x-1",
+  "aliases": [
+    "Cyg X-1",
+    "Cygnus X-1 black hole"
+  ],
+  "facts": {
+    "massKg": 2.94285568e+31,
+    "radiusMeanKm": 43.7044,
+    "approximateFields": [
+      "radiusMeanKm"
+    ],
+    "discoveryNotes": "Stellar-mass black hole with a massive blue companion star. Listed size uses the Schwarzschild radius from the cited mass as a horizon-scale size proxy.",
+    "discoveryDate": "1971"
+  },
+  "color": "#2d1b4e",
+  "meta": {
+    "source": "Chandra Photo Album Cygnus X-1 (2011) \u2014 mass 14.8 Msun, distance ~6070 ly; Rs from mass",
+    "confidence": "known",
+    "sources": [
+      {
+        "name": "Chandra \u2014 Cygnus X-1",
+        "url": "https://chandra.harvard.edu/photo/2011/cygx1/",
+        "fields": [
+          "facts.massKg",
+          "facts.discoveryNotes",
+          "facts.discoveryDate",
+          "facts.radiusMeanKm"
+        ]
+      }
+    ],
+    "fetchedAt": "2026-09-12T22:38:28.400Z",
+    "unitsVersion": 1
+  }
+}

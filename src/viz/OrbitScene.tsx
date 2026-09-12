@@ -23,7 +23,7 @@ import {
   hasUsableOrbit,
   listChildren,
 } from "@/data/catalog";
-import type { Body } from "@/data/schema";
+import { isPrimaryHostKind, type Body } from "@/data/schema";
 import {
   periodFromA,
   positionAtMa,
@@ -59,6 +59,8 @@ import {
   COMPANION_OUT_OF_PLANE_FRAC,
 } from "./schematicFit";
 import { getBodyAppearanceMaterial, useRegistryTexture } from "./appearance";
+import { getPoisForBody } from "@/data/pois";
+import { SurfacePoiMarkers } from "./SurfacePoiMarkers";
 
 /** Must match <Canvas camera.near> — focus floors stay outside the near plane. */
 const CAMERA_NEAR = 0.01;
@@ -68,6 +70,9 @@ const CAMERA_NEAR = 0.01;
 type Props = {
   focusId?: string | null;
   onSelect?: (id: string | null) => void;
+  /** Selected surface POI id (Explore Facts); markers only on focused body. */
+  selectedPoiId?: string | null;
+  onSelectPoi?: (id: string | null) => void;
   highlightColor?: string;
   /** Simulated days advanced per real second (idle + follow). UI owns presets. */
   simDaysPerSec?: number;
@@ -117,10 +122,16 @@ function useSystemViz(): SystemVizApi {
  * {@link heliocentricSharedDisplayScale} (star clearance + planet/dwarf
  * sibling gaps; asteroids excluded from sibling loop).
  */
+/** Primary host = first star|black_hole root (prefer !parentId). */
+function findPrimaryHost(bodies: readonly Body[]): Body | undefined {
+  return (
+    bodies.find((b) => isPrimaryHostKind(b.kind) && !b.parentId) ??
+    bodies.find((b) => isPrimaryHostKind(b.kind))
+  );
+}
+
 function heliocentricDisplayScale(bodies: Body[], sizeMode: SizeMode): number {
-  const star =
-    bodies.find((b) => b.kind === "star" && !b.parentId) ??
-    bodies.find((b) => b.kind === "star");
+  const star = findPrimaryHost(bodies);
   if (!star) return 1;
   const kids = bodies.filter(
     (b) => hasUsableOrbit(b) && b.orbit?.frame !== "parent",
@@ -382,7 +393,7 @@ function visualBinaryCompanionOffset(
   // Mesh clearance after fit: fitScale must not bury companions in the primary.
   const parent =
     systemBodies.find((b) => b.id === body.parentId) ??
-    systemBodies.find((b) => b.kind === "star" && !b.parentId);
+    findPrimaryHost(systemBodies);
   const rPrimary = parent
     ? visualRadius(parent, sizeMode, systemBodies)
     : visualRadius(body, sizeMode, systemBodies);
@@ -430,15 +441,16 @@ function isExploreSceneBody(
   byId: ReadonlyMap<string, Body>,
   seen: Set<string> = new Set(),
 ): boolean {
-  // Primary star / dedicated central (earth-sats-earth: no orbit, no parent).
+  // Primary host (star | black_hole) or dedicated central (earth-sats-earth: no orbit).
   if (
     body.id === primaryStarId ||
-    (body.kind === "star" && !body.parentId) ||
+    (isPrimaryHostKind(body.kind) && !body.parentId) ||
     (!body.parentId && !hasUsableOrbit(body))
   ) {
     return true;
   }
   // Mesh companion stars even without Kepler (visual-binary display offset).
+  // Black holes are not visual-binary companions.
   if (body.kind === "star" && body.parentId) {
     return true;
   }
@@ -746,11 +758,15 @@ const BodyMesh = memo(function BodyMesh({
   focused,
   onSelect,
   highlightColor,
+  selectedPoiId,
+  onSelectPoi,
 }: {
   body: Body;
   focused: boolean;
   onSelect?: (id: string | null) => void;
   highlightColor?: string;
+  selectedPoiId?: string | null;
+  onSelectPoi?: (id: string | null) => void;
 }) {
   const group = useRef<THREE.Group>(null);
   const { getSimDays } = useSimApi();
@@ -767,6 +783,7 @@ const BodyMesh = memo(function BodyMesh({
     highlightColor,
     surfaceMap,
   );
+  const surfacePois = focused ? getPoisForBody(body.id) : [];
 
   const handleClick = useCallback(
     (e: { stopPropagation: () => void }) => {
@@ -886,6 +903,28 @@ const BodyMesh = memo(function BodyMesh({
     );
   }
 
+  if (body.kind === "black_hole") {
+    // Primary BH host: sphere + cooler/dimmer accretion pointLight (no OrbitLine).
+    return (
+      <group ref={group} name={body.id}>
+        <pointLight
+          intensity={1.2}
+          distance={60}
+          color={body.color ?? "#ff6a3d"}
+        />
+        <mesh
+          ref={spinMesh}
+          onClick={handleClick}
+          onContextMenu={handleContextMenu}
+          material={mat}
+          scale={focused ? 1.2 : 1}
+        >
+          <sphereGeometry args={[r, 32, 32]} />
+        </mesh>
+      </group>
+    );
+  }
+
   return (
     <group ref={group} name={body.id}>
       <mesh
@@ -896,6 +935,14 @@ const BodyMesh = memo(function BodyMesh({
         scale={focused ? 1.35 : 1}
       >
         <sphereGeometry args={[r, 24, 24]} />
+        {surfacePois.length > 0 ? (
+          <SurfacePoiMarkers
+            pois={surfacePois}
+            radius={r}
+            selectedPoiId={selectedPoiId}
+            onSelectPoi={onSelectPoi}
+          />
+        ) : null}
       </mesh>
     </group>
   );
@@ -915,7 +962,7 @@ function wrapDeltaAngle(d: number): number {
  * this when computing FOV distance — matches Pluto gold-standard screenshot.
  */
 function focusMeshScale(body: Body): number {
-  return body.kind === "star" ? 1.2 : 1.35;
+  return isPrimaryHostKind(body.kind) ? 1.2 : 1.35;
 }
 
 /**
@@ -1122,9 +1169,7 @@ function IdleCameraBootstrap({ focusId }: { focusId?: string | null }) {
         );
         if (clear > extent) extent = clear;
       }
-      const star =
-        systemBodies.find((b) => b.kind === "star" && !b.parentId) ??
-        systemBodies.find((b) => b.kind === "star");
+      const star = findPrimaryHost(systemBodies);
       starVis = star ? visualRadius(star, sizeMode, systemBodies) : 0;
     }
     const dist = schematicIdleCameraDistance(extent, starVis, fitScale);
@@ -1826,6 +1871,8 @@ function SimProvider({
 function SceneContent({
   focusId,
   onSelect,
+  selectedPoiId,
+  onSelectPoi,
   highlightColor,
   simDaysPerSec,
   sizeMode = DEFAULT_SIZE_MODE,
@@ -1862,10 +1909,7 @@ function SceneContent({
   const primaryStarId = useMemo(() => {
     const declared = systemGraph.system.primaryStarId;
     if (declared) return declared;
-    return (
-      systemBodies.find((b) => b.kind === "star" && !b.parentId)?.id ??
-      systemBodies.find((b) => b.kind === "star")?.id
-    );
+    return findPrimaryHost(systemBodies)?.id;
   }, [systemGraph, systemBodies]);
   const systemViz = useMemo(
     () => ({ bodies: systemBodies, helioScale, fitScale, faceOn, primaryStarId }),
@@ -1953,6 +1997,8 @@ function SceneContent({
             focused={focusId === b.id}
             onSelect={onSelect}
             highlightColor={highlightColor}
+            selectedPoiId={focusId === b.id ? selectedPoiId : null}
+            onSelectPoi={onSelectPoi}
           />
         ))}
       </BarycentricRoot>
@@ -1983,6 +2029,8 @@ function SceneContent({
 export function OrbitScene({
   focusId,
   onSelect,
+  selectedPoiId,
+  onSelectPoi,
   highlightColor,
   simDaysPerSec,
   sizeMode = DEFAULT_SIZE_MODE,
@@ -1996,6 +2044,7 @@ export function OrbitScene({
       className="h-full w-full"
       onContextMenu={(e) => {
         e.preventDefault();
+        onSelectPoi?.(null);
         onSelect?.(null);
       }}
     >
@@ -2016,6 +2065,8 @@ export function OrbitScene({
         <SceneContent
           focusId={focusId}
           onSelect={onSelect}
+          selectedPoiId={selectedPoiId}
+          onSelectPoi={onSelectPoi}
           highlightColor={highlightColor}
           simDaysPerSec={simDaysPerSec}
           sizeMode={sizeMode}

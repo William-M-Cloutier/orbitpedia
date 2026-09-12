@@ -32,7 +32,11 @@ const BodyKindSchema = z.enum([
   "asteroid",
   "moon",
   "satellite",
+  "black_hole",
 ]);
+function isPrimaryHostKind(kind) {
+  return kind === "star" || kind === "black_hole";
+}
 const OrbitFrameSchema = z.enum([
   "heliocentric",
   "barycentric",
@@ -245,10 +249,10 @@ const CatalogSchema = z
         continue;
       }
       const primary = bodyById.get(s.primaryStarId);
-      if (!primary || primary.kind !== "star") {
+      if (!primary || !isPrimaryHostKind(primary.kind)) {
         ctx.addIssue({
           code: "custom",
-          message: `system ${s.id} primaryStarId must be kind star: ${s.primaryStarId}`,
+          message: `system ${s.id} primaryStarId must be kind star|black_hole: ${s.primaryStarId}`,
           path: ["systems"],
         });
         continue;
@@ -263,14 +267,14 @@ const CatalogSchema = z
       if (primary.orbit) {
         ctx.addIssue({
           code: "custom",
-          message: `system ${s.id} primary star must omit orbit (companions use parent-frame)`,
+          message: `system ${s.id} primary host must omit orbit (companions use parent-frame)`,
           path: ["systems"],
         });
       }
       if (primary.parentId) {
         ctx.addIssue({
           code: "custom",
-          message: `system ${s.id} primary star must omit parentId`,
+          message: `system ${s.id} primary host must omit parentId`,
           path: ["systems"],
         });
       }
@@ -350,8 +354,8 @@ function findCentralBody(bodies, idHint) {
   }
   // Prefer root star, else root body with no orbit (earth-sats Earth), else sun id
   return (
-    bodies.find((b) => b.kind === "star" && !b.parentId) ??
-    bodies.find((b) => b.kind === "star") ??
+    bodies.find((b) => isPrimaryHostKind(b.kind) && !b.parentId) ??
+    bodies.find((b) => isPrimaryHostKind(b.kind)) ??
     bodies.find((b) => !b.parentId && !b.orbit) ??
     bodies.find((b) => b.id === "sun")
   );
@@ -385,7 +389,7 @@ function collectWeakFieldFlags(body, centralId) {
     flags.push("meta.provenance|source missing");
   }
   if (!body.meta.confidence) flags.push("meta.confidence missing");
-  if (body.id !== centralId && !body.orbit && body.kind !== "star") {
+  if (body.id !== centralId && !body.orbit && !isPrimaryHostKind(body.kind)) {
     flags.push("orbit missing (non-central)");
   }
   if (body.orbit && body.id !== centralId) {
@@ -403,7 +407,7 @@ function collectWeakFieldFlags(body, centralId) {
   }
   if (
     body.facts.albedo == null &&
-    body.kind !== "star" &&
+    !isPrimaryHostKind(body.kind) &&
     body.kind !== "moon" &&
     body.kind !== "satellite"
   ) {

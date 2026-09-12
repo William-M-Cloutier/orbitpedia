@@ -1,0 +1,24 @@
+{
+  "bodyId": "uranus",
+  "pois": [
+    {
+      "id": "south-polar-collar",
+      "bodyId": "uranus",
+      "name": "South Polar Collar",
+      "latDeg": -45,
+      "lonDeg": 0,
+      "summary": "Seasonal atmospheric band of enhanced methane absorption around Uranus’s southern mid-to-high latitudes, historically prominent near about 45°S. Coordinates are representative for this atmospheric collar; discrete dark spots on Uranus are rarer and often ephemeral.",
+      "sources": [
+        {
+          "name": "NASA Hubble — Uranus atmosphere imaging",
+          "url": "https://science.nasa.gov/asset/hubble/hubble-discovers-dark-cloud-in-the-atmosphere-of-uranus/"
+        },
+        {
+          "name": "arXiv — Ice giant circulation patterns",
+          "url": "https://arxiv.org/abs/1907.02901"
+        }
+      ],
+      "confidence": "assumed"
+    }
+  ]
+}

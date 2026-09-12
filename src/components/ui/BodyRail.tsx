@@ -12,6 +12,7 @@ import type { Body, BodyKind } from "@/data/schema";
 
 const FILTERS: Array<BodyKind | "all"> = [
   "all",
+  "black_hole",
   "star",
   "planet",
   "moon",
@@ -27,6 +28,7 @@ const KIND_GROUPS: Array<{
   /** Always render the section header (multi-star ready). */
   always?: boolean;
 }> = [
+  { kind: "black_hole", label: "Black holes" },
   { kind: "star", label: "Stars", always: true },
   { kind: "planet", label: "Planets" },
   { kind: "satellite", label: "Satellites" },

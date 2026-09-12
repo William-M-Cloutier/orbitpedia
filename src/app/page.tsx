@@ -23,6 +23,7 @@ import {
   getHomeSystem,
   getSystemGraph,
 } from "@/data/catalog";
+import { getPoi } from "@/data/pois";
 import { getSystemGraphAsync } from "@/data/archiveCatalog";
 import {
   SizeModeControl,
@@ -84,11 +85,13 @@ function ExploreHome() {
   );
 
   const [focusId, setFocusId] = useState<string | null>(null);
+  const [selectedPoiId, setSelectedPoiId] = useState<string | null>(null);
   const [speedMultiple, setSpeedMultiple] = useState(DEFAULT_SPEED_PRESET.multiple);
   const [sizeMode, setSizeMode] = useState<SizeMode>(DEFAULT_SIZE_MODE);
   /** Session-only — never written to catalog JSON. Cleared on system switch. */
   const [hiddenIds, setHiddenIds] = useState<Set<string>>(() => new Set());
   const focus = focusId ? getBody(focusId) : undefined;
+  const selectedPoi = selectedPoiId ? getPoi(selectedPoiId) : undefined;
   const simDaysPerSec = useMemo(
     () => multipleToDaysPerSec(speedMultiple),
     [speedMultiple],
@@ -108,6 +111,7 @@ function ExploreHome() {
       return;
     }
     setFocusId(null);
+    setSelectedPoiId(null);
   }, [focusParam, memberIds]);
 
   const pushExplore = useCallback(
@@ -130,6 +134,7 @@ function ExploreHome() {
       const next =
         id && memberIds.has(id) && getBody(id) ? id : null;
       setFocusId(next);
+      setSelectedPoiId(null);
       pushExplore(systemId, next);
     },
     [memberIds, pushExplore, systemId],
@@ -137,6 +142,7 @@ function ExploreHome() {
 
   const goHome = useCallback(() => {
     setFocusId(null);
+    setSelectedPoiId(null);
     setHiddenIds(new Set());
     router.replace("/", { scroll: false });
   }, [router]);
@@ -147,6 +153,10 @@ function ExploreHome() {
     [setFocus],
   );
   const onClear = useCallback(() => setFocus(null), [setFocus]);
+  const onSelectPoi = useCallback((id: string | null) => {
+    setSelectedPoiId(id);
+  }, []);
+  const onClearPoi = useCallback(() => setSelectedPoiId(null), []);
   const onRailFocus = useCallback(
     (id: string) => setFocus(focusId === id ? null : id),
     [setFocus, focusId],
@@ -167,12 +177,26 @@ function ExploreHome() {
   );
 
   useEffect(() => {
+    if (
+      selectedPoiId &&
+      (!focusId || getPoi(selectedPoiId)?.bodyId !== focusId)
+    ) {
+      setSelectedPoiId(null);
+    }
+  }, [focusId, selectedPoiId]);
+
+  useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setFocus(null);
+      if (e.key !== "Escape") return;
+      if (selectedPoiId) {
+        setSelectedPoiId(null);
+        return;
+      }
+      setFocus(null);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [setFocus]);
+  }, [setFocus, selectedPoiId]);
 
   if (!graphReady) {
     return (
@@ -236,6 +260,8 @@ function ExploreHome() {
                 systemId={systemId}
                 focusId={focusId}
                 onSelect={onSelect}
+                selectedPoiId={selectedPoiId}
+                onSelectPoi={onSelectPoi}
                 highlightColor={focus?.color}
                 simDaysPerSec={simDaysPerSec}
                 sizeMode={sizeMode}
@@ -255,7 +281,13 @@ function ExploreHome() {
             */}
             <div className="pointer-events-none hidden w-72 shrink-0 border-l border-white/10 md:block lg:w-80">
               <div className="pointer-events-auto h-full">
-                <FactsPanel body={focus} system={system} onClear={onClear} />
+                <FactsPanel
+                  body={focus}
+                  system={system}
+                  onClear={onClear}
+                  selectedPoi={selectedPoi}
+                  onClearPoi={onClearPoi}
+                />
               </div>
             </div>
           </div>

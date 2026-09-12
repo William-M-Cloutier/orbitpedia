@@ -1,0 +1,24 @@
+{
+  "bodyId": "neptune",
+  "pois": [
+    {
+      "id": "south-polar-vortex",
+      "bodyId": "neptune",
+      "name": "South Polar Vortex",
+      "latDeg": -80,
+      "lonDeg": 0,
+      "summary": "Warm cyclonic vortex over Neptune’s south polar region, with an edge often near roughly 80°S in atmospheric observations. This is a persistent atmospheric feature, distinct from the transient Great Dark Spot imaged by Voyager 2 near ~20°S.",
+      "sources": [
+        {
+          "name": "NASA Photojournal — Neptune atmosphere",
+          "url": "https://science.nasa.gov/photojournal/neptune-changes-in-great-dark-spot/"
+        },
+        {
+          "name": "Reviews of Geophysics — Polar vortices in planetary atmospheres",
+          "url": "https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2020RG000723"
+        }
+      ],
+      "confidence": "assumed"
+    }
+  ]
+}
