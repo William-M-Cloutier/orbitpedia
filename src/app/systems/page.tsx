@@ -87,7 +87,7 @@ type StarBin = "1" | "2" | "3+";
 const STAR_CHIPS: { id: StarBin; label: string }[] = [
   { id: "1", label: "1 star" },
   { id: "2", label: "2 stars" },
-  { id: "3+", label: "3+" },
+  { id: "3+", label: "3+ stars" },
 ];
 
 function spectralChipFromType(
