@@ -11,9 +11,10 @@
  *   2) Sampled ellipse |r| stays outside REAL central radius (au) [heliocentric]
  *   3) Solar-mass systems: periodD ≈ GAUSS_YEAR_D * aAu^1.5 within tol
  *      Other hosts: periodD ≈ GAUSS_YEAR_D * aAu^1.5 / sqrt(M/Msun) (skip if mass unknown)
- *   4) Central star has no heliocentric orbit / no OrbitLine required
+ *   4) Central / primary star has no orbit / no OrbitLine; companions may orbit
  *   5) Parent-frame: q clears parent real radius; shared viz scale; skip sun Kepler-3
  *   6) Epoch MA pose lies on true-anomaly OrbitLine polyline (body-on-line)
+ *   7) Multi-star: hasUsableOrbit allows companion stars; mesh-only companions OK
  *
  * Usage: node scripts/orbit-sanity.mjs
  *        npm test
@@ -198,7 +199,7 @@ function loadJsonDir(dir) {
 
 function hasUsableOrbit(body) {
   const o = body.orbit;
-  if (!o || body.kind === "star") return false;
+  if (!o) return false;
   return (
     Number.isFinite(o.aAu) &&
     o.aAu > 0 &&
@@ -298,11 +299,16 @@ function runSystemSanity(system) {
   }
 
   const central =
-    bodies.find((b) => b.kind === "star" && !b.parentId) ??
-    bodies.find((b) => b.kind === "star") ??
+    (system.primaryStarId && bodyById.get(system.primaryStarId)) ||
+    bodies.find((b) => b.kind === "star" && !b.parentId) ||
+    bodies.find((b) => b.kind === "star") ||
     bodies.find((b) => b.id === "sun");
   if (!central) {
     fail(`no central star in system ${system.id}`);
+    return;
+  }
+  if (central.kind !== "star") {
+    fail(`central ${central.id} must be kind star`);
     return;
   }
 
@@ -392,6 +398,11 @@ function runSystemSanity(system) {
 
   for (const b of orbiters) {
   if (!hasUsableOrbit(b)) {
+    // Companion stars may be mesh-only until Ephemeris lands elements.
+    if (b.kind === "star") {
+      ok(`${b.id}: companion star mesh-only (no usable orbit / OrbitLine)`);
+      continue;
+    }
     fail(`${b.id}: non-central body missing usable orbit (elements + frame)`);
     continue;
   }
@@ -831,6 +842,106 @@ if (!Number.isFinite(c)) {
     fail("proceduralTextures should use NoColorSpace for grayscale modulation maps");
   } else {
     ok("procedural maps use NoColorSpace (catalog color fidelity)");
+  }
+}
+
+// Synthetic multi-star (no curated fixture) — render/orbit contracts for companions.
+{
+  console.log("\n=== synthetic multi-star contracts ===");
+  const primary = {
+    id: "syn-primary",
+    kind: "star",
+    systemId: "syn-binary",
+    facts: { radiusMeanKm: 70000, massKg: 1.98841e30 },
+  };
+  const companion = {
+    id: "syn-companion",
+    kind: "star",
+    systemId: "syn-binary",
+    parentId: "syn-primary",
+    facts: { radiusMeanKm: 50000, massKg: 8e29 },
+    orbit: {
+      frame: "parent",
+      aAu: 0.08,
+      e: 0.02,
+      iDeg: 5,
+      omDeg: 10,
+      wDeg: 20,
+      maDeg: 30,
+      periodD: 20,
+      qAu: 0.08 * (1 - 0.02),
+    },
+  };
+  const meshOnly = {
+    id: "syn-mesh",
+    kind: "star",
+    systemId: "syn-binary",
+    parentId: "syn-primary",
+    facts: { radiusMeanKm: 40000 },
+  };
+  const planet = {
+    id: "syn-planet",
+    kind: "planet",
+    systemId: "syn-binary",
+    facts: { radiusMeanKm: 6000 },
+    orbit: {
+      frame: "heliocentric",
+      aAu: 0.25,
+      e: 0.04,
+      iDeg: 1,
+      omDeg: 0,
+      wDeg: 0,
+      maDeg: 0,
+      periodD: 40,
+    },
+  };
+
+  if (hasUsableOrbit(primary)) fail("synthetic primary must not have usable orbit");
+  else ok("synthetic primary: hasUsableOrbit false");
+  if (!hasUsableOrbit(companion)) fail("synthetic companion with elements must have usable orbit");
+  else ok("synthetic companion: hasUsableOrbit true (parent-frame)");
+  if (hasUsableOrbit(meshOnly)) fail("synthetic mesh-only companion must not have usable orbit");
+  else ok("synthetic mesh-only companion: hasUsableOrbit false");
+  if (!hasUsableOrbit(planet)) fail("synthetic planet must have usable orbit");
+  else ok("synthetic planet: hasUsableOrbit true");
+
+  const parentRealAu = primary.facts.radiusMeanKm / AU_KM;
+  const q = periapsisAu(companion.orbit);
+  if (!(q > parentRealAu + EPS_AU)) {
+    fail(`synthetic companion q=${q} does not clear primary real radius ${parentRealAu}`);
+  } else {
+    ok(`synthetic companion parent-frame q=${q.toPrecision(6)} > primary ${parentRealAu.toPrecision(6)}`);
+  }
+
+  // Helio kids = primary-frame only (companion is parent-frame → excluded).
+  const bodies = [primary, companion, meshOnly, planet];
+  const helioKids = bodies.filter(
+    (b) => hasUsableOrbit(b) && b.orbit?.frame !== "parent",
+  );
+  if (helioKids.length !== 1 || helioKids[0].id !== "syn-planet") {
+    fail(`synthetic helio kids expected [syn-planet], got ${helioKids.map((b) => b.id)}`);
+  } else {
+    ok("synthetic helio clearance orbiters exclude parent-frame companion star");
+  }
+
+  const schemaSrc = fs.readFileSync(path.join(ROOT, "src/data/schema.ts"), "utf8");
+  if (/if \(body\.kind === "star"\) return false/.test(schemaSrc)) {
+    fail("schema hasUsableOrbit still blanket-rejects stars");
+  } else {
+    ok("schema hasUsableOrbit allows stars with finite elements");
+  }
+  const sceneSrc = fs.readFileSync(path.join(ROOT, "src/viz/OrbitScene.tsx"), "utf8");
+  if (/if \(body\.kind === "star" \|\| !body\.orbit\) return \[0, 0, 0\]/.test(sceneSrc)) {
+    fail("OrbitScene bodyPosition/localOrbit still blanks all stars at origin");
+  } else if (!/hasUsableOrbit\(body\)\) return \[0, 0, 0\]/.test(sceneSrc)) {
+    fail("OrbitScene should gate star pose on hasUsableOrbit");
+  } else {
+    ok("OrbitScene positions companion stars via hasUsableOrbit / Kepler");
+  }
+  if (!/lightIntensity|isPrimaryStar/.test(sceneSrc) || !/0\.8/.test(sceneSrc)) {
+    fail("OrbitScene missing dimmed companion star pointLights");
+  } else {
+    ok("OrbitScene dims companion star pointLights (soft perf)");
   }
 }
 

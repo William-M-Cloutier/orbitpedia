@@ -165,6 +165,13 @@ export const SystemSchema = z.object({
   compactnessNote: z.string().min(1).optional(),
   /** Archive plane: any planet ≳50 M⊕ or ≳4 R⊕ (see ingest / hasGas.ts). */
   hasGas: z.boolean().optional(),
+  /** Bound stars in the system (archive: sy_snum). Prefer over counting bodies. */
+  starCount: z.number().int().positive().optional(),
+  /**
+   * Optional companion spectral types (archive index/map). Never invent —
+   * omit entries when unknown; length may be < starCount - 1.
+   */
+  companionSpectralTypes: z.array(z.string().min(1)).optional(),
   meta: SystemMetaSchema.optional(),
 });
 
@@ -287,13 +294,16 @@ export function bodyProvenance(body: Pick<Body, "meta">): string {
   return body.meta.provenance ?? body.meta.source ?? "unknown";
 }
 
-/** True when orbit has Kepler elements usable for path / position. */
+/**
+ * True when orbit has Kepler elements usable for path / position.
+ * Stars are allowed when elements are finite (binary companions); primaries
+ * typically omit orbit and stay at the system origin.
+ */
 export function hasUsableOrbit(
   body: Pick<Body, "orbit" | "kind">,
 ): body is Body & { orbit: Orbit } {
   const o = body.orbit;
   if (!o) return false;
-  if (body.kind === "star") return false;
   return (
     Number.isFinite(o.aAu) &&
     o.aAu > 0 &&

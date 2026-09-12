@@ -93,6 +93,8 @@ type SystemVizApi = {
   helioScale: number;
   /** Viz-only map of system mean orbital plane → ecliptic (face-on Explore). */
   faceOn: FaceOnRotation;
+  /** Strong pointLight star — System.primaryStarId or inferred root star. */
+  primaryStarId?: string;
 };
 
 const SystemVizContext = createContext<SystemVizApi | null>(null);
@@ -219,7 +221,7 @@ function useSimApi(): SimApi {
   return api;
 }
 
-/** True only when focus refers to a body with a usable orbit (not sun / not star). */
+/** True when focus has usable Kepler elements (primary stars usually false). */
 function focusIsOrbiter(focusId?: string | null): boolean {
   if (!focusId) return false;
   const b = getBody(focusId);
@@ -283,7 +285,11 @@ function parentDisplayScale(
   if (body.orbit?.frame !== "parent" || !body.parentId) return 1;
   const parent = getParent(body.id) ?? getBody(body.parentId);
   if (!parent) return 1;
-  const kids = listChildren(parent.id).filter(
+  const pool =
+    systemBodies && systemBodies.length > 0
+      ? systemBodies.filter((c) => c.parentId === parent.id)
+      : listChildren(parent.id);
+  const kids = pool.filter(
     (c) => c.orbit?.frame === "parent" && hasUsableOrbit(c),
   );
   if (kids.length === 0) return 1;
@@ -305,6 +311,41 @@ function parentDisplayScale(
   );
 }
 
+
+/**
+ * Viz-only layout for companion stars that lack usable Kepler elements.
+ * Not a catalog AU claim — equal angles around primary, clearance from meshes.
+ * Prefer real parent-frame elements when Ephemeris provides them.
+ */
+function companionStarLayoutOffset(
+  body: Body,
+  sizeMode: SizeMode,
+  systemBodies: readonly Body[],
+  faceOn: FaceOnRotation,
+): [number, number, number] {
+  const companions = systemBodies.filter(
+    (b) => b.kind === "star" && b.parentId && !hasUsableOrbit(b),
+  );
+  const idx = companions.findIndex((b) => b.id === body.id);
+  if (idx < 0) return [0, 0, 0];
+  const primary =
+    systemBodies.find((b) => b.kind === "star" && !b.parentId) ??
+    systemBodies.find((b) => b.kind === "star");
+  const rPrimary = primary
+    ? visualRadius(primary, sizeMode, systemBodies)
+    : 0.35;
+  const rSelf = visualRadius(body, sizeMode, systemBodies);
+  const sep = rPrimary + rSelf + Math.max(0.12, rPrimary * 0.35);
+  const n = Math.max(companions.length, 1);
+  const ang = (2 * Math.PI * idx) / n - Math.PI / 2;
+  return eclipticToSceneFaceOn(
+    faceOn,
+    Math.cos(ang) * sep,
+    0,
+    Math.sin(ang) * sep,
+  );
+}
+
 /**
  * Scene-local Kepler position for one body's own elements (no parent offset).
  * `relScale` folds orbitDistanceScale and optional parent-frame display scale.
@@ -315,7 +356,8 @@ function localOrbitPosition(
   relScale: number,
   faceOn: FaceOnRotation = FACE_ON_IDENTITY,
 ): [number, number, number] {
-  if (body.kind === "star" || !body.orbit) return [0, 0, 0];
+  // Stars without usable elements stay at origin; companions with Kepler data move.
+  if (!hasUsableOrbit(body)) return [0, 0, 0];
   const period = body.orbit.periodD ?? periodFromA(body.orbit.aAu);
   const ma = body.orbit.maDeg + (360 * simDays) / period;
   const [x, y, z] = positionAtMa(body.orbit, ma);
@@ -338,7 +380,18 @@ function bodyPosition(
   faceOn: FaceOnRotation = FACE_ON_IDENTITY,
   seen: Set<string> = new Set(),
 ): [number, number, number] {
-  if (body.kind === "star" || !body.orbit) return [0, 0, 0];
+  // Primary / non-orbiters → origin; mesh-only companion stars get layout offset.
+  if (!hasUsableOrbit(body)) {
+    if (
+      body.kind === "star" &&
+      body.parentId &&
+      systemBodies &&
+      systemBodies.length > 0
+    ) {
+      return companionStarLayoutOffset(body, sizeMode, systemBodies, faceOn);
+    }
+    return [0, 0, 0];
+  }
   if (seen.has(body.id)) return [0, 0, 0];
   seen.add(body.id);
 
@@ -572,7 +625,7 @@ const BodyMesh = memo(function BodyMesh({
 }) {
   const group = useRef<THREE.Group>(null);
   const { getSimDays } = useSimApi();
-  const { bodies: systemBodies, helioScale, faceOn } = useSystemViz();
+  const { bodies: systemBodies, helioScale, faceOn, primaryStarId } = useSystemViz();
   const sizeMode = useSizeMode();
   const distScale = orbitDistanceScale(sizeMode);
   const r = visualRadius(body, sizeMode, systemBodies);
@@ -636,10 +689,18 @@ const BodyMesh = memo(function BodyMesh({
   });
 
   if (body.kind === "star") {
+    // Primary: full light. Companions: dimmer — soft perf with 2–3 stars.
+    const isPrimaryStar = body.id === primaryStarId;
+    const lightIntensity = isPrimaryStar ? 2.2 : 0.8;
+    const lightDistance = isPrimaryStar ? 80 : 40;
     return (
       <group ref={group} name={body.id}>
-        {/* Viz-only barycentric wobble drives this group via useFrame; no OrbitLine. */}
-        <pointLight intensity={2.2} distance={80} color={body.color ?? "#FDB813"} />
+        {/* Primary: bary/face-on origin. Companion with usable orbit: Kepler via applyPose + OrbitLine. */}
+        <pointLight
+          intensity={lightIntensity}
+          distance={lightDistance}
+          color={body.color ?? "#FDB813"}
+        />
         <mesh
           ref={spinMesh}
           onClick={handleClick}
@@ -1554,10 +1615,11 @@ function SceneContent({
   viewInsetRight = 0,
 }: Props) {
   const resolvedSystemId = systemId ?? getHomeSystem().id;
-  const systemBodies = useMemo(
-    () => getSystemGraph(resolvedSystemId).bodies,
+  const systemGraph = useMemo(
+    () => getSystemGraph(resolvedSystemId),
     [resolvedSystemId],
   );
+  const systemBodies = systemGraph.bodies;
   const helioScale = useMemo(
     () => heliocentricDisplayScale(systemBodies, sizeMode),
     [systemBodies, sizeMode],
@@ -1566,9 +1628,17 @@ function SceneContent({
     () => systemFaceOnRotation(systemBodies),
     [systemBodies],
   );
+  const primaryStarId = useMemo(() => {
+    const declared = systemGraph.system.primaryStarId;
+    if (declared) return declared;
+    return (
+      systemBodies.find((b) => b.kind === "star" && !b.parentId)?.id ??
+      systemBodies.find((b) => b.kind === "star")?.id
+    );
+  }, [systemGraph, systemBodies]);
   const systemViz = useMemo(
-    () => ({ bodies: systemBodies, helioScale, faceOn }),
-    [systemBodies, helioScale, faceOn],
+    () => ({ bodies: systemBodies, helioScale, faceOn, primaryStarId }),
+    [systemBodies, helioScale, faceOn, primaryStarId],
   );
 
   // Orbit ellipses from system graph elements — skip if no usable orbit.
@@ -1584,13 +1654,15 @@ function SceneContent({
         : orbiters,
     [orbiters, hiddenIds],
   );
-  const visibleBodies = useMemo(
-    () =>
-      hiddenIds && hiddenIds.size > 0
-        ? systemBodies.filter((b) => !hiddenIds.has(b.id))
-        : systemBodies,
-    [systemBodies, hiddenIds],
-  );
+  const visibleBodies = useMemo(() => {
+    const base = systemBodies.filter((b) => {
+      if (hiddenIds && hiddenIds.has(b.id)) return false;
+      // Stars always mesh (primary + companions). Planets without aAu: rail only.
+      if (b.kind === "star") return true;
+      return hasUsableOrbit(b);
+    });
+    return base;
+  }, [systemBodies, hiddenIds]);
   // Idle system view: no camera autoRotate (user orbits manually).
   // Follow mode still ride-alongs when a planet is selected.
   const invalidate = useThree((s) => s.invalidate);
@@ -1614,7 +1686,7 @@ function SceneContent({
       <SoftHaze />
       <ambientLight intensity={0.32} />
       <BarycentricRoot focusId={focusId}>
-        {/* pointLight lives on the sun BodyMesh so it follows barycentric wobble */}
+        {/* pointLight lives on each star BodyMesh (primary strong; companions dimmed) */}
         {visibleOrbiters.map((b) => (
           <OrbitLine
             key={`o-${b.id}`}
