@@ -60,12 +60,13 @@ const AU_KM = 149_597_870.7;
 /**
  * Earth-sat Explore scale (viz-only; catalog aKm unchanged).
  *
- * LEO altitudes are tiny vs R⊕ (ISS ~0.067 R⊕). Amplify altitude so rings
- * read outside the Earth sphere while Earth mesh stays readable:
+ * GEOCENTRIC_ALT_AMPLIFY is viz-only readable LEO spacing (not catalog km).
+ * Facts / Store B keep real aKm; Explore amplifies altitude so LEO rings read
+ * outside the Earth sphere while the Earth mesh stays readable:
  *   sceneA = earthVis * (1 + GEOCENTRIC_ALT_AMPLIFY * (aKm - R⊕) / R⊕)
  *   scale  = sceneA / aAu   (Kepler samples land at sceneA)
  *
- * Amplify = 12 → ISS ~1.8× Earth mesh radius; NOAA-20 ~2.6×. Facts keep real km.
+ * Amplify = 12 → ISS ~1.8× Earth mesh radius; NOAA-20 ~2.6×.
  */
 export const GEOCENTRIC_ALT_AMPLIFY = 12;
 /** Mean Earth radius for altitude amplification (matches earth-sats-earth card). */

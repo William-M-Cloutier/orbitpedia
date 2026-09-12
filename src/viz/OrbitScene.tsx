@@ -11,6 +11,7 @@ import {
   useRef,
   createContext,
   useContext,
+  type RefObject,
 } from "react";
 import * as THREE from "three";
 import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
@@ -59,9 +60,26 @@ import {
   VISUAL_BINARY_CLEARANCE_MARGIN,
   COMPANION_OUT_OF_PLANE_FRAC,
 } from "./schematicFit";
-import { getBodyAppearanceMaterial, useRegistryTexture } from "./appearance";
+import {
+  getBodyAppearanceMaterial,
+  getSatPointsMaterial,
+  getSatSharedMaterial,
+  useRegistryTexture,
+} from "./appearance";
 import { getPoisForBody } from "@/data/pois";
 import { SurfacePoiMarkers } from "./SurfacePoiMarkers";
+import {
+  assignSatMeshRanks,
+  resolveSatLodTier,
+  shouldDrawGeocentricOrbitLine,
+  type SatLodTier,
+} from "./satLod";
+
+/** Single-vertex buffer for far/dense sat Points impostors (shared). */
+const SAT_POINT_POSITION_ATTR = new THREE.BufferAttribute(
+  new Float32Array([0, 0, 0]),
+  3,
+);
 
 /** Must match <Canvas camera.near> — focus floors stay outside the near plane. */
 const CAMERA_NEAR = 0.01;
@@ -800,6 +818,112 @@ const OrbitLine = memo(function OrbitLine({
   return line;
 });
 
+/**
+ * Artificial satellite mesh with focus/distance/density LOD.
+ * Shared materials via getSatSharedMaterial — no per-mount MeshStandardMaterial.
+ * frustumCulled stays true on mesh / points impostors.
+ */
+const SatelliteBodyMesh = memo(function SatelliteBodyMesh({
+  body,
+  focused,
+  groupRef,
+  spinRef,
+  r,
+  onClick,
+  onContextMenu,
+  satLod,
+}: {
+  body: Body;
+  focused: boolean;
+  groupRef: RefObject<THREE.Group | null>;
+  spinRef: RefObject<THREE.Object3D | null>;
+  r: number;
+  onClick: (e: { stopPropagation: () => void }) => void;
+  onContextMenu: (e: {
+    stopPropagation: () => void;
+    nativeEvent?: { preventDefault?: () => void };
+  }) => void;
+  satLod?: { satCount: number; meshRank: number };
+}) {
+  const tint = body.color ?? "#c8c8c8";
+  const busMat = getSatSharedMaterial("bus", tint);
+  const panelMat = getSatSharedMaterial("panel", "#3a5a8a");
+  const antennaMat = getSatSharedMaterial("antenna", "#dddddd");
+  const pointMat = getSatPointsMaterial(tint);
+  const tierRef = useRef<SatLodTier>(focused ? "full" : "simple");
+  const fullRef = useRef<THREE.Group>(null);
+  const simpleRef = useRef<THREE.Mesh>(null);
+  const pointsRef = useRef<THREE.Points>(null);
+  const { camera } = useThree();
+
+  const applyTier = (tier: SatLodTier) => {
+    tierRef.current = tier;
+    if (fullRef.current) fullRef.current.visible = tier === "full";
+    if (simpleRef.current) simpleRef.current.visible = tier === "simple";
+    if (pointsRef.current) pointsRef.current.visible = tier === "points";
+  };
+
+  useLayoutEffect(() => {
+    applyTier(focused ? "full" : "simple");
+  }, [focused]);
+
+  useFrame(() => {
+    if (!groupRef.current) return;
+    const dist = camera.position.distanceTo(groupRef.current.position);
+    const next = resolveSatLodTier({
+      focused,
+      satCount: satLod?.satCount ?? 1,
+      meshRank: satLod?.meshRank ?? 0,
+      distToCamera: dist,
+    });
+    if (next !== tierRef.current) applyTier(next);
+  });
+
+  const s = focused ? 1.35 : 1;
+  return (
+    <group ref={groupRef} name={body.id}>
+      <group
+        ref={spinRef}
+        scale={s}
+        onClick={onClick}
+        onContextMenu={onContextMenu}
+      >
+        {/* Focused / near: full procedural bus + panels + antenna. */}
+        <group ref={fullRef} visible={focused}>
+          <mesh frustumCulled material={busMat}>
+            <boxGeometry args={[r * 1.4, r * 0.7, r * 0.9]} />
+          </mesh>
+          <mesh frustumCulled material={panelMat}>
+            <boxGeometry args={[r * 4.2, r * 0.08, r * 1.1]} />
+          </mesh>
+          <mesh frustumCulled position={[0, r * 0.55, 0]} material={antennaMat}>
+            <boxGeometry args={[r * 0.35, r * 0.55, r * 0.35]} />
+          </mesh>
+        </group>
+        {/* Near/idle among visible set: simplified octahedron. */}
+        <mesh
+          ref={simpleRef}
+          frustumCulled
+          visible={!focused}
+          material={busMat}
+        >
+          <octahedronGeometry args={[r * 1.15, 0]} />
+        </mesh>
+        {/* Far / dense: tiny Points impostor. */}
+        <points ref={pointsRef} frustumCulled visible={false}>
+          <bufferGeometry>
+            <primitive
+              attach="attributes-position"
+              object={SAT_POINT_POSITION_ATTR}
+            />
+          </bufferGeometry>
+          <primitive object={pointMat} attach="material" />
+        </points>
+      </group>
+    </group>
+  );
+});
+
 const BodyMesh = memo(function BodyMesh({
   body,
   focused,
@@ -807,6 +931,7 @@ const BodyMesh = memo(function BodyMesh({
   highlightColor,
   selectedPoiId,
   onSelectPoi,
+  satLod,
 }: {
   body: Body;
   focused: boolean;
@@ -814,6 +939,8 @@ const BodyMesh = memo(function BodyMesh({
   highlightColor?: string;
   selectedPoiId?: string | null;
   onSelectPoi?: (id: string | null) => void;
+  /** Satellite mesh LOD inputs (omit for non-sats). */
+  satLod?: { satCount: number; meshRank: number };
 }) {
   const group = useRef<THREE.Group>(null);
   const { getSimDays } = useSimApi();
@@ -909,44 +1036,20 @@ const BodyMesh = memo(function BodyMesh({
     );
   }
 
-  // Artificial satellites: procedural box + panels (no real sat texture packs).
+  // Artificial satellites: procedural LOD (no real sat texture packs).
+  // Focused → full box+panels; near/idle → simple octahedron; far/dense → Points.
   if (body.kind === "satellite") {
-    const tint = body.color ?? "#c8c8c8";
-    const s = focused ? 1.35 : 1;
     return (
-      <group ref={group} name={body.id}>
-        <group
-          ref={spinMesh}
-          scale={s}
-          onClick={handleClick}
-          onContextMenu={handleContextMenu}
-        >
-          <mesh>
-            <boxGeometry args={[r * 1.4, r * 0.7, r * 0.9]} />
-            <meshStandardMaterial
-              color={tint}
-              metalness={0.35}
-              roughness={0.45}
-            />
-          </mesh>
-          <mesh>
-            <boxGeometry args={[r * 4.2, r * 0.08, r * 1.1]} />
-            <meshStandardMaterial
-              color="#3a5a8a"
-              metalness={0.2}
-              roughness={0.55}
-            />
-          </mesh>
-          <mesh position={[0, r * 0.55, 0]}>
-            <boxGeometry args={[r * 0.35, r * 0.55, r * 0.35]} />
-            <meshStandardMaterial
-              color="#dddddd"
-              metalness={0.1}
-              roughness={0.6}
-            />
-          </mesh>
-        </group>
-      </group>
+      <SatelliteBodyMesh
+        body={body}
+        focused={focused}
+        groupRef={group}
+        spinRef={spinMesh}
+        r={r}
+        onClick={handleClick}
+        onContextMenu={handleContextMenu}
+        satLod={satLod}
+      />
     );
   }
 
@@ -2009,6 +2112,21 @@ function SceneContent({
     if (!hiddenIds || hiddenIds.size === 0) return sceneBodies;
     return sceneBodies.filter((b) => !hiddenIds.has(b.id));
   }, [sceneBodies, hiddenIds]);
+  // Sat mesh / OrbitLine LOD ranks (system-agnostic; N≤cap keeps all mesh-eligible).
+  const visibleSats = useMemo(
+    () => visibleBodies.filter((b) => b.kind === "satellite"),
+    [visibleBodies],
+  );
+  const satCount = visibleSats.length;
+  const satMeshRanks = useMemo(
+    () => assignSatMeshRanks(visibleSats, focusId),
+    [visibleSats, focusId],
+  );
+  const geoSatCount = useMemo(
+    () =>
+      visibleOrbiters.filter((b) => b.orbit?.frame === "geocentric").length,
+    [visibleOrbiters],
+  );
   // Idle system view: no camera autoRotate (user orbits manually).
   // Follow mode still ride-alongs when a planet is selected.
   const invalidate = useThree((s) => s.invalidate);
@@ -2049,14 +2167,29 @@ function SceneContent({
       ) : null}
       <BarycentricRoot focusId={focusId}>
         {/* pointLight lives on each star BodyMesh (primary strong; companions dimmed) */}
-        {visibleOrbiters.map((b) => (
-          <OrbitLine
-            key={`o-${b.id}`}
-            body={b}
-            highlighted={focusId === b.id}
-            highlightColor={highlightColor}
-          />
-        ))}
+        {visibleOrbiters.map((b) => {
+          // Geocentric OrbitLine LOD: focused always; all when N≤cap; else neighbors only.
+          if (b.orbit?.frame === "geocentric") {
+            const rank = satMeshRanks.get(b.id) ?? 999;
+            if (
+              !shouldDrawGeocentricOrbitLine({
+                focused: focusId === b.id,
+                geoSatCount,
+                meshRank: rank,
+              })
+            ) {
+              return null;
+            }
+          }
+          return (
+            <OrbitLine
+              key={`o-${b.id}`}
+              body={b}
+              highlighted={focusId === b.id}
+              highlightColor={highlightColor}
+            />
+          );
+        })}
         {visibleBodies.map((b) => (
           <BodyMesh
             key={`${b.id}-${sizeMode}`}
@@ -2066,6 +2199,14 @@ function SceneContent({
             highlightColor={highlightColor}
             selectedPoiId={focusId === b.id ? selectedPoiId : null}
             onSelectPoi={onSelectPoi}
+            satLod={
+              b.kind === "satellite"
+                ? {
+                    satCount,
+                    meshRank: satMeshRanks.get(b.id) ?? 999,
+                  }
+                : undefined
+            }
           />
         ))}
       </BarycentricRoot>
