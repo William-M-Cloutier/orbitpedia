@@ -101,10 +101,6 @@ type Props = {
   sizeMode?: SizeMode;
   /** Session-only ids with mesh + orbit line suppressed (Explore hide). */
   hiddenIds?: ReadonlySet<string>;
-  /** Hide all probe path.waypoints polylines (Sol Explore chrome). */
-  hideProbePaths?: boolean;
-  /** Hide all probe craft meshes (Sol Explore chrome). */
-  hideProbes?: boolean;
   /** Active system graph (default: home). Remount OrbitCanvas on change. */
   systemId?: string;
   /**
@@ -1119,7 +1115,6 @@ const BodyMesh = memo(function BodyMesh({
   selectedPoiId,
   onSelectPoi,
   satLod,
-  hideProbePaths = false,
 }: {
   body: Body;
   focused: boolean;
@@ -1129,8 +1124,6 @@ const BodyMesh = memo(function BodyMesh({
   onSelectPoi?: (id: string | null) => void;
   /** Satellite mesh LOD inputs (omit for non-sats). */
   satLod?: { satCount: number; meshRank: number };
-  /** When true, skip ProbePathLine (paths chrome toggle). */
-  hideProbePaths?: boolean;
 }) {
   const group = useRef<THREE.Group>(null);
   const { getSimDays } = useSimApi();
@@ -1292,13 +1285,11 @@ const BodyMesh = memo(function BodyMesh({
           onClick={handleClick}
           onContextMenu={handleContextMenu}
         />
-        {!hideProbePaths ? (
-          <ProbePathLine
-            body={body}
-            highlighted={focused}
-            highlightColor={highlightColor}
-          />
-        ) : null}
+        <ProbePathLine
+          body={body}
+          highlighted={focused}
+          highlightColor={highlightColor}
+        />
       </>
     );
   }
@@ -2257,8 +2248,6 @@ function SceneContent({
   simDaysPerSec,
   sizeMode = DEFAULT_SIZE_MODE,
   hiddenIds,
-  hideProbePaths = false,
-  hideProbes = false,
   systemId,
   viewInsetLeft = 0,
   viewInsetRight = 0,
@@ -2321,15 +2310,9 @@ function SceneContent({
       : orbiters;
   }, [sceneBodies, hiddenIds]);
   const visibleBodies = useMemo(() => {
-    let list = sceneBodies;
-    if (hiddenIds && hiddenIds.size > 0) {
-      list = list.filter((b) => !hiddenIds.has(b.id));
-    }
-    if (hideProbes) {
-      list = list.filter((b) => b.kind !== "probe");
-    }
-    return list;
-  }, [sceneBodies, hiddenIds, hideProbes]);
+    if (!hiddenIds || hiddenIds.size === 0) return sceneBodies;
+    return sceneBodies.filter((b) => !hiddenIds.has(b.id));
+  }, [sceneBodies, hiddenIds]);
   // Sat mesh / OrbitLine LOD ranks (system-agnostic; N≤cap keeps all mesh-eligible).
   const visibleSats = useMemo(
     () => visibleBodies.filter((b) => b.kind === "satellite"),
@@ -2425,7 +2408,6 @@ function SceneContent({
                   }
                 : undefined
             }
-            hideProbePaths={hideProbePaths}
           />
         ))}
       </BarycentricRoot>
@@ -2462,8 +2444,6 @@ export function OrbitScene({
   simDaysPerSec,
   sizeMode = DEFAULT_SIZE_MODE,
   hiddenIds,
-  hideProbePaths = false,
-  hideProbes = false,
   systemId,
   viewInsetLeft = 0,
   viewInsetRight = 0,
@@ -2500,8 +2480,6 @@ export function OrbitScene({
           simDaysPerSec={simDaysPerSec}
           sizeMode={sizeMode}
           hiddenIds={hiddenIds}
-          hideProbePaths={hideProbePaths}
-          hideProbes={hideProbes}
           systemId={systemId}
           viewInsetLeft={viewInsetLeft}
           viewInsetRight={viewInsetRight}
