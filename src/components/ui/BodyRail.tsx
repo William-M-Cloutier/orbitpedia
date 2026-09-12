@@ -57,9 +57,9 @@ type Props = {
   /** Kinds whose orbit/path lines are hidden (default empty = all visible). */
   hideOrbitPathKinds?: ReadonlySet<BodyKind>;
   onToggleHideOrbitPathKind?: (kind: BodyKind) => void;
-  /** Hide probe craft meshes / markers (default false = visible). */
-  hideProbeMeshes?: boolean;
-  onHideProbeMeshesChange?: (next: boolean) => void;
+  /** Kinds whose meshes/markers are hidden (default empty = all visible). */
+  hideMeshKinds?: ReadonlySet<BodyKind>;
+  onToggleHideMeshKind?: (kind: BodyKind) => void;
 };
 
 type RailRow = { body: Body; depth: number; childCount: number };
@@ -134,8 +134,8 @@ export function BodyRail({
   systemId,
   hideOrbitPathKinds,
   onToggleHideOrbitPathKind,
-  hideProbeMeshes = false,
-  onHideProbeMeshesChange,
+  hideMeshKinds,
+  onToggleHideMeshKind,
 }: Props) {
   const [filter, setFilter] = useState<(typeof FILTERS)[number]>("all");
   const [open, setOpen] = useState(true);
@@ -432,9 +432,10 @@ export function BodyRail({
             {groupedSections.map((g) => {
               const closed = groupCollapsed.has(g.kind);
               const pathsHidden = hideOrbitPathKinds?.has(g.kind) ?? false;
+              const meshesHidden = hideMeshKinds?.has(g.kind) ?? false;
               const showPathToggle = onToggleHideOrbitPathKind != null;
-              const showProbeMeshToggle =
-                g.kind === "probe" && onHideProbeMeshesChange != null;
+              const showMeshToggle = onToggleHideMeshKind != null;
+              const kindLabel = g.label.toLowerCase();
               return (
                 <div key={g.kind}>
                   <div className="mb-0.5 flex items-center gap-0.5">
@@ -453,7 +454,7 @@ export function BodyRail({
                       </span>
                     </button>
                   </div>
-                  {showPathToggle || showProbeMeshToggle ? (
+                  {showPathToggle || showMeshToggle ? (
                     <div className="mb-1 flex flex-wrap gap-1 px-1">
                       {showPathToggle ? (
                         <button
@@ -467,30 +468,32 @@ export function BodyRail({
                           aria-pressed={pathsHidden}
                           title={
                             pathsHidden
-                              ? `Show ${g.label.toLowerCase()} paths`
-                              : `Hide ${g.label.toLowerCase()} paths`
+                              ? `Show ${kindLabel} paths`
+                              : `Hide ${kindLabel} paths`
                           }
                         >
                           {pathsHidden ? "Paths hidden" : "Hide paths"}
                         </button>
                       ) : null}
-                      {showProbeMeshToggle ? (
+                      {showMeshToggle ? (
                         <button
                           type="button"
-                          onClick={() =>
-                            onHideProbeMeshesChange(!hideProbeMeshes)
-                          }
+                          onClick={() => onToggleHideMeshKind(g.kind)}
                           className={`rounded px-1.5 py-0.5 text-[10px] ${
-                            hideProbeMeshes
+                            meshesHidden
                               ? "bg-amber-500/15 text-amber-200/90"
                               : "bg-white/5 text-zinc-500 hover:text-zinc-300"
                           }`}
-                          aria-pressed={hideProbeMeshes}
+                          aria-pressed={meshesHidden}
                           title={
-                            hideProbeMeshes ? "Show probes" : "Hide probes"
+                            meshesHidden
+                              ? `Show ${kindLabel}`
+                              : `Hide ${kindLabel}`
                           }
                         >
-                          {hideProbeMeshes ? "Probes hidden" : "Hide probes"}
+                          {meshesHidden
+                            ? `${g.label} hidden`
+                            : `Hide ${kindLabel}`}
                         </button>
                       ) : null}
                     </div>

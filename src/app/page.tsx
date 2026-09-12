@@ -97,8 +97,10 @@ function ExploreHome() {
   const [hideOrbitPathKinds, setHideOrbitPathKinds] = useState<Set<BodyKind>>(
     () => new Set(),
   );
-  /** Hide all probe craft meshes / markers (default visible). */
-  const [hideProbeMeshes, setHideProbeMeshes] = useState(false);
+  /** Kinds whose meshes/markers are hidden (default all visible). */
+  const [hideMeshKinds, setHideMeshKinds] = useState<Set<BodyKind>>(
+    () => new Set(),
+  );
   const focus = focusId ? getBody(focusId) : undefined;
   const selectedPoi = selectedPoiId ? getPoi(selectedPoiId) : undefined;
   const simDaysPerSec = useMemo(
@@ -113,7 +115,7 @@ function ExploreHome() {
   useEffect(() => {
     setHiddenIds(new Set());
     setHideOrbitPathKinds(new Set());
-    setHideProbeMeshes(false);
+    setHideMeshKinds(new Set());
   }, [systemId]);
 
   // Earth sats: 1 day / 60s wall (not Sol Default). Slow remains a user option.
@@ -228,6 +230,15 @@ function ExploreHome() {
     });
   }, []);
 
+  const onToggleHideMeshKind = useCallback((kind: BodyKind) => {
+    setHideMeshKinds((prev) => {
+      const next = new Set(prev);
+      if (next.has(kind)) next.delete(kind);
+      else next.add(kind);
+      return next;
+    });
+  }, []);
+
   if (!graphReady) {
     return (
       <div className="flex min-h-[calc(100vh-3.5rem)] items-center justify-center text-sm text-zinc-500">
@@ -247,8 +258,8 @@ function ExploreHome() {
           onToggleHidden={onToggleHidden}
           hideOrbitPathKinds={hideOrbitPathKinds}
           onToggleHideOrbitPathKind={onToggleHideOrbitPathKind}
-          hideProbeMeshes={hideProbeMeshes}
-          onHideProbeMeshesChange={setHideProbeMeshes}
+          hideMeshKinds={hideMeshKinds}
+          onToggleHideMeshKind={onToggleHideMeshKind}
         />
       }
     >
@@ -301,7 +312,7 @@ function ExploreHome() {
                 sizeMode={sizeMode}
                 hiddenIds={hiddenIds}
                 hideOrbitPathKinds={hideOrbitPathKinds}
-                hideProbeMeshes={hideProbeMeshes}
+                hideMeshKinds={hideMeshKinds}
               />
               <div className="pointer-events-none absolute left-3 top-3 z-10 flex flex-col gap-2 items-start">
                 {!isEarthSats ? (

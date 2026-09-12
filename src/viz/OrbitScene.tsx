@@ -105,8 +105,10 @@ type Props = {
   hideProbePaths?: boolean;
   /** Hide all probe craft meshes / markers (ProbeBodyMesh). Default false = visible. */
   hideProbeMeshes?: boolean;
-  /** Suppress OrbitLine / ProbePathLine by body kind (moons inherit planet). Meshes stay. */
+  /** Suppress OrbitLine / ProbePathLine by body kind (moons inherit planet). */
   hideOrbitPathKinds?: ReadonlySet<BodyKind>;
+  /** Suppress meshes/markers by body kind (moons inherit planet). */
+  hideMeshKinds?: ReadonlySet<BodyKind>;
   /** Active system graph (default: home). Remount OrbitCanvas on change. */
   systemId?: string;
   /**
@@ -1125,6 +1127,20 @@ const SatelliteBodyMesh = memo(function SatelliteBodyMesh({
   );
 });
 
+
+/** Meshes/markers hidden for kind; moons inherit planet. Also honors legacy hideProbeMeshes. */
+function shouldHideMesh(
+  body: Pick<Body, "kind">,
+  hideMeshKinds?: ReadonlySet<BodyKind>,
+  hideProbeMeshes?: boolean,
+): boolean {
+  if (hideProbeMeshes && body.kind === "probe") return true;
+  if (!hideMeshKinds || hideMeshKinds.size === 0) return false;
+  if (hideMeshKinds.has(body.kind)) return true;
+  if (body.kind === "moon" && hideMeshKinds.has("planet")) return true;
+  return false;
+}
+
 const BodyMesh = memo(function BodyMesh({
   body,
   focused,
@@ -1136,6 +1152,7 @@ const BodyMesh = memo(function BodyMesh({
   hideProbePaths = false,
   hideProbeMeshes = false,
   hideOrbitPathKinds,
+  hideMeshKinds,
 }: {
   body: Body;
   focused: boolean;
@@ -1148,6 +1165,7 @@ const BodyMesh = memo(function BodyMesh({
   hideProbePaths?: boolean;
   hideProbeMeshes?: boolean;
   hideOrbitPathKinds?: ReadonlySet<BodyKind>;
+  hideMeshKinds?: ReadonlySet<BodyKind>;
 }) {
   const group = useRef<THREE.Group>(null);
   const { getSimDays } = useSimApi();
@@ -1304,7 +1322,7 @@ const BodyMesh = memo(function BodyMesh({
     if (hideProbeMeshes && hidePath) return null;
     return (
       <>
-        {!hideProbeMeshes ? (
+        {!shouldHideMesh(body, hideMeshKinds, hideProbeMeshes) ? (
           <ProbeBodyMesh
             body={body}
             focused={focused}
@@ -1352,6 +1370,8 @@ const BodyMesh = memo(function BodyMesh({
 const Y_AXIS = new THREE.Vector3(0, 1, 0);
 
 /** Normalize angle delta into (-π, π]. */
+
+
 function wrapDeltaAngle(d: number): number {
   if (d > Math.PI) return d - Math.PI * 2;
   if (d <= -Math.PI) return d + Math.PI * 2;
@@ -2293,6 +2313,7 @@ function SceneContent({
   hideProbePaths = false,
   hideProbeMeshes = false,
   hideOrbitPathKinds,
+  hideMeshKinds,
   systemId,
   viewInsetLeft = 0,
   viewInsetRight = 0,
@@ -2358,10 +2379,16 @@ function SceneContent({
     );
     return orbiters;
   }, [sceneBodies, hiddenIds, hideOrbitPathKinds]);
-  const visibleBodies = useMemo(() => {
-    if (!hiddenIds || hiddenIds.size === 0) return sceneBodies;
-    return sceneBodies.filter((b) => !hiddenIds.has(b.id));
-  }, [sceneBodies, hiddenIds]);
+    const visibleBodies = useMemo(() => {
+    let list = sceneBodies;
+    if (hiddenIds && hiddenIds.size > 0) {
+      list = list.filter((b) => !hiddenIds.has(b.id));
+    }
+    list = list.filter(
+      (b) => !shouldHideMesh(b, hideMeshKinds, hideProbeMeshes),
+    );
+    return list;
+  }, [sceneBodies, hiddenIds, hideMeshKinds, hideProbeMeshes]);
   // Sat mesh / OrbitLine LOD ranks (system-agnostic; N≤cap keeps all mesh-eligible).
   const visibleSats = useMemo(
     () => visibleBodies.filter((b) => b.kind === "satellite"),
@@ -2499,6 +2526,7 @@ export function OrbitScene({
   hideProbePaths,
   hideProbeMeshes,
   hideOrbitPathKinds,
+  hideMeshKinds,
   systemId,
   viewInsetLeft = 0,
   viewInsetRight = 0,
@@ -2538,6 +2566,7 @@ export function OrbitScene({
           hideProbePaths={hideProbePaths}
           hideProbeMeshes={hideProbeMeshes}
           hideOrbitPathKinds={hideOrbitPathKinds}
+          hideMeshKinds={hideMeshKinds}
           systemId={systemId}
           viewInsetLeft={viewInsetLeft}
           viewInsetRight={viewInsetRight}

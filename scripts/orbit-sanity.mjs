@@ -1925,35 +1925,33 @@ if (!Number.isFinite(c)) {
     ok("path.waypoints ProbePathLine + last-waypoint craft pose wired; marker-only fail-open OK");
   }
 
-  // Probe visibility toggles (Explore): hide paths vs meshes independently.
+  // Per-kind visibility toggles (Explore): paths vs meshes independently.
   {
     const pageSrc = fs.readFileSync(path.join(ROOT, "src/app/page.tsx"), "utf8");
     const canvasSrc = fs.readFileSync(path.join(ROOT, "src/viz/OrbitCanvas.tsx"), "utf8");
     const railSrc = fs.readFileSync(path.join(ROOT, "src/components/ui/BodyRail.tsx"), "utf8");
     const hasPage =
-      /hideProbePaths/.test(pageSrc) &&
-      /hideProbeMeshes/.test(pageSrc) &&
-      /onHideProbePathsChange/.test(pageSrc) &&
-      /onHideProbeMeshesChange/.test(pageSrc);
+      /hideOrbitPathKinds/.test(pageSrc) &&
+      /hideMeshKinds/.test(pageSrc) &&
+      /onToggleHideOrbitPathKind/.test(pageSrc) &&
+      /onToggleHideMeshKind/.test(pageSrc);
     const hasCanvas =
-      /hideProbePaths/.test(canvasSrc) && /hideProbeMeshes/.test(canvasSrc);
+      /hideOrbitPathKinds/.test(canvasSrc) && /hideMeshKinds/.test(canvasSrc);
     const hasScene =
-      /hideProbePaths/.test(sceneSrc) &&
-      /hideProbeMeshes/.test(sceneSrc) &&
+      /hideOrbitPathKinds/.test(sceneSrc) &&
+      (/hideMeshKinds/.test(sceneSrc) || /shouldHideMesh/.test(sceneSrc)) &&
       /ProbePathLine/.test(sceneSrc) &&
       /ProbeBodyMesh/.test(sceneSrc);
-    // Rail chrome may land separately (Sky); assert page+viz wiring at minimum.
     if (!hasPage) {
-      fail("page.tsx should lift hideProbePaths / hideProbeMeshes + setters");
+      fail("page.tsx should lift hideOrbitPathKinds / hideMeshKinds + toggles");
     } else if (!hasCanvas) {
-      fail("OrbitCanvas should accept hideProbePaths / hideProbeMeshes props");
+      fail("OrbitCanvas should accept hideOrbitPathKinds / hideMeshKinds props");
     } else if (!hasScene) {
-      fail("OrbitScene should gate ProbePathLine / ProbeBodyMesh on hide toggles");
+      fail("OrbitScene should gate paths/meshes via hideOrbitPathKinds / hideMeshKinds");
     } else {
-      ok("probe visibility toggles wired (page + OrbitCanvas + OrbitScene)");
-      // Soft: BodyRail may already expose the props (string presence OK if present).
-      if (/hideProbePaths/.test(railSrc) || /hideProbeMeshes/.test(railSrc)) {
-        ok("BodyRail mentions hideProbePaths / hideProbeMeshes");
+      ok("per-kind visibility toggles wired (page + OrbitCanvas + OrbitScene)");
+      if (/hideOrbitPathKinds/.test(railSrc) && /hideMeshKinds/.test(railSrc)) {
+        ok("BodyRail mentions hideOrbitPathKinds / hideMeshKinds");
       }
     }
   }

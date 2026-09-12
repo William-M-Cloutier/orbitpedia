@@ -30,10 +30,12 @@ type Props = {
   hiddenIds?: ReadonlySet<string>;
   /** Body kinds whose OrbitLine / ProbePathLine are hidden (moons inherit planet). */
   hideOrbitPathKinds?: ReadonlySet<BodyKind>;
-  /** Hide all probe craft meshes / markers (ProbeBodyMesh). Default false = visible. */
-  hideProbeMeshes?: boolean;
-  /** @deprecated Prefer hideOrbitPathKinds.has("probe") — still honored by OrbitScene. */
+  /** Body kinds whose meshes/markers are hidden (moons inherit planet). */
+  hideMeshKinds?: ReadonlySet<BodyKind>;
+  /** @deprecated Prefer hideOrbitPathKinds.has("probe"). */
   hideProbePaths?: boolean;
+  /** @deprecated Prefer hideMeshKinds.has("probe"). */
+  hideProbeMeshes?: boolean;
   /** Active system graph — remount parent with key={systemId} to unload RAF/meshes. */
   systemId?: string;
   /** Canvas-space overlay insets for setViewOffset (see OrbitScene). */
