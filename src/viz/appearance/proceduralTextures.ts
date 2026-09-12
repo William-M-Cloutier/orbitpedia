@@ -93,20 +93,20 @@ function sampleFamily(
       // Grayscale modulates catalog color (warm crimson / purple disk tint).
       // Distinct from star granulation and gas lat bands.
       const lat = (v - 0.5) * 2; // −1…1 from equator
-      const equator = Math.exp(-lat * lat * 9);
+      const equator = Math.exp(-lat * lat * 7);
       const warp = fbm(u * 2.5, v * 1.8, 31, 3);
       const swirl =
         0.5 +
         0.5 *
           Math.sin(
-            u * Math.PI * 7 + lat * 3.5 + warp * Math.PI * 2.2,
+            u * Math.PI * 9 + lat * 4 + warp * Math.PI * 2.4,
           );
-      const fine = fbm(u * 8, v * 4, 47, 2);
-      const horizon = 0.03 + 0.06 * fbm(u * 1.5, v * 1.5, 41, 2);
+      const fine = fbm(u * 10, v * 5, 47, 2);
+      const horizon = 0.02 + 0.05 * fbm(u * 1.5, v * 1.5, 41, 2);
       const n =
         horizon +
-        equator * (0.28 + 0.32 * swirl + 0.1 * fine);
-      return Math.min(0.78, Math.max(0.02, n));
+        equator * (0.38 + 0.4 * swirl + 0.12 * fine);
+      return Math.min(0.92, Math.max(0.015, n));
     }
     case "star": {
       // Soft granulation; stay bright so MeshBasic host stars read cleanly.

@@ -13,10 +13,10 @@
     "approximateFields": [
       "radiusMeanKm"
     ],
-    "discoveryNotes": "Stellar-mass black hole with a massive blue companion star. Listed size uses the Schwarzschild radius from the cited mass as a horizon-scale size proxy.",
+    "discoveryNotes": "One of the first black holes confirmed in our galaxy \u2014 a stellar-mass hole fed by a massive blue companion, shining brightly in X-rays. Size shown is the event horizon scale from its measured mass.",
     "discoveryDate": "1971"
   },
-  "color": "#2d1b4e",
+  "color": "#c45cff",
   "meta": {
     "source": "Chandra Photo Album Cygnus X-1 (2011) \u2014 mass 14.8 Msun, distance ~6070 ly; Rs from mass",
     "confidence": "known",

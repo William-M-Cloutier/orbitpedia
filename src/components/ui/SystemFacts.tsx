@@ -33,6 +33,13 @@ export function SystemFacts({
     earthSats && bodies
       ? bodies.filter((b) => b.kind === "satellite").length
       : null;
+  const primary =
+    (system.primaryStarId &&
+      bodies?.find((b) => b.id === system.primaryStarId)) ||
+    bodies?.find((b) => b.kind === "black_hole" || b.kind === "star");
+  const hostLabel =
+    system.hostSpectralType ??
+    (primary?.kind === "black_hole" ? "Black hole" : undefined);
 
   return (
     <div className={`flex flex-col gap-3 ${className}`}>
@@ -84,14 +91,12 @@ export function SystemFacts({
             <dd className="mt-0.5 text-sm text-zinc-100">{system.starCount}</dd>
           </div>
         ) : null}
-        {system.hostSpectralType ? (
+        {hostLabel ? (
           <div className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
             <dt className="text-[11px] uppercase tracking-wider text-zinc-500">
               Host
             </dt>
-            <dd className="mt-0.5 text-sm text-zinc-100">
-              {system.hostSpectralType}
-            </dd>
+            <dd className="mt-0.5 text-sm text-zinc-100">{hostLabel}</dd>
           </div>
         ) : null}
         {system.distanceLy != null ? (

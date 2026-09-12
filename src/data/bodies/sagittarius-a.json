@@ -15,10 +15,10 @@
       "massKg",
       "radiusMeanKm"
     ],
-    "discoveryNotes": "Galactic-center supermassive black hole. Listed size uses the Schwarzschild radius from the cited mass as a horizon-scale size proxy, not a solid surface.",
+    "discoveryNotes": "The quiet heart of the Milky Way \u2014 a supermassive black hole whose gravity steers the innermost stars. Size shown is the event horizon scale from its measured mass.",
     "discoveryDate": "1974"
   },
-  "color": "#1a1a2e",
+  "color": "#ff6a3d",
   "meta": {
     "source": "NASA Chandra / JPL Education \u2014 mass ~4e6 Msun; Schwarzschild radius from mass (approximateFields)",
     "confidence": "known",
