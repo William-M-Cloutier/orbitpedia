@@ -55,16 +55,16 @@ Lean WebP under Guard caps, served from `public/textures/`, registered in
 | `neptune-marquee` | Neptune | NASA/Voyager-derived ([Solar System Scope](https://www.solarsystemscope.com/textures/) 2k, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)) — 2048×1024 WebP |
 | `sun-marquee` | Sun | NASA SDO-derived ([Solar System Scope](https://www.solarsystemscope.com/textures/) 2k, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)) — 2048×1024 WebP |
 | `mercury-marquee` | Mercury | NASA/MESSENGER-derived ([Solar System Scope](https://www.solarsystemscope.com/textures/) 2k, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)) — 2048×1024 WebP |
-| `pluto-marquee` | Pluto | NASA/JHUAPL/SwRI New Horizons extended-color cylindrical [PIA19956](https://photojournal.jpl.nasa.gov/catalog/PIA19956) (public domain) — 2048×1024 WebP |
+| `pluto-marquee` | Pluto | NASA/JHUAPL/SwRI New Horizons extended-color cylindrical [PIA19956](https://photojournal.jpl.nasa.gov/catalog/PIA19956) + USGS New Horizons global mosaic fill (public domain) — 2048×1024 WebP |
 | `ceres-marquee` | Ceres | NASA/Dawn-derived ([Solar System Scope](https://www.solarsystemscope.com/textures/) 2k, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)) — 2048×1024 WebP |
 | `io-marquee` | Io | NASA/JPL/USGS Voyager–Galileo cylindrical mosaic (public domain) — 2048×1024 WebP |
 | `europa-marquee` | Europa | NASA/Juno–Voyager–Galileo cylindrical mosaic (public domain) — 2048×1024 WebP |
 | `ganymede-marquee` | Ganymede | NASA/JPL/USGS Voyager–Galileo cylindrical mosaic (public domain) — 2048×1024 WebP |
 | `callisto-marquee` | Callisto | NASA/Voyager–Galileo cylindrical mosaic (public domain) — 2048×1024 WebP |
-| `titan-marquee` | Titan | NASA/JPL-Caltech/SSI Cassini global map [PIA19658](https://photojournal.jpl.nasa.gov/catalog/PIA19658) (public domain) — 2048×1024 WebP |
-| `enceladus-marquee` | Enceladus | NASA/JPL/SSI Cassini global map [PIA08417](https://photojournal.jpl.nasa.gov/catalog/PIA08417) (public domain) — 2048×1024 WebP |
+| `titan-marquee` | Titan | NASA/JPL-Caltech/Univ. Arizona Cassini ISS global mosaic [PIA22770](https://photojournal.jpl.nasa.gov/catalog/PIA22770) (public domain; clean, no grid) — 2048×1024 WebP |
+| `enceladus-marquee` | Enceladus | NASA/JPL-Caltech/SSI/LPI Cassini color global mosaic [PIA18435](https://photojournal.jpl.nasa.gov/catalog/PIA18435) (public domain; clean, no grid) — 2048×1024 WebP |
 | `triton-marquee` | Triton | NASA/Voyager cylindrical mosaic (public domain) — 2048×1024 WebP |
-| `charon-marquee` | Charon | NASA/JHUAPL/SwRI New Horizons cylindrical mosaic (public domain) — 2048×1024 WebP |
+| `charon-marquee` | Charon | NASA/JHUAPL/SwRI New Horizons cylindrical mosaic [PIA19866](https://photojournal.jpl.nasa.gov/catalog/PIA19866) + USGS/Antdoghalo-derived full-globe fill (public domain / NASA-compatible) — 2048×1024 WebP |
 
 Compress offline; no TIFFs / no huge sources in-repo. Code Guard ACK: pack
 cap bumped ≤12/≤6MB → ≤20/≤8MB (William+Lead) for iconic major moons; other
