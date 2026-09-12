@@ -1,11 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   bodyHref,
   getBodiesForSystem,
   getHomeSystem,
+  isEarthSatsSystemId,
   KIND_LABEL,
 } from "@/data/catalog";
 import type { Body, BodyKind } from "@/data/schema";
@@ -133,9 +134,22 @@ export function BodyRail({
     () => new Set(),
   );
 
+  const earthSatsMode = systemId != null && isEarthSatsSystemId(systemId);
+
+  useEffect(() => {
+    if (earthSatsMode && filter !== "all" && filter !== "satellite") {
+      setFilter("all");
+    }
+  }, [earthSatsMode, filter]);
+
   const bodies = useMemo(() => {
     const id = systemId ?? getHomeSystem().id;
-    return getBodiesForSystem(id);
+    const list = getBodiesForSystem(id);
+    // Earth-sats: flat satellites-only rail (omit Earth center + empty Stars/Planets).
+    if (isEarthSatsSystemId(id)) {
+      return list.filter((b) => b.kind === "satellite");
+    }
+    return list;
   }, [systemId]);
 
   const parentIdsWithChildren = useMemo(() => {
@@ -159,8 +173,12 @@ export function BodyRail({
     return KIND_GROUPS.map((g) => {
       const rows = buildGroupRows(bodies, g.kind, collapsed);
       return { ...g, rows };
-    }).filter((g) => g.always || g.rows.length > 0);
-  }, [bodies, filter, collapsed]);
+    }).filter((g) => {
+      // earth-sats: never show empty Stars/Planets (always:true is wrong here)
+      if (earthSatsMode) return g.rows.length > 0;
+      return g.always || g.rows.length > 0;
+    });
+  }, [bodies, filter, collapsed, earthSatsMode]);
 
   const toggleAllMoonsInList = useCallback(() => {
     setCollapsed((prev) => {
@@ -358,7 +376,10 @@ export function BodyRail({
           </button>
         </div>
         <div className="flex flex-wrap gap-1">
-          {FILTERS.map((f) => (
+          {(earthSatsMode
+            ? (["all", "satellite"] as Array<(typeof FILTERS)[number]>)
+            : FILTERS
+          ).map((f) => (
             <button
               key={f}
               type="button"
@@ -369,7 +390,7 @@ export function BodyRail({
                   : "bg-white/5 text-zinc-400 hover:text-zinc-200"
               }`}
             >
-              {f === "all" ? "All" : KIND_LABEL[f]}
+              {f === "all" ? "All" : (KIND_LABEL[f] ?? f)}
             </button>
           ))}
         </div>

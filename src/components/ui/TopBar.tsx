@@ -26,7 +26,7 @@ const MODES = [
   { href: "/", label: "Explore", id: "explore" as const },
   {
     href: `/?system=${EARTH_SATS_SYSTEM_ID}`,
-    label: "Earth",
+    label: "Satellite",
     id: "earth" as const,
   },
   { href: "/systems", label: "Systems", id: "systems" as const },
@@ -69,7 +69,7 @@ function flattenHits(result: CatalogSearchResult, cap: number): FlatHit[] {
       id: b.id,
       label: b.name,
       href: exploreHref(b.id, b.systemId),
-      kindLabel: KIND_LABEL[b.kind],
+      kindLabel: KIND_LABEL[b.kind] ?? b.kind,
       systemName: sys?.name ?? b.systemId,
     });
   }

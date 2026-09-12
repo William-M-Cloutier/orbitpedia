@@ -26,7 +26,7 @@ export function BodyCard({ body, selected, onSelect }: Props) {
           />
           <div>
             <h3 className="font-medium text-zinc-100">{body.name}</h3>
-            <p className="text-xs text-zinc-500">{KIND_LABEL[body.kind]}</p>
+            <p className="text-xs text-zinc-500">{KIND_LABEL[body.kind] ?? body.kind}</p>
           </div>
         </div>
         {onSelect && (

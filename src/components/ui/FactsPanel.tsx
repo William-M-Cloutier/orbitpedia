@@ -274,7 +274,7 @@ export function FactsPanel({ body, system, onClear, selectedPoi, onClearPoi }: P
               {body.name}
             </h2>
           </div>
-          <p className="mt-0.5 text-xs text-zinc-500">{KIND_LABEL[body.kind]}</p>
+          <p className="mt-0.5 text-xs text-zinc-500">{KIND_LABEL[body.kind] ?? body.kind}</p>
         </div>
         <div className="flex shrink-0 items-center gap-1">
           <button
