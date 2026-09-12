@@ -34,8 +34,6 @@ const SPACING_MODES: { id: MapSpacing; label: string }[] = [
   { id: "proportional", label: "Proportional" },
 ];
 
-const SHOWCASE_IDS = new Set(["trappist-1", "kepler-11"]);
-
 /** Viewport size in world units at zoom = 1. Layout is much larger. */
 const WORLD_W = 960;
 const WORLD_H = 560;
@@ -49,24 +47,21 @@ const SEPARATE_N_MAX = 80;
 const SPOKE_CAP = 24;
 /** Neighbor target (world units) — ~10× the old fit-to-view cluster. */
 const MIN_SEP = 168;
-/** Show in-view name labels only at/above this zoom (plus always-on set). */
+/** Show in-view name labels only at/above this zoom (plus selected / hover). */
 const LABEL_ZOOM = 0.9;
-const LABEL_CAP = 64;
+const LABEL_CAP = 96;
+/** Featured/middle disc — uniform for every system. */
+const NODE_R = 10;
 
 type SystemNode = {
   id: string;
   name: string;
   home: boolean;
-  curated: boolean;
   memberCount: number;
   planetCount: number;
   outerAAu: number;
   starColor: string;
 };
-
-function isFeatured(n: { home: boolean; curated: boolean; id: string }): boolean {
-  return n.home || n.curated || SHOWCASE_IDS.has(n.id);
-}
 
 function buildNodesFromList(
   rows: Array<System | ArchiveSystemSummary>,
@@ -85,7 +80,6 @@ function buildNodesFromList(
         id: curated.id,
         name: curated.name,
         home: curated.home === true,
-        curated: true,
         memberCount: bodies.length,
         planetCount:
           curated.planetCount ??
@@ -99,25 +93,12 @@ function buildNodesFromList(
       id: s.id,
       name: s.name,
       home: false,
-      curated: false,
       memberCount: planets + 1,
       planetCount: planets,
       outerAAu: 1,
       starColor: "#FDB813",
     };
   });
-}
-
-function radiusFor(n: SystemNode, spacing: MapSpacing): number {
-  if (n.home) return 14;
-  if (n.curated || SHOWCASE_IDS.has(n.id)) {
-    return spacing === "schematic"
-      ? 10
-      : 9 + Math.min(3, Math.sqrt(n.outerAAu));
-  }
-  return spacing === "schematic"
-    ? 3.6
-    : 3.2 + Math.min(1.6, Math.sqrt(n.planetCount) * 0.35);
 }
 
 /** Coarse grid placement — O(n) — used when N is large. */
@@ -197,7 +178,6 @@ function layoutNodes(
 
   const sorted = [...nodes].sort((a, b) => {
     if (a.home !== b.home) return a.home ? -1 : 1;
-    if (a.curated !== b.curated) return a.curated ? -1 : 1;
     return b.outerAAu - a.outerAAu;
   });
   const GOLDEN = Math.PI * (3 - Math.sqrt(5));
@@ -207,7 +187,7 @@ function layoutNodes(
   );
 
   const pts = sorted.map((n, i) => {
-    const r = radiusFor(n, spacing);
+    const r = NODE_R;
     if (n.home || sorted.length === 1) {
       return { ...n, x: 0, y: 0, r };
     }
@@ -523,13 +503,15 @@ function SystemMapView() {
 
   const spokeTargets = useMemo(() => {
     if (!homeLaid) return [];
-    const others = laid.filter((n) => n.id !== homeLaid.id);
-    const featured = others.filter((n) => isFeatured(n));
-    const rest = others.filter((n) => !isFeatured(n));
-    return [
-      ...featured,
-      ...rest.slice(0, Math.max(0, SPOKE_CAP - featured.length)),
-    ];
+    return laid
+      .filter((n) => n.id !== homeLaid.id)
+      .map((n) => ({
+        n,
+        d: Math.hypot(n.x - homeLaid.x, n.y - homeLaid.y),
+      }))
+      .sort((a, b) => a.d - b.d)
+      .slice(0, SPOKE_CAP)
+      .map((x) => x.n);
   }, [laid, homeLaid]);
 
   const { visible, labeledIds } = useMemo(() => {
@@ -548,17 +530,8 @@ function SystemMapView() {
         n.y - n.r <= vy1,
     );
     const ids = new Set<string>();
-    for (const n of laid) {
-      if (
-        n.home ||
-        n.curated ||
-        SHOWCASE_IDS.has(n.id) ||
-        n.id === selectedId ||
-        n.id === hoveredId
-      ) {
-        ids.add(n.id);
-      }
-    }
+    if (selectedId) ids.add(selectedId);
+    if (hoveredId) ids.add(hoveredId);
     if (cam.zoom >= LABEL_ZOOM) {
       const scored = visible
         .map((n) => ({
@@ -600,10 +573,10 @@ function SystemMapView() {
           <div>
             <h1 className="text-lg font-medium text-zinc-100">System map</h1>
             <p className="mt-0.5 max-w-2xl text-sm text-zinc-500">
-              All systems on one map — pan and zoom to explore. Sol and
-              showcase stay highlighted. Names appear when zoomed in (and for
-              selected / hover). Drag or WASD to pan, Shift faster, scroll to
-              zoom. Double-click or Open Explore to enter.
+              All systems on one map — pan and zoom to explore. Names appear
+              when zoomed in (and for selected / hover). Drag or WASD to pan,
+              Shift faster, scroll to zoom. Double-click or Open Explore to
+              enter.
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
@@ -691,8 +664,6 @@ function SystemMapView() {
 
             {visible.map((n) => {
               const sel = n.id === selectedId;
-              const featured = isFeatured(n);
-              const showRings = featured || sel;
               const labeled = labeledIds.has(n.id);
               return (
                 <g
@@ -713,43 +684,31 @@ function SystemMapView() {
                     setHoveredId((h) => (h === n.id ? null : h))
                   }
                 >
-                  {showRings ? (
-                    <>
-                      <circle
-                        cx={n.x}
-                        cy={n.y}
-                        r={n.r + 8}
-                        fill="none"
-                        stroke="rgba(255,255,255,0.14)"
-                        strokeWidth={1}
-                      />
-                      {n.home || sel ? (
-                        <circle
-                          cx={n.x}
-                          cy={n.y}
-                          r={n.r + 15}
-                          fill="none"
-                          stroke="rgba(255,255,255,0.07)"
-                          strokeWidth={1}
-                        />
-                      ) : null}
-                    </>
+                  <circle
+                    cx={n.x}
+                    cy={n.y}
+                    r={n.r + 8}
+                    fill="none"
+                    stroke="rgba(255,255,255,0.14)"
+                    strokeWidth={1}
+                  />
+                  {sel ? (
+                    <circle
+                      cx={n.x}
+                      cy={n.y}
+                      r={n.r + 15}
+                      fill="none"
+                      stroke="rgba(56,189,248,0.28)"
+                      strokeWidth={1.25}
+                    />
                   ) : null}
                   <circle
                     cx={n.x}
                     cy={n.y}
                     r={n.r}
                     fill={n.starColor}
-                    stroke={
-                      sel
-                        ? "#38bdf8"
-                        : n.home
-                          ? "#7dd3fc"
-                          : featured
-                            ? "rgba(186,230,253,0.7)"
-                            : "rgba(255,255,255,0.35)"
-                    }
-                    strokeWidth={sel ? 2.5 : n.home ? 2 : featured ? 1.5 : 1}
+                    stroke={sel ? "#38bdf8" : "rgba(186,230,253,0.7)"}
+                    strokeWidth={sel ? 2.5 : 1.5}
                   />
                   {labeled ? (
                     <>
@@ -759,25 +718,23 @@ function SystemMapView() {
                         textAnchor="middle"
                         className="fill-zinc-200"
                         style={{
-                          fontSize: featured || sel ? 11 : 9,
+                          fontSize: 11,
                           fontWeight: 600,
                         }}
                       >
                         {n.name}
                       </text>
-                      {(featured || sel) && (
-                        <text
-                          x={n.x}
-                          y={n.y + n.r + 26}
-                          textAnchor="middle"
-                          className="fill-zinc-500"
-                          style={{ fontSize: 9 }}
-                        >
-                          {n.planetCount} planet
-                          {n.planetCount === 1 ? "" : "s"}
-                          {n.home ? " · home" : ""}
-                        </text>
-                      )}
+                      <text
+                        x={n.x}
+                        y={n.y + n.r + 26}
+                        textAnchor="middle"
+                        className="fill-zinc-500"
+                        style={{ fontSize: 9 }}
+                      >
+                        {n.planetCount} planet
+                        {n.planetCount === 1 ? "" : "s"}
+                        {n.home ? " · home" : ""}
+                      </text>
                     </>
                   ) : null}
                 </g>
