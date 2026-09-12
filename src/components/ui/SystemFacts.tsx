@@ -2,6 +2,10 @@
 
 import type { Body, System } from "@/data/schema";
 import { systemOverviewBlurb } from "@/lib/interestBlurb";
+import {
+  VISUAL_BINARY_NOTE,
+  hasVisualBinaryCompanions,
+} from "@/lib/visualBinaryNote";
 
 type Props = {
   system: System;

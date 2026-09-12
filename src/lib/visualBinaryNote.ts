@@ -2,7 +2,7 @@ import { hasUsableOrbit, type Body } from "@/data/schema";
 
 /** Honest Explore note when companions lack a full catalog orbit. */
 export const VISUAL_BINARY_NOTE =
-  "Companion star positions are approximate — true orbits unknown.";
+  "Companion stars are shown schematically — true orbits unknown.";
 
 /**
  * Companion star with no usable Kepler (schematic ring and/or projected
