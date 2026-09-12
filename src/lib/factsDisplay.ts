@@ -65,8 +65,11 @@ export function unknownReason(body: Body, field: FactKey): string | undefined {
   return undefined;
 }
 
+const EMPTY_EXPECTED: ReadonlySet<string> = new Set();
+
+/** True when this kind expects the field (Unknown if missing). Unknown kinds → false. */
 export function isExpectedFact(kind: BodyKind, field: FactKey): boolean {
-  return EXPECTED_BY_KIND[kind].has(field);
+  return (EXPECTED_BY_KIND[kind] ?? EMPTY_EXPECTED).has(field);
 }
 
 /**
