@@ -29,7 +29,10 @@ import {
   loadFavoriteSystemIds,
   saveFavoriteSystemIds,
 } from "@/lib/favoriteSystems";
-import { starColorFromSpectralType } from "@/lib/starColor";
+import {
+  starColorForMapSegment,
+  starColorFromSpectralType,
+} from "@/lib/starColor";
 import { systemHasGasGiant } from "@/lib/hasGas";
 
 /** Inter-system node spacing — Schematic / Proportional share 2D; Prop stretches r. */
@@ -71,11 +74,20 @@ const SPECTRAL_CHIPS: { id: SpectralChip; label: string }[] = [
 ];
 
 /** Exclusive planet-count bins (soft ranges). */
-type PlanetBin = "2" | "3-4" | "5+";
+type PlanetBin = "1" | "2" | "3-4" | "5+";
 const PLANET_CHIPS: { id: PlanetBin; label: string }[] = [
+  { id: "1", label: "1 planet" },
   { id: "2", label: "2 planets" },
   { id: "3-4", label: "3–4" },
   { id: "5+", label: "5+" },
+];
+
+/** Exclusive star-count bins (sy_snum / starCount). */
+type StarBin = "1" | "2" | "3+";
+const STAR_CHIPS: { id: StarBin; label: string }[] = [
+  { id: "1", label: "1 star" },
+  { id: "2", label: "2 stars" },
+  { id: "3+", label: "3+" },
 ];
 
 function spectralChipFromType(
@@ -91,10 +103,36 @@ function spectralChipFromType(
 }
 
 function planetBinForCount(count: number): PlanetBin | null {
+  if (count === 1) return "1";
   if (count === 2) return "2";
   if (count === 3 || count === 4) return "3-4";
   if (count >= 5) return "5+";
   return null;
+}
+
+function starBinForCount(count: number): StarBin | null {
+  if (count === 1) return "1";
+  if (count === 2) return "2";
+  if (count >= 3) return "3+";
+  return null;
+}
+
+/** Equal-area pie wedge path (N wedges fill the NODE_R disc). */
+function pieWedgePath(
+  cx: number,
+  cy: number,
+  r: number,
+  index: number,
+  n: number,
+): string {
+  const a0 = (index / n) * Math.PI * 2 - Math.PI / 2;
+  const a1 = ((index + 1) / n) * Math.PI * 2 - Math.PI / 2;
+  const x0 = cx + r * Math.cos(a0);
+  const y0 = cy + r * Math.sin(a0);
+  const x1 = cx + r * Math.cos(a1);
+  const y1 = cy + r * Math.sin(a1);
+  const large = a1 - a0 > Math.PI ? 1 : 0;
+  return `M ${cx} ${cy} L ${x0} ${y0} A ${r} ${r} 0 ${large} 1 ${x1} ${y1} Z`;
 }
 
 function toggleInSet<T>(prev: Set<T>, id: T): Set<T> {
@@ -110,8 +148,12 @@ type SystemNode = {
   home: boolean;
   memberCount: number;
   planetCount: number;
+  starCount: number;
   outerAAu: number;
+  /** Primary / solid-fill color (single-star nodes). */
   starColor: string;
+  /** Equal pie wedges when starCount ≥ 2 (spectral colors; unknown → Other). */
+  starColors: string[];
   hostSpectralType?: string;
   spectralChip: SpectralChip;
   /** true = known gas; false = known none; undefined = missing index flag */
@@ -125,10 +167,17 @@ function buildNodesFromList(
     const curated = getSystem(s.id);
     if (curated) {
       const bodies = getBodiesForSystem(curated.id);
-      const star = bodies.find((b) => b.kind === "star");
+      const stars = bodies.filter((b) => b.kind === "star");
+      const primary =
+        (curated.primaryStarId
+          ? stars.find((b) => b.id === curated.primaryStarId)
+          : undefined) ??
+        stars.find((b) => !b.parentId) ??
+        stars[0];
       let outerAAu = 0;
       for (const b of bodies) {
         if (!hasUsableOrbit(b) || b.orbit?.frame === "parent") continue;
+        if (b.kind === "star") continue;
         if (b.orbit.aAu > outerAAu) outerAAu = b.orbit.aAu;
       }
       const hostSpectralType =
@@ -145,6 +194,25 @@ function buildNodesFromList(
           : fromCurated !== undefined
             ? fromCurated
             : systemHasGasGiant(bodies);
+      const starCount =
+        curated.starCount ??
+        ("starCount" in s && typeof s.starCount === "number"
+          ? s.starCount
+          : undefined) ??
+        Math.max(stars.length, 1);
+      const orderedStars = [
+        ...(primary ? [primary] : []),
+        ...stars.filter((b) => b.id !== primary?.id),
+      ];
+      const starColors =
+        orderedStars.length > 0
+          ? orderedStars.map(
+              (b) => b.color ?? starColorForMapSegment(hostSpectralType),
+            )
+          : [starColorFromSpectralType(hostSpectralType)];
+      while (starColors.length < starCount) {
+        starColors.push(starColorForMapSegment(undefined));
+      }
       return {
         id: curated.id,
         name: curated.name,
@@ -153,8 +221,10 @@ function buildNodesFromList(
         planetCount:
           curated.planetCount ??
           bodies.filter((b) => b.kind === "planet").length,
+        starCount,
         outerAAu: outerAAu > 0 ? outerAAu : 1,
-        starColor: star?.color ?? "#FDB813",
+        starColor: primary?.color ?? starColors[0] ?? "#FDB813",
+        starColors: starColors.slice(0, Math.max(starCount, 1)),
         hostSpectralType,
         spectralChip: spectralChipFromType(hostSpectralType),
         hasGas,
@@ -165,14 +235,28 @@ function buildNodesFromList(
       "hostSpectralType" in s ? s.hostSpectralType : undefined;
     const hasGas =
       "hasGas" in s && typeof s.hasGas === "boolean" ? s.hasGas : undefined;
+    const starCount =
+      "starCount" in s && typeof s.starCount === "number" && s.starCount > 0
+        ? s.starCount
+        : 1;
+    const companionTypes =
+      "companionSpectralTypes" in s && Array.isArray(s.companionSpectralTypes)
+        ? s.companionSpectralTypes
+        : [];
+    const starColors = [starColorForMapSegment(hostSpectralType)];
+    for (let i = 0; i < starCount - 1; i++) {
+      starColors.push(starColorForMapSegment(companionTypes[i]));
+    }
     return {
       id: s.id,
       name: s.name,
       home: false,
-      memberCount: planets + 1,
+      memberCount: planets + starCount,
       planetCount: planets,
+      starCount,
       outerAAu: 1,
       starColor: starColorFromSpectralType(hostSpectralType),
+      starColors,
       hostSpectralType,
       spectralChip: spectralChipFromType(hostSpectralType),
       hasGas,
@@ -413,6 +497,7 @@ function SystemMapView() {
   const [planetFilters, setPlanetFilters] = useState<Set<PlanetBin>>(
     () => new Set(),
   );
+  const [starFilters, setStarFilters] = useState<Set<StarBin>>(() => new Set());
   const [hasGasFilter, setHasGasFilter] = useState(false);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const filtersRef = useRef<HTMLDivElement>(null);
@@ -420,18 +505,26 @@ function SystemMapView() {
   const clearMapFilters = useCallback(() => {
     setSpectralFilters(new Set());
     setPlanetFilters(new Set());
+    setStarFilters(new Set());
     setHasGasFilter(false);
     setFavoritesOnly(false);
   }, []);
 
   const panelFiltersActive =
-    spectralFilters.size > 0 || planetFilters.size > 0 || hasGasFilter;
+    spectralFilters.size > 0 ||
+    planetFilters.size > 0 ||
+    starFilters.size > 0 ||
+    hasGasFilter;
   const panelFilterCount =
-    spectralFilters.size + planetFilters.size + (hasGasFilter ? 1 : 0);
+    spectralFilters.size +
+    planetFilters.size +
+    starFilters.size +
+    (hasGasFilter ? 1 : 0);
   const filtersActive =
     favoritesOnly ||
     spectralFilters.size > 0 ||
     planetFilters.size > 0 ||
+    starFilters.size > 0 ||
     hasGasFilter;
 
   useEffect(() => {
@@ -512,6 +605,7 @@ function SystemMapView() {
         name: n.name,
         memberIds: [],
         planetCount: n.planetCount,
+        starCount: n.starCount,
         home: false,
         hostSpectralType: n.hostSpectralType,
         hasGas: n.hasGas,
@@ -547,6 +641,11 @@ function SystemMapView() {
         const bin = planetBinForCount(n.planetCount);
         if (!bin || !planetFilters.has(bin)) return false;
       }
+      // OR within star bins; empty = all. AND with other filter groups.
+      if (starFilters.size > 0) {
+        const bin = starBinForCount(n.starCount);
+        if (!bin || !starFilters.has(bin)) return false;
+      }
       // Has gas giant: off = don't care; on → hasGas === true (missing excluded).
       if (hasGasFilter && n.hasGas !== true) return false;
       return true;
@@ -557,6 +656,7 @@ function SystemMapView() {
     favoriteIds,
     spectralFilters,
     planetFilters,
+    starFilters,
     hasGasFilter,
   ]);
 
@@ -932,10 +1032,6 @@ function SystemMapView() {
                         );
                       })}
                     </div>
-                    <p className="mt-1.5 text-[10px] leading-snug text-zinc-600">
-                      Other / unknown: missing type, or outside M/K/G/F/A
-                      (includes O, B, and non-letter).
-                    </p>
                   </div>
                   <div className="mb-3">
                     <div className="mb-1.5 text-[11px] font-medium uppercase tracking-wide text-zinc-500">
@@ -953,6 +1049,33 @@ function SystemMapView() {
                               setPlanetFilters((prev) =>
                                 toggleInSet(prev, c.id),
                               )
+                            }
+                            className={
+                              on
+                                ? "rounded-md bg-sky-600 px-2 py-1 text-[11px] font-medium text-white"
+                                : "rounded-md bg-white/5 px-2 py-1 text-[11px] text-zinc-400 hover:bg-white/10 hover:text-zinc-200"
+                            }
+                          >
+                            {c.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                  <div className="mb-3">
+                    <div className="mb-1.5 text-[11px] font-medium uppercase tracking-wide text-zinc-500">
+                      Stars
+                    </div>
+                    <div className="flex flex-wrap gap-1">
+                      {STAR_CHIPS.map((c) => {
+                        const on = starFilters.has(c.id);
+                        return (
+                          <button
+                            key={c.id}
+                            type="button"
+                            aria-pressed={on}
+                            onClick={() =>
+                              setStarFilters((prev) => toggleInSet(prev, c.id))
                             }
                             className={
                               on
@@ -1127,20 +1250,47 @@ function SystemMapView() {
                       strokeWidth={1.25}
                     />
                   ) : null}
-                  <circle
-                    cx={n.x}
-                    cy={n.y}
-                    r={drawR}
-                    fill={n.starColor}
-                    stroke={
-                      sel
-                        ? "#38bdf8"
-                        : fav
-                          ? "#fbbf24"
-                          : "rgba(186,230,253,0.7)"
-                    }
-                    strokeWidth={sel ? 2.5 : fav ? 2.25 : 1.5}
-                  />
+                  {n.starCount >= 2 && n.starColors.length >= 2 ? (
+                    <>
+                      {n.starColors.slice(0, n.starCount).map((fill, i, arr) => (
+                        <path
+                          key={`${n.id}-wedge-${i}`}
+                          d={pieWedgePath(n.x, n.y, drawR, i, arr.length)}
+                          fill={fill}
+                          stroke="none"
+                        />
+                      ))}
+                      <circle
+                        cx={n.x}
+                        cy={n.y}
+                        r={drawR}
+                        fill="none"
+                        stroke={
+                          sel
+                            ? "#38bdf8"
+                            : fav
+                              ? "#fbbf24"
+                              : "rgba(186,230,253,0.7)"
+                        }
+                        strokeWidth={sel ? 2.5 : fav ? 2.25 : 1.5}
+                      />
+                    </>
+                  ) : (
+                    <circle
+                      cx={n.x}
+                      cy={n.y}
+                      r={drawR}
+                      fill={n.starColor}
+                      stroke={
+                        sel
+                          ? "#38bdf8"
+                          : fav
+                            ? "#fbbf24"
+                            : "rgba(186,230,253,0.7)"
+                      }
+                      strokeWidth={sel ? 2.5 : fav ? 2.25 : 1.5}
+                    />
+                  )}
                   {labeled ? (
                     <>
                       <text

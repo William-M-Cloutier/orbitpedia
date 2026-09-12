@@ -44,6 +44,14 @@ export function SystemFacts({ system, compact = false, className = "" }: Props) 
             <dd className="mt-0.5 text-sm text-zinc-100">{system.planetCount}</dd>
           </div>
         ) : null}
+        {system.starCount != null ? (
+          <div className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
+            <dt className="text-[11px] uppercase tracking-wider text-zinc-500">
+              Stars
+            </dt>
+            <dd className="mt-0.5 text-sm text-zinc-100">{system.starCount}</dd>
+          </div>
+        ) : null}
         {system.hostSpectralType ? (
           <div className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
             <dt className="text-[11px] uppercase tracking-wider text-zinc-500">

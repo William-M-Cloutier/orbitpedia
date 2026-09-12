@@ -34,6 +34,13 @@ export type ArchiveSystemSummary = {
   overviewUrl?: string;
   /** Archive hasGas (≳50 M⊕ or ≳4 R⊕). Missing = unknown / pre-flag index. */
   hasGas?: boolean;
+  /** Bound stars (sy_snum). Missing = treat as 1 for map filters. */
+  starCount?: number;
+  /**
+   * Companion spectral types when known (never invented). May be shorter than
+   * starCount - 1; map paints unknown wedges as Other.
+   */
+  companionSpectralTypes?: string[];
 };
 
 export type ArchiveIndex = {

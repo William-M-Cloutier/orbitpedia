@@ -116,7 +116,7 @@ export function getHomeSystemGraph(): SystemGraph {
 export function resolveParentTree(bodyId: string): Body[] {
   const chain: Body[] = [];
   const seen = new Set<string>();
-  let cur = bodyById.get(bodyId);
+  let cur = getBody(bodyId);
   while (cur) {
     if (seen.has(cur.id)) {
       throw new Error(`parent tree cycle at ${cur.id}`);
@@ -124,20 +124,39 @@ export function resolveParentTree(bodyId: string): Body[] {
     seen.add(cur.id);
     chain.push(cur);
     if (!cur.parentId) break;
-    cur = bodyById.get(cur.parentId);
+    cur = getBody(cur.parentId);
   }
   return chain;
 }
 
 export function getParent(id: string): Body | undefined {
-  const b = bodyById.get(id);
+  const b = getBody(id);
   if (!b?.parentId) return undefined;
-  return bodyById.get(b.parentId);
+  return getBody(b.parentId);
 }
 
-/** Direct children of a body (parentId === parentId), catalog order. */
+/** Direct children of a body (parentId === parentId), member / catalog order. */
 export function listChildren(parentId: string): Body[] {
-  return bodies.filter((b) => b.parentId === parentId);
+  const parent = getBody(parentId);
+  if (parent?.systemId) {
+    const members = getBodiesForSystem(parent.systemId);
+    if (members.length > 0) {
+      return members.filter((b) => b.parentId === parentId);
+    }
+  }
+  const curated = bodies.filter((b) => b.parentId === parentId);
+  if (curated.length > 0) return curated;
+  // Session-only parent (archive multi-star) — scan primed bodies via system graph.
+  try {
+    if (parent?.systemId) {
+      return getSystemGraph(parent.systemId).bodies.filter(
+        (b) => b.parentId === parentId,
+      );
+    }
+  } catch {
+    /* unknown */
+  }
+  return [];
 }
 
 export function getBodiesByKind(kind: BodyKind): Body[] {

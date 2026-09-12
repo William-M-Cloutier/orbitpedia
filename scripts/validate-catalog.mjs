@@ -336,7 +336,9 @@ function collectWeakFieldFlags(body, centralId) {
     flags.push("meta.provenance|source missing");
   }
   if (!body.meta.confidence) flags.push("meta.confidence missing");
-  if (body.id !== centralId && !body.orbit) flags.push("orbit missing (non-central)");
+  if (body.id !== centralId && !body.orbit && body.kind !== "star") {
+    flags.push("orbit missing (non-central)");
+  }
   if (body.orbit && body.id !== centralId) {
     if (!body.horizonId && !body.sbdbDes) flags.push("horizonId/sbdbDes missing");
     if (!body.orbit.frame) flags.push("orbit.frame missing");
@@ -424,7 +426,7 @@ for (const system of systemsToCheck) {
     .map((id) => bodyById.get(id))
     .filter(Boolean);
 
-  const central = findCentralBody(graphBodies, args.centralBody);
+  const central = findCentralBody(graphBodies, args.centralBody ?? system.primaryStarId);
   if (!central) {
     hardErrors.push(`${system.id}: no central body (star) found; pass --central-body`);
     continue;
@@ -464,6 +466,8 @@ for (const system of systemsToCheck) {
     }
     if (b.id === central.id) continue;
     if (!b.orbit) {
+      // Companion stars may be mesh-only until elements land (no invented orbits).
+      if (b.kind === "star") continue;
       hardErrors.push(`${b.id}: missing orbit while not central body`);
       continue;
     }
