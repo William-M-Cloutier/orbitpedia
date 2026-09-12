@@ -13,14 +13,14 @@
     ],
     "primaryStarId": "hd-158259",
     "starCount": 1,
-    "blurb": "HD 158259 is a G0 system with 5 confirmed planets. About 88.2 ly from the Sun. First planet discovered 2020 (Radial Velocity).",
+    "blurb": "HD 158259 (G0) — 5 planets; 88.2 ly; first confirmed 2020 (Radial Velocity).",
     "planetCount": 5,
     "distanceLy": 88.2,
     "hostSpectralType": "G0",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:22:03.017Z",
+      "fetchedAt": "2026-09-12T20:49:08.900Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — HD 158259 overview",
@@ -61,7 +61,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -92,7 +92,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -123,7 +123,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -154,7 +154,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -185,7 +185,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -216,7 +216,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "known",
         "unitsVersion": 1
       }

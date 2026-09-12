@@ -5,22 +5,22 @@
     "home": false,
     "memberIds": [
       "cd-35-2722",
-      "cd-35-2722-star-1",
-      "cd-35-2722-b"
+      "cd-35-2722-comp-b",
+      "cd-35-2722-comp-b-b"
     ],
     "primaryStarId": "cd-35-2722",
     "starCount": 2,
-    "blurb": "CD-35 2722 is a L4.5 V multi-star system (2 stars) with 1 confirmed planet. First planet discovered 2026 (Radial Velocity).",
+    "blurb": "CD-35 2722 (L4.5 V) — 1 planet, 2 stars; first confirmed 2026 (Radial Velocity).",
     "planetCount": 1,
     "hostSpectralType": "L4.5 V",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:22:03.017Z",
+      "fetchedAt": "2026-09-12T20:49:08.900Z",
       "sources": [
         {
-          "name": "NASA Exoplanet Archive — CD-35 2722 B overview",
-          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/CD-35%202722%20B",
+          "name": "NASA Exoplanet Archive — CD-35 2722 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/CD-35%202722",
           "fields": [
             "blurb",
             "planetCount",
@@ -34,12 +34,11 @@
   "bodies": [
     {
       "id": "cd-35-2722",
-      "name": "CD-35 2722 B",
+      "name": "CD-35 2722",
       "kind": "star",
       "systemId": "cd-35-2722",
       "facts": {
-        "massKg": 6.959645000000001e+28,
-        "radiusMeanKm": 110616.3,
+        "massKg": 7.95388e+29,
         "discoveryDate": "2026"
       },
       "color": "#E84A3C",
@@ -47,46 +46,60 @@
         "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
         "sources": [
           {
-            "name": "NASA Exoplanet Archive — CD-35 2722 B overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/CD-35%202722%20B",
+            "name": "NASA Exoplanet Archive — CD-35 2722 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/CD-35%202722",
             "fields": [
               "facts.massKg",
-              "facts.radiusMeanKm",
               "facts.discoveryDate"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "known",
         "unitsVersion": 1
       }
     },
     {
-      "id": "cd-35-2722-star-1",
-      "name": "CD-35 2722 companion",
+      "id": "cd-35-2722-comp-b",
+      "name": "CD-35 2722 B",
       "kind": "star",
       "systemId": "cd-35-2722",
       "parentId": "cd-35-2722",
-      "color": "#9aa3ad",
+      "facts": {
+        "massKg": 5.6074853999999995e+28,
+        "radiusMeanKm": 110616.3,
+        "discoveryDate": "2026",
+        "projectedSepAu": 0.968
+      },
+      "color": "#E84A3C",
       "meta": {
-        "source": "Placeholder companion — sy_snum slot with no archive stellar row",
+        "source": "NASA Exoplanet Archive stellarhosts/pscomppars — companion projectedSepAu from angsep×distance; no invented binary orbit",
         "sources": [
           {
-            "name": "NASA Exoplanet Archive — overview",
+            "name": "NASA Exoplanet Archive — CD-35 2722 B overview",
             "url": "https://exoplanetarchive.ipac.caltech.edu/overview/CD-35%202722%20B",
-            "fields": []
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate",
+              "facts.projectedSepAu"
+            ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
-        "confidence": "placeholder",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "confidence": "assumed",
+        "approximateFields": [
+          "facts.projectedSepAu"
+        ],
         "unitsVersion": 1
       }
     },
     {
-      "id": "cd-35-2722-b",
+      "id": "cd-35-2722-comp-b-b",
       "name": "CD-35 2722 B b",
       "kind": "planet",
       "systemId": "cd-35-2722",
+      "parentId": "cd-35-2722-comp-b",
       "facts": {
         "massKg": 1.746284027302568e+27,
         "radiusMeanKm": 88556.90000000001,
@@ -95,7 +108,7 @@
       },
       "color": "#C45C26",
       "meta": {
-        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host CD-35 2722 B (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=parent relative to companion host CD-35 2722 B (parentId=cd-35-2722-comp-b). omDeg=0 and maDeg=0 assumed (also defaulted: iDeg).",
         "sources": [
           {
             "name": "NASA Exoplanet Archive — CD-35 2722 B overview",
@@ -112,12 +125,12 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
       "orbit": {
-        "frame": "heliocentric",
+        "frame": "parent",
         "aAu": 0.2,
         "e": 0.27,
         "iDeg": 90,

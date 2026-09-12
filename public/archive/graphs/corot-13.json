@@ -9,14 +9,14 @@
     ],
     "primaryStarId": "corot-13",
     "starCount": 1,
-    "blurb": "CoRoT-13 is a G0 V system with 1 confirmed planet. About 3,747 ly from the Sun. First planet discovered 2010 (Transit).",
+    "blurb": "CoRoT-13 (G0 V) — 1 planet; 3,747 ly; first confirmed 2010 (Transit).",
     "planetCount": 1,
     "distanceLy": 3747.3,
     "hostSpectralType": "G0 V",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:22:03.017Z",
+      "fetchedAt": "2026-09-12T20:49:08.900Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — CoRoT-13 overview",
@@ -57,7 +57,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -93,7 +93,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

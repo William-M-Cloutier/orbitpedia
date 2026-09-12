@@ -12,13 +12,13 @@
     ],
     "primaryStarId": "kepler-1388",
     "starCount": 1,
-    "blurb": "Kepler-1388 hosts 4 confirmed planets. About 1,480 ly from the Sun. First planet discovered 2016 (Transit).",
+    "blurb": "Kepler-1388 — 4 planets; 1,480 ly; first confirmed 2016 (Transit).",
     "planetCount": 4,
     "distanceLy": 1480.1,
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:22:03.017Z",
+      "fetchedAt": "2026-09-12T20:49:08.900Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-1388 overview",
@@ -58,7 +58,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -94,7 +94,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -141,7 +141,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -188,7 +188,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -235,7 +235,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

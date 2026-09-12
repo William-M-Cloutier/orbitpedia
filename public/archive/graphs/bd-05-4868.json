@@ -5,19 +5,19 @@
     "home": false,
     "memberIds": [
       "bd-05-4868",
-      "bd-05-4868-star-1",
+      "bd-05-4868-comp-b",
       "bd-05-4868-b"
     ],
     "primaryStarId": "bd-05-4868",
     "starCount": 2,
-    "blurb": "BD+05 4868 is a K V multi-star system (2 stars) with 1 confirmed planet. About 142 ly from the Sun. First planet discovered 2025 (Transit).",
+    "blurb": "BD+05 4868 (K V) — 1 planet, 2 stars; 142 ly; first confirmed 2025 (Transit).",
     "planetCount": 1,
     "distanceLy": 142.1,
     "hostSpectralType": "K V",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:22:03.017Z",
+      "fetchedAt": "2026-09-12T20:49:08.900Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — BD+05 4868 A overview",
@@ -58,29 +58,43 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "known",
         "unitsVersion": 1
       }
     },
     {
-      "id": "bd-05-4868-star-1",
-      "name": "BD+05 4868 companion",
+      "id": "bd-05-4868-comp-b",
+      "name": "BD+05 4868 B",
       "kind": "star",
       "systemId": "bd-05-4868",
       "parentId": "bd-05-4868",
-      "color": "#9aa3ad",
+      "facts": {
+        "massKg": 8.550420999999999e+29,
+        "radiusMeanKm": 292194,
+        "discoveryDate": "2025",
+        "projectedSepAu": 131.4
+      },
+      "color": "#FDB813",
       "meta": {
-        "source": "Placeholder companion — sy_snum slot with no archive stellar row",
+        "source": "NASA Exoplanet Archive stellarhosts/pscomppars — companion projectedSepAu from angsep×distance; no invented binary orbit",
         "sources": [
           {
-            "name": "NASA Exoplanet Archive — overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/BD%2B05%204868%20A",
-            "fields": []
+            "name": "NASA Exoplanet Archive — BD+05 4868 B overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/BD%2B05%204868%20B",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate",
+              "facts.projectedSepAu"
+            ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
-        "confidence": "placeholder",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "confidence": "assumed",
+        "approximateFields": [
+          "facts.projectedSepAu"
+        ],
         "unitsVersion": 1
       }
     },
@@ -111,7 +125,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

@@ -13,14 +13,14 @@
     ],
     "primaryStarId": "k2-138",
     "starCount": 1,
-    "blurb": "K2-138 is a G8 V system with 5 confirmed planets. About 661 ly from the Sun. First planet discovered 2017 (Transit).",
+    "blurb": "K2-138 (G8 V) — 5 planets; 661 ly; first confirmed 2017 (Transit).",
     "planetCount": 5,
     "distanceLy": 660.7,
     "hostSpectralType": "G8 V",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:22:03.017Z",
+      "fetchedAt": "2026-09-12T20:49:08.900Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — K2-138 overview",
@@ -61,7 +61,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -98,7 +98,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -146,7 +146,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -194,7 +194,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -242,7 +242,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -290,7 +290,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

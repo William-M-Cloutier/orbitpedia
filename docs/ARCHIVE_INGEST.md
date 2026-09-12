@@ -181,7 +181,7 @@ Archive Facts / System blurbs are **factual-or-omit**:
   `sample ingest`, `hand-enriched`, `Phase 1 catalog`, `Orbitpedia catalog`,
   `Archive system (sparse)`, `load the full graph`, lazy-load wiring notes, etc.).
 - Star `discoveryNotes` omitted unless a real archive note exists; prefer `discoveryDate`.
-- System `blurb` = hostname + optional spectral type + confirmed planet count + distance when known.
+- Graph `system.blurb` = Sky locked one-liner (`{hostname} ({spectral?}) — {N} planet(s)[, {S} stars]; {D} ly; first confirmed {year} ({method}).`).
 - Facts/UI = human astronomy; thresholds/field names only in code comments + docs.
 
 ## hasGas filter (index + system chunk)
@@ -249,7 +249,18 @@ Planets set `facts.discoveryNotes` from NEA when available (omit on `kind:star` 
 
 ## System blurb (archive)
 
-- Graph `system.blurb`: Sky sentence voice (`{name} is a {spectral} system with N confirmed planets. About D ly from the Sun. First planet discovered YYYY (Method).`) — omit unknown clauses.
-- Index `blurb`: compact mid-dot line (`G8 V · 7 planets · 2 stars · first world 1996 · 41 ly`) for map overlay before graph load.
+- Graph `system.blurb`: Sky locked one-liner —
+  `{hostname} ({spectral?}) — {N} planet(s)[, {S} stars]; {distanceLy} ly; first confirmed {year} ({method}).`
+  Omit unknowns; stars clause only when `starCount ≥ 2`; earliest planet discovery only; no process meta; soft-cap ~160 chars.
+  Example: `55 Cnc (G8 V) — 7 planets, 2 stars; 41 ly; first confirmed 1996 (Radial Velocity).`
+- Index `blurb`: compact mid-dot line (`G8 V · 7 planets · 2 stars · first world 1996 · 41 ly`) for map overlay before graph load (optional path; UI prefers graph `system.blurb` via `systemOverviewBlurb`).
 - Earliest planet discovery only (never invent; not copied onto `kind:star` discoveryNotes).
+
+## Companion projected separation (archive)
+
+- Additive optional `facts.projectedSepAu` (SI au, positive) on **companion** stars only — not under `orbit`; never invent Kepler elements / OrbitLine.
+- Lean NEA path (no Gaia dump in git): `stellarhosts` sibling hostnames with distinct `ra`/`dec` + `sy_dist` → θ″ × d_pc (AU). Prefer primary distance. Omit when unresolved (θ≈0) or coords/dist missing.
+- Provenance: overview URL in `meta.sources` fields includes `facts.projectedSepAu`; `meta.approximateFields: ["facts.projectedSepAu"]`; `meta.confidence: assumed` when derived.
+- Placeholders / unknown sep → omit field (Viz keeps tight schematic). Product disclaimer (Sky): companion positions approximate when schematic or projected-sep without full orbit.
+- Coverage (2026-09-12 `--all`): **220 / 425** multi-star systems (223 companion stars) received `facts.projectedSepAu`. Remainder stay schematic (omit field). Ingest logs `projectedSepAu coverage: X/Y multi-star…`.
 

@@ -9,14 +9,14 @@
     ],
     "primaryStarId": "gj-436",
     "starCount": 1,
-    "blurb": "GJ 436 is a M2.5 V system with 1 confirmed planet. About 31.8 ly from the Sun. First planet discovered 2004 (Radial Velocity).",
+    "blurb": "GJ 436 (M2.5 V) — 1 planet; 31.8 ly; first confirmed 2004 (Radial Velocity).",
     "planetCount": 1,
     "distanceLy": 31.8,
     "hostSpectralType": "M2.5 V",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:22:03.017Z",
+      "fetchedAt": "2026-09-12T20:49:08.900Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — GJ 436 overview",
@@ -57,7 +57,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -94,7 +94,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

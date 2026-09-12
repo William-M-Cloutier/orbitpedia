@@ -10,14 +10,14 @@
     ],
     "primaryStarId": "dmpp-1",
     "starCount": 1,
-    "blurb": "DMPP-1 is a F8 V system with 2 confirmed planets. About 204 ly from the Sun. First planet discovered 2019 (Radial Velocity).",
+    "blurb": "DMPP-1 (F8 V) — 2 planets; 204 ly; first confirmed 2019 (Radial Velocity).",
     "planetCount": 2,
     "distanceLy": 204,
     "hostSpectralType": "F8 V",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:22:03.017Z",
+      "fetchedAt": "2026-09-12T20:49:08.900Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — DMPP-1 overview",
@@ -58,7 +58,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -92,7 +92,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -137,7 +137,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

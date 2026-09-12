@@ -105,8 +105,9 @@ function formatDistanceLy(ly) {
 }
 
 /**
- * System overview blurb — Sky sentence voice (SystemFacts prefers hand blurb).
- * Omit unknown clauses; never invent.
+ * System overview blurb — Sky locked one-liner (systemOverviewBlurb prefers this).
+ * Shape: `{hostname} ({spectral?}) — {N} planet(s)[, {S} stars]; {distanceLy} ly; first confirmed {year} ({method}).`
+ * Omit unknowns; stars only when ≥2; ≤~160 chars; never invent.
  */
 function buildSystemOverviewBlurb({
   name,
@@ -117,53 +118,32 @@ function buildSystemOverviewBlurb({
   firstYear,
   firstMethod,
 }) {
-  const sentences = [];
-  const planetBit =
-    planetCount > 0
-      ? `${planetCount} confirmed planet${planetCount === 1 ? "" : "s"}`
-      : null;
-  if (spectral && planetBit) {
-    if (starCount >= 2) {
-      sentences.push(
-        `${name} is a ${spectral} multi-star system (${starCount} stars) with ${planetBit}.`,
-      );
-    } else {
-      sentences.push(`${name} is a ${spectral} system with ${planetBit}.`);
-    }
-  } else if (spectral) {
-    if (starCount >= 2) {
-      sentences.push(
-        `${name} is a ${spectral} multi-star system (${starCount} stars).`,
-      );
-    } else {
-      sentences.push(`${name} is a ${spectral} system.`);
-    }
-  } else if (planetBit) {
-    if (starCount >= 2) {
-      sentences.push(
-        `${name} is a multi-star system (${starCount} stars) with ${planetBit}.`,
-      );
-    } else {
-      sentences.push(`${name} hosts ${planetBit}.`);
-    }
-  } else if (starCount >= 2) {
-    sentences.push(`${name} is a multi-star system (${starCount} stars).`);
+  const head = spectral ? `${name} (${spectral})` : name;
+  const countBits = [];
+  if (planetCount > 0) {
+    countBits.push(`${planetCount} planet${planetCount === 1 ? "" : "s"}`);
   }
+  if (starCount >= 2) countBits.push(`${starCount} stars`);
+  const clauses = [];
+  if (countBits.length) clauses.push(`${head} — ${countBits.join(", ")}`);
+  else clauses.push(head);
 
   if (distanceLy != null && Number.isFinite(distanceLy) && distanceLy > 0) {
     const d = formatDistanceLy(distanceLy);
-    if (d) sentences.push(`About ${d} from the Sun.`);
+    if (d) clauses.push(d); // already includes " ly"
   }
 
   if (firstYear) {
-    sentences.push(
+    clauses.push(
       firstMethod
-        ? `First planet discovered ${firstYear} (${firstMethod}).`
-        : `First planet discovered ${firstYear}.`,
+        ? `first confirmed ${firstYear} (${firstMethod})`
+        : `first confirmed ${firstYear}`,
     );
   }
 
-  return sentences.length ? sentences.join(" ") : undefined;
+  const out = clauses.join("; ") + (clauses.length ? "." : "");
+  if (!out || out === ".") return undefined;
+  return out.length > 160 ? `${out.slice(0, 157).trimEnd()}…` : out;
 }
 
 /** Compact mid-dot line for archive index / map overlay (Sky optional path). */
@@ -206,6 +186,8 @@ const COLUMNS = [
   "st_mass",
   "st_spectype",
   "sy_dist",
+  "ra",
+  "dec",
   "sy_pnum",
   "sy_snum",
   "cb_flag",
@@ -464,6 +446,109 @@ function companionLetter(hostname) {
   return m ? m[1].toUpperCase() : null;
 }
 
+/** Great-circle separation in arcseconds (RA/Dec degrees). */
+function angularSepArcsec(ra1, dec1, ra2, dec2) {
+  const d2r = Math.PI / 180;
+  const a1 = ra1 * d2r;
+  const d1 = dec1 * d2r;
+  const a2 = ra2 * d2r;
+  const d2 = dec2 * d2r;
+  let cosd =
+    Math.sin(d1) * Math.sin(d2) +
+    Math.cos(d1) * Math.cos(d2) * Math.cos(a1 - a2);
+  cosd = Math.max(-1, Math.min(1, cosd));
+  return Math.acos(cosd) * (180 / Math.PI) * 3600;
+}
+
+/**
+ * Projected physical separation (AU) ≈ θ″ × d_pc (small-angle).
+ * Prefer primary distance; omit if coords/dist missing or unresolved (θ≈0).
+ */
+function projectedSepAuFromCoords(primaryRow, companionRow) {
+  const ra1 = num(primaryRow?.ra);
+  const dec1 = num(primaryRow?.dec);
+  const ra2 = num(companionRow?.ra);
+  const dec2 = num(companionRow?.dec);
+  const distPc = num(primaryRow?.sy_dist) ?? num(companionRow?.sy_dist);
+  if (
+    ra1 == null ||
+    dec1 == null ||
+    ra2 == null ||
+    dec2 == null ||
+    distPc == null ||
+    !(distPc > 0)
+  ) {
+    return undefined;
+  }
+  const ang = angularSepArcsec(ra1, dec1, ra2, dec2);
+  if (!(ang > 1e-4)) return undefined;
+  const sep = ang * distPc;
+  if (!(sep > 0) || !Number.isFinite(sep)) return undefined;
+  if (sep >= 100) return Math.round(sep * 10) / 10;
+  if (sep >= 1) return Math.round(sep * 100) / 100;
+  return Math.round(sep * 1000) / 1000;
+}
+
+function scoreStellarHostRow(r) {
+  let s = 0;
+  if (num(r?.ra) != null) s += 4;
+  if (num(r?.dec) != null) s += 4;
+  if (num(r?.sy_dist) != null && num(r.sy_dist) > 0) s += 4;
+  if (num(r?.st_mass) != null) s += 2;
+  if (num(r?.st_rad) != null) s += 1;
+  if (num(r?.st_teff) != null) s += 1;
+  if (r?.st_spectype && String(r.st_spectype).trim()) s += 1;
+  return s;
+}
+
+/** Best stellarhosts row per hostname (sy_snum ≥ 2); lean NEA path for projectedSepAu. */
+async function fetchStellarHostsByHostname() {
+  const adql =
+    "select hostname, ra, dec, sy_dist, st_mass, st_rad, st_teff, st_spectype, sy_snum from stellarhosts where sy_snum >= 2";
+  const rows = await tapCsv(adql);
+  const map = new Map();
+  for (const r of rows) {
+    const h = r.hostname;
+    if (!h) continue;
+    const prev = map.get(h);
+    if (!prev || scoreStellarHostRow(r) > scoreStellarHostRow(prev)) {
+      map.set(h, r);
+    }
+  }
+  return map;
+}
+
+function indexStellarHostsByFamily(stellarHosts) {
+  const byFam = new Map();
+  if (!stellarHosts) return byFam;
+  for (const h of stellarHosts.keys()) {
+    const k = familyKey(h);
+    if (!byFam.has(k)) byFam.set(k, []);
+    byFam.get(k).push(h);
+  }
+  return byFam;
+}
+
+/** Prefer stellarhosts coords; fall back to pscomppars planet-host row. */
+function mergeStarRow(hostname, planetRows, stellarHosts) {
+  const sh = stellarHosts?.get(hostname) || null;
+  const pr =
+    (planetRows || []).find((r) => r.hostname === hostname) || null;
+  if (!sh && !pr) return null;
+  if (!sh) return pr;
+  if (!pr) return sh;
+  return {
+    ...pr,
+    ra: num(sh.ra) != null ? sh.ra : pr.ra,
+    dec: num(sh.dec) != null ? sh.dec : pr.dec,
+    sy_dist: num(sh.sy_dist) != null ? sh.sy_dist : pr.sy_dist,
+    st_mass: num(sh.st_mass) != null ? sh.st_mass : pr.st_mass,
+    st_rad: num(sh.st_rad) != null ? sh.st_rad : pr.st_rad,
+    st_teff: num(sh.st_teff) != null ? sh.st_teff : pr.st_teff,
+    st_spectype: sh.st_spectype || pr.st_spectype,
+  };
+}
+
 function buildStarBody({
   id,
   name,
@@ -475,6 +560,7 @@ function buildStarBody({
   discMethod,
   placeholder = false,
   parentId = undefined,
+  projectedSepAu = undefined,
 }) {
   // Orbit Viz Explore (eae49ee): primary has no orbit; companions/placeholders
   // may set parentId → primaryStarId for the rail. Never invent orbit elements.
@@ -510,11 +596,19 @@ function buildStarBody({
     massKg: stMass != null && stMass > 0 ? stMass * M_SUN_KG : undefined,
     radiusMeanKm: stRad != null && stRad > 0 ? stRad * R_SUN_KM : undefined,
     discoveryDate: discYear,
+    projectedSepAu:
+      projectedSepAu != null &&
+      Number.isFinite(projectedSepAu) &&
+      projectedSepAu > 0
+        ? projectedSepAu
+        : undefined,
   });
   const hasReal =
     starFacts.massKg != null ||
     starFacts.radiusMeanKm != null ||
     (row?.st_spectype && String(row.st_spectype).trim());
+  const sepDerived = starFacts.projectedSepAu != null;
+  const approximateFields = sepDerived ? ["facts.projectedSepAu"] : undefined;
 
   return omitEmpty({
     id,
@@ -526,7 +620,9 @@ function buildStarBody({
     color: starColorFromTeff(stTeff),
     meta: {
       source: parentId
-        ? "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — companion star; no invented binary orbit"
+        ? sepDerived
+          ? "NASA Exoplanet Archive stellarhosts/pscomppars — companion projectedSepAu from angsep×distance; no invented binary orbit"
+          : "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — companion star; no invented binary orbit"
         : "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
       sources: [
         {
@@ -536,11 +632,13 @@ function buildStarBody({
             ...(starFacts.massKg != null ? ["facts.massKg"] : []),
             ...(starFacts.radiusMeanKm != null ? ["facts.radiusMeanKm"] : []),
             ...(discYear ? ["facts.discoveryDate"] : []),
+            ...(sepDerived ? ["facts.projectedSepAu"] : []),
           ],
         },
       ],
       fetchedAt,
-      confidence: hasReal ? "known" : "assumed",
+      confidence: sepDerived ? "assumed" : hasReal ? "known" : "assumed",
+      approximateFields,
       unitsVersion: 1,
     },
   });
@@ -553,11 +651,14 @@ function buildStarBody({
  * @param {string} fetchedAt
  * @param {object[]} [companionStarRows] — optional extra stellar rows (unused; siblings in planetRows suffice)
  */
-function buildSystem(familyName, planetRows, fetchedAt, companionStarRows) {
-  void companionStarRows; // nice-to-have hook; sibling pscomppars rows already carry st_*
+function buildSystem(familyName, planetRows, fetchedAt, stellarHosts, stellarByFamily) {
   const systemId = kebabId(familyName);
   const hostnames = [...new Set(planetRows.map((r) => r.hostname).filter(Boolean))];
-  const primaryHostname = pickPrimaryHostname(hostnames, familyName);
+  // Fold in stellarhosts siblings so multi-star families get real companion cards + sep.
+  const extra = stellarByFamily?.get(familyName) || [];
+  for (const h of extra) hostnames.push(h);
+  const uniqHosts = [...new Set(hostnames.filter(Boolean))];
+  const primaryHostname = pickPrimaryHostname(uniqHosts, familyName);
   const ov = overviewUrl(primaryHostname || familyName);
 
   // Prefer a row from the primary hostname for system-level fields
@@ -775,7 +876,10 @@ function buildSystem(familyName, planetRows, fetchedAt, companionStarRows) {
 
   // Primary star
   const primaryStarId = systemId;
-  const primaryRow = primaryRows[0] || first;
+  const primaryRow =
+    mergeStarRow(primaryHostname, primaryRows.length ? primaryRows : planetRows, stellarHosts) ||
+    primaryRows[0] ||
+    first;
   stars.push(
     buildStarBody({
       id: primaryStarId,
@@ -791,8 +895,8 @@ function buildSystem(familyName, planetRows, fetchedAt, companionStarRows) {
   );
   usedStarIds.add(primaryStarId);
 
-  // Archive-backed companion hostnames (siblings in family)
-  const companionHosts = hostnames
+  // Archive-backed companions: pscomppars siblings + stellarhosts family siblings
+  const companionHosts = [...new Set(uniqHosts)]
     .filter((h) => h !== primaryHostname)
     .sort((a, b) => a.localeCompare(b));
 
@@ -810,8 +914,9 @@ function buildSystem(familyName, planetRows, fetchedAt, companionStarRows) {
       }
     }
     if (usedStarIds.has(compId)) continue;
-    const compRows = planetRows.filter((r) => r.hostname === compHostname);
-    const compRow = compRows[0];
+    const compRow = mergeStarRow(compHostname, planetRows, stellarHosts);
+    if (!compRow) continue;
+    const sepAu = projectedSepAuFromCoords(primaryRow, compRow);
     stars.push(
       buildStarBody({
         id: compId,
@@ -824,6 +929,7 @@ function buildSystem(familyName, planetRows, fetchedAt, companionStarRows) {
         discMethod,
         placeholder: false,
         parentId: primaryStarId,
+        projectedSepAu: sepAu,
       }),
     );
     usedStarIds.add(compId);
@@ -1097,6 +1203,21 @@ async function main() {
   }
 
   const byFamily = groupByFamily(rows);
+  let stellarHosts = new Map();
+  let stellarByFamily = new Map();
+  try {
+    stellarHosts = await fetchStellarHostsByHostname();
+    stellarByFamily = indexStellarHostsByFamily(stellarHosts);
+    console.log(
+      `stellarhosts multi-star rows (deduped hostnames): ${stellarHosts.size}`,
+    );
+  } catch (err) {
+    console.warn(
+      "stellarhosts fetch failed (projectedSepAu will be sparse):",
+      err.message || err,
+    );
+  }
+
   const built = [];
   const skippedProtected = [];
   const skippedEmpty = [];
@@ -1127,7 +1248,7 @@ async function main() {
         return null;
       }
     }
-    const item = buildSystem(familyName, planetRows, fetchedAt);
+    const item = buildSystem(familyName, planetRows, fetchedAt, stellarHosts, stellarByFamily);
     if (!item) {
       skippedEmpty.push(systemId);
       return null;
@@ -1194,8 +1315,28 @@ async function main() {
     systems: built.map((b) => b.indexRow),
   };
 
+  let multiStarSystems = 0;
+  let systemsWithProjectedSep = 0;
+  let companionStarsWithSep = 0;
+  for (const item of built) {
+    const sc = item.graph?.system?.starCount ?? item.indexRow?.starCount ?? 1;
+    if (sc >= 2) multiStarSystems++;
+    let any = false;
+    for (const b of item.graph?.bodies || []) {
+      if (b.kind !== "star") continue;
+      const sep = b.facts?.projectedSepAu;
+      if (sep != null && sep > 0) {
+        companionStarsWithSep++;
+        any = true;
+      }
+    }
+    if (any) systemsWithProjectedSep++;
+  }
   console.log(
     `Built ${built.length} systems; skipped protected=${skippedProtected.length} empty=${skippedEmpty.length}`,
+  );
+  console.log(
+    `projectedSepAu coverage: ${systemsWithProjectedSep}/${multiStarSystems} multi-star systems; ${companionStarsWithSep} companion star(s) with sep`,
   );
 
   if (opts.dryRun) {

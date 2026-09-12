@@ -5,7 +5,7 @@
     "home": false,
     "memberIds": [
       "k2-32",
-      "k2-32-star-1",
+      "k2-32-comp-b",
       "k2-32-e",
       "k2-32-b",
       "k2-32-c",
@@ -13,14 +13,14 @@
     ],
     "primaryStarId": "k2-32",
     "starCount": 2,
-    "blurb": "K2-32 is a G9 V multi-star system (2 stars) with 4 confirmed planets. About 514 ly from the Sun. First planet discovered 2016 (Transit).",
+    "blurb": "K2-32 (G9 V) — 4 planets, 2 stars; 514 ly; first confirmed 2016 (Transit).",
     "planetCount": 4,
     "distanceLy": 514.3,
     "hostSpectralType": "G9 V",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:22:03.017Z",
+      "fetchedAt": "2026-09-12T20:49:08.900Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — K2-32 overview",
@@ -43,8 +43,8 @@
       "kind": "star",
       "systemId": "k2-32",
       "facts": {
-        "massKg": 1.6504300999999998e+30,
-        "radiusMeanKm": 598302,
+        "massKg": 1.7299689e+30,
+        "radiusMeanKm": 605259,
         "discoveryDate": "2019"
       },
       "color": "#FDB813",
@@ -61,29 +61,43 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "known",
         "unitsVersion": 1
       }
     },
     {
-      "id": "k2-32-star-1",
-      "name": "K2-32 companion",
+      "id": "k2-32-comp-b",
+      "name": "K2-32 B",
       "kind": "star",
       "systemId": "k2-32",
       "parentId": "k2-32",
-      "color": "#9aa3ad",
+      "facts": {
+        "massKg": 4.0466955276e+29,
+        "radiusMeanKm": 162631.70190000001,
+        "discoveryDate": "2019",
+        "projectedSepAu": 2335.3
+      },
+      "color": "#E84A3C",
       "meta": {
-        "source": "Placeholder companion — sy_snum slot with no archive stellar row",
+        "source": "NASA Exoplanet Archive stellarhosts/pscomppars — companion projectedSepAu from angsep×distance; no invented binary orbit",
         "sources": [
           {
-            "name": "NASA Exoplanet Archive — overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-32",
-            "fields": []
+            "name": "NASA Exoplanet Archive — K2-32 B overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-32%20B",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate",
+              "facts.projectedSepAu"
+            ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
-        "confidence": "placeholder",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "confidence": "assumed",
+        "approximateFields": [
+          "facts.projectedSepAu"
+        ],
         "unitsVersion": 1
       }
     },
@@ -119,7 +133,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -167,7 +181,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -215,7 +229,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -263,7 +277,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

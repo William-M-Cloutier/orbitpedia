@@ -9,14 +9,14 @@
     ],
     "primaryStarId": "corot-10",
     "starCount": 1,
-    "blurb": "CoRoT-10 is a K1 V system with 1 confirmed planet. About 1,104 ly from the Sun. First planet discovered 2010 (Transit).",
+    "blurb": "CoRoT-10 (K1 V) — 1 planet; 1,104 ly; first confirmed 2010 (Transit).",
     "planetCount": 1,
     "distanceLy": 1103.7,
     "hostSpectralType": "K1 V",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:22:03.017Z",
+      "fetchedAt": "2026-09-12T20:49:08.900Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — CoRoT-10 overview",
@@ -57,7 +57,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -94,7 +94,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

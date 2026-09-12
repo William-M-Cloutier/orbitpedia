@@ -12,14 +12,14 @@
     ],
     "primaryStarId": "gj-676",
     "starCount": 2,
-    "blurb": "GJ 676 is a M0 multi-star system (2 stars) with 3 confirmed planets. About 52.3 ly from the Sun. First planet discovered 2012 (Radial Velocity).",
+    "blurb": "GJ 676 (M0) — 3 planets, 2 stars; 52.3 ly; first confirmed 2012 (Radial Velocity).",
     "planetCount": 3,
     "distanceLy": 52.3,
     "hostSpectralType": "M0",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:22:03.017Z",
+      "fetchedAt": "2026-09-12T20:49:08.900Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — GJ 676 A overview",
@@ -42,8 +42,8 @@
       "kind": "star",
       "systemId": "gj-676",
       "facts": {
-        "massKg": 1.24478222e+30,
-        "radiusMeanKm": 480032.99999999994,
+        "massKg": 1.1135432000000002e+30,
+        "radiusMeanKm": 507861,
         "discoveryDate": "2012"
       },
       "color": "#FF8C42",
@@ -60,7 +60,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -81,7 +81,7 @@
             "fields": []
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "placeholder",
         "unitsVersion": 1
       }
@@ -116,7 +116,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -161,7 +161,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -207,7 +207,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

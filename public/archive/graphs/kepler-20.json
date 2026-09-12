@@ -5,7 +5,7 @@
     "home": false,
     "memberIds": [
       "kepler-20",
-      "kepler-20-star-1",
+      "kepler-20-comp-b",
       "kepler-20-b",
       "kepler-20-c",
       "kepler-20-f",
@@ -14,13 +14,13 @@
     ],
     "primaryStarId": "kepler-20",
     "starCount": 2,
-    "blurb": "Kepler-20 is a multi-star system (2 stars) with 5 confirmed planets. About 922 ly from the Sun. First planet discovered 2011 (Transit).",
+    "blurb": "Kepler-20 — 5 planets, 2 stars; 922 ly; first confirmed 2011 (Transit).",
     "planetCount": 5,
     "distanceLy": 921.6,
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:22:03.017Z",
+      "fetchedAt": "2026-09-12T20:49:08.900Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-20 overview",
@@ -42,8 +42,8 @@
       "kind": "star",
       "systemId": "kepler-20",
       "facts": {
-        "massKg": 1.8472886300000002e+30,
-        "radiusMeanKm": 637539.48,
+        "massKg": 1.81348464e+30,
+        "radiusMeanKm": 656740.7999999999,
         "discoveryDate": "2011"
       },
       "color": "#FDB813",
@@ -60,29 +60,39 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "known",
         "unitsVersion": 1
       }
     },
     {
-      "id": "kepler-20-star-1",
-      "name": "Kepler-20 companion",
+      "id": "kepler-20-comp-b",
+      "name": "Kepler-20 B",
       "kind": "star",
       "systemId": "kepler-20",
       "parentId": "kepler-20",
-      "color": "#9aa3ad",
+      "facts": {
+        "discoveryDate": "2011",
+        "projectedSepAu": 1070.8
+      },
+      "color": "#FDB813",
       "meta": {
-        "source": "Placeholder companion — sy_snum slot with no archive stellar row",
+        "source": "NASA Exoplanet Archive stellarhosts/pscomppars — companion projectedSepAu from angsep×distance; no invented binary orbit",
         "sources": [
           {
-            "name": "NASA Exoplanet Archive — overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-20",
-            "fields": []
+            "name": "NASA Exoplanet Archive — Kepler-20 B overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/Kepler-20%20B",
+            "fields": [
+              "facts.discoveryDate",
+              "facts.projectedSepAu"
+            ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
-        "confidence": "placeholder",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "confidence": "assumed",
+        "approximateFields": [
+          "facts.projectedSepAu"
+        ],
         "unitsVersion": 1
       }
     },
@@ -117,7 +127,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -164,7 +174,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -211,7 +221,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -256,7 +266,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -302,7 +312,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

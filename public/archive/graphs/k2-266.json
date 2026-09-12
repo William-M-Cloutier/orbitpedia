@@ -5,7 +5,7 @@
     "home": false,
     "memberIds": [
       "k2-266",
-      "k2-266-star-1",
+      "k2-266-comp-b",
       "k2-266-b",
       "k2-266-c",
       "k2-266-d",
@@ -13,13 +13,13 @@
     ],
     "primaryStarId": "k2-266",
     "starCount": 2,
-    "blurb": "K2-266 is a multi-star system (2 stars) with 4 confirmed planets. About 253 ly from the Sun. First planet discovered 2018 (Transit).",
+    "blurb": "K2-266 — 4 planets, 2 stars; 253 ly; first confirmed 2018 (Transit).",
     "planetCount": 4,
     "distanceLy": 253,
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:22:03.017Z",
+      "fetchedAt": "2026-09-12T20:49:08.900Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — K2-266 overview",
@@ -59,29 +59,43 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "known",
         "unitsVersion": 1
       }
     },
     {
-      "id": "k2-266-star-1",
-      "name": "K2-266 companion",
+      "id": "k2-266-comp-b",
+      "name": "K2-266 B",
       "kind": "star",
       "systemId": "k2-266",
       "parentId": "k2-266",
-      "color": "#9aa3ad",
+      "facts": {
+        "massKg": 1.15506643054e+30,
+        "radiusMeanKm": 411324.97229999996,
+        "discoveryDate": "2018",
+        "projectedSepAu": 3308.7
+      },
+      "color": "#FF8C42",
       "meta": {
-        "source": "Placeholder companion — sy_snum slot with no archive stellar row",
+        "source": "NASA Exoplanet Archive stellarhosts/pscomppars — companion projectedSepAu from angsep×distance; no invented binary orbit",
         "sources": [
           {
-            "name": "NASA Exoplanet Archive — overview",
-            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-266",
-            "fields": []
+            "name": "NASA Exoplanet Archive — K2-266 B overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/K2-266%20B",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate",
+              "facts.projectedSepAu"
+            ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
-        "confidence": "placeholder",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "confidence": "assumed",
+        "approximateFields": [
+          "facts.projectedSepAu"
+        ],
         "unitsVersion": 1
       }
     },
@@ -115,7 +129,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -163,7 +177,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -211,7 +225,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -259,7 +273,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

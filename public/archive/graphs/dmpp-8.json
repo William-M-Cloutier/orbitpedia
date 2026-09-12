@@ -9,13 +9,13 @@
     ],
     "primaryStarId": "dmpp-8",
     "starCount": 1,
-    "blurb": "DMPP-8 hosts 1 confirmed planet. About 248 ly from the Sun. First planet discovered 2026 (Radial Velocity).",
+    "blurb": "DMPP-8 — 1 planet; 248 ly; first confirmed 2026 (Radial Velocity).",
     "planetCount": 1,
     "distanceLy": 248.3,
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:22:03.017Z",
+      "fetchedAt": "2026-09-12T20:49:08.900Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — DMPP-8 overview",
@@ -55,7 +55,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -90,7 +90,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

@@ -9,14 +9,14 @@
     ],
     "primaryStarId": "corot-3",
     "starCount": 1,
-    "blurb": "CoRoT-3 is a F3 V system with 1 confirmed planet. About 2,507 ly from the Sun. First planet discovered 2008 (Transit).",
+    "blurb": "CoRoT-3 (F3 V) — 1 planet; 2,507 ly; first confirmed 2008 (Transit).",
     "planetCount": 1,
     "distanceLy": 2507.4,
     "hostSpectralType": "F3 V",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:22:03.017Z",
+      "fetchedAt": "2026-09-12T20:49:08.900Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — CoRoT-3 overview",
@@ -57,7 +57,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -93,7 +93,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

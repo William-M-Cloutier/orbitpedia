@@ -9,14 +9,14 @@
     ],
     "primaryStarId": "hat-p-12",
     "starCount": 1,
-    "blurb": "HAT-P-12 is a K4 system with 1 confirmed planet. About 466 ly from the Sun. First planet discovered 2009 (Transit).",
+    "blurb": "HAT-P-12 (K4) — 1 planet; 466 ly; first confirmed 2009 (Transit).",
     "planetCount": 1,
     "distanceLy": 465.6,
     "hostSpectralType": "K4",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:22:03.017Z",
+      "fetchedAt": "2026-09-12T20:49:08.900Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — HAT-P-12 overview",
@@ -57,7 +57,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -94,7 +94,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

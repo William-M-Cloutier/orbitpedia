@@ -10,14 +10,14 @@
     ],
     "primaryStarId": "gj-3021",
     "starCount": 2,
-    "blurb": "GJ 3021 is a G6 V multi-star system (2 stars) with 1 confirmed planet. About 57.3 ly from the Sun. First planet discovered 2000 (Radial Velocity).",
+    "blurb": "GJ 3021 (G6 V) — 1 planet, 2 stars; 57.3 ly; first confirmed 2000 (Radial Velocity).",
     "planetCount": 1,
     "distanceLy": 57.3,
     "hostSpectralType": "G6 V",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:22:03.017Z",
+      "fetchedAt": "2026-09-12T20:49:08.900Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — GJ 3021 overview",
@@ -58,7 +58,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -79,7 +79,7 @@
             "fields": []
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "placeholder",
         "unitsVersion": 1
       }
@@ -114,7 +114,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

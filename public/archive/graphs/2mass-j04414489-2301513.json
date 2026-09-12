@@ -9,14 +9,14 @@
     ],
     "primaryStarId": "2mass-j04414489-2301513",
     "starCount": 1,
-    "blurb": "2MASS J04414489+2301513 is a M8.5 system with 1 confirmed planet. About 393 ly from the Sun. First planet discovered 2010 (Imaging).",
+    "blurb": "2MASS J04414489+2301513 (M8.5) — 1 planet; 393 ly; first confirmed 2010 (Imaging).",
     "planetCount": 1,
     "distanceLy": 392.8,
     "hostSpectralType": "M8.5",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:22:03.017Z",
+      "fetchedAt": "2026-09-12T20:49:08.900Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — 2MASS J04414489+2301513 overview",
@@ -57,7 +57,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -89,7 +89,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

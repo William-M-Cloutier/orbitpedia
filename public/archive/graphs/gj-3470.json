@@ -9,14 +9,14 @@
     ],
     "primaryStarId": "gj-3470",
     "starCount": 1,
-    "blurb": "GJ 3470 is a M1.5 system with 1 confirmed planet. About 96 ly from the Sun. First planet discovered 2012 (Radial Velocity).",
+    "blurb": "GJ 3470 (M1.5) — 1 planet; 96 ly; first confirmed 2012 (Radial Velocity).",
     "planetCount": 1,
     "distanceLy": 96,
     "hostSpectralType": "M1.5",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:22:03.017Z",
+      "fetchedAt": "2026-09-12T20:49:08.900Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — GJ 3470 overview",
@@ -57,7 +57,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -94,7 +94,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

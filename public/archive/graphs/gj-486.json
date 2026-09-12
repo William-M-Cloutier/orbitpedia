@@ -9,14 +9,14 @@
     ],
     "primaryStarId": "gj-486",
     "starCount": 1,
-    "blurb": "GJ 486 is a M3.5 V system with 1 confirmed planet. About 26.3 ly from the Sun. First planet discovered 2021 (Radial Velocity).",
+    "blurb": "GJ 486 (M3.5 V) — 1 planet; 26.3 ly; first confirmed 2021 (Radial Velocity).",
     "planetCount": 1,
     "distanceLy": 26.3,
     "hostSpectralType": "M3.5 V",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:22:03.017Z",
+      "fetchedAt": "2026-09-12T20:49:08.900Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — GJ 486 overview",
@@ -57,7 +57,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -94,7 +94,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

@@ -16,14 +16,14 @@
     ],
     "primaryStarId": "55-cnc",
     "starCount": 2,
-    "blurb": "55 Cnc is a G8 V multi-star system (2 stars) with 7 confirmed planets. About 41 ly from the Sun. First planet discovered 1996 (Radial Velocity).",
+    "blurb": "55 Cnc (G8 V) — 7 planets, 2 stars; 41 ly; first confirmed 1996 (Radial Velocity).",
     "planetCount": 7,
     "distanceLy": 41,
     "hostSpectralType": "G8 V",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:22:03.017Z",
+      "fetchedAt": "2026-09-12T20:49:08.900Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — 55 Cnc overview",
@@ -46,8 +46,8 @@
       "kind": "star",
       "systemId": "55-cnc",
       "facts": {
-        "massKg": 1.79956535e+30,
-        "radiusMeanKm": 656045.1,
+        "massKg": 2.0182970499999998e+30,
+        "radiusMeanKm": 681786,
         "discoveryDate": "2004"
       },
       "color": "#FF8C42",
@@ -64,7 +64,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -78,11 +78,12 @@
       "facts": {
         "massKg": 5.1700220000000004e+29,
         "radiusMeanKm": 190621.80000000002,
-        "discoveryDate": "2004"
+        "discoveryDate": "2004",
+        "projectedSepAu": 1067.5
       },
       "color": "#E84A3C",
       "meta": {
-        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — companion star; no invented binary orbit",
+        "source": "NASA Exoplanet Archive stellarhosts/pscomppars — companion projectedSepAu from angsep×distance; no invented binary orbit",
         "sources": [
           {
             "name": "NASA Exoplanet Archive — 55 Cnc B overview",
@@ -90,12 +91,16 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.projectedSepAu"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
-        "confidence": "known",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
+        "confidence": "assumed",
+        "approximateFields": [
+          "facts.projectedSepAu"
+        ],
         "unitsVersion": 1
       }
     },
@@ -131,7 +136,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -179,7 +184,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -227,7 +232,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -275,7 +280,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -323,7 +328,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -370,7 +375,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -417,7 +422,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

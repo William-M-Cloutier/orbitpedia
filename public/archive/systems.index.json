@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "fetchedAt": "2026-09-12T20:22:03.017Z",
+  "fetchedAt": "2026-09-12T20:49:08.900Z",
   "source": "NASA Exoplanet Archive pscomppars",
   "systems": [
     {
@@ -83,7 +83,7 @@
       "hostSpectralType": "L4.5 V",
       "hasGas": true,
       "blurb": "L4.5 V · 1 planet · 2 stars · first world 2026",
-      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/CD-35%202722%20B",
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/CD-35%202722",
       "primaryStarId": "cd-35-2722"
     },
     {

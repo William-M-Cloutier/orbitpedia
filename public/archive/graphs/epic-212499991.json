@@ -9,13 +9,13 @@
     ],
     "primaryStarId": "epic-212499991",
     "starCount": 1,
-    "blurb": "EPIC 212499991 hosts 1 confirmed planet. About 924 ly from the Sun. First planet discovered 2019 (Transit).",
+    "blurb": "EPIC 212499991 — 1 planet; 924 ly; first confirmed 2019 (Transit).",
     "planetCount": 1,
     "distanceLy": 924,
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:22:03.017Z",
+      "fetchedAt": "2026-09-12T20:49:08.900Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — EPIC 212499991 overview",
@@ -55,7 +55,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -86,7 +86,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "known",
         "unitsVersion": 1
       }

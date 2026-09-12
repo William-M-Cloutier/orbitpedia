@@ -13,13 +13,13 @@
     ],
     "primaryStarId": "koi-94",
     "starCount": 2,
-    "blurb": "KOI-94 is a multi-star system (2 stars) with 4 confirmed planets. About 1,556 ly from the Sun. First planet discovered 2013 (Transit).",
+    "blurb": "KOI-94 — 4 planets, 2 stars; 1,556 ly; first confirmed 2013 (Transit).",
     "planetCount": 4,
     "distanceLy": 1555.9,
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:22:03.017Z",
+      "fetchedAt": "2026-09-12T20:49:08.900Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — KOI-94 overview",
@@ -41,8 +41,8 @@
       "kind": "star",
       "systemId": "koi-94",
       "facts": {
-        "massKg": 2.53927619e+30,
-        "radiusMeanKm": 1057464,
+        "massKg": 2.19924782e+30,
+        "radiusMeanKm": 925976.7,
         "discoveryDate": "2013"
       },
       "color": "#F8F7FF",
@@ -59,7 +59,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -80,7 +80,7 @@
             "fields": []
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "placeholder",
         "unitsVersion": 1
       }
@@ -116,7 +116,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -163,7 +163,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -210,7 +210,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -257,7 +257,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

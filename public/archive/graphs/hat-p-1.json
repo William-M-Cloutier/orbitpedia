@@ -10,14 +10,14 @@
     ],
     "primaryStarId": "hat-p-1",
     "starCount": 2,
-    "blurb": "HAT-P-1 is a G0 V multi-star system (2 stars) with 1 confirmed planet. About 519 ly from the Sun. First planet discovered 2006 (Transit).",
+    "blurb": "HAT-P-1 (G0 V) — 1 planet, 2 stars; 519 ly; first confirmed 2006 (Transit).",
     "planetCount": 1,
     "distanceLy": 518.5,
     "hostSpectralType": "G0 V",
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:22:03.017Z",
+      "fetchedAt": "2026-09-12T20:49:08.900Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — HAT-P-1 overview",
@@ -40,11 +40,11 @@
       "kind": "star",
       "systemId": "hat-p-1",
       "facts": {
-        "massKg": 2.28872897e+30,
-        "radiusMeanKm": 816751.7999999999,
+        "massKg": 2.2270864000000003e+30,
+        "radiusMeanKm": 800054.9999999999,
         "discoveryDate": "2006"
       },
-      "color": "#FDB813",
+      "color": "#F8F7FF",
       "meta": {
         "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
         "sources": [
@@ -58,7 +58,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -79,7 +79,7 @@
             "fields": []
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "placeholder",
         "unitsVersion": 1
       }
@@ -116,7 +116,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

@@ -9,14 +9,14 @@
     ],
     "primaryStarId": "g-9-40",
     "starCount": 1,
-    "blurb": "G 9-40 is a M2.5 V system with 1 confirmed planet. About 91.1 ly from the Sun. First planet discovered 2019 (Transit).",
+    "blurb": "G 9-40 (M2.5 V) — 1 planet; 91.1 ly; first confirmed 2019 (Transit).",
     "planetCount": 1,
     "distanceLy": 91.1,
     "hostSpectralType": "M2.5 V",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:22:03.017Z",
+      "fetchedAt": "2026-09-12T20:49:08.900Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — G 9-40 overview",
@@ -57,7 +57,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -94,7 +94,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

@@ -9,14 +9,14 @@
     ],
     "primaryStarId": "gj-1214",
     "starCount": 1,
-    "blurb": "GJ 1214 is a M4 V system with 1 confirmed planet. About 47.8 ly from the Sun. First planet discovered 2009 (Transit).",
+    "blurb": "GJ 1214 (M4 V) — 1 planet; 47.8 ly; first confirmed 2009 (Transit).",
     "planetCount": 1,
     "distanceLy": 47.8,
     "hostSpectralType": "M4 V",
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T20:22:03.017Z",
+      "fetchedAt": "2026-09-12T20:49:08.900Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — GJ 1214 overview",
@@ -57,7 +57,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -94,7 +94,7 @@
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T20:22:03.017Z",
+        "fetchedAt": "2026-09-12T20:49:08.900Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
