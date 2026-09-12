@@ -26,7 +26,7 @@ import { satelliteFactRows } from "@/lib/satelliteDisplay";
 import type { SurfacePoi } from "@/data/poiSchema";
 import { formatLatDeg, formatLonDeg } from "@/lib/latLon";
 import { missionFactRows } from "@/lib/missionDisplay";
-import { ProbeDistanceChart } from "@/viz/ProbeDistanceCharts";
+import { ProbeDistanceChartLazy } from "@/viz/ProbeDistanceChartsLazy";
 
 type Props = {
   body: Body | null | undefined;
@@ -348,7 +348,7 @@ export function FactsPanel({ body, system, onClear, selectedPoi, onClearPoi }: P
                 <Stat label="Semi-major axis" value={formatAu(body.orbit.aAu)} />
               )}
             </dl>
-            {isProbe ? <ProbeDistanceChart body={body} /> : null}
+            {isProbe ? <ProbeDistanceChartLazy body={body} /> : null}
             {overview && (
               <p className="text-sm leading-relaxed text-zinc-400">{overview}</p>
             )}
@@ -435,7 +435,7 @@ export function FactsPanel({ body, system, onClear, selectedPoi, onClearPoi }: P
 
             {isProbe ? (
               <div className="w-full">
-                <ProbeDistanceChart body={body} />
+                <ProbeDistanceChartLazy body={body} />
               </div>
             ) : null}
 
