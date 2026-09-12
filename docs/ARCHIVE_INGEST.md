@@ -155,7 +155,8 @@ Systems map shows archive **index stubs**; graph loads on Explore open.
 Archive Facts / System blurbs are **factual-or-omit**:
 
 - Do **not** write process phrases into user-facing copy (`Archive host`, `ingest slice`,
-  `sample ingest`, `hand-enriched`, lazy-load wiring notes, etc.).
+  `sample ingest`, `hand-enriched`, `Phase 1 catalog`, `Orbitpedia catalog`,
+  `Archive system (sparse)`, `load the full graph`, lazy-load wiring notes, etc.).
 - Star `discoveryNotes` omitted unless a real archive note exists; prefer `discoveryDate`.
 - System `blurb` = hostname + optional spectral type + confirmed planet count + distance when known.
 - Facts/UI = human astronomy; thresholds/field names only in code comments + docs.

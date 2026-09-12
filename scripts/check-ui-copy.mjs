@@ -35,6 +35,11 @@ const PHRASE_BANNED = [
   "session prime",
   "generate:catalog",
   "npm run",
+  // Product-voice meta (post d7c42a6 scrub)
+  "phase 1 catalog",
+  "orbitpedia catalog",
+  "archive system (sparse)",
+  "load the full graph",
 ];
 
 /** Schema / flag tokens — UI attrs, JSX text, archive copy only. */
