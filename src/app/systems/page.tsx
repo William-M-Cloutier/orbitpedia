@@ -110,6 +110,7 @@ function separateNodes(
   }
 }
 
+/** Shared 2D slots (golden-angle); schematic = equal rings, proportional = size-scaled radii. */
 function layoutNodes(
   nodes: SystemNode[],
   spacing: MapSpacing,
@@ -122,43 +123,43 @@ function layoutNodes(
   const usableW = Math.max(120, width - padX * 2);
   const usableH = Math.max(120, height - padY * 2);
   const midY = height * 0.42;
+  const cx0 = width / 2;
 
-  if (spacing === "schematic" || nodes.length === 1) {
-    const step = nodes.length > 1 ? usableW / (nodes.length - 1) : 0;
-    return nodes.map((n, i) => ({
-      ...n,
-      x: padX + (nodes.length === 1 ? usableW / 2 : i * step),
-      y: midY,
-      r: radiusFor(n, spacing),
-    }));
-  }
-
-  // Proportional: 2D scatter (size ~ outer extent), then resolve collisions.
-  // Not sky positions — just a readable non-colliding graph that scales.
+  // Same order/slots for both modes: home center, then by outer extent.
   const sorted = [...nodes].sort((a, b) => {
     if (a.home !== b.home) return a.home ? -1 : 1;
     return b.outerAAu - a.outerAAu;
   });
   const GOLDEN = Math.PI * (3 - Math.sqrt(5));
+  const nOther = Math.max(sorted.length - 1, 1);
+  const maxExtent = Math.max(
+    ...sorted.map((n) => Math.sqrt(n.outerAAu)),
+    1,
+  );
+
   const pts = sorted.map((n, i) => {
     const r = radiusFor(n, spacing);
     if (n.home || sorted.length === 1) {
-      return { ...n, x: width / 2, y: midY, r };
+      return { ...n, x: cx0, y: midY, r };
     }
-    const k = i; // home is 0
-    const ring = 0.22 + 0.55 * Math.sqrt(k / Math.max(sorted.length - 1, 1));
+    const k = i; // home is 0 → shared angular slot
     const ang = k * GOLDEN;
-    // Bias spread by relative system size so larger systems sit farther out a bit.
-    const sizeBias = 0.85 + 0.3 * Math.min(1, Math.sqrt(n.outerAAu) / 3);
+    const ring = 0.28 + 0.72 * Math.sqrt(k / nOther);
+    // Proportional only: stretch distance from home by √outerAAu (same angles).
+    const distMul =
+      spacing === "proportional"
+        ? 0.62 + 0.58 * (Math.sqrt(n.outerAAu) / maxExtent)
+        : 1;
+    const rad = ring * distMul;
     return {
       ...n,
-      x: width / 2 + Math.cos(ang) * usableW * 0.42 * ring * sizeBias,
-      y: midY + Math.sin(ang) * usableH * 0.42 * ring,
+      x: cx0 + Math.cos(ang) * usableW * 0.42 * rad,
+      y: midY + Math.sin(ang) * usableH * 0.42 * rad,
       r,
     };
   });
 
-  separateNodes(pts, 16);
+  separateNodes(pts, spacing === "schematic" ? 14 : 16);
 
   // Fit into padded bounds without changing relative layout much.
   let minX = Infinity,
@@ -382,10 +383,10 @@ function SystemMapView() {
           <div>
             <h1 className="text-lg font-medium text-zinc-100">System map</h1>
             <p className="mt-0.5 max-w-2xl text-sm text-zinc-500">
-              Click a system for facts (centers view). Proportional uses a
-              2D non-colliding layout (not sky positions). Drag or WASD to
-              pan, Shift faster, scroll to zoom. Double-click or Open Explore
-              to enter.
+              Click a system for facts (centers view). Both spacings share one
+              2D layout (not sky positions); Proportional only scales distances
+              by system size. Drag or WASD to pan, Shift faster, scroll to zoom.
+              Double-click or Open Explore to enter.
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -467,39 +468,23 @@ function SystemMapView() {
               fill="url(#mapGlow)"
             />
 
-            {spacing === "schematic" ? (
-              <line
-                x1={60}
-                y1={WORLD_H * 0.42}
-                x2={WORLD_W - 60}
-                y2={WORLD_H * 0.42}
-                stroke="rgba(255,255,255,0.08)"
-                strokeWidth={1}
-                strokeDasharray="4 6"
-              />
-            ) : null}
-
             {(() => {
               const home = laid.find((n) => n.home) ?? laid[0];
               if (!home) return null;
-              // Schematic: chain along the row. Proportional: star from home.
-              const edges =
-                spacing === "schematic"
-                  ? laid.slice(0, -1).map((a, i) => [a, laid[i + 1]!] as const)
-                  : laid
-                      .filter((n) => n.id !== home.id)
-                      .map((n) => [home, n] as const);
-              return edges.map(([a, b]) => (
-                <line
-                  key={`e-${a.id}-${b.id}`}
-                  x1={a.x}
-                  y1={a.y}
-                  x2={b.x}
-                  y2={b.y}
-                  stroke="rgba(125,180,255,0.25)"
-                  strokeWidth={1.5}
-                />
-              ));
+              // Home-star edges for the shared 2D layout.
+              return laid
+                .filter((n) => n.id !== home.id)
+                .map((n) => (
+                  <line
+                    key={`e-${home.id}-${n.id}`}
+                    x1={home.x}
+                    y1={home.y}
+                    x2={n.x}
+                    y2={n.y}
+                    stroke="rgba(125,180,255,0.25)"
+                    strokeWidth={1.5}
+                  />
+                ));
             })()}
 
             {laid.map((n) => (
