@@ -4,7 +4,12 @@
  *
  * Graphs are lazy-fetched so thousands of cards never enter the client bundle.
  */
-import type { Body, System } from "./schema";
+import {
+  BodySchema,
+  SystemSchema,
+  type Body,
+  type System,
+} from "./schema";
 import {
   getSystem,
   getSystemGraph,
@@ -90,7 +95,32 @@ export async function getArchiveSystemGraph(
       `archive graph id mismatch: file claims "${data.system.id}" vs "${systemId}"`,
     );
   }
-  const graph: SystemGraph = { system: data.system, bodies: data.bodies };
+  // Loud-fail junk chunks (same Zod contract as curated Store B).
+  const system = SystemSchema.parse(data.system);
+  const bodies = data.bodies.map((b, i) => {
+    try {
+      return BodySchema.parse(b);
+    } catch (err) {
+      throw new Error(
+        `archive graph "${systemId}" body[${i}] id=${(b as Body)?.id ?? "?"} failed Zod: ${err}`,
+      );
+    }
+  });
+  for (const mid of system.memberIds) {
+    if (!bodies.some((b) => b.id === mid)) {
+      throw new Error(
+        `archive graph "${systemId}" memberId missing body card: ${mid}`,
+      );
+    }
+  }
+  for (const b of bodies) {
+    if (b.systemId !== systemId) {
+      throw new Error(
+        `archive graph "${systemId}" body "${b.id}" systemId "${b.systemId}" mismatch`,
+      );
+    }
+  }
+  const graph: SystemGraph = { system, bodies };
   graphCache.set(systemId, graph);
   return graph;
 }
