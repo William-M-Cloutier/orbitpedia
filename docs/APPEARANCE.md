@@ -5,8 +5,10 @@ will never ship real surface maps.
 
 ## Procedural default
 
-- Materials are chosen by **kind / traits** (rocky, gas, ice, star) plus light
-  noise, tinted with optional body `color` when present.
+- Materials are chosen by **kind / traits** (rocky, gas, ice, star) plus **light**
+  noise, tinted with optional body `color` when present (catalog hue stays
+  dominant — rocky especially; no alien neon tints).
+- Selection uses a soft shared emissive (muted intensity), not a bright rim.
 - Shared material pool — lean; do not allocate per-frame or per-unique-byte maps.
 - Missing or unknown `appearance.textureId`, empty registry, or a future failed
   load → **fail-open to procedural**. Never block Explore; no error toasts.

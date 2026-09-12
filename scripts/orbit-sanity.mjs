@@ -720,6 +720,23 @@ if (!Number.isFinite(c)) {
     }
   }
   ok("procedural body materials wired (pool + BodyMesh; textureId ignored)");
+  // Soft selection glow — avoid neon rim regression (emissiveIntensity was 0.45).
+  if (!/FOCUS_EMISSIVE_INTENSITY/.test(poolSrc)) {
+    fail("materialPool missing FOCUS_EMISSIVE_INTENSITY soft-select constant");
+  } else {
+    const m = poolSrc.match(/FOCUS_EMISSIVE_INTENSITY\s*=\s*([0-9.]+)/);
+    const v = m ? Number(m[1]) : NaN;
+    if (!(v > 0 && v <= 0.25)) {
+      fail(`selection emissiveIntensity too strong: ${v} (want >0 and ≤0.25)`);
+    } else {
+      ok(`selection glow soft (FOCUS_EMISSIVE_INTENSITY=${v})`);
+    }
+  }
+  if (!/NoColorSpace/.test(fs.readFileSync(path.join(appearanceDir, "proceduralTextures.ts"), "utf8"))) {
+    fail("proceduralTextures should use NoColorSpace for grayscale modulation maps");
+  } else {
+    ok("procedural maps use NoColorSpace (catalog color fidelity)");
+  }
 }
 
 if (process.exitCode) {

@@ -41,29 +41,33 @@ function sampleFamily(
   family: SurfaceFamily,
   u: number,
   v: number,
-  x: number,
-  y: number,
+  _x: number,
+  _y: number,
 ): number {
   switch (family) {
     case "gas": {
-      // Soft latitude bands + light longitudinal noise.
-      const bands = 0.55 + 0.35 * Math.sin(v * Math.PI * 10 + fbm(u * 3, v * 2, 3, 2) * 1.2);
-      const swirl = 0.08 * fbm(u * 6, v * 4, 11, 3);
-      return Math.min(1, Math.max(0.15, bands + swirl));
+      // Soft latitude bands + light longitudinal noise (readable, not striped neon).
+      const bands =
+        0.72 + 0.18 * Math.sin(v * Math.PI * 8 + fbm(u * 2.5, v * 1.5, 3, 2) * 0.9);
+      const swirl = 0.05 * fbm(u * 5, v * 3, 11, 2);
+      return Math.min(1, Math.max(0.55, bands + swirl));
     }
     case "ice": {
-      const n = fbm(u * 4, v * 4, 7, 3);
-      return Math.min(1, Math.max(0.55, 0.72 + 0.28 * n));
+      // Pale frost with gentle mottling — keep albedo high so catalog cyan/white holds.
+      const n = fbm(u * 3.5, v * 3.5, 7, 2);
+      return Math.min(1, Math.max(0.7, 0.82 + 0.18 * n));
     }
     case "star": {
-      const g = fbm(u * 8, v * 8, 13, 4);
-      return Math.min(1, Math.max(0.35, 0.55 + 0.45 * g));
+      // Soft granulation; stay bright so MeshBasic host stars read cleanly.
+      const g = fbm(u * 6, v * 6, 13, 3);
+      return Math.min(1, Math.max(0.55, 0.7 + 0.3 * g));
     }
     case "rocky":
     default: {
-      const n = fbm(u * 10, v * 10, 2, 4);
-      const speck = hash2(x, y, 5) > 0.92 ? 0.25 : 0;
-      return Math.min(1, Math.max(0.2, 0.35 + 0.5 * n + speck));
+      // Light noise only — catalog color must dominate (Earth #6B93D6 stays
+      // blue-ish, not mottled neon / alien green under yellow sun light).
+      const n = fbm(u * 5, v * 5, 2, 2);
+      return Math.min(1, Math.max(0.78, 0.88 + 0.12 * n));
     }
   }
 }
@@ -90,7 +94,9 @@ function buildDataTexture(family: SurfaceFamily): THREE.DataTexture {
   tex.magFilter = THREE.LinearFilter;
   tex.minFilter = THREE.LinearMipmapLinearFilter;
   tex.generateMipmaps = true;
-  tex.colorSpace = THREE.SRGBColorSpace;
+  // Grayscale modulation map — leave linear so midtones don't crush/shift hue
+  // when multiplied by catalog color under warm sun lighting.
+  tex.colorSpace = THREE.NoColorSpace;
   tex.needsUpdate = true;
   return tex;
 }

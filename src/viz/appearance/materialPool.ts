@@ -9,10 +9,22 @@ import { proceduralMap } from "./proceduralTextures";
 
 const pool = new Map<string, THREE.Material>();
 
+/** Selection glow — readable but not a neon rim (was 0.45 + full-color emissive). */
+const FOCUS_EMISSIVE_INTENSITY = 0.16;
+/** Mix emissive toward black so the halo stays soft across all families. */
+const FOCUS_EMISSIVE_MIX = 0.35;
+
 function normalizeHex(color: string | undefined, family: SurfaceFamily): string {
   const raw = (color ?? defaultFamilyColor(family)).trim();
   if (!raw) return defaultFamilyColor(family);
   return raw.toLowerCase();
+}
+
+/** Soft selection emissive: catalog/highlight hue, heavily muted. */
+function softEmissiveHex(hex: string): string {
+  const c = new THREE.Color(hex);
+  c.multiplyScalar(FOCUS_EMISSIVE_MIX);
+  return `#${c.getHexString()}`;
 }
 
 function buildProceduralMaterial(
@@ -32,15 +44,15 @@ function buildProceduralMaterial(
   }
 
   const roughness =
-    family === "ice" ? 0.38 : family === "gas" ? 0.55 : 0.82;
-  const metalness = family === "ice" ? 0.12 : 0.04;
+    family === "ice" ? 0.42 : family === "gas" ? 0.58 : 0.78;
+  const metalness = family === "ice" ? 0.08 : 0.03;
   return new THREE.MeshStandardMaterial({
     color: colorHex,
     map,
     roughness,
     metalness,
-    emissive: focused ? emissiveHex : "#000000",
-    emissiveIntensity: focused ? 0.45 : 0,
+    emissive: focused ? softEmissiveHex(emissiveHex) : "#000000",
+    emissiveIntensity: focused ? FOCUS_EMISSIVE_INTENSITY : 0,
   });
 }
 
