@@ -28,12 +28,12 @@ type Props = {
   sizeMode?: SizeMode;
   /** Session-only ids with mesh + orbit line suppressed (Explore hide). */
   hiddenIds?: ReadonlySet<string>;
-  /** Hide all probe trajectory polylines (ProbePathLine). Default false = visible. */
-  hideProbePaths?: boolean;
+  /** Body kinds whose OrbitLine / ProbePathLine are hidden (moons inherit planet). */
+  hideOrbitPathKinds?: ReadonlySet<BodyKind>;
   /** Hide all probe craft meshes / markers (ProbeBodyMesh). Default false = visible. */
   hideProbeMeshes?: boolean;
-  /** Suppress OrbitLine / ProbePathLine by body kind (moons inherit planet). Meshes stay. */
-  hideOrbitPathKinds?: ReadonlySet<BodyKind>;
+  /** @deprecated Prefer hideOrbitPathKinds.has("probe") — still honored by OrbitScene. */
+  hideProbePaths?: boolean;
   /** Active system graph — remount parent with key={systemId} to unload RAF/meshes. */
   systemId?: string;
   /** Canvas-space overlay insets for setViewOffset (see OrbitScene). */
