@@ -85,6 +85,15 @@ function planetLooksGas(mEarth, rEarth) {
   return false;
 }
 
+/** Factual archive discovery note — omit when year and method both missing. */
+function discoveryNote(discYear, method) {
+  const m = method != null && String(method).trim() ? String(method).trim() : "";
+  if (discYear && m) return `Discovered ${discYear} (${m}).`;
+  if (discYear) return `Discovered ${discYear}.`;
+  if (m) return `Discovered via ${m}.`;
+  return undefined;
+}
+
 const COLUMNS = [
   "hostname",
   "pl_name",
@@ -106,6 +115,7 @@ const COLUMNS = [
   "sy_snum",
   "cb_flag",
   "disc_year",
+  "discoverymethod",
 ];
 
 function parseArgs(argv) {
@@ -367,6 +377,7 @@ function buildStarBody({
   fetchedAt,
   ov,
   discYear,
+  discMethod,
   placeholder = false,
   parentId = undefined,
 }) {
@@ -399,10 +410,12 @@ function buildStarBody({
   const stMass = num(row?.st_mass);
   const stRad = num(row?.st_rad);
   const stTeff = num(row?.st_teff);
+  const starNote = discoveryNote(discYear, discMethod || row?.discoverymethod);
   const starFacts = omitEmpty({
     massKg: stMass != null && stMass > 0 ? stMass * M_SUN_KG : undefined,
     radiusMeanKm: stRad != null && stRad > 0 ? stRad * R_SUN_KM : undefined,
     discoveryDate: discYear,
+    discoveryNotes: starNote,
   });
   const hasReal =
     starFacts.massKg != null ||
@@ -429,6 +442,7 @@ function buildStarBody({
             ...(starFacts.massKg != null ? ["facts.massKg"] : []),
             ...(starFacts.radiusMeanKm != null ? ["facts.radiusMeanKm"] : []),
             ...(discYear ? ["facts.discoveryDate"] : []),
+            ...(starNote ? ["facts.discoveryNotes"] : []),
           ],
         },
       ],
@@ -482,6 +496,7 @@ function buildSystem(familyName, planetRows, fetchedAt, companionStarRows) {
   const discYear = first.disc_year
     ? String(Math.trunc(num(first.disc_year) ?? first.disc_year))
     : undefined;
+  const discMethod = first.discoverymethod || undefined;
 
   // --- Planets (dedupe by pl_name AND body id; sort with null aAu last) ---
   // Family merge can yield "55 Cnc b" + "55 Cnc B b" → same letter → same body id.
@@ -543,11 +558,17 @@ function buildSystem(familyName, planetRows, fetchedAt, companionStarRows) {
     const mEarth = num(row.pl_bmasse);
     if (planetLooksGas(mEarth, rEarth)) hasGas = true;
 
+    const rowYear = row.disc_year
+      ? String(Math.trunc(num(row.disc_year) ?? row.disc_year))
+      : discYear;
+    const rowMethod = row.discoverymethod || discMethod;
+    const note = discoveryNote(rowYear, rowMethod);
     const facts = omitEmpty({
       massKg: mEarth != null && mEarth > 0 ? mEarth * M_EARTH_KG : undefined,
       radiusMeanKm:
         rEarth != null && rEarth > 0 ? rEarth * R_EARTH_KM : undefined,
-      discoveryDate: discYear,
+      discoveryDate: rowYear,
+      discoveryNotes: note,
     });
 
     // Skip entirely empty cards (no orbit and no facts)
@@ -584,6 +605,7 @@ function buildSystem(familyName, planetRows, fetchedAt, companionStarRows) {
         "facts.massKg",
         "facts.radiusMeanKm",
         "facts.discoveryDate",
+        "facts.discoveryNotes",
       ].filter((f) => {
         if (f.startsWith("orbit.")) {
           const key = f.slice(6);
@@ -596,7 +618,8 @@ function buildSystem(familyName, planetRows, fetchedAt, companionStarRows) {
         }
         if (f === "facts.massKg") return facts.massKg != null;
         if (f === "facts.radiusMeanKm") return facts.radiusMeanKm != null;
-        if (f === "facts.discoveryDate") return discYear != null;
+        if (f === "facts.discoveryDate") return rowYear != null;
+        if (f === "facts.discoveryNotes") return note != null;
         return false;
       });
     } else {
@@ -604,10 +627,12 @@ function buildSystem(familyName, planetRows, fetchedAt, companionStarRows) {
         "facts.massKg",
         "facts.radiusMeanKm",
         "facts.discoveryDate",
+        "facts.discoveryNotes",
       ].filter((f) => {
         if (f === "facts.massKg") return facts.massKg != null;
         if (f === "facts.radiusMeanKm") return facts.radiusMeanKm != null;
-        if (f === "facts.discoveryDate") return discYear != null;
+        if (f === "facts.discoveryDate") return rowYear != null;
+        if (f === "facts.discoveryNotes") return note != null;
         return false;
       });
     }
@@ -667,6 +692,7 @@ function buildSystem(familyName, planetRows, fetchedAt, companionStarRows) {
       fetchedAt,
       ov,
       discYear,
+      discMethod,
       placeholder: false,
     }),
   );
@@ -702,6 +728,7 @@ function buildSystem(familyName, planetRows, fetchedAt, companionStarRows) {
         fetchedAt,
         ov: overviewUrl(compHostname),
         discYear,
+        discMethod,
         placeholder: false,
         parentId: primaryStarId,
       }),
@@ -724,6 +751,7 @@ function buildSystem(familyName, planetRows, fetchedAt, companionStarRows) {
         fetchedAt,
         ov,
         discYear,
+        discMethod,
         placeholder: true,
         parentId: primaryStarId,
       }),

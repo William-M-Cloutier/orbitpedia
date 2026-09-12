@@ -18,7 +18,7 @@
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T08:23:37.922Z",
+      "fetchedAt": "2026-09-12T18:56:45.295Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — GJ 887 overview",
@@ -43,7 +43,8 @@
       "facts": {
         "massKg": 9.8429265e+29,
         "radiusMeanKm": 325587.60000000003,
-        "discoveryDate": "2026"
+        "discoveryDate": "2026",
+        "discoveryNotes": "Discovered 2026 (Radial Velocity)."
       },
       "color": "#E84A3C",
       "meta": {
@@ -55,11 +56,12 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -72,7 +74,8 @@
       "facts": {
         "massKg": 8.719412e+24,
         "radiusMeanKm": 7135.52,
-        "discoveryDate": "2026"
+        "discoveryDate": "2026",
+        "discoveryNotes": "Discovered 2026 (Radial Velocity)."
       },
       "color": "#C45C26",
       "meta": {
@@ -87,11 +90,12 @@
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -115,7 +119,8 @@
       "facts": {
         "massKg": 2.329158e+25,
         "radiusMeanKm": 11467.800000000001,
-        "discoveryDate": "2026"
+        "discoveryDate": "2020",
+        "discoveryNotes": "Discovered 2020 (Radial Velocity)."
       },
       "color": "#D4A574",
       "meta": {
@@ -132,11 +137,12 @@
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -160,7 +166,8 @@
       "facts": {
         "massKg": 3.88193e+25,
         "radiusMeanKm": 15481.53,
-        "discoveryDate": "2026"
+        "discoveryDate": "2020",
+        "discoveryNotes": "Discovered 2020 (Radial Velocity)."
       },
       "color": "#6B93D6",
       "meta": {
@@ -177,11 +184,12 @@
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

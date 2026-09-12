@@ -19,7 +19,7 @@
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T08:23:37.922Z",
+      "fetchedAt": "2026-09-12T18:56:45.295Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — HD 160691 overview",
@@ -44,7 +44,8 @@
       "facts": {
         "massKg": 2.2469710999999996e+30,
         "radiusMeanKm": 925281,
-        "discoveryDate": "2004"
+        "discoveryDate": "2004",
+        "discoveryNotes": "Discovered 2004 (Radial Velocity)."
       },
       "color": "#FDB813",
       "meta": {
@@ -56,11 +57,12 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -73,7 +75,8 @@
       "facts": {
         "massKg": 6.2648378e+25,
         "radiusMeanKm": 20578.329999999998,
-        "discoveryDate": "2004"
+        "discoveryDate": "2004",
+        "discoveryNotes": "Discovered 2004 (Radial Velocity)."
       },
       "color": "#C45C26",
       "meta": {
@@ -90,11 +93,12 @@
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -117,7 +121,8 @@
       "systemId": "hd-160691",
       "facts": {
         "massKg": 1.32869436859978e+28,
-        "discoveryDate": "2004"
+        "discoveryDate": "2006",
+        "discoveryNotes": "Discovered 2006 (Radial Velocity)."
       },
       "color": "#D4A574",
       "meta": {
@@ -134,11 +139,12 @@
               "orbit.wDeg",
               "orbit.epochJd",
               "facts.massKg",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -161,7 +167,8 @@
       "systemId": "hd-160691",
       "facts": {
         "massKg": 8.16197969282722e+27,
-        "discoveryDate": "2004"
+        "discoveryDate": "2000",
+        "discoveryNotes": "Discovered 2000 (Radial Velocity)."
       },
       "color": "#6B93D6",
       "meta": {
@@ -178,11 +185,12 @@
               "orbit.wDeg",
               "orbit.epochJd",
               "facts.massKg",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -205,7 +213,8 @@
       "systemId": "hd-160691",
       "facts": {
         "massKg": 8.35179317405576e+27,
-        "discoveryDate": "2004"
+        "discoveryDate": "2004",
+        "discoveryNotes": "Discovered 2004 (Radial Velocity)."
       },
       "color": "#C1440E",
       "meta": {
@@ -222,11 +231,12 @@
               "orbit.wDeg",
               "orbit.epochJd",
               "facts.massKg",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

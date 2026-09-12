@@ -16,7 +16,7 @@
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T08:23:37.922Z",
+      "fetchedAt": "2026-09-12T18:56:45.295Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — CoRoT-13 overview",
@@ -41,7 +41,8 @@
       "facts": {
         "massKg": 2.1674323e+30,
         "radiusMeanKm": 702657,
-        "discoveryDate": "2010"
+        "discoveryDate": "2010",
+        "discoveryNotes": "Discovered 2010 (Transit)."
       },
       "color": "#FDB813",
       "meta": {
@@ -53,11 +54,12 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -70,7 +72,8 @@
       "facts": {
         "massKg": 2.4826674288e+27,
         "radiusMeanKm": 63200.32,
-        "discoveryDate": "2010"
+        "discoveryDate": "2010",
+        "discoveryNotes": "Discovered 2010 (Transit)."
       },
       "color": "#C45C26",
       "meta": {
@@ -87,11 +90,12 @@
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

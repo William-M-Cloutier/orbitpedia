@@ -18,7 +18,7 @@
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T08:23:37.922Z",
+      "fetchedAt": "2026-09-12T18:56:45.295Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-138 overview",
@@ -43,7 +43,8 @@
       "facts": {
         "massKg": 1.0638314500000001e+30,
         "radiusMeanKm": 372199.5,
-        "discoveryDate": "2014"
+        "discoveryDate": "2014",
+        "discoveryNotes": "Discovered 2014 (Transit)."
       },
       "color": "#FF8C42",
       "meta": {
@@ -55,11 +56,12 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -72,7 +74,8 @@
       "facts": {
         "massKg": 4.1805400000000006e+23,
         "radiusMeanKm": 4077.44,
-        "discoveryDate": "2014"
+        "discoveryDate": "2014",
+        "discoveryNotes": "Discovered 2014 (Transit)."
       },
       "color": "#C45C26",
       "meta": {
@@ -90,11 +93,12 @@
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -118,7 +122,8 @@
       "facts": {
         "massKg": 1.373606e+25,
         "radiusMeanKm": 9620.210000000001,
-        "discoveryDate": "2014"
+        "discoveryDate": "2014",
+        "discoveryNotes": "Discovered 2014 (Transit)."
       },
       "color": "#D4A574",
       "meta": {
@@ -136,11 +141,12 @@
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -164,7 +170,8 @@
       "facts": {
         "massKg": 2.568046e+24,
         "radiusMeanKm": 5077.687,
-        "discoveryDate": "2014"
+        "discoveryDate": "2022",
+        "discoveryNotes": "Discovered 2022 (Transit Timing Variations)."
       },
       "color": "#6B93D6",
       "meta": {
@@ -181,11 +188,12 @@
               "orbit.wDeg",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

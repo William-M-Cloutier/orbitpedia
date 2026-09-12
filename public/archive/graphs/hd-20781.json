@@ -19,7 +19,7 @@
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T08:23:37.922Z",
+      "fetchedAt": "2026-09-12T18:56:45.295Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — HD 20781 overview",
@@ -44,7 +44,8 @@
       "facts": {
         "massKg": 1.391929e+30,
         "radiusMeanKm": 579941.7813,
-        "discoveryDate": "2019"
+        "discoveryDate": "2019",
+        "discoveryNotes": "Discovered 2019 (Radial Velocity)."
       },
       "color": "#FDB813",
       "meta": {
@@ -56,11 +57,12 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -81,7 +83,7 @@
             "fields": []
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "placeholder",
         "unitsVersion": 1
       }
@@ -94,7 +96,8 @@
       "facts": {
         "massKg": 1.1526346e+25,
         "radiusMeanKm": 7708.91,
-        "discoveryDate": "2019"
+        "discoveryDate": "2019",
+        "discoveryNotes": "Discovered 2019 (Radial Velocity)."
       },
       "color": "#C45C26",
       "meta": {
@@ -110,11 +113,12 @@
               "orbit.wDeg",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -137,7 +141,8 @@
       "facts": {
         "massKg": 3.1831826000000003e+25,
         "radiusMeanKm": 13825.07,
-        "discoveryDate": "2019"
+        "discoveryDate": "2019",
+        "discoveryNotes": "Discovered 2019 (Radial Velocity)."
       },
       "color": "#D4A574",
       "meta": {
@@ -153,11 +158,12 @@
               "orbit.wDeg",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -180,7 +186,8 @@
       "facts": {
         "massKg": 8.3789966e+25,
         "radiusMeanKm": 24400.93,
-        "discoveryDate": "2019"
+        "discoveryDate": "2019",
+        "discoveryNotes": "Discovered 2019 (Radial Velocity)."
       },
       "color": "#6B93D6",
       "meta": {
@@ -196,11 +203,12 @@
               "orbit.wDeg",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

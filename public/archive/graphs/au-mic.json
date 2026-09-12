@@ -19,7 +19,7 @@
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T08:23:37.922Z",
+      "fetchedAt": "2026-09-12T18:56:45.295Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — AU Mic overview",
@@ -44,7 +44,8 @@
       "facts": {
         "massKg": 1.26267845e+30,
         "radiusMeanKm": 599693.4,
-        "discoveryDate": "2020"
+        "discoveryDate": "2020",
+        "discoveryNotes": "Discovered 2020 (Transit)."
       },
       "color": "#E84A3C",
       "meta": {
@@ -56,11 +57,12 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -73,7 +75,8 @@
       "facts": {
         "massKg": 5.3690078e+25,
         "radiusMeanKm": 30517.09,
-        "discoveryDate": "2020"
+        "discoveryDate": "2020",
+        "discoveryNotes": "Discovered 2020 (Transit)."
       },
       "color": "#C45C26",
       "meta": {
@@ -91,11 +94,12 @@
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -119,7 +123,8 @@
       "facts": {
         "massKg": 8.635801200000001e+25,
         "radiusMeanKm": 17775.09,
-        "discoveryDate": "2020"
+        "discoveryDate": "2021",
+        "discoveryNotes": "Discovered 2021 (Transit)."
       },
       "color": "#D4A574",
       "meta": {
@@ -137,11 +142,12 @@
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -165,7 +171,8 @@
       "facts": {
         "massKg": 6.288726599999999e+24,
         "radiusMeanKm": 6498.42,
-        "discoveryDate": "2020"
+        "discoveryDate": "2023",
+        "discoveryNotes": "Discovered 2023 (Transit Timing Variations)."
       },
       "color": "#6B93D6",
       "meta": {
@@ -177,11 +184,12 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -194,7 +202,8 @@
       "facts": {
         "massKg": 1.2601342000000002e+26,
         "radiusMeanKm": 31026.77,
-        "discoveryDate": "2020"
+        "discoveryDate": "2025",
+        "discoveryNotes": "Discovered 2025 (Radial Velocity)."
       },
       "color": "#C1440E",
       "meta": {
@@ -206,11 +215,12 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "known",
         "unitsVersion": 1
       }

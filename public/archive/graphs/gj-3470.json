@@ -16,7 +16,7 @@
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T08:23:37.922Z",
+      "fetchedAt": "2026-09-12T18:56:45.295Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — GJ 3470 overview",
@@ -41,7 +41,8 @@
       "facts": {
         "massKg": 1.07178533e+30,
         "radiusMeanKm": 380547.9,
-        "discoveryDate": "2012"
+        "discoveryDate": "2012",
+        "discoveryNotes": "Discovered 2012 (Radial Velocity)."
       },
       "color": "#E84A3C",
       "meta": {
@@ -53,11 +54,12 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -70,7 +72,8 @@
       "facts": {
         "massKg": 8.301358e+25,
         "radiusMeanKm": 29115.47,
-        "discoveryDate": "2012"
+        "discoveryDate": "2012",
+        "discoveryNotes": "Discovered 2012 (Radial Velocity)."
       },
       "color": "#C45C26",
       "meta": {
@@ -88,11 +91,12 @@
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

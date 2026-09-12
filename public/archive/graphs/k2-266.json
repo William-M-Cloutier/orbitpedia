@@ -19,7 +19,7 @@
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T08:23:37.922Z",
+      "fetchedAt": "2026-09-12T18:56:45.295Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — K2-266 overview",
@@ -43,7 +43,8 @@
       "facts": {
         "massKg": 1.3640904200000002e+30,
         "radiusMeanKm": 489077.1,
-        "discoveryDate": "2018"
+        "discoveryDate": "2018",
+        "discoveryNotes": "Discovered 2018 (Transit)."
       },
       "color": "#FF8C42",
       "meta": {
@@ -55,11 +56,12 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -80,7 +82,7 @@
             "fields": []
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "placeholder",
         "unitsVersion": 1
       }
@@ -93,7 +95,8 @@
       "facts": {
         "massKg": 6.7293697119194e+25,
         "radiusMeanKm": 21024.3,
-        "discoveryDate": "2018"
+        "discoveryDate": "2018",
+        "discoveryNotes": "Discovered 2018 (Transit)."
       },
       "color": "#C45C26",
       "meta": {
@@ -109,11 +112,12 @@
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -137,7 +141,8 @@
       "facts": {
         "massKg": 1.732718685984e+24,
         "radiusMeanKm": 4491.554999999999,
-        "discoveryDate": "2018"
+        "discoveryDate": "2018",
+        "discoveryNotes": "Discovered 2018 (Transit)."
       },
       "color": "#D4A574",
       "meta": {
@@ -155,11 +160,12 @@
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -183,7 +189,8 @@
       "facts": {
         "massKg": 5.315258e+25,
         "radiusMeanKm": 18667.030000000002,
-        "discoveryDate": "2018"
+        "discoveryDate": "2018",
+        "discoveryNotes": "Discovered 2018 (Transit)."
       },
       "color": "#6B93D6",
       "meta": {
@@ -201,11 +208,12 @@
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -229,7 +237,8 @@
       "facts": {
         "massKg": 8.540246e+25,
         "radiusMeanKm": 17392.829999999998,
-        "discoveryDate": "2018"
+        "discoveryDate": "2018",
+        "discoveryNotes": "Discovered 2018 (Transit)."
       },
       "color": "#C1440E",
       "meta": {
@@ -247,11 +256,12 @@
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

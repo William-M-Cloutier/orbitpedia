@@ -21,7 +21,7 @@
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T08:23:37.922Z",
+      "fetchedAt": "2026-09-12T18:56:45.295Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — GJ 667 C overview",
@@ -45,7 +45,8 @@
       "systemId": "gj-667",
       "facts": {
         "massKg": 6.561951e+29,
-        "discoveryDate": "2012"
+        "discoveryDate": "2012",
+        "discoveryNotes": "Discovered 2012 (Radial Velocity)."
       },
       "color": "#E84A3C",
       "meta": {
@@ -56,11 +57,12 @@
             "url": "https://exoplanetarchive.ipac.caltech.edu/overview/GJ%20667%20C",
             "fields": [
               "facts.massKg",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -81,7 +83,7 @@
             "fields": []
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "placeholder",
         "unitsVersion": 1
       }
@@ -102,7 +104,7 @@
             "fields": []
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "placeholder",
         "unitsVersion": 1
       }
@@ -115,7 +117,8 @@
       "facts": {
         "massKg": 3.3922096e+25,
         "radiusMeanKm": 14334.75,
-        "discoveryDate": "2012"
+        "discoveryDate": "2012",
+        "discoveryNotes": "Discovered 2012 (Radial Velocity)."
       },
       "color": "#C45C26",
       "meta": {
@@ -131,11 +134,12 @@
               "orbit.wDeg",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -158,7 +162,8 @@
       "facts": {
         "massKg": 2.269436e+25,
         "radiusMeanKm": 11276.67,
-        "discoveryDate": "2012"
+        "discoveryDate": "2013",
+        "discoveryNotes": "Discovered 2013 (Radial Velocity)."
       },
       "color": "#D4A574",
       "meta": {
@@ -174,11 +179,12 @@
               "orbit.wDeg",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -201,7 +207,8 @@
       "facts": {
         "massKg": 1.6124940000000002e+25,
         "radiusMeanKm": 9237.949999999999,
-        "discoveryDate": "2012"
+        "discoveryDate": "2013",
+        "discoveryNotes": "Discovered 2013 (Radial Velocity)."
       },
       "color": "#6B93D6",
       "meta": {
@@ -217,11 +224,12 @@
               "orbit.wDeg",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -244,7 +252,8 @@
       "facts": {
         "massKg": 1.6124940000000002e+25,
         "radiusMeanKm": 9237.949999999999,
-        "discoveryDate": "2012"
+        "discoveryDate": "2013",
+        "discoveryNotes": "Discovered 2013 (Radial Velocity)."
       },
       "color": "#C1440E",
       "meta": {
@@ -260,11 +269,12 @@
               "orbit.wDeg",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

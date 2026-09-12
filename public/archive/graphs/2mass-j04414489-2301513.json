@@ -16,7 +16,7 @@
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T08:23:37.922Z",
+      "fetchedAt": "2026-09-12T18:56:45.295Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — 2MASS J04414489+2301513 overview",
@@ -41,7 +41,8 @@
       "facts": {
         "massKg": 3.778093e+28,
         "radiusMeanKm": 161343.96120000002,
-        "discoveryDate": "2010"
+        "discoveryDate": "2010",
+        "discoveryNotes": "Discovered 2010 (Imaging)."
       },
       "color": "#E84A3C",
       "meta": {
@@ -53,11 +54,12 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -70,7 +72,8 @@
       "facts": {
         "massKg": 1.423533592e+28,
         "radiusMeanKm": 80274.59999999999,
-        "discoveryDate": "2010"
+        "discoveryDate": "2010",
+        "discoveryNotes": "Discovered 2010 (Imaging)."
       },
       "color": "#C45C26",
       "meta": {
@@ -83,11 +86,12 @@
               "orbit.aAu",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

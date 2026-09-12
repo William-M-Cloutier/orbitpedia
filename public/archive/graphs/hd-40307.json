@@ -20,7 +20,7 @@
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T08:23:37.922Z",
+      "fetchedAt": "2026-09-12T18:56:45.295Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — HD 40307 overview",
@@ -45,7 +45,8 @@
       "facts": {
         "massKg": 1.5311219e+30,
         "radiusMeanKm": 498597.0588,
-        "discoveryDate": "2009"
+        "discoveryDate": "2009",
+        "discoveryNotes": "Discovered 2009 (Radial Velocity)."
       },
       "color": "#FF8C42",
       "meta": {
@@ -57,11 +58,12 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -74,7 +76,8 @@
       "facts": {
         "massKg": 3.1055440000000004e+25,
         "radiusMeanKm": 13570.23,
-        "discoveryDate": "2009"
+        "discoveryDate": "2013",
+        "discoveryNotes": "Discovered 2013 (Radial Velocity)."
       },
       "color": "#C45C26",
       "meta": {
@@ -90,11 +93,12 @@
               "orbit.wDeg",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -117,7 +121,8 @@
       "facts": {
         "massKg": 4.240262e+25,
         "radiusMeanKm": 16309.76,
-        "discoveryDate": "2009"
+        "discoveryDate": "2013",
+        "discoveryNotes": "Discovered 2013 (Radial Velocity)."
       },
       "color": "#D4A574",
       "meta": {
@@ -133,11 +138,12 @@
               "orbit.wDeg",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -159,7 +165,8 @@
       "systemId": "hd-40307",
       "facts": {
         "massKg": 7.100922332777599e+27,
-        "discoveryDate": "2009"
+        "discoveryDate": "2009",
+        "discoveryNotes": "Discovered 2009 (Radial Velocity)."
       },
       "color": "#6B93D6",
       "meta": {
@@ -175,11 +182,12 @@
               "orbit.iDeg",
               "orbit.wDeg",
               "facts.massKg",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -201,7 +209,8 @@
       "systemId": "hd-40307",
       "facts": {
         "massKg": 1.115913456140795e+28,
-        "discoveryDate": "2009"
+        "discoveryDate": "2009",
+        "discoveryNotes": "Discovered 2009 (Radial Velocity)."
       },
       "color": "#C1440E",
       "meta": {
@@ -217,11 +226,12 @@
               "orbit.iDeg",
               "orbit.wDeg",
               "facts.massKg",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -243,7 +253,8 @@
       "systemId": "hd-40307",
       "facts": {
         "massKg": 1.0602981061414301e+28,
-        "discoveryDate": "2009"
+        "discoveryDate": "2009",
+        "discoveryNotes": "Discovered 2009 (Radial Velocity)."
       },
       "color": "#C88B3A",
       "meta": {
@@ -259,11 +270,12 @@
               "orbit.iDeg",
               "orbit.wDeg",
               "facts.massKg",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

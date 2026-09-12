@@ -20,7 +20,7 @@
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T08:23:37.922Z",
+      "fetchedAt": "2026-09-12T18:56:45.295Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — TOI-1136 overview",
@@ -44,7 +44,8 @@
       "facts": {
         "massKg": 2.03221634e+30,
         "radiusMeanKm": 673437.6,
-        "discoveryDate": "2022"
+        "discoveryDate": "2022",
+        "discoveryNotes": "Discovered 2022 (Transit)."
       },
       "color": "#FDB813",
       "meta": {
@@ -56,11 +57,12 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -73,7 +75,8 @@
       "facts": {
         "massKg": 2.09027e+25,
         "radiusMeanKm": 12104.9,
-        "discoveryDate": "2022"
+        "discoveryDate": "2022",
+        "discoveryNotes": "Discovered 2022 (Transit)."
       },
       "color": "#C45C26",
       "meta": {
@@ -91,11 +94,12 @@
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -119,7 +123,8 @@
       "facts": {
         "massKg": 3.7744304000000004e+25,
         "radiusMeanKm": 18342.109,
-        "discoveryDate": "2022"
+        "discoveryDate": "2022",
+        "discoveryNotes": "Discovered 2022 (Transit)."
       },
       "color": "#D4A574",
       "meta": {
@@ -137,11 +142,12 @@
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -165,7 +171,8 @@
       "facts": {
         "massKg": 4.986787e+25,
         "radiusMeanKm": 29478.617,
-        "discoveryDate": "2022"
+        "discoveryDate": "2022",
+        "discoveryNotes": "Discovered 2022 (Transit)."
       },
       "color": "#6B93D6",
       "meta": {
@@ -183,11 +190,12 @@
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -211,7 +219,8 @@
       "facts": {
         "massKg": 3.6251254000000004e+25,
         "radiusMeanKm": 16813.069,
-        "discoveryDate": "2022"
+        "discoveryDate": "2022",
+        "discoveryNotes": "Discovered 2022 (Transit)."
       },
       "color": "#C1440E",
       "meta": {
@@ -229,11 +238,12 @@
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -257,7 +267,8 @@
       "facts": {
         "massKg": 5.793034e+25,
         "radiusMeanKm": 23801.51331822,
-        "discoveryDate": "2022"
+        "discoveryDate": "2022",
+        "discoveryNotes": "Discovered 2022 (Transit)."
       },
       "color": "#C88B3A",
       "meta": {
@@ -275,11 +286,12 @@
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -303,7 +315,8 @@
       "facts": {
         "massKg": 3.344432e+25,
         "radiusMeanKm": 16118.63,
-        "discoveryDate": "2022"
+        "discoveryDate": "2022",
+        "discoveryNotes": "Discovered 2022 (Transit)."
       },
       "color": "#7EC8E3",
       "meta": {
@@ -321,11 +334,12 @@
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

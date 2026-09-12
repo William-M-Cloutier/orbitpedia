@@ -19,7 +19,7 @@
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T08:23:37.922Z",
+      "fetchedAt": "2026-09-12T18:56:45.295Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-48 overview",
@@ -43,7 +43,8 @@
       "facts": {
         "massKg": 1.7498536e+30,
         "radiusMeanKm": 619173,
-        "discoveryDate": "2012"
+        "discoveryDate": "2012",
+        "discoveryNotes": "Discovered 2012 (Transit)."
       },
       "color": "#FF8C42",
       "meta": {
@@ -55,11 +56,12 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -72,7 +74,8 @@
       "facts": {
         "massKg": 2.3530468000000003e+25,
         "radiusMeanKm": 11977.48,
-        "discoveryDate": "2012"
+        "discoveryDate": "2012",
+        "discoveryNotes": "Discovered 2012 (Transit)."
       },
       "color": "#C45C26",
       "meta": {
@@ -89,11 +92,12 @@
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -117,7 +121,8 @@
       "facts": {
         "massKg": 8.7253842e+25,
         "radiusMeanKm": 17265.41,
-        "discoveryDate": "2012"
+        "discoveryDate": "2012",
+        "discoveryNotes": "Discovered 2012 (Transit)."
       },
       "color": "#D4A574",
       "meta": {
@@ -134,11 +139,12 @@
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -162,7 +168,8 @@
       "facts": {
         "massKg": 4.7359546e+25,
         "radiusMeanKm": 12996.84,
-        "discoveryDate": "2012"
+        "discoveryDate": "2014",
+        "discoveryNotes": "Discovered 2014 (Transit)."
       },
       "color": "#6B93D6",
       "meta": {
@@ -179,11 +186,12 @@
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -207,7 +215,8 @@
       "facts": {
         "massKg": 3.9237354e+27,
         "radiusMeanKm": 85371.40000000001,
-        "discoveryDate": "2012"
+        "discoveryDate": "2014",
+        "discoveryNotes": "Discovered 2014 (Radial Velocity)."
       },
       "color": "#C1440E",
       "meta": {
@@ -222,11 +231,12 @@
               "orbit.e",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -249,7 +259,8 @@
       "facts": {
         "massKg": 1.78318542908896e+27,
         "radiusMeanKm": 87919.8,
-        "discoveryDate": "2012"
+        "discoveryDate": "2023",
+        "discoveryNotes": "Discovered 2023 (Radial Velocity)."
       },
       "color": "#C88B3A",
       "meta": {
@@ -264,11 +275,12 @@
               "orbit.e",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

@@ -21,7 +21,7 @@
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T08:23:37.922Z",
+      "fetchedAt": "2026-09-12T18:56:45.295Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-444 overview",
@@ -46,7 +46,8 @@
       "facts": {
         "massKg": 1.50726026e+30,
         "radiusMeanKm": 523166.4,
-        "discoveryDate": "2015"
+        "discoveryDate": "2015",
+        "discoveryNotes": "Discovered 2015 (Transit)."
       },
       "color": "#FF8C42",
       "meta": {
@@ -58,11 +59,12 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -83,7 +85,7 @@
             "fields": []
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "placeholder",
         "unitsVersion": 1
       }
@@ -104,7 +106,7 @@
             "fields": []
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "placeholder",
         "unitsVersion": 1
       }
@@ -117,7 +119,8 @@
       "facts": {
         "massKg": 2.2336028e+23,
         "radiusMeanKm": 2567.5130000000004,
-        "discoveryDate": "2015"
+        "discoveryDate": "2015",
+        "discoveryNotes": "Discovered 2015 (Transit)."
       },
       "color": "#C45C26",
       "meta": {
@@ -134,11 +137,12 @@
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -162,7 +166,8 @@
       "facts": {
         "massKg": 4.7359546e+23,
         "radiusMeanKm": 3166.387,
-        "discoveryDate": "2015"
+        "discoveryDate": "2015",
+        "discoveryNotes": "Discovered 2015 (Transit)."
       },
       "color": "#D4A574",
       "meta": {
@@ -179,11 +184,12 @@
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -207,7 +213,8 @@
       "facts": {
         "massKg": 5.9722000000000005e+23,
         "radiusMeanKm": 3478.5660000000003,
-        "discoveryDate": "2015"
+        "discoveryDate": "2015",
+        "discoveryNotes": "Discovered 2015 (Transit)."
       },
       "color": "#6B93D6",
       "meta": {
@@ -224,11 +231,12 @@
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -252,7 +260,8 @@
       "facts": {
         "massKg": 1.9827704e+24,
         "radiusMeanKm": 4720.911,
-        "discoveryDate": "2015"
+        "discoveryDate": "2015",
+        "discoveryNotes": "Discovered 2015 (Transit)."
       },
       "color": "#C1440E",
       "meta": {
@@ -269,11 +278,12 @@
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

@@ -16,7 +16,7 @@
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T08:23:37.922Z",
+      "fetchedAt": "2026-09-12T18:56:45.295Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — CoRoT-28 overview",
@@ -41,7 +41,8 @@
       "facts": {
         "massKg": 2.0083547e+30,
         "radiusMeanKm": 1238346,
-        "discoveryDate": "2015"
+        "discoveryDate": "2015",
+        "discoveryNotes": "Discovered 2015 (Transit)."
       },
       "color": "#FF8C42",
       "meta": {
@@ -53,11 +54,12 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -70,7 +72,8 @@
       "facts": {
         "massKg": 9.187018537840001e+26,
         "radiusMeanKm": 68198.974745,
-        "discoveryDate": "2015"
+        "discoveryDate": "2015",
+        "discoveryNotes": "Discovered 2015 (Transit)."
       },
       "color": "#C45C26",
       "meta": {
@@ -88,11 +91,12 @@
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

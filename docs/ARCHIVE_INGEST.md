@@ -238,3 +238,12 @@ node scripts/ingest-exoplanet-archive.mjs --limit 100 --min-planets 1 --verify
 - **`circumbinary`** when `cb_flag==1`.
 - **Single-planet** hosts included (`--min-planets 1` / default for this dump).
 - **no-aAu** planets: omit `orbit` entirely; Facts stay sparse/honest — never invent a.
+
+## Body discoveryNotes (archive)
+
+Planets and host stars set `facts.discoveryNotes` from NEA when available:
+
+- `Discovered {disc_year} ({discoverymethod}).` — or year-only / method-only if one is missing.
+- Omit when both absent. No wiki in default ingest (optional later flag).
+- Sky Overview composes `discoveryDate` + `discoveryNotes` (no `facts.overview` field).
+

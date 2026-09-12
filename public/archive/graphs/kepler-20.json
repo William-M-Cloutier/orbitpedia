@@ -20,7 +20,7 @@
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T08:23:37.922Z",
+      "fetchedAt": "2026-09-12T18:56:45.295Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — Kepler-20 overview",
@@ -44,7 +44,8 @@
       "facts": {
         "massKg": 1.8472886300000002e+30,
         "radiusMeanKm": 637539.48,
-        "discoveryDate": "2011"
+        "discoveryDate": "2011",
+        "discoveryNotes": "Discovered 2011 (Transit)."
       },
       "color": "#FDB813",
       "meta": {
@@ -56,11 +57,12 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -81,7 +83,7 @@
             "fields": []
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "placeholder",
         "unitsVersion": 1
       }
@@ -94,7 +96,8 @@
       "facts": {
         "massKg": 5.793034e+25,
         "radiusMeanKm": 11295.783,
-        "discoveryDate": "2011"
+        "discoveryDate": "2011",
+        "discoveryNotes": "Discovered 2011 (Transit)."
       },
       "color": "#C45C26",
       "meta": {
@@ -111,11 +114,12 @@
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -139,7 +143,8 @@
       "facts": {
         "massKg": 6.629142e+25,
         "radiusMeanKm": 18437.674,
-        "discoveryDate": "2011"
+        "discoveryDate": "2011",
+        "discoveryNotes": "Discovered 2011 (Transit)."
       },
       "color": "#D4A574",
       "meta": {
@@ -156,11 +161,12 @@
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -184,7 +190,8 @@
       "facts": {
         "massKg": 8.36108e+24,
         "radiusMeanKm": 6065.192,
-        "discoveryDate": "2011"
+        "discoveryDate": "2011",
+        "discoveryNotes": "Discovered 2011 (Transit)."
       },
       "color": "#6B93D6",
       "meta": {
@@ -201,11 +208,12 @@
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -229,7 +237,8 @@
       "facts": {
         "massKg": 1.19205112e+26,
         "radiusMeanKm": 30007.41,
-        "discoveryDate": "2011"
+        "discoveryDate": "2016",
+        "discoveryNotes": "Discovered 2016 (Radial Velocity)."
       },
       "color": "#C1440E",
       "meta": {
@@ -244,11 +253,12 @@
               "orbit.e",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -271,7 +281,8 @@
       "facts": {
         "massKg": 8.002748e+25,
         "radiusMeanKm": 16602.826,
-        "discoveryDate": "2011"
+        "discoveryDate": "2011",
+        "discoveryNotes": "Discovered 2011 (Transit)."
       },
       "color": "#C88B3A",
       "meta": {
@@ -288,11 +299,12 @@
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

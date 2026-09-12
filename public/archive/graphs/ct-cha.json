@@ -16,7 +16,7 @@
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T08:23:37.922Z",
+      "fetchedAt": "2026-09-12T18:56:45.295Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — CT Cha overview",
@@ -40,7 +40,8 @@
       "systemId": "ct-cha",
       "facts": {
         "radiusMeanKm": 1168563.1158,
-        "discoveryDate": "2007"
+        "discoveryDate": "2007",
+        "discoveryNotes": "Discovered 2007 (Imaging)."
       },
       "color": "#FF8C42",
       "meta": {
@@ -51,11 +52,12 @@
             "url": "https://exoplanetarchive.ipac.caltech.edu/overview/CT%20Cha",
             "fields": [
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -68,7 +70,8 @@
       "facts": {
         "massKg": 3.22677966e+28,
         "radiusMeanKm": 157108.86000000002,
-        "discoveryDate": "2007"
+        "discoveryDate": "2007",
+        "discoveryNotes": "Discovered 2007 (Imaging)."
       },
       "color": "#C45C26",
       "meta": {
@@ -81,11 +84,12 @@
               "orbit.aAu",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

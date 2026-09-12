@@ -19,7 +19,7 @@
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T08:23:37.922Z",
+      "fetchedAt": "2026-09-12T18:56:45.295Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — KOI-94 overview",
@@ -43,7 +43,8 @@
       "facts": {
         "massKg": 2.53927619e+30,
         "radiusMeanKm": 1057464,
-        "discoveryDate": "2013"
+        "discoveryDate": "2013",
+        "discoveryNotes": "Discovered 2013 (Transit)."
       },
       "color": "#F8F7FF",
       "meta": {
@@ -55,11 +56,12 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -80,7 +82,7 @@
             "fields": []
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "placeholder",
         "unitsVersion": 1
       }
@@ -93,7 +95,8 @@
       "facts": {
         "massKg": 6.27081e+25,
         "radiusMeanKm": 10894.41,
-        "discoveryDate": "2013"
+        "discoveryDate": "2013",
+        "discoveryNotes": "Discovered 2013 (Transit)."
       },
       "color": "#C45C26",
       "meta": {
@@ -110,11 +113,12 @@
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -138,7 +142,8 @@
       "facts": {
         "massKg": 9.316632e+25,
         "radiusMeanKm": 27522.72,
-        "discoveryDate": "2013"
+        "discoveryDate": "2013",
+        "discoveryNotes": "Discovered 2013 (Transit)."
       },
       "color": "#D4A574",
       "meta": {
@@ -155,11 +160,12 @@
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -183,7 +189,8 @@
       "facts": {
         "massKg": 6.330532e+26,
         "radiusMeanKm": 71801.17,
-        "discoveryDate": "2013"
+        "discoveryDate": "2013",
+        "discoveryNotes": "Discovered 2013 (Transit)."
       },
       "color": "#6B93D6",
       "meta": {
@@ -200,11 +207,12 @@
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -228,7 +236,8 @@
       "facts": {
         "massKg": 2.09027e+26,
         "radiusMeanKm": 41793.759999999995,
-        "discoveryDate": "2013"
+        "discoveryDate": "2013",
+        "discoveryNotes": "Discovered 2013 (Transit)."
       },
       "color": "#C1440E",
       "meta": {
@@ -245,11 +254,12 @@
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

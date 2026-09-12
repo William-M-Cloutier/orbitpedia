@@ -17,7 +17,7 @@
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T08:23:37.922Z",
+      "fetchedAt": "2026-09-12T18:56:45.295Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — DMPP-1 overview",
@@ -42,7 +42,8 @@
       "facts": {
         "massKg": 2.4060486999999998e+30,
         "radiusMeanKm": 876582,
-        "discoveryDate": "2019"
+        "discoveryDate": "2019",
+        "discoveryNotes": "Discovered 2019 (Radial Velocity)."
       },
       "color": "#F8F7FF",
       "meta": {
@@ -54,11 +55,12 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -71,7 +73,8 @@
       "facts": {
         "massKg": 2.4665186e+25,
         "radiusMeanKm": 11850.060000000001,
-        "discoveryDate": "2019"
+        "discoveryDate": "2019",
+        "discoveryNotes": "Discovered 2019 (Radial Velocity)."
       },
       "color": "#C45C26",
       "meta": {
@@ -86,11 +89,12 @@
               "orbit.e",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -113,7 +117,8 @@
       "facts": {
         "massKg": 6.5335868e+25,
         "radiusMeanKm": 21088.010000000002,
-        "discoveryDate": "2019"
+        "discoveryDate": "2019",
+        "discoveryNotes": "Discovered 2019 (Radial Velocity)."
       },
       "color": "#D4A574",
       "meta": {
@@ -129,11 +134,12 @@
               "orbit.wDeg",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

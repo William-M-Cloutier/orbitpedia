@@ -17,7 +17,7 @@
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T08:23:37.922Z",
+      "fetchedAt": "2026-09-12T18:56:45.295Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — K2-384 overview",
@@ -42,7 +42,8 @@
       "facts": {
         "massKg": 6.561951e+29,
         "radiusMeanKm": 242103.59999999998,
-        "discoveryDate": "2022"
+        "discoveryDate": "2022",
+        "discoveryNotes": "Discovered 2022 (Transit)."
       },
       "color": "#E84A3C",
       "meta": {
@@ -54,11 +55,12 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -71,7 +73,8 @@
       "facts": {
         "massKg": 1.4154114e+25,
         "radiusMeanKm": 8568.994999999999,
-        "discoveryDate": "2022"
+        "discoveryDate": "2022",
+        "discoveryNotes": "Discovered 2022 (Transit)."
       },
       "color": "#C45C26",
       "meta": {
@@ -83,11 +86,12 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -100,7 +104,8 @@
       "facts": {
         "massKg": 3.3265154000000005e+25,
         "radiusMeanKm": 14156.362,
-        "discoveryDate": "2022"
+        "discoveryDate": "2022",
+        "discoveryNotes": "Discovered 2022 (Transit)."
       },
       "color": "#D4A574",
       "meta": {
@@ -112,11 +117,12 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "known",
         "unitsVersion": 1
       }

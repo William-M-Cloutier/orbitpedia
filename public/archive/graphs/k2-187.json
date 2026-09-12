@@ -16,7 +16,7 @@
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T08:23:37.922Z",
+      "fetchedAt": "2026-09-12T18:56:45.295Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — K2-187 overview",
@@ -40,7 +40,8 @@
       "facts": {
         "massKg": 1.92284850153e+30,
         "radiusMeanKm": 577431,
-        "discoveryDate": "2018"
+        "discoveryDate": "2018",
+        "discoveryNotes": "Discovered 2018 (Transit)."
       },
       "color": "#FDB813",
       "meta": {
@@ -52,11 +53,12 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -69,7 +71,8 @@
       "facts": {
         "massKg": 1.1168014000000001e+25,
         "radiusMeanKm": 7645.2,
-        "discoveryDate": "2018"
+        "discoveryDate": "2018",
+        "discoveryNotes": "Discovered 2018 (Transit)."
       },
       "color": "#C45C26",
       "meta": {
@@ -85,11 +88,12 @@
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
@@ -113,7 +117,8 @@
       "facts": {
         "massKg": 3.792347e+25,
         "radiusMeanKm": 15290.4,
-        "discoveryDate": "2018"
+        "discoveryDate": "2018",
+        "discoveryNotes": "Discovered 2018 (Transit)."
       },
       "color": "#D4A574",
       "meta": {
@@ -129,11 +134,12 @@
               "orbit.epochJd",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

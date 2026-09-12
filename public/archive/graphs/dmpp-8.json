@@ -15,7 +15,7 @@
     "hasGas": true,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T08:23:37.922Z",
+      "fetchedAt": "2026-09-12T18:56:45.295Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — DMPP-8 overview",
@@ -39,7 +39,8 @@
       "facts": {
         "massKg": 1.9685853e+30,
         "radiusMeanKm": 862668,
-        "discoveryDate": "2026"
+        "discoveryDate": "2026",
+        "discoveryNotes": "Discovered 2026 (Radial Velocity)."
       },
       "color": "#F8F7FF",
       "meta": {
@@ -51,11 +52,12 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -68,7 +70,8 @@
       "facts": {
         "massKg": 4.8428569800000005e+26,
         "radiusMeanKm": 68806.8,
-        "discoveryDate": "2026"
+        "discoveryDate": "2026",
+        "discoveryNotes": "Discovered 2026 (Radial Velocity)."
       },
       "color": "#C45C26",
       "meta": {
@@ -84,11 +87,12 @@
               "orbit.wDeg",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

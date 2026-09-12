@@ -16,7 +16,7 @@
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T08:23:37.922Z",
+      "fetchedAt": "2026-09-12T18:56:45.295Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — GJ 341 overview",
@@ -41,7 +41,8 @@
       "facts": {
         "massKg": 9.544655999999999e+29,
         "radiusMeanKm": 352441.62000000005,
-        "discoveryDate": "2025"
+        "discoveryDate": "2025",
+        "discoveryNotes": "Discovered 2025 (Transit)."
       },
       "color": "#FF8C42",
       "meta": {
@@ -53,11 +54,12 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -70,7 +72,8 @@
       "facts": {
         "massKg": 2.38888e+25,
         "radiusMeanKm": 5606.4800000000005,
-        "discoveryDate": "2025"
+        "discoveryDate": "2025",
+        "discoveryNotes": "Discovered 2025 (Transit)."
       },
       "color": "#C45C26",
       "meta": {
@@ -82,11 +85,12 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "known",
         "unitsVersion": 1
       }

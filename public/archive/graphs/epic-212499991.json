@@ -15,7 +15,7 @@
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T08:23:37.922Z",
+      "fetchedAt": "2026-09-12T18:56:45.295Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — EPIC 212499991 overview",
@@ -39,7 +39,8 @@
       "facts": {
         "massKg": 1.81348464e+30,
         "radiusMeanKm": 527021.2737,
-        "discoveryDate": "2019"
+        "discoveryDate": "2019",
+        "discoveryNotes": "Discovered 2019 (Transit)."
       },
       "color": "#FF8C42",
       "meta": {
@@ -51,11 +52,12 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -68,7 +70,8 @@
       "facts": {
         "massKg": 1.9051318000000001e+25,
         "radiusMeanKm": 10193.6,
-        "discoveryDate": "2019"
+        "discoveryDate": "2019",
+        "discoveryNotes": "Discovered 2019 (Transit)."
       },
       "color": "#C45C26",
       "meta": {
@@ -80,11 +83,12 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "known",
         "unitsVersion": 1
       }

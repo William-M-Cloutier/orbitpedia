@@ -16,7 +16,7 @@
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T08:23:37.922Z",
+      "fetchedAt": "2026-09-12T18:56:45.295Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — GJ 674 overview",
@@ -41,7 +41,8 @@
       "facts": {
         "massKg": 6.959645e+29,
         "radiusMeanKm": 253673.09100000001,
-        "discoveryDate": "2007"
+        "discoveryDate": "2007",
+        "discoveryNotes": "Discovered 2007 (Radial Velocity)."
       },
       "color": "#E84A3C",
       "meta": {
@@ -53,11 +54,12 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -70,7 +72,8 @@
       "facts": {
         "massKg": 6.6231698e+25,
         "radiusMeanKm": 21215.43,
-        "discoveryDate": "2007"
+        "discoveryDate": "2007",
+        "discoveryNotes": "Discovered 2007 (Radial Velocity)."
       },
       "color": "#C45C26",
       "meta": {
@@ -86,11 +89,12 @@
               "orbit.wDeg",
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },

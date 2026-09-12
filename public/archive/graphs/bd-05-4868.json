@@ -17,7 +17,7 @@
     "hasGas": false,
     "meta": {
       "confidence": "known",
-      "fetchedAt": "2026-09-12T08:23:37.922Z",
+      "fetchedAt": "2026-09-12T18:56:45.295Z",
       "sources": [
         {
           "name": "NASA Exoplanet Archive — BD+05 4868 A overview",
@@ -42,7 +42,8 @@
       "facts": {
         "massKg": 1.391929e+30,
         "radiusMeanKm": 480032.99999999994,
-        "discoveryDate": "2025"
+        "discoveryDate": "2025",
+        "discoveryNotes": "Discovered 2025 (Transit)."
       },
       "color": "#FF8C42",
       "meta": {
@@ -54,11 +55,12 @@
             "fields": [
               "facts.massKg",
               "facts.radiusMeanKm",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "known",
         "unitsVersion": 1
       }
@@ -79,7 +81,7 @@
             "fields": []
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "placeholder",
         "unitsVersion": 1
       }
@@ -91,7 +93,8 @@
       "systemId": "bd-05-4868",
       "facts": {
         "massKg": 3.7027640000000003e+25,
-        "discoveryDate": "2025"
+        "discoveryDate": "2025",
+        "discoveryNotes": "Discovered 2025 (Transit)."
       },
       "color": "#C45C26",
       "meta": {
@@ -105,11 +108,12 @@
               "orbit.periodD",
               "orbit.epochJd",
               "facts.massKg",
-              "facts.discoveryDate"
+              "facts.discoveryDate",
+              "facts.discoveryNotes"
             ]
           }
         ],
-        "fetchedAt": "2026-09-12T08:23:37.922Z",
+        "fetchedAt": "2026-09-12T18:56:45.295Z",
         "confidence": "assumed",
         "unitsVersion": 1
       },
