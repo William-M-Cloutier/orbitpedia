@@ -404,6 +404,41 @@ export function parentFrameDisplayScale(
   return childOrbitQAu >= need ? 1 : need / childOrbitQAu;
 }
 
+/**
+ * Raw minimum heliocentric display scale so every primary-frame perihelion
+ * still clears starVis + childVis + margin. Same need as
+ * {@link parentFrameDisplayScale}, but **not** floored at 1 — used after
+ * schematic fitScale may compress clearanceHelio below the perihelion
+ * requirement. Catalog aAu unchanged.
+ */
+export function perihelionClearanceFloor(
+  bodies: readonly Body[],
+  sizeMode: SizeMode = DEFAULT_SIZE_MODE,
+): number {
+  const star = systemStar(bodies);
+  if (!star) return 0;
+  const starVis = visualRadius(star, sizeMode, bodies);
+  if (!(starVis > 0) || !Number.isFinite(starVis)) return 0;
+  let floor = 0;
+  for (const b of bodies) {
+    if (!hasUsableOrbit(b) || b.orbit?.frame === "parent") continue;
+    const q = orbitQAu(b.orbit!);
+    if (!(q > 0) || !Number.isFinite(q)) continue;
+    const childVis = visualRadius(b, sizeMode, bodies);
+    const margin = Math.min(
+      PERIHELION_CLEARANCE_MARGIN_AU,
+      Math.max(starVis * 0.35, childVis),
+    );
+    const need = Math.max(
+      starVis + childVis + margin,
+      starVis * 1.85 + childVis,
+    );
+    const req = need / q;
+    if (Number.isFinite(req) && req > floor) floor = req;
+  }
+  return floor;
+}
+
 /** Viz-only input row for {@link parentFrameSharedDisplayScale}. */
 export type ParentFrameChildOrbit = {
   qAu: number;

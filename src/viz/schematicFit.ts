@@ -12,6 +12,8 @@ import { visualRadius, type SizeMode } from "./sizeTiers";
  * via the caller — do not special-case body ids here.
  *
  * Prop/True and STAR_VISUAL_RADIUS / clearance solvers are untouched.
+ * After fit, OrbitScene floors helioScale at perihelionClearanceFloor and
+ * companion sep at mesh radii + margin so compress cannot bury bodies.
  */
 
 /** Legacy Sol idle camera offset (Canvas default). Direction reused; distance from {@link idleCameraDistance}. */

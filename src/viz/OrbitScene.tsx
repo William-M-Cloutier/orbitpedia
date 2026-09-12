@@ -39,6 +39,7 @@ import {
   parentFrameDisplayScale,
   parentFrameSharedDisplayScale,
   heliocentricSharedDisplayScale,
+  perihelionClearanceFloor,
   visualRadius,
   type SizeMode,
 } from "./sizeTiers";
@@ -49,6 +50,7 @@ import {
   schematicOrbitFitScale,
   schematicIdleCameraDistance,
   visualBinaryDisplaySep,
+  VISUAL_BINARY_CLEARANCE_MARGIN,
 } from "./schematicFit";
 import { getBodyAppearanceMaterial, useRegistryTexture } from "./appearance";
 
@@ -313,6 +315,8 @@ function localOrbitPosition(
  *   Display-only compression of Gaia/projected sep — catalog AU unchanged;
  *   Facts / Sky still show the true value. log1p is monotonic so multi-
  *   companion relative order is preserved.
+ * Schematic fitScale may shrink baseSep; placement then re-floors at
+ * rPrimary+rSelf+VISUAL_BINARY_CLEARANCE_MARGIN so companions stay clear.
  * Locked sizeTiers / visualRadius contract (incl. companion Prop/True) is
  * respected as-is. Never draw OrbitLine unless hasUsableOrbit.
  *
@@ -347,7 +351,18 @@ function visualBinaryCompanionOffset(
   // Catalog / Facts keep the true projectedSepAu — viz-only (see schematicFit).
   const baseSep = visualBinaryDisplaySep(body, sizeMode, systemBodies);
   const fs = fitScale > 0 && Number.isFinite(fitScale) ? fitScale : 1;
-  const sep = baseSep * fs;
+  // Mesh clearance after fit: fitScale must not bury companions in the primary.
+  const parent =
+    systemBodies.find((b) => b.id === body.parentId) ??
+    systemBodies.find((b) => b.kind === "star" && !b.parentId);
+  const rPrimary = parent
+    ? visualRadius(parent, sizeMode, systemBodies)
+    : visualRadius(body, sizeMode, systemBodies);
+  const rSelf = visualRadius(body, sizeMode, systemBodies);
+  const sep = Math.max(
+    baseSep * fs,
+    rPrimary + rSelf + VISUAL_BINARY_CLEARANCE_MARGIN,
+  );
   // Even spread in the face-on orbital plane (start at 0 → +X). Horizontal ring.
   const ang = (2 * Math.PI * idx) / n;
   const x = sep * Math.cos(ang);
@@ -1674,7 +1689,11 @@ function SceneContent({
     if (sizeMode !== "schematic" || isHome) return 1;
     return schematicOrbitFitScale(systemBodies, clearanceHelio);
   }, [sizeMode, isHome, systemBodies, clearanceHelio]);
-  const helioScale = clearanceHelio * fitScale;
+  // Keep perihelion clearance after fit compress (do not floor at 1).
+  const helioScale = Math.max(
+    clearanceHelio * fitScale,
+    perihelionClearanceFloor(systemBodies, sizeMode),
+  );
   const faceOn = useMemo(
     () => systemFaceOnRotation(systemBodies),
     [systemBodies],

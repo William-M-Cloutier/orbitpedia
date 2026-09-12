@@ -1016,6 +1016,15 @@ if (!Number.isFinite(c)) {
   } else {
     ok("OrbitScene soft-clears projectedSepAu against primary+self+margin");
   }
+  // After fitScale, companion placement must still clear primary+self meshes.
+  if (
+    !/Math\.max\(\s*baseSep \* fs/.test(sceneSrc) &&
+    !/Math\.max\([\s\S]{0,80}baseSep \* fs/.test(sceneSrc)
+  ) {
+    fail("visualBinaryCompanionOffset must Math.max(baseSep*fs, rPrimary+rSelf+margin) after fit");
+  } else {
+    ok("visualBinaryCompanionOffset keeps mesh clearance after fitScale");
+  }
   // Display-only compression: raw Gaia-class seps must NOT be used verbatim.
   if (
     !/Math\.log1p\(projected\)/.test(sceneSrc) &&
@@ -1312,6 +1321,109 @@ if (!Number.isFinite(c)) {
     }
   } else {
     ok("schematicFit does not redefine STAR_VISUAL_RADIUS");
+  }
+}
+
+
+// Schematic fit must keep perihelion + companion mesh clearance (post-fit floors).
+{
+  const sizeSrc = fs.readFileSync(path.join(ROOT, "src/viz/sizeTiers.ts"), "utf8");
+  const sceneSrc = fs.readFileSync(path.join(ROOT, "src/viz/OrbitScene.tsx"), "utf8");
+  if (!/export function perihelionClearanceFloor/.test(sizeSrc)) {
+    fail("sizeTiers missing perihelionClearanceFloor (post-fit perihelion floor)");
+  } else if (
+    !/perihelionClearanceFloor/.test(sceneSrc) ||
+    !/Math\.max\([\s\S]{0,120}clearanceHelio \* fitScale/.test(sceneSrc)
+  ) {
+    fail("OrbitScene must helioScale = max(clearanceHelio*fitScale, perihelionClearanceFloor)");
+  } else {
+    ok("OrbitScene floors helioScale at perihelionClearanceFloor after fit");
+  }
+
+  const STAR_VISUAL_RADIUS = tiers.STAR_VISUAL_RADIUS;
+  const MARGIN = tiers.PERIHELION_CLEARANCE_MARGIN_AU;
+  const VISUAL_BINARY_CLEARANCE_MARGIN = 0.005;
+  const SCHEMATIC_FIT_MIN = 0.15;
+
+  // Raw perihelion floor (parentFrameDisplayScale need / q, no floor at 1).
+  function periFloor(starVis, kids) {
+    let floor = 0;
+    for (const c of kids) {
+      const margin = Math.min(MARGIN, Math.max(starVis * 0.35, c.vis));
+      const need = Math.max(starVis + c.vis + margin, starVis * 1.85 + c.vis);
+      if (!(c.qAu > 0)) continue;
+      const req = need / c.qAu;
+      if (req > floor) floor = req;
+    }
+    return floor;
+  }
+
+  // 55 Cnc-style: huge clearanceHelio × fitMin must not drop below peri floor.
+  {
+    const starVis = STAR_VISUAL_RADIUS;
+    const qAu = 0.014668; // ultra-close hot planet
+    const childVis = tiers.PLANET_VISUAL_RADIUS_SMALL;
+    const clearanceHelio = parentFrameDisplayScale(
+      qAu,
+      starVis,
+      childVis,
+      MARGIN,
+    );
+    const fitScale = SCHEMATIC_FIT_MIN;
+    const floor = periFloor(starVis, [{ qAu, vis: childVis }]);
+    const helioScale = Math.max(clearanceHelio * fitScale, floor);
+    if (!(helioScale + 1e-12 >= floor)) {
+      fail(`55 Cnc-style: helioScale ${helioScale} < perihelion floor ${floor}`);
+    } else if (!(Math.abs(helioScale - floor) < 1e-9) && !(helioScale >= clearanceHelio * fitScale - 1e-12)) {
+      fail(`55 Cnc-style: unexpected helioScale ${helioScale}`);
+    } else {
+      const qVis = qAu * helioScale;
+      const margin = Math.min(MARGIN, Math.max(starVis * 0.35, childVis));
+      const need = Math.max(starVis + childVis + margin, starVis * 1.85 + childVis);
+      if (!(qVis + 1e-9 >= need)) {
+        fail(`55 Cnc-style: q*helio ${qVis} < need ${need}`);
+      } else {
+        ok(
+          `55 Cnc-style: helioScale=${helioScale.toFixed(3)} restores perihelion (fit alone would be ${(clearanceHelio * fitScale).toFixed(3)})`,
+        );
+      }
+    }
+  }
+
+  // 51 Eri-style: companion sep after fit must clear primary+self meshes.
+  {
+    const rPrimary = STAR_VISUAL_RADIUS;
+    const rSelf = STAR_VISUAL_RADIUS;
+    const baseSep = Math.max(
+      (rPrimary + rSelf) * 1.3,
+      0.04,
+    ); // schematic mesh-radii sep
+    const fitScale = SCHEMATIC_FIT_MIN;
+    const meshNeed = rPrimary + rSelf + VISUAL_BINARY_CLEARANCE_MARGIN;
+    const sep = Math.max(baseSep * fitScale, meshNeed);
+    if (!(sep + 1e-12 >= meshNeed)) {
+      fail(`51 Eri-style: companion sep ${sep} < mesh need ${meshNeed}`);
+    } else if (baseSep * fitScale + 1e-12 >= meshNeed) {
+      fail("51 Eri-style synthetic expected fit alone to bury companion (test setup)");
+    } else {
+      ok(
+        `51 Eri-style: companion sep=${sep.toFixed(3)} clears meshes (fit alone ${(baseSep * fitScale).toFixed(3)})`,
+      );
+    }
+  }
+
+  // Floor must NOT force ≥1 — Sol-scale systems with fitScale=1 stay unchanged,
+  // and wide hosts with mild peri need keep compress below 1.
+  {
+    const starVis = STAR_VISUAL_RADIUS;
+    const qAu = 4.472; // 51 Eri b-class
+    const childVis = tiers.PLANET_VISUAL_RADIUS_SMALL;
+    const floor = periFloor(starVis, [{ qAu, vis: childVis }]);
+    if (!(floor < 1)) {
+      fail(`wide-host perihelion floor should be <1 (got ${floor}) so fitScale compress remains`);
+    } else {
+      ok(`wide-host perihelion floor=${floor.toFixed(3)} <1 (fit compress preserved)`);
+    }
   }
 }
 
