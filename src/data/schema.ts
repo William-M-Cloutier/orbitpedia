@@ -149,6 +149,11 @@ export const SystemSchema = z.object({
   memberIds: z.array(z.string().min(1)).min(1),
   /** Optional primary when graph is sparse / placeholder. */
   placeholderPrimaryId: z.string().min(1).optional(),
+  /**
+   * Multi-star: id of the primary star member (kind star, omit orbit).
+   * Companions use parentId → primary + orbit.frame parent.
+   */
+  primaryStarId: z.string().min(1).optional(),
   /** Short system blurb for System cards. */
   blurb: z.string().min(1).optional(),
   /** Bullet highlights (keep short). */
@@ -204,6 +209,48 @@ export const CatalogSchema = z
           code: "custom",
           message: `body ${b.id} parentId not found: ${b.parentId}`,
           path: ["bodies"],
+        });
+      }
+    }
+    const bodyById = new Map(cat.bodies.map((b) => [b.id, b]));
+    for (const s of cat.systems) {
+      if (!s.primaryStarId) continue;
+      if (!s.memberIds.includes(s.primaryStarId)) {
+        ctx.addIssue({
+          code: "custom",
+          message: `system ${s.id} primaryStarId not in memberIds: ${s.primaryStarId}`,
+          path: ["systems"],
+        });
+        continue;
+      }
+      const primary = bodyById.get(s.primaryStarId);
+      if (!primary || primary.kind !== "star") {
+        ctx.addIssue({
+          code: "custom",
+          message: `system ${s.id} primaryStarId must be kind star: ${s.primaryStarId}`,
+          path: ["systems"],
+        });
+        continue;
+      }
+      if (primary.systemId !== s.id) {
+        ctx.addIssue({
+          code: "custom",
+          message: `system ${s.id} primaryStarId body systemId mismatch`,
+          path: ["systems"],
+        });
+      }
+      if (primary.orbit) {
+        ctx.addIssue({
+          code: "custom",
+          message: `system ${s.id} primary star must omit orbit (companions use parent-frame)`,
+          path: ["systems"],
+        });
+      }
+      if (primary.parentId) {
+        ctx.addIssue({
+          code: "custom",
+          message: `system ${s.id} primary star must omit parentId`,
+          path: ["systems"],
         });
       }
     }

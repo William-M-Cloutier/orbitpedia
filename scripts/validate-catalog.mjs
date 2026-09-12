@@ -125,12 +125,14 @@ const SystemSchema = z.object({
   home: z.boolean().optional(),
   memberIds: z.array(z.string().min(1)).min(1),
   placeholderPrimaryId: z.string().min(1).optional(),
+  primaryStarId: z.string().min(1).optional(),
   blurb: z.string().min(1).optional(),
   highlights: z.array(z.string().min(1)).optional(),
   planetCount: z.number().int().nonnegative().optional(),
   distanceLy: z.number().nonnegative().optional(),
   hostSpectralType: z.string().min(1).optional(),
   compactnessNote: z.string().min(1).optional(),
+  hasGas: z.boolean().optional(),
   meta: SystemMetaSchema.optional(),
 });
 const CatalogSchema = z
@@ -180,6 +182,48 @@ const CatalogSchema = z
           code: "custom",
           message: `body ${b.id} parentId not found: ${b.parentId}`,
           path: ["bodies"],
+        });
+      }
+    }
+    const bodyById = new Map(cat.bodies.map((b) => [b.id, b]));
+    for (const s of cat.systems) {
+      if (!s.primaryStarId) continue;
+      if (!s.memberIds.includes(s.primaryStarId)) {
+        ctx.addIssue({
+          code: "custom",
+          message: `system ${s.id} primaryStarId not in memberIds: ${s.primaryStarId}`,
+          path: ["systems"],
+        });
+        continue;
+      }
+      const primary = bodyById.get(s.primaryStarId);
+      if (!primary || primary.kind !== "star") {
+        ctx.addIssue({
+          code: "custom",
+          message: `system ${s.id} primaryStarId must be kind star: ${s.primaryStarId}`,
+          path: ["systems"],
+        });
+        continue;
+      }
+      if (primary.systemId !== s.id) {
+        ctx.addIssue({
+          code: "custom",
+          message: `system ${s.id} primaryStarId body systemId mismatch`,
+          path: ["systems"],
+        });
+      }
+      if (primary.orbit) {
+        ctx.addIssue({
+          code: "custom",
+          message: `system ${s.id} primary star must omit orbit (companions use parent-frame)`,
+          path: ["systems"],
+        });
+      }
+      if (primary.parentId) {
+        ctx.addIssue({
+          code: "custom",
+          message: `system ${s.id} primary star must omit parentId`,
+          path: ["systems"],
         });
       }
     }
