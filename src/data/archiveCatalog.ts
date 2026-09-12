@@ -5,9 +5,11 @@
  * Graphs are lazy-fetched so thousands of cards never enter the client bundle.
  *
  * Base resolution (once per session):
- *   NEXT_PUBLIC_ARCHIVE_BASE → else /archive/bulk if present → else /archive (smoke).
- * Bulk is gitignored. The committed smoke index is also bundled as a fallback so
- * listSystemsAsync still yields ~100 systems when HTTP fetch fails.
+ *   NEXT_PUBLIC_ARCHIVE_BASE → else smoke `/archive` immediately.
+ * Bulk `/archive/bulk` is probed only as a background upgrade (timed) and
+ * adopted only when it has more systems AND real raDeg/decDeg coverage
+ * (≥50%). A 0%-coord overnight dump must never replace smoke or freeze the map.
+ * The committed smoke index is also bundled as a sync/HTTP fallback.
  */
 import {
   BodySchema,
@@ -71,6 +73,15 @@ export type ArchiveSystemGraphFile = {
 const SMOKE_ARCHIVE_BASE = "/archive";
 const BULK_ARCHIVE_BASE = "/archive/bulk";
 
+/** Timed fetch budget for index probes (bulk can hang on huge parse). */
+const FETCH_TIMEOUT_MS = 1500;
+
+/**
+ * Minimum fraction of rows with both raDeg+decDeg before adopting bulk.
+ * Overnight --all dumps with 0% coords must be ignored (map gutter + O(n²) freeze).
+ */
+const MIN_BULK_COORD_COVERAGE = 0.5;
+
 /**
  * Override with NEXT_PUBLIC_ARCHIVE_BASE (e.g. "/archive/bulk" or a CDN prefix).
  * Production default remains smoke `/archive` unless env is set.
@@ -83,6 +94,7 @@ function envArchiveBase(): string | null {
 
 let archiveBase: string | null = null;
 let indexCache: ArchiveIndex | null = null;
+let bulkUpgradeStarted = false;
 const graphCache = new Map<string, SystemGraph>();
 
 function indexUrl(base: string): string {
@@ -94,23 +106,80 @@ function graphUrl(systemId: string): string {
   return `${base}/graphs/${encodeURIComponent(systemId)}.json`;
 }
 
-async function fetchArchiveIndex(base: string): Promise<ArchiveIndex | null> {
+/** Fraction of index rows with finite raDeg and decDeg (0..1). */
+export function archiveCoordCoverage(index: ArchiveIndex): number {
+  const n = index.systems.length;
+  if (n === 0) return 0;
+  let both = 0;
+  for (const s of index.systems) {
+    if (
+      typeof s.raDeg === "number" &&
+      Number.isFinite(s.raDeg) &&
+      typeof s.decDeg === "number" &&
+      Number.isFinite(s.decDeg)
+    ) {
+      both++;
+    }
+  }
+  return both / n;
+}
+
+/**
+ * Fetch archive index with AbortController timeout. Abort / error → null.
+ * Exported for tests and callers that need a timed probe.
+ */
+export async function fetchArchiveIndex(
+  base: string,
+  timeoutMs: number = FETCH_TIMEOUT_MS,
+): Promise<ArchiveIndex | null> {
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), timeoutMs);
   try {
-    const res = await fetch(indexUrl(base));
+    const res = await fetch(indexUrl(base), { signal: ctrl.signal });
     if (!res.ok) return null;
     const data = (await res.json()) as ArchiveIndex;
     if (!data || !Array.isArray(data.systems)) return null;
     return data;
   } catch {
     return null;
+  } finally {
+    clearTimeout(timer);
   }
+}
+
+/** True when bulk is larger than current cache and has usable sky coverage. */
+function isAdoptableBulk(
+  bulk: ArchiveIndex,
+  current: ArchiveIndex | null,
+): boolean {
+  if (archiveCoordCoverage(bulk) < MIN_BULK_COORD_COVERAGE) return false;
+  const curN = current?.systems.length ?? 0;
+  return bulk.systems.length > curN;
+}
+
+/**
+ * Non-blocking bulk probe. Never awaited on the map first-paint path.
+ * Adopts bulk only when coverage ≥50% and row count exceeds current cache.
+ */
+function startBackgroundBulkUpgrade(): void {
+  if (bulkUpgradeStarted) return;
+  if (envArchiveBase()) return;
+  if (typeof window === "undefined") return;
+  bulkUpgradeStarted = true;
+  void (async () => {
+    const bulk = await fetchArchiveIndex(BULK_ARCHIVE_BASE, FETCH_TIMEOUT_MS);
+    if (!bulk) return;
+    if (!isAdoptableBulk(bulk, indexCache)) return;
+    archiveBase = BULK_ARCHIVE_BASE;
+    indexCache = bulk;
+  })();
 }
 
 /**
  * Resolve archive base once per session:
  * 1) NEXT_PUBLIC_ARCHIVE_BASE if set
- * 2) else prefer /archive/bulk when present (local --all)
- * 3) else smoke /archive
+ * 2) else smoke `/archive` immediately (never await bulk)
+ * Bulk may upgrade later via startBackgroundBulkUpgrade.
  */
 async function resolveArchiveBase(): Promise<string> {
   if (archiveBase) return archiveBase;
@@ -119,17 +188,12 @@ async function resolveArchiveBase(): Promise<string> {
     archiveBase = fromEnv;
     return archiveBase;
   }
-  const bulk = await fetchArchiveIndex(BULK_ARCHIVE_BASE);
-  if (bulk) {
-    archiveBase = BULK_ARCHIVE_BASE;
-    indexCache = bulk;
-    return archiveBase;
-  }
   archiveBase = SMOKE_ARCHIVE_BASE;
+  startBackgroundBulkUpgrade();
   return archiveBase;
 }
 
-/** Active archive base after first resolve (null until loadArchiveIndex). */
+/** Active archive base after first resolve (null until loadArchiveIndex / sync). */
 export function getArchiveBase(): string | null {
   return archiveBase;
 }
@@ -139,6 +203,7 @@ export function clearArchiveCaches(): void {
   indexCache = null;
   graphCache.clear();
   archiveBase = null;
+  bulkUpgradeStarted = false;
   clearSystemGraphSession();
 }
 
@@ -156,18 +221,53 @@ function bundledSmokeArchiveIndex(): ArchiveIndex {
   };
 }
 
+/**
+ * Sync curated + bundled smoke extras — no await, no fetch.
+ * First paint for the Systems map (~100+ archive, not curated-only).
+ */
+export function listSystemsWithSmokeSync(): Array<
+  System | ArchiveSystemSummary
+> {
+  const curated = listSystems();
+  const curatedIds = new Set(curated.map((s) => s.id));
+  const archive =
+    indexCache?.systems ?? bundledSmokeArchiveIndex().systems;
+  const extra = archive.filter((s) => !curatedIds.has(s.id));
+  return [...curated, ...extra];
+}
+
 export async function loadArchiveIndex(): Promise<ArchiveIndex> {
-  if (indexCache) return indexCache;
+  if (indexCache) {
+    startBackgroundBulkUpgrade();
+    return indexCache;
+  }
   const base = await resolveArchiveBase();
-  // resolveArchiveBase may have already filled indexCache when probing bulk
+  // resolveArchiveBase never fills indexCache from bulk anymore
   if (indexCache) return indexCache;
-  const data = await fetchArchiveIndex(base);
+
+  const data = await fetchArchiveIndex(base, FETCH_TIMEOUT_MS);
   if (data) {
-    indexCache = data;
-    return data;
+    // Fail-closed: env/bulk with near-zero coords must not replace smoke
+    // (map would gutter-pack thousands and freeze on separation).
+    const coverage = archiveCoordCoverage(data);
+    if (base === SMOKE_ARCHIVE_BASE || coverage >= MIN_BULK_COORD_COVERAGE) {
+      indexCache = data;
+      startBackgroundBulkUpgrade();
+      return data;
+    }
+    // Bad coverage — fall through to smoke / bundled
+    archiveBase = SMOKE_ARCHIVE_BASE;
+  }
+
+  const smoke = await fetchArchiveIndex(SMOKE_ARCHIVE_BASE, FETCH_TIMEOUT_MS);
+  if (smoke) {
+    indexCache = smoke;
+    startBackgroundBulkUpgrade();
+    return smoke;
   }
   // HTTP failed — still serve the committed smoke plane (never curated-only).
   indexCache = bundledSmokeArchiveIndex();
+  startBackgroundBulkUpgrade();
   return indexCache;
 }
 
@@ -244,6 +344,8 @@ export async function getSystemGraphAsync(
  * Curated systems first (home ordered), then archive index rows whose ids
  * are not already curated. Archive entries are thin summaries — load the
  * graph via getSystemGraphAsync before Explore.
+ *
+ * Does not await a hangable bulk probe; smoke HTTP (timed) or bundled smoke.
  */
 export async function listSystemsAsync(): Promise<
   Array<System | ArchiveSystemSummary>
@@ -341,4 +443,3 @@ export async function searchCatalogAsync(
     return curated;
   }
 }
-
