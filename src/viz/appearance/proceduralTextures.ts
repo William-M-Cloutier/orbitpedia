@@ -89,24 +89,22 @@ function sampleFamily(
       return Math.min(1, Math.max(0.55, n));
     }
     case "black_hole": {
-      // Dark event-horizon disk + brighter accretion equatorial band / swirl.
-      // Grayscale modulates catalog color (warm crimson / purple disk tint).
+      // Near-black horizon core + thinner brighter equatorial accretion band.
+      // Keplerian swirl (angular shear) — grayscale modulates catalog tint.
       // Distinct from star granulation and gas lat bands.
       const lat = (v - 0.5) * 2; // −1…1 from equator
-      const equator = Math.exp(-lat * lat * 7);
-      const warp = fbm(u * 2.5, v * 1.8, 31, 3);
-      const swirl =
-        0.5 +
-        0.5 *
-          Math.sin(
-            u * Math.PI * 9 + lat * 4 + warp * Math.PI * 2.4,
-          );
-      const fine = fbm(u * 10, v * 5, 47, 2);
-      const horizon = 0.02 + 0.05 * fbm(u * 1.5, v * 1.5, 41, 2);
+      const equator = Math.exp(-lat * lat * 18); // thin band
+      const warp = fbm(u * 3.0, v * 2.0, 31, 3);
+      // Differential / Keplerian-ish swirl: tighter angular freq near band peak.
+      const kepler =
+        u * Math.PI * (10 + 5 * equator) + lat * 5.5 + warp * Math.PI * 2.6;
+      const swirl = 0.5 + 0.5 * Math.sin(kepler);
+      const fine = fbm(u * 12, v * 6, 47, 2);
+      const horizon = 0.005 + 0.015 * fbm(u * 1.5, v * 1.5, 41, 2);
       const n =
         horizon +
-        equator * (0.38 + 0.4 * swirl + 0.12 * fine);
-      return Math.min(0.92, Math.max(0.015, n));
+        equator * (0.58 + 0.38 * swirl + 0.1 * fine);
+      return Math.min(0.96, Math.max(0.004, n));
     }
     case "star": {
       // Soft granulation; stay bright so MeshBasic host stars read cleanly.

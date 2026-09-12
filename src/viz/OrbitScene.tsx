@@ -1054,23 +1054,36 @@ const BodyMesh = memo(function BodyMesh({
   }
 
   if (body.kind === "black_hole") {
-    // Primary BH host: sphere + warm accretion pointLight (no OrbitLine).
+    // Primary BH host: dark sphere + thin equatorial accretion torus +
+    // color-keyed pointLight (no OrbitLine; no extra glow shells).
+    const bhColor = body.color ?? "#ff6a3d";
+    const ringRadius = r * 1.48;
+    const ringTube = Math.max(r * 0.028, 0.002);
     return (
       <group ref={group} name={body.id}>
-        <pointLight
-          intensity={1.65}
-          distance={70}
-          color={body.color ?? "#ff6a3d"}
-        />
-        <mesh
+        <pointLight intensity={1.75} distance={70} color={bhColor} />
+        <group
           ref={spinMesh}
           onClick={handleClick}
           onContextMenu={handleContextMenu}
-          material={mat}
           scale={focused ? 1.2 : 1}
         >
-          <sphereGeometry args={[r, 32, 32]} />
-        </mesh>
+          <mesh material={mat}>
+            <sphereGeometry args={[r, 32, 32]} />
+          </mesh>
+          {/* Thin emissive torus coplanar with equator — edge-on silhouette. */}
+          <mesh rotation={[Math.PI / 2, 0, 0]}>
+            <torusGeometry args={[ringRadius, ringTube, 8, 64]} />
+            <meshStandardMaterial
+              color={bhColor}
+              emissive={bhColor}
+              emissiveIntensity={focused ? 0.9 : 0.5}
+              roughness={0.4}
+              metalness={0.15}
+              toneMapped
+            />
+          </mesh>
+        </group>
       </group>
     );
   }
