@@ -335,10 +335,12 @@ export const KIND_LABEL: Record<BodyKind, string> = {
   dwarf_planet: "Dwarf planet",
   asteroid: "Asteroid",
   moon: "Moon",
+  black_hole: "Black hole",
 };
 
 /** Kind order for Search / typeahead grouping. */
 export const KIND_ORDER: BodyKind[] = [
+  "black_hole",
   "star",
   "planet",
   "dwarf_planet",
