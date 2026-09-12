@@ -82,6 +82,7 @@ const STAR_NO_RADIUS_COMPANION_MESH_FRAC = 0.4;
 function schematicRadiusNonMoon(body: Body): number {
   const tiers: Record<Exclude<BodyKind, "moon">, number> = {
     star: STAR_VISUAL_RADIUS,
+    black_hole: STAR_VISUAL_RADIUS,
     planet: (body.facts.radiusMeanKm ?? 0) > 20000
       ? PLANET_VISUAL_RADIUS_LARGE
       : PLANET_VISUAL_RADIUS_SMALL,
@@ -181,9 +182,9 @@ function resolveSystemBodies(
 
 /** Clearance star = system kind==="star" (prefer root / no parentId). */
 function systemStar(bodies: readonly Body[]): Body | undefined {
+  const isHost = (b: Body) => b.kind === "star" || b.kind === "black_hole";
   return (
-    bodies.find((b) => b.kind === "star" && !b.parentId) ??
-    bodies.find((b) => b.kind === "star")
+    bodies.find((b) => isHost(b) && !b.parentId) ?? bodies.find((b) => isHost(b))
   );
 }
 
@@ -236,7 +237,7 @@ function innermostPrimaryOrbitBody(
   let best: Body | undefined;
   let bestQ = Infinity;
   for (const b of bodies) {
-    if (b.kind === "star") continue;
+    if (b.kind === "star" || b.kind === "black_hole") continue;
     if (!hasUsableOrbit(b)) continue;
     if (b.orbit.frame === "parent") continue;
     const q = orbitQAu(b.orbit);
@@ -253,7 +254,7 @@ function innermostPrimaryOrbitBody(
 function maxNonStarRadiusKm(bodies: readonly Body[]): number {
   let max = 0;
   for (const b of bodies) {
-    if (b.kind === "star") continue;
+    if (b.kind === "star" || b.kind === "black_hole") continue;
     const r = b.facts.radiusMeanKm;
     if (r != null && r > max) max = r;
   }
