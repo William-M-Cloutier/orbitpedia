@@ -29,6 +29,7 @@ import {
   loadFavoriteSystemIds,
   saveFavoriteSystemIds,
 } from "@/lib/favoriteSystems";
+import { starColorFromSpectralType } from "@/lib/starColor";
 
 /** Inter-system node spacing — Schematic / Proportional share 2D; Prop stretches r. */
 type MapSpacing = "schematic" | "proportional";
@@ -101,7 +102,9 @@ function buildNodesFromList(
       memberCount: planets + 1,
       planetCount: planets,
       outerAAu: 1,
-      starColor: "#FDB813",
+      starColor: starColorFromSpectralType(
+        "hostSpectralType" in s ? s.hostSpectralType : undefined,
+      ),
     };
   });
 }
@@ -341,17 +344,22 @@ function SystemMapView() {
 
   useEffect(() => {
     if (!favoritesHydrated) return;
-    saveFavoriteSystemIds(favoriteIds);
-  }, [favoriteIds, favoritesHydrated]);
+    saveFavoriteSystemIds(favoriteIds, homeId);
+  }, [favoriteIds, favoritesHydrated, homeId]);
 
-  const toggleFavorite = useCallback((id: string) => {
-    setFavoriteIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-  }, []);
+  const toggleFavorite = useCallback(
+    (id: string) => {
+      if (id === homeId) return;
+      setFavoriteIds((prev) => {
+        const next = new Set(prev);
+        if (next.has(id)) next.delete(id);
+        else next.add(id);
+        next.add(homeId);
+        return next;
+      });
+    },
+    [homeId],
+  );
 
   useEffect(() => {
     let cancelled = false;
@@ -893,24 +901,37 @@ function SystemMapView() {
                   <button
                     type="button"
                     onClick={() => toggleFavorite(selectedSystem.id)}
-                    aria-pressed={favoriteIds.has(selectedSystem.id)}
-                    aria-label={
+                    disabled={selectedSystem.id === homeId}
+                    aria-pressed={
+                      selectedSystem.id === homeId ||
                       favoriteIds.has(selectedSystem.id)
-                        ? "Remove from favorites"
-                        : "Add to favorites"
+                    }
+                    aria-label={
+                      selectedSystem.id === homeId
+                        ? "Home stays favorited"
+                        : favoriteIds.has(selectedSystem.id)
+                          ? "Remove from favorites"
+                          : "Add to favorites"
                     }
                     title={
-                      favoriteIds.has(selectedSystem.id)
-                        ? "Unfavorite"
-                        : "Favorite"
+                      selectedSystem.id === homeId
+                        ? "Home stays favorited"
+                        : favoriteIds.has(selectedSystem.id)
+                          ? "Unfavorite"
+                          : "Favorite"
                     }
                     className={
-                      favoriteIds.has(selectedSystem.id)
-                        ? "rounded px-1.5 py-0.5 text-sm text-amber-300 hover:bg-amber-500/15"
-                        : "rounded px-1.5 py-0.5 text-sm text-zinc-500 hover:bg-white/10 hover:text-amber-200"
+                      selectedSystem.id === homeId
+                        ? "cursor-default rounded px-1.5 py-0.5 text-sm text-amber-300 opacity-90"
+                        : favoriteIds.has(selectedSystem.id)
+                          ? "rounded px-1.5 py-0.5 text-sm text-amber-300 hover:bg-amber-500/15"
+                          : "rounded px-1.5 py-0.5 text-sm text-zinc-500 hover:bg-white/10 hover:text-amber-200"
                     }
                   >
-                    {favoriteIds.has(selectedSystem.id) ? "★" : "☆"}
+                    {selectedSystem.id === homeId ||
+                    favoriteIds.has(selectedSystem.id)
+                      ? "★"
+                      : "☆"}
                   </button>
                   <button
                     type="button"
