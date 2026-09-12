@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "fetchedAt": "2026-09-12T04:12:18.312Z",
+  "source": "NASA Exoplanet Archive pscomppars",
+  "systems": [
+    {
+      "id": "55-cnc",
+      "name": "55 Cnc",
+      "planetCount": 7,
+      "distanceLy": 41,
+      "hostSpectralType": "G8 V",
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/55%20Cnc"
+    },
+    {
+      "id": "55-cnc-comp-b",
+      "name": "55 Cnc B",
+      "planetCount": 7,
+      "distanceLy": 40.7,
+      "hostSpectralType": "M4.5 V",
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/55%20Cnc%20B"
+    },
+    {
+      "id": "hd-110067",
+      "name": "HD 110067",
+      "planetCount": 6,
+      "distanceLy": 104.9,
+      "hostSpectralType": "K0.0 V",
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20110067"
+    },
+    {
+      "id": "hip-41378",
+      "name": "HIP 41378",
+      "planetCount": 6,
+      "distanceLy": 346.7,
+      "hostSpectralType": "F6",
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/HIP%2041378"
+    },
+    {
+      "id": "koi-351",
+      "name": "KOI-351",
+      "planetCount": 8,
+      "distanceLy": 2766.6,
+      "overviewUrl": "https://exoplanetarchive.ipac.caltech.edu/overview/KOI-351"
+    }
+  ]
+}

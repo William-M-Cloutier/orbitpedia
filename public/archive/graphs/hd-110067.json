@@ -1,0 +1,339 @@
+{
+  "system": {
+    "id": "hd-110067",
+    "name": "HD 110067",
+    "home": false,
+    "memberIds": [
+      "hd-110067",
+      "hd-110067-b",
+      "hd-110067-c",
+      "hd-110067-d",
+      "hd-110067-e",
+      "hd-110067-f",
+      "hd-110067-g"
+    ],
+    "blurb": "HD 110067 — NASA Exoplanet Archive planetary system (6 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 6,
+    "distanceLy": 104.9,
+    "hostSpectralType": "K0.0 V",
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T04:12:18.312Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — HD 110067 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20110067",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy",
+            "hostSpectralType"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "hd-110067",
+      "name": "HD 110067",
+      "kind": "star",
+      "systemId": "hd-110067",
+      "facts": {
+        "massKg": 1.58679906e+30,
+        "radiusMeanKm": 548211.6,
+        "discoveryNotes": "Archive host (6 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2023"
+      },
+      "color": "#FDB813",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 110067 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20110067",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:12:18.312Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "hd-110067-b",
+      "name": "HD 110067 b",
+      "kind": "planet",
+      "systemId": "hd-110067",
+      "facts": {
+        "massKg": 3.3981818000000005e+25,
+        "radiusMeanKm": 14016.2,
+        "discoveryDate": "2023",
+        "discoveryNotes": "NEA composite: HD 110067 b"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 110067 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: e, wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 110067 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20110067",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:12:18.312Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2459640.15797,
+        "aAu": 0.0793,
+        "e": 0,
+        "iDeg": 89.061,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 9.113678
+      }
+    },
+    {
+      "id": "hd-110067-c",
+      "name": "HD 110067 c",
+      "kind": "planet",
+      "systemId": "hd-110067",
+      "facts": {
+        "massKg": 3.762486e+25,
+        "radiusMeanKm": 15213.947999999999,
+        "discoveryDate": "2023",
+        "discoveryNotes": "NEA composite: HD 110067 c"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 110067 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: e, wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 110067 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20110067",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:12:18.312Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2459657.45704,
+        "aAu": 0.1039,
+        "e": 0,
+        "iDeg": 89.687,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 13.673694
+      }
+    },
+    {
+      "id": "hd-110067-d",
+      "name": "HD 110067 d",
+      "kind": "planet",
+      "systemId": "hd-110067",
+      "facts": {
+        "massKg": 5.0883144e+25,
+        "radiusMeanKm": 18170.092,
+        "discoveryDate": "2023",
+        "discoveryNotes": "NEA composite: HD 110067 d"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 110067 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: e, wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 110067 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20110067",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:12:18.312Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2459708.20282,
+        "aAu": 0.1362,
+        "e": 0,
+        "iDeg": 89.248,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 20.519617
+      }
+    },
+    {
+      "id": "hd-110067-e",
+      "name": "HD 110067 e",
+      "kind": "planet",
+      "systemId": "hd-110067",
+      "facts": {
+        "massKg": 2.329158e+25,
+        "radiusMeanKm": 12359.74,
+        "discoveryDate": "2023",
+        "discoveryNotes": "NEA composite: HD 110067 e"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 110067 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: e, wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 110067 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20110067",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:12:18.312Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2459646.0919,
+        "aAu": 0.1785,
+        "e": 0,
+        "iDeg": 89.867,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 30.793091
+      }
+    },
+    {
+      "id": "hd-110067-f",
+      "name": "HD 110067 f",
+      "kind": "planet",
+      "systemId": "hd-110067",
+      "facts": {
+        "massKg": 3.0099888e+25,
+        "radiusMeanKm": 16570.971,
+        "discoveryDate": "2023",
+        "discoveryNotes": "NEA composite: HD 110067 f"
+      },
+      "color": "#C88B3A",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 110067 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: e, wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 110067 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20110067",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:12:18.312Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2459641.5763,
+        "aAu": 0.2163,
+        "e": 0,
+        "iDeg": 89.673,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 41.05854
+      }
+    },
+    {
+      "id": "hd-110067-g",
+      "name": "HD 110067 g",
+      "kind": "planet",
+      "systemId": "hd-110067",
+      "facts": {
+        "massKg": 5.016648e+25,
+        "radiusMeanKm": 16609.197,
+        "discoveryDate": "2023",
+        "discoveryNotes": "NEA composite: HD 110067 g"
+      },
+      "color": "#7EC8E3",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HD 110067 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: e, wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HD 110067 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HD%20110067",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:12:18.312Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2459656.0921,
+        "aAu": 0.2621,
+        "e": 0,
+        "iDeg": 89.729,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 54.76992
+      }
+    }
+  ]
+}

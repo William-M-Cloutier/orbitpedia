@@ -157,6 +157,23 @@ Ingest scripts may *fetch* APIs; the **cited** URL for Facts links must still be
 7. Run [NEW_SYSTEM_CHECKLIST.md](./NEW_SYSTEM_CHECKLIST.md) (scale, face-on, map, Sol regression).
 8. Ship with SHA + short pass/fail note.
 
+## Archive dump (NEA scale)
+
+Full NASA Exoplanet Archive ingest does **not** write curated
+`systems/` / `bodies/` cards. It writes the archive plane under
+`public/archive/` (thin `systems.index.json` + per-system
+`graphs/<id>.json`) so `catalog.generated.ts` stays curated-only.
+
+See [ARCHIVE_INGEST.md](./ARCHIVE_INGEST.md). Sample:
+
+```bash
+npm run ingest:nea-sample
+# or: node scripts/ingest-exoplanet-archive.mjs --limit 5
+```
+
+Lazy load helpers: `src/data/archiveCatalog.ts`
+(`listSystemsAsync`, `getSystemGraphAsync`).
+
 ## Related
 
 - Ship gates: `docs/NEW_SYSTEM_CHECKLIST.md`

@@ -1,0 +1,300 @@
+{
+  "system": {
+    "id": "hip-41378",
+    "name": "HIP 41378",
+    "home": false,
+    "memberIds": [
+      "hip-41378",
+      "hip-41378-b",
+      "hip-41378-c",
+      "hip-41378-e",
+      "hip-41378-d",
+      "hip-41378-f"
+    ],
+    "blurb": "HIP 41378 — NASA Exoplanet Archive planetary system (5 planets in sample ingest). Sparse archive card; curated showcase systems stay hand-enriched.",
+    "planetCount": 6,
+    "distanceLy": 346.7,
+    "hostSpectralType": "F6",
+    "meta": {
+      "confidence": "known",
+      "fetchedAt": "2026-09-12T04:12:18.312Z",
+      "sources": [
+        {
+          "name": "NASA Exoplanet Archive — HIP 41378 overview",
+          "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HIP%2041378",
+          "fields": [
+            "blurb",
+            "planetCount",
+            "distanceLy",
+            "hostSpectralType"
+          ]
+        }
+      ]
+    }
+  },
+  "bodies": [
+    {
+      "id": "hip-41378",
+      "name": "HIP 41378",
+      "kind": "star",
+      "systemId": "hip-41378",
+      "facts": {
+        "massKg": 2.4259334e+30,
+        "radiusMeanKm": 904410,
+        "discoveryNotes": "Archive host (5 planets in this ingest slice); open from Systems / Explore when wired to archive lazy-load.",
+        "discoveryDate": "2016"
+      },
+      "color": "#F8F7FF",
+      "meta": {
+        "source": "NASA Exoplanet Archive Planetary Systems Composite Parameters (pscomppars) — stellar mass/radius; orbit frame N/A (central star)",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HIP 41378 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HIP%2041378",
+            "fields": [
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryNotes",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:12:18.312Z",
+        "confidence": "known",
+        "unitsVersion": 1
+      }
+    },
+    {
+      "id": "hip-41378-b",
+      "name": "HIP 41378 b",
+      "kind": "planet",
+      "systemId": "hip-41378",
+      "facts": {
+        "massKg": 4.120818e+25,
+        "radiusMeanKm": 16819.440000000002,
+        "discoveryDate": "2016",
+        "discoveryNotes": "NEA composite: HIP 41378 b"
+      },
+      "color": "#C45C26",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HIP 41378 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HIP 41378 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HIP%2041378",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:12:18.312Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2457152.282,
+        "aAu": 0.1303,
+        "e": 0.05,
+        "iDeg": 88.816,
+        "omDeg": 0,
+        "wDeg": -13,
+        "maDeg": 0,
+        "periodD": 15.57209
+      }
+    },
+    {
+      "id": "hip-41378-c",
+      "name": "HIP 41378 c",
+      "kind": "planet",
+      "systemId": "hip-41378",
+      "facts": {
+        "massKg": 3.5654034e+25,
+        "radiusMeanKm": 17456.54,
+        "discoveryDate": "2016",
+        "discoveryNotes": "NEA composite: HIP 41378 c"
+      },
+      "color": "#D4A574",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HIP 41378 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: none).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HIP 41378 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HIP%2041378",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.wDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:12:18.312Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2457163.166,
+        "aAu": 0.2093,
+        "e": 0.044,
+        "iDeg": 88.462,
+        "omDeg": 0,
+        "wDeg": 158,
+        "maDeg": 0,
+        "periodD": 31.70591
+      }
+    },
+    {
+      "id": "hip-41378-e",
+      "name": "HIP 41378 e",
+      "kind": "planet",
+      "systemId": "hip-41378",
+      "facts": {
+        "massKg": 4.5508164e+25,
+        "radiusMeanKm": 33065.490000000005,
+        "discoveryDate": "2016",
+        "discoveryNotes": "NEA composite: HIP 41378 e"
+      },
+      "color": "#6B93D6",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HIP 41378 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HIP 41378 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HIP%2041378",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:12:18.312Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2457142.018,
+        "aAu": 0.68,
+        "e": 0.065,
+        "iDeg": 89.7,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 393
+      }
+    },
+    {
+      "id": "hip-41378-d",
+      "name": "HIP 41378 d",
+      "kind": "planet",
+      "systemId": "hip-41378",
+      "facts": {
+        "massKg": 3.899846600000001e+25,
+        "radiusMeanKm": 23254.149999999998,
+        "discoveryDate": "2016",
+        "discoveryNotes": "NEA composite: HIP 41378 d"
+      },
+      "color": "#C1440E",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HIP 41378 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HIP 41378 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HIP%2041378",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:12:18.312Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2457166.261,
+        "aAu": 1.17,
+        "e": 0.063,
+        "iDeg": 89.93,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 278.3618
+      }
+    },
+    {
+      "id": "hip-41378-f",
+      "name": "HIP 41378 f",
+      "kind": "planet",
+      "systemId": "hip-41378",
+      "facts": {
+        "massKg": 1.4930500000000001e+26,
+        "radiusMeanKm": 60333.37,
+        "discoveryDate": "2016",
+        "discoveryNotes": "NEA composite: HIP 41378 f"
+      },
+      "color": "#C88B3A",
+      "meta": {
+        "source": "NASA Exoplanet Archive pscomppars; orbit.frame=heliocentric relative to host HIP 41378 (not SSB). omDeg=0 and maDeg=0 assumed (also defaulted: wDeg).",
+        "sources": [
+          {
+            "name": "NASA Exoplanet Archive — HIP 41378 overview",
+            "url": "https://exoplanetarchive.ipac.caltech.edu/overview/HIP%2041378",
+            "fields": [
+              "orbit.aAu",
+              "orbit.periodD",
+              "orbit.e",
+              "orbit.iDeg",
+              "orbit.epochJd",
+              "facts.massKg",
+              "facts.radiusMeanKm",
+              "facts.discoveryDate"
+            ]
+          }
+        ],
+        "fetchedAt": "2026-09-12T04:12:18.312Z",
+        "confidence": "assumed",
+        "unitsVersion": 1
+      },
+      "orbit": {
+        "frame": "heliocentric",
+        "epochJd": 2457186.914,
+        "aAu": 1.394,
+        "e": 0.052,
+        "iDeg": 89.953,
+        "omDeg": 0,
+        "wDeg": 0,
+        "maDeg": 0,
+        "periodD": 542.0797
+      }
+    }
+  ]
+}
