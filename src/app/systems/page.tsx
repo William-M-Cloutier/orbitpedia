@@ -30,6 +30,7 @@ import {
   saveFavoriteSystemIds,
 } from "@/lib/favoriteSystems";
 import { starColorFromSpectralType } from "@/lib/starColor";
+import { systemHasGasGiant } from "@/lib/hasGas";
 
 /** Inter-system node spacing — Schematic / Proportional share 2D; Prop stretches r. */
 type MapSpacing = "schematic" | "proportional";
@@ -113,6 +114,8 @@ type SystemNode = {
   starColor: string;
   hostSpectralType?: string;
   spectralChip: SpectralChip;
+  /** true = known gas; false = known none; undefined = missing index flag */
+  hasGas?: boolean;
 };
 
 function buildNodesFromList(
@@ -131,6 +134,17 @@ function buildNodesFromList(
       const hostSpectralType =
         curated.hostSpectralType ??
         ("hostSpectralType" in s ? s.hostSpectralType : undefined);
+      // Prefer index/system hasGas when present; else derive (Sol Jupiter…).
+      const fromRow =
+        "hasGas" in s && typeof s.hasGas === "boolean" ? s.hasGas : undefined;
+      const fromCurated =
+        typeof curated.hasGas === "boolean" ? curated.hasGas : undefined;
+      const hasGas =
+        fromRow !== undefined
+          ? fromRow
+          : fromCurated !== undefined
+            ? fromCurated
+            : systemHasGasGiant(bodies);
       return {
         id: curated.id,
         name: curated.name,
@@ -143,11 +157,14 @@ function buildNodesFromList(
         starColor: star?.color ?? "#FDB813",
         hostSpectralType,
         spectralChip: spectralChipFromType(hostSpectralType),
+        hasGas,
       };
     }
     const planets = s.planetCount ?? 0;
     const hostSpectralType =
       "hostSpectralType" in s ? s.hostSpectralType : undefined;
+    const hasGas =
+      "hasGas" in s && typeof s.hasGas === "boolean" ? s.hasGas : undefined;
     return {
       id: s.id,
       name: s.name,
@@ -158,6 +175,7 @@ function buildNodesFromList(
       starColor: starColorFromSpectralType(hostSpectralType),
       hostSpectralType,
       spectralChip: spectralChipFromType(hostSpectralType),
+      hasGas,
     };
   });
 }
@@ -395,20 +413,26 @@ function SystemMapView() {
   const [planetFilters, setPlanetFilters] = useState<Set<PlanetBin>>(
     () => new Set(),
   );
+  const [hasGasFilter, setHasGasFilter] = useState(false);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const filtersRef = useRef<HTMLDivElement>(null);
 
   const clearMapFilters = useCallback(() => {
     setSpectralFilters(new Set());
     setPlanetFilters(new Set());
+    setHasGasFilter(false);
     setFavoritesOnly(false);
   }, []);
 
   const panelFiltersActive =
-    spectralFilters.size > 0 || planetFilters.size > 0;
-  const panelFilterCount = spectralFilters.size + planetFilters.size;
+    spectralFilters.size > 0 || planetFilters.size > 0 || hasGasFilter;
+  const panelFilterCount =
+    spectralFilters.size + planetFilters.size + (hasGasFilter ? 1 : 0);
   const filtersActive =
-    favoritesOnly || spectralFilters.size > 0 || planetFilters.size > 0;
+    favoritesOnly ||
+    spectralFilters.size > 0 ||
+    planetFilters.size > 0 ||
+    hasGasFilter;
 
   useEffect(() => {
     if (!filtersOpen) return;
@@ -522,9 +546,18 @@ function SystemMapView() {
         const bin = planetBinForCount(n.planetCount);
         if (!bin || !planetFilters.has(bin)) return false;
       }
+      // Has gas giant: off = don't care; on → hasGas === true (missing excluded).
+      if (hasGasFilter && n.hasGas !== true) return false;
       return true;
     });
-  }, [nodes, favoritesOnly, favoriteIds, spectralFilters, planetFilters]);
+  }, [
+    nodes,
+    favoritesOnly,
+    favoriteIds,
+    spectralFilters,
+    planetFilters,
+    hasGasFilter,
+  ]);
 
   const laid = useMemo(
     () => layoutNodes(mapNodes, spacing),
@@ -934,6 +967,26 @@ function SystemMapView() {
                       })}
                     </div>
                   </div>
+                  <div className="mb-3">
+                    <div className="mb-1.5 text-[11px] font-medium uppercase tracking-wide text-zinc-500">
+                      Composition
+                    </div>
+                    <div className="flex flex-wrap gap-1">
+                      <button
+                        type="button"
+                        aria-pressed={hasGasFilter}
+                        title="At least one gas giant (archive hasGas or curated bodies; ≳50 M⊕ or ≳4 R⊕)"
+                        onClick={() => setHasGasFilter((v) => !v)}
+                        className={
+                          hasGasFilter
+                            ? "rounded-md bg-sky-600 px-2 py-1 text-[11px] font-medium text-white"
+                            : "rounded-md bg-white/5 px-2 py-1 text-[11px] text-zinc-400 hover:bg-white/10 hover:text-zinc-200"
+                        }
+                      >
+                        Has gas giant
+                      </button>
+                    </div>
+                  </div>
                   <div className="flex items-center justify-between gap-2 border-t border-white/10 pt-2">
                     <span className="text-[11px] tabular-nums text-zinc-500">
                       {mapNodes.length}
@@ -991,8 +1044,8 @@ function SystemMapView() {
             <div className="pointer-events-auto absolute inset-0 z-20 flex flex-col items-center justify-center gap-3 bg-[#060a14]/92 px-6 text-center">
               <p className="text-sm text-zinc-300">No systems match</p>
               <p className="max-w-sm text-xs text-zinc-500">
-                Filters combine with AND across spectral type, planet count, and
-                favorites. Within a chip group, selection is OR.
+                Filters combine with AND across spectral type, planet count, gas
+                giant, and favorites. Within a chip group, selection is OR.
               </p>
               <button
                 type="button"
@@ -1202,9 +1255,9 @@ function SystemMapView() {
 
         <p className="mt-2 text-xs text-zinc-600">
           Drag or WASD to pan · Shift faster · scroll wheel zoom · Reset
-          recenters on Sol. Filters (spectral / planet) OR within a group, AND
-          across groups (+ ★ Fav). Click empty space to dismiss facts. Enter
-          opens selected system.
+          recenters on Sol. Filters (spectral / planet / gas) OR within a
+          group, AND across groups (+ ★ Fav). Click empty space to dismiss
+          facts. Enter opens selected system.
         </p>
       </div>
     </AppShell>

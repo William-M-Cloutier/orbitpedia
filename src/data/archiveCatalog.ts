@@ -32,6 +32,8 @@ export type ArchiveSystemSummary = {
   distanceLy?: number;
   hostSpectralType?: string;
   overviewUrl?: string;
+  /** Archive hasGas (≳50 M⊕ or ≳4 R⊕). Missing = unknown / pre-flag index. */
+  hasGas?: boolean;
 };
 
 export type ArchiveIndex = {

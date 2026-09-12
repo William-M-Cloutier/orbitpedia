@@ -158,6 +158,8 @@ export const SystemSchema = z.object({
   distanceLy: z.number().nonnegative().optional(),
   hostSpectralType: z.string().min(1).optional(),
   compactnessNote: z.string().min(1).optional(),
+  /** Archive plane: any planet ≳50 M⊕ or ≳4 R⊕ (see ingest / hasGas.ts). */
+  hasGas: z.boolean().optional(),
   meta: SystemMetaSchema.optional(),
 });
 

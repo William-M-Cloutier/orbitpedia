@@ -158,6 +158,11 @@ Archive index rows and system chunks include boolean **`hasGas`**:
 - `false` if no planet meets those thresholds (including when mass/radius are missing
   — we do **not** invent gas giants from incomplete rows).
 
+Systems map **Has gas giant** (Filters popover) requires `hasGas === true` and
+ANDs with spectral / planet-count / ★ Fav. Empty = don't care; rows missing the
+flag are excluded while the filter is on (do not invent). Curated Sol derives
+locally from bodies with the same 50 M⊕ / 4 R⊕ cuts (Jupiter/Saturn).
+
 Re-run smoke (`--limit 100`) after changing thresholds. Full pack requires
 re-ingest into `public/archive/bulk/` (`--all`); committed smoke alone is not enough.
 
