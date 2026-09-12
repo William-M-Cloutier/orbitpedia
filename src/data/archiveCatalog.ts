@@ -11,12 +11,15 @@ import {
   type System,
 } from "./schema";
 import {
+  getSystem,
   getSystemGraph,
-  isCuratedSystemId,
   listSystems,
-  registerLoadedSystemGraph,
   type SystemGraph,
 } from "./catalog";
+import {
+  clearSystemGraphSession,
+  rememberSystemGraph,
+} from "./systemGraphSession";
 
 export type ArchiveSystemSummary = {
   id: string;
@@ -52,6 +55,7 @@ const graphCache = new Map<string, SystemGraph>();
 export function clearArchiveCaches(): void {
   indexCache = null;
   graphCache.clear();
+  clearSystemGraphSession();
 }
 
 export async function loadArchiveIndex(): Promise<ArchiveIndex> {
@@ -80,10 +84,7 @@ export async function getArchiveSystemGraph(
   systemId: string,
 ): Promise<SystemGraph> {
   const cached = graphCache.get(systemId);
-  if (cached) {
-    registerLoadedSystemGraph(cached);
-    return cached;
-  }
+  if (cached) return cached;
   const res = await fetch(graphUrl(systemId));
   if (!res.ok) {
     throw new Error(
@@ -126,7 +127,7 @@ export async function getArchiveSystemGraph(
   }
   const graph: SystemGraph = { system, bodies };
   graphCache.set(systemId, graph);
-  registerLoadedSystemGraph(graph);
+  rememberSystemGraph(graph);
   return graph;
 }
 
@@ -134,7 +135,7 @@ export async function getArchiveSystemGraph(
 export async function getSystemGraphAsync(
   systemId: string,
 ): Promise<SystemGraph> {
-  if (isCuratedSystemId(systemId)) {
+  if (getSystem(systemId)) {
     return getSystemGraph(systemId);
   }
   return getArchiveSystemGraph(systemId);
@@ -162,5 +163,5 @@ export async function listSystemsAsync(): Promise<
 }
 
 export function isArchiveOnlySystemId(systemId: string): boolean {
-  return !isCuratedSystemId(systemId);
+  return !getSystem(systemId);
 }

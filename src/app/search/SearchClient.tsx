@@ -19,13 +19,12 @@ import {
   getSystem,
   KIND_LABEL,
   KIND_ORDER,
+  listSystems,
   isFixtureSystemId,
   searchCatalog,
+  type CatalogSearchResult,
 } from "@/data/catalog";
-import {
-  listSystemsAsync,
-  type ArchiveSystemSummary,
-} from "@/data/archiveCatalog";
+import { listArchiveSystems } from "@/data/archiveCatalog";
 import {
   loadRecentSearches,
   pushRecentSearch,
@@ -33,16 +32,11 @@ import {
 } from "@/lib/recentSearches";
 import type { Body, BodyKind, System } from "@/data/schema";
 
-type SystemHit = Pick<System, "id" | "name"> & Partial<System>;
-
 type FlatHit =
-  | { key: string; type: "system"; system: SystemHit; href: string }
+  | { key: string; type: "system"; system: System; href: string }
   | { key: string; type: "body"; body: Body; href: string };
 
-function flattenGrouped(result: {
-  systems: SystemHit[];
-  bodies: Body[];
-}): FlatHit[] {
+function flattenGrouped(result: CatalogSearchResult): FlatHit[] {
   const out: FlatHit[] = [];
   for (const s of result.systems) {
     out.push({
@@ -94,58 +88,87 @@ export function SearchClient() {
     setQ(param);
   }, [searchParams]);
 
-  const [listedSystems, setListedSystems] = useState<
-    Array<System | ArchiveSystemSummary>
-  >([]);
+  const [archiveHits, setArchiveHits] = useState<FlatHit[]>([]);
+  const result = useMemo(() => searchCatalog(q), [q]);
+  const hits = useMemo(() => {
+    const curated = flattenGrouped(result);
+    const curatedKeys = new Set(curated.map((h) => h.key));
+    return [...curated, ...archiveHits.filter((h) => !curatedKeys.has(h.key))];
+  }, [result, archiveHits]);
 
   useEffect(() => {
     let cancelled = false;
-    listSystemsAsync().then((list) => {
-      if (!cancelled) setListedSystems(list);
-    });
+    const needle = q.trim().toLowerCase();
+    if (!needle) {
+      setArchiveHits([]);
+      return;
+    }
+    (async () => {
+      try {
+        const archive = await listArchiveSystems();
+        if (cancelled) return;
+        const curatedIds = new Set(listSystems().map((s) => s.id));
+        const matched = archive
+          .filter(
+            (s) =>
+              !curatedIds.has(s.id) &&
+              (s.name.toLowerCase().includes(needle) ||
+                s.id.toLowerCase().includes(needle)),
+          )
+          .slice(0, 20)
+          .map((s) => ({
+            key: `sys:${s.id}`,
+            type: "system" as const,
+            system: {
+              id: s.id,
+              name: s.name,
+              memberIds: [] as string[],
+            },
+            href: exploreSystemHref(s.id),
+          }));
+        setArchiveHits(matched);
+      } catch {
+        if (!cancelled) setArchiveHits([]);
+      }
+    })();
     return () => {
       cancelled = true;
     };
-  }, []);
-
-  const curatedResult = useMemo(() => searchCatalog(q), [q]);
-
-  const result = useMemo((): {
-    systems: SystemHit[];
-    bodies: Body[];
-  } => {
-    const qn = q.trim().toLowerCase();
-    if (!qn) {
-      return { systems: [], bodies: [] };
-    }
-    const curatedIds = new Set(curatedResult.systems.map((s) => s.id));
-    const archiveHits: SystemHit[] = [];
-    for (const s of listedSystems) {
-      if (curatedIds.has(s.id) || isFixtureSystemId(s.id)) continue;
-      if (getSystem(s.id)) continue; // curated already covered
-      if (
-        s.id.toLowerCase().includes(qn) ||
-        s.name.toLowerCase().includes(qn)
-      ) {
-        archiveHits.push({ id: s.id, name: s.name });
-      }
-    }
-    return {
-      systems: [...curatedResult.systems, ...archiveHits],
-      bodies: curatedResult.bodies,
-    };
-  }, [q, curatedResult, listedSystems]);
-
-  const hits = useMemo(() => flattenGrouped(result), [result]);
+  }, [q]);
 
   useEffect(() => {
     setActive(0);
   }, [q]);
 
-  const systemsForChips = useMemo(
-    () => listedSystems.filter((s) => !isFixtureSystemId(s.id)),
-    [listedSystems],
+  const [systemsForChips, setSystemsForChips] = useState(
+    () => listSystems().filter((s) => !isFixtureSystemId(s.id)),
   );
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const curated = listSystems().filter((s) => !isFixtureSystemId(s.id));
+      const curatedIds = new Set(curated.map((s) => s.id));
+      try {
+        const archive = await listArchiveSystems();
+        if (cancelled) return;
+        const stubs = archive
+          .filter((s) => !curatedIds.has(s.id))
+          .map((s) => ({
+            id: s.id,
+            name: s.name,
+            home: false as boolean | undefined,
+            memberIds: [] as string[],
+          }));
+        setSystemsForChips([...curated, ...stubs]);
+      } catch {
+        if (!cancelled) setSystemsForChips(curated);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const go = useCallback(
     (hit: FlatHit) => {

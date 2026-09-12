@@ -22,8 +22,6 @@ import {
   getBody,
   getHomeSystem,
   getSystemGraph,
-  isCuratedSystemId,
-  type SystemGraph,
 } from "@/data/catalog";
 import { getSystemGraphAsync } from "@/data/archiveCatalog";
 import {
@@ -39,53 +37,50 @@ function ExploreHome() {
   const systemParam = searchParams.get("system");
 
   const homeId = getHomeSystem().id;
-  // Accept curated + archive ids via ?system= (async load confirms).
-  const systemId = systemParam?.trim() ? systemParam.trim() : homeId;
+  const requestedSystemId = systemParam && systemParam.length > 0 ? systemParam : homeId;
 
-  const [graph, setGraph] = useState<SystemGraph | null>(null);
-  const [loadError, setLoadError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [systemId, setSystemId] = useState<string>(homeId);
+  const [graphReady, setGraphReady] = useState(false);
 
+  // Prime curated sync or archive lazy graph before Explore renders the scene.
   useEffect(() => {
     let cancelled = false;
-    setLoadError(null);
-
-    // Curated: sync/fast — no loading flash for Sol / showcase.
-    if (isCuratedSystemId(systemId)) {
+    setGraphReady(false);
+    (async () => {
       try {
-        setGraph(getSystemGraph(systemId));
-        setLoading(false);
-      } catch (err: unknown) {
-        setGraph(null);
-        setLoadError(err instanceof Error ? err.message : String(err));
-        setLoading(false);
+        await getSystemGraphAsync(requestedSystemId);
+        if (cancelled) return;
+        setSystemId(requestedSystemId);
+        setGraphReady(true);
+      } catch (err) {
+        if (cancelled) return;
+        // Unknown / failed archive → fall back to home.
+        try {
+          await getSystemGraphAsync(homeId);
+        } catch {
+          /* home must exist */
+        }
+        if (cancelled) return;
+        setSystemId(homeId);
+        setGraphReady(true);
+        void err;
       }
-      return;
-    }
-
-    setLoading(true);
-    setGraph(null);
-    getSystemGraphAsync(systemId)
-      .then((g) => {
-        if (cancelled) return;
-        setGraph(g);
-        setLoading(false);
-      })
-      .catch((err: unknown) => {
-        if (cancelled) return;
-        setGraph(null);
-        setLoadError(err instanceof Error ? err.message : String(err));
-        setLoading(false);
-      });
+    })();
     return () => {
       cancelled = true;
     };
-  }, [systemId]);
+  }, [requestedSystemId, homeId]);
 
-  const system = graph?.system;
+  const system = useMemo(
+    () => (graphReady ? getSystemGraph(systemId).system : getHomeSystem()),
+    [graphReady, systemId],
+  );
   const memberIds = useMemo(
-    () => new Set(graph?.bodies.map((b) => b.id) ?? []),
-    [graph],
+    () =>
+      graphReady
+        ? new Set(getSystemGraph(systemId).bodies.map((b) => b.id))
+        : new Set<string>(),
+    [graphReady, systemId],
   );
 
   const [focusId, setFocusId] = useState<string | null>(null);
@@ -106,18 +101,14 @@ function ExploreHome() {
     setHiddenIds(new Set());
   }, [systemId]);
 
-  // Hydrate (and re-hydrate) from ?system=&focus= once graph is ready.
+  // Hydrate (and re-hydrate) from ?system=&focus=
   useEffect(() => {
-    if (!graph) {
-      setFocusId(null);
-      return;
-    }
     if (focusParam && memberIds.has(focusParam) && getBody(focusParam)) {
       setFocusId(focusParam);
       return;
     }
     setFocusId(null);
-  }, [focusParam, memberIds, graph]);
+  }, [focusParam, memberIds]);
 
   const pushExplore = useCallback(
     (nextSystemId: string, nextFocus: string | null) => {
@@ -183,20 +174,24 @@ function ExploreHome() {
     return () => window.removeEventListener("keydown", onKey);
   }, [setFocus]);
 
-  const titleName = system?.name ?? systemId;
+  if (!graphReady) {
+    return (
+      <div className="flex min-h-[calc(100vh-3.5rem)] items-center justify-center text-sm text-zinc-500">
+        Loading system…
+      </div>
+    );
+  }
 
   return (
     <AppShell
       rail={
-        graph ? (
-          <BodyRail
-            systemId={systemId}
-            activeId={focusId ?? undefined}
-            onFocus={onRailFocus}
-            hiddenIds={hiddenIds}
-            onToggleHidden={onToggleHidden}
-          />
-        ) : undefined
+        <BodyRail
+          systemId={systemId}
+          activeId={focusId ?? undefined}
+          onFocus={onRailFocus}
+          hiddenIds={hiddenIds}
+          onToggleHidden={onToggleHidden}
+        />
       }
     >
       <div className="relative flex h-[calc(100vh-3.5rem)] flex-col md:flex-row">
@@ -206,7 +201,7 @@ function ExploreHome() {
               <h1 className="text-sm font-medium text-zinc-200">
                 Explore
                 <span className="ml-2 font-normal text-zinc-500">
-                  · {titleName}
+                  · {system.name}
                 </span>
               </h1>
               <p className="text-xs text-zinc-500">
@@ -235,44 +230,24 @@ function ExploreHome() {
           </div>
           <div className="relative flex min-h-0 flex-1 flex-row">
             <div className="relative min-h-0 min-w-0 flex-1">
-              {loading ? (
-                <div className="flex h-full items-center justify-center text-sm text-zinc-500">
-                  Loading system…
-                </div>
-              ) : loadError ? (
-                <div className="flex h-full flex-col items-center justify-center gap-3 px-6 text-center">
-                  <p className="text-sm text-rose-300/90">Could not load system</p>
-                  <p className="max-w-md text-xs text-zinc-500">{loadError}</p>
-                  <button
-                    type="button"
-                    onClick={goHome}
-                    className="rounded-md border border-sky-500/30 bg-sky-500/15 px-3 py-1.5 text-xs text-sky-200 hover:bg-sky-500/25"
-                  >
-                    Back to Solar System
-                  </button>
-                </div>
-              ) : graph ? (
-                <>
-                  {/* key remounts Canvas — unload RAF / meshes on system switch */}
-                  <OrbitCanvas
-                    key={systemId}
-                    systemId={systemId}
-                    focusId={focusId}
-                    onSelect={onSelect}
-                    highlightColor={focus?.color}
-                    simDaysPerSec={simDaysPerSec}
-                    sizeMode={sizeMode}
-                    hiddenIds={hiddenIds}
-                  />
-                  <div className="pointer-events-none absolute left-3 top-3 z-10 flex flex-col gap-2 items-start">
-                    <SizeModeControl mode={sizeMode} onModeChange={setSizeMode} />
-                    <SpeedControl
-                      multiple={speedMultiple}
-                      onMultipleChange={setSpeedMultiple}
-                    />
-                  </div>
-                </>
-              ) : null}
+              {/* key remounts Canvas — unload RAF / meshes on system switch */}
+              <OrbitCanvas
+                key={systemId}
+                systemId={systemId}
+                focusId={focusId}
+                onSelect={onSelect}
+                highlightColor={focus?.color}
+                simDaysPerSec={simDaysPerSec}
+                sizeMode={sizeMode}
+                hiddenIds={hiddenIds}
+              />
+              <div className="pointer-events-none absolute left-3 top-3 z-10 flex flex-col gap-2 items-start">
+                <SizeModeControl mode={sizeMode} onModeChange={setSizeMode} />
+                <SpeedControl
+                  multiple={speedMultiple}
+                  onMultipleChange={setSpeedMultiple}
+                />
+              </div>
             </div>
             {/*
               Always reserve the Facts column on md+ so the WebGL canvas width
@@ -280,9 +255,7 @@ function ExploreHome() {
             */}
             <div className="pointer-events-none hidden w-72 shrink-0 border-l border-white/10 md:block lg:w-80">
               <div className="pointer-events-auto h-full">
-                {system ? (
-                  <FactsPanel body={focus} system={system} onClear={onClear} />
-                ) : null}
+                <FactsPanel body={focus} system={system} onClear={onClear} />
               </div>
             </div>
           </div>
