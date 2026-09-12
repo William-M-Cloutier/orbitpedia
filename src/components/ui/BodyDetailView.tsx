@@ -2,9 +2,10 @@ import Link from "next/link";
 import { BodyRail } from "@/components/ui/BodyRail";
 import { AppShell } from "@/components/ui/AppShell";
 import { exploreHref, getHomeSystem, getSystem, KIND_LABEL } from "@/data/catalog";
-import { bodyProvenance, type Body } from "@/data/schema";
+import { bodyProvenance, hasUsableOrbit, type Body } from "@/data/schema";
 import { keyFactRows } from "@/lib/factsDisplay";
 import { overviewBlurb } from "@/lib/interestBlurb";
+import { VISUAL_BINARY_NOTE } from "@/lib/visualBinaryNote";
 import { periodFromA } from "@/lib/kepler";
 import { formatAu, formatPeriodDays } from "@/lib/units";
 import { CatalogChartsLazy } from "@/viz/CatalogChartsLazy";
@@ -54,9 +55,25 @@ export function BodyDetailView({ body }: { body: Body }) {
           {overview ? (
             <p className="text-zinc-300">{overview}</p>
           ) : null}
+          {body.kind === "star" &&
+          body.parentId &&
+          !hasUsableOrbit(body) ? (
+            <p
+              className={`text-xs leading-relaxed text-zinc-500${
+                overview ? " mt-2" : ""
+              }`}
+            >
+              {VISUAL_BINARY_NOTE}
+            </p>
+          ) : null}
           <p
             className={`text-xs text-zinc-600${
-              overview ? " mt-2" : ""
+              overview ||
+              (body.kind === "star" &&
+                Boolean(body.parentId) &&
+                !hasUsableOrbit(body))
+                ? " mt-2"
+                : ""
             }`}
           >
             Source: {bodyProvenance(body)}
