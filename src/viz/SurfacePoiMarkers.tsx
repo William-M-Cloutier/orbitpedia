@@ -17,6 +17,7 @@ type Props = {
 /**
  * Geographic surface markers parented under the body's spin mesh so they
  * rotate with the texture. Shown only for the focused body.
+ * Labels: selected only, occluded by the globe, offset callout (not on-dot).
  */
 export const SurfacePoiMarkers = memo(function SurfacePoiMarkers({
   pois,
@@ -24,7 +25,7 @@ export const SurfacePoiMarkers = memo(function SurfacePoiMarkers({
   selectedPoiId,
   onSelectPoi,
 }: Props) {
-  const markerR = Math.max(radius * 0.035, 0.0018);
+  const markerR = Math.max(radius * 0.028, 0.0015);
   const lift = radius * 1.02;
 
   const positions = useMemo(() => {
@@ -73,7 +74,7 @@ const PoiMarker = memo(function PoiMarker({
 
   return (
     <group position={position}>
-      <mesh onClick={handleClick} scale={selected ? 1.35 : 1}>
+      <mesh onClick={handleClick} scale={selected ? 1.25 : 1}>
         <sphereGeometry args={[markerR, 12, 12]} />
         <meshBasicMaterial
           color={selected ? "#fbbf24" : "#38bdf8"}
@@ -84,12 +85,21 @@ const PoiMarker = memo(function PoiMarker({
       {selected ? (
         <Html
           center
-          distanceFactor={8}
+          occlude
+          distanceFactor={10}
+          position={[0, markerR * 3.2, 0]}
           style={{ pointerEvents: "none", userSelect: "none" }}
           zIndexRange={[100, 0]}
         >
-          <div className="whitespace-nowrap rounded-md border border-amber-400/40 bg-[#0a1220]/92 px-2 py-1 text-[11px] font-medium text-amber-100 shadow-lg backdrop-blur-sm">
-            {poi.name}
+          <div className="flex flex-col items-center">
+            <div className="max-w-[11rem] truncate rounded-md border border-amber-400/35 bg-[#0a1220]/95 px-2 py-1 text-center text-[11px] font-medium leading-tight text-amber-50 shadow-lg backdrop-blur-sm">
+              {poi.name}
+            </div>
+            {/* Caret toward the marker */}
+            <div
+              className="h-0 w-0 border-x-[5px] border-x-transparent border-t-[6px] border-t-amber-400/50"
+              aria-hidden
+            />
           </div>
         </Html>
       ) : null}

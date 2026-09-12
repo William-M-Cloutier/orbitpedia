@@ -193,12 +193,12 @@ function PoiDetail({
       <p className="mt-2 text-sm leading-relaxed text-zinc-300">{poi.summary}</p>
       <dl className="mt-3 grid gap-2">
         <Stat
-          label="Geographic latitude"
+          label="Latitude"
           value={formatLatDeg(poi.latDeg)}
           approximate={poi.confidence === "assumed"}
         />
         <Stat
-          label="Geographic longitude"
+          label="Longitude"
           value={formatLonDeg(poi.lonDeg)}
           approximate={poi.confidence === "assumed"}
         />
