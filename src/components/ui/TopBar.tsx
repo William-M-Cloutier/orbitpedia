@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   useCallback,
   useEffect,
@@ -11,6 +11,7 @@ import {
   type KeyboardEvent,
 } from "react";
 import {
+  EARTH_SATS_SYSTEM_ID,
   exploreHref,
   exploreSystemHref,
   getSystem,
@@ -22,10 +23,15 @@ import { searchCatalogAsync } from "@/data/archiveCatalog";
 import { pushRecentSearch } from "@/lib/recentSearches";
 
 const MODES = [
-  { href: "/", label: "Explore" },
-  { href: "/systems", label: "Systems" },
-  { href: "/discover", label: "Discover" },
-  { href: "/search", label: "Search" },
+  { href: "/", label: "Explore", id: "explore" as const },
+  {
+    href: `/?system=${EARTH_SATS_SYSTEM_ID}`,
+    label: "Earth",
+    id: "earth" as const,
+  },
+  { href: "/systems", label: "Systems", id: "systems" as const },
+  { href: "/discover", label: "Discover", id: "discover" as const },
+  { href: "/search", label: "Search", id: "search" as const },
 ] as const;
 
 const TYPEAHEAD_CAP = 10;
@@ -72,7 +78,9 @@ function flattenHits(result: CatalogSearchResult, cap: number): FlatHit[] {
 
 export function TopBar() {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const router = useRouter();
+  const systemParam = searchParams.get("system");
   const [q, setQ] = useState("");
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(0);
@@ -168,13 +176,17 @@ export function TopBar() {
 
         <nav className="flex gap-1 rounded-lg bg-white/5 p-1 text-sm">
           {MODES.map((m) => {
+            const onExplore =
+              pathname === "/" || pathname.startsWith("/explore");
             const activeMode =
-              m.href === "/"
-                ? pathname === "/" || pathname.startsWith("/explore")
-                : pathname.startsWith(m.href);
+              m.id === "earth"
+                ? onExplore && systemParam === EARTH_SATS_SYSTEM_ID
+                : m.id === "explore"
+                  ? onExplore && systemParam !== EARTH_SATS_SYSTEM_ID
+                  : pathname.startsWith(m.href);
             return (
               <Link
-                key={m.href}
+                key={m.id}
                 href={m.href}
                 className={`rounded-md px-3 py-1.5 transition ${
                   activeMode

@@ -1,0 +1,106 @@
+[
+  {
+    "OBJECT_NAME": "ISS (ZARYA)",
+    "OBJECT_ID": "1998-067A",
+    "EPOCH": "2026-09-12T04:59:21.263136",
+    "MEAN_MOTION": 15.4908657,
+    "ECCENTRICITY": 0.00049527,
+    "INCLINATION": 51.6305,
+    "RA_OF_ASC_NODE": 229.4056,
+    "ARG_OF_PERICENTER": 131.3152,
+    "MEAN_ANOMALY": 228.8264,
+    "NORAD_CAT_ID": 25544,
+    "REV_AT_EPOCH": 58524,
+    "BSTAR": 9.7728592e-5,
+    "MEAN_MOTION_DOT": 4.954e-5,
+    "MEAN_MOTION_DDOT": 0,
+    "sourceUrl": "https://celestrak.org/NORAD/elements/gp.php?CATNR=25544&FORMAT=JSON-PRETTY",
+    "fetchedAt": "2026-09-12T22:34:00Z",
+    "facts": {
+      "owner": "International (NASA / Roscosmos / ESA / JAXA / CSA)",
+      "launchDate": "1998-11-20",
+      "expectedReentry": null,
+      "notesSource": "SatNOGS / NASA ISS pages — reentry omit until sourced"
+    }
+  },
+  {
+    "OBJECT_NAME": "HST",
+    "OBJECT_ID": "1990-037B",
+    "EPOCH": "2026-09-12T05:15:24.763104",
+    "MEAN_MOTION": 15.31621652,
+    "ECCENTRICITY": 0.00017951,
+    "INCLINATION": 28.473,
+    "RA_OF_ASC_NODE": 205.3366,
+    "ARG_OF_PERICENTER": 39.5104,
+    "MEAN_ANOMALY": 320.5623,
+    "NORAD_CAT_ID": 20580,
+    "REV_AT_EPOCH": 80192,
+    "sourceUrl": "https://celestrak.org/NORAD/elements/gp.php?CATNR=20580&FORMAT=JSON-PRETTY",
+    "fetchedAt": "2026-09-12T22:34:00Z",
+    "facts": {
+      "owner": "NASA",
+      "launchDate": "1990-04-24",
+      "expectedReentry": null
+    }
+  },
+  {
+    "OBJECT_NAME": "CSS (TIANHE)",
+    "OBJECT_ID": "2021-035A",
+    "EPOCH": "2026-09-12T03:38:29.096160",
+    "MEAN_MOTION": 15.59839597,
+    "ECCENTRICITY": 0.00026312,
+    "INCLINATION": 41.4683,
+    "RA_OF_ASC_NODE": 154.0266,
+    "ARG_OF_PERICENTER": 272.9242,
+    "MEAN_ANOMALY": 87.1296,
+    "NORAD_CAT_ID": 48274,
+    "REV_AT_EPOCH": 30674,
+    "sourceUrl": "https://celestrak.org/NORAD/elements/gp.php?CATNR=48274&FORMAT=JSON-PRETTY",
+    "fetchedAt": "2026-09-12T22:34:00Z",
+    "facts": {
+      "owner": "CMSA / CNSA",
+      "launchDate": "2021-04-29",
+      "expectedReentry": null
+    }
+  },
+  {
+    "OBJECT_NAME": "TERRA",
+    "OBJECT_ID": "1999-068A",
+    "EPOCH": "2026-09-12T06:12:30.582720",
+    "MEAN_MOTION": 14.6115869,
+    "ECCENTRICITY": 0.00015531,
+    "INCLINATION": 97.9374,
+    "RA_OF_ASC_NODE": 301.3181,
+    "ARG_OF_PERICENTER": 353.3189,
+    "MEAN_ANOMALY": 48.7649,
+    "NORAD_CAT_ID": 25994,
+    "REV_AT_EPOCH": 42232,
+    "sourceUrl": "https://celestrak.org/NORAD/elements/gp.php?CATNR=25994&FORMAT=JSON-PRETTY",
+    "fetchedAt": "2026-09-12T22:34:00Z",
+    "facts": {
+      "owner": "NASA",
+      "launchDate": "1999-12-18",
+      "expectedReentry": null
+    }
+  },
+  {
+    "OBJECT_NAME": "NOAA 20 (JPSS-1)",
+    "OBJECT_ID": "2017-073A",
+    "EPOCH": "2026-09-12T06:18:46.389024",
+    "MEAN_MOTION": 14.19525446,
+    "ECCENTRICITY": 0.00016029,
+    "INCLINATION": 98.7811,
+    "RA_OF_ASC_NODE": 193.965,
+    "ARG_OF_PERICENTER": 52.9174,
+    "MEAN_ANOMALY": 307.2148,
+    "NORAD_CAT_ID": 43013,
+    "REV_AT_EPOCH": 45682,
+    "sourceUrl": "https://celestrak.org/NORAD/elements/gp.php?CATNR=43013&FORMAT=JSON-PRETTY",
+    "fetchedAt": "2026-09-12T22:34:00Z",
+    "facts": {
+      "owner": "NOAA / NASA",
+      "launchDate": "2017-11-18",
+      "expectedReentry": null
+    }
+  }
+]

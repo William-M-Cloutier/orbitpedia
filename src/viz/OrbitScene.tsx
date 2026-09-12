@@ -15,6 +15,7 @@ import {
 import * as THREE from "three";
 import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 import {
+  EARTH_SATS_SYSTEM_ID,
   getBody,
   getHomeSystem,
   getParent,
@@ -35,11 +36,13 @@ import {
 } from "@/lib/kepler";
 import {
   DEFAULT_SIZE_MODE,
+  geocentricDisplayScale,
   orbitDistanceScale,
   parentFrameDisplayScale,
   parentFrameSharedDisplayScale,
   heliocentricSharedDisplayScale,
   perihelionClearanceFloor,
+  PLANET_VISUAL_RADIUS_SMALL,
   visualRadius,
   type SizeMode,
 } from "./sizeTiers";
@@ -438,10 +441,11 @@ function isExploreSceneBody(
   byId: ReadonlyMap<string, Body>,
   seen: Set<string> = new Set(),
 ): boolean {
-  // Primary host (star | black_hole): always mesh. BH is never a companion path.
+  // Primary host (star | black_hole) or dedicated central (earth-sats-earth: no orbit).
   if (
     body.id === primaryStarId ||
-    (isPrimaryHostKind(body.kind) && !body.parentId)
+    (isPrimaryHostKind(body.kind) && !body.parentId) ||
+    (!body.parentId && !hasUsableOrbit(body))
   ) {
     return true;
   }
@@ -451,7 +455,10 @@ function isExploreSceneBody(
     return true;
   }
   if (!hasUsableOrbit(body)) return false;
-  if (body.orbit.frame === "parent" && body.parentId) {
+  if (
+    (body.orbit.frame === "parent" || body.orbit.frame === "geocentric") &&
+    body.parentId
+  ) {
     if (seen.has(body.id)) return false;
     seen.add(body.id);
     const parent = byId.get(body.parentId);
@@ -459,6 +466,27 @@ function isExploreSceneBody(
     return isExploreSceneBody(parent, primaryStarId, byId, seen);
   }
   return true;
+}
+
+
+/**
+ * Rel scale for geocentric sats: amplify altitude vs Earth mesh so LEO rings
+ * read clearly. Catalog aKm / aAu unchanged (Facts show real km).
+ * See GEOCENTRIC_ALT_AMPLIFY in sizeTiers.ts.
+ */
+function geocentricOrbitRelScale(
+  body: Body,
+  sizeMode: SizeMode,
+  systemBodies?: readonly Body[],
+): number {
+  if (body.orbit?.frame !== "geocentric" || !body.parentId) return 1;
+  const parent = resolveParentBody(body, systemBodies);
+  if (!parent) return 1;
+  const earthVis = visualRadius(parent, sizeMode, systemBodies);
+  return geocentricDisplayScale(
+    body,
+    earthVis > 0 ? earthVis : PLANET_VISUAL_RADIUS_SMALL,
+  );
 }
 
 /**
@@ -496,7 +524,10 @@ function bodyPosition(
 
   const s = distScale > 0 ? distScale : 1;
   const hs = helioScale > 0 ? helioScale : 1;
-  if (body.orbit.frame === "parent" && body.parentId) {
+  if (
+    (body.orbit.frame === "parent" || body.orbit.frame === "geocentric") &&
+    body.parentId
+  ) {
     const parent = resolveParentBody(body, systemBodies);
     if (parent) {
       const parentPos = bodyPosition(
@@ -510,7 +541,10 @@ function bodyPosition(
         fitScale,
         seen,
       );
-      const ps = parentDisplayScale(body, sizeMode, systemBodies);
+      const ps =
+        body.orbit.frame === "geocentric"
+          ? geocentricOrbitRelScale(body, sizeMode, systemBodies)
+          : parentDisplayScale(body, sizeMode, systemBodies);
       const local = localOrbitPosition(body, simDays, s * ps, faceOn);
       return [
         parentPos[0] + local[0],
@@ -645,11 +679,15 @@ const OrbitLine = memo(function OrbitLine({
   const { bodies: systemBodies, helioScale, fitScale, faceOn } = useSystemViz();
   const { getSimDays } = useSimApi();
   const parent =
-    body.orbit?.frame === "parent" && body.parentId
+    (body.orbit?.frame === "parent" || body.orbit?.frame === "geocentric") &&
+    body.parentId
       ? resolveParentBody(body, systemBodies)
       : undefined;
   const relScale = useMemo(() => {
     if (!hasUsableOrbit(body)) return distScale;
+    if (parent && body.orbit?.frame === "geocentric") {
+      return distScale * geocentricOrbitRelScale(body, sizeMode, systemBodies);
+    }
     if (parent) return distScale * parentDisplayScale(body, sizeMode, systemBodies);
     return distScale * helioScale;
   }, [body, parent, distScale, sizeMode, helioScale, systemBodies]);
@@ -765,7 +803,7 @@ const BodyMesh = memo(function BodyMesh({
     [onSelect],
   );
 
-  const spinMesh = useRef<THREE.Mesh>(null);
+  const spinMesh = useRef<THREE.Object3D>(null);
 
   const applyPose = (days: number) => {
     if (!group.current) return;
@@ -820,6 +858,47 @@ const BodyMesh = memo(function BodyMesh({
         >
           <sphereGeometry args={[r, 32, 32]} />
         </mesh>
+      </group>
+    );
+  }
+
+  // Artificial satellites: procedural box + panels (no real sat texture packs).
+  if (body.kind === "satellite") {
+    const tint = body.color ?? "#c8c8c8";
+    const s = focused ? 1.35 : 1;
+    return (
+      <group ref={group} name={body.id}>
+        <group
+          ref={spinMesh}
+          scale={s}
+          onClick={handleClick}
+          onContextMenu={handleContextMenu}
+        >
+          <mesh>
+            <boxGeometry args={[r * 1.4, r * 0.7, r * 0.9]} />
+            <meshStandardMaterial
+              color={tint}
+              metalness={0.35}
+              roughness={0.45}
+            />
+          </mesh>
+          <mesh>
+            <boxGeometry args={[r * 4.2, r * 0.08, r * 1.1]} />
+            <meshStandardMaterial
+              color="#3a5a8a"
+              metalness={0.2}
+              roughness={0.55}
+            />
+          </mesh>
+          <mesh position={[0, r * 0.55, 0]}>
+            <boxGeometry args={[r * 0.35, r * 0.55, r * 0.35]} />
+            <meshStandardMaterial
+              color="#dddddd"
+              metalness={0.1}
+              roughness={0.6}
+            />
+          </mesh>
+        </group>
       </group>
     );
   }
@@ -1054,22 +1133,45 @@ function IdleCameraBootstrap({ focusId }: { focusId?: string | null }) {
 
     // Planet apo×helio (already fit-scaled) + companion display seps × fitScale
     // + helio-planet clearance (already in effective helioScale units).
-    let extent = Math.max(
-      systemSceneExtent(systemBodies, helioScale),
-      maxCompanionDisplaySep(systemBodies, sizeMode) * fitScale,
+    const geoSats = systemBodies.filter(
+      (b) => b.orbit?.frame === "geocentric" && hasUsableOrbit(b),
     );
-    for (const b of systemBodies) {
-      if (b.kind !== "star" || !b.parentId || hasUsableOrbit(b)) continue;
-      const clear = visualBinaryHelioPlanetClearanceSep(
-        b,
-        sizeMode,
-        systemBodies,
-        helioScale,
+    let extent: number;
+    let starVis: number;
+    if (geoSats.length > 0) {
+      // Earth-centered Explore: frame on amplified LEO rings, not tiny aAu.
+      const earth =
+        systemBodies.find((b) => !b.parentId && !b.orbit) ??
+        systemBodies.find((b) => b.kind === "planet" && !b.parentId);
+      const earthVis = earth
+        ? visualRadius(earth, sizeMode, systemBodies)
+        : PLANET_VISUAL_RADIUS_SMALL;
+      starVis = earthVis;
+      extent = earthVis;
+      for (const b of geoSats) {
+        const rel = geocentricOrbitRelScale(b, sizeMode, systemBodies);
+        const apo = b.orbit!.aAu * (1 + b.orbit!.e) * rel;
+        if (apo > extent) extent = apo;
+      }
+      extent *= 1.25;
+    } else {
+      extent = Math.max(
+        systemSceneExtent(systemBodies, helioScale),
+        maxCompanionDisplaySep(systemBodies, sizeMode) * fitScale,
       );
-      if (clear > extent) extent = clear;
+      for (const b of systemBodies) {
+        if (b.kind !== "star" || !b.parentId || hasUsableOrbit(b)) continue;
+        const clear = visualBinaryHelioPlanetClearanceSep(
+          b,
+          sizeMode,
+          systemBodies,
+          helioScale,
+        );
+        if (clear > extent) extent = clear;
+      }
+      const star = findPrimaryHost(systemBodies);
+      starVis = star ? visualRadius(star, sizeMode, systemBodies) : 0;
     }
-    const star = findPrimaryHost(systemBodies);
-    const starVis = star ? visualRadius(star, sizeMode, systemBodies) : 0;
     const dist = schematicIdleCameraDistance(extent, starVis, fitScale);
     const [ox, oy, oz] = IDLE_CAMERA_OFFSET;
     const len = Math.hypot(ox, oy, oz) || 1;
@@ -1861,7 +1963,23 @@ function SceneContent({
       <color attach="background" args={["#02040a"]} />
       <Starfield />
       <SoftHaze />
-      <ambientLight intensity={0.32} />
+      <ambientLight
+        intensity={resolvedSystemId === EARTH_SATS_SYSTEM_ID ? 0.48 : 0.32}
+      />
+      {resolvedSystemId === EARTH_SATS_SYSTEM_ID ? (
+        <>
+          {/* Dim distant Sun backdrop — not a catalog body. */}
+          <directionalLight
+            position={[48, 22, 36]}
+            intensity={0.9}
+            color="#fff2dd"
+          />
+          <mesh position={[70, 32, 52]} frustumCulled={false}>
+            <sphereGeometry args={[1.1, 16, 16]} />
+            <meshBasicMaterial color="#FDB813" />
+          </mesh>
+        </>
+      ) : null}
       <BarycentricRoot focusId={focusId}>
         {/* pointLight lives on each star BodyMesh (primary strong; companions dimmed) */}
         {visibleOrbiters.map((b) => (

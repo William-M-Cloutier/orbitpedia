@@ -10,6 +10,8 @@ export const BodyKindSchema = z.enum([
   "asteroid",
   /** Natural satellite (parent-frame orbit around parentId). */
   "moon",
+  /** Artificial Earth satellite (geocentric frame around Earth central). */
+  "satellite",
   /** Central compact host (omit orbit like a primary star). */
   "black_hole",
 ]);
@@ -23,25 +25,50 @@ export const OrbitFrameSchema = z.enum([
   "heliocentric",
   "barycentric",
   "parent",
+  /** Earth-centered inertial / TEME-ish GP elements (educational viz). */
+  "geocentric",
 ]);
 
 export const ConfidenceSchema = z.enum(["known", "assumed", "placeholder"]);
 
-export const OrbitSchema = z.object({
-  /** Julian Day epoch when elements are tied to a specific epoch. */
-  epochJd: z.number().optional(),
-  aAu: z.number().positive(),
-  e: z.number().min(0).max(1),
-  iDeg: z.number(),
-  omDeg: z.number(),
-  wDeg: z.number(),
-  maDeg: z.number(),
-  periodD: z.number().positive().optional(),
-  /** Periapsis distance (au). If omitted, validators use aAu*(1-e). */
-  qAu: z.number().positive().optional(),
-  /** Reference frame for Kepler elements. */
-  frame: OrbitFrameSchema,
-});
+export const OrbitSchema = z
+  .object({
+    /** Julian Day epoch when elements are tied to a specific epoch. */
+    epochJd: z.number().optional(),
+    /**
+     * Semi-major axis in au (always required for schema compatibility).
+     * For geocentric sats store aKm/149597870.7 and set aKm.
+     */
+    aAu: z.number().positive(),
+    /**
+     * Semi-major axis in km — required when frame is geocentric (GP/OMM).
+     * Prefer this for Facts display; aAu remains the au mirror.
+     */
+    aKm: z.number().positive().optional(),
+    e: z.number().min(0).max(1),
+    iDeg: z.number(),
+    omDeg: z.number(),
+    wDeg: z.number(),
+    maDeg: z.number(),
+    periodD: z.number().positive().optional(),
+    /** Periapsis distance (au). If omitted, validators use aAu*(1-e). */
+    qAu: z.number().positive().optional(),
+    /** Optional periapsis in km when frame is geocentric. */
+    qKm: z.number().positive().optional(),
+    /** Reference frame for Kepler elements. */
+    frame: OrbitFrameSchema,
+  })
+  .superRefine((orbit, ctx) => {
+    if (orbit.frame === "geocentric") {
+      if (orbit.aKm == null || !(orbit.aKm > 0)) {
+        ctx.addIssue({
+          code: "custom",
+          message: "geocentric orbit requires positive aKm",
+          path: ["aKm"],
+        });
+      }
+    }
+  });
 
 /** Sparse facts — radius preferred when present; other fields optional. */
 export const FactsSchema = z.object({
@@ -53,6 +80,12 @@ export const FactsSchema = z.object({
   discoveryNotes: z.string().optional(),
   /** ISO date (YYYY-MM-DD) or year (YYYY) when known; omit for antiquity / N/A. */
   discoveryDate: z.string().optional(),
+  /** Operating agency / owner for artificial satellites. */
+  owner: z.string().min(1).optional(),
+  /** Launch date (ISO YYYY-MM-DD); prefer over discoveryDate for sats. */
+  launchDate: z.string().min(1).optional(),
+  /** Expected reentry (ISO date) when sourced; omit when unknown. */
+  expectedReentry: z.string().min(1).optional(),
   /**
    * Archive-backed estimates: list fact keys shown with a leading ~ in UI
    * (e.g. ["massKg"]). Never invent estimates — only mark stored values.
@@ -109,6 +142,13 @@ export const AppearanceSchema = z
   })
   .strict();
 
+export const SatelliteBlockSchema = z
+  .object({
+    /** Two-line element set lines (without name line) for provenance. */
+    tle: z.tuple([z.string().min(1), z.string().min(1)]).optional(),
+  })
+  .strict();
+
 export const BodySchema = z
   .object({
     id: z.string().min(1),
@@ -124,6 +164,10 @@ export const BodySchema = z
     color: z.string().optional(),
     horizonId: z.string().optional(),
     sbdbDes: z.string().optional(),
+    /** NORAD catalog number for artificial satellites (GP/OMM). */
+    noradCatId: z.number().int().positive().optional(),
+    /** Optional satellite provenance (TLE lines). */
+    satellite: SatelliteBlockSchema.optional(),
     /** Optional render hint — textureId is a registry key only (no URLs/bytes). */
     appearance: AppearanceSchema.optional(),
     meta: BodyMetaSchema,
@@ -134,6 +178,22 @@ export const BodySchema = z
         code: "custom",
         message: "parentId must not equal id",
         path: ["parentId"],
+      });
+    }
+    if (body.orbit?.frame === "geocentric") {
+      if (!body.parentId) {
+        ctx.addIssue({
+          code: "custom",
+          message: "geocentric orbit requires parentId (Earth central)",
+          path: ["parentId"],
+        });
+      }
+    }
+    if (body.kind === "satellite" && body.orbit && body.orbit.frame !== "geocentric") {
+      ctx.addIssue({
+        code: "custom",
+        message: "satellite kind should use orbit.frame geocentric",
+        path: ["orbit", "frame"],
       });
     }
   });
@@ -295,6 +355,7 @@ export type Confidence = z.infer<typeof ConfidenceSchema>;
 export type Orbit = z.infer<typeof OrbitSchema>;
 export type Facts = z.infer<typeof FactsSchema>;
 export type Appearance = z.infer<typeof AppearanceSchema>;
+export type SatelliteBlock = z.infer<typeof SatelliteBlockSchema>;
 export type BodyMeta = z.infer<typeof BodyMetaSchema>;
 export type Body = z.infer<typeof BodySchema>;
 export type SystemMeta = z.infer<typeof SystemMetaSchema>;

@@ -1,0 +1,63 @@
+{
+  "id": "terra",
+  "name": "Terra",
+  "kind": "satellite",
+  "systemId": "earth-sats",
+  "parentId": "earth-sats-earth",
+  "aliases": [
+    "EOS AM-1"
+  ],
+  "noradCatId": 25994,
+  "facts": {
+    "owner": "NASA",
+    "launchDate": "1999-12-18",
+    "discoveryNotes": "NASA Earth Observing System flagship (AM) satellite."
+  },
+  "orbit": {
+    "frame": "geocentric",
+    "aKm": 7067.572,
+    "aAu": 4.7243800776905046e-05,
+    "e": 0.00015531,
+    "iDeg": 97.9374,
+    "omDeg": 301.3181,
+    "wDeg": 353.3189,
+    "maDeg": 48.7649,
+    "periodD": 0.06843883603087629,
+    "qAu": 4.7236463342206386e-05,
+    "qKm": 7066.47433539268
+  },
+  "color": "#6BCB77",
+  "meta": {
+    "provenance": "Celestrak GP OMM JSON fetched 2026-09-12T22:34:00Z: https://celestrak.org/NORAD/elements/gp.php?CATNR=25994&FORMAT=JSON-PRETTY",
+    "source": "Celestrak GP (OMM) NORAD 25994",
+    "confidence": "known",
+    "fetchedAt": "2026-09-12T22:34:00Z",
+    "unitsVersion": 1,
+    "sources": [
+      {
+        "name": "Celestrak NORAD GP elements",
+        "url": "https://celestrak.org/NORAD/elements/",
+        "fields": [
+          "orbit.aKm",
+          "orbit.aAu",
+          "orbit.e",
+          "orbit.iDeg",
+          "orbit.omDeg",
+          "orbit.wDeg",
+          "orbit.maDeg",
+          "orbit.periodD",
+          "noradCatId"
+        ]
+      },
+      {
+        "name": "Celestrak satcat CATNR=25994",
+        "url": "https://celestrak.org/satcat/records.php?CATNR=25994",
+        "fields": [
+          "facts.owner",
+          "facts.launchDate",
+          "name"
+        ]
+      }
+    ]
+  }
+}

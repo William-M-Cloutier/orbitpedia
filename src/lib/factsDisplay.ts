@@ -15,6 +15,8 @@ const EXPECTED_BY_KIND: Record<BodyKind, ReadonlySet<string>> = {
   /** Radius preferred; mass often unknown — omit mass row when missing. */
   asteroid: new Set(["radiusMeanKm"]),
   moon: new Set(["radiusMeanKm"]),
+  /** Artificial sats: owner/launch shown separately; phys often sparse. */
+  satellite: new Set([]),
 };
 
 export type FactKey =

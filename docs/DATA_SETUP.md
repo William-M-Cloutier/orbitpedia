@@ -68,6 +68,7 @@ dwarfs/asteroids, moons either after their parent or listed anywhere as long as
 | `black_hole` | **none** (central host, same as primary star) | none |
 | `planet` / `dwarf_planet` / `asteroid` | Kepler + `frame: "heliocentric"` (relative to **host**, not SSB for exoplanets) | omit (or star id only if you need tree hints — Sol planets omit) |
 | `moon` | Kepler + `frame: "parent"` | **required** `parentId` |
+| `satellite` | Kepler + `frame: "geocentric"` + **`aKm`** (aAu = aKm/149597870.7) | **required** `parentId` → Earth central |
 
 `primaryStarId` names the primary **host** (`star` | `black_hole`); field name kept for compat.
 For black holes, optional `facts.radiusMeanKm` may be the Schwarzschild radius derived from a cited mass (mark `approximateFields`); omit rather than invent.
@@ -82,6 +83,7 @@ For black holes, optional `facts.radiusMeanKm` may be the Schwarzschild radius d
 | `rotationPeriodD` | Sidereal days; negative = retrograde |
 | `albedo` | Geometric; omit if unknown |
 | `discoveryDate` | `YYYY` or `YYYY-MM-DD`; omit for antiquity / N/A stars |
+| `owner` / `launchDate` / `expectedReentry` | Artificial satellites — omit `expectedReentry` when unknown |
 | `discoveryNotes` | Short; **star** / **black_hole** hosts should include a system-scale hook |
 
 Do **not** fill unknowns with zeros or Wikipedia guesses.
@@ -121,6 +123,31 @@ Optional additive field (omit on existing cards):
 - Keep textures **out of** `facts` and `meta.sources` (citations stay science pages).
 - Marquee Sol maps live under Guard caps: ≤512KB/file, ≤2048², ≤20 Sol maps,
   ≤8MB pack, lazy on focus/near. See [APPEARANCE.md](./APPEARANCE.md) for seeded keys.
+
+
+## Earth satellites (`earth-sats`)
+
+Dedicated Explore system (not `home`). Central card `earth-sats-earth` (kind
+`planet`, **no orbit**, `earth-marquee` ok) + members with `kind: "satellite"`,
+`orbit.frame: "geocentric"`, `noradCatId`, and Celestrak GP provenance.
+
+- Prefer optional `orbit.aKm` (required by refine when geocentric); keep `aAu`
+  as `aKm / 149597870.7` for schema compatibility.
+- Store real `periodD` from mean motion (`1/n`); do **not** use solar Kepler-3.
+- Optional `satellite.tle` two-line strings for provenance (ISS seed included).
+- Exclude from Systems map star layout via `isSkyMapExcludedSystemId` (Sky UI
+  should not treat this as an exoplanet host).
+- Never invent orbital elements — Celestrak GP/OMM only.
+
+### Geocentric Explore scale (viz-only)
+
+Catalog `aKm` / `aAu` stay honest. Explore amplifies **altitude above R⊕** so
+LEO rings clear the Earth mesh (`GEOCENTRIC_ALT_AMPLIFY = 12` in
+`sizeTiers.ts`):
+
+`sceneA = earthVis × (1 + 12 × (aKm − R⊕) / R⊕)` then `scale = sceneA / aAu`.
+
+Sol Explore is unchanged (heliocentric / parent-frame paths only).
 
 ## Sources policy (locked)
 

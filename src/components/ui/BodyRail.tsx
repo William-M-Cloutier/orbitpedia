@@ -16,6 +16,7 @@ const FILTERS: Array<BodyKind | "all"> = [
   "star",
   "planet",
   "moon",
+  "satellite",
   "dwarf_planet",
   "asteroid",
 ];
@@ -30,6 +31,7 @@ const KIND_GROUPS: Array<{
   { kind: "black_hole", label: "Black holes" },
   { kind: "star", label: "Stars", always: true },
   { kind: "planet", label: "Planets" },
+  { kind: "satellite", label: "Satellites" },
   { kind: "dwarf_planet", label: "Dwarf planets" },
   { kind: "asteroid", label: "Asteroids" },
 ];

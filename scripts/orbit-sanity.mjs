@@ -253,6 +253,10 @@ function visualRadius(body, tiers) {
       return tiers.asteroid;
     case "moon":
       return tiers.moon;
+    case "satellite":
+      return tiers.satellite ?? 0.018;
+    case "probe":
+      return tiers.probe ?? tiers.asteroid ?? 0.02;
     default:
       throw new Error(`unknown kind ${body.kind}`);
   }
@@ -311,13 +315,24 @@ function runSystemSanity(system) {
     (system.primaryStarId && bodyById.get(system.primaryStarId)) ||
     bodies.find((b) => isPrimaryHostKind(b.kind) && !b.parentId) ||
     bodies.find((b) => isPrimaryHostKind(b.kind)) ||
+    // Earth-sats: central planet host with geocentric members only.
+    bodies.find((b) => b.id === "earth-sats-earth") ||
+    bodies.find((b) => !b.parentId && !b.orbit) ||
     bodies.find((b) => b.id === "sun");
   if (!central) {
     fail(`no central host in system ${system.id}`);
     return;
   }
-  if (!isPrimaryHostKind(central.kind)) {
-    fail(`central ${central.id} must be kind star|black_hole`);
+  const geoOnly =
+    bodies.some((b) => b.orbit?.frame === "geocentric") &&
+    bodies
+      .filter((b) => b.id !== central.id && b.orbit)
+      .every((b) => b.orbit.frame === "geocentric");
+  const okCentral =
+    isPrimaryHostKind(central.kind) ||
+    (geoOnly && (central.kind === "planet" || central.id === "earth-sats-earth"));
+  if (!okCentral) {
+    fail(`central ${central.id} must be kind star|black_hole (or Earth host for geocentric sats)`);
     return;
   }
 

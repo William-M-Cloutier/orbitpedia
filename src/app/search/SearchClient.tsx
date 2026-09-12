@@ -22,6 +22,7 @@ import {
   KIND_ORDER,
   listSystems,
   isFixtureSystemId,
+  isSkyMapExcludedSystemId,
   searchCatalog,
   type CatalogSearchResult,
 } from "@/data/catalog";
@@ -119,13 +120,13 @@ export function SearchClient() {
   }, [q]);
 
   const [systemsForChips, setSystemsForChips] = useState(
-    () => listSystems().filter((s) => !isFixtureSystemId(s.id)),
+    () => listSystems().filter((s) => !isSkyMapExcludedSystemId(s.id)),
   );
 
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      const curated = listSystems().filter((s) => !isFixtureSystemId(s.id));
+      const curated = listSystems().filter((s) => !isSkyMapExcludedSystemId(s.id));
       const curatedIds = new Set(curated.map((s) => s.id));
       try {
         const archive = await listArchiveSystems();

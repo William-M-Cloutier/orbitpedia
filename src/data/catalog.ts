@@ -226,6 +226,7 @@ function compareSearchBodies(a: Body, b: Body, q: string): number {
     dwarf_planet: 3,
     moon: 4,
     asteroid: 5,
+    satellite: 6,
   };
   const ra = searchMatchRank(a.name, a.id, q, a.aliases);
   const rb = searchMatchRank(b.name, b.id, q, b.aliases);
@@ -251,6 +252,8 @@ export function searchCatalog(query: string): CatalogSearchResult {
 
   const matchedSystems = systems.filter((s) => {
     if (!showFixture && isFixtureSystemId(s.id)) return false;
+    // Earth sats mode is TopBar Earth — omit from sky-map-style system search.
+    if (isEarthSatsSystemId(s.id)) return false;
     return systemMatchesQuery(s, q);
   });
 
@@ -337,6 +340,7 @@ export const KIND_LABEL: Record<BodyKind, string> = {
   asteroid: "Asteroid",
   moon: "Moon",
   black_hole: "Black hole",
+  satellite: "Satellite",
 };
 
 /** Kind order for Search / typeahead grouping. */
@@ -347,4 +351,17 @@ export const KIND_ORDER: BodyKind[] = [
   "dwarf_planet",
   "moon",
   "asteroid",
+  "satellite",
 ];
+
+/** Earth-centered satellites Explore system — exclude from Sky star map. */
+export const EARTH_SATS_SYSTEM_ID = "earth-sats";
+
+export function isEarthSatsSystemId(systemId: string): boolean {
+  return systemId === EARTH_SATS_SYSTEM_ID;
+}
+
+/** Systems omitted from Systems map proportional/schematic star layout. */
+export function isSkyMapExcludedSystemId(systemId: string): boolean {
+  return isFixtureSystemId(systemId) || isEarthSatsSystemId(systemId);
+}
