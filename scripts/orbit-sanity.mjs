@@ -1935,6 +1935,83 @@ if (!Number.isFinite(c)) {
 }
 
 
+
+// Earth-sats: geocentric amplify helpers + sat mesh/orbit LOD path.
+{
+  const sizeSrc = fs.readFileSync(path.join(ROOT, "src/viz/sizeTiers.ts"), "utf8");
+  const sceneSrc = fs.readFileSync(path.join(ROOT, "src/viz/OrbitScene.tsx"), "utf8");
+  const lodSrc = fs.readFileSync(path.join(ROOT, "src/viz/satLod.ts"), "utf8");
+  const matSrc = fs.readFileSync(
+    path.join(ROOT, "src/viz/appearance/materialPool.ts"),
+    "utf8",
+  );
+
+  if (!/export const GEOCENTRIC_ALT_AMPLIFY\s*=\s*12/.test(sizeSrc)) {
+    fail("sizeTiers missing GEOCENTRIC_ALT_AMPLIFY = 12");
+  } else if (!/function geocentricSceneSemiMajor/.test(sizeSrc)) {
+    fail("sizeTiers missing geocentricSceneSemiMajor");
+  } else if (!/function geocentricDisplayScale/.test(sizeSrc)) {
+    fail("sizeTiers missing geocentricDisplayScale");
+  } else if (
+    !/viz-only readable LEO spacing \(not catalog km\)/.test(sizeSrc) &&
+    !/viz-only; catalog aKm unchanged/.test(sizeSrc)
+  ) {
+    fail("sizeTiers should document GEOCENTRIC_ALT_AMPLIFY as viz-only (not catalog km)");
+  } else {
+    ok("geocentric amplify helpers present (GEOCENTRIC_ALT_AMPLIFY / display scale)");
+  }
+
+  if (!/export const SAT_FULL_MESH_CAP\s*=\s*24/.test(lodSrc)) {
+    fail("satLod missing SAT_FULL_MESH_CAP = 24");
+  } else if (!/function resolveSatLodTier/.test(lodSrc)) {
+    fail("satLod missing resolveSatLodTier");
+  } else if (!/function assignSatMeshRanks/.test(lodSrc)) {
+    fail("satLod missing assignSatMeshRanks");
+  } else if (!/function shouldDrawGeocentricOrbitLine/.test(lodSrc)) {
+    fail("satLod missing shouldDrawGeocentricOrbitLine");
+  } else {
+    ok("sat mesh/orbit LOD constants + helpers present");
+  }
+
+  // Dense-path structure: over-cap ranks demote to points; N≤cap stays mesh-eligible.
+  if (
+    !/satCount > cap && opts\.meshRank >= cap/.test(lodSrc) &&
+    !/meshRank >= cap/.test(lodSrc)
+  ) {
+    fail("resolveSatLodTier should demote over-cap ranks to points (dense path)");
+  } else {
+    ok("sat LOD dense path demotes over-cap ranks to Points");
+  }
+
+  if (!/getSatSharedMaterial/.test(matSrc) || !/getSatPointsMaterial/.test(matSrc)) {
+    fail("materialPool missing getSatSharedMaterial / getSatPointsMaterial");
+  } else if (!/getSatSharedMaterial/.test(sceneSrc) || !/SatelliteBodyMesh/.test(sceneSrc)) {
+    fail("OrbitScene should use SatelliteBodyMesh + shared sat materials");
+  } else if (!/shouldDrawGeocentricOrbitLine/.test(sceneSrc)) {
+    fail("OrbitScene should gate geocentric OrbitLine via shouldDrawGeocentricOrbitLine");
+  } else if (!/frustumCulled/.test(sceneSrc)) {
+    fail("OrbitScene sat meshes should set frustumCulled");
+  } else {
+    ok("OrbitScene wires sat LOD + shared materials + frustumCulled");
+  }
+
+  const earthSatsSys = path.join(DATA, "systems/earth-sats.json");
+  if (!fs.existsSync(earthSatsSys)) {
+    fail("earth-sats system missing");
+  } else {
+    const sys = JSON.parse(fs.readFileSync(earthSatsSys, "utf8"));
+    const members = sys.memberIds || [];
+    if (sys.id !== "earth-sats") fail("earth-sats system id mismatch");
+    else if (!members.includes("earth-sats-earth")) {
+      fail("earth-sats missing earth-sats-earth central");
+    } else if (members.length < 2) {
+      fail("earth-sats should include Earth + satellites");
+    } else {
+      ok(`earth-sats system validates (${members.length} members)`);
+    }
+  }
+}
+
 if (process.exitCode) {
   console.error("\norbit-sanity FAILED");
   process.exit(process.exitCode);

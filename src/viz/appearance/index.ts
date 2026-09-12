@@ -3,7 +3,14 @@ export {
   defaultFamilyColor,
   type SurfaceFamily,
 } from "./surfaceFamily";
-export { getBodyAppearanceMaterial, appearancePoolSize } from "./materialPool";
+export {
+  getBodyAppearanceMaterial,
+  appearancePoolSize,
+  getSatSharedMaterial,
+  getSatPointsMaterial,
+  satAppearancePoolSize,
+  type SatMaterialRole,
+} from "./materialPool";
 export { proceduralMap } from "./proceduralTextures";
 export { lookupTextureId, TEXTURE_REGISTRY } from "./textureRegistry";
 export type { TextureRegistryEntry } from "./textureRegistry";
