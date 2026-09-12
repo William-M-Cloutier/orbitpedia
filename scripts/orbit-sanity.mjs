@@ -234,9 +234,14 @@ function loadVisualTiers() {
   };
 }
 
+function isPrimaryHostKind(kind) {
+  return kind === "star" || kind === "black_hole";
+}
+
 function visualRadius(body, tiers) {
   switch (body.kind) {
     case "star":
+    case "black_hole":
       return tiers.STAR_VISUAL_RADIUS;
     case "planet":
       return (body.facts?.radiusMeanKm ?? 0) > 20000
@@ -304,15 +309,15 @@ function runSystemSanity(system) {
 
   const central =
     (system.primaryStarId && bodyById.get(system.primaryStarId)) ||
-    bodies.find((b) => b.kind === "star" && !b.parentId) ||
-    bodies.find((b) => b.kind === "star") ||
+    bodies.find((b) => isPrimaryHostKind(b.kind) && !b.parentId) ||
+    bodies.find((b) => isPrimaryHostKind(b.kind)) ||
     bodies.find((b) => b.id === "sun");
   if (!central) {
-    fail(`no central star in system ${system.id}`);
+    fail(`no central host in system ${system.id}`);
     return;
   }
-  if (central.kind !== "star") {
-    fail(`central ${central.id} must be kind star`);
+  if (!isPrimaryHostKind(central.kind)) {
+    fail(`central ${central.id} must be kind star|black_hole`);
     return;
   }
 
@@ -330,7 +335,7 @@ function runSystemSanity(system) {
   console.log(`  central ${central.id} realRadiusAu=${realSunRadiusAu} visualRadius=${sunVisual} M/Msun=${Number.isFinite(mSun) ? mSun.toPrecision(4) : "?"}`);
 
   if (central.orbit) {
-    fail(`${central.id}: central star must not carry a heliocentric orbit`);
+    fail(`${central.id}: central host must not carry a heliocentric orbit`);
   } else {
     ok(`${central.id}: no heliocentric orbit (no OrbitLine)`);
   }

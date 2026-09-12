@@ -65,8 +65,12 @@ dwarfs/asteroids, moons either after their parent or listed anywhere as long as
 | Kind | Orbit | Parent |
 |------|-------|--------|
 | `star` | **none** | none |
+| `black_hole` | **none** (central host, same as primary star) | none |
 | `planet` / `dwarf_planet` / `asteroid` | Kepler + `frame: "heliocentric"` (relative to **host**, not SSB for exoplanets) | omit (or star id only if you need tree hints — Sol planets omit) |
 | `moon` | Kepler + `frame: "parent"` | **required** `parentId` |
+
+`primaryStarId` names the primary **host** (`star` | `black_hole`); field name kept for compat.
+For black holes, optional `facts.radiusMeanKm` may be the Schwarzschild radius derived from a cited mass (mark `approximateFields`); omit rather than invent.
 
 ### Facts (sparse OK)
 
@@ -78,7 +82,7 @@ dwarfs/asteroids, moons either after their parent or listed anywhere as long as
 | `rotationPeriodD` | Sidereal days; negative = retrograde |
 | `albedo` | Geometric; omit if unknown |
 | `discoveryDate` | `YYYY` or `YYYY-MM-DD`; omit for antiquity / N/A stars |
-| `discoveryNotes` | Short; **star** should include a system-scale hook |
+| `discoveryNotes` | Short; **star** / **black_hole** hosts should include a system-scale hook |
 
 Do **not** fill unknowns with zeros or Wikipedia guesses.
 

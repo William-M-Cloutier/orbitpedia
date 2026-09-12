@@ -1,0 +1,41 @@
+{
+  "id": "sagittarius-a",
+  "name": "Sagittarius A*",
+  "home": false,
+  "memberIds": [
+    "sagittarius-a"
+  ],
+  "primaryStarId": "sagittarius-a",
+  "blurb": "The supermassive black hole at the center of the Milky Way.",
+  "highlights": [
+    "Milky Way\u2019s central supermassive black hole (Sgr A*)",
+    "About four million times the mass of the Sun",
+    "Roughly 26,000 light-years from Earth"
+  ],
+  "planetCount": 0,
+  "distanceLy": 26000,
+  "meta": {
+    "confidence": "known",
+    "fetchedAt": "2026-09-12T22:38:28.400Z",
+    "sources": [
+      {
+        "name": "NASA \u2014 Supermassive Black Hole Sagittarius A*",
+        "url": "https://www.nasa.gov/image-article/supermassive-black-hole-sagittarius/",
+        "fields": [
+          "blurb",
+          "highlights",
+          "planetCount",
+          "distanceLy"
+        ]
+      },
+      {
+        "name": "NASA JPL Education \u2014 Milky Way's Black Hole",
+        "url": "https://www.jpl.nasa.gov/edu/resources/teachable-moment/telescopes-get-extraordinary-view-of-milky-ways-black-hole/",
+        "fields": [
+          "highlights",
+          "distanceLy"
+        ]
+      }
+    ]
+  }
+}
