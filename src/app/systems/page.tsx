@@ -170,6 +170,8 @@ type SystemNode = {
   spectralChip: SpectralChip;
   /** true = known gas; false = known none; undefined = missing index flag */
   hasGas?: boolean;
+  /** Primary host kind is black_hole. */
+  hasBlackHole?: boolean;
   /** Index mid-dot overview (archive stubs before graph load). */
   blurb?: string;
   distanceLy?: number;
@@ -211,6 +213,9 @@ function buildNodesFromList(
           : fromCurated !== undefined
             ? fromCurated
             : systemHasGasGiant(bodies);
+      const hasBlackHole =
+        primary?.kind === "black_hole" ||
+        bodies.some((b) => b.kind === "black_hole" && !b.parentId);
       const starCount =
         curated.starCount ??
         ("starCount" in s && typeof s.starCount === "number"
@@ -245,6 +250,7 @@ function buildNodesFromList(
         hostSpectralType,
         spectralChip: spectralChipFromType(hostSpectralType),
         hasGas,
+        hasBlackHole,
         blurb: curated.blurb,
         distanceLy: curated.distanceLy,
         raDeg:
@@ -262,6 +268,12 @@ function buildNodesFromList(
       "hostSpectralType" in s ? s.hostSpectralType : undefined;
     const hasGas =
       "hasGas" in s && typeof s.hasGas === "boolean" ? s.hasGas : undefined;
+    const hasBlackHole =
+      "hasBlackHole" in s && typeof s.hasBlackHole === "boolean"
+        ? s.hasBlackHole
+        : "hostKind" in s && s.hostKind === "black_hole"
+          ? true
+          : undefined;
     const starCount =
       "starCount" in s && typeof s.starCount === "number" && s.starCount > 0
         ? s.starCount
@@ -299,6 +311,7 @@ function buildNodesFromList(
       hostSpectralType,
       spectralChip: spectralChipFromType(hostSpectralType),
       hasGas,
+      hasBlackHole,
       blurb,
       distanceLy,
       raDeg,
@@ -544,6 +557,7 @@ function SystemMapView() {
   );
   const [starFilters, setStarFilters] = useState<Set<StarBin>>(() => new Set());
   const [hasGasFilter, setHasGasFilter] = useState(false);
+  const [blackHoleFilter, setBlackHoleFilter] = useState(false);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const filtersRef = useRef<HTMLDivElement>(null);
 
@@ -551,6 +565,7 @@ function SystemMapView() {
     setSpectralFilters(new Set());
     setPlanetFilters(new Set());
     setStarFilters(new Set());
+    setBlackHoleFilter(false);
     setHasGasFilter(false);
     setFavoritesOnly(false);
   }, []);
@@ -559,18 +574,21 @@ function SystemMapView() {
     spectralFilters.size > 0 ||
     planetFilters.size > 0 ||
     starFilters.size > 0 ||
-    hasGasFilter;
+    hasGasFilter ||
+    blackHoleFilter;
   const panelFilterCount =
     spectralFilters.size +
     planetFilters.size +
     starFilters.size +
-    (hasGasFilter ? 1 : 0);
+    (hasGasFilter ? 1 : 0) +
+    (blackHoleFilter ? 1 : 0);
   const filtersActive =
     favoritesOnly ||
     spectralFilters.size > 0 ||
     planetFilters.size > 0 ||
     starFilters.size > 0 ||
-    hasGasFilter;
+    hasGasFilter ||
+    blackHoleFilter;
 
   useEffect(() => {
     if (!filtersOpen) return;
@@ -695,6 +713,7 @@ function SystemMapView() {
       }
       // Has gas giant: off = don't care; on → hasGas === true (missing excluded).
       if (hasGasFilter && n.hasGas !== true) return false;
+      if (blackHoleFilter && n.hasBlackHole !== true) return false;
       return true;
     });
   }, [
@@ -705,6 +724,7 @@ function SystemMapView() {
     planetFilters,
     starFilters,
     hasGasFilter,
+    blackHoleFilter,
   ]);
 
   const laid = useMemo(
@@ -1099,6 +1119,19 @@ function SystemMapView() {
                           </button>
                         );
                       })}
+                      <button
+                        type="button"
+                        aria-pressed={blackHoleFilter}
+                        title="Systems with a black hole host"
+                        onClick={() => setBlackHoleFilter((v) => !v)}
+                        className={
+                          blackHoleFilter
+                            ? "rounded-md bg-sky-600 px-2 py-1 text-[11px] font-medium text-white"
+                            : "rounded-md bg-white/5 px-2 py-1 text-[11px] text-zinc-400 hover:bg-white/10 hover:text-zinc-200"
+                        }
+                      >
+                        Black hole
+                      </button>
                     </div>
                   </div>
                   <div className="mb-3">

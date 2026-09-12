@@ -27,6 +27,7 @@ export const SPEED_PRESETS: SpeedPreset[] = [
 ];
 
 export const DEFAULT_SPEED_PRESET = SPEED_PRESETS.find((p) => p.id === "default")!;
+export const SLOW_SPEED_PRESET = SPEED_PRESETS.find((p) => p.id === "slow")!;
 
 export function multipleToDaysPerSec(multiple: number): number {
   return multiple * REALISM_DAYS_PER_SEC;
