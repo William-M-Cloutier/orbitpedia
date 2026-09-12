@@ -15,9 +15,8 @@ type Props = {
 };
 
 /**
- * Geographic surface markers parented under the body's spin mesh so they
- * rotate with the texture. Shown only for the focused body.
- * Labels: selected only, occluded by the globe, offset callout (not on-dot).
+ * Geographic surface markers parented under the body's spin mesh.
+ * Focused body only. Labels: selected-only, occluded, finished callout.
  */
 export const SurfacePoiMarkers = memo(function SurfacePoiMarkers({
   pois,
@@ -25,7 +24,7 @@ export const SurfacePoiMarkers = memo(function SurfacePoiMarkers({
   selectedPoiId,
   onSelectPoi,
 }: Props) {
-  const markerR = Math.max(radius * 0.028, 0.0015);
+  const markerR = Math.max(radius * 0.026, 0.0014);
   const lift = radius * 1.02;
 
   const positions = useMemo(() => {
@@ -74,8 +73,20 @@ const PoiMarker = memo(function PoiMarker({
 
   return (
     <group position={position}>
-      <mesh onClick={handleClick} scale={selected ? 1.25 : 1}>
-        <sphereGeometry args={[markerR, 12, 12]} />
+      {selected ? (
+        <mesh scale={2.15}>
+          <sphereGeometry args={[markerR, 16, 16]} />
+          <meshBasicMaterial
+            color="#fbbf24"
+            transparent
+            opacity={0.28}
+            depthTest
+            depthWrite={false}
+          />
+        </mesh>
+      ) : null}
+      <mesh onClick={handleClick} scale={selected ? 1.15 : 1}>
+        <sphereGeometry args={[markerR, 16, 16]} />
         <meshBasicMaterial
           color={selected ? "#fbbf24" : "#38bdf8"}
           depthTest
@@ -86,18 +97,26 @@ const PoiMarker = memo(function PoiMarker({
         <Html
           center
           occlude
-          distanceFactor={10}
-          position={[0, markerR * 3.2, 0]}
+          distanceFactor={9}
+          position={[0, markerR * 4.2, 0]}
           style={{ pointerEvents: "none", userSelect: "none" }}
           zIndexRange={[100, 0]}
         >
           <div className="flex flex-col items-center">
-            <div className="max-w-[11rem] truncate rounded-md border border-amber-400/35 bg-[#0a1220]/95 px-2 py-1 text-center text-[11px] font-medium leading-tight text-amber-50 shadow-lg backdrop-blur-sm">
-              {poi.name}
+            <div className="max-w-[12rem] rounded-lg border border-amber-300/40 bg-[#0a1220]/96 px-2.5 py-1.5 text-center shadow-[0_8px_24px_rgba(0,0,0,0.45)] backdrop-blur-md">
+              <p className="text-[9px] font-medium uppercase tracking-[0.14em] text-amber-200/65">
+                Place
+              </p>
+              <p className="mt-0.5 truncate text-[12px] font-semibold leading-snug tracking-tight text-amber-50">
+                {poi.name}
+              </p>
             </div>
-            {/* Caret toward the marker */}
             <div
-              className="h-0 w-0 border-x-[5px] border-x-transparent border-t-[6px] border-t-amber-400/50"
+              className="mt-0.5 h-2.5 w-px bg-gradient-to-b from-amber-300/50 to-amber-400/25"
+              aria-hidden
+            />
+            <div
+              className="h-0 w-0 border-x-[5px] border-x-transparent border-t-[6px] border-t-amber-300/55"
               aria-hidden
             />
           </div>
