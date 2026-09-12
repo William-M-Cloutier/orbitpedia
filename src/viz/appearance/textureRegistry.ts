@@ -40,6 +40,31 @@ export const TEXTURE_REGISTRY: Readonly<Record<string, TextureRegistryEntry>> =
       src: "/textures/jupiter-marquee.webp",
       credit: "NASA/JPL/SSI Cassini PIA07782",
     },
+    "venus-marquee": {
+      id: "venus-marquee",
+      src: "/textures/venus-marquee.webp",
+      credit: "NASA/JPL Magellan radar mosaic",
+    },
+    "saturn-marquee": {
+      id: "saturn-marquee",
+      src: "/textures/saturn-marquee.webp",
+      credit: "NASA/Cassini-derived globe (Solar System Scope, CC BY 4.0)",
+    },
+    "uranus-marquee": {
+      id: "uranus-marquee",
+      src: "/textures/uranus-marquee.webp",
+      credit: "NASA/Voyager-derived (Solar System Scope, CC BY 4.0)",
+    },
+    "neptune-marquee": {
+      id: "neptune-marquee",
+      src: "/textures/neptune-marquee.webp",
+      credit: "NASA/Voyager-derived (Solar System Scope, CC BY 4.0)",
+    },
+    "sun-marquee": {
+      id: "sun-marquee",
+      src: "/textures/sun-marquee.webp",
+      credit: "NASA SDO-derived (Solar System Scope, CC BY 4.0)",
+    },
   });
 
 export function lookupTextureId(

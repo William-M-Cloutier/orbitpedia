@@ -13,6 +13,9 @@
     "discoveryDate": "1846-09-23"
   },
   "color": "#5B5DDF",
+  "appearance": {
+    "textureId": "neptune-marquee"
+  },
   "horizonId": "899",
   "meta": {
     "source": "JPL Horizons + SSD phys_par",

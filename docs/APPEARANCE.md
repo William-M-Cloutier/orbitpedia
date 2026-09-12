@@ -49,9 +49,14 @@ Lean WebP under Guard caps, served from `public/textures/`, registered in
 | `moon-marquee` | Moon | NASA lunar mosaic (Clementine-class; public domain) — 1024×512 WebP |
 | `mars-marquee` | Mars | NASA/USGS Viking color mosaic derivative — 1024×512 WebP |
 | `jupiter-marquee` | Jupiter | NASA/JPL/SSI Cassini cylindrical map [PIA07782](https://photojournal.jpl.nasa.gov/catalog/PIA07782) — 2048×1024 WebP |
+| `venus-marquee` | Venus | NASA/JPL Magellan radar mosaic (public domain) — 2048×1024 WebP |
+| `saturn-marquee` | Saturn | NASA/Cassini-derived globe only (no rings; [Solar System Scope](https://www.solarsystemscope.com/textures/) 2k, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)) — 2048×1024 WebP |
+| `uranus-marquee` | Uranus | NASA/Voyager-derived ([Solar System Scope](https://www.solarsystemscope.com/textures/) 2k, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)) — 2048×1024 WebP |
+| `neptune-marquee` | Neptune | NASA/Voyager-derived ([Solar System Scope](https://www.solarsystemscope.com/textures/) 2k, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)) — 2048×1024 WebP |
+| `sun-marquee` | Sun | NASA SDO-derived ([Solar System Scope](https://www.solarsystemscope.com/textures/) 2k, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)) — 2048×1024 WebP |
 
-Compress offline; no TIFFs / no huge sources in-repo. Residual: more Sol
-bodies can join later within the ≤12 / ≤6 MB pack budget.
+Compress offline; no TIFFs / no huge sources in-repo. Residual: 3 Sol slots
+and ~5 MB remain within the ≤12 / ≤6 MB pack budget.
 
 Mapped materials use the albedo map with white tint so continents / bands read
 true; procedural path unchanged for unmapped bodies.

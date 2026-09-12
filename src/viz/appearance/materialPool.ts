@@ -62,6 +62,14 @@ function buildMappedMaterial(
   emissiveHex: string,
   surfaceMap: THREE.Texture,
 ): THREE.Material {
+  // Stars stay unlit so a registry map does not go dark (the star is the light).
+  if (family === "star") {
+    return new THREE.MeshBasicMaterial({
+      color: "#ffffff",
+      map: surfaceMap,
+      toneMapped: true,
+    });
+  }
   // Color maps carry albedo — keep tint white so continents / bands read true.
   const roughness =
     family === "ice" ? 0.42 : family === "gas" ? 0.52 : 0.72;

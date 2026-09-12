@@ -699,6 +699,11 @@ if (!Number.isFinite(c)) {
     moon: "moon-marquee",
     mars: "mars-marquee",
     jupiter: "jupiter-marquee",
+    venus: "venus-marquee",
+    saturn: "saturn-marquee",
+    uranus: "uranus-marquee",
+    neptune: "neptune-marquee",
+    sun: "sun-marquee",
   };
   let packBytes = 0;
   let mapCount = 0;
@@ -728,6 +733,16 @@ if (!Number.isFinite(c)) {
       fail(`${texId}.webp over 512KB (${st.size})`);
     } else {
       ok(`${texId}.webp ${(st.size / 1024).toFixed(1)}KB`);
+    }
+  }
+  // Honest Guard totals: every WebP in the pack, not just the seeded checklist.
+  if (fs.existsSync(texDir)) {
+    packBytes = 0;
+    mapCount = 0;
+    for (const name of fs.readdirSync(texDir)) {
+      if (!name.endsWith(".webp")) continue;
+      packBytes += fs.statSync(path.join(texDir, name)).size;
+      mapCount += 1;
     }
   }
   if (packBytes > 6 * 1024 * 1024) {

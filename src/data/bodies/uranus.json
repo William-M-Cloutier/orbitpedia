@@ -13,6 +13,9 @@
     "discoveryDate": "1781-03-13"
   },
   "color": "#7EC8E3",
+  "appearance": {
+    "textureId": "uranus-marquee"
+  },
   "horizonId": "799",
   "meta": {
     "source": "JPL Horizons + SSD phys_par",
