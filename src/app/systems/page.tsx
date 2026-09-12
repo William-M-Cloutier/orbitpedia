@@ -20,38 +20,38 @@ import {
 } from "@/data/catalog";
 import {
   getSystemGraphAsync,
-  listArchiveSystems,
+  listSystemsAsync,
   type ArchiveSystemSummary,
 } from "@/data/archiveCatalog";
-import { hasUsableOrbit } from "@/data/schema";
+import { hasUsableOrbit, type System } from "@/data/schema";
 import { SystemFacts } from "@/components/ui/SystemFacts";
 
-/** Inter-system node spacing — Schematic / Proportional only (no True). */
+/** Inter-system node spacing — Schematic / Proportional share 2D; Prop stretches r. */
 type MapSpacing = "schematic" | "proportional";
-/** Soft density filter — All still LOD'd heavily. */
-type MapFilter = "curated" | "multi" | "all";
 
 const SPACING_MODES: { id: MapSpacing; label: string }[] = [
   { id: "schematic", label: "Schematic" },
   { id: "proportional", label: "Proportional" },
 ];
 
-const FILTER_MODES: { id: MapFilter; label: string }[] = [
-  { id: "curated", label: "Curated" },
-  { id: "multi", label: "Multi-planet" },
-  { id: "all", label: "All" },
-];
+const SHOWCASE_IDS = new Set(["trappist-1", "kepler-11"]);
 
+/** Viewport size in world units at zoom = 1. Layout is much larger. */
 const WORLD_W = 960;
 const WORLD_H = 560;
-const ZOOM_MIN = 0.45;
-const ZOOM_MAX = 4;
-const PAN_SPEED = 380;
+const ZOOM_MIN = 0.22;
+const ZOOM_MAX = 6;
+const PAN_SPEED = 520;
 const PAN_SHIFT = 2.6;
 /** Skip pairwise separation above this count (use coarse grid instead). */
 const SEPARATE_N_MAX = 80;
-/** Cap spoke lines from home (curated always; archive limited). */
+/** Cap spoke lines from home. */
 const SPOKE_CAP = 24;
+/** Neighbor target (world units) — ~10× the old fit-to-view cluster. */
+const MIN_SEP = 168;
+/** Show in-view name labels only at/above this zoom (plus always-on set). */
+const LABEL_ZOOM = 0.9;
+const LABEL_CAP = 64;
 
 type SystemNode = {
   id: string;
@@ -64,11 +64,17 @@ type SystemNode = {
   starColor: string;
 };
 
-function buildCuratedNodes(): SystemNode[] {
-  return listSystems()
-    .filter((s) => !isFixtureSystemId(s.id))
-    .map((s) => {
-      const bodies = getBodiesForSystem(s.id);
+function isFeatured(n: { home: boolean; curated: boolean; id: string }): boolean {
+  return n.home || n.curated || SHOWCASE_IDS.has(n.id);
+}
+
+function buildNodesFromList(
+  rows: Array<System | ArchiveSystemSummary>,
+): SystemNode[] {
+  return rows.map((s) => {
+    const curated = getSystem(s.id);
+    if (curated) {
+      const bodies = getBodiesForSystem(curated.id);
       const star = bodies.find((b) => b.kind === "star");
       let outerAAu = 0;
       for (const b of bodies) {
@@ -76,49 +82,42 @@ function buildCuratedNodes(): SystemNode[] {
         if (b.orbit.aAu > outerAAu) outerAAu = b.orbit.aAu;
       }
       return {
-        id: s.id,
-        name: s.name,
-        home: s.home === true,
+        id: curated.id,
+        name: curated.name,
+        home: curated.home === true,
         curated: true,
         memberCount: bodies.length,
-        planetCount: bodies.filter((b) => b.kind === "planet").length,
+        planetCount:
+          curated.planetCount ??
+          bodies.filter((b) => b.kind === "planet").length,
         outerAAu: outerAAu > 0 ? outerAAu : 1,
         starColor: star?.color ?? "#FDB813",
       };
-    });
-}
-
-/** Archive index stubs — graph fetched only when Explore opens the system. */
-function buildArchiveStubNodes(
-  rows: ArchiveSystemSummary[],
-  curatedIds: Set<string>,
-): SystemNode[] {
-  return rows
-    .filter((s) => !curatedIds.has(s.id) && !isFixtureSystemId(s.id))
-    .map((s) => {
-      const planets = s.planetCount ?? 0;
-      return {
-        id: s.id,
-        name: s.name,
-        home: false,
-        curated: false,
-        memberCount: planets + 1,
-        planetCount: planets,
-        outerAAu: 1,
-        starColor: "#FDB813",
-      };
-    });
-}
-
-function nodeFootprint(r: number): number {
-  return r + 44;
+    }
+    const planets = s.planetCount ?? 0;
+    return {
+      id: s.id,
+      name: s.name,
+      home: false,
+      curated: false,
+      memberCount: planets + 1,
+      planetCount: planets,
+      outerAAu: 1,
+      starColor: "#FDB813",
+    };
+  });
 }
 
 function radiusFor(n: SystemNode, spacing: MapSpacing): number {
-  if (spacing === "schematic") return n.home ? 28 : n.curated ? 22 : 10;
-  if (n.home) return 28;
-  if (n.curated) return 20 + Math.min(10, Math.sqrt(n.outerAAu) * 2);
-  return 8 + Math.min(4, Math.sqrt(n.planetCount));
+  if (n.home) return 14;
+  if (n.curated || SHOWCASE_IDS.has(n.id)) {
+    return spacing === "schematic"
+      ? 10
+      : 9 + Math.min(3, Math.sqrt(n.outerAAu));
+  }
+  return spacing === "schematic"
+    ? 3.6
+    : 3.2 + Math.min(1.6, Math.sqrt(n.planetCount) * 0.35);
 }
 
 /** Coarse grid placement — O(n) — used when N is large. */
@@ -138,7 +137,6 @@ function gridSeparate(
   }
   for (const idxs of bins.values()) {
     if (idxs.length < 2) continue;
-    // Local push within cell only
     for (let a = 0; a < idxs.length; a++) {
       for (let b = a + 1; b < idxs.length; b++) {
         const pa = pts[idxs[a]!]!;
@@ -146,7 +144,7 @@ function gridSeparate(
         const dx = pb.x - pa.x;
         const dy = pb.y - pa.y;
         const dist = Math.hypot(dx, dy) || 0.01;
-        const need = pa.r + pb.r + 6;
+        const need = pa.r + pb.r + 8;
         if (dist >= need) continue;
         const push = (need - dist) / 2;
         const ux = dx / dist;
@@ -160,7 +158,7 @@ function gridSeparate(
   }
 }
 
-/** Push overlapping discs apart (includes label footprint on Y) — O(n²), small N. */
+/** Push overlapping discs apart — O(n²), small N only. */
 function separateNodes(
   pts: Array<{ x: number; y: number; r: number }>,
   pad: number,
@@ -175,7 +173,7 @@ function separateNodes(
         const dx = b.x - a.x;
         const dy = b.y - a.y;
         const dist = Math.hypot(dx, dy) || 0.01;
-        const need = a.r + b.r + pad + 36;
+        const need = a.r + b.r + pad;
         if (dist >= need) continue;
         const push = (need - dist) / 2;
         const ux = dx / dist;
@@ -194,16 +192,8 @@ function separateNodes(
 function layoutNodes(
   nodes: SystemNode[],
   spacing: MapSpacing,
-  width: number,
-  height: number,
 ): Array<SystemNode & { x: number; y: number; r: number }> {
   if (nodes.length === 0) return [];
-  const padX = 90;
-  const padY = 70;
-  const usableW = Math.max(120, width - padX * 2);
-  const usableH = Math.max(120, height - padY * 2);
-  const midY = height * 0.42;
-  const cx0 = width / 2;
 
   const sorted = [...nodes].sort((a, b) => {
     if (a.home !== b.home) return a.home ? -1 : 1;
@@ -211,7 +201,6 @@ function layoutNodes(
     return b.outerAAu - a.outerAAu;
   });
   const GOLDEN = Math.PI * (3 - Math.sqrt(5));
-  const nOther = Math.max(sorted.length - 1, 1);
   const maxExtent = Math.max(
     ...sorted.map((n) => Math.sqrt(n.outerAAu)),
     1,
@@ -220,53 +209,35 @@ function layoutNodes(
   const pts = sorted.map((n, i) => {
     const r = radiusFor(n, spacing);
     if (n.home || sorted.length === 1) {
-      return { ...n, x: cx0, y: midY, r };
+      return { ...n, x: 0, y: 0, r };
     }
-    const k = i;
-    const ang = k * GOLDEN;
-    const ring = 0.28 + 0.72 * Math.sqrt(k / nOther);
+    const ang = i * GOLDEN;
+    // Same sunflower for both modes; Prop only stretches radial distance.
     const distMul =
       spacing === "proportional"
-        ? 0.62 + 0.58 * (Math.sqrt(n.outerAAu) / maxExtent)
+        ? 0.7 + 0.9 * (Math.sqrt(n.outerAAu) / maxExtent)
         : 1;
-    const rad = ring * distMul;
+    const rad = MIN_SEP * Math.sqrt(i) * distMul;
     return {
       ...n,
-      x: cx0 + Math.cos(ang) * usableW * 0.42 * rad,
-      y: midY + Math.sin(ang) * usableH * 0.42 * rad,
+      x: Math.cos(ang) * rad,
+      y: Math.sin(ang) * rad * 0.72,
       r,
     };
   });
 
   if (pts.length <= SEPARATE_N_MAX) {
-    separateNodes(pts, spacing === "schematic" ? 14 : 16);
+    separateNodes(pts, spacing === "schematic" ? 36 : 32);
   } else {
-    gridSeparate(pts, spacing === "schematic" ? 28 : 24);
+    gridSeparate(pts, MIN_SEP);
   }
 
-  let minX = Infinity,
-    maxX = -Infinity,
-    minY = Infinity,
-    maxY = -Infinity;
-  for (const p of pts) {
-    minX = Math.min(minX, p.x - p.r);
-    maxX = Math.max(maxX, p.x + p.r);
-    minY = Math.min(minY, p.y - p.r);
-    maxY = Math.max(maxY, p.y + nodeFootprint(p.r));
-  }
-  const spanX = Math.max(maxX - minX, 1);
-  const spanY = Math.max(maxY - minY, 1);
-  const scale = Math.min(usableW / spanX, usableH / spanY, 1.15);
-  const cx = (minX + maxX) / 2;
-  const cy = (minY + maxY) / 2;
-  return pts.map((p) => ({
-    ...p,
-    x: width / 2 + (p.x - cx) * scale,
-    y: height / 2 + (p.y - cy) * scale * 0.92,
-  }));
+  return pts;
 }
 
 type Cam = { x: number; y: number; zoom: number };
+
+const CAM0: Cam = { x: 0, y: 0, zoom: 1 };
 
 function viewBoxFor(cam: Cam): string {
   const w = WORLD_W / cam.zoom;
@@ -278,33 +249,24 @@ function SystemMapView() {
   const router = useRouter();
   const homeId = getHomeSystem().id;
   const [spacing, setSpacing] = useState<MapSpacing>("schematic");
-  const [filter, setFilter] = useState<MapFilter>("curated");
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
-  const [allNodes, setAllNodes] = useState<SystemNode[]>(() =>
-    buildCuratedNodes(),
+  const [nodes, setNodes] = useState<SystemNode[]>(() =>
+    buildNodesFromList(listSystems().filter((s) => !isFixtureSystemId(s.id))),
   );
-  const [cam, setCam] = useState<Cam>({
-    x: WORLD_W / 2,
-    y: WORLD_H / 2,
-    zoom: 1,
-  });
+  const [cam, setCam] = useState<Cam>(CAM0);
 
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      const curated = buildCuratedNodes();
-      const curatedIds = new Set(curated.map((n) => n.id));
       try {
-        const archive = await listArchiveSystems();
+        const list = await listSystemsAsync();
         if (cancelled) return;
-        setAllNodes([
-          ...curated,
-          ...buildArchiveStubNodes(archive, curatedIds),
-        ]);
+        setNodes(
+          buildNodesFromList(list.filter((s) => !isFixtureSystemId(s.id))),
+        );
       } catch {
-        if (cancelled) return;
-        setAllNodes(curated);
+        /* curated seed already shown */
       }
     })();
     return () => {
@@ -312,16 +274,7 @@ function SystemMapView() {
     };
   }, []);
 
-  const nodes = useMemo(() => {
-    if (filter === "curated") return allNodes.filter((n) => n.curated);
-    if (filter === "multi")
-      return allNodes.filter((n) => n.curated || n.planetCount >= 2);
-    return allNodes;
-  }, [allNodes, filter]);
-
-  const [selectedSystem, setSelectedSystem] = useState<
-    import("@/data/schema").System | null
-  >(null);
+  const [selectedSystem, setSelectedSystem] = useState<System | null>(null);
 
   useEffect(() => {
     if (!selectedId) {
@@ -359,10 +312,7 @@ function SystemMapView() {
     };
   }, [selectedId, nodes]);
 
-  const laid = useMemo(
-    () => layoutNodes(nodes, spacing, WORLD_W, WORLD_H),
-    [nodes, spacing],
-  );
+  const laid = useMemo(() => layoutNodes(nodes, spacing), [nodes, spacing]);
 
   const mapRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -393,13 +343,10 @@ function SystemMapView() {
 
   function openExplore(systemId: string) {
     router.push(
-      systemId === homeId
-        ? "/"
-        : `/?system=${encodeURIComponent(systemId)}`,
+      systemId === homeId ? "/" : `/?system=${encodeURIComponent(systemId)}`,
     );
   }
 
-  // When selection changes, center that system (bias left of facts panel).
   useEffect(() => {
     if (!selectedId) return;
     const n = laid.find((x) => x.id === selectedId);
@@ -413,7 +360,6 @@ function SystemMapView() {
     setCam(next);
   }, [selectedId, laid, applyViewBox]);
 
-  // WASD pan — mutate viewBox via ref; commit React cam when keys idle.
   useEffect(() => {
     const isEditable = (t: EventTarget | null) => {
       if (!(t instanceof HTMLElement)) return false;
@@ -575,43 +521,59 @@ function SystemMapView() {
 
   const homeLaid = laid.find((n) => n.home) ?? laid[0];
 
-  // Spoke targets: curated always; archive capped when filter is dense.
   const spokeTargets = useMemo(() => {
     if (!homeLaid) return [];
     const others = laid.filter((n) => n.id !== homeLaid.id);
-    if (filter === "curated") return others;
-    const curatedOthers = others.filter((n) => n.curated);
-    const archiveOthers = others.filter((n) => !n.curated);
+    const featured = others.filter((n) => isFeatured(n));
+    const rest = others.filter((n) => !isFeatured(n));
     return [
-      ...curatedOthers,
-      ...archiveOthers.slice(0, Math.max(0, SPOKE_CAP - curatedOthers.length)),
+      ...featured,
+      ...rest.slice(0, Math.max(0, SPOKE_CAP - featured.length)),
     ];
-  }, [laid, homeLaid, filter]);
+  }, [laid, homeLaid]);
 
-  // Nearest node to camera center for optional label (when zoomed in).
-  const nearestId = useMemo(() => {
-    if (laid.length === 0) return null;
-    if (cam.zoom < 1.35 && filter !== "curated") return null;
-    let best: string | null = null;
-    let bestD = Infinity;
+  const { visible, labeledIds } = useMemo(() => {
+    const cullPad = 220;
+    const viewW = WORLD_W / cam.zoom;
+    const viewH = WORLD_H / cam.zoom;
+    const vx0 = cam.x - viewW / 2 - cullPad;
+    const vy0 = cam.y - viewH / 2 - cullPad;
+    const vx1 = cam.x + viewW / 2 + cullPad;
+    const vy1 = cam.y + viewH / 2 + cullPad;
+    const visible = laid.filter(
+      (n) =>
+        n.x + n.r >= vx0 &&
+        n.x - n.r <= vx1 &&
+        n.y + n.r >= vy0 &&
+        n.y - n.r <= vy1,
+    );
+    const ids = new Set<string>();
     for (const n of laid) {
-      const d = Math.hypot(n.x - cam.x, n.y - cam.y);
-      if (d < bestD) {
-        bestD = d;
-        best = n.id;
+      if (
+        n.home ||
+        n.curated ||
+        SHOWCASE_IDS.has(n.id) ||
+        n.id === selectedId ||
+        n.id === hoveredId
+      ) {
+        ids.add(n.id);
       }
     }
-    return best;
-  }, [laid, cam.x, cam.y, cam.zoom, filter]);
+    if (cam.zoom >= LABEL_ZOOM) {
+      const scored = visible
+        .map((n) => ({
+          id: n.id,
+          d: Math.hypot(n.x - cam.x, n.y - cam.y),
+        }))
+        .sort((a, b) => a.d - b.d);
+      for (const s of scored) {
+        if (ids.size >= LABEL_CAP) break;
+        ids.add(s.id);
+      }
+    }
+    return { visible, labeledIds: ids };
+  }, [laid, cam.x, cam.y, cam.zoom, selectedId, hoveredId]);
 
-  const showLabel = (n: SystemNode) =>
-    n.curated ||
-    n.id === selectedId ||
-    n.id === hoveredId ||
-    n.id === nearestId ||
-    n.home;
-
-  // Map-level keyboard: Enter opens selected / focused via selection.
   const onMapKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && selectedId) {
       e.preventDefault();
@@ -622,21 +584,14 @@ function SystemMapView() {
     }
   };
 
-  // Viewport cull pad (world units)
-  const cullPad = 80;
-  const viewW = WORLD_W / cam.zoom;
-  const viewH = WORLD_H / cam.zoom;
-  const vx0 = cam.x - viewW / 2 - cullPad;
-  const vy0 = cam.y - viewH / 2 - cullPad;
-  const vx1 = cam.x + viewW / 2 + cullPad;
-  const vy1 = cam.y + viewH / 2 + cullPad;
-  const inView = (n: { x: number; y: number; r: number }) =>
-    n.x + n.r >= vx0 &&
-    n.x - n.r <= vx1 &&
-    n.y + n.r >= vy0 &&
-    n.y - n.r <= vy1;
-
-  const visible = filter === "curated" ? laid : laid.filter(inView);
+  const resetView = () => {
+    const n = homeLaid;
+    const next = n ? { x: n.x, y: n.y, zoom: 1 } : CAM0;
+    camRef.current = next;
+    applyViewBox(next);
+    setCam(next);
+    setSelectedId(null);
+  };
 
   return (
     <AppShell>
@@ -645,37 +600,13 @@ function SystemMapView() {
           <div>
             <h1 className="text-lg font-medium text-zinc-100">System map</h1>
             <p className="mt-0.5 max-w-2xl text-sm text-zinc-500">
-              Click a system for facts (centers view). Labels stay lean at large
-              N — curated, selected, hover, or nearest when zoomed. Drag or WASD
-              to pan, Shift faster, scroll to zoom. Double-click or Open Explore
-              to enter.
+              All systems on one map — pan and zoom to explore. Sol and
+              showcase stay highlighted. Names appear when zoomed in (and for
+              selected / hover). Drag or WASD to pan, Shift faster, scroll to
+              zoom. Double-click or Open Explore to enter.
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            <div className="rounded-lg border border-white/10 bg-zinc-950/80 px-3 py-2 text-xs text-zinc-300">
-              <div className="mb-1.5 font-medium uppercase tracking-wide text-zinc-500">
-                Show
-              </div>
-              <div className="flex gap-1">
-                {FILTER_MODES.map((m) => (
-                  <button
-                    key={m.id}
-                    type="button"
-                    onClick={() => {
-                      setFilter(m.id);
-                      setSelectedId(null);
-                    }}
-                    className={
-                      filter === m.id
-                        ? "rounded-md bg-violet-600 px-2 py-1 font-medium text-white"
-                        : "rounded-md bg-white/5 px-2 py-1 text-zinc-400 hover:bg-white/10 hover:text-zinc-200"
-                    }
-                  >
-                    {m.label}
-                  </button>
-                ))}
-              </div>
-            </div>
             <div className="rounded-lg border border-white/10 bg-zinc-950/80 px-3 py-2 text-xs text-zinc-300">
               <div className="mb-1.5 font-medium uppercase tracking-wide text-zinc-500">
                 Spacing
@@ -699,13 +630,7 @@ function SystemMapView() {
             </div>
             <button
               type="button"
-              onClick={() => {
-                const next = { x: WORLD_W / 2, y: WORLD_H / 2, zoom: 1 };
-                camRef.current = next;
-                applyViewBox(next);
-                setCam(next);
-                setSelectedId(null);
-              }}
+              onClick={resetView}
               className="rounded-md border border-white/10 bg-white/5 px-3 py-2 text-xs text-zinc-300 hover:bg-white/10"
             >
               Reset view
@@ -747,20 +672,8 @@ function SystemMapView() {
                 <stop offset="100%" stopColor="#060a14" stopOpacity="0" />
               </radialGradient>
             </defs>
-            <rect
-              x={-WORLD_W}
-              y={-WORLD_H}
-              width={WORLD_W * 3}
-              height={WORLD_H * 3}
-              fill="#060a14"
-            />
-            <ellipse
-              cx={WORLD_W / 2}
-              cy={WORLD_H / 2}
-              rx={WORLD_W * 0.42}
-              ry={WORLD_H * 0.38}
-              fill="url(#mapGlow)"
-            />
+            <rect x={-24000} y={-18000} width={48000} height={36000} fill="#060a14" />
+            <ellipse cx={0} cy={0} rx={380} ry={280} fill="url(#mapGlow)" />
 
             {homeLaid
               ? spokeTargets.map((n) => (
@@ -778,8 +691,9 @@ function SystemMapView() {
 
             {visible.map((n) => {
               const sel = n.id === selectedId;
-              const showRings = n.home || n.curated || sel;
-              const labeled = showLabel(n);
+              const featured = isFeatured(n);
+              const showRings = featured || sel;
+              const labeled = labeledIds.has(n.id);
               return (
                 <g
                   key={n.id}
@@ -804,18 +718,18 @@ function SystemMapView() {
                       <circle
                         cx={n.x}
                         cy={n.y}
-                        r={n.r + 10}
+                        r={n.r + 8}
                         fill="none"
-                        stroke="rgba(255,255,255,0.12)"
+                        stroke="rgba(255,255,255,0.14)"
                         strokeWidth={1}
                       />
                       {n.home || sel ? (
                         <circle
                           cx={n.x}
                           cy={n.y}
-                          r={n.r + 18}
+                          r={n.r + 15}
                           fill="none"
-                          stroke="rgba(255,255,255,0.06)"
+                          stroke="rgba(255,255,255,0.07)"
                           strokeWidth={1}
                         />
                       ) : null}
@@ -831,31 +745,33 @@ function SystemMapView() {
                         ? "#38bdf8"
                         : n.home
                           ? "#7dd3fc"
-                          : "rgba(255,255,255,0.35)"
+                          : featured
+                            ? "rgba(186,230,253,0.7)"
+                            : "rgba(255,255,255,0.35)"
                     }
-                    strokeWidth={sel ? 3 : n.home ? 2.5 : 1.25}
+                    strokeWidth={sel ? 2.5 : n.home ? 2 : featured ? 1.5 : 1}
                   />
                   {labeled ? (
                     <>
                       <text
                         x={n.x}
-                        y={n.y + n.r + 16}
+                        y={n.y + n.r + 14}
                         textAnchor="middle"
                         className="fill-zinc-200"
                         style={{
-                          fontSize: n.curated || sel ? 12 : 10,
+                          fontSize: featured || sel ? 11 : 9,
                           fontWeight: 600,
                         }}
                       >
                         {n.name}
                       </text>
-                      {(n.curated || sel) && (
+                      {(featured || sel) && (
                         <text
                           x={n.x}
-                          y={n.y + n.r + 30}
+                          y={n.y + n.r + 26}
                           textAnchor="middle"
                           className="fill-zinc-500"
-                          style={{ fontSize: 10 }}
+                          style={{ fontSize: 9 }}
                         >
                           {n.planetCount} planet
                           {n.planetCount === 1 ? "" : "s"}
@@ -903,14 +819,13 @@ function SystemMapView() {
           ) : null}
 
           <p className="pointer-events-none absolute bottom-2 left-3 text-[10px] text-zinc-600">
-            {nodes.length} systems · filter {filter}
-            {filter !== "curated" ? ` · ${visible.length} in view` : ""}
+            {nodes.length} systems · {visible.length} in view
           </p>
         </div>
 
         <p className="mt-2 text-xs text-zinc-600">
           Drag or WASD to pan · Shift faster · scroll wheel zoom · Reset view
-          restores the full map. Click empty space to dismiss facts. Enter opens
+          recenters on Sol. Click empty space to dismiss facts. Enter opens
           selected system.
         </p>
       </div>
