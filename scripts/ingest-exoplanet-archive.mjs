@@ -57,6 +57,9 @@ function resolveArchiveDirs(opts) {
 const TAP = "https://exoplanetarchive.ipac.caltech.edu/TAP/sync";
 const OVERVIEW = "https://exoplanetarchive.ipac.caltech.edu/overview";
 
+/** ADQL TOP applies to planet rows, not hosts. --all uses this window until pagination ships. */
+const TAP_ROW_CAP_ALL = 20000;
+
 /** Curated / showcase — never overwrite without --force-ids. */
 const PROTECTED_SYSTEM_IDS = new Set([
   "solar",
@@ -99,6 +102,7 @@ function parseArgs(argv) {
     includeSinglePlanet: false,
     hosts: null,
     dryRun: false,
+    verify: false,
     forceIds: new Set(),
   };
   for (let i = 0; i < argv.length; i++) {
@@ -128,7 +132,8 @@ function parseArgs(argv) {
   --include-single-planet Set min-planets to 1 (single-planet hosts; off by default)
   --hosts a,b             Named host list (skips limit scan)
   --force-ids a,b         Allow overwrite of protected curated ids
-  --dry-run               Fetch + build; do not write`);
+  --dry-run               Fetch + build; do not write
+  --verify               Print census vs TAP row-window host counts; no write`);
       process.exit(0);
     }
   }
@@ -258,7 +263,8 @@ async function fetchRows(opts) {
   }
   // Pull a generous row window, then pick first N distinct hosts client-side.
   // (ADQL TOP applies to rows, not groups.)
-  const rowCap = opts.all ? 20000 : Math.max(opts.limit * 12, 200);
+  const rowCap = opts.all ? TAP_ROW_CAP_ALL : Math.max(opts.limit * 12, 200);
+  opts._rowCap = rowCap; // for --verify reporting
   const adql = `select top ${rowCap} ${cols} from pscomppars where sy_pnum >= ${opts.minPlanets} and pl_orbsmax is not null order by sy_pnum desc, hostname, pl_orbsmax`;
   return tapCsv(adql);
 }
@@ -486,6 +492,52 @@ function groupByHost(rows) {
   return map;
 }
 
+
+async function verifyCensus(opts) {
+  const minP = opts.minPlanets;
+  console.log(`--verify (sy_pnum >= ${minP}; pl_orbsmax required for ingestable planets)`);
+
+  // Distinct host census (no TOP) — may be slower but is the true multi-planet count.
+  const censusAdql = `select count(distinct hostname) as n from pscomppars where sy_pnum >= ${minP}`;
+  const censusRows = await tapCsv(censusAdql);
+  const censusHosts = Number(censusRows[0]?.n ?? censusRows[0]?.N ?? NaN);
+
+  const withAAdql = `select count(distinct hostname) as n from pscomppars where sy_pnum >= ${minP} and pl_orbsmax is not null`;
+  const withARows = await tapCsv(withAAdql);
+  const censusWithA = Number(withARows[0]?.n ?? withARows[0]?.N ?? NaN);
+
+  const rows = await fetchRows({ ...opts, all: opts.all || opts.limit === Number.POSITIVE_INFINITY });
+  const byHost = groupByHost(rows);
+  const windowHosts = byHost.size;
+  const rowCap = opts._rowCap ?? (opts.all ? TAP_ROW_CAP_ALL : Math.max(opts.limit * 12, 200));
+
+  let buildable = 0;
+  let protectedHits = 0;
+  for (const [hostname, planetRows] of byHost) {
+    const systemId = systemIdForHostname(hostname);
+    if (PROTECTED_SYSTEM_IDS.has(systemId)) {
+      protectedHits++;
+      continue;
+    }
+    if (buildSystem(hostname, planetRows, new Date().toISOString())) buildable++;
+  }
+
+  console.log(JSON.stringify({
+    minPlanets: minP,
+    tapRowCap: rowCap,
+    planetRowsFetched: rows.length,
+    distinctHostsInWindow: windowHosts,
+    buildableHostsInWindow: buildable,
+    protectedHostsInWindow: protectedHits,
+    neaDistinctHosts_sy_pnum: censusHosts,
+    neaDistinctHosts_sy_pnum_with_a: censusWithA,
+    gapVsCensusWithA: Number.isFinite(censusWithA) ? censusWithA - windowHosts : null,
+    note: opts.all
+      ? `TOP ${TAP_ROW_CAP_ALL} planet rows may miss hosts beyond the window; pagination not implemented yet.`
+      : `Bounded --limit uses TOP ${rowCap} planet rows then first N hosts.`,
+  }, null, 2));
+}
+
 async function main() {
   const opts = parseArgs(process.argv.slice(2));
   const dirs = resolveArchiveDirs(opts);
@@ -501,6 +553,11 @@ async function main() {
         ? `NEA archive ingest — ALL systems (sy_pnum >= ${opts.minPlanets}) → bulk/ARCHIVE_OUT plane`
         : `NEA archive ingest — limit ${opts.limit} systems (sy_pnum >= ${opts.minPlanets})`,
   );
+
+  if (opts.verify) {
+    await verifyCensus(opts);
+    return;
+  }
 
   let rows;
   try {
