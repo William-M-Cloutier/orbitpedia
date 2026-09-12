@@ -25,6 +25,10 @@ import {
 } from "@/data/archiveCatalog";
 import { hasUsableOrbit, type System } from "@/data/schema";
 import { SystemFacts } from "@/components/ui/SystemFacts";
+import {
+  loadFavoriteSystemIds,
+  saveFavoriteSystemIds,
+} from "@/lib/favoriteSystems";
 
 /** Inter-system node spacing — Schematic / Proportional share 2D; Prop stretches r. */
 type MapSpacing = "schematic" | "proportional";
@@ -43,15 +47,16 @@ const PAN_SPEED = 520;
 const PAN_SHIFT = 2.6;
 /** Skip pairwise separation above this count (use coarse grid instead). */
 const SEPARATE_N_MAX = 80;
-/** Cap spoke lines from home. */
-const SPOKE_CAP = 24;
+/** Undirected k-NN edges: propose K nearest, hard-cap degree. */
+const KNN_K = 2;
+const DEGREE_CAP = 3;
 /** Neighbor target (world units) — ~10× the old fit-to-view cluster. */
 const MIN_SEP = 168;
-/** Show in-view name labels only at/above this zoom (plus selected / hover). */
-const LABEL_ZOOM = 0.9;
-const LABEL_CAP = 96;
-/** Featured/middle disc — uniform for every system. */
+/** Soft cap for in-view labels (prefer labeling all visible; cull off-screen). */
+const LABEL_CAP = 220;
+/** Base disc — uniform for every system (favorites render slightly larger). */
 const NODE_R = 10;
+const NODE_R_FAV = 13;
 
 type SystemNode = {
   id: string;
@@ -215,6 +220,94 @@ function layoutNodes(
   return pts;
 }
 
+type LaidPt = { id: string; x: number; y: number };
+
+/**
+ * Lean undirected neighbor graph — spatial-hash k-NN proposals, greedy degree
+ * cap. Avoids O(n²) at ~1k; does not star every system from home/Sol.
+ */
+function buildNeighborEdges(
+  pts: LaidPt[],
+): Array<{ key: string; x1: number; y1: number; x2: number; y2: number }> {
+  const n = pts.length;
+  if (n < 2) return [];
+
+  const cell = Math.max(MIN_SEP * 0.85, 48);
+  const bins = new Map<string, number[]>();
+  const cellKey = (x: number, y: number) =>
+    `${Math.floor(x / cell)}:${Math.floor(y / cell)}`;
+  for (let i = 0; i < n; i++) {
+    const p = pts[i]!;
+    const k = cellKey(p.x, p.y);
+    const list = bins.get(k);
+    if (list) list.push(i);
+    else bins.set(k, [i]);
+  }
+
+  type Cand = { i: number; j: number; d: number };
+  const candMap = new Map<string, Cand>();
+
+  for (let i = 0; i < n; i++) {
+    const a = pts[i]!;
+    const cx = Math.floor(a.x / cell);
+    const cy = Math.floor(a.y / cell);
+    const local: Cand[] = [];
+    for (let dx = -2; dx <= 2; dx++) {
+      for (let dy = -2; dy <= 2; dy++) {
+        const idxs = bins.get(`${cx + dx}:${cy + dy}`);
+        if (!idxs) continue;
+        for (const j of idxs) {
+          if (j === i) continue;
+          const b = pts[j]!;
+          local.push({
+            i: Math.min(i, j),
+            j: Math.max(i, j),
+            d: Math.hypot(b.x - a.x, b.y - a.y),
+          });
+        }
+      }
+    }
+    local.sort((u, v) => u.d - v.d);
+    let added = 0;
+    const seenOther = new Set<number>();
+    for (const c of local) {
+      const other = c.i === i ? c.j : c.i;
+      if (seenOther.has(other)) continue;
+      seenOther.add(other);
+      if (added >= KNN_K) break;
+      const ek = `${c.i}:${c.j}`;
+      const prev = candMap.get(ek);
+      if (!prev || c.d < prev.d) candMap.set(ek, c);
+      added++;
+    }
+  }
+
+  const cands = [...candMap.values()].sort((a, b) => a.d - b.d);
+  const degree = new Array<number>(n).fill(0);
+  const out: Array<{
+    key: string;
+    x1: number;
+    y1: number;
+    x2: number;
+    y2: number;
+  }> = [];
+  for (const c of cands) {
+    if (degree[c.i]! >= DEGREE_CAP || degree[c.j]! >= DEGREE_CAP) continue;
+    const a = pts[c.i]!;
+    const b = pts[c.j]!;
+    degree[c.i]!++;
+    degree[c.j]!++;
+    out.push({
+      key: `${a.id}|${b.id}`,
+      x1: a.x,
+      y1: a.y,
+      x2: b.x,
+      y2: b.y,
+    });
+  }
+  return out;
+}
+
 type Cam = { x: number; y: number; zoom: number };
 
 const CAM0: Cam = { x: 0, y: 0, zoom: 1 };
@@ -235,6 +328,30 @@ function SystemMapView() {
     buildNodesFromList(listSystems().filter((s) => !isFixtureSystemId(s.id))),
   );
   const [cam, setCam] = useState<Cam>(CAM0);
+  const [favoriteIds, setFavoriteIds] = useState<Set<string>>(
+    () => new Set([homeId]),
+  );
+  const [favoritesHydrated, setFavoritesHydrated] = useState(false);
+  const [favoritesOnly, setFavoritesOnly] = useState(false);
+
+  useEffect(() => {
+    setFavoriteIds(loadFavoriteSystemIds(homeId));
+    setFavoritesHydrated(true);
+  }, [homeId]);
+
+  useEffect(() => {
+    if (!favoritesHydrated) return;
+    saveFavoriteSystemIds(favoriteIds);
+  }, [favoriteIds, favoritesHydrated]);
+
+  const toggleFavorite = useCallback((id: string) => {
+    setFavoriteIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -292,7 +409,15 @@ function SystemMapView() {
     };
   }, [selectedId, nodes]);
 
-  const laid = useMemo(() => layoutNodes(nodes, spacing), [nodes, spacing]);
+  const mapNodes = useMemo(() => {
+    if (!favoritesOnly) return nodes;
+    return nodes.filter((n) => favoriteIds.has(n.id));
+  }, [nodes, favoritesOnly, favoriteIds]);
+
+  const laid = useMemo(
+    () => layoutNodes(mapNodes, spacing),
+    [mapNodes, spacing],
+  );
 
   const mapRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -501,20 +626,12 @@ function SystemMapView() {
 
   const homeLaid = laid.find((n) => n.home) ?? laid[0];
 
-  const spokeTargets = useMemo(() => {
-    if (!homeLaid) return [];
-    return laid
-      .filter((n) => n.id !== homeLaid.id)
-      .map((n) => ({
-        n,
-        d: Math.hypot(n.x - homeLaid.x, n.y - homeLaid.y),
-      }))
-      .sort((a, b) => a.d - b.d)
-      .slice(0, SPOKE_CAP)
-      .map((x) => x.n);
-  }, [laid, homeLaid]);
+  const knnEdges = useMemo(
+    () => buildNeighborEdges(laid.map((n) => ({ id: n.id, x: n.x, y: n.y }))),
+    [laid],
+  );
 
-  const { visible, labeledIds } = useMemo(() => {
+  const { visible, labeledIds, visibleEdges } = useMemo(() => {
     const cullPad = 220;
     const viewW = WORLD_W / cam.zoom;
     const viewH = WORLD_H / cam.zoom;
@@ -522,30 +639,28 @@ function SystemMapView() {
     const vy0 = cam.y - viewH / 2 - cullPad;
     const vx1 = cam.x + viewW / 2 + cullPad;
     const vy1 = cam.y + viewH / 2 + cullPad;
-    const visible = laid.filter(
-      (n) =>
-        n.x + n.r >= vx0 &&
-        n.x - n.r <= vx1 &&
-        n.y + n.r >= vy0 &&
-        n.y - n.r <= vy1,
-    );
+    const inBox = (x: number, y: number, r = 0) =>
+      x + r >= vx0 && x - r <= vx1 && y + r >= vy0 && y - r <= vy1;
+    const visible = laid.filter((n) => inBox(n.x, n.y, n.r));
+    // Prefer labeling every in-view system; soft-cap only if needed for perf.
     const ids = new Set<string>();
     if (selectedId) ids.add(selectedId);
     if (hoveredId) ids.add(hoveredId);
-    if (cam.zoom >= LABEL_ZOOM) {
-      const scored = visible
-        .map((n) => ({
-          id: n.id,
-          d: Math.hypot(n.x - cam.x, n.y - cam.y),
-        }))
-        .sort((a, b) => a.d - b.d);
-      for (const s of scored) {
-        if (ids.size >= LABEL_CAP) break;
-        ids.add(s.id);
-      }
+    const scored = visible
+      .map((n) => ({
+        id: n.id,
+        d: Math.hypot(n.x - cam.x, n.y - cam.y),
+      }))
+      .sort((a, b) => a.d - b.d);
+    for (const s of scored) {
+      if (ids.size >= LABEL_CAP) break;
+      ids.add(s.id);
     }
-    return { visible, labeledIds: ids };
-  }, [laid, cam.x, cam.y, cam.zoom, selectedId, hoveredId]);
+    const visibleEdges = knnEdges.filter(
+      (e) => inBox(e.x1, e.y1) || inBox(e.x2, e.y2),
+    );
+    return { visible, labeledIds: ids, visibleEdges };
+  }, [laid, knnEdges, cam.x, cam.y, cam.zoom, selectedId, hoveredId]);
 
   const onMapKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && selectedId) {
@@ -573,10 +688,10 @@ function SystemMapView() {
           <div>
             <h1 className="text-lg font-medium text-zinc-100">System map</h1>
             <p className="mt-0.5 max-w-2xl text-sm text-zinc-500">
-              All systems on one map — pan and zoom to explore. Names appear
-              when zoomed in (and for selected / hover). Drag or WASD to pan,
-              Shift faster, scroll to zoom. Double-click or Open Explore to
-              enter.
+              All systems on one map — pan and zoom to explore. Names show for
+              systems in view. Favorites (star) stay slightly larger. Drag or
+              WASD to pan, Shift faster, scroll to zoom. Double-click or Open
+              Explore to enter.
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
@@ -601,6 +716,18 @@ function SystemMapView() {
                 ))}
               </div>
             </div>
+            <button
+              type="button"
+              onClick={() => setFavoritesOnly((v) => !v)}
+              aria-pressed={favoritesOnly}
+              className={
+                favoritesOnly
+                  ? "rounded-md border border-amber-400/40 bg-amber-500/20 px-3 py-2 text-xs font-medium text-amber-100"
+                  : "rounded-md border border-white/10 bg-white/5 px-3 py-2 text-xs text-zinc-300 hover:bg-white/10"
+              }
+            >
+              Favorites only
+            </button>
             <button
               type="button"
               onClick={resetView}
@@ -648,23 +775,23 @@ function SystemMapView() {
             <rect x={-24000} y={-18000} width={48000} height={36000} fill="#060a14" />
             <ellipse cx={0} cy={0} rx={380} ry={280} fill="url(#mapGlow)" />
 
-            {homeLaid
-              ? spokeTargets.map((n) => (
-                  <line
-                    key={`e-${homeLaid.id}-${n.id}`}
-                    x1={homeLaid.x}
-                    y1={homeLaid.y}
-                    x2={n.x}
-                    y2={n.y}
-                    stroke="rgba(125,180,255,0.22)"
-                    strokeWidth={1}
-                  />
-                ))
-              : null}
+            {visibleEdges.map((e) => (
+              <line
+                key={e.key}
+                x1={e.x1}
+                y1={e.y1}
+                x2={e.x2}
+                y2={e.y2}
+                stroke="rgba(125,180,255,0.2)"
+                strokeWidth={1}
+              />
+            ))}
 
             {visible.map((n) => {
               const sel = n.id === selectedId;
+              const fav = favoriteIds.has(n.id);
               const labeled = labeledIds.has(n.id);
+              const drawR = fav ? NODE_R_FAV : NODE_R;
               return (
                 <g
                   key={n.id}
@@ -687,16 +814,18 @@ function SystemMapView() {
                   <circle
                     cx={n.x}
                     cy={n.y}
-                    r={n.r + 8}
+                    r={drawR + (fav ? 10 : 8)}
                     fill="none"
-                    stroke="rgba(255,255,255,0.14)"
-                    strokeWidth={1}
+                    stroke={
+                      fav ? "rgba(251,191,36,0.35)" : "rgba(255,255,255,0.14)"
+                    }
+                    strokeWidth={fav ? 1.5 : 1}
                   />
                   {sel ? (
                     <circle
                       cx={n.x}
                       cy={n.y}
-                      r={n.r + 15}
+                      r={drawR + 15}
                       fill="none"
                       stroke="rgba(56,189,248,0.28)"
                       strokeWidth={1.25}
@@ -705,18 +834,24 @@ function SystemMapView() {
                   <circle
                     cx={n.x}
                     cy={n.y}
-                    r={n.r}
+                    r={drawR}
                     fill={n.starColor}
-                    stroke={sel ? "#38bdf8" : "rgba(186,230,253,0.7)"}
-                    strokeWidth={sel ? 2.5 : 1.5}
+                    stroke={
+                      sel
+                        ? "#38bdf8"
+                        : fav
+                          ? "#fbbf24"
+                          : "rgba(186,230,253,0.7)"
+                    }
+                    strokeWidth={sel ? 2.5 : fav ? 2.25 : 1.5}
                   />
                   {labeled ? (
                     <>
                       <text
                         x={n.x}
-                        y={n.y + n.r + 14}
+                        y={n.y + drawR + 14}
                         textAnchor="middle"
-                        className="fill-zinc-200"
+                        className={fav ? "fill-amber-200" : "fill-zinc-200"}
                         style={{
                           fontSize: 11,
                           fontWeight: 600,
@@ -726,14 +861,15 @@ function SystemMapView() {
                       </text>
                       <text
                         x={n.x}
-                        y={n.y + n.r + 26}
+                        y={n.y + drawR + 26}
                         textAnchor="middle"
-                        className="fill-zinc-500"
+                        className={fav ? "fill-amber-500/80" : "fill-zinc-500"}
                         style={{ fontSize: 9 }}
                       >
                         {n.planetCount} planet
                         {n.planetCount === 1 ? "" : "s"}
                         {n.home ? " · home" : ""}
+                        {fav && !n.home ? " · ★" : ""}
                       </text>
                     </>
                   ) : null}
@@ -753,14 +889,38 @@ function SystemMapView() {
                 <p className="text-[11px] font-medium uppercase tracking-wider text-zinc-500">
                   System facts
                 </p>
-                <button
-                  type="button"
-                  onClick={() => setSelectedId(null)}
-                  className="rounded px-1.5 py-0.5 text-xs text-zinc-500 hover:bg-white/10 hover:text-zinc-300"
-                  aria-label="Close system facts"
-                >
-                  Close
-                </button>
+                <div className="flex items-center gap-1">
+                  <button
+                    type="button"
+                    onClick={() => toggleFavorite(selectedSystem.id)}
+                    aria-pressed={favoriteIds.has(selectedSystem.id)}
+                    aria-label={
+                      favoriteIds.has(selectedSystem.id)
+                        ? "Remove from favorites"
+                        : "Add to favorites"
+                    }
+                    title={
+                      favoriteIds.has(selectedSystem.id)
+                        ? "Unfavorite"
+                        : "Favorite"
+                    }
+                    className={
+                      favoriteIds.has(selectedSystem.id)
+                        ? "rounded px-1.5 py-0.5 text-sm text-amber-300 hover:bg-amber-500/15"
+                        : "rounded px-1.5 py-0.5 text-sm text-zinc-500 hover:bg-white/10 hover:text-amber-200"
+                    }
+                  >
+                    {favoriteIds.has(selectedSystem.id) ? "★" : "☆"}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedId(null)}
+                    className="rounded px-1.5 py-0.5 text-xs text-zinc-500 hover:bg-white/10 hover:text-zinc-300"
+                    aria-label="Close system facts"
+                  >
+                    Close
+                  </button>
+                </div>
               </div>
               <div className="min-h-0 flex-1 overflow-y-auto">
                 <SystemFacts system={selectedSystem} compact />
@@ -776,13 +936,17 @@ function SystemMapView() {
           ) : null}
 
           <p className="pointer-events-none absolute bottom-2 left-3 text-[10px] text-zinc-600">
-            {nodes.length} systems · {visible.length} in view
+            {favoritesOnly
+              ? `${mapNodes.length} favorites`
+              : `${nodes.length} systems`}{" "}
+            · {visible.length} in view · {favoriteIds.size} ★
           </p>
         </div>
 
         <p className="mt-2 text-xs text-zinc-600">
           Drag or WASD to pan · Shift faster · scroll wheel zoom · Reset view
-          recenters on Sol. Click empty space to dismiss facts. Enter opens
+          recenters on Sol. Star a system in the facts panel · Favorites only
+          filters the map. Click empty space to dismiss facts. Enter opens
           selected system.
         </p>
       </div>
