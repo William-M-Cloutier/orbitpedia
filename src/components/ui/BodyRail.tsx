@@ -54,12 +54,12 @@ type Props = {
   onToggleHidden?: (id: string) => void;
   /** Limit rail to one system graph (default: home). */
   systemId?: string;
-  /** Sol Explore: hide probe path polylines (default false = visible). */
-  hideProbePaths?: boolean;
-  onHideProbePathsChange?: (next: boolean) => void;
-  /** Sol Explore: hide probe craft meshes (default false = visible). */
-  hideProbeMeshes?: boolean;
-  onHideProbeMeshesChange?: (next: boolean) => void;
+  /** Kinds whose orbit/path lines are hidden (default empty = all visible). */
+  hideOrbitPathKinds?: ReadonlySet<BodyKind>;
+  onToggleHideOrbitPathKind?: (kind: BodyKind) => void;
+  /** Kinds whose meshes/markers are hidden (default empty = all visible). */
+  hideMeshKinds?: ReadonlySet<BodyKind>;
+  onToggleHideMeshKind?: (kind: BodyKind) => void;
 };
 
 type RailRow = { body: Body; depth: number; childCount: number };
@@ -132,10 +132,10 @@ export function BodyRail({
   hiddenIds,
   onToggleHidden,
   systemId,
-  hideProbePaths = false,
-  onHideProbePathsChange,
-  hideProbeMeshes = false,
-  onHideProbeMeshesChange,
+  hideOrbitPathKinds,
+  onToggleHideOrbitPathKind,
+  hideMeshKinds,
+  onToggleHideMeshKind,
 }: Props) {
   const [filter, setFilter] = useState<(typeof FILTERS)[number]>("all");
   const [open, setOpen] = useState(true);
@@ -431,10 +431,11 @@ export function BodyRail({
           <div className="space-y-2">
             {groupedSections.map((g) => {
               const closed = groupCollapsed.has(g.kind);
-              const showProbeToggles =
-                g.kind === "probe" &&
-                (onHideProbePathsChange != null ||
-                  onHideProbeMeshesChange != null);
+              const pathsHidden = hideOrbitPathKinds?.has(g.kind) ?? false;
+              const meshesHidden = hideMeshKinds?.has(g.kind) ?? false;
+              const showPathToggle = onToggleHideOrbitPathKind != null;
+              const showMeshToggle = onToggleHideMeshKind != null;
+              const kindLabel = g.label.toLowerCase();
               return (
                 <div key={g.kind}>
                   <div className="mb-0.5 flex items-center gap-0.5">
@@ -453,48 +454,46 @@ export function BodyRail({
                       </span>
                     </button>
                   </div>
-                  {showProbeToggles ? (
+                  {showPathToggle || showMeshToggle ? (
                     <div className="mb-1 flex flex-wrap gap-1 px-1">
-                      {onHideProbePathsChange ? (
+                      {showPathToggle ? (
                         <button
                           type="button"
-                          onClick={() =>
-                            onHideProbePathsChange(!hideProbePaths)
-                          }
+                          onClick={() => onToggleHideOrbitPathKind(g.kind)}
                           className={`rounded px-1.5 py-0.5 text-[10px] ${
-                            hideProbePaths
+                            pathsHidden
                               ? "bg-amber-500/15 text-amber-200/90"
                               : "bg-white/5 text-zinc-500 hover:text-zinc-300"
                           }`}
-                          aria-pressed={hideProbePaths}
+                          aria-pressed={pathsHidden}
                           title={
-                            hideProbePaths
-                              ? "Show probe paths"
-                              : "Hide probe paths"
+                            pathsHidden
+                              ? `Show ${kindLabel} paths`
+                              : `Hide ${kindLabel} paths`
                           }
                         >
-                          {hideProbePaths ? "Paths hidden" : "Hide paths"}
+                          {pathsHidden ? "Paths hidden" : "Hide paths"}
                         </button>
                       ) : null}
-                      {onHideProbeMeshesChange ? (
+                      {showMeshToggle ? (
                         <button
                           type="button"
-                          onClick={() =>
-                            onHideProbeMeshesChange(!hideProbeMeshes)
-                          }
+                          onClick={() => onToggleHideMeshKind(g.kind)}
                           className={`rounded px-1.5 py-0.5 text-[10px] ${
-                            hideProbeMeshes
+                            meshesHidden
                               ? "bg-amber-500/15 text-amber-200/90"
                               : "bg-white/5 text-zinc-500 hover:text-zinc-300"
                           }`}
-                          aria-pressed={hideProbeMeshes}
+                          aria-pressed={meshesHidden}
                           title={
-                            hideProbeMeshes
-                              ? "Show probes"
-                              : "Hide probes"
+                            meshesHidden
+                              ? `Show ${kindLabel}`
+                              : `Hide ${kindLabel}`
                           }
                         >
-                          {hideProbeMeshes ? "Probes hidden" : "Hide probes"}
+                          {meshesHidden
+                            ? `${g.label} hidden`
+                            : `Hide ${kindLabel}`}
                         </button>
                       ) : null}
                     </div>

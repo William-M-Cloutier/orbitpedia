@@ -32,6 +32,7 @@ import {
   SizeModeControl,
   DEFAULT_SIZE_MODE,
 } from "@/components/ui/SizeModeControl";
+import type { BodyKind } from "@/data/schema";
 import type { SizeMode } from "@/viz/sizeTiers";
 
 function ExploreHome() {
@@ -93,10 +94,14 @@ function ExploreHome() {
   const [sizeMode, setSizeMode] = useState<SizeMode>(DEFAULT_SIZE_MODE);
   /** Session-only — never written to catalog JSON. Cleared on system switch. */
   const [hiddenIds, setHiddenIds] = useState<Set<string>>(() => new Set());
-  /** Sol Explore: hide all probe trajectory polylines (default visible). */
-  const [hideProbePaths, setHideProbePaths] = useState(false);
-  /** Sol Explore: hide all probe craft meshes / markers (default visible). */
-  const [hideProbeMeshes, setHideProbeMeshes] = useState(false);
+  /** Kinds whose OrbitLine / probe paths are hidden (default all visible). */
+  const [hideOrbitPathKinds, setHideOrbitPathKinds] = useState<Set<BodyKind>>(
+    () => new Set(),
+  );
+  /** Kinds whose meshes/markers are hidden (default all visible). */
+  const [hideMeshKinds, setHideMeshKinds] = useState<Set<BodyKind>>(
+    () => new Set(),
+  );
   const focus = focusId ? getBody(focusId) : undefined;
   const selectedPoi = selectedPoiId ? getPoi(selectedPoiId) : undefined;
   const simDaysPerSec = useMemo(
@@ -110,8 +115,8 @@ function ExploreHome() {
   // Drop session hide set when leaving a system (no leftover filters).
   useEffect(() => {
     setHiddenIds(new Set());
-    setHideProbePaths(false);
-    setHideProbeMeshes(false);
+    setHideOrbitPathKinds(new Set());
+    setHideMeshKinds(new Set());
   }, [systemId]);
 
   // Earth sats: 1 day / 60s wall (not Sol Default). Slow remains a user option.
@@ -217,6 +222,24 @@ function ExploreHome() {
     return () => window.removeEventListener("keydown", onKey);
   }, [setFocus, selectedPoiId]);
 
+  const onToggleHideOrbitPathKind = useCallback((kind: BodyKind) => {
+    setHideOrbitPathKinds((prev) => {
+      const next = new Set(prev);
+      if (next.has(kind)) next.delete(kind);
+      else next.add(kind);
+      return next;
+    });
+  }, []);
+
+  const onToggleHideMeshKind = useCallback((kind: BodyKind) => {
+    setHideMeshKinds((prev) => {
+      const next = new Set(prev);
+      if (next.has(kind)) next.delete(kind);
+      else next.add(kind);
+      return next;
+    });
+  }, []);
+
   if (!graphReady) {
     return (
       <div className="flex min-h-[calc(100vh-3.5rem)] items-center justify-center text-sm text-zinc-500">
@@ -234,14 +257,10 @@ function ExploreHome() {
           onFocus={onRailFocus}
           hiddenIds={hiddenIds}
           onToggleHidden={onToggleHidden}
-          hideProbePaths={hideProbePaths}
-          hideProbeMeshes={hideProbeMeshes}
-          onHideProbePathsChange={
-            isHome ? setHideProbePaths : undefined
-          }
-          onHideProbeMeshesChange={
-            isHome ? setHideProbeMeshes : undefined
-          }
+          hideOrbitPathKinds={hideOrbitPathKinds}
+          onToggleHideOrbitPathKind={onToggleHideOrbitPathKind}
+          hideMeshKinds={hideMeshKinds}
+          onToggleHideMeshKind={onToggleHideMeshKind}
         />
       }
     >
@@ -293,8 +312,8 @@ function ExploreHome() {
                 simDaysPerSec={simDaysPerSec}
                 sizeMode={sizeMode}
                 hiddenIds={hiddenIds}
-                hideProbePaths={hideProbePaths}
-                hideProbeMeshes={hideProbeMeshes}
+                hideOrbitPathKinds={hideOrbitPathKinds}
+                hideMeshKinds={hideMeshKinds}
               />
               <div className="pointer-events-none absolute left-3 top-3 z-10 flex flex-col gap-2 items-start">
                 {!isEarthSats ? (

@@ -1925,36 +1925,71 @@ if (!Number.isFinite(c)) {
     ok("path.waypoints ProbePathLine + last-waypoint craft pose wired; marker-only fail-open OK");
   }
 
-  // Probe visibility toggles (Explore): hide paths vs meshes independently.
+  // Per-kind visibility toggles (Explore): paths vs meshes independently.
   {
     const pageSrc = fs.readFileSync(path.join(ROOT, "src/app/page.tsx"), "utf8");
     const canvasSrc = fs.readFileSync(path.join(ROOT, "src/viz/OrbitCanvas.tsx"), "utf8");
     const railSrc = fs.readFileSync(path.join(ROOT, "src/components/ui/BodyRail.tsx"), "utf8");
     const hasPage =
-      /hideProbePaths/.test(pageSrc) &&
-      /hideProbeMeshes/.test(pageSrc) &&
-      /onHideProbePathsChange/.test(pageSrc) &&
-      /onHideProbeMeshesChange/.test(pageSrc);
+      /hideOrbitPathKinds/.test(pageSrc) &&
+      /hideMeshKinds/.test(pageSrc) &&
+      /onToggleHideOrbitPathKind/.test(pageSrc) &&
+      /onToggleHideMeshKind/.test(pageSrc);
     const hasCanvas =
-      /hideProbePaths/.test(canvasSrc) && /hideProbeMeshes/.test(canvasSrc);
+      /hideOrbitPathKinds/.test(canvasSrc) && /hideMeshKinds/.test(canvasSrc);
     const hasScene =
-      /hideProbePaths/.test(sceneSrc) &&
-      /hideProbeMeshes/.test(sceneSrc) &&
+      /hideOrbitPathKinds/.test(sceneSrc) &&
+      (/hideMeshKinds/.test(sceneSrc) || /shouldHideMesh/.test(sceneSrc)) &&
       /ProbePathLine/.test(sceneSrc) &&
       /ProbeBodyMesh/.test(sceneSrc);
-    // Rail chrome may land separately (Sky); assert page+viz wiring at minimum.
     if (!hasPage) {
-      fail("page.tsx should lift hideProbePaths / hideProbeMeshes + setters");
+      fail("page.tsx should lift hideOrbitPathKinds / hideMeshKinds + toggles");
     } else if (!hasCanvas) {
-      fail("OrbitCanvas should accept hideProbePaths / hideProbeMeshes props");
+      fail("OrbitCanvas should accept hideOrbitPathKinds / hideMeshKinds props");
     } else if (!hasScene) {
-      fail("OrbitScene should gate ProbePathLine / ProbeBodyMesh on hide toggles");
+      fail("OrbitScene should gate paths/meshes via hideOrbitPathKinds / hideMeshKinds");
     } else {
-      ok("probe visibility toggles wired (page + OrbitCanvas + OrbitScene)");
-      // Soft: BodyRail may already expose the props (string presence OK if present).
-      if (/hideProbePaths/.test(railSrc) || /hideProbeMeshes/.test(railSrc)) {
-        ok("BodyRail mentions hideProbePaths / hideProbeMeshes");
+      ok("per-kind visibility toggles wired (page + OrbitCanvas + OrbitScene)");
+      if (/hideOrbitPathKinds/.test(railSrc) && /hideMeshKinds/.test(railSrc)) {
+        ok("BodyRail mentions hideOrbitPathKinds / hideMeshKinds");
       }
+    }
+  }
+
+  // hideOrbitPathKinds scene gate (OrbitLine + ProbePathLine; moons inherit planet).
+  {
+    const canvasSrc = fs.readFileSync(path.join(ROOT, "src/viz/OrbitCanvas.tsx"), "utf8");
+    if (!/hideOrbitPathKinds/.test(canvasSrc)) {
+      fail("OrbitCanvas missing hideOrbitPathKinds prop");
+    } else if (!/function shouldHideOrbitPath/.test(sceneSrc)) {
+      fail("OrbitScene missing shouldHideOrbitPath helper");
+    } else if (!/hideOrbitPathKinds/.test(sceneSrc)) {
+      fail("OrbitScene missing hideOrbitPathKinds plumbing");
+    } else if (!/kind === "moon".*has\("planet"\)|has\("planet"\).*kind === "moon"/.test(sceneSrc)
+      && !/body\.kind === "moon" && hideOrbitPathKinds\.has\("planet"\)/.test(sceneSrc)) {
+      fail("shouldHideOrbitPath must inherit moon when planet hidden");
+    } else {
+      ok("hideOrbitPathKinds gate wired (OrbitCanvas + shouldHideOrbitPath + moon inherit)");
+    // Paths/meshes independent: visibleBodies must not drop mesh-hidden probes.
+    if (/visibleBodies[\s\S]{0,400}shouldHideMesh/.test(sceneSrc) &&
+        /list\.filter\([\s\S]*shouldHideMesh/.test(sceneSrc)) {
+      fail("visibleBodies must not filter shouldHideMesh (drops ProbePathLine when mesh-only hidden)");
+    } else {
+      ok("visibleBodies keeps probes mounted when only meshes hidden");
+    {
+      const meshIdx = sceneSrc.indexOf("body.kind !== \"probe\" &&");
+      const starIdx = sceneSrc.indexOf('if (body.kind === "star")');
+      const satIdx = sceneSrc.indexOf('if (body.kind === "satellite")');
+      // Prefer the BodyMesh early-return (after shouldHideMesh helper).
+      const gateIdx = sceneSrc.lastIndexOf("body.kind !== \"probe\" &&\n    shouldHideMesh");
+      const g = gateIdx >= 0 ? gateIdx : meshIdx;
+      if (g < 0 || (starIdx >= 0 && g > starIdx) || (satIdx >= 0 && g > satIdx)) {
+        fail("shouldHideMesh non-probe gate must run before star/satellite BodyMesh returns");
+      } else {
+        ok("shouldHideMesh gate runs before star/satellite branches");
+      }
+    }
+    }
     }
   }
 
