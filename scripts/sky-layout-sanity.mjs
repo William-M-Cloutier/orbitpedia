@@ -178,6 +178,23 @@ if (!/screenFloorWorldR/.test(page)) {
   ok("screen-space disc floor present");
 }
 
+
+if (!/LIGHT_PX/.test(page) || !/screenPxWorld/.test(page) || /drawR = fav \? NODE_R_FAV/.test(page)) {
+  fail("map discs must be screen-stable px, not world-fixed NODE_R");
+} else {
+  ok("screen-stable map disc radii");
+}
+if (/richOk/.test(page)) {
+  fail("richOk still promotes all in-view to fat detail discs");
+} else {
+  ok("no richOk fat-disc promotion");
+}
+if (!/DENSE_IN_VIEW/.test(page) || !/LIGHT_PX_DENSE/.test(page)) {
+  fail("dense 1–2px points missing");
+} else {
+  ok("dense paint uses tiny screen points");
+}
+
 if (process.exitCode) {
   console.error("\nsky-layout-sanity FAILED");
   process.exit(1);
