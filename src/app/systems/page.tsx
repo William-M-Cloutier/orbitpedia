@@ -721,6 +721,8 @@ function SystemMapView() {
   camRef.current = cam;
   const keysActiveRef = useRef(false);
   const commitTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const prevSelectedIdRef = useRef<string | null>(null);
+  const prevSpacingRef = useRef(spacing);
 
   const applyViewBox = useCallback((c: Cam) => {
     const svg = svgRef.current;
@@ -746,17 +748,27 @@ function SystemMapView() {
   }
 
   useEffect(() => {
-    if (!selectedId) return;
+    if (!selectedId) {
+      prevSelectedIdRef.current = null;
+      prevSpacingRef.current = spacing;
+      return;
+    }
+    const selectedChanged = prevSelectedIdRef.current !== selectedId;
+    const spacingChanged = prevSpacingRef.current !== spacing;
+    prevSelectedIdRef.current = selectedId;
+    prevSpacingRef.current = spacing;
+    // Archive hydrate rebuilds `laid` — do not steal pan/zoom.
+    if (!selectedChanged && !spacingChanged) return;
     const n = laid.find((x) => x.id === selectedId);
     if (!n) return;
     const prev = camRef.current;
     const w = WORLD_W / prev.zoom;
-    const biasX = w * 0.14;
-    const next = { ...prev, x: n.x + biasX, y: n.y };
+    const biasX = selectedChanged ? w * 0.14 : 0;
+    const next = { x: n.x + biasX, y: n.y, zoom: prev.zoom };
     camRef.current = next;
     applyViewBox(next);
     setCam(next);
-  }, [selectedId, laid, applyViewBox]);
+  }, [selectedId, spacing, laid, applyViewBox]);
 
   useEffect(() => {
     const isEditable = (t: EventTarget | null) => {
