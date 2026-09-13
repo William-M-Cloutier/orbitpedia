@@ -342,18 +342,39 @@ export async function listArchiveSystems(): Promise<ArchiveSystemSummary[]> {
 /**
  * Lazy-load one archive graph chunk. Does not read curated Store B cards.
  */
+async function fetchArchiveGraphJson(
+  systemId: string,
+): Promise<ArchiveSystemGraphFile> {
+  const primary = graphUrl(systemId);
+  let res = await fetch(primary);
+  if (!res.ok) {
+    // Full index lists ~4.7k hosts; smoke only ships ~100 graphs. Retry bulk
+    // (gitignored local --all) before failing.
+    const bulkUrl = `${BULK_ARCHIVE_BASE}/graphs/${encodeURIComponent(systemId)}.json`;
+    if (primary !== bulkUrl) {
+      const bulkRes = await fetch(bulkUrl);
+      if (bulkRes.ok) {
+        res = bulkRes;
+      } else {
+        throw new Error(
+          `archive graph HTTP ${res.status} for "${systemId}" (${primary}; bulk ${bulkRes.status})`,
+        );
+      }
+    } else {
+      throw new Error(
+        `archive graph HTTP ${res.status} for "${systemId}" (${primary})`,
+      );
+    }
+  }
+  return (await res.json()) as ArchiveSystemGraphFile;
+}
+
 export async function getArchiveSystemGraph(
   systemId: string,
 ): Promise<SystemGraph> {
   const cached = graphCache.get(systemId);
   if (cached) return cached;
-  const res = await fetch(graphUrl(systemId));
-  if (!res.ok) {
-    throw new Error(
-      `archive graph HTTP ${res.status} for "${systemId}" (${graphUrl(systemId)})`,
-    );
-  }
-  const data = (await res.json()) as ArchiveSystemGraphFile;
+  const data = await fetchArchiveGraphJson(systemId);
   if (!data?.system || !Array.isArray(data.bodies) || data.bodies.length === 0) {
     throw new Error(`archive graph "${systemId}" missing system/bodies`);
   }
