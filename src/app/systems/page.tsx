@@ -90,10 +90,19 @@ const SUBTITLE_ZOOM = 1.15;
 const EDGE_N_MAX = 250;
 /** Skip edges when zoomed out past this. */
 const EDGE_ZOOM_MIN = 0.22;
-/** Hard cap for non-priority painted dots when zoomed out / dense. */
+/** Neighborhood in-view paint is uncapped; this is leftover headroom only. */
 const LIGHT_PAINT_MAX = 520;
 /** Spatially sample plain dots when more than this are in view. */
 const VISIBLE_SAMPLE_MAX = LIGHT_PAINT_MAX;
+/** Far zoom: sparse starfield, not a yellow clump. */
+const FAR_PAINT_CAP = 150;
+/** Screen-space sample cell when zoomed out — neighbors stay apart. */
+const FAR_SAMPLE_PX = 16;
+/** Extra min screen gap after the cell sample (thins Prop-near-Sol harder). */
+const FAR_MIN_SEP_PX = 10;
+const FAR_LIGHT_PX = 2;
+const FAR_LIGHT_PX_DENSE = 1.5;
+const FAR_PRIORITY_PX = 3.2;
 /** Max world radius for screen-floor boost (prevents zoomed-out overlap blobs). */
 const WORLD_R_FLOOR_MAX = 64;
 /** Proportional: only separate home + this many nearest hosts. */
@@ -627,7 +636,14 @@ function screenFloorWorldR(zoom: number, preferPx = 8): number {
   return screenPxWorld(preferPx, zoom);
 }
 
+function isZoomedOut(zoom: number): boolean {
+  return zoom < NEIGHBORHOOD_ZOOM * 0.55;
+}
+
 function paintedDotWorldR(zoom: number, dense = false): number {
+  if (isZoomedOut(zoom)) {
+    return screenPxWorld(dense ? FAR_LIGHT_PX_DENSE : FAR_LIGHT_PX, zoom);
+  }
   return screenPxWorld(dense ? LIGHT_PX_DENSE : LIGHT_PX, zoom);
 }
 
@@ -755,6 +771,38 @@ function stableIdHash(id: string): number {
     h = Math.imul(h, 16777619);
   }
   return h >>> 0;
+}
+
+/** Drop non-priority nodes that sit on top of a kept neighbor (dense clumps). */
+function thinDenseByScreenSep<T extends { id: string; x: number; y: number }>(
+  nodes: T[],
+  priority: Set<string>,
+  zoom: number,
+  minPx: number,
+  cap: number,
+): T[] {
+  const minD = screenPxWorld(minPx, zoom);
+  const pri: T[] = [];
+  const rest: T[] = [];
+  for (const n of nodes) {
+    if (priority.has(n.id)) pri.push(n);
+    else rest.push(n);
+  }
+  rest.sort((a, b) => stableIdHash(a.id) - stableIdHash(b.id));
+  const kept: T[] = [];
+  const tooClose = (n: T) => {
+    for (const k of kept) {
+      if (Math.hypot(n.x - k.x, n.y - k.y) < minD) return true;
+    }
+    return false;
+  };
+  for (const n of pri) kept.push(n);
+  for (const n of rest) {
+    if (kept.length >= cap) break;
+    if (tooClose(n)) continue;
+    kept.push(n);
+  }
+  return kept;
 }
 
 function pickNearestLaid(
@@ -1293,15 +1341,16 @@ function SystemMapView() {
         for (const n of mapNodes) priority.add(n.id);
       }
 
-      const zoomedOut = cam.zoom < NEIGHBORHOOD_ZOOM * 0.55;
-      const paintCap = Math.min(LIGHT_PAINT_MAX, 480);
+      const zoomedOut = isZoomedOut(cam.zoom);
+      const paintCap = zoomedOut ? FAR_PAINT_CAP : Math.min(LIGHT_PAINT_MAX, 480);
 
       let visible = inView;
       // Neighborhood and closer: paint every in-view system. Sampling only
       // when truly zoomed out — and pick a stable id per cell so zooming
-      // does not swap which system represents that cell.
+      // does not swap which system represents that cell. Cell is screen-
+      // stable so far-out neighbors don't sit on the same pixel.
       if (zoomedOut && inView.length > paintCap) {
-        const cell = Math.max(MIN_SEP * 1.1, 96);
+        const cell = screenPxWorld(FAR_SAMPLE_PX, cam.zoom);
         const best = new Map<string, (typeof inView)[number]>();
         const sampled: typeof inView = [];
         for (const n of inView) {
@@ -1336,6 +1385,13 @@ function SystemMapView() {
         } else {
           visible = sampled;
         }
+        visible = thinDenseByScreenSep(
+          visible,
+          priority,
+          cam.zoom,
+          FAR_MIN_SEP_PX,
+          paintCap,
+        );
       }
 
       const dense = visible.length > DENSE_IN_VIEW;
@@ -1851,8 +1907,12 @@ function SystemMapView() {
                     visible.length > DENSE_IN_VIEW,
                   )}
                   fill={n.starColor}
-                  stroke="rgba(255,255,255,0.45)"
-                  strokeWidth={0.75}
+                  stroke={
+                    isZoomedOut(cam.zoom)
+                      ? "rgba(255,255,255,0.22)"
+                      : "rgba(255,255,255,0.45)"
+                  }
+                  strokeWidth={isZoomedOut(cam.zoom) ? 0.35 : 0.75}
                   vectorEffect="nonScalingStroke"
                 />
               ))}
@@ -1863,9 +1923,19 @@ function SystemMapView() {
               const fav = favoriteIds.has(n.id);
               const bh = n.hasBlackHole === true;
               const labeled = labeledIds.has(n.id);
-              const px = sel || fav || n.home || bh ? 11 : PRIORITY_PX;
+              const far = isZoomedOut(cam.zoom);
+              const px = far
+                ? sel || fav || n.home || bh
+                  ? FAR_PRIORITY_PX + 0.8
+                  : FAR_PRIORITY_PX
+                : sel || fav || n.home || bh
+                  ? 11
+                  : PRIORITY_PX;
               const drawR = screenPxWorld(px, cam.zoom);
-              const halo = screenPxWorld(sel ? 4 : 2.5, cam.zoom);
+              const halo = screenPxWorld(
+                far ? (sel ? 2 : 1.2) : sel ? 4 : 2.5,
+                cam.zoom,
+              );
               const showSubtitle =
                 labeled &&
                 (sel || sparseAllLabels || cam.zoom >= SUBTITLE_ZOOM);

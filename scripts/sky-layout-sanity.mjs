@@ -207,6 +207,23 @@ if (!/LIGHT_PX = 6\.5/.test(page) || !/PRIORITY_PX = 10/.test(page)) {
   ok("light ~6.5px / priority ~10px discs");
 }
 
+
+if (!/FAR_PAINT_CAP\s*=\s*150/.test(page) || !/FAR_LIGHT_PX\s*=\s*2/.test(page)) {
+  fail("far-zoom starfield cap/disc sizes missing (paintCap 150, ~2px dots)");
+} else {
+  ok("far-zoom paintCap 150 + ~2px discs");
+}
+if (!/thinDenseByScreenSep/.test(page) || !/FAR_SAMPLE_PX/.test(page) || !/FAR_MIN_SEP_PX/.test(page)) {
+  fail("far-zoom screen-stable cell / dense-region thin missing");
+} else {
+  ok("far-zoom screen-stable cell + dense thin");
+}
+if (!/isZoomedOut/.test(page)) {
+  fail("isZoomedOut helper missing");
+} else {
+  ok("isZoomedOut gates far disc sizes");
+}
+
 if (process.exitCode) {
   console.error("\nsky-layout-sanity FAILED");
   process.exit(1);
