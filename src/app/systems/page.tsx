@@ -77,7 +77,7 @@ const DEGREE_CAP = 3;
 /** Neighbor target (world units) — Schematic sunflower + k-NN cell size. */
 const MIN_SEP = SUNFLOWER_MIN_SEP;
 /** Hard cap for non-priority in-view labels (avoid white-cloud SVG text). */
-const LABEL_CAP = 50;
+const LABEL_CAP = 64;
 /** Zoom below this: only priority labels (home / fav / sel / hover / sparse). */
 const LABEL_ZOOM_GATE = 0.55;
 /** Zoom for planet-count subtitle under the name. */
@@ -86,8 +86,12 @@ const SUBTITLE_ZOOM = 1.15;
 const EDGE_N_MAX = 250;
 /** Skip edges when zoomed out past this. */
 const EDGE_ZOOM_MIN = 0.22;
+/** Hard cap for non-priority painted dots when zoomed out / dense. */
+const LIGHT_PAINT_MAX = 520;
 /** Spatially sample plain dots when more than this are in view. */
-const VISIBLE_SAMPLE_MAX = 1500;
+const VISIBLE_SAMPLE_MAX = LIGHT_PAINT_MAX;
+/** Max world radius for screen-floor boost (prevents zoomed-out overlap blobs). */
+const WORLD_R_FLOOR_MAX = 64;
 /** Proportional: only separate home + this many nearest hosts. */
 const LOCAL_SEP_MAX = 80;
 /** Sparse set: always label every matching system. */
@@ -537,12 +541,12 @@ function buildNeighborEdges(
 type Cam = { x: number; y: number; zoom: number };
 
 /**
- * Rough default before laid bounds are known — wide enough for a mid-size
- * sunflower; Reset / fitCamToPoints recompute from real laid extents.
- * ZOOM_MIN still reaches the full galactic disk for Proportional / backdrop.
+ * Neighborhood-friendly default (pre-MW feel: zoom≈1 around Sol).
+ * ZOOM_MIN still reaches the full galactic disk if the user scrolls out;
+ * default / Reset must NOT frame the entire sunflower.
  */
-const DEFAULT_ZOOM = 0.045;
-const CAM0: Cam = { x: SOL_GAL.x, y: SOL_GAL.y, zoom: DEFAULT_ZOOM };
+const NEIGHBORHOOD_ZOOM = 1;
+const CAM0: Cam = { x: SOL_GAL.x, y: SOL_GAL.y, zoom: NEIGHBORHOOD_ZOOM };
 
 function viewBoxFor(cam: Cam): string {
   const w = WORLD_W / cam.zoom;
@@ -577,10 +581,110 @@ function fitCamToPoints(
   return { x: cx, y: cy, zoom };
 }
 
-/** World radius that maps to ~target CSS px (WORLD_W ≈ full map width). */
+/** World radius that maps to ~target CSS px (WORLD_W ≈ full map width).
+ * Clamped so discs cannot explode into overlap blobs at ZOOM_MIN.
+ */
 function screenFloorWorldR(zoom: number, preferPx = 8): number {
   const px = Math.min(SCREEN_R_MAX_PX, Math.max(SCREEN_R_MIN_PX, preferPx));
-  return px / Math.max(zoom, ZOOM_MIN);
+  const world = px / Math.max(zoom, 1e-6);
+  return Math.min(WORLD_R_FLOOR_MAX, world);
+}
+
+type LaidNode = SystemNode & { x: number; y: number; r: number; unknownSky?: boolean };
+
+type LaidSpatialIndex = {
+  cell: number;
+  buckets: Map<string, LaidNode[]>;
+  nodes: LaidNode[];
+  byId: Map<string, LaidNode>;
+};
+
+const EMPTY_ID_SET: ReadonlySet<string> = new Set();
+
+function buildLaidSpatialIndex(nodes: LaidNode[], cell: number): LaidSpatialIndex {
+  const buckets = new Map<string, LaidNode[]>();
+  const byId = new Map<string, LaidNode>();
+  for (const n of nodes) {
+    byId.set(n.id, n);
+    const key = `${Math.floor(n.x / cell)}:${Math.floor(n.y / cell)}`;
+    let bucket = buckets.get(key);
+    if (!bucket) {
+      bucket = [];
+      buckets.set(key, bucket);
+    }
+    bucket.push(n);
+  }
+  return { cell, buckets, nodes, byId };
+}
+
+function queryLaidInView(
+  index: LaidSpatialIndex,
+  vx0: number,
+  vy0: number,
+  vx1: number,
+  vy1: number,
+  padR = 0,
+): LaidNode[] {
+  const { cell, buckets, nodes } = index;
+  const ix0 = Math.floor((vx0 - padR) / cell);
+  const ix1 = Math.floor((vx1 + padR) / cell);
+  const iy0 = Math.floor((vy0 - padR) / cell);
+  const iy1 = Math.floor((vy1 + padR) / cell);
+  const cellCount = (ix1 - ix0 + 1) * (iy1 - iy0 + 1);
+  const inBox = (x: number, y: number, r = 0) =>
+    x + r >= vx0 && x - r <= vx1 && y + r >= vy0 && y - r <= vy1;
+  // Zoomed-out / huge span: linear scan then caller samples — cheaper than
+  // iterating tens of thousands of empty cells.
+  if (cellCount > 4000 || cellCount > buckets.size * 2) {
+    return nodes.filter((n) => inBox(n.x, n.y, n.r));
+  }
+  const out: LaidNode[] = [];
+  const seen = new Set<string>();
+  for (let ix = ix0; ix <= ix1; ix++) {
+    for (let iy = iy0; iy <= iy1; iy++) {
+      const bucket = buckets.get(`${ix}:${iy}`);
+      if (!bucket) continue;
+      for (const n of bucket) {
+        if (seen.has(n.id)) continue;
+        if (!inBox(n.x, n.y, n.r)) continue;
+        seen.add(n.id);
+        out.push(n);
+      }
+    }
+  }
+  return out;
+}
+
+function clientToSvgWorld(
+  svg: SVGSVGElement,
+  clientX: number,
+  clientY: number,
+): { x: number; y: number } | null {
+  const ctm = svg.getScreenCTM();
+  if (!ctm) return null;
+  const pt = svg.createSVGPoint();
+  pt.x = clientX;
+  pt.y = clientY;
+  const loc = pt.matrixTransform(ctm.inverse());
+  return { x: loc.x, y: loc.y };
+}
+
+function pickNearestLaid(
+  nodes: LaidNode[],
+  wx: number,
+  wy: number,
+  hitR: number,
+): LaidNode | null {
+  let best: LaidNode | null = null;
+  let bestD = hitR;
+  for (const n of nodes) {
+    const d = Math.hypot(n.x - wx, n.y - wy);
+    if (d <= bestD) {
+      bestD = d;
+      best = n;
+    }
+  }
+  return best;
 }
 
 function SystemMapView() {
@@ -798,6 +902,34 @@ function SystemMapView() {
     () => layoutNodes(mapNodes, spacing),
     [mapNodes, spacing],
   );
+
+  const laidIndex = useMemo(
+    () => buildLaidSpatialIndex(laid, Math.max(MIN_SEP, 128)),
+    [laid],
+  );
+
+  /** Precomputed fav/home/BH-when-filter sets — never rebuild O(N) on cam ticks. */
+  const bhPriorityIds = useMemo(() => {
+    if (!blackHoleFilter) return EMPTY_ID_SET;
+    const s = new Set<string>();
+    for (const n of laid) {
+      if (n.hasBlackHole === true) s.add(n.id);
+    }
+    return s;
+  }, [laid, blackHoleFilter]);
+
+  const stickyPriorityIds = useMemo(() => {
+    const s = new Set<string>();
+    s.add(homeId);
+    for (const id of favoriteIds) s.add(id);
+    for (const id of bhPriorityIds) s.add(id);
+    return s;
+  }, [homeId, favoriteIds, bhPriorityIds]);
+
+  const [canvasMounted, setCanvasMounted] = useState(false);
+  useEffect(() => {
+    setCanvasMounted(true);
+  }, []);
 
   const mapRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -1026,98 +1158,141 @@ function SystemMapView() {
     );
   }, [laid]);
 
-  const { visible, labeledIds, visibleEdges, detailIds } = useMemo(() => {
-    const cullPad = 220;
-    const viewW = WORLD_W / cam.zoom;
-    const viewH = WORLD_H / cam.zoom;
-    const vx0 = cam.x - viewW / 2 - cullPad;
-    const vy0 = cam.y - viewH / 2 - cullPad;
-    const vx1 = cam.x + viewW / 2 + cullPad;
-    const vy1 = cam.y + viewH / 2 + cullPad;
-    const inBox = (x: number, y: number, r = 0) =>
-      x + r >= vx0 && x - r <= vx1 && y + r >= vy0 && y - r <= vy1;
-    const inView = laid.filter((n) => inBox(n.x, n.y, n.r));
+  const { visible, lightNodes, detailNodes, labeledIds, visibleEdges, detailIds } =
+    useMemo(() => {
+      const cullPad = 220;
+      const viewW = WORLD_W / cam.zoom;
+      const viewH = WORLD_H / cam.zoom;
+      const vx0 = cam.x - viewW / 2 - cullPad;
+      const vy0 = cam.y - viewH / 2 - cullPad;
+      const vx1 = cam.x + viewW / 2 + cullPad;
+      const vy1 = cam.y + viewH / 2 + cullPad;
+      const inBox = (x: number, y: number, r = 0) =>
+        x + r >= vx0 && x - r <= vx1 && y + r >= vy0 && y - r <= vy1;
 
-    const priority = new Set<string>();
-    if (selectedId) priority.add(selectedId);
-    if (hoveredId) priority.add(hoveredId);
-    for (const n of laid) {
-      if (n.home || favoriteIds.has(n.id) || n.hasBlackHole) {
-        priority.add(n.id);
+      const inView = queryLaidInView(laidIndex, vx0, vy0, vx1, vy1);
+
+      // O(1) cam-tick priority: sticky sets + selection/hover only.
+      const priority = new Set<string>(stickyPriorityIds);
+      if (selectedId) priority.add(selectedId);
+      if (hoveredId) priority.add(hoveredId);
+      if (sparseAllLabels) {
+        for (const n of mapNodes) priority.add(n.id);
       }
-    }
 
-    // Spatial sample when thousands are in view — keep priority nodes.
-    let visible = inView;
-    if (inView.length > VISIBLE_SAMPLE_MAX) {
-      const cell = Math.max(MIN_SEP * 0.5, 48);
-      const seen = new Set<string>();
-      const sampled: typeof inView = [];
-      for (const n of inView) {
-        if (priority.has(n.id)) {
+      const zoomedOut = cam.zoom < NEIGHBORHOOD_ZOOM * 0.55;
+      const paintCap = zoomedOut
+        ? Math.min(LIGHT_PAINT_MAX, 480)
+        : VISIBLE_SAMPLE_MAX;
+
+      let visible = inView;
+      if (inView.length > paintCap) {
+        const cell = Math.max(
+          MIN_SEP * (zoomedOut ? 1.1 : 0.5),
+          zoomedOut ? 96 : 48,
+        );
+        const seen = new Set<string>();
+        const sampled: typeof inView = [];
+        for (const n of inView) {
+          if (priority.has(n.id)) {
+            sampled.push(n);
+            continue;
+          }
+          const ck = `${Math.floor(n.x / cell)}:${Math.floor(n.y / cell)}`;
+          if (seen.has(ck)) continue;
+          seen.add(ck);
           sampled.push(n);
-          continue;
+          // Reserve room for any remaining priority not yet pushed.
+          if (sampled.length >= paintCap + priority.size) break;
         }
-        const ck = `${Math.floor(n.x / cell)}:${Math.floor(n.y / cell)}`;
-        if (seen.has(ck)) continue;
-        seen.add(ck);
-        sampled.push(n);
+        // Ensure every in-view priority node is present.
+        const have = new Set(sampled.map((n) => n.id));
+        for (const n of inView) {
+          if (priority.has(n.id) && !have.has(n.id)) sampled.push(n);
+        }
+        // Hard-trim non-priority if still over cap.
+        if (sampled.length > paintCap + priority.size) {
+          const kept: typeof sampled = [];
+          for (const n of sampled) {
+            if (priority.has(n.id)) kept.push(n);
+          }
+          for (const n of sampled) {
+            if (priority.has(n.id)) continue;
+            if (kept.length >= paintCap) break;
+            kept.push(n);
+          }
+          visible = kept;
+        } else {
+          visible = sampled;
+        }
       }
-      visible = sampled;
-    }
 
-    const ids = new Set<string>();
-    // Always label priority that is in the laid set / view-adjacent.
-    for (const n of laid) {
-      if (
-        n.id === selectedId ||
-        n.id === hoveredId ||
-        n.home ||
-        favoriteIds.has(n.id)
-      ) {
-        ids.add(n.id);
+      const detailIds = new Set<string>(priority);
+      const lightNodes: typeof visible = [];
+      const detailNodes: typeof visible = [];
+      const richOk =
+        !zoomedOut && visible.length <= 400 && cam.zoom >= LABEL_ZOOM_GATE;
+      for (const n of visible) {
+        const detailed =
+          detailIds.has(n.id) ||
+          sparseAllLabels ||
+          (richOk && !zoomedOut);
+        if (detailed) {
+          detailIds.add(n.id);
+          detailNodes.push(n);
+        } else {
+          lightNodes.push(n);
+        }
       }
-    }
-    if (sparseAllLabels) {
-      for (const n of mapNodes) ids.add(n.id);
-    } else if (cam.zoom >= LABEL_ZOOM_GATE) {
-      const scored = visible
-        .map((n) => ({
-          id: n.id,
-          d: Math.hypot(n.x - cam.x, n.y - cam.y),
-        }))
-        .sort((a, b) => a.d - b.d);
-      for (const s of scored) {
-        if (ids.size >= LABEL_CAP) break;
-        ids.add(s.id);
+
+      const ids = new Set<string>();
+      for (const id of stickyPriorityIds) ids.add(id);
+      if (selectedId) ids.add(selectedId);
+      if (hoveredId) ids.add(hoveredId);
+      if (sparseAllLabels) {
+        for (const n of mapNodes) ids.add(n.id);
+      } else if (cam.zoom >= LABEL_ZOOM_GATE) {
+        const scored = visible
+          .map((n) => ({
+            id: n.id,
+            d: Math.hypot(n.x - cam.x, n.y - cam.y),
+          }))
+          .sort((a, b) => a.d - b.d);
+        for (const s of scored) {
+          if (ids.size >= LABEL_CAP) break;
+          ids.add(s.id);
+        }
       }
-    }
 
-    const detailIds = new Set<string>(priority);
+      // No k-NN edges when zoomed out past neighborhood (pre-MW cheapness).
+      const drawEdges =
+        !zoomedOut &&
+        cam.zoom >= EDGE_ZOOM_MIN &&
+        laid.length <= EDGE_N_MAX
+          ? knnEdges.filter((e) => inBox(e.x1, e.y1) || inBox(e.x2, e.y2))
+          : [];
 
-    const drawEdges =
-      cam.zoom >= EDGE_ZOOM_MIN && laid.length <= EDGE_N_MAX
-        ? knnEdges.filter((e) => inBox(e.x1, e.y1) || inBox(e.x2, e.y2))
-        : [];
-
-    return {
-      visible,
-      labeledIds: ids,
-      visibleEdges: drawEdges,
-      detailIds,
-    };
-  }, [
-    laid,
-    knnEdges,
-    cam.x,
-    cam.y,
-    cam.zoom,
-    selectedId,
-    hoveredId,
-    favoriteIds,
-    sparseAllLabels,
-    mapNodes,
-  ]);
+      return {
+        visible,
+        lightNodes,
+        detailNodes,
+        labeledIds: ids,
+        visibleEdges: drawEdges,
+        detailIds,
+      };
+    }, [
+      laidIndex,
+      laid.length,
+      knnEdges,
+      cam.x,
+      cam.y,
+      cam.zoom,
+      selectedId,
+      hoveredId,
+      stickyPriorityIds,
+      sparseAllLabels,
+      mapNodes,
+    ]);
 
   const onMapKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && selectedId) {
@@ -1138,23 +1313,24 @@ function SystemMapView() {
   }, [laid, spacing, applyViewBox]);
 
   const resetView = () => {
-    if (laid.length > 0) {
-      const next = fitCamToPoints(laid, spacing === "schematic" ? 1.18 : 1.28);
-      camRef.current = next;
-      applyViewBox(next);
-      setCam(next);
-    } else {
-      camRef.current = CAM0;
-      applyViewBox(CAM0);
-      setCam(CAM0);
-    }
+    // Neighborhood around Sol/home — never Fit-all the full archive.
+    const home = laid.find((n) => n.home) ?? laidIndex.byId.get(homeId);
+    const next: Cam = {
+      x: home?.x ?? SOL_GAL.x,
+      y: home?.y ?? SOL_GAL.y,
+      zoom: NEIGHBORHOOD_ZOOM,
+    };
+    camRef.current = next;
+    applyViewBox(next);
+    setCam(next);
     setSelectedId(null);
   };
 
-  // Auto-fit when BH filter turns on or the filtered set becomes sparse.
+  // Auto-fit only for sparse filtered sets (≤12), including BH filter results
+  // that are that small. Never Fit-all the full ~5k archive by default.
   const sparseFitKeyRef = useRef<string>("");
   useEffect(() => {
-    const sparse = blackHoleFilter || mapNodes.length <= SPARSE_FIT_N;
+    const sparse = mapNodes.length > 0 && mapNodes.length <= SPARSE_FIT_N;
     if (!sparse || laid.length === 0) {
       if (!sparse) sparseFitKeyRef.current = "";
       return;
@@ -1168,30 +1344,9 @@ function SystemMapView() {
     setCam(next);
   }, [blackHoleFilter, mapNodes.length, laid, spacing, applyViewBox]);
 
-  // Schematic: frame the sunflower on first layout and when the set grows
-  // a lot (smoke → full archive). Sparse/BH auto-fit owns the other path.
-  const schemFitNRef = useRef(0);
-  useEffect(() => {
-    if (spacing !== "schematic" || laid.length < 2) return;
-    if (blackHoleFilter || mapNodes.length <= SPARSE_FIT_N) return;
-    const prevN = schemFitNRef.current;
-    const grewALot = prevN === 0 || laid.length >= prevN * 2;
-    if (!grewALot) {
-      schemFitNRef.current = Math.max(prevN, laid.length);
-      return;
-    }
-    schemFitNRef.current = laid.length;
-    const next = fitCamToPoints(laid, 1.18);
-    camRef.current = next;
-    applyViewBox(next);
-    setCam(next);
-  }, [
-    laid,
-    spacing,
-    applyViewBox,
-    blackHoleFilter,
-    mapNodes.length,
-  ]);
+  // Do NOT auto-fit the full sunflower/disk on hydrate or archive adopt —
+  // that put thousands on screen (pre-MW kept a Sol neighborhood default).
+  // Sparse/BH ≤12 still auto-fits above; Fit all remains an explicit control.
 
   return (
     <AppShell>
@@ -1478,13 +1633,75 @@ function SystemMapView() {
               </button>
             </div>
           ) : null}
+          {!canvasMounted ? (
+            <div
+              className="h-full w-full bg-[#060a14]"
+              aria-hidden="true"
+            />
+          ) : (
           <svg
             ref={svgRef}
             viewBox={viewBoxFor(cam)}
             className="h-full w-full cursor-grab active:cursor-grabbing"
             role="img"
             aria-label="System map canvas"
-            onClick={() => setSelectedId(null)}
+            onClick={(e) => {
+              const svg = svgRef.current;
+              if (!svg) {
+                setSelectedId(null);
+                return;
+              }
+              const world = clientToSvgWorld(svg, e.clientX, e.clientY);
+              if (!world) {
+                setSelectedId(null);
+                return;
+              }
+              const hitR = Math.min(
+                WORLD_R_FLOOR_MAX,
+                Math.max(NODE_R_DOT * 4, 12 / Math.max(cam.zoom, 1e-6)),
+              );
+              const hit = pickNearestLaid(lightNodes, world.x, world.y, hitR);
+              if (hit) {
+                setSelectedId(hit.id);
+                return;
+              }
+              setSelectedId(null);
+            }}
+            onDoubleClick={(e) => {
+              const svg = svgRef.current;
+              if (!svg) return;
+              const world = clientToSvgWorld(svg, e.clientX, e.clientY);
+              if (!world) return;
+              const hitR = Math.min(
+                WORLD_R_FLOOR_MAX,
+                Math.max(NODE_R_DOT * 4, 12 / Math.max(cam.zoom, 1e-6)),
+              );
+              const hit = pickNearestLaid(lightNodes, world.x, world.y, hitR);
+              if (hit) {
+                e.preventDefault();
+                openExplore(hit.id);
+              }
+            }}
+            onPointerMove={(e) => {
+              if (draggingRef.current) return;
+              const t = e.target as Element | null;
+              if (t && typeof t.closest === "function" && t.closest("[data-detail-node]")) {
+                return;
+              }
+              const svg = svgRef.current;
+              if (!svg) return;
+              const world = clientToSvgWorld(svg, e.clientX, e.clientY);
+              if (!world) {
+                setHoveredId(null);
+                return;
+              }
+              const hitR = Math.min(
+                WORLD_R_FLOOR_MAX,
+                Math.max(NODE_R_DOT * 4, 12 / Math.max(cam.zoom, 1e-6)),
+              );
+              const hit = pickNearestLaid(lightNodes, world.x, world.y, hitR);
+              setHoveredId(hit ? hit.id : null);
+            }}
           >
             <MilkyWayBackdrop look={mwLook} />
 
@@ -1500,32 +1717,33 @@ function SystemMapView() {
               />
             ))}
 
-            {visible.map((n) => {
+            {/* Light dots: single circle, no handlers — hit-test on SVG. */}
+            <g aria-hidden="true" style={{ pointerEvents: "none" }}>
+              {lightNodes.map((n) => (
+                <circle
+                  key={`dot-${n.id}`}
+                  cx={n.x}
+                  cy={n.y}
+                  r={NODE_R_DOT}
+                  fill={n.starColor}
+                  stroke="none"
+                />
+              ))}
+            </g>
+
+            {detailNodes.map((n) => {
               const sel = n.id === selectedId;
               const fav = favoriteIds.has(n.id);
-              const hovered = n.id === hoveredId;
               const bh = n.hasBlackHole === true;
               const labeled = labeledIds.has(n.id);
-              const detailed =
-                detailIds.has(n.id) ||
-                sel ||
-                fav ||
-                hovered ||
-                n.home ||
-                sparseAllLabels;
-              const light =
-                !detailed &&
-                (cam.zoom < LABEL_ZOOM_GATE || visible.length > 400);
-              let drawR = fav ? NODE_R_FAV : light ? NODE_R_DOT : NODE_R;
-              if (detailed || bh || sparseAllLabels) {
-                drawR = Math.max(
-                  drawR,
-                  screenFloorWorldR(
-                    cam.zoom,
-                    bh || sparseAllLabels ? 9 : 7,
-                  ),
-                );
-              }
+              let drawR = fav ? NODE_R_FAV : NODE_R;
+              drawR = Math.max(
+                drawR,
+                screenFloorWorldR(
+                  cam.zoom,
+                  bh || sparseAllLabels ? 9 : fav || n.home ? 8 : 7,
+                ),
+              );
               const showSubtitle =
                 labeled &&
                 (sel || sparseAllLabels || cam.zoom >= SUBTITLE_ZOOM);
@@ -1538,6 +1756,7 @@ function SystemMapView() {
               return (
                 <g
                   key={n.id}
+                  data-detail-node={n.id}
                   className="cursor-pointer"
                   onClick={(e) => {
                     e.stopPropagation();
@@ -1558,14 +1777,14 @@ function SystemMapView() {
                     <circle
                       cx={n.x}
                       cy={n.y}
-                      r={drawR + (detailed ? 14 : 10)}
+                      r={drawR + 14}
                       fill="none"
                       stroke={n.starColor}
                       strokeOpacity={0.55}
-                      strokeWidth={detailed ? 2.25 : 1.75}
+                      strokeWidth={2.25}
                     />
                   ) : null}
-                  {detailed && !bh ? (
+                  {!bh ? (
                     <circle
                       cx={n.x}
                       cy={n.y}
@@ -1589,15 +1808,7 @@ function SystemMapView() {
                       strokeWidth={1.25}
                     />
                   ) : null}
-                  {light ? (
-                    <circle
-                      cx={n.x}
-                      cy={n.y}
-                      r={drawR}
-                      fill={n.starColor}
-                      stroke="none"
-                    />
-                  ) : n.starCount >= 2 && n.starColors.length >= 2 ? (
+                  {n.starCount >= 2 && n.starColors.length >= 2 ? (
                     <>
                       {n.starColors.slice(0, n.starCount).map((fill, i, arr) => (
                         <path
@@ -1662,6 +1873,7 @@ function SystemMapView() {
               );
             })}
           </svg>
+          )}
 
           {selectedSystem ? (
             <aside
