@@ -105,10 +105,20 @@ const SPARSE_FIT_N = 12;
 /** Screen-space disc floor (CSS px approx via WORLD_W mapping). */
 const SCREEN_R_MIN_PX = 6;
 const SCREEN_R_MAX_PX = 10;
-/** Base disc — uniform for every system (favorites render slightly larger). */
+/** Layout-only disc (separation). Map paint uses screen-stable px, not these. */
 const NODE_R = 10;
 const NODE_R_FAV = 13;
 const NODE_R_DOT = 3;
+/**
+ * Screen-stable map disc radii (CSS px). Never world-fixed.
+ * This map is browse/show — wander a pretty sky, click what you notice.
+ * Search finds systems. Dense fields stay tiny points (atmosphere), not a
+ * readable inventory of every archive row.
+ */
+const LIGHT_PX = 2.5;
+const LIGHT_PX_DENSE = 1.5;
+const PRIORITY_PX = 4.5;
+const DENSE_IN_VIEW = 80;
 
 /** Spectral filter groups — first Harvard letter; Other = missing/non-letter. */
 type SpectralChip = "M" | "K" | "G" | "FA" | "Other";
@@ -608,20 +618,20 @@ function fitCamToPoints(
 /** World radius that maps to ~target CSS px (WORLD_W ≈ full map width).
  * Clamped so discs cannot explode into overlap blobs at ZOOM_MIN.
  */
+function screenPxWorld(px: number, zoom: number): number {
+  return px / Math.max(zoom, 1e-6);
+}
+
 function screenFloorWorldR(zoom: number, preferPx = 8): number {
-  const px = Math.min(SCREEN_R_MAX_PX, Math.max(SCREEN_R_MIN_PX, preferPx));
-  const world = px / Math.max(zoom, 1e-6);
-  return Math.min(WORLD_R_FLOOR_MAX, world);
+  return screenPxWorld(preferPx, zoom);
 }
 
-/** Painted light-dot radius — visible (~5px) but not a zoom-scaled ghost blob. */
-function paintedDotWorldR(zoom: number): number {
-  const world = 5 / Math.max(zoom, 1e-6);
-  return Math.min(WORLD_R_FLOOR_MAX, Math.max(NODE_R_DOT, world));
+function paintedDotWorldR(zoom: number, dense = false): number {
+  return screenPxWorld(dense ? LIGHT_PX_DENSE : LIGHT_PX, zoom);
 }
 
-function paintedHitR(zoom: number): number {
-  return paintedDotWorldR(zoom) * 1.25;
+function paintedHitR(zoom: number, dense = false): number {
+  return paintedDotWorldR(zoom, dense) * 1.35;
 }
 
 /** Drop non-locked labels that sit on top of an already-kept name. */
@@ -631,7 +641,7 @@ function cullOverlappingLabels(
   locked: Set<string>,
   zoom: number,
 ): Set<string> {
-  const minD = Math.min(140, Math.max(36, 20 / Math.max(zoom, 0.15)));
+  const minD = 28 / Math.max(zoom, 1e-6);
   const byId = new Map(nodes.map((n) => [n.id, n]));
   const taken: LaidNode[] = [];
   const out = new Set<string>();
@@ -1327,16 +1337,12 @@ function SystemMapView() {
         }
       }
 
+      const dense = visible.length > DENSE_IN_VIEW;
       const detailIds = new Set<string>(priority);
       const lightNodes: typeof visible = [];
       const detailNodes: typeof visible = [];
-      const richOk =
-        !zoomedOut && visible.length <= 400 && cam.zoom >= LABEL_ZOOM_GATE;
       for (const n of visible) {
-        const detailed =
-          detailIds.has(n.id) ||
-          sparseAllLabels ||
-          (richOk && !zoomedOut);
+        const detailed = detailIds.has(n.id) || sparseAllLabels;
         if (detailed) {
           detailIds.add(n.id);
           detailNodes.push(n);
@@ -1349,9 +1355,10 @@ function SystemMapView() {
       for (const id of stickyPriorityIds) ids.add(id);
       if (selectedId) ids.add(selectedId);
       if (hoveredId) ids.add(hoveredId);
+      const locked = new Set<string>(ids);
       if (sparseAllLabels) {
         for (const n of mapNodes) ids.add(n.id);
-      } else if (cam.zoom >= LABEL_ZOOM_GATE) {
+      } else if (!dense && cam.zoom >= LABEL_ZOOM_GATE) {
         const scored = visible
           .map((n) => ({
             id: n.id,
@@ -1362,15 +1369,10 @@ function SystemMapView() {
           if (ids.size >= LABEL_CAP) break;
           ids.add(s.id);
         }
-        if (spacing === "proportional") {
-          const locked = new Set<string>(stickyPriorityIds);
-          if (selectedId) locked.add(selectedId);
-          if (hoveredId) locked.add(hoveredId);
-          const culled = cullOverlappingLabels(visible, ids, locked, cam.zoom);
-          ids.clear();
-          for (const id of culled) ids.add(id);
-        }
       }
+      const culled = cullOverlappingLabels(visible, ids, locked, cam.zoom);
+      ids.clear();
+      for (const id of culled) ids.add(id);
 
       // No k-NN edges when zoomed out past neighborhood (pre-MW cheapness).
       const drawEdges =
@@ -1776,7 +1778,7 @@ function SystemMapView() {
                 lightNodes,
                 world.x,
                 world.y,
-                paintedHitR(cam.zoom),
+                paintedHitR(cam.zoom, visible.length > DENSE_IN_VIEW),
               );
               if (hit) {
                 setSelectedId(hit.id);
@@ -1793,7 +1795,7 @@ function SystemMapView() {
                 lightNodes,
                 world.x,
                 world.y,
-                paintedHitR(cam.zoom),
+                paintedHitR(cam.zoom, visible.length > DENSE_IN_VIEW),
               );
               if (hit) {
                 e.preventDefault();
@@ -1817,7 +1819,7 @@ function SystemMapView() {
                 lightNodes,
                 world.x,
                 world.y,
-                paintedHitR(cam.zoom),
+                paintedHitR(cam.zoom, visible.length > DENSE_IN_VIEW),
               );
               setHoveredId(hit ? hit.id : null);
             }}
@@ -1843,10 +1845,14 @@ function SystemMapView() {
                   key={`dot-${n.id}`}
                   cx={n.x}
                   cy={n.y}
-                  r={paintedDotWorldR(cam.zoom)}
+                  r={paintedDotWorldR(
+                    cam.zoom,
+                    visible.length > DENSE_IN_VIEW,
+                  )}
                   fill={n.starColor}
-                  stroke="rgba(255,255,255,0.5)"
-                  strokeWidth={0.9}
+                  stroke="rgba(255,255,255,0.45)"
+                  strokeWidth={0.75}
+                  vectorEffect="nonScalingStroke"
                 />
               ))}
             </g>
@@ -1856,14 +1862,9 @@ function SystemMapView() {
               const fav = favoriteIds.has(n.id);
               const bh = n.hasBlackHole === true;
               const labeled = labeledIds.has(n.id);
-              let drawR = fav ? NODE_R_FAV : NODE_R;
-              drawR = Math.max(
-                drawR,
-                screenFloorWorldR(
-                  cam.zoom,
-                  bh || sparseAllLabels ? 9 : fav || n.home ? 8 : 7,
-                ),
-              );
+              const px = sel || fav || n.home || bh ? 5 : PRIORITY_PX;
+              const drawR = screenPxWorld(px, cam.zoom);
+              const halo = screenPxWorld(sel ? 4 : 2.5, cam.zoom);
               const showSubtitle =
                 labeled &&
                 (sel || sparseAllLabels || cam.zoom >= SUBTITLE_ZOOM);
@@ -1872,7 +1873,7 @@ function SystemMapView() {
                 : fav
                   ? "#fbbf24"
                   : "rgba(186,230,253,0.7)";
-              const ringW = sel ? 2.5 : fav ? 2.25 : 1.5;
+              const ringW = sel ? 1.5 : fav ? 1.35 : 1;
               return (
                 <g
                   key={n.id}
@@ -1901,7 +1902,7 @@ function SystemMapView() {
                     <circle
                       cx={n.x}
                       cy={n.y}
-                      r={drawR + 14}
+                      r={drawR + halo}
                       fill="none"
                       stroke={n.starColor}
                       strokeOpacity={0.55}
@@ -1912,7 +1913,7 @@ function SystemMapView() {
                     <circle
                       cx={n.x}
                       cy={n.y}
-                      r={drawR + (fav ? 10 : 8)}
+                      r={drawR + halo}
                       fill="none"
                       stroke={
                         fav
@@ -1926,13 +1927,13 @@ function SystemMapView() {
                     <circle
                       cx={n.x}
                       cy={n.y}
-                      r={drawR + 15}
+                      r={drawR + halo}
                       fill="none"
                       stroke="rgba(56,189,248,0.28)"
                       strokeWidth={1.25}
                     />
                   ) : null}
-                  {n.starCount >= 2 && n.starColors.length >= 2 ? (
+                  {(sel || fav) && n.starCount >= 2 && n.starColors.length >= 2 ? (
                     <>
                       {n.starColors.slice(0, n.starCount).map((fill, i, arr) => (
                         <path
@@ -1965,7 +1966,7 @@ function SystemMapView() {
                     <>
                       <text
                         x={n.x}
-                        y={n.y + drawR + 14}
+                        y={n.y + drawR + screenPxWorld(12, cam.zoom)}
                         textAnchor="middle"
                         className={fav ? "fill-amber-200" : "fill-zinc-200"}
                         style={{
@@ -1978,7 +1979,7 @@ function SystemMapView() {
                       {showSubtitle ? (
                         <text
                           x={n.x}
-                          y={n.y + drawR + 26}
+                          y={n.y + drawR + screenPxWorld(22, cam.zoom)}
                           textAnchor="middle"
                           className={
                             fav ? "fill-amber-500/80" : "fill-zinc-500"
