@@ -7,8 +7,8 @@
  * +Y in the direction of Galactic rotation, +Z toward the NGP.
  *
  * World units: 1 = 1 light-year (proportional). Schematic uses a golden-angle
- * sunflower around Sol (spread, not sky ring). Proportional uses true sky
- * distance. Never invents RA/Dec.
+ * sunflower around the galactic/map center (inside the MW disk art), not Sol
+ * at the rim. Proportional uses true sky distance. Never invents RA/Dec.
  */
 
 export type SkyCoords = {
@@ -51,15 +51,46 @@ export const GOLDEN_ANGLE = Math.PI * (3 - Math.sqrt(5));
 /** Center-to-center target spacing for Schematic sunflower (world units). */
 export const SUNFLOWER_MIN_SEP = 168;
 
+/** Flatten Y so the pack is a bit oval (pre-MW feel). */
+export const SUNFLOWER_Y_FLAT = 0.72;
+
+/** MW backdrop ellipse (must match MilkyWayBackdrop). */
+export const MW_DISK_RX = MW_DISK_R_LY;
+export const MW_DISK_RY = MW_DISK_R_LY * 0.42;
+
+/** Schematic pack origin — galactic / graphic center, not Sol at the rim. */
+export const SCHEMATIC_ORIGIN = { x: 0, y: 0 } as const;
+
+/** Keep the Schematic pack inside this fraction of the disk ellipse. */
+export const SCHEMATIC_DISK_FIT = 0.8;
+
 /**
- * Golden-angle sunflower around an origin (Sol / SOL_GAL on the Systems map).
- * index 0 → origin; later indices spiral out as MIN_SEP * sqrt(i).
- * Y is slightly flattened (×0.72) to match the pre-MW map feel.
+ * Spacing so a sunflower of `count` nodes stays inside the MW disk ellipse.
+ * Shrinks below SUNFLOWER_MIN_SEP only when the raw pack would spill.
+ */
+export function schematicSunflowerSep(
+  count: number,
+  minSep: number = SUNFLOWER_MIN_SEP,
+): number {
+  if (count <= 1) return minSep;
+  const maxI = count - 1;
+  const maxRad = Math.min(
+    SCHEMATIC_DISK_FIT * MW_DISK_RX,
+    (SCHEMATIC_DISK_FIT * MW_DISK_RY) / SUNFLOWER_Y_FLAT,
+  );
+  const raw = minSep * Math.sqrt(maxI);
+  if (raw <= maxRad) return minSep;
+  return maxRad / Math.sqrt(maxI);
+}
+
+/**
+ * Golden-angle sunflower around an origin (Schematic: disk center).
+ * index 0 → origin (Sol/home); later indices spiral out as sep * sqrt(i).
  */
 export function placeSystemSunflower(
   index: number,
-  originX: number = SOL_GAL.x,
-  originY: number = SOL_GAL.y,
+  originX: number = SCHEMATIC_ORIGIN.x,
+  originY: number = SCHEMATIC_ORIGIN.y,
   minSep: number = SUNFLOWER_MIN_SEP,
 ): { x: number; y: number } {
   if (index <= 0) {
@@ -69,7 +100,7 @@ export function placeSystemSunflower(
   const rad = minSep * Math.sqrt(index);
   return {
     x: originX + Math.cos(ang) * rad,
-    y: originY + Math.sin(ang) * rad * 0.72,
+    y: originY + Math.sin(ang) * rad * SUNFLOWER_Y_FLAT,
   };
 }
 

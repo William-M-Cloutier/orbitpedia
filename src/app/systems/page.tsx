@@ -42,6 +42,8 @@ import {
   MIN_VISUAL_GAP,
   placeSystemSky,
   placeSystemSunflower,
+  SCHEMATIC_ORIGIN,
+  schematicSunflowerSep,
   separateSkyNodes,
   SOL_GAL,
   SUNFLOWER_MIN_SEP,
@@ -361,18 +363,24 @@ function layoutNodes(
   if (nodes.length === 0) return [];
 
   if (spacing === "schematic") {
-    // Golden-angle sunflower around Sol — restores pre-MW spread feel.
-    // Stable order: home first, then id (no RA/Dec invented).
+    // Golden-angle sunflower around the MW graphic center (not Sol at the rim).
+    // Sol/home sits at the pack center. Scale so the pack stays in the disk.
     const sorted = [...nodes].sort((a, b) => {
       if (a.home !== b.home) return a.home ? -1 : 1;
       return a.id.localeCompare(b.id);
     });
+    const sep = schematicSunflowerSep(sorted.length, MIN_SEP);
     return sorted.map((n, i) => {
-      const { x, y } = placeSystemSunflower(i, SOL_GAL.x, SOL_GAL.y, MIN_SEP);
+      const { x, y } = placeSystemSunflower(
+        i,
+        SCHEMATIC_ORIGIN.x,
+        SCHEMATIC_ORIGIN.y,
+        sep,
+      );
       return {
         ...n,
-        x: n.home ? SOL_GAL.x : x,
-        y: n.home ? SOL_GAL.y : y,
+        x: n.home ? SCHEMATIC_ORIGIN.x : x,
+        y: n.home ? SCHEMATIC_ORIGIN.y : y,
         r: NODE_R,
         unknownSky: false,
       };
@@ -542,12 +550,26 @@ function buildNeighborEdges(
 type Cam = { x: number; y: number; zoom: number };
 
 /**
- * Neighborhood-friendly default (pre-MW feel: zoom≈1 around Sol).
- * ZOOM_MIN still reaches the full galactic disk if the user scrolls out;
- * default / Reset must NOT frame the entire sunflower.
+ * Proportional default: Sol neighborhood (pre-MW zoom≈1).
+ * Schematic default: frames the centered pack inside the MW disk.
+ * ZOOM_MIN still reaches the full galactic disk if the user scrolls out.
  */
 const NEIGHBORHOOD_ZOOM = 1;
-const CAM0: Cam = { x: SOL_GAL.x, y: SOL_GAL.y, zoom: NEIGHBORHOOD_ZOOM };
+
+function schematicPackCam(count: number): Cam {
+  const n = Math.max(count, 2);
+  const sep = schematicSunflowerSep(n, MIN_SEP);
+  const rad = sep * Math.sqrt(n - 1);
+  const halfW = Math.max(rad * 1.2, MIN_SEP);
+  const halfH = Math.max(rad * 0.72 * 1.2, MIN_SEP);
+  const zoom = Math.max(
+    ZOOM_MIN,
+    Math.min(WORLD_W / (2 * halfW), WORLD_H / (2 * halfH), ZOOM_MAX),
+  );
+  return { x: SCHEMATIC_ORIGIN.x, y: SCHEMATIC_ORIGIN.y, zoom };
+}
+
+const CAM0: Cam = schematicPackCam(5000);
 
 function viewBoxFor(cam: Cam): string {
   const w = WORLD_W / cam.zoom;
@@ -978,17 +1000,25 @@ function SystemMapView() {
   }
 
   useEffect(() => {
-    if (!selectedId) {
-      prevSelectedIdRef.current = null;
-      prevSpacingRef.current = spacing;
-      return;
-    }
     const selectedChanged = prevSelectedIdRef.current !== selectedId;
     const spacingChanged = prevSpacingRef.current !== spacing;
     prevSelectedIdRef.current = selectedId;
     prevSpacingRef.current = spacing;
     // Archive hydrate rebuilds `laid` — do not steal pan/zoom.
     if (!selectedChanged && !spacingChanged) return;
+    if (spacingChanged && !selectedId) {
+      const next =
+        spacing === "schematic"
+          ? laid.length
+            ? fitCamToPoints(laid, 1.18)
+            : schematicPackCam(5000)
+          : { x: SOL_GAL.x, y: SOL_GAL.y, zoom: NEIGHBORHOOD_ZOOM };
+      camRef.current = next;
+      applyViewBox(next);
+      setCam(next);
+      return;
+    }
+    if (!selectedId) return;
     const n = laid.find((x) => x.id === selectedId);
     if (!n) return;
     const prev = camRef.current;
@@ -1324,13 +1354,20 @@ function SystemMapView() {
   }, [laid, spacing, applyViewBox]);
 
   const resetView = () => {
-    // Neighborhood around Sol/home — never Fit-all the full archive.
-    const home = laid.find((n) => n.home) ?? laidIndex.byId.get(homeId);
-    const next: Cam = {
-      x: home?.x ?? SOL_GAL.x,
-      y: home?.y ?? SOL_GAL.y,
-      zoom: NEIGHBORHOOD_ZOOM,
-    };
+    const next =
+      spacing === "schematic"
+        ? laid.length
+          ? fitCamToPoints(laid, 1.18)
+          : schematicPackCam(mapNodes.length || 5000)
+        : {
+            x:
+              (laid.find((n) => n.home) ?? laidIndex.byId.get(homeId))?.x ??
+              SOL_GAL.x,
+            y:
+              (laid.find((n) => n.home) ?? laidIndex.byId.get(homeId))?.y ??
+              SOL_GAL.y,
+            zoom: NEIGHBORHOOD_ZOOM,
+          };
     camRef.current = next;
     applyViewBox(next);
     setCam(next);

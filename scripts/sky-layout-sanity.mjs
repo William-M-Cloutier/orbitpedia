@@ -20,37 +20,57 @@ function ok(msg) {
 
 const GOLDEN = Math.PI * (3 - Math.sqrt(5));
 const MIN_SEP = 168;
+const Y_FLAT = 0.72;
+const RX = 15 * 3261.56;
+const RY = RX * 0.42;
+const FIT = 0.8;
 const SOL_X = -8.2 * 3261.56;
 const SOL_Y = 0;
 
-function placeSunflower(index) {
-  if (index <= 0) return { x: SOL_X, y: SOL_Y };
+function schematicSep(count) {
+  if (count <= 1) return MIN_SEP;
+  const maxI = count - 1;
+  const maxRad = Math.min(FIT * RX, (FIT * RY) / Y_FLAT);
+  const raw = MIN_SEP * Math.sqrt(maxI);
+  return raw <= maxRad ? MIN_SEP : maxRad / Math.sqrt(maxI);
+}
+
+function placeSunflower(index, originX, originY, sep) {
+  if (index <= 0) return { x: originX, y: originY };
   const ang = index * GOLDEN;
-  const rad = MIN_SEP * Math.sqrt(index);
+  const rad = sep * Math.sqrt(index);
   return {
-    x: SOL_X + Math.cos(ang) * rad,
-    y: SOL_Y + Math.sin(ang) * rad * 0.72,
+    x: originX + Math.cos(ang) * rad,
+    y: originY + Math.sin(ang) * rad * Y_FLAT,
   };
 }
 
 const N = 4700;
-let maxR = 0;
+const sep = schematicSep(N);
+let maxEllipse = 0;
 for (let i = 0; i < N; i++) {
-  const p = placeSunflower(i);
-  maxR = Math.max(maxR, Math.hypot(p.x - SOL_X, p.y - SOL_Y));
+  const p = placeSunflower(i, 0, 0, sep);
+  const e = (p.x / RX) ** 2 + (p.y / RY) ** 2;
+  if (e > maxEllipse) maxEllipse = e;
 }
-const expect = MIN_SEP * Math.sqrt(N - 1);
-if (!(maxR > 8000)) {
-  fail(`Schematic sunflower maxR=${maxR} expected ≫ 280 (got order of ${expect})`);
+if (maxEllipse > FIT * FIT + 1e-6) {
+  fail(`Schematic pack spills MW disk: max ellipse=${maxEllipse.toFixed(3)} > ${FIT}^2`);
 } else {
-  ok(`Schematic N=${N} maxR≈${maxR.toFixed(0)} (≳ MIN_SEP*sqrt(N)≈${expect.toFixed(0)}; not SCHEMATIC_R=280)`);
+  ok(`Schematic N=${N} stays inside ${FIT} of MW disk (max ellipse=${maxEllipse.toFixed(3)})`);
 }
 
-const home = placeSunflower(0);
-if (home.x !== SOL_X || home.y !== SOL_Y) {
-  fail(`home index 0 should be SOL_GAL, got ${home.x},${home.y}`);
+const home = placeSunflower(0, 0, 0, sep);
+if (home.x !== 0 || home.y !== 0) {
+  fail(`home index 0 should be disk center, got ${home.x},${home.y}`);
 } else {
-  ok("sunflower index 0 pins Sol");
+  ok("sunflower index 0 pins Sol at disk center");
+}
+
+const propHome = { x: SOL_X, y: SOL_Y };
+if (Math.abs(propHome.x - SOL_X) > 1e-6) {
+  fail("SOL_GAL drifted");
+} else {
+  ok("Proportional Sol still at galactic rim (SOL_GAL)");
 }
 
 const src = fs.readFileSync(path.join(ROOT, "src/lib/skyLayout.ts"), "utf8");
@@ -66,6 +86,18 @@ if (!/export const GOLDEN_ANGLE/.test(src)) {
 }
 
 const page = fs.readFileSync(path.join(ROOT, "src/app/systems/page.tsx"), "utf8");
+
+if (!/SCHEMATIC_ORIGIN/.test(page) || !/schematicSunflowerSep/.test(page)) {
+  fail("schematic pack is not centered/scaled with SCHEMATIC_ORIGIN");
+} else {
+  ok("Schematic uses disk-center origin + disk-fit sep");
+}
+if (/placeSystemSunflower\(\s*i,\s*SOL_GAL/.test(page)) {
+  fail("Schematic sunflower still anchored at SOL_GAL rim");
+} else {
+  ok("Schematic sunflower not anchored at SOL_GAL");
+}
+
 if (!/placeSystemSunflower/.test(page)) {
   fail("systems page does not call placeSystemSunflower");
 } else {
