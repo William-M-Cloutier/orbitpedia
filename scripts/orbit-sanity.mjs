@@ -2131,6 +2131,56 @@ if (!Number.isFinite(c)) {
       ok(`earth-sats system validates (${members.length} members)`);
     }
   }
+
+  // Epoch phase: catalog maDeg must place distinct sats at distinct poses (simDays=0).
+  // Mirrors OrbitScene localOrbitPosition: ma = orbit.maDeg + (360*simDays)/period.
+  // Do not invent random offsets — GP MEAN_ANOMALY is the phase source.
+  {
+    const issPath = path.join(DATA, "bodies/iss.json");
+    const swotPath = path.join(DATA, "bodies/swot.json");
+    if (!fs.existsSync(issPath) || !fs.existsSync(swotPath)) {
+      fail("iss/swot bodies missing for maDeg phase check");
+    } else {
+      const iss = JSON.parse(fs.readFileSync(issPath, "utf8"));
+      const swot = JSON.parse(fs.readFileSync(swotPath, "utf8"));
+      const oIss = iss.orbit;
+      const oSwot = swot.orbit;
+      if (!oIss || !oSwot) {
+        fail("iss/swot missing orbit for maDeg phase check");
+      } else if (!(Number.isFinite(oIss.maDeg) && Number.isFinite(oSwot.maDeg))) {
+        fail("iss/swot maDeg must be finite catalog GP values");
+      } else if (oIss.maDeg === oSwot.maDeg) {
+        fail(`iss and swot share maDeg=${oIss.maDeg} — expected distinct GP phases`);
+      } else {
+        const pIss = positionAtMa(oIss, oIss.maDeg); // simDays=0
+        const pSwot = positionAtMa(oSwot, oSwot.maDeg);
+        const dx = pIss[0] - pSwot[0];
+        const dy = pIss[1] - pSwot[1];
+        const dz = pIss[2] - pSwot[2];
+        const sep = Math.hypot(dx, dy, dz);
+        // LEO aAu ~ 4.5e-5; require clearly separated poses (not identical phase dump).
+        if (!(sep > 1e-8)) {
+          fail(
+            `iss vs swot epoch positions too close (sep=${sep} au) — maDeg phase ignored?`,
+          );
+        } else {
+          ok(
+            `earth-sats maDeg phase: iss(${oIss.maDeg}) ≠ swot(${oSwot.maDeg}); sep=${sep.toExponential(2)} au @ simDays=0`,
+          );
+        }
+      }
+    }
+  }
+
+  // OrbitScene geocentric mesh pose must use catalog maDeg (not hard-zero).
+  {
+    const sceneSrc = fs.readFileSync(path.join(ROOT, "src/viz/OrbitScene.tsx"), "utf8");
+    if (!/const ma = body\.orbit\.maDeg \+ \(360 \* simDays\) \/ period/.test(sceneSrc)) {
+      fail("OrbitScene localOrbitPosition must use body.orbit.maDeg + simDays advance");
+    } else {
+      ok("OrbitScene localOrbitPosition uses catalog maDeg for mesh pose");
+    }
+  }
 }
 
 if (process.exitCode) {
