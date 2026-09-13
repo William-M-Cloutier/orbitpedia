@@ -82,10 +82,27 @@ if (/spacing === "schematic"[\s\S]{0,200}placeSystemSky/.test(page)) {
 } else {
   ok("Schematic layout skips placeSystemSky ring");
 }
-if (!/LABEL_CAP = 50/.test(page) && !/LABEL_CAP = 5\d/.test(page)) {
-  fail("LABEL_CAP should be ~40–60, not 220");
+const labelCapM = page.match(/LABEL_CAP\s*=\s*(\d+)/);
+const labelCapN = labelCapM ? Number(labelCapM[1]) : NaN;
+if (!(labelCapN >= 40 && labelCapN <= 70)) {
+  fail("LABEL_CAP should be ~40–70 (pre-MW 64), not 220");
 } else {
   ok("LABEL_CAP tightened");
+}
+if (!/NEIGHBORHOOD_ZOOM\s*=\s*1/.test(page)) {
+  fail("NEIGHBORHOOD_ZOOM default missing (expected 1)");
+} else {
+  ok("NEIGHBORHOOD_ZOOM neighborhood default");
+}
+if (!/LIGHT_PAINT_MAX\s*=\s*[1-9]\d{2}/.test(page) || !/WORLD_R_FLOOR_MAX/.test(page)) {
+  fail("zoomed-out paint cap / world-r floor missing");
+} else {
+  ok("zoomed-out paint cap + world-r floor");
+}
+if (!/canvasMounted/.test(page)) {
+  fail("map canvas mount-gate missing (hydration)");
+} else {
+  ok("map canvas mount-gate present");
 }
 if (!/prevSelectedIdRef/.test(page) || !/Archive hydrate rebuilds/.test(page)) {
   fail("selectedId camera guard (cam-lock) missing");
