@@ -201,6 +201,15 @@ export function searchMatchRank(
   return 99;
 }
 
+/** Discover system picker — name/id/alias rank (SYSTEM_ALIASES when known). */
+export function systemPickerMatchRank(
+  name: string,
+  id: string,
+  q: string,
+): number {
+  return searchMatchRank(name, id, q, SYSTEM_ALIASES[id]);
+}
+
 function systemMatchesQuery(s: System, q: string): boolean {
   return searchMatchRank(s.name, s.id, q, SYSTEM_ALIASES[s.id]) < 99;
 }

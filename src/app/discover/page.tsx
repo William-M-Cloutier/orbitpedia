@@ -1,6 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type KeyboardEvent,
+} from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import Link from "next/link";
@@ -15,6 +22,7 @@ import {
   getSystem,
   isFixtureSystemId,
   KIND_LABEL,
+  systemPickerMatchRank,
 } from "@/data/catalog";
 import {
   getSystemGraphAsync,
@@ -44,6 +52,8 @@ function DiscoverInner() {
   >([]);
   const [graphReady, setGraphReady] = useState(false);
   const [pickerOpen, setPickerOpen] = useState(false);
+  const [pickerQuery, setPickerQuery] = useState("");
+  const pickerSearchRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -139,6 +149,53 @@ function DiscoverInner() {
     return out;
   }, [systems, systemId, homeId]);
 
+  const filteredPickerSystems = useMemo(() => {
+    const q = pickerQuery.trim().toLowerCase();
+    if (!q) return orderedSystems;
+    const matched = systems
+      .map((s) => ({
+        s,
+        rank: systemPickerMatchRank(s.name, s.id, q),
+      }))
+      .filter((x) => x.rank < 99)
+      .sort(
+        (a, b) =>
+          a.rank - b.rank || a.s.name.localeCompare(b.s.name),
+      )
+      .map((x) => x.s);
+    // Always keep selected (and Sol when present) at top if still in catalog.
+    const pinned: Array<System | ArchiveSystemSummary> = [];
+    const selectedSys = systems.find((s) => s.id === systemId);
+    const homeSys = systems.find((s) => s.id === homeId);
+    if (selectedSys) pinned.push(selectedSys);
+    if (homeSys && homeSys.id !== systemId) pinned.push(homeSys);
+    const pinnedIds = new Set(pinned.map((s) => s.id));
+    return [...pinned, ...matched.filter((s) => !pinnedIds.has(s.id))];
+  }, [orderedSystems, systems, pickerQuery, systemId, homeId]);
+
+  useEffect(() => {
+    if (!pickerOpen) return;
+    setPickerQuery("");
+    const t = window.setTimeout(() => pickerSearchRef.current?.focus(), 0);
+    return () => window.clearTimeout(t);
+  }, [pickerOpen]);
+
+  const onPickerSearchKeyDown = useCallback(
+    (e: KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        setPickerOpen(false);
+        return;
+      }
+      if (e.key === "Enter") {
+        e.preventDefault();
+        const first = filteredPickerSystems[0];
+        if (first) setSystem(first.id);
+      }
+    },
+    [filteredPickerSystems, setSystem],
+  );
+
   const selectedLabel =
     system?.name ??
     systems.find((s) => s.id === systemId)?.name ??
@@ -193,25 +250,41 @@ function DiscoverInner() {
               </span>
             </button>
             {pickerOpen ? (
-              <div className="mt-2 max-h-64 w-full overflow-y-auto rounded-lg border border-white/10 bg-zinc-950/90 p-2">
-                <div className="flex flex-wrap gap-2">
-                  {orderedSystems.map((s) => (
-                    <button
-                      key={s.id}
-                      type="button"
-                      onClick={() => setSystem(s.id)}
-                      className={`rounded-lg px-3 py-1.5 text-sm ${
-                        s.id === systemId
-                          ? "bg-sky-500/25 text-sky-100"
-                          : s.id === homeId
-                            ? "bg-amber-500/15 text-amber-100 hover:bg-amber-500/25"
-                            : "bg-white/5 text-zinc-400 hover:bg-white/10 hover:text-zinc-200"
-                      }`}
-                    >
-                      {s.name}
-                      {s.id === homeId ? " · home" : ""}
-                    </button>
-                  ))}
+              <div className="mt-2 w-full rounded-lg border border-white/10 bg-zinc-950/90 p-2">
+                <input
+                  ref={pickerSearchRef}
+                  type="search"
+                  value={pickerQuery}
+                  onChange={(e) => setPickerQuery(e.target.value)}
+                  onKeyDown={onPickerSearchKeyDown}
+                  placeholder="Search systems"
+                  aria-label="Search systems"
+                  className="mb-2 w-full rounded-md border border-white/10 bg-white/5 px-2.5 py-1.5 text-sm text-zinc-100 placeholder:text-zinc-600 outline-none focus:border-sky-500/40"
+                />
+                <div className="max-h-56 overflow-y-auto">
+                  {filteredPickerSystems.length === 0 ? (
+                    <p className="px-1 py-2 text-xs text-zinc-500">No matches</p>
+                  ) : (
+                    <div className="flex flex-wrap gap-2">
+                      {filteredPickerSystems.map((s) => (
+                        <button
+                          key={s.id}
+                          type="button"
+                          onClick={() => setSystem(s.id)}
+                          className={`rounded-lg px-3 py-1.5 text-sm ${
+                            s.id === systemId
+                              ? "bg-sky-500/25 text-sky-100"
+                              : s.id === homeId
+                                ? "bg-amber-500/15 text-amber-100 hover:bg-amber-500/25"
+                                : "bg-white/5 text-zinc-400 hover:bg-white/10 hover:text-zinc-200"
+                          }`}
+                        >
+                          {s.name}
+                          {s.id === homeId ? " · home" : ""}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             ) : null}
