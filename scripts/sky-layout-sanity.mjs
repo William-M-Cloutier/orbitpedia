@@ -165,6 +165,13 @@ if (!/cullOverlappingLabels/.test(page)) {
   ok("Prop label collision cull present");
 }
 
+
+if (!/stableIdHash/.test(page) || !/zoomedOut && inView.length > paintCap/.test(page)) {
+  fail("zoomed-in must paint all in-view; sample only when zoomed out");
+} else {
+  ok("no neighborhood spatial sample; far-out sample is stable");
+}
+
 if (!/screenFloorWorldR/.test(page)) {
   fail("screen-space disc floor missing");
 } else {

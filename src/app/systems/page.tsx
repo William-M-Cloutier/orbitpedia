@@ -737,6 +737,15 @@ function clientToSvgWorld(
   return { x: loc.x, y: loc.y };
 }
 
+function stableIdHash(id: string): number {
+  let h = 2166136261;
+  for (let i = 0; i < id.length; i++) {
+    h ^= id.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
+}
+
 function pickNearestLaid(
   nodes: LaidNode[],
   wx: number,
@@ -1274,17 +1283,15 @@ function SystemMapView() {
       }
 
       const zoomedOut = cam.zoom < NEIGHBORHOOD_ZOOM * 0.55;
-      const paintCap = zoomedOut
-        ? Math.min(LIGHT_PAINT_MAX, 480)
-        : VISIBLE_SAMPLE_MAX;
+      const paintCap = Math.min(LIGHT_PAINT_MAX, 480);
 
       let visible = inView;
-      if (inView.length > paintCap) {
-        const cell = Math.max(
-          MIN_SEP * (zoomedOut ? 1.1 : 0.5),
-          zoomedOut ? 96 : 48,
-        );
-        const seen = new Set<string>();
+      // Neighborhood and closer: paint every in-view system. Sampling only
+      // when truly zoomed out — and pick a stable id per cell so zooming
+      // does not swap which system represents that cell.
+      if (zoomedOut && inView.length > paintCap) {
+        const cell = Math.max(MIN_SEP * 1.1, 96);
+        const best = new Map<string, (typeof inView)[number]>();
         const sampled: typeof inView = [];
         for (const n of inView) {
           if (priority.has(n.id)) {
@@ -1292,25 +1299,25 @@ function SystemMapView() {
             continue;
           }
           const ck = `${Math.floor(n.x / cell)}:${Math.floor(n.y / cell)}`;
-          if (seen.has(ck)) continue;
-          seen.add(ck);
-          sampled.push(n);
-          // Reserve room for any remaining priority not yet pushed.
-          if (sampled.length >= paintCap + priority.size) break;
+          const prev = best.get(ck);
+          if (!prev || stableIdHash(n.id) < stableIdHash(prev.id)) {
+            best.set(ck, n);
+          }
         }
-        // Ensure every in-view priority node is present.
+        for (const n of best.values()) sampled.push(n);
         const have = new Set(sampled.map((n) => n.id));
         for (const n of inView) {
           if (priority.has(n.id) && !have.has(n.id)) sampled.push(n);
         }
-        // Hard-trim non-priority if still over cap.
         if (sampled.length > paintCap + priority.size) {
           const kept: typeof sampled = [];
           for (const n of sampled) {
             if (priority.has(n.id)) kept.push(n);
           }
-          for (const n of sampled) {
-            if (priority.has(n.id)) continue;
+          const rest = sampled
+            .filter((n) => !priority.has(n.id))
+            .sort((a, b) => stableIdHash(a.id) - stableIdHash(b.id));
+          for (const n of rest) {
             if (kept.length >= paintCap) break;
             kept.push(n);
           }
