@@ -104,6 +104,13 @@ if (!/canvasMounted/.test(page)) {
 } else {
   ok("map canvas mount-gate present");
 }
+
+if (/camRef\.current\s*=\s*cam\s*;/.test(page)) {
+  fail("camRef.current = cam every-render stomp is back");
+} else {
+  ok("camRef not stomped from React cam each render");
+}
+
 if (!/prevSelectedIdRef/.test(page) || !/Archive hydrate rebuilds/.test(page)) {
   fail("selectedId camera guard (cam-lock) missing");
 } else {

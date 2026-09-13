@@ -3,6 +3,7 @@
 import {
   useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   Suspense,
@@ -937,7 +938,6 @@ function SystemMapView() {
   const draggingRef = useRef(false);
   const lastPtrRef = useRef<{ x: number; y: number } | null>(null);
   const camRef = useRef(cam);
-  camRef.current = cam;
   const keysActiveRef = useRef(false);
   const commitTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const prevSelectedIdRef = useRef<string | null>(null);
@@ -947,6 +947,17 @@ function SystemMapView() {
     const svg = svgRef.current;
     if (svg) svg.setAttribute("viewBox", viewBoxFor(c));
   }, []);
+
+  // Live camera lives in camRef. Never copy React `cam` back onto it — a hover
+  // re-render during wheel/pan would restore stale cam and snap the view.
+  useLayoutEffect(() => {
+    applyViewBox(camRef.current);
+  });
+
+  const camInteracting = () =>
+    draggingRef.current ||
+    keysActiveRef.current ||
+    commitTimerRef.current != null;
 
   const commitCam = useCallback(() => {
     setCam({ ...camRef.current });
@@ -1641,7 +1652,7 @@ function SystemMapView() {
           ) : (
           <svg
             ref={svgRef}
-            viewBox={viewBoxFor(cam)}
+            viewBox={viewBoxFor(camRef.current)}
             className="h-full w-full cursor-grab active:cursor-grabbing"
             role="img"
             aria-label="System map canvas"
@@ -1683,7 +1694,7 @@ function SystemMapView() {
               }
             }}
             onPointerMove={(e) => {
-              if (draggingRef.current) return;
+              if (camInteracting()) return;
               const t = e.target as Element | null;
               if (t && typeof t.closest === "function" && t.closest("[data-detail-node]")) {
                 return;
@@ -1768,10 +1779,14 @@ function SystemMapView() {
                     openExplore(n.id);
                   }}
                   onPointerDown={(e) => e.stopPropagation()}
-                  onPointerEnter={() => setHoveredId(n.id)}
-                  onPointerLeave={() =>
-                    setHoveredId((h) => (h === n.id ? null : h))
-                  }
+                  onPointerEnter={() => {
+                    if (camInteracting()) return;
+                    setHoveredId(n.id);
+                  }}
+                  onPointerLeave={() => {
+                    if (camInteracting()) return;
+                    setHoveredId((h) => (h === n.id ? null : h));
+                  }}
                 >
                   {bh ? (
                     <circle
