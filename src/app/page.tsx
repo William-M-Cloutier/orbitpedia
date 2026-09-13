@@ -63,29 +63,27 @@ function ExploreHome() {
 
   const [systemId, setSystemId] = useState<string>(homeId);
   const [graphReady, setGraphReady] = useState(false);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   // Prime curated sync or archive lazy graph before Explore renders the scene.
   useEffect(() => {
     let cancelled = false;
     setGraphReady(false);
+    setLoadError(null);
     (async () => {
       try {
         await getSystemGraphAsync(requestedSystemId);
         if (cancelled) return;
+        setLoadError(null);
         setSystemId(requestedSystemId);
         setGraphReady(true);
       } catch (err) {
         if (cancelled) return;
-        // Unknown / failed archive → fall back to home.
-        try {
-          await getSystemGraphAsync(homeId);
-        } catch {
-          /* home must exist */
-        }
-        if (cancelled) return;
-        setSystemId(homeId);
-        setGraphReady(true);
-        void err;
+        // Do not silently paint Sol while URL still says ?system=other.
+        const msg =
+          err instanceof Error ? err.message : `Failed to load system "${requestedSystemId}"`;
+        setLoadError(msg);
+        setGraphReady(false);
       }
     })();
     return () => {
@@ -268,6 +266,23 @@ function ExploreHome() {
       return next;
     });
   }, []);
+
+  if (loadError && requestedSystemId !== homeId) {
+    return (
+      <div className="flex min-h-[calc(100vh-3.5rem)] flex-col items-center justify-center gap-3 p-8 text-center">
+        <p className="text-lg font-medium text-zinc-100">Couldn’t open this system</p>
+        <p className="max-w-md text-sm text-zinc-400">{requestedSystemId}</p>
+        <p className="max-w-lg text-xs text-zinc-500">{loadError}</p>
+        <button
+          type="button"
+          className="mt-2 rounded border border-white/20 px-3 py-1.5 text-sm text-zinc-200"
+          onClick={() => router.replace("/")}
+        >
+          Back to Sol
+        </button>
+      </div>
+    );
+  }
 
   if (!graphReady) {
     return (

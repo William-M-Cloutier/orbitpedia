@@ -294,3 +294,7 @@ cp public/archive/bulk/systems.index.json public/archive/systems.index.json
 # keep systems.index.smoke.json as the bundled first-paint slice
 ```
 
+### Graph fetch fallback
+
+`getArchiveSystemGraph` loads `{archiveBase}/graphs/{id}.json`, then retries `/archive/bulk/graphs/{id}.json` on HTTP miss (local `--all` dump). Explore must not silently paint Sol when `?system=` fails.
+
