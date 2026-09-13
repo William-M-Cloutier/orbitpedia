@@ -1976,6 +1976,19 @@ if (!Number.isFinite(c)) {
       fail("visibleBodies must not filter shouldHideMesh (drops ProbePathLine when mesh-only hidden)");
     } else {
       ok("visibleBodies keeps probes mounted when only meshes hidden");
+    {
+      const meshIdx = sceneSrc.indexOf("body.kind !== \"probe\" &&");
+      const starIdx = sceneSrc.indexOf('if (body.kind === "star")');
+      const satIdx = sceneSrc.indexOf('if (body.kind === "satellite")');
+      // Prefer the BodyMesh early-return (after shouldHideMesh helper).
+      const gateIdx = sceneSrc.lastIndexOf("body.kind !== \"probe\" &&\n    shouldHideMesh");
+      const g = gateIdx >= 0 ? gateIdx : meshIdx;
+      if (g < 0 || (starIdx >= 0 && g > starIdx) || (satIdx >= 0 && g > satIdx)) {
+        fail("shouldHideMesh non-probe gate must run before star/satellite BodyMesh returns");
+      } else {
+        ok("shouldHideMesh gate runs before star/satellite branches");
+      }
+    }
     }
     }
   }

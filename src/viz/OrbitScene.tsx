@@ -1234,6 +1234,17 @@ const BodyMesh = memo(function BodyMesh({
     applyPose(getSimDays());
   });
 
+
+  // Mesh-only hide: keep body mounted for probes (paths); other kinds skip mesh
+  // while OrbitLine remains on visibleOrbiters. Must run before star/satellite/
+  // black_hole returns or those Hide toggles no-op.
+  if (
+    body.kind !== "probe" &&
+    shouldHideMesh(body, hideMeshKinds, hideProbeMeshes)
+  ) {
+    return null;
+  }
+
   if (body.kind === "star") {
     // Primary: full light. Kepler companions move on orbit; orbit-unknown
     // companions sit on visual-binary offset — both use dim light (soft perf).
@@ -1276,16 +1287,6 @@ const BodyMesh = memo(function BodyMesh({
         satLod={satLod}
       />
     );
-  }
-
-
-  // Mesh-only hide: keep body mounted for probes (paths); other kinds skip mesh
-  // while OrbitLine remains on visibleOrbiters.
-  if (
-    body.kind !== "probe" &&
-    shouldHideMesh(body, hideMeshKinds, hideProbeMeshes)
-  ) {
-    return null;
   }
 
   if (body.kind === "black_hole") {
