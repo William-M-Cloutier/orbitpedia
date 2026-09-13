@@ -109,7 +109,12 @@ const SCREEN_R_MAX_PX = 10;
 const NODE_R = 10;
 const NODE_R_FAV = 13;
 const NODE_R_DOT = 3;
-/** Screen-stable map disc radii (CSS px). Never world-fixed. */
+/**
+ * Screen-stable map disc radii (CSS px). Never world-fixed.
+ * This map is browse/show — wander a pretty sky, click what you notice.
+ * Search finds systems. Dense fields stay tiny points (atmosphere), not a
+ * readable inventory of every archive row.
+ */
 const LIGHT_PX = 2.5;
 const LIGHT_PX_DENSE = 1.5;
 const PRIORITY_PX = 4.5;
