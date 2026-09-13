@@ -195,6 +195,18 @@ if (!/DENSE_IN_VIEW/.test(page) || !/LIGHT_PX_DENSE/.test(page)) {
   ok("dense paint uses tiny screen points");
 }
 
+
+if (!/fontSize: screenPxWorld\(11/.test(page)) {
+  fail("labels must be screen-stable (~11px), not world-fixed 11");
+} else {
+  ok("labels are screen-stable ~11px");
+}
+if (!/LIGHT_PX = 6\.5/.test(page) || !/PRIORITY_PX = 10/.test(page)) {
+  fail("clickable disc sizes not bumped");
+} else {
+  ok("light ~6.5px / priority ~10px discs");
+}
+
 if (process.exitCode) {
   console.error("\nsky-layout-sanity FAILED");
   process.exit(1);
