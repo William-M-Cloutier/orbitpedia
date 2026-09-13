@@ -35,6 +35,23 @@ import {
 import type { BodyKind } from "@/data/schema";
 import type { SizeMode } from "@/viz/sizeTiers";
 
+
+/** Sol Explore: asteroid/comet/probe paths start hidden; other systems all visible. */
+const SOL_DEFAULT_HIDDEN_PATH_KINDS: readonly BodyKind[] = [
+  "asteroid",
+  "comet",
+  "probe",
+];
+
+function defaultHideOrbitPathKinds(
+  systemId: string,
+  homeId: string,
+): Set<BodyKind> {
+  if (systemId === homeId) return new Set(SOL_DEFAULT_HIDDEN_PATH_KINDS);
+  return new Set();
+}
+
+
 function ExploreHome() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -94,9 +111,9 @@ function ExploreHome() {
   const [sizeMode, setSizeMode] = useState<SizeMode>(DEFAULT_SIZE_MODE);
   /** Session-only — never written to catalog JSON. Cleared on system switch. */
   const [hiddenIds, setHiddenIds] = useState<Set<string>>(() => new Set());
-  /** Kinds whose OrbitLine / probe paths are hidden (default all visible). */
+  /** Kinds whose OrbitLine / probe paths are hidden. Sol defaults asteroid/comet/probe. */
   const [hideOrbitPathKinds, setHideOrbitPathKinds] = useState<Set<BodyKind>>(
-    () => new Set(),
+    () => defaultHideOrbitPathKinds(homeId, homeId),
   );
   /** Kinds whose meshes/markers are hidden (default all visible). */
   const [hideMeshKinds, setHideMeshKinds] = useState<Set<BodyKind>>(
@@ -113,11 +130,12 @@ function ExploreHome() {
   const isEarthSats = systemId === EARTH_SATS_SYSTEM_ID;
 
   // Drop session hide set when leaving a system (no leftover filters).
+  // Sol restores default hidden small-body/probe paths; other systems clear.
   useEffect(() => {
     setHiddenIds(new Set());
-    setHideOrbitPathKinds(new Set());
+    setHideOrbitPathKinds(defaultHideOrbitPathKinds(systemId, homeId));
     setHideMeshKinds(new Set());
-  }, [systemId]);
+  }, [systemId, homeId]);
 
   // Earth sats: 1 day / 60s wall (not Sol Default). Slow remains a user option.
   useEffect(() => {
