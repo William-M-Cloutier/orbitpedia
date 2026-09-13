@@ -115,9 +115,9 @@ const NODE_R_DOT = 3;
  * Search finds systems. Dense fields stay tiny points (atmosphere), not a
  * readable inventory of every archive row.
  */
-const LIGHT_PX = 2.5;
-const LIGHT_PX_DENSE = 1.5;
-const PRIORITY_PX = 4.5;
+const LIGHT_PX = 5.5;
+const LIGHT_PX_DENSE = 3.5;
+const PRIORITY_PX = 9;
 const DENSE_IN_VIEW = 80;
 
 /** Spectral filter groups — first Harvard letter; Other = missing/non-letter. */
@@ -631,7 +631,7 @@ function paintedDotWorldR(zoom: number, dense = false): number {
 }
 
 function paintedHitR(zoom: number, dense = false): number {
-  return paintedDotWorldR(zoom, dense) * 1.35;
+  return paintedDotWorldR(zoom, dense) * 1.75;
 }
 
 /** Drop non-locked labels that sit on top of an already-kept name. */
@@ -1862,7 +1862,7 @@ function SystemMapView() {
               const fav = favoriteIds.has(n.id);
               const bh = n.hasBlackHole === true;
               const labeled = labeledIds.has(n.id);
-              const px = sel || fav || n.home || bh ? 5 : PRIORITY_PX;
+              const px = sel || fav || n.home || bh ? 10 : PRIORITY_PX;
               const drawR = screenPxWorld(px, cam.zoom);
               const halo = screenPxWorld(sel ? 4 : 2.5, cam.zoom);
               const showSubtitle =
@@ -1970,7 +1970,7 @@ function SystemMapView() {
                         textAnchor="middle"
                         className={fav ? "fill-amber-200" : "fill-zinc-200"}
                         style={{
-                          fontSize: 11,
+                          fontSize: screenPxWorld(11, cam.zoom),
                           fontWeight: 600,
                         }}
                       >
@@ -1984,7 +1984,7 @@ function SystemMapView() {
                           className={
                             fav ? "fill-amber-500/80" : "fill-zinc-500"
                           }
-                          style={{ fontSize: 9 }}
+                          style={{ fontSize: screenPxWorld(8, cam.zoom) }}
                         >
                           {n.planetCount} planet
                           {n.planetCount === 1 ? "" : "s"}
