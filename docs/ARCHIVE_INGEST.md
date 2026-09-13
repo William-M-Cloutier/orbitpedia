@@ -294,7 +294,9 @@ cp public/archive/bulk/systems.index.json public/archive/systems.index.json
 # keep systems.index.smoke.json as the bundled first-paint slice
 ```
 
-### Graph fetch fallback
+### Archive base + graph fetch
 
-`getArchiveSystemGraph` loads `{archiveBase}/graphs/{id}.json`, then retries `/archive/bulk/graphs/{id}.json` on HTTP miss (local `--all` dump). Explore must not silently paint Sol when `?system=` fails.
+- One session `archiveBase` for index and graphs (`resolveArchiveBase` / `NEXT_PUBLIC_ARCHIVE_BASE`).
+- Background upgrade may adopt `/archive` full index then prefer `/archive/bulk` when present (same or larger, sky-covered) so Visit uses co-located graphs.
+- `getArchiveSystemGraph`: fetch `{archiveBase}/graphs/{id}.json`; on miss retry the alternate plane once (bulk↔smoke), then loud-fail. Explore must not silently paint Sol.
 
