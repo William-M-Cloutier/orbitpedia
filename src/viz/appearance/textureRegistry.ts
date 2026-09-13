@@ -7,7 +7,7 @@
  * Fail-open: missing key or failed load → procedural material.
  *
  * Guard caps: ≤512KB/file, ≤2048², ≤20 Sol bodies, ≤8MB pack, lazy load.
- * (Code Guard ACK: William+Lead bump from ≤12/≤6MB for major-moon pack.)
+ * (Major-moon pack cap: ≤20 files / ≤8MB.)
  */
 
 export type TextureRegistryEntry = {

@@ -66,8 +66,8 @@ Lean WebP under Guard caps, served from `public/textures/`, registered in
 | `triton-marquee` | Triton | NASA/Voyager cylindrical mosaic (public domain) — 2048×1024 WebP |
 | `charon-marquee` | Charon | NASA/JHUAPL/SwRI New Horizons cylindrical mosaic [PIA19866](https://photojournal.jpl.nasa.gov/catalog/PIA19866) + USGS/Antdoghalo-derived full-globe fill (public domain / NASA-compatible) — 2048×1024 WebP |
 
-Compress offline; no TIFFs / no huge sources in-repo. Code Guard ACK: pack
-cap bumped ≤12/≤6MB → ≤20/≤8MB (William+Lead) for iconic major moons; other
+Compress offline; no TIFFs / no huge sources in-repo. Pack
+cap is ≤20 files / ≤8MB for iconic major moons; other
 moons stay procedural. Moon tidal-lock is parked.
 
 Mapped materials use the albedo map with white tint so continents / bands read

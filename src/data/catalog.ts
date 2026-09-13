@@ -15,7 +15,7 @@ import {
 } from "./systemGraphSession";
 
 /**
- * Assembled Store B catalog (v2). Body/system JSON is auto-registered via
+ * Assembled catalog (v2). Body/system JSON is auto-registered via
  * scripts/generate-catalog-index.mjs (run after ingest / new cards).
  * Explore loads one system graph via getHomeSystemGraph() — never assume a
  * flat forever-all-bodies list.
@@ -79,7 +79,7 @@ export type SystemGraph = {
 
 /** One system + its member body cards (default Explore load path). */
 export function getSystemGraph(systemId: string): SystemGraph {
-  // Curated Store B first.
+  // Curated catalog first.
   if (systemById.has(systemId)) {
     const system = systemById.get(systemId)!;
     const members = getBodiesForSystem(systemId);
@@ -163,7 +163,7 @@ export function getBodiesByKind(kind: BodyKind): Body[] {
   return bodies.filter((b) => b.kind === kind);
 }
 
-/** UI fixture system — hide from default search unless query matches. */
+/** Former UI fixture id (removed from catalog). Kept for call-site compatibility. */
 export const FIXTURE_SYSTEM_ID = "sparse-test";
 
 /** Common system aliases (id → tokens). Bodies already carry aliases in JSON. */
@@ -254,7 +254,7 @@ export type CatalogSearchResult = {
 
 /**
  * Unified client-side search over systems + bodies.
- * Hides sparse-test (and its members) unless the query clearly matches ("sparse").
+ * Fixture filter (no-op once sparse-test was removed from the catalog).
  */
 export function searchCatalog(query: string): CatalogSearchResult {
   const q = query.trim().toLowerCase();

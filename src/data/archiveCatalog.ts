@@ -344,7 +344,7 @@ export async function listArchiveSystems(): Promise<ArchiveSystemSummary[]> {
 }
 
 /**
- * Lazy-load one archive graph chunk. Does not read curated Store B cards.
+ * Lazy-load one archive graph chunk. Does not read curated catalog cards.
  */
 function alternateArchiveBase(base: string): string | null {
   if (base === SMOKE_ARCHIVE_BASE) return BULK_ARCHIVE_BASE;
@@ -399,7 +399,7 @@ export async function getArchiveSystemGraph(
       `archive graph id mismatch: file claims "${data.system.id}" vs "${systemId}"`,
     );
   }
-  // Loud-fail junk chunks (same Zod contract as curated Store B).
+  // Loud-fail junk chunks (same Zod contract as curated catalog cards).
   const system = SystemSchema.parse(data.system);
   const bodies = data.bodies.map((b, i) => {
     try {

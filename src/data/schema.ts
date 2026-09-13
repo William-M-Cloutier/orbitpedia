@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-/** Catalog / schema version for Store B (systems + body cards). */
+/** Catalog / schema version (systems + body cards). */
 export const CATALOG_VERSION = 2 as const;
 
 export const BodyKindSchema = z.enum([

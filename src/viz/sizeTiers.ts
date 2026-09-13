@@ -25,7 +25,7 @@ import { getBody, getHomeSystemGraph, getSystemGraph } from "@/data/catalog";
  * display spacing is separate (parentFrameSharedDisplayScale) and also
  * formula-driven — not per-moon constants.
  *
- * Adding a body later = Store B card only; sizeTiers maps radius → mesh.
+ * Adding a body later = catalog card only; sizeTiers maps radius → mesh.
  */
 
 export type SizeMode = "schematic" | "proportional" | "true";
@@ -61,7 +61,7 @@ const AU_KM = 149_597_870.7;
  * Earth-sat Explore scale (viz-only; catalog aKm unchanged).
  *
  * GEOCENTRIC_ALT_AMPLIFY is viz-only readable LEO spacing (not catalog km).
- * Facts / Store B keep real aKm; Explore amplifies altitude so LEO rings read
+ * Facts / catalog keep real aKm; Explore amplifies altitude so LEO rings read
  * outside the Earth sphere while the Earth mesh stays readable:
  *   sceneA = earthVis * (1 + GEOCENTRIC_ALT_AMPLIFY * (aKm - R⊕) / R⊕)
  *   scale  = sceneA / aAu   (Kepler samples land at sceneA)
@@ -481,7 +481,7 @@ export function orbitDistanceScale(_mode: SizeMode = DEFAULT_SIZE_MODE): number 
  * Viz-only multiplier for one parent-frame child orbit (e.g. Moon).
  * Catalog a/e/i stay real; schematic/oversized parent meshes otherwise swallow
  * the child path. Scales relative Kepler XYZ so periapsis clears
- * parentVis + childVis + a small margin (never written back to Store B).
+ * parentVis + childVis + a small margin (never written back to catalog cards).
  *
  * When a parent has multiple moons, prefer {@link parentFrameSharedDisplayScale}
  * so siblings share one inflate factor (per-child scales can stack everyone on

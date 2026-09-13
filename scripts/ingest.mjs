@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Orbitpedia Store B solar ingest — reproducible one-shot.
+ * Orbitpedia solar ingest — reproducible one-shot.
  * Public HTTP only; no API keys / secrets.
  *
  * Usage (from repo root): node scripts/ingest.mjs

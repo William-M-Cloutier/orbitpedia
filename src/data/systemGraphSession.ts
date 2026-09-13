@@ -1,6 +1,6 @@
 /**
  * Runtime session cache for lazily loaded archive (or other) system graphs.
- * Curated Store B stays in catalog.ts; Explore primes archive via
+ * Curated systems stay in catalog.ts; Explore primes archive via
  * getSystemGraphAsync, then sync getters can resolve the active graph.
  */
 import type { Body, System } from "./schema";

@@ -14,7 +14,7 @@ import titanPois from "./pois/titan.json";
 import ioPois from "./pois/io.json";
 
 /**
- * Curated surface POIs by body id — separate from Store B body cards.
+ * Curated surface POIs by body id — separate from body cards.
  * Add new `pois/<bodyId>.json` files and register them here.
  */
 const files = [
