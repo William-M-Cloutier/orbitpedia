@@ -8,6 +8,8 @@ const TEX_SIZE: Record<SurfaceFamily, number> = {
   rocky: 64,
   star: 64,
   black_hole: 128,
+  small_body: 96,
+  comet: 96,
 };
 
 /** Tiny deterministic hash → [0,1). */
@@ -42,6 +44,51 @@ function fbm(x: number, y: number, seed: number, octaves: number): number {
     freq *= 2;
   }
   return norm > 0 ? sum / norm : 0;
+}
+
+/** Soft circular crater darkening in UV (several seeded sites). */
+function craterField(u: number, v: number, seed: number): number {
+  let dark = 0;
+  for (let i = 0; i < 5; i++) {
+    const cx = hash2(i * 3.1, seed, 41);
+    const cy = hash2(i * 7.7, seed + 2, 43);
+    const rad = 0.04 + 0.07 * hash2(i, seed + 5, 47);
+    let du = u - cx;
+    // Wrap U so craters near seam don't hard-cut.
+    if (du > 0.5) du -= 1;
+    if (du < -0.5) du += 1;
+    const dv = v - cy;
+    const d = Math.sqrt(du * du + dv * dv * 1.15);
+    if (d < rad) {
+      const t = 1 - d / rad;
+      // Rim slightly brighter, floor darker.
+      const floor = t * t;
+      const rim = Math.exp(-((d - rad * 0.72) ** 2) / (rad * rad * 0.04));
+      dark += floor * 0.55 - rim * 0.12;
+    }
+  }
+  return dark;
+}
+
+function sampleSmallBodyRock(u: number, v: number, frost: boolean): number {
+  // Dark mottled rock — stronger contrast than planet-smooth rocky.
+  const base = fbm(u * 7, v * 7, frost ? 29 : 2, 4);
+  const fine = fbm(u * 18, v * 18, frost ? 31 : 5, 3);
+  const mottling = fbm(u * 4, v * 3.5, frost ? 37 : 11, 3);
+  const craters = craterField(u, v, frost ? 53 : 17);
+  let n =
+    0.38 +
+    0.32 * base +
+    0.14 * fine +
+    0.18 * mottling -
+    0.28 * Math.max(0, craters);
+  if (frost) {
+    // Subtle cool frost patches — brighter flecks, not ice-giant bands.
+    const frostPatch = fbm(u * 9, v * 6, 59, 3);
+    const fleck = frostPatch > 0.58 ? (frostPatch - 0.58) * 0.55 : 0;
+    n = Math.min(0.92, n * 0.92 + fleck + 0.04);
+  }
+  return Math.min(0.88, Math.max(0.18, n));
 }
 
 function sampleFamily(
@@ -111,6 +158,10 @@ function sampleFamily(
       const g = fbm(u * 6, v * 6, 13, 3);
       return Math.min(1, Math.max(0.55, 0.7 + 0.3 * g));
     }
+    case "small_body":
+      return sampleSmallBodyRock(u, v, false);
+    case "comet":
+      return sampleSmallBodyRock(u, v, true);
     case "rocky":
     default: {
       // Light noise only — catalog color must dominate (Earth #6B93D6 stays

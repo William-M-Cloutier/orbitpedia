@@ -3,9 +3,17 @@ import type { Body } from "@/data/schema";
 /**
  * Procedural surface family — drives shared material look when no real map
  * is registered. Distinct by kind/traits so sparse catalogs still read as
- * intentional (rocky / gas / ice / star / black_hole), not flat same-tint balls.
+ * intentional (rocky / gas / ice / star / black_hole / small_body / comet),
+ * not flat same-tint balls.
  */
-export type SurfaceFamily = "star" | "gas" | "ice" | "rocky" | "black_hole";
+export type SurfaceFamily =
+  | "star"
+  | "gas"
+  | "ice"
+  | "rocky"
+  | "black_hole"
+  | "small_body"
+  | "comet";
 
 /** Gas-giant schematic threshold (matches sizeTiers large-planet cut). */
 const GAS_RADIUS_KM = 20_000;
@@ -23,6 +31,9 @@ export function inferSurfaceFamily(
   if (body.kind === "star") return "star";
   if (body.kind === "black_hole") return "black_hole";
   if (body.kind === "probe") return "rocky";
+  // Small bodies: dedicated rocky-lump family (not planet-smooth rocky/ice).
+  if (body.kind === "asteroid") return "small_body";
+  if (body.kind === "comet") return "comet";
 
   const r = body.facts.radiusMeanKm;
   const density = body.facts.densityGcm3;
@@ -60,6 +71,12 @@ export function defaultFamilyColor(family: SurfaceFamily): string {
       return "#C88B3A";
     case "ice":
       return "#A8D4E8";
+    case "small_body":
+      // Dark mottled rock — catalog color still dominates when present.
+      return "#6B5E52";
+    case "comet":
+      // Rocky nucleus + cool frost bias when catalog color missing.
+      return "#7A8A8E";
     case "rocky":
     default:
       return "#8A8A8A";

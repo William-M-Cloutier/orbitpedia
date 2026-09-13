@@ -835,6 +835,8 @@ if (!Number.isFinite(c)) {
   function inferFamily(body) {
     if (body.kind === "star") return "star";
     if (body.kind === "black_hole") return "black_hole";
+    if (body.kind === "asteroid") return "small_body";
+    if (body.kind === "comet") return "comet";
     const r = body.facts?.radiusMeanKm;
     const density = body.facts?.densityGcm3;
     const albedo = body.facts?.albedo;
@@ -860,7 +862,7 @@ if (!Number.isFinite(c)) {
     neptune: "ice",
     earth: "rocky",
     mars: "rocky",
-    ceres: "rocky",
+    ceres: "small_body",
   };
   for (const [id, want] of Object.entries(expect)) {
     const body = bodyById.get(id);
@@ -908,6 +910,54 @@ if (!Number.isFinite(c)) {
     ok("OrbitScene treats black_hole as host light");
   }
   ok("procedural + marquee maps wired (pool + BodyMesh + registry; fail-open)");
+  // Small-body look: irregular shared geo + dedicated families (not planet spheres).
+  const geoSrcPath = path.join(appearanceDir, "smallBodyGeometry.ts");
+  if (!fs.existsSync(geoSrcPath)) {
+    fail("missing appearance/smallBodyGeometry.ts for asteroid/comet meshes");
+  } else {
+    const geoSrc = fs.readFileSync(geoSrcPath, "utf8");
+    if (!/getSmallBodyGeometry/.test(geoSrc) || !/IcosahedronGeometry/.test(geoSrc)) {
+      fail("smallBodyGeometry must export getSmallBodyGeometry (displaced icosphere)");
+    } else {
+      ok("smallBodyGeometry shared displaced icosphere cache");
+    }
+  }
+  if (
+    !/kind === "asteroid"/.test(sceneSrc) ||
+    !/kind === "comet"/.test(sceneSrc) ||
+    !/getSmallBodyGeometry/.test(sceneSrc)
+  ) {
+    fail("BodyMesh must wire asteroid/comet to getSmallBodyGeometry (not sphere-only)");
+  } else {
+    ok("BodyMesh wires irregular asteroid/comet meshes");
+  }
+  if (!/"small_body"/.test(famSrc) || !/kind === "asteroid"/.test(famSrc)) {
+    fail("surfaceFamily must include small_body for asteroids");
+  } else {
+    ok("surfaceFamily includes small_body");
+  }
+  if (!/"comet"/.test(famSrc) || !/kind === "comet"/.test(famSrc)) {
+    fail("surfaceFamily must include comet family for comets");
+  } else {
+    ok("surfaceFamily includes comet");
+  }
+  if (!/case "small_body"/.test(procSrc) || !/case "comet"/.test(procSrc)) {
+    fail("proceduralTextures must sample small_body + comet (rocky/cratered, not planet-smooth)");
+  } else {
+    ok("proceduralTextures includes small_body + comet");
+  }
+  const sbGot = inferFamily({ kind: "asteroid", facts: {} });
+  const cometGot = inferFamily({ kind: "comet", facts: { densityGcm3: 0.6 } });
+  if (sbGot !== "small_body") {
+    fail(`appearance family asteroid: got ${sbGot}, want small_body`);
+  } else {
+    ok("appearance family asteroid → small_body");
+  }
+  if (cometGot !== "comet") {
+    fail(`appearance family comet: got ${cometGot}, want comet (not ice-ball)`);
+  } else {
+    ok("appearance family comet → comet");
+  }
   // Soft selection glow — avoid neon rim regression (emissiveIntensity was 0.45).
   if (!/FOCUS_EMISSIVE_INTENSITY/.test(poolSrc)) {
     fail("materialPool missing FOCUS_EMISSIVE_INTENSITY soft-select constant");

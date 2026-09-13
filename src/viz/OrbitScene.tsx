@@ -65,6 +65,7 @@ import {
   getBodyAppearanceMaterial,
   getSatPointsMaterial,
   getSatSharedMaterial,
+  getSmallBodyGeometry,
   useRegistryTexture,
 } from "./appearance";
 import { getPoisForBody } from "@/data/pois";
@@ -1359,6 +1360,26 @@ const BodyMesh = memo(function BodyMesh({
           />
         ) : null}
       </>
+    );
+  }
+
+  // Asteroids / comets: shared irregular lumpy rock (unit geo × visualRadius).
+  // Do not invent catalog radii — scale contract unchanged. Selection glow via mat.
+  if (body.kind === "asteroid" || body.kind === "comet") {
+    const rockGeo = getSmallBodyGeometry(body.id);
+    return (
+      <group ref={group} name={body.id}>
+        <mesh
+          ref={spinMesh}
+          onClick={handleClick}
+          onContextMenu={handleContextMenu}
+          material={mat}
+          geometry={rockGeo}
+          dispose={null}
+          scale={focused ? 1.35 * r : r}
+          frustumCulled
+        />
+      </group>
     );
   }
 
