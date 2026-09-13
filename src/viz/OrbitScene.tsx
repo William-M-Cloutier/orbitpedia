@@ -341,6 +341,10 @@ function parentDisplayScale(
 /**
  * Scene-local Kepler position for one body's own elements (no parent offset).
  * `relScale` folds orbitDistanceScale and optional parent-frame display scale.
+ *
+ * Phase: catalog `orbit.maDeg` + mean-motion advance from simDays. Heliocentric,
+ * parent-frame, and geocentric sats share this via bodyPosition — do not zero M
+ * for LEO/GEO. CSS/GP modules may honestly share elements; do not invent phases.
  */
 function localOrbitPosition(
   body: Body,
@@ -352,6 +356,7 @@ function localOrbitPosition(
   // use visualBinaryCompanionOffset via bodyPosition — never invent elements here.
   if (!hasUsableOrbit(body)) return [0, 0, 0];
   const period = body.orbit.periodD ?? periodFromA(body.orbit.aAu);
+  // Epoch M + n·t (deg). Geocentric earth-sats use the same formula.
   const ma = body.orbit.maDeg + (360 * simDays) / period;
   const [x, y, z] = positionAtMa(body.orbit, ma);
   const s = relScale > 0 ? relScale : 1;

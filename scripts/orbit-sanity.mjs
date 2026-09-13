@@ -2181,6 +2181,47 @@ if (!Number.isFinite(c)) {
       ok("OrbitScene localOrbitPosition uses catalog maDeg for mesh pose");
     }
   }
+
+  // Mean-motion advance: same sat at simDays=0 vs period/4 must move (not stuck at M).
+  {
+    const swotPath = path.join(DATA, "bodies/swot.json");
+    if (fs.existsSync(swotPath)) {
+      const swot = JSON.parse(fs.readFileSync(swotPath, "utf8"));
+      const o = swot.orbit;
+      const period = o?.periodD;
+      if (!o || !(period > 0)) {
+        fail("swot missing periodD for simDays advance check");
+      } else {
+        const p0 = positionAtMa(o, o.maDeg);
+        const pQ = positionAtMa(o, o.maDeg + 90); // +period/4 → +90° mean anomaly
+        const sep = Math.hypot(p0[0] - pQ[0], p0[1] - pQ[1], p0[2] - pQ[2]);
+        if (!(sep > 1e-8)) {
+          fail(`swot simDays advance too small (sep=${sep}) — mean motion ignored?`);
+        } else {
+          ok(`swot mean-motion advance +90° MA sep=${sep.toExponential(2)} au`);
+        }
+      }
+    }
+  }
+
+  // FollowCamera: snap on focus acquire only — does not rewrite URL / setFocus.
+  // SWOT autofocus loop was page.tsx memberIds churn; viz must not re-force focus.
+  {
+    const sceneSrc = fs.readFileSync(path.join(ROOT, "src/viz/OrbitScene.tsx"), "utf8");
+    const followIdx = sceneSrc.indexOf("function FollowCamera()");
+    if (followIdx < 0) {
+      fail("FollowCamera missing");
+    } else {
+      const followSrc = sceneSrc.slice(followIdx, followIdx + 5000);
+      if (/router\.(replace|push)/.test(followSrc) || /setFocus\(/.test(followSrc)) {
+        fail("FollowCamera must not rewrite URL or call setFocus (focus owned by page)");
+      } else if (!/\[focusId,\s*camera,\s*controls,\s*invalidate\]/.test(followSrc)) {
+        fail("FollowCamera snap effect must depend on focusId (acquire-only)");
+      } else {
+        ok("FollowCamera snap is focusId-gated; no URL/setFocus re-force");
+      }
+    }
+  }
 }
 
 if (process.exitCode) {
