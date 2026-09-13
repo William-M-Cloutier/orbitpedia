@@ -146,15 +146,26 @@ function ExploreHome() {
     );
   }, [systemId]);
 
-  // Hydrate (and re-hydrate) from ?system=&focus=
+  // Sync focus from URL when focus search param changes — not when memberIds
+  // Set identity churns (that was re-forcing SWOT after deselect).
   useEffect(() => {
-    if (focusParam && memberIds.has(focusParam) && getBody(focusParam)) {
+    if (focusParam && getBody(focusParam)) {
       setFocusId(focusParam);
       return;
     }
-    setFocusId(null);
-    setSelectedPoiId(null);
-  }, [focusParam, memberIds]);
+    if (!focusParam) {
+      setFocusId(null);
+      setSelectedPoiId(null);
+    }
+  }, [focusParam]);
+
+  // Drop focus if the current id left the active system graph.
+  useEffect(() => {
+    if (focusId && memberIds.size > 0 && !memberIds.has(focusId)) {
+      setFocusId(null);
+      setSelectedPoiId(null);
+    }
+  }, [memberIds, focusId]);
 
   const pushExplore = useCallback(
     (nextSystemId: string, nextFocus: string | null) => {
