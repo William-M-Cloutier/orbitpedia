@@ -188,21 +188,24 @@ export async function fetchArchiveIndex(
   }
 }
 
-/** True when bulk is larger than current cache and has usable sky coverage. */
+/**
+ * Prefer bulk when sky-covered and not smaller than current.
+ * Same-size bulk beats /archive full index — graphs live under bulk locally.
+ */
 function isAdoptableBulk(
   bulk: ArchiveIndex,
   current: ArchiveIndex | null,
 ): boolean {
   if (archiveCoordCoverage(bulk) < MIN_BULK_COORD_COVERAGE) return false;
   const curN = current?.systems.length ?? 0;
-  return bulk.systems.length > curN;
+  return bulk.systems.length >= curN && bulk.systems.length > 0;
 }
 
 /**
  * Non-blocking post-hydrate upgrade. Never awaited on first paint.
  * 1) HTTP `/archive/systems.index.json` (committed full sky index, ~2MB)
  * 2) Optional local `/archive/bulk` if even larger
- * Adopts only when coverage ≥50% and row count exceeds current cache.
+ * Adopts when coverage ≥50% and row count ≥ current (prefer bulk for graphs).
  * Notifies subscribeArchiveIndex listeners on adopt.
  */
 function startBackgroundBulkUpgrade(): void {
@@ -229,7 +232,8 @@ function startBackgroundBulkUpgrade(): void {
  * Resolve archive base once per session:
  * 1) NEXT_PUBLIC_ARCHIVE_BASE if set
  * 2) else smoke `/archive` immediately (never await bulk)
- * Bulk may upgrade later via startBackgroundBulkUpgrade.
+ * Bulk/full may upgrade later via startBackgroundBulkUpgrade; archiveBase then
+ * sticks for the session so graphUrl matches the index plane.
  */
 async function resolveArchiveBase(): Promise<string> {
   if (archiveBase) return archiveBase;
@@ -342,22 +346,34 @@ export async function listArchiveSystems(): Promise<ArchiveSystemSummary[]> {
 /**
  * Lazy-load one archive graph chunk. Does not read curated Store B cards.
  */
+function alternateArchiveBase(base: string): string | null {
+  if (base === SMOKE_ARCHIVE_BASE) return BULK_ARCHIVE_BASE;
+  if (base === BULK_ARCHIVE_BASE) return SMOKE_ARCHIVE_BASE;
+  return null;
+}
+
+/**
+ * Fetch graph from the session archiveBase first (index + graphs same plane).
+ * On 404, retry the alternate plane once (bulk↔smoke), then loud-fail.
+ */
 async function fetchArchiveGraphJson(
   systemId: string,
 ): Promise<ArchiveSystemGraphFile> {
-  const primary = graphUrl(systemId);
+  const base = archiveBase ?? SMOKE_ARCHIVE_BASE;
+  const primary = `${base}/graphs/${encodeURIComponent(systemId)}.json`;
   let res = await fetch(primary);
   if (!res.ok) {
-    // Full index lists ~4.7k hosts; smoke only ships ~100 graphs. Retry bulk
-    // (gitignored local --all) before failing.
-    const bulkUrl = `${BULK_ARCHIVE_BASE}/graphs/${encodeURIComponent(systemId)}.json`;
-    if (primary !== bulkUrl) {
-      const bulkRes = await fetch(bulkUrl);
-      if (bulkRes.ok) {
-        res = bulkRes;
+    const alt = alternateArchiveBase(base);
+    if (alt) {
+      const altUrl = `${alt}/graphs/${encodeURIComponent(systemId)}.json`;
+      const altRes = await fetch(altUrl);
+      if (altRes.ok) {
+        // Stick session base to the plane that actually has the graph.
+        archiveBase = alt;
+        res = altRes;
       } else {
         throw new Error(
-          `archive graph HTTP ${res.status} for "${systemId}" (${primary}; bulk ${bulkRes.status})`,
+          `archive graph HTTP ${res.status} for "${systemId}" (${primary}; alt ${altRes.status} ${altUrl})`,
         );
       }
     } else {
