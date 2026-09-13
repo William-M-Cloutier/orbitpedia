@@ -179,6 +179,8 @@ export const ProbeWaypointSchema = z
     zAu: z.number(),
     /** Optional heliocentric distance from Earth (au) when sourced. */
     earthDistAu: z.number().nonnegative().optional(),
+    /** Optional event label (launch, jupiter, heliopause, …). */
+    label: z.string().min(1).optional(),
   })
   .strict();
 
