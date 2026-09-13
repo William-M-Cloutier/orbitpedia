@@ -15,3 +15,8 @@ export { proceduralMap } from "./proceduralTextures";
 export { lookupTextureId, TEXTURE_REGISTRY } from "./textureRegistry";
 export type { TextureRegistryEntry } from "./textureRegistry";
 export { useRegistryTexture, requestRegistryTexture } from "./textureLoader";
+export {
+  getSmallBodyGeometry,
+  hashBodyId,
+  smallBodyGeometryCacheSize,
+} from "./smallBodyGeometry";

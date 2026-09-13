@@ -64,8 +64,19 @@ function buildProceduralMaterial(
   }
 
   const roughness =
-    family === "ice" ? 0.42 : family === "gas" ? 0.55 : 0.78;
-  const metalness = family === "ice" ? 0.08 : 0.03;
+    family === "ice"
+      ? 0.42
+      : family === "gas"
+        ? 0.55
+        : family === "small_body" || family === "comet"
+          ? 0.92
+          : 0.78;
+  const metalness =
+    family === "ice"
+      ? 0.08
+      : family === "small_body" || family === "comet"
+        ? 0.02
+        : 0.03;
   return new THREE.MeshStandardMaterial({
     color: colorHex,
     map,
