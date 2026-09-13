@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Orbitpedia first-slice — Celestrak GP JSON → Store B satellite cards.
+ * Orbitpedia — Celestrak GP JSON → satellite catalog cards.
  *
  * Source-locked: Celestrak GP (OMM JSON) via CATNR queries.
  * Never invents elements; skips a CATNR when required GP fields are missing.
@@ -12,7 +12,7 @@
  *   node scripts/ingest-celestrak-gp.mjs --catnr 25544,20580 --dry-run
  *   node scripts/ingest-celestrak-gp.mjs --with-tle --dry-run
  *
- * Default: first-slice five CATNRs, dry-run (print JSON to stdout).
+ * Default: seed CATNRs, dry-run (print JSON to stdout).
  * Live fetch respects Celestrak usage (cache under /tmp; prefer --from-seed).
  *
  * Writes (with --write):
@@ -58,7 +58,7 @@ const GP_DOCS_URL =
   "https://celestrak.org/NORAD/documentation/gp-data-formats.php";
 
 /**
- * First-slice catalog: NORAD CATNR → Store B id / display defaults.
+ * Catalog defaults: NORAD CATNR → body id / display defaults.
  * Curated owner/launchDate are optional overlays (not from GP); omit if unset.
  */
 const FIRST_SLICE = [
@@ -926,7 +926,7 @@ async function main() {
   }
 
   if (!slice.length) {
-    console.error("No matching first-slice entries for --catnr/--group");
+    console.error("No matching seed catalog entries for --catnr/--group");
     process.exit(1);
   }
 

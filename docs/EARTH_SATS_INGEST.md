@@ -1,6 +1,6 @@
 # Earth satellites — Celestrak GP ingest
 
-First-slice path: **Celestrak GP (OMM) JSON by CATNR** → Store B `kind: "satellite"` cards.
+Ingest path: **Celestrak GP (OMM) JSON by CATNR** → `kind: "satellite"` catalog cards.
 
 ## Command
 
@@ -20,9 +20,9 @@ Never invent elements: skip a CATNR when required GP fields are missing.
 
 ## Field map (GP / OMM → card)
 
-| Store B | Source |
+| Catalog field | Source |
 |---------|--------|
-| `id` / `name` / `aliases` | Curated first-slice table in script (stable kebab ids) |
+| `id` / `name` / `aliases` | Curated seed table in script (stable kebab ids) |
 | `kind` | `"satellite"` |
 | `systemId` | `earth-sats` |
 | `parentId` | `earth-sats-earth` (required for geocentric) |
@@ -79,8 +79,8 @@ Groups: `stations` | `weather` | `science`. Fixture: `scripts/fixtures/celestrak
 
 **SWOT** is NORAD **54754** (not 53847 — that CATNR is Starlink).
 
-System shell + Earth central card are owned by Earth Sats lead. This script only (re)writes `src/data/bodies/<id>.json` for satellite ids; after write, update `src/data/systems/earth-sats.json` `memberIds` and run `npm run generate:catalog`.
+This script only (re)writes `src/data/bodies/<id>.json` for satellite ids; after write, update `src/data/systems/earth-sats.json` `memberIds` and run `npm run generate:catalog`.
 
 ## Full catalog later
 
-Pagination / group GP files after first-slice stub validates in Explore. Keep Celestrak usage limits (cache identical CATNR fetches). Prefer refreshing the fixture via WebFetch/GP when box TLS to Celestrak fails.
+Pagination / group GP files after the seed catalog validates in Explore. Keep Celestrak usage limits (cache identical CATNR fetches). Prefer refreshing the fixture via WebFetch/GP when box TLS to Celestrak fails.

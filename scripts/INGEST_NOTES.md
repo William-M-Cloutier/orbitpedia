@@ -1,4 +1,4 @@
-# Orbitpedia Store B — solar ingest notes
+# Orbitpedia — solar ingest notes
 
 ## Usage (repo root)
 
@@ -21,14 +21,14 @@ Cache / omitted log go under `/tmp` (not committed).
 - `meta.confidence: "known"` for fetched solar seeds
 
 ## Validation
-`scripts/validate-catalog.mjs` loads Store B (`--data-dir src/data`) and asserts periapsis clearance vs central radius (EPS_AU=1e-9).
+`scripts/validate-catalog.mjs` loads the catalog (`--data-dir src/data`) and asserts periapsis clearance vs central radius (EPS_AU=1e-9).
 
 
 ---
 
-## Legacy notes (pre–Store B)
+## Legacy notes
 
-# Orbitpedia Phase 1 — catalog enrichment notes
+# Orbitpedia — catalog enrichment notes
 
 Work dir: `/workspace/orbitpedia-enrich`  
 Generated: see `meta.fetchedAt` on each body in `bodies.json`  

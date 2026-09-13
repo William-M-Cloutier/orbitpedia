@@ -1,4 +1,4 @@
-# NASA Exoplanet Archive → Orbitpedia Store B (archive plane)
+# NASA Exoplanet Archive → Orbitpedia catalog (archive plane)
 
 Plan for the **full NEA-scale dump** without bloating the curated Explore
 bundle. Pair with [DATA_SETUP.md](./DATA_SETUP.md) and
@@ -25,7 +25,7 @@ bundle. `generate:catalog` must stay curated-only.
 - Public HTTP only — no API keys / secrets.
 - Extra columns (v2): `sy_snum` (star count), `cb_flag` (circumbinary).
 
-## Filter defaults (dump v2 — William lock)
+## Filter defaults (dump v2)
 
 | Flag / setting | Default | Meaning |
 |----------------|---------|---------|
@@ -109,7 +109,7 @@ Thin index `systems.index.json`:
 ## Guardrails
 
 - **Do not clobber curated:** never write archive chunks for
-  `solar`, `trappist-1`, `kepler-11`, `sparse-test` unless `--force-ids` lists them.
+  `solar`, `trappist-1`, `kepler-11` unless `--force-ids` lists them.
 - **Sol stays curated** — Horizons / SSD path (`scripts/ingest.mjs`), not NEA.
 - **Sky coords:** `raDeg` / `decDeg` (ICRS degrees) from the same primary/first TAP row as `sy_dist`. Omit when missing; Sol/home never gets invented coords. Focused backfill: `node scripts/backfill-archive-sky-coords.mjs`.
 - **No invented moons** for exoplanet systems.
@@ -229,7 +229,7 @@ node scripts/ingest-exoplanet-archive.mjs --limit 100 --min-planets 1 --verify
 7. Spot-check: `starCount` on index; multi-star graphs have N star bodies; some
    planets omit `orbit`; single-planet systems present; blurbs stay factual.
 
-## Multi-star / single-planet / no-aAu (William overnight)
+## Multi-star / single-planet / no-aAu
 
 - **`starCount`** ← NEA `sy_snum` on index + system; Filters bins 1 / 2 / 3+.
 - **`primaryStarId`** on system; Explore shows **N** `kind:star` members.

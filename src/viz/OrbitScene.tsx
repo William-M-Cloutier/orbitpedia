@@ -1493,7 +1493,7 @@ function focusDistanceFloor(
  * FOV-based focus distance for ALL bodies (sun + planets + asteroids).
  * On-screen diameter ≈ fill * min(viewport width, height):
  *   d = r / (fill * tan(fovY/2) * min(1, aspect))
- * Replaces sin-based height-only framing that undershot William's Pluto ref.
+ * Replaces sin-based height-only framing that undershot the Pluto focus reference.
  * Always enforces dist >= focused mesh radius × 2.5 and near+r so True/Prop
  * focus never ends inside the sphere (tiny meshes used to frame below near).
  */

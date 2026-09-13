@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Orbitpedia viz / Kepler sanity for every Store B system graph.
+ * Orbitpedia viz / Kepler sanity for every catalog system graph.
  *
  * Catalog-side physical clearance lives in validate-catalog.mjs:
  *   q = orbit.qAu ?? aAu*(1-e)  MUST  q > centralRadiusAu (real km→AU).

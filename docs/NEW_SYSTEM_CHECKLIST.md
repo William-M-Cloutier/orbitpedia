@@ -5,10 +5,9 @@ Do not ship until every item is checked. No invented moons/bodies.
 Archive-first sources only (human-readable pages; never raw API JSON;
 never nssdc planetary factsheet).
 
-Also available as the Grok Bot skill **Orbitpedia new system checklist**.
 How to build cards consistently: [DATA_SETUP.md](./DATA_SETUP.md).
 
-## A. Store B / catalog
+## A. Catalog
 
 - [ ] `systems/<id>.json` with memberIds, blurb, highlights, planetCount, distanceLy (if known), hostSpectralType, compactnessNote when relevant, meta.sources
 - [ ] One body card per member under `bodies/`; star has no heliocentric orbit
@@ -51,6 +50,5 @@ Ship only with commit SHA(s) and a short pass/fail note against this list.
 
 ## Fixture exception
 
-`sparse-test` is a non-science UI fixture. It must pass catalog/orbit gates but is
-excluded from real-system polish expectations in sections B–E.
+Do not ship synthetic fixture systems in the public catalog.
 

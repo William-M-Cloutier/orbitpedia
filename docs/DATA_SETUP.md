@@ -1,10 +1,10 @@
 # Orbitpedia data setup guide
 
-How to build **consistent** Store B cards when mass-producing systems.
+How to build **consistent** catalog cards when mass-producing systems.
 Pair with [NEW_SYSTEM_CHECKLIST.md](./NEW_SYSTEM_CHECKLIST.md) (ship gates).
 Do not invent bodies, moons, or numbers. Sparse + honest beats fake-complete.
 
-## Layout (Store B)
+## Layout
 
 ```
 src/data/
@@ -217,17 +217,10 @@ Lazy load helpers: `src/data/archiveCatalog.ts`
 - Schema: `src/data/schema.ts` (CATALOG_VERSION = 2)
 - Appearance / procedural: `docs/APPEARANCE.md`
 
-## UI fixture: `sparse-test`
+## UI fixture (removed)
 
-`systemId: sparse-test` (“Sparse Test (fixture)”) is a **non-science** catalog system for Facts / dials / charts edge cases (missing mass → Unknown, omitted albedo, `~` approximateFields, moon with parent, etc.).
+The former `sparse-test` catalog system was a non-science Facts / dials fixture. It was removed from the shipped catalog before public release.
 
-- Marked in blurb/highlights as a UI fixture — exclude from real-system polish expectations.
-- Values are placeholders for Explore scale / Kepler gates only; omit fields rather than invent science numbers when testing “missing”.
-- Still must pass `validate:catalog` + `orbit-sanity` (structural gates).
-
-### `facts.approximateFields`
-
-Optional string list of fact keys whose **stored** values should render with a leading `~` (archive-backed estimates). Cite the estimate in `meta.sources`. Never invent estimates just to fill the UI.
 
 ## Probes (`kind: probe`)
 

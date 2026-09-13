@@ -67,8 +67,7 @@ const PROTECTED_SYSTEM_IDS = new Set([
   "solar",
   "trappist-1",
   "kepler-11",
-  "sparse-test",
-]);
+  ]);
 
 const M_SUN_KG = 1.98847e30;
 const R_SUN_KM = 695_700;
@@ -198,7 +197,7 @@ const COLUMNS = [
 function parseArgs(argv) {
   const out = {
     limit: 100,
-    minPlanets: 1, // William lock: include single-planet hosts by default
+    minPlanets: 1, // Include single-planet hosts by default
     all: false,
     includeSinglePlanet: false,
     hosts: null,

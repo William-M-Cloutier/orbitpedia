@@ -47,3 +47,8 @@ scripts/ingest-omitted.json
 
 # NEA full/bulk archive dumps (not the committed smoke sample)
 public/archive/bulk/
+
+# Dense Horizons range/milestone caches (regenerable via scripts/fetch-probe-waypoints.py)
+scripts/fixtures/horizons-probes/*_range_*.txt
+scripts/fixtures/horizons-probes/*_ms_*.txt
+scripts/__pycache__/

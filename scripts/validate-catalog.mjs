@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Catalog sanity + schema validation for Orbitpedia (Store B / catalog v2).
+ * Catalog sanity + schema validation for Orbitpedia (catalog v2).
  *
  * Usage (from repo root):
  *   node scripts/validate-catalog.mjs
@@ -10,7 +10,7 @@
  *   node scripts/validate-catalog.mjs --strict-warnings
  *   node scripts/validate-catalog.mjs --system solar
  *
- * Loads src/data/systems/*.json + src/data/bodies/*.json (Store B).
+ * Loads src/data/systems/*.json + src/data/bodies/*.json.
  * Zod shapes below must stay in sync with src/data/schema.ts until scripts can
  * import TypeScript directly (tracked follow-up: share one schema module).
  */
@@ -458,7 +458,7 @@ if (args.help) {
 
 if (args.catalog) {
   console.error(
-    "VALIDATION FAIL: --catalog single-file is retired (v1). Use Store B --data-dir (systems/ + bodies/).",
+    "VALIDATION FAIL: --catalog single-file is retired (v1). Use --data-dir (systems/ + bodies/).",
   );
   process.exit(1);
 }
@@ -470,7 +470,7 @@ try {
   systems = loadJsonDir(join(dataDir, "systems"));
   bodies = loadJsonDir(join(dataDir, "bodies"));
 } catch (err) {
-  console.error(`VALIDATION FAIL: cannot load Store B data under ${dataDir}`);
+  console.error(`VALIDATION FAIL: cannot load catalog data under ${dataDir}`);
   console.error(String(err));
   process.exit(1);
 }
