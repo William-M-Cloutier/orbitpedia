@@ -6,8 +6,9 @@
  * origin, +X toward the center from the Sun's side (Sol at ≈ (−R₀, 0, 0)),
  * +Y in the direction of Galactic rotation, +Z toward the NGP.
  *
- * World units: 1 = 1 light-year (proportional). Schematic equalizes distance
- * but keeps sky direction. Never invents RA/Dec.
+ * World units: 1 = 1 light-year (proportional). Schematic uses a golden-angle
+ * sunflower around Sol (spread, not sky ring). Proportional uses true sky
+ * distance. Never invents RA/Dec.
  */
 
 export type SkyCoords = {
@@ -33,13 +34,45 @@ export const SOL_GAL = {
 /** Approximate stellar disk radius used for the backdrop (kpc → ly). */
 export const MW_DISK_R_LY = 15 * LY_PER_KPC;
 
-/** Schematic ring radius around Sol (ly / world units). */
+/**
+ * Legacy equalized sky-ring radius (unused by Schematic sunflower layout).
+ * Kept for any callers still probing the old ring path in placeSystemSky.
+ */
 export const SCHEMATIC_R = 280;
 
 /** Gutter for systems missing sky coords (below the disk plane in map Y). */
 export const UNKNOWN_GUTTER_Y = SOL_GAL.y + MW_DISK_R_LY * 0.55;
 export const UNKNOWN_GUTTER_X0 = SOL_GAL.x - 900;
 export const UNKNOWN_GUTTER_STEP = 56;
+
+/** Golden angle (radians) for sunflower / Vogel spiral layout. */
+export const GOLDEN_ANGLE = Math.PI * (3 - Math.sqrt(5));
+
+/** Center-to-center target spacing for Schematic sunflower (world units). */
+export const SUNFLOWER_MIN_SEP = 168;
+
+/**
+ * Golden-angle sunflower around an origin (Sol / SOL_GAL on the Systems map).
+ * index 0 → origin; later indices spiral out as MIN_SEP * sqrt(i).
+ * Y is slightly flattened (×0.72) to match the pre-MW map feel.
+ */
+export function placeSystemSunflower(
+  index: number,
+  originX: number = SOL_GAL.x,
+  originY: number = SOL_GAL.y,
+  minSep: number = SUNFLOWER_MIN_SEP,
+): { x: number; y: number } {
+  if (index <= 0) {
+    return { x: originX, y: originY };
+  }
+  const ang = index * GOLDEN_ANGLE;
+  const rad = minSep * Math.sqrt(index);
+  return {
+    x: originX + Math.cos(ang) * rad,
+    y: originY + Math.sin(ang) * rad * 0.72,
+  };
+}
+
 
 /**
  * Hipparcos / IAU equatorial (J2000) → galactic Cartesian rotation.
@@ -90,9 +123,10 @@ export type LaidSky = {
 };
 
 /**
- * Place one system in galactic-plane map coords.
+ * Place one system in galactic-plane map coords (Proportional / legacy ring).
  * Sol/home → Sol's conventional galactic position (no RA/Dec required).
  * Missing coords → gutter (caller assigns horizontal index).
+ * Schematic map layout should use placeSystemSunflower instead of the ring.
  */
 export function placeSystemSky(
   n: SkyCoords,
@@ -117,7 +151,7 @@ export function placeSystemSky(
       : undefined;
 
   if (spacing === "schematic" || dist == null) {
-    // Direction from a unit-distance vector; equalized ring around Sol.
+    // Legacy equalized ring (Schematic map uses placeSystemSunflower).
     const h = equatorialToGalactic(n.raDeg, n.decDeg, 1);
     const hyp = Math.hypot(h.x, h.y, h.z) || 1;
     const lon = Math.atan2(h.y, h.x);
@@ -165,8 +199,8 @@ function sepPushPair(
   const aPin = isSepPinned(a);
   const bPin = isSepPinned(b);
   if (aPin && bPin) return false;
-  let dx = b.x - a.x;
-  let dy = b.y - a.y;
+  const dx = b.x - a.x;
+  const dy = b.y - a.y;
   let dist = Math.hypot(dx, dy);
   if (dist >= minGap) return false;
   let ux: number;
