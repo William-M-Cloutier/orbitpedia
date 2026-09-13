@@ -34,7 +34,8 @@ export const SurfacePoiMarkers = memo(function SurfacePoiMarkers({
   selectedPoiId,
   onSelectPoi,
 }: Props) {
-  const markerR = Math.max(radius * 0.022, 0.0012);
+  /** Visible pin scale — keep lean; clickability comes from invisible hit volume. */
+  const markerR = Math.max(radius * 0.026, 0.0014);
   /** Place pin base just above the sphere so the stem reads radially out. */
   const lift = radius * 1.012;
 
@@ -155,6 +156,9 @@ const PoiMarker = memo(function PoiMarker({
   const stemR = markerR * 0.2;
   const headR = markerR * (selected ? 1.05 : 0.88);
   const headY = stemH + headR * 0.75;
+  /** Invisible click proxy — generous around head/stem without visual clutter. */
+  const hitR = markerR * 3.6;
+  const hitY = headY * 0.55;
 
   const headColor = selected ? COLOR_SELECTED : COLOR_DEFAULT;
   const emissiveIntensity = hovered
@@ -168,6 +172,22 @@ const PoiMarker = memo(function PoiMarker({
 
   return (
     <group position={position} quaternion={quaternion}>
+      {/* Invisible hit volume — easy to click; keeps visible pin clean */}
+      <mesh
+        position={[0, hitY, 0]}
+        onClick={handleClick}
+        onPointerOver={onOver}
+        onPointerOut={onOut}
+      >
+        <sphereGeometry args={[hitR, 12, 12]} />
+        <meshBasicMaterial
+          transparent
+          opacity={0}
+          depthWrite={false}
+          depthTest={false}
+        />
+      </mesh>
+
       {/* Stem — thin cylinder along outward normal */}
       <mesh
         position={[0, stemH * 0.5, 0]}
@@ -215,30 +235,31 @@ const PoiMarker = memo(function PoiMarker({
         </mesh>
       ) : null}
 
+      {/* Selected-only name chip: screen-stable (no distanceFactor) so zoom never balloons it.
+          Bottom-anchored so caret tip sits on/near the pin head. */}
       {selected ? (
         <Html
-          center
           occlude
-          distanceFactor={9}
-          position={[0, headY + headR * 3.2, 0]}
+          position={[0, headY + headR * 0.15, 0]}
           style={{ pointerEvents: "none", userSelect: "none" }}
           zIndexRange={[100, 0]}
         >
-          <div className="flex flex-col items-center">
-            <div className="max-w-[12rem] rounded-lg border border-amber-300/40 bg-[#0a1220]/96 px-2.5 py-1.5 text-center shadow-[0_8px_24px_rgba(0,0,0,0.45)] backdrop-blur-md">
-              <p className="text-[9px] font-medium uppercase tracking-[0.14em] text-amber-200/65">
-                Place
-              </p>
-              <p className="mt-0.5 truncate text-[12px] font-semibold leading-snug tracking-tight text-amber-50">
+          <div
+            className="flex flex-col items-center"
+            style={{ transform: "translate(-50%, -100%)" }}
+          >
+            <div className="max-w-[9rem] rounded-md border border-amber-300/40 bg-[#0a1220]/96 px-1.5 py-0.5 text-center shadow-[0_6px_16px_rgba(0,0,0,0.4)] backdrop-blur-md">
+              <p className="truncate text-[11px] font-semibold leading-tight tracking-tight text-amber-50">
                 {poi.name}
               </p>
             </div>
+            {/* Short stem + caret — tip at Html anchor / pin head */}
             <div
-              className="mt-0.5 h-2.5 w-px bg-gradient-to-b from-amber-300/50 to-amber-400/25"
+              className="h-1 w-px bg-gradient-to-b from-amber-300/50 to-amber-400/25"
               aria-hidden
             />
             <div
-              className="h-0 w-0 border-x-[5px] border-x-transparent border-t-[6px] border-t-amber-300/55"
+              className="h-0 w-0 border-x-[4px] border-x-transparent border-t-[5px] border-t-amber-300/55"
               aria-hidden
             />
           </div>
