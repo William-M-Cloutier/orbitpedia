@@ -115,9 +115,9 @@ const NODE_R_DOT = 3;
  * Search finds systems. Dense fields stay tiny points (atmosphere), not a
  * readable inventory of every archive row.
  */
-const LIGHT_PX = 5.5;
-const LIGHT_PX_DENSE = 3.5;
-const PRIORITY_PX = 9;
+const LIGHT_PX = 6.5;
+const LIGHT_PX_DENSE = 4;
+const PRIORITY_PX = 10;
 const DENSE_IN_VIEW = 80;
 
 /** Spectral filter groups — first Harvard letter; Other = missing/non-letter. */
@@ -618,6 +618,7 @@ function fitCamToPoints(
 /** World radius that maps to ~target CSS px (WORLD_W ≈ full map width).
  * Clamped so discs cannot explode into overlap blobs at ZOOM_MIN.
  */
+/** Paint size only. Zoom is a camera; layout distances never rescale. */
 function screenPxWorld(px: number, zoom: number): number {
   return px / Math.max(zoom, 1e-6);
 }
@@ -631,7 +632,7 @@ function paintedDotWorldR(zoom: number, dense = false): number {
 }
 
 function paintedHitR(zoom: number, dense = false): number {
-  return paintedDotWorldR(zoom, dense) * 1.75;
+  return paintedDotWorldR(zoom, dense) * 1.8;
 }
 
 /** Drop non-locked labels that sit on top of an already-kept name. */
@@ -1862,7 +1863,7 @@ function SystemMapView() {
               const fav = favoriteIds.has(n.id);
               const bh = n.hasBlackHole === true;
               const labeled = labeledIds.has(n.id);
-              const px = sel || fav || n.home || bh ? 10 : PRIORITY_PX;
+              const px = sel || fav || n.home || bh ? 11 : PRIORITY_PX;
               const drawR = screenPxWorld(px, cam.zoom);
               const halo = screenPxWorld(sel ? 4 : 2.5, cam.zoom);
               const showSubtitle =

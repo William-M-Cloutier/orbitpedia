@@ -201,10 +201,10 @@ if (!/fontSize: screenPxWorld\(11/.test(page)) {
 } else {
   ok("labels are screen-stable ~11px");
 }
-if (!/LIGHT_PX = 5\.5/.test(page) || !/PRIORITY_PX = 9/.test(page)) {
+if (!/LIGHT_PX = 6\.5/.test(page) || !/PRIORITY_PX = 10/.test(page)) {
   fail("clickable disc sizes not bumped");
 } else {
-  ok("light ~5.5px / priority ~9px discs");
+  ok("light ~6.5px / priority ~10px discs");
 }
 
 if (process.exitCode) {
