@@ -148,6 +148,23 @@ if (!/prevSelectedIdRef/.test(page) || !/Archive hydrate rebuilds/.test(page)) {
 } else {
   ok("selectedId-only camera guard present");
 }
+
+if (!/paintedHitR/.test(page) || !/paintedDotWorldR/.test(page)) {
+  fail("painted hit/dot radius helpers missing");
+} else {
+  ok("hit-test uses painted disc radius");
+}
+if (!/unknownSky/.test(page) || !/gutterInView/.test(page)) {
+  fail("Prop unknownSky gutter hide missing");
+} else {
+  ok("Prop hides unknownSky gutter unless in view");
+}
+if (!/cullOverlappingLabels/.test(page)) {
+  fail("Prop label collision cull missing");
+} else {
+  ok("Prop label collision cull present");
+}
+
 if (!/screenFloorWorldR/.test(page)) {
   fail("screen-space disc floor missing");
 } else {

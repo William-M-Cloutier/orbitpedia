@@ -47,6 +47,7 @@ import {
   separateSkyNodes,
   SOL_GAL,
   SUNFLOWER_MIN_SEP,
+  UNKNOWN_GUTTER_Y,
 } from "@/lib/skyLayout";
 import {
   MilkyWayBackdrop,
@@ -611,6 +612,50 @@ function screenFloorWorldR(zoom: number, preferPx = 8): number {
   const px = Math.min(SCREEN_R_MAX_PX, Math.max(SCREEN_R_MIN_PX, preferPx));
   const world = px / Math.max(zoom, 1e-6);
   return Math.min(WORLD_R_FLOOR_MAX, world);
+}
+
+/** Painted light-dot radius — visible (~5px) but not a zoom-scaled ghost blob. */
+function paintedDotWorldR(zoom: number): number {
+  const world = 5 / Math.max(zoom, 1e-6);
+  return Math.min(WORLD_R_FLOOR_MAX, Math.max(NODE_R_DOT, world));
+}
+
+function paintedHitR(zoom: number): number {
+  return paintedDotWorldR(zoom) * 1.25;
+}
+
+/** Drop non-locked labels that sit on top of an already-kept name. */
+function cullOverlappingLabels(
+  nodes: LaidNode[],
+  want: Set<string>,
+  locked: Set<string>,
+  zoom: number,
+): Set<string> {
+  const minD = Math.min(140, Math.max(36, 20 / Math.max(zoom, 0.15)));
+  const byId = new Map(nodes.map((n) => [n.id, n]));
+  const taken: LaidNode[] = [];
+  const out = new Set<string>();
+  for (const id of locked) {
+    if (!want.has(id)) continue;
+    const n = byId.get(id);
+    if (!n) continue;
+    taken.push(n);
+    out.add(id);
+  }
+  for (const n of nodes) {
+    if (!want.has(n.id) || out.has(n.id)) continue;
+    let clash = false;
+    for (const a of taken) {
+      if (Math.hypot(a.x - n.x, a.y - n.y) < minD) {
+        clash = true;
+        break;
+      }
+    }
+    if (clash) continue;
+    taken.push(n);
+    out.add(n.id);
+  }
+  return out;
 }
 
 type LaidNode = SystemNode & { x: number; y: number; r: number; unknownSky?: boolean };
@@ -1211,7 +1256,14 @@ function SystemMapView() {
       const inBox = (x: number, y: number, r = 0) =>
         x + r >= vx0 && x - r <= vx1 && y + r >= vy0 && y - r <= vy1;
 
-      const inView = queryLaidInView(laidIndex, vx0, vy0, vx1, vy1);
+      let inView = queryLaidInView(laidIndex, vx0, vy0, vx1, vy1);
+      if (spacing === "proportional") {
+        const gutterInView =
+          vy0 < UNKNOWN_GUTTER_Y + 400 && vy1 > UNKNOWN_GUTTER_Y - 400;
+        if (!gutterInView) {
+          inView = inView.filter((n) => n.unknownSky !== true);
+        }
+      }
 
       // O(1) cam-tick priority: sticky sets + selection/hover only.
       const priority = new Set<string>(stickyPriorityIds);
@@ -1303,6 +1355,14 @@ function SystemMapView() {
           if (ids.size >= LABEL_CAP) break;
           ids.add(s.id);
         }
+        if (spacing === "proportional") {
+          const locked = new Set<string>(stickyPriorityIds);
+          if (selectedId) locked.add(selectedId);
+          if (hoveredId) locked.add(hoveredId);
+          const culled = cullOverlappingLabels(visible, ids, locked, cam.zoom);
+          ids.clear();
+          for (const id of culled) ids.add(id);
+        }
       }
 
       // No k-NN edges when zoomed out past neighborhood (pre-MW cheapness).
@@ -1333,6 +1393,7 @@ function SystemMapView() {
       stickyPriorityIds,
       sparseAllLabels,
       mapNodes,
+      spacing,
     ]);
 
   const onMapKeyDown = (e: React.KeyboardEvent) => {
@@ -1704,11 +1765,12 @@ function SystemMapView() {
                 setSelectedId(null);
                 return;
               }
-              const hitR = Math.min(
-                WORLD_R_FLOOR_MAX,
-                Math.max(NODE_R_DOT * 4, 12 / Math.max(cam.zoom, 1e-6)),
+              const hit = pickNearestLaid(
+                lightNodes,
+                world.x,
+                world.y,
+                paintedHitR(cam.zoom),
               );
-              const hit = pickNearestLaid(lightNodes, world.x, world.y, hitR);
               if (hit) {
                 setSelectedId(hit.id);
                 return;
@@ -1720,11 +1782,12 @@ function SystemMapView() {
               if (!svg) return;
               const world = clientToSvgWorld(svg, e.clientX, e.clientY);
               if (!world) return;
-              const hitR = Math.min(
-                WORLD_R_FLOOR_MAX,
-                Math.max(NODE_R_DOT * 4, 12 / Math.max(cam.zoom, 1e-6)),
+              const hit = pickNearestLaid(
+                lightNodes,
+                world.x,
+                world.y,
+                paintedHitR(cam.zoom),
               );
-              const hit = pickNearestLaid(lightNodes, world.x, world.y, hitR);
               if (hit) {
                 e.preventDefault();
                 openExplore(hit.id);
@@ -1743,11 +1806,12 @@ function SystemMapView() {
                 setHoveredId(null);
                 return;
               }
-              const hitR = Math.min(
-                WORLD_R_FLOOR_MAX,
-                Math.max(NODE_R_DOT * 4, 12 / Math.max(cam.zoom, 1e-6)),
+              const hit = pickNearestLaid(
+                lightNodes,
+                world.x,
+                world.y,
+                paintedHitR(cam.zoom),
               );
-              const hit = pickNearestLaid(lightNodes, world.x, world.y, hitR);
               setHoveredId(hit ? hit.id : null);
             }}
           >
@@ -1772,9 +1836,10 @@ function SystemMapView() {
                   key={`dot-${n.id}`}
                   cx={n.x}
                   cy={n.y}
-                  r={NODE_R_DOT}
+                  r={paintedDotWorldR(cam.zoom)}
                   fill={n.starColor}
-                  stroke="none"
+                  stroke="rgba(255,255,255,0.5)"
+                  strokeWidth={0.9}
                 />
               ))}
             </g>
