@@ -1193,8 +1193,8 @@ const BodyMesh = memo(function BodyMesh({
   const handleClick = useCallback(
     (e: { stopPropagation: () => void }) => {
       e.stopPropagation();
-      // Second click on the focused body clears (William deselect).
-      onSelect?.(focused ? null : body.id);
+      // Left-click selects / keeps focus — never clears (right-click / Esc clear).
+      onSelect?.(body.id);
     },
     [body.id, focused, onSelect],
   );

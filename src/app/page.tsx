@@ -319,8 +319,7 @@ function ExploreHome() {
                 </span>
               </h1>
               <p className="text-xs text-zinc-500">
-                Click to follow; click again or right-click to clear; Esc also
-                clears.
+                Click to follow; right-click or Esc to clear.
               </p>
             </div>
             <div className="flex shrink-0 items-center gap-2">
